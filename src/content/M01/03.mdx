@@ -4,31 +4,13 @@ export const meta = {
   title: "Client-Server Architecture",
   khmerTitle: "ស្ថាបត្យកម្ម Client-Server",
   type: "architecture",
-  codeLanguage: "javascript",
-  summary: "The foundational distributed systems model where clients (mobile apps, web browsers, IoT devices) initiate requests over TCP/IP and HTTP, and centralized server nodes authenticate, parse, query database clusters, and return formatted responses.",
+  imageUrl: "/images/lessons/client-server-architecture.png",
+  summary: `**Client-Server Architecture** is the foundational distributed computing model powering the modern internet:
+- **Clients (Frontend Devices)**: Web browsers, mobile apps, and IoT devices initiate requests over network protocols (HTTP/HTTPS, TCP/IP).
+- **Servers (Backend Hosts)**: Centralized Node.js + Express servers authenticate requests, enforce business logic, and compute responses.
+- **Databases & Caches**: High-performance persistence layers (MongoDB, PostgreSQL) and in-memory caches (Redis) supply real-time data.
+- **Stateless Communication**: In REST APIs, each request contains complete authentication credentials (JWT Bearer tokens) to operate independently.`,
   tip: "Statelessness is key in modern REST: each HTTP request must carry all authentication metadata necessary to fulfill it independently.",
   objective: "Trace the path of an HTTP packet from client interaction to database query and response.",
   expectedOutcome: "Deep comprehension of reverse proxies, application servers, and persistence layers.",
-  codeSnippet: "// CLIENT (Browser / React App)\nconst response = await fetch(\"https://api.myapp.com/products\", {\n  method: \"GET\",\n  headers: { Authorization: `Bearer ${token}` },\n});\nconst data = await response.json();\n\n// ─── HTTP travels over TCP/IP → Nginx → Node.js ───\n\n// SERVER (Node.js + Express)\napp.get(\"/products\", verifyToken, async (req, res) => {\n  const cached = await redis.get(\"products\");\n  if (cached) return res.json(JSON.parse(cached));\n\n  const products = await Product.find({ active: true }); // MongoDB\n  await redis.setEx(\"products\", 60, JSON.stringify(products));\n  res.json({ success: true, data: products });\n});",
 };
-
-```javascript
-// CLIENT (Browser / React App)
-const response = await fetch("https://api.myapp.com/products", {
-  method: "GET",
-  headers: { Authorization: `Bearer ${token}` },
-});
-const data = await response.json();
-
-// ─── HTTP travels over TCP/IP → Nginx → Node.js ───
-
-// SERVER (Node.js + Express)
-app.get("/products", verifyToken, async (req, res) => {
-  const cached = await redis.get("products");
-  if (cached) return res.json(JSON.parse(cached));
-
-  const products = await Product.find({ active: true }); // MongoDB
-  await redis.setEx("products", 60, JSON.stringify(products));
-  res.json({ success: true, data: products });
-});
-```

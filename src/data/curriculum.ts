@@ -42,7 +42,7 @@ const MODULE_TOPICS: Record<string, LessonTopic[]> = {
   M01: [
     {"id":"M01-01","number":"01","title":"What is Backend Development?","khmerTitle":"អ្វីជាការអភិវឌ្ឍ Backend?","type":"concept","imageUrl":"/images/lessons/what-is-backend.png"},
     {"id":"M01-02","number":"02","title":"Frontend vs Backend","khmerTitle":"ភាពខុសគ្នារវាង Frontend និង Backend","type":"concept","imageUrl":"/images/lessons/frontend-vs-backend.png"},
-    {"id":"M01-03","number":"03","title":"Client-Server Architecture","khmerTitle":"ស្ថាបត្យកម្ម Client-Server","type":"architecture","codeLanguage":"javascript"},
+    {"id":"M01-03","number":"03","title":"Client-Server Architecture","khmerTitle":"ស្ថាបត្យកម្ម Client-Server","type":"architecture","imageUrl":"/images/lessons/client-server-architecture.png"},
     {"id":"M01-04","number":"04","title":"What is Node.js?","khmerTitle":"អ្វីទៅជា Node.js?","type":"concept","codeLanguage":"javascript"},
     {"id":"M01-05","number":"05","title":"Why Node.js?","khmerTitle":"ហេតុអ្វីត្រូវជ្រើសរើស Node.js?","type":"concept","codeLanguage":"javascript"},
     {"id":"M01-06","number":"06","title":"Node.js Runtime","khmerTitle":"បរិស្ថានប្រតិបត្តិការ Node.js Runtime","type":"architecture","codeLanguage":"javascript"},

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ChevronLeft,
   ChevronRight,
@@ -41,10 +42,28 @@ export const SlideView: React.FC<SlideViewProps> = ({
   initialModuleId = "M01",
   initialSlideId = 1,
 }) => {
-  const [currentModuleId, setCurrentModuleId] = useState<string>(initialModuleId);
-  const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(
-    Math.max(0, initialSlideId - 1)
+  const searchParams = useSearchParams();
+  const queryModule = searchParams.get("module");
+  const querySlide = searchParams.get("slide");
+
+  const [currentModuleId, setCurrentModuleId] = useState<string>(
+    queryModule || initialModuleId
   );
+  const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(
+    Math.max(0, (querySlide ? Number(querySlide) : initialSlideId) - 1)
+  );
+
+  useEffect(() => {
+    if (queryModule && queryModule !== currentModuleId) {
+      setCurrentModuleId(queryModule);
+    }
+    if (querySlide) {
+      const idx = Math.max(0, Number(querySlide) - 1);
+      if (idx !== currentSlideIndex) {
+        setCurrentSlideIndex(idx);
+      }
+    }
+  }, [queryModule, querySlide]);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);

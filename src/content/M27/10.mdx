@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M27-10",
+  number: "10",
+  title: "Database",
+  khmerTitle: "ការរៀបចំ Database Connection Pool និង Lifecycle Hooks",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The Database configuration module manages the MongoDB connection lifecycle. It configures connection pooling (`maxPoolSize`), handles initial connect attempts with retries, and registers event listeners for disconnects, reconnections, and errors.",
+  tip: "Set `maxPoolSize: 50` in Mongoose connection options for high-traffic servers to handle concurrent queries efficiently without socket starvation.",
+  objective: "Build a resilient MongoDB connection module with pooling and lifecycle logging.",
+  expectedOutcome: "Robust database connection singleton with auto-reconnect resilience.",
+  codeSnippet: "// config/database.js\nimport mongoose from \"mongoose\";\n\nexport const connectDatabase = async (uri) => {\n  try {\n    const conn = await mongoose.connect(uri, {\n      maxPoolSize: 50, // Connection pool size\n      serverSelectionTimeoutMS: 5000,\n      socketTimeoutMS: 45000,\n    });\n    console.log(`MongoDB Connected: ${conn.connection.host}`);\n  } catch (err) {\n    console.error(\"MongoDB Connection Error:\", err.message);\n    process.exit(1);\n  }\n};\n\nmongoose.connection.on(\"disconnected\", () => console.warn(\"MongoDB disconnected!\"));\nmongoose.connection.on(\"reconnected\", () => console.log(\"MongoDB reconnected!\"));",
+};
+
+```javascript
+// config/database.js
+import mongoose from "mongoose";
+
+export const connectDatabase = async (uri) => {
+  try {
+    const conn = await mongoose.connect(uri, {
+      maxPoolSize: 50, // Connection pool size
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.error("MongoDB Connection Error:", err.message);
+    process.exit(1);
+  }
+};
+
+mongoose.connection.on("disconnected", () => console.warn("MongoDB disconnected!"));
+mongoose.connection.on("reconnected", () => console.log("MongoDB reconnected!"));
+```

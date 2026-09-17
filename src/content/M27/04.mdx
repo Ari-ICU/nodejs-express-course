@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M27-04",
+  number: "04",
+  title: "Services",
+  khmerTitle: "តួនាទី និងការរៀបចំ Services Layer (Core Business Logic)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The Service layer contains the core business logic of the application. Services know nothing about Express, `req`, or `res`. They receive plain JavaScript objects, perform computations, execute database operations, dispatch emails, and return data or throw errors. This makes services 100% reusable across CLI scripts, tests, and API routes.",
+  tip: "Because services do not touch `req` or `res`, you can unit test them without needing Supertest or HTTP simulation.",
+  objective: "Encapsulate business operations inside transport-agnostic service functions.",
+  expectedOutcome: "Portable, testable business logic isolated from HTTP routing frameworks.",
+  codeSnippet: "// services/product.service.js\nimport { Product } from \"../models/product.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const createProduct = async (productData, authorId) => {\n  // Business rule: Check duplicate title\n  const existing = await Product.findOne({ title: productData.title });\n  if (existing) {\n    throw new AppError(\"A product with this title already exists\", 409);\n  }\n\n  // Calculate pricing margin or business logic\n  const profitMargin = productData.price - (productData.costPrice || 0);\n\n  const product = await Product.create({\n    ...productData,\n    creator: authorId,\n    profitMargin,\n  });\n\n  return product;\n};",
+};
+
+```javascript
+// services/product.service.js
+import { Product } from "../models/product.model.js";
+import { AppError } from "../utils/AppError.js";
+
+export const createProduct = async (productData, authorId) => {
+  // Business rule: Check duplicate title
+  const existing = await Product.findOne({ title: productData.title });
+  if (existing) {
+    throw new AppError("A product with this title already exists", 409);
+  }
+
+  // Calculate pricing margin or business logic
+  const profitMargin = productData.price - (productData.costPrice || 0);
+
+  const product = await Product.create({
+    ...productData,
+    creator: authorId,
+    profitMargin,
+  });
+
+  return product;
+};
+```

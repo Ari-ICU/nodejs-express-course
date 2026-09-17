@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M20-10",
+  number: "10",
+  title: "Background Email Jobs",
+  khmerTitle: "ការផ្ញើ Email តាមរយៈ Background Queues (BullMQ)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "In high-traffic production environments, email delivery must be decoupled from web servers using asynchronous job queues like BullMQ backed by Redis. The Express API publishes email jobs to the queue instantly (<5ms). Dedicated background worker processes listen to the queue, execute SMTP transfers with automatic retries on network failure, and track delivery status.",
+  tip: "Set exponential backoff retries on email jobs (`attempts: 5, backoff: { type: 'exponential', delay: 5000 }`) so temporary SMTP glitches don't drop emails.",
+  objective: "Dispatch email delivery tasks to a Redis-backed BullMQ queue.",
+  expectedOutcome: "Zero-latency email dispatch with automated retry resilience.",
+  codeSnippet: "import { Queue } from \"bullmq\";\n\n// 1. Initialize BullMQ Queue\nexport const emailQueue = new Queue(\"email-notifications\", {\n  connection: { host: process.env.REDIS_HOST, port: Number(process.env.REDIS_PORT) },\n});\n\n// 2. Dispatch email job inside Express Controller\nexport const triggerPasswordReset = async (req, res, next) => {\n  // ... generate resetToken ...\n\n  // Offload to BullMQ with 3 retries and exponential backoff\n  await emailQueue.add(\"send-reset-email\", {\n    email: user.email,\n    token: resetToken,\n  }, {\n    attempts: 3,\n    backoff: { type: \"exponential\", delay: 3000 },\n  });\n\n  res.json({ status: \"success\", message: \"Password reset link sent to your email!\" });\n};",
+};
+
+```javascript
+import { Queue } from "bullmq";
+
+// 1. Initialize BullMQ Queue
+export const emailQueue = new Queue("email-notifications", {
+  connection: { host: process.env.REDIS_HOST, port: Number(process.env.REDIS_PORT) },
+});
+
+// 2. Dispatch email job inside Express Controller
+export const triggerPasswordReset = async (req, res, next) => {
+  // ... generate resetToken ...
+
+  // Offload to BullMQ with 3 retries and exponential backoff
+  await emailQueue.add("send-reset-email", {
+    email: user.email,
+    token: resetToken,
+  }, {
+    attempts: 3,
+    backoff: { type: "exponential", delay: 3000 },
+  });
+
+  res.json({ status: "success", message: "Password reset link sent to your email!" });
+};
+```

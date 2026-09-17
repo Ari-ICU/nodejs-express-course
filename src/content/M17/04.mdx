@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M17-04",
+  number: "04",
+  title: "Admin Routes",
+  khmerTitle: "ការការពារ Admin Routes ដោយឡែក",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Admin routes handle privileged operations like user management, system analytics, and catalog updates. These endpoints should be grouped into dedicated route modules (e.g. `/api/v1/admin/...`) protected by both authentication and role restriction middleware (`restrictTo('admin')`).",
+  tip: "Mount all administrative routes under a single dedicated prefix like `/api/v1/admin` to apply global admin guards and audit logging effortlessly.",
+  objective: "Isolate and protect administrative endpoints behind role-based route guards.",
+  expectedOutcome: "Dedicated admin routing module inaccessible to non-privileged users.",
+  codeSnippet: "// routes/admin.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport { restrictTo } from \"../middleware/role.middleware.js\";\nimport * as adminController from \"../controllers/admin.controller.js\";\n\nconst router = express.Router();\n\n// Enforce authentication AND admin role for all routes in this file\nrouter.use(protect);\nrouter.use(restrictTo(\"admin\", \"superadmin\"));\n\nrouter.get(\"/dashboard/stats\", adminController.getSystemStats);\nrouter.get(\"/users\", adminController.getAllUsers);\nrouter.patch(\"/users/:id/ban\", adminController.banUser);\n\nexport default router;",
+};
+
+```javascript
+// routes/admin.routes.js
+import express from "express";
+import { protect } from "../middleware/auth.middleware.js";
+import { restrictTo } from "../middleware/role.middleware.js";
+import * as adminController from "../controllers/admin.controller.js";
+
+const router = express.Router();
+
+// Enforce authentication AND admin role for all routes in this file
+router.use(protect);
+router.use(restrictTo("admin", "superadmin"));
+
+router.get("/dashboard/stats", adminController.getSystemStats);
+router.get("/users", adminController.getAllUsers);
+router.patch("/users/:id/ban", adminController.banUser);
+
+export default router;
+```

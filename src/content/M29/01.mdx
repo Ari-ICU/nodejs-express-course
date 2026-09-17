@@ -5,11 +5,11 @@ export const meta = {
   khmerTitle: "គម្រោងទី ១ ៖ Todo REST API",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build a complete, production-quality Todo REST API integrating Express routing, MongoDB + Mongoose persistence, Zod request validation, centralized error handling, and cursor-based pagination. This project solidifies CRUD fundamentals with real-world patterns: filtering by completed status, multi-field sorting, page/limit pagination with metadata, and proper HTTP status codes for each operation.",
-  tip: "Start by defining the Zod validation schemas before writing controllers. Define what a valid request looks like first — this ensures your API has clear, consistent validation before any business logic is written.",
-  objective: "Build a complete production REST CRUD API with validation, filtering, sorting, and pagination.",
-  expectedOutcome: "Clean, fully error-handled Todo API ready for Docker deployment.",
-  codeSnippet: "// GET /api/v1/todos?completed=true&sort=-createdAt&page=1&limit=10\n\nexport const getTodos = catchAsync(async (req, res) => {\n  const { completed, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = completed !== undefined ? { completed: completed === \"true\" } : {};\n\n  const [todos, total] = await Promise.all([\n    Todo.find(filter)\n      .sort(sort)\n      .skip((Number(page) - 1) * Number(limit))\n      .limit(Number(limit)),\n    Todo.countDocuments(filter)\n  ]);\n\n  res.json({\n    success: true,\n    count: todos.length,\n    total,\n    page: Number(page),\n    pages: Math.ceil(total / Number(limit)),\n    data: todos\n  });\n});\n\n// Routes: POST / → create, GET / → list, GET /:id → detail\n//         PATCH /:id → update, DELETE /:id → remove\n// Zod schema validates: title (string, min 1), completed (boolean, optional)",
+  summary: "Build a robust Todo REST API with full CRUD functionality, status filtering (?completed=true), search by title, sorting by creation date, pagination with limit and skip, Zod input validation, central error handling, and MongoDB persistence. Teaches fundamental RESTful design principles and clean controller-service architecture.",
+  tip: "Use Promise.all to run the data query and the countDocuments query concurrently — this halves the response time on paginated endpoints.",
+  objective: "Build a production-quality CRUD REST API with filtering, pagination, and validation.",
+  expectedOutcome: "Clean, robust Todo API meeting REST standards and proper HTTP response contracts.",
+  codeSnippet: "// GET /api/v1/todos?completed=true&sort=-createdAt&page=1&limit=10\n\nexport const getTodos = catchAsync(async (req, res) => {\n  const { completed, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = completed !== undefined ? { completed: completed === \"true\" } : {};\n\n  const [todos, total] = await Promise.all([\n    Todo.find(filter)\n      .sort(sort)\n      .skip((Number(page) - 1) * Number(limit))\n      .limit(Number(limit)),\n    Todo.countDocuments(filter)\n  ]);\n\n  res.json({\n    success: true,\n    count: todos.length,\n    total,\n    page: Number(page),\n    pages: Math.ceil(total / Number(limit)),\n    data: todos\n  });\n});",
 };
 
 ```javascript
@@ -36,8 +36,4 @@ export const getTodos = catchAsync(async (req, res) => {
     data: todos
   });
 });
-
-// Routes: POST / → create, GET / → list, GET /:id → detail
-//         PATCH /:id → update, DELETE /:id → remove
-// Zod schema validates: title (string, min 1), completed (boolean, optional)
 ```

@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M19-04",
+  number: "04",
+  title: "Upload Images",
+  khmerTitle: "ការ Upload រូបភាព (Single & Multiple Image Uploads)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Image upload routes often accept either a single image (e.g. user avatar) or a collection of images (e.g. product gallery). Using `upload.single('avatar')` handles one file, while `upload.array('photos', 5)` accepts up to 5 images under the same field name. `upload.fields()` allows handling mixed fields like one cover image and several gallery photos.",
+  tip: "Use `upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])` for e-commerce product endpoints.",
+  objective: "Handle single, array, and mixed multi-field image uploads in Express.",
+  expectedOutcome: "Versatile image upload routes supporting complex multi-image forms.",
+  codeSnippet: "// routes/product.routes.js\nimport multer from \"multer\";\nconst upload = multer({ dest: \"uploads/temp\" });\n\n// Handling mixed fields: 1 cover image + up to 5 gallery images\nconst productUploads = upload.fields([\n  { name: \"coverImage\", maxCount: 1 },\n  { name: \"gallery\", maxCount: 5 },\n]);\n\nrouter.post(\"/products\", productUploads, (req, res) => {\n  const cover = req.files[\"coverImage\"]?.[0];\n  const gallery = req.files[\"gallery\"] || [];\n\n  res.json({\n    status: \"success\",\n    coverFilename: cover?.filename,\n    galleryCount: gallery.length,\n  });\n});",
+};
+
+```javascript
+// routes/product.routes.js
+import multer from "multer";
+const upload = multer({ dest: "uploads/temp" });
+
+// Handling mixed fields: 1 cover image + up to 5 gallery images
+const productUploads = upload.fields([
+  { name: "coverImage", maxCount: 1 },
+  { name: "gallery", maxCount: 5 },
+]);
+
+router.post("/products", productUploads, (req, res) => {
+  const cover = req.files["coverImage"]?.[0];
+  const gallery = req.files["gallery"] || [];
+
+  res.json({
+    status: "success",
+    coverFilename: cover?.filename,
+    galleryCount: gallery.length,
+  });
+});
+```

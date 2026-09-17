@@ -1,0 +1,45 @@
+export const meta = {
+  id: "M16-09",
+  number: "09",
+  title: "Refresh Tokens",
+  khmerTitle: "យន្តការ Refresh Tokens និង Token Rotation",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "A Refresh Token is a long-lived credential (typically 7 to 30 days) used solely to obtain a new access token when the current one expires. Unlike access tokens, refresh tokens should be stored in the database or Redis cache so they can be immediately revoked if compromised. In Token Rotation, every time a refresh token is used, it is invalidated and replaced with a brand new one, preventing replay attacks.",
+  tip: "Store hashed refresh tokens in MongoDB or Redis so you can revoke them instantly when a user clicks 'Log out from all devices'.",
+  objective: "Implement a refresh token endpoint with token rotation and revocation capabilities.",
+  expectedOutcome: "Seamless user session persistence without sacrificing credential revocation control.",
+  codeSnippet: "// POST /api/v1/auth/refresh\nexport const refreshTokenHandler = async (req, res, next) => {\n  try {\n    const rawRefreshToken = req.cookies.refreshToken;\n    if (!rawRefreshToken) throw new AppError(\"No refresh token provided\", 401);\n\n    // 1. Verify token signature\n    const decoded = jwt.verify(rawRefreshToken, process.env.JWT_REFRESH_SECRET);\n\n    // 2. Validate token against DB session whitelist\n    const user = await User.findById(decoded.sub);\n    if (!user || user.refreshToken !== rawRefreshToken) {\n      throw new AppError(\"Invalid or expired refresh token\", 403);\n    }\n\n    // 3. Token Rotation: Issue new access token + new refresh token\n    const newAccessToken = generateAccessToken(user._id, user.role);\n    const newRefreshToken = generateRefreshToken(user._id);\n\n    user.refreshToken = newRefreshToken;\n    await user.save({ validateBeforeSave: false });\n\n    // 4. Send updated cookie & access token\n    sendRefreshTokenCookie(res, newRefreshToken);\n    res.json({ status: \"success\", accessToken: newAccessToken });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+// POST /api/v1/auth/refresh
+export const refreshTokenHandler = async (req, res, next) => {
+  try {
+    const rawRefreshToken = req.cookies.refreshToken;
+    if (!rawRefreshToken) throw new AppError("No refresh token provided", 401);
+
+    // 1. Verify token signature
+    const decoded = jwt.verify(rawRefreshToken, process.env.JWT_REFRESH_SECRET);
+
+    // 2. Validate token against DB session whitelist
+    const user = await User.findById(decoded.sub);
+    if (!user || user.refreshToken !== rawRefreshToken) {
+      throw new AppError("Invalid or expired refresh token", 403);
+    }
+
+    // 3. Token Rotation: Issue new access token + new refresh token
+    const newAccessToken = generateAccessToken(user._id, user.role);
+    const newRefreshToken = generateRefreshToken(user._id);
+
+    user.refreshToken = newRefreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    // 4. Send updated cookie & access token
+    sendRefreshTokenCookie(res, newRefreshToken);
+    res.json({ status: "success", accessToken: newAccessToken });
+  } catch (err) {
+    next(err);
+  }
+};
+```

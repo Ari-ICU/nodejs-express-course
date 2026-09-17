@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M27-07",
+  number: "07",
+  title: "Validators",
+  khmerTitle: "តួនាទី និងការរៀបចំ Validators Layer (Zod Schemas)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The Validators layer houses Zod or Joi schemas defining the contract for every incoming request body, query parameter, and route parameter. Grouping validation schemas into dedicated files keeps controllers clean and allows schemas to be reused across API endpoints and tests.",
+  tip: "Name validation schemas descriptively: `createProductSchema`, `updateProductSchema`, `queryProductsSchema`.",
+  objective: "Define structured request validation schemas separate from route handlers.",
+  expectedOutcome: "Clear, declarative data contracts isolating validation logic.",
+  codeSnippet: "// validators/product.validator.js\nimport { z } from \"zod\";\n\nexport const createProductSchema = z.object({\n  body: z.object({\n    title: z.string().min(3).max(100),\n    price: z.number().positive(),\n    category: z.string().min(1),\n    stock: z.number().int().nonnegative().default(0),\n  }),\n});",
+};
+
+```javascript
+// validators/product.validator.js
+import { z } from "zod";
+
+export const createProductSchema = z.object({
+  body: z.object({
+    title: z.string().min(3).max(100),
+    price: z.number().positive(),
+    category: z.string().min(1),
+    stock: z.number().int().nonnegative().default(0),
+  }),
+});
+```

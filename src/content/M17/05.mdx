@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M17-05",
+  number: "05",
+  title: "User Routes",
+  khmerTitle: "ការរៀបចំ User Profile Routes និង Self-Service Actions",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "User routes handle self-service account management, such as updating profiles, changing passwords, and viewing personal order histories. Standard authenticated users (`role: 'user'`) must have access to these routes, but must only be permitted to mutate their own account details, never other users' records.",
+  tip: "Use the authenticated `req.user._id` directly instead of taking user IDs from URL params for personal profile updates.",
+  objective: "Build user-specific routes that safely operate on the authenticated user context.",
+  expectedOutcome: "Safe user profile endpoints preventing accidental or malicious cross-account modifications.",
+  codeSnippet: "// controllers/user.controller.js\nexport const getMyProfile = async (req, res, next) => {\n  // Always query by req.user._id, never trust client-supplied ID for \"me\" routes\n  res.json({\n    status: \"success\",\n    data: { user: req.user }\n  });\n};\n\nexport const updateMyPassword = async (req, res, next) => {\n  const { currentPassword, newPassword } = req.body;\n  const user = await User.findById(req.user._id).select(\"+password\");\n\n  if (!(await bcrypt.compare(currentPassword, user.password))) {\n    throw new AppError(\"Current password incorrect\", 400);\n  }\n\n  user.password = newPassword;\n  await user.save(); // triggers pre-save bcrypt hook\n\n  res.json({ status: \"success\", message: \"Password updated successfully\" });\n};",
+};
+
+```javascript
+// controllers/user.controller.js
+export const getMyProfile = async (req, res, next) => {
+  // Always query by req.user._id, never trust client-supplied ID for "me" routes
+  res.json({
+    status: "success",
+    data: { user: req.user }
+  });
+};
+
+export const updateMyPassword = async (req, res, next) => {
+  const { currentPassword, newPassword } = req.body;
+  const user = await User.findById(req.user._id).select("+password");
+
+  if (!(await bcrypt.compare(currentPassword, user.password))) {
+    throw new AppError("Current password incorrect", 400);
+  }
+
+  user.password = newPassword;
+  await user.save(); // triggers pre-save bcrypt hook
+
+  res.json({ status: "success", message: "Password updated successfully" });
+};
+```

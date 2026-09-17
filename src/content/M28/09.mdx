@@ -1,0 +1,43 @@
+export const meta = {
+  id: "M28-09",
+  number: "09",
+  title: "Docker Compose",
+  khmerTitle: "ការរៀបចំ Multi-Container Stack ជាមួយ Docker Compose",
+  type: "lab",
+  codeLanguage: "yaml",
+  summary: "Docker Compose coordinates multi-container environments (Node.js API, MongoDB, Redis, Nginx) defined in a single `docker-compose.yml` file. A single command (`docker compose up -d`) creates isolated internal networks, mounts storage volumes, and boots the entire application stack.",
+  tip: "Use named volumes for database storage (`volumes: - mongodb_data:/data/db`) so database records survive container restarts and updates.",
+  objective: "Define and orchestrate multi-container application stacks using Docker Compose.",
+  expectedOutcome: "One-command local environment bootstrapping Node.js, MongoDB, and Redis.",
+  codeSnippet: "version: \"3.8\"\n\nservices:\n  api:\n    build: .\n    ports:\n      - \"5000:5000\"\n    environment:\n      - NODE_ENV=production\n      - MONGODB_URI=mongodb://mongo:27017/app_prod\n      - REDIS_URL=redis://redis:6379\n    depends_on:\n      - mongo\n      - redis\n\n  mongo:\n    image: mongo:7-jammy\n    restart: always\n    volumes:\n      - mongo_data:/data/db\n\n  redis:\n    image: redis:alpine\n    restart: always\n\nvolumes:\n  mongo_data:",
+};
+
+```yaml
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/app_prod
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:7-jammy
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+volumes:
+  mongo_data:
+```

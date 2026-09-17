@@ -1,41 +1,35 @@
 export const meta = {
   id: "M17-01",
   number: "01",
-  title: "Role-Based Access Control (RBAC)",
-  khmerTitle: "ការគ្រប់គ្រងសិទ្ធិ (Role-Based Access Control)",
-  type: "lab",
+  title: "User Roles",
+  khmerTitle: "ការកំណត់ User Roles ក្នុង Schema",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Role-Based Access Control restricts system operations based on assigned user roles. Users carry a role field (user, admin, moderator) embedded in their JWT payload. A reusable restrictTo(...roles) middleware factory checks if the authenticated user's role is among permitted roles before granting access. This decouples authorization logic from route handlers, enabling centralized permission governance across the entire API.",
-  tip: "Embed the role in the JWT payload to avoid an extra DB lookup per request. Still validate critical operations with a fresh DB query to catch role changes after token issuance.",
-  objective: "Implement role-based route guards to enforce fine-grained authorization in Express APIs.",
-  expectedOutcome: "Secure multi-role API where only authorized roles can access protected resources.",
-  codeSnippet: "// middleware/auth.js\n\n// 1. Verify JWT and attach user to request\nexport const protect = async (req, res, next) => {\n  const header = req.headers.authorization;\n  if (!header?.startsWith(\"Bearer \")) throw new AppError(\"Not authenticated\", 401);\n\n  const token = header.split(\" \")[1];\n  const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);\n  req.user = await User.findById(decoded.userId).select(\"-password\");\n  if (!req.user) throw new AppError(\"User no longer exists\", 401);\n  next();\n};\n\n// 2. Role Guard factory — restrictTo(\"admin\") or restrictTo(\"admin\", \"moderator\")\nexport const restrictTo = (...roles) => (req, res, next) => {\n  if (!roles.includes(req.user.role)) {\n    throw new AppError(\"You do not have permission to perform this action\", 403);\n  }\n  next();\n};\n\n// Usage in routes:\nrouter.delete(\"/users/:id\", protect, restrictTo(\"admin\"), deleteUser);\nrouter.patch(\"/posts/:id/approve\", protect, restrictTo(\"admin\", \"moderator\"), approvePost);",
+  summary: "User roles define categorical identities within an application (e.g. `user`, `moderator`, `admin`, `superadmin`). In Mongoose, roles are declared as an enumerated string with strict validation and a safe default (e.g. `user`). Restricting role escalation during self-registration ensures standard signups can never assign themselves administrative privileges.",
+  tip: "Never allow `req.body.role` to be saved directly on public registration routes! Always hardcode `role: 'user'` during self-signup.",
+  objective: "Define role schemas with Mongoose enums and enforce strict privilege defaults.",
+  expectedOutcome: "Type-safe role schema preventing unauthorized privilege escalation.",
+  codeSnippet: "// models/user.model.js\nimport mongoose from \"mongoose\";\n\nconst userSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  email: { type: String, required: true, unique: true },\n  password: { type: String, required: true, select: false },\n  role: {\n    type: String,\n    enum: {\n      values: [\"user\", \"moderator\", \"admin\", \"superadmin\"],\n      message: \"{VALUE} is not a valid user role\"\n    },\n    default: \"user\", // Strict safe default\n  },\n  isActive: { type: Boolean, default: true }\n}, { timestamps: true });\n\nexport const User = mongoose.model(\"User\", userSchema);",
 };
 
 ```javascript
-// middleware/auth.js
+// models/user.model.js
+import mongoose from "mongoose";
 
-// 1. Verify JWT and attach user to request
-export const protect = async (req, res, next) => {
-  const header = req.headers.authorization;
-  if (!header?.startsWith("Bearer ")) throw new AppError("Not authenticated", 401);
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true, select: false },
+  role: {
+    type: String,
+    enum: {
+      values: ["user", "moderator", "admin", "superadmin"],
+      message: "{VALUE} is not a valid user role"
+    },
+    default: "user", // Strict safe default
+  },
+  isActive: { type: Boolean, default: true }
+}, { timestamps: true });
 
-  const token = header.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-  req.user = await User.findById(decoded.userId).select("-password");
-  if (!req.user) throw new AppError("User no longer exists", 401);
-  next();
-};
-
-// 2. Role Guard factory — restrictTo("admin") or restrictTo("admin", "moderator")
-export const restrictTo = (...roles) => (req, res, next) => {
-  if (!roles.includes(req.user.role)) {
-    throw new AppError("You do not have permission to perform this action", 403);
-  }
-  next();
-};
-
-// Usage in routes:
-router.delete("/users/:id", protect, restrictTo("admin"), deleteUser);
-router.patch("/posts/:id/approve", protect, restrictTo("admin", "moderator"), approvePost);
+export const User = mongoose.model("User", userSchema);
 ```

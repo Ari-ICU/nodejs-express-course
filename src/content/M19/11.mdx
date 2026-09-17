@@ -1,0 +1,42 @@
+export const meta = {
+  id: "M19-11",
+  number: "11",
+  title: "Cloudflare R2",
+  khmerTitle: "ការ Upload ឯកសារទៅ Cloudflare R2 ដោយប្រើ AWS SDK v3",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Cloudflare R2 is an S3-compatible object storage service that charges zero egress bandwidth fees, making it exceptionally cost-effective for web applications. Using `@aws-sdk/client-s3`, files processed into memory buffers by Multer are streamed directly to R2 buckets via `PutObjectCommand`.",
+  tip: "Cloudflare R2 has zero data egress fees! Serving 10TB of images per month costs $0 in bandwidth compared to hundreds of dollars on AWS S3.",
+  objective: "Stream in-memory file buffers to Cloudflare R2 using AWS SDK v3.",
+  expectedOutcome: "Production-ready cloud upload helper pushing assets to Cloudflare R2.",
+  codeSnippet: "import { S3Client, PutObjectCommand } from \"@aws-sdk/client-s3\";\nimport crypto from \"node:crypto\";\n\nconst r2 = new S3Client({\n  region: \"auto\",\n  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,\n  credentials: {\n    accessKeyId: process.env.R2_ACCESS_KEY_ID,\n    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,\n  },\n});\n\nexport const uploadToR2 = async (fileBuffer, originalName, mimeType) => {\n  const fileKey = `uploads/${crypto.randomUUID()}-${originalName}`;\n\n  await r2.send(\n    new PutObjectCommand({\n      Bucket: process.env.R2_BUCKET_NAME,\n      Key: fileKey,\n      Body: fileBuffer,\n      ContentType: mimeType,\n    })\n  );\n\n  return `${process.env.R2_PUBLIC_DOMAIN}/${fileKey}`;\n};",
+};
+
+```javascript
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import crypto from "node:crypto";
+
+const r2 = new S3Client({
+  region: "auto",
+  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+});
+
+export const uploadToR2 = async (fileBuffer, originalName, mimeType) => {
+  const fileKey = `uploads/${crypto.randomUUID()}-${originalName}`;
+
+  await r2.send(
+    new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: fileKey,
+      Body: fileBuffer,
+      ContentType: mimeType,
+    })
+  );
+
+  return `${process.env.R2_PUBLIC_DOMAIN}/${fileKey}`;
+};
+```

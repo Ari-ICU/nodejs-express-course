@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M21-08",
+  number: "08",
+  title: "Authentication Documentation",
+  khmerTitle: "ការកត់ត្រា Auth Security Schemes (Bearer JWT & Cookies)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Documenting authentication informs consumers which security schemes protect an endpoint. OpenAPI supports Bearer JWT tokens, API keys, and HTTP cookies. Setting up a `bearerAuth` security scheme in Swagger UI enables the green 'Authorize' padlock button, allowing developers to paste a JWT token and test protected endpoints live.",
+  tip: "Define `bearerAuth` in `components.securitySchemes` and add `security: - bearerAuth: []` to all protected routes in Swagger annotations.",
+  objective: "Configure Bearer JWT security schemes in OpenAPI and enable interactive authorization.",
+  expectedOutcome: "Fully functional 'Authorize' button in Swagger UI allowing authenticated API testing.",
+  codeSnippet: "/**\n * @openapi\n * components:\n *   securitySchemes:\n *     bearerAuth:\n *       type: http\n *       scheme: bearer\n *       bearerFormat: JWT\n *       description: Enter your JWT Bearer token to authorize requests\n *\n * /api/v1/users/me:\n *   get:\n *     summary: Get current authenticated user profile\n *     tags: [Users]\n *     security:\n *       - bearerAuth: []\n *     responses:\n *       200:\n *         description: User profile retrieved successfully\n *       401:\n *         description: Unauthorized - Token missing or expired\n */",
+};
+
+```javascript
+/**
+ * @openapi
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *       description: Enter your JWT Bearer token to authorize requests
+ *
+ * /api/v1/users/me:
+ *   get:
+ *     summary: Get current authenticated user profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User profile retrieved successfully
+ *       401:
+ *         description: Unauthorized - Token missing or expired
+ */
+```

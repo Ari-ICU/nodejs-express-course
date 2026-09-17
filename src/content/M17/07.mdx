@@ -1,0 +1,40 @@
+export const meta = {
+  id: "M17-07",
+  number: "07",
+  title: "Resource Ownership",
+  khmerTitle: "ការផ្ទៀងផ្ទាត់កម្មសិទ្ធិនៃទិន្នន័យ (Resource Ownership Verification)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Resource ownership ensures that standard users can only edit or delete items they created (e.g. updating a blog post, canceling an order). A user might have permission to update articles, but only articles where `article.author.toString() === req.user._id.toString()`. Administrators typically bypass ownership checks via role bypass logic.",
+  tip: "Always convert MongoDB ObjectIds to strings with `.toString()` when comparing `doc.owner.toString() === req.user._id.toString()`, because two distinct ObjectId instances never match with `===`.",
+  objective: "Implement resource ownership checks ensuring users can only mutate their own records.",
+  expectedOutcome: "Bulletproof data protection preventing Horizontal Privilege Escalation (IDOR).",
+  codeSnippet: "// controllers/post.controller.js\nexport const updatePost = async (req, res, next) => {\n  try {\n    const post = await Post.findById(req.params.id);\n    if (!post) throw new AppError(\"Post not found\", 404);\n\n    // Check ownership: Must be author OR an administrator\n    const isOwner = post.author.toString() === req.user._id.toString();\n    const isAdmin = req.user.role === \"admin\";\n\n    if (!isOwner && !isAdmin) {\n      throw new AppError(\"You do not have permission to edit this post\", 403);\n    }\n\n    // Apply updates...\n    post.title = req.body.title || post.title;\n    post.content = req.body.content || post.content;\n    await post.save();\n\n    res.json({ status: \"success\", data: { post } });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+// controllers/post.controller.js
+export const updatePost = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) throw new AppError("Post not found", 404);
+
+    // Check ownership: Must be author OR an administrator
+    const isOwner = post.author.toString() === req.user._id.toString();
+    const isAdmin = req.user.role === "admin";
+
+    if (!isOwner && !isAdmin) {
+      throw new AppError("You do not have permission to edit this post", 403);
+    }
+
+    // Apply updates...
+    post.title = req.body.title || post.title;
+    post.content = req.body.content || post.content;
+    await post.save();
+
+    res.json({ status: "success", data: { post } });
+  } catch (err) {
+    next(err);
+  }
+};
+```

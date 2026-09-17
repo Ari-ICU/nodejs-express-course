@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M26-04",
+  number: "04",
+  title: "Redis",
+  khmerTitle: "តួនាទីរបស់ Redis ក្នុងប្រព័ន្ធ Message Queues",
+  type: "concept",
+  codeLanguage: "bash",
+  summary: "Redis is the industry standard backing store for Node.js message queues because of its atomic data structures (`LPUSH`, `BRPOP`, `ZADD`). In-memory storage provides microsecond task scheduling, while Redis Streams and Pub/Sub primitives ensure guaranteed at-least-once message delivery across clustered workers.",
+  tip: "Enable Redis AOF (Append-Only File) persistence (`appendonly yes`) in production so pending queue jobs survive unexpected Redis server restarts.",
+  objective: "Understand how Redis atomic data structures power distributed message queues.",
+  expectedOutcome: "Confidence configuring Redis as a high-throughput job queue engine.",
+  codeSnippet: "# Redis atomic operations for queues:\nLPUSH queue:jobs '{\"id\": 101, \"task\": \"send_email\"}' # Producer adds job\nBRPOP queue:jobs 0                                    # Worker blocks waiting for job atomically\nZADD queue:delayed 1773729600 '{\"id\": 102}'            # Scheduled delayed job sorted by timestamp",
+};
+
+```bash
+# Redis atomic operations for queues:
+LPUSH queue:jobs '{"id": 101, "task": "send_email"}' # Producer adds job
+BRPOP queue:jobs 0                                    # Worker blocks waiting for job atomically
+ZADD queue:delayed 1773729600 '{"id": 102}'            # Scheduled delayed job sorted by timestamp
+```

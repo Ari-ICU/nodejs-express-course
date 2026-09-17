@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M26-09",
+  number: "09",
+  title: "Retry",
+  khmerTitle: "យុទ្ធសាស្ត្រ Retry ជាមួយ Exponential Backoff",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "External networks and APIs experience transient glitches (rate limits, timeouts, temporary 503s). Configuring automatic retries with Exponential Backoff (`2s`, `4s`, `8s`, `16s`) ensures that temporary network drops resolve automatically without dropping messages or spamming failing endpoints.",
+  tip: "Always use exponential backoff rather than fixed delay retries — exponential backoff gives recovering third-party servers breathing room to stabilize.",
+  objective: "Configure resilient automated retry policies with exponential backoff.",
+  expectedOutcome: "Automated self-healing job execution resilient to network interruptions.",
+  codeSnippet: "// Producer configuring exponential backoff retries:\nawait orderQueue.add(\n  \"process-payment\",\n  { orderId: \"ord_10293\", amount: 99.00 },\n  {\n    attempts: 5, // Try 5 times before declaring permanent failure\n    backoff: {\n      type: \"exponential\",\n      delay: 3000, // 3s, 6s, 12s, 24s...\n    },\n  }\n);",
+};
+
+```javascript
+// Producer configuring exponential backoff retries:
+await orderQueue.add(
+  "process-payment",
+  { orderId: "ord_10293", amount: 99.00 },
+  {
+    attempts: 5, // Try 5 times before declaring permanent failure
+    backoff: {
+      type: "exponential",
+      delay: 3000, // 3s, 6s, 12s, 24s...
+    },
+  }
+);
+```

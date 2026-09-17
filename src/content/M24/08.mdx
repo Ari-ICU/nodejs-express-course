@@ -1,0 +1,41 @@
+export const meta = {
+  id: "M24-08",
+  number: "08",
+  title: "Real-time Notifications",
+  khmerTitle: "ការបញ្ជូន Real-time Notifications ទៅកាន់អ្នកប្រើប្រាស់ជាក់លាក់",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Real-time notifications inform specific users of instant updates (e.g. 'Your order has shipped', 'Someone liked your photo'). By associating an authenticated user's MongoDB `_id` with their active socket connection, the backend can target notification events directly to individual users across devices.",
+  tip: "Map user IDs to socket rooms: on connection, have each user join `socket.join('user:' + user._id)`. Then trigger notifications with `io.to('user:' + targetUserId).emit('notification', payload)`.",
+  objective: "Build a targeted real-time user notification pipeline.",
+  expectedOutcome: "Targeted push notifications delivered instantly to specific authenticated users.",
+  codeSnippet: "// Authenticate socket and join personal notification channel:\nio.use((socket, next) => {\n  const token = socket.handshake.auth.token;\n  try {\n    const user = jwt.verify(token, process.env.JWT_SECRET);\n    socket.user = user;\n    next();\n  } catch (err) {\n    next(new Error(\"Authentication failed\"));\n  }\n});\n\nio.on(\"connection\", (socket) => {\n  // Join room named after user's database ID\n  socket.join(`user:${socket.user.id}`);\n});\n\n// Anywhere in your backend (e.g. Order Service):\nexport const notifyUserOrderShipped = (io, userId, order) => {\n  io.to(`user:${userId}`).emit(\"notification\", {\n    type: \"ORDER_SHIPPED\",\n    title: \"Order on the way!\",\n    message: `Order #${order.id} has been dispatched.`,\n  });\n};",
+};
+
+```javascript
+// Authenticate socket and join personal notification channel:
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    socket.user = user;
+    next();
+  } catch (err) {
+    next(new Error("Authentication failed"));
+  }
+});
+
+io.on("connection", (socket) => {
+  // Join room named after user's database ID
+  socket.join(`user:${socket.user.id}`);
+});
+
+// Anywhere in your backend (e.g. Order Service):
+export const notifyUserOrderShipped = (io, userId, order) => {
+  io.to(`user:${userId}`).emit("notification", {
+    type: "ORDER_SHIPPED",
+    title: "Order on the way!",
+    message: `Order #${order.id} has been dispatched.`,
+  });
+};
+```

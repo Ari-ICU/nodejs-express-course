@@ -1,52 +1,21 @@
 export const meta = {
   id: "M25-01",
   number: "01",
-  title: "Performance & Caching with Redis",
-  khmerTitle: "ការបង្កើនប្រសិទ្ធភាព API ជាមួយ Redis Cache",
-  type: "lab",
+  title: "Node.js Performance",
+  khmerTitle: "ការស្វែងយល់ពីប្រសិទ្ធភាព និង Performance Metrics ក្នុង Node.js",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Redis is a lightning-fast in-memory data store that reduces database load for frequently accessed, slowly changing data. The cache-aside pattern: check Redis first (cache HIT → instant return), otherwise query MongoDB, store result in Redis with a TTL expiry (cache MISS → query + cache). MongoDB compound indexes are the second critical lever — they allow the database engine to find documents without scanning the entire collection, reducing query time from O(n) to O(log n).",
-  tip: "Cache aggressively at the route level for read-heavy public endpoints. Always set TTL on cached data to prevent stale cache poisoning. Invalidate relevant cache keys on write operations (create/update/delete) to maintain consistency.",
-  objective: "Implement Redis response caching and MongoDB index optimization for high-traffic APIs.",
-  expectedOutcome: "API response times reduced from hundreds of milliseconds to under 5ms for cached routes.",
-  codeSnippet: "import { createClient } from \"redis\";\n\nconst redis = createClient({ url: process.env.REDIS_URL });\nawait redis.connect();\n\n// Cache-aside middleware factory\nexport const cacheRoute = (ttlSeconds = 60) => async (req, res, next) => {\n  const cacheKey = `cache:${req.originalUrl}`;\n  const cached = await redis.get(cacheKey);\n\n  if (cached) {\n    console.log(\"CACHE HIT:\", cacheKey);\n    return res.json(JSON.parse(cached));\n  }\n\n  // Intercept res.json to store response in cache\n  const originalJson = res.json.bind(res);\n  res.json = (body) => {\n    redis.setEx(cacheKey, ttlSeconds, JSON.stringify(body));\n    return originalJson(body);\n  };\n  next();\n};\n\n// Apply to public routes\nrouter.get(\"/products\", cacheRoute(60), getProducts);\n\n// Invalidate cache on mutation\nexport const createProduct = catchAsync(async (req, res) => {\n  const product = await Product.create(req.body);\n  await redis.del(\"cache:/api/v1/products\");  // Clear stale cache\n  res.status(201).json({ success: true, data: product });\n});\n\n// Mongoose compound index for fast filtered queries:\nproductSchema.index({ category: 1, price: -1, createdAt: -1 });",
+  summary: "Node.js is exceptionally fast for I/O-heavy operations due to its event-driven non-blocking architecture, but its single-threaded nature requires careful performance management. Key metrics to monitor include CPU utilization, Event Loop Lag, Resident Set Size (RSS) memory consumption, garbage collection pauses, and response latency percentiles (p95, p99).",
+  tip: "Monitor p95 and p99 response times rather than averages. An average of 50ms can easily hide the fact that 5% of your users are experiencing 3-second delays.",
+  objective: "Identify key performance metrics and bottlenecks in Node.js backend services.",
+  expectedOutcome: "Comprehensive understanding of performance profiling indicators.",
+  codeSnippet: "// Key Performance Metrics in Node.js:\n// 1. Event Loop Lag: Delay before scheduled callbacks execute (<20ms is healthy)\n// 2. Memory (RSS): Total memory allocated for the process (watch for memory leaks!)\n// 3. Heap Used: Actual memory utilized by V8 objects\n// 4. Latency Percentiles: p50 (median), p95 (95% of users), p99 (tail latency)",
 };
 
 ```javascript
-import { createClient } from "redis";
-
-const redis = createClient({ url: process.env.REDIS_URL });
-await redis.connect();
-
-// Cache-aside middleware factory
-export const cacheRoute = (ttlSeconds = 60) => async (req, res, next) => {
-  const cacheKey = `cache:${req.originalUrl}`;
-  const cached = await redis.get(cacheKey);
-
-  if (cached) {
-    console.log("CACHE HIT:", cacheKey);
-    return res.json(JSON.parse(cached));
-  }
-
-  // Intercept res.json to store response in cache
-  const originalJson = res.json.bind(res);
-  res.json = (body) => {
-    redis.setEx(cacheKey, ttlSeconds, JSON.stringify(body));
-    return originalJson(body);
-  };
-  next();
-};
-
-// Apply to public routes
-router.get("/products", cacheRoute(60), getProducts);
-
-// Invalidate cache on mutation
-export const createProduct = catchAsync(async (req, res) => {
-  const product = await Product.create(req.body);
-  await redis.del("cache:/api/v1/products");  // Clear stale cache
-  res.status(201).json({ success: true, data: product });
-});
-
-// Mongoose compound index for fast filtered queries:
-productSchema.index({ category: 1, price: -1, createdAt: -1 });
+// Key Performance Metrics in Node.js:
+// 1. Event Loop Lag: Delay before scheduled callbacks execute (<20ms is healthy)
+// 2. Memory (RSS): Total memory allocated for the process (watch for memory leaks!)
+// 3. Heap Used: Actual memory utilized by V8 objects
+// 4. Latency Percentiles: p50 (median), p95 (95% of users), p99 (tail latency)
 ```

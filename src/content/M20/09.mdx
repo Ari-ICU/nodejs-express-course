@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M20-09",
+  number: "09",
+  title: "Notification System",
+  khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Notification (In-app & Email)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Comprehensive notification architectures deliver updates across multiple channels: in-app notification bells and external channels like Email, SMS, or Push. An event-driven notification service dispatches notifications according to user preference settings (e.g. 'Email me when someone comments on my post').",
+  tip: "Store in-app notifications in MongoDB with `{ isRead: false }` so users can see a live notification badge and mark items as read.",
+  objective: "Architect a multi-channel notification service supporting user delivery preferences.",
+  expectedOutcome: "Unified notification pipeline orchestrating both database and email alerts.",
+  codeSnippet: "// models/notification.model.js\nconst notificationSchema = new mongoose.Schema({\n  recipient: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  actor: { type: mongoose.Schema.Types.ObjectId, ref: \"User\" },\n  type: { type: String, enum: [\"ORDER_SHIPPED\", \"COMMENT_REPLY\", \"SECURITY_ALERT\"] },\n  title: String,\n  message: String,\n  link: String,\n  isRead: { type: Boolean, default: false },\n}, { timestamps: true });\n\nexport const Notification = mongoose.model(\"Notification\", notificationSchema);",
+};
+
+```javascript
+// models/notification.model.js
+const notificationSchema = new mongoose.Schema({
+  recipient: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  actor: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  type: { type: String, enum: ["ORDER_SHIPPED", "COMMENT_REPLY", "SECURITY_ALERT"] },
+  title: String,
+  message: String,
+  link: String,
+  isRead: { type: Boolean, default: false },
+}, { timestamps: true });
+
+export const Notification = mongoose.model("Notification", notificationSchema);
+```

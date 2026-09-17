@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M19-06",
+  number: "06",
+  title: "File Validation",
+  khmerTitle: "ការផ្ទៀងផ្ទាត់ប្រភេទ និងភាពត្រឹមត្រូវនៃឯកសារ (File Filter)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Multer provides a `fileFilter` callback to evaluate incoming files before saving them. The filter receives `req`, `file`, and a `cb` callback. Passing `cb(null, true)` accepts the file, while `cb(new AppError(...), false)` rejects the upload. Validating both MIME types and extensions stops malicious script uploads.",
+  tip: "Reject SVG files if user avatars are rendered directly in browsers unless sanitized — SVGs can embed inline JavaScript and trigger XSS attacks.",
+  objective: "Implement a custom fileFilter callback rejecting dangerous file types.",
+  expectedOutcome: "Strict file filtering protecting server storage from malicious file extensions.",
+  codeSnippet: "import path from \"node:path\";\n\nconst imageFileFilter = (req, file, cb) => {\n  const allowedExtensions = /jpeg|jpg|png|webp/;\n  const ext = path.extname(file.originalname).toLowerCase();\n  const isValidExt = allowedExtensions.test(ext);\n  const isValidMime = file.mimetype.startsWith(\"image/\");\n\n  if (isValidExt && isValidMime) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Only image files (JPEG, PNG, WebP) are allowed!\", 400), false);\n  }\n};",
+};
+
+```javascript
+import path from "node:path";
+
+const imageFileFilter = (req, file, cb) => {
+  const allowedExtensions = /jpeg|jpg|png|webp/;
+  const ext = path.extname(file.originalname).toLowerCase();
+  const isValidExt = allowedExtensions.test(ext);
+  const isValidMime = file.mimetype.startsWith("image/");
+
+  if (isValidExt && isValidMime) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Only image files (JPEG, PNG, WebP) are allowed!", 400), false);
+  }
+};
+```

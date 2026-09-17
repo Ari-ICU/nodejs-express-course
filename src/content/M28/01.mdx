@@ -1,42 +1,24 @@
 export const meta = {
   id: "M28-01",
   number: "01",
-  title: "Dockerizing Node.js",
-  khmerTitle: "ការ Containerize Node.js API ជាមួយ Docker",
-  type: "lab",
-  codeLanguage: "dockerfile",
-  summary: "Docker packages your application and all dependencies into a portable, immutable container image that runs identically across development, CI pipelines, and production servers. A multi-stage Dockerfile uses a full Node.js image to install dependencies, then copies only production artifacts into a minimal Alpine final image — dramatically reducing size and attack surface. Docker Compose orchestrates Node.js + MongoDB + Redis as a unified local environment with a single command.",
-  tip: "Always create a .dockerignore file excluding node_modules, .env, .git, and logs/ from the build context. This prevents baking secrets into images and speeds up build times significantly. Use a non-root user inside the container for security.",
-  objective: "Package a Node.js Express API as a production-ready, multi-stage Docker container.",
-  expectedOutcome: "Containerized API deployable to any cloud provider with docker compose up.",
-  codeSnippet: "# Multi-stage Dockerfile for production Node.js\n\n# Stage 1: Install dependencies\nFROM node:20-alpine AS deps\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\n# Stage 2: Final production image (minimal)\nFROM node:20-alpine AS runner\nWORKDIR /app\n\n# Non-root user for security\nRUN addgroup -S appgroup && adduser -S appuser -G appgroup\nUSER appuser\n\nCOPY --from=deps /app/node_modules ./node_modules\nCOPY . .\n\nEXPOSE 5000\nENV NODE_ENV=production\n\nHEALTHCHECK --interval=30s --timeout=3s \\\n  CMD wget -qO- http://localhost:5000/health || exit 1\n\nCMD [\"node\", \"src/app.js\"]",
+  title: "Development vs Production",
+  khmerTitle: "ភាពខុសគ្នារវាងបរិស្ថាន Development និង Production",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Development environments prioritize developer velocity: hot-reloading (nodemon/tsx), detailed error stack traces, mock SMTP inboxes, and verbose console logs. Production environments prioritize security, uptime, performance, and fault tolerance: optimized minified builds, structured JSON logging, strict CORS, HTTPS encryption, and sanitized error envelopes.",
+  tip: "Set `NODE_ENV=production` on production servers — Express and many packages automatically enable performance caching and suppress leaking internal stack traces when this flag is set.",
+  objective: "Contrast operational requirements between development and production environments.",
+  expectedOutcome: "Clear strategy for environment-dependent performance and security behaviors.",
+  codeSnippet: "// Key Differences:\n// Setting                | Development            | Production\n// -----------------------+------------------------+--------------------------\n// NODE_ENV               | \"development\"          | \"production\"\n// Error Responses        | Full stack trace       | Generic \"Something went wrong\"\n// Server Process         | nodemon / tsx watch    | PM2 cluster / Docker container\n// Logging                | Pretty console output  | Structured JSON (Winston/Pino)\n// HTTPS                  | Disabled (http://)     | Enforced (SSL/TLS certificate)",
 };
 
-```dockerfile
-# Multi-stage Dockerfile for production Node.js
-
-# Stage 1: Install dependencies
-FROM node:20-alpine AS deps
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-
-# Stage 2: Final production image (minimal)
-FROM node:20-alpine AS runner
-WORKDIR /app
-
-# Non-root user for security
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
-
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
-EXPOSE 5000
-ENV NODE_ENV=production
-
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget -qO- http://localhost:5000/health || exit 1
-
-CMD ["node", "src/app.js"]
+```javascript
+// Key Differences:
+// Setting                | Development            | Production
+// -----------------------+------------------------+--------------------------
+// NODE_ENV               | "development"          | "production"
+// Error Responses        | Full stack trace       | Generic "Something went wrong"
+// Server Process         | nodemon / tsx watch    | PM2 cluster / Docker container
+// Logging                | Pretty console output  | Structured JSON (Winston/Pino)
+// HTTPS                  | Disabled (http://)     | Enforced (SSL/TLS certificate)
 ```

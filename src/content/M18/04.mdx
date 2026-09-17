@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M18-04",
+  number: "04",
+  title: "Rate Limiting",
+  khmerTitle: "ការកំណត់ចំនួន Request (Rate Limiting) ជាមួយ express-rate-limit",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Rate limiting restricts how many HTTP requests a client IP address can make within a specified time window. It protects APIs from Denial of Service (DoS) attacks, brute-force credential stuffing, and web scraping abuse. The `express-rate-limit` package sets standard `RateLimit-*` headers and returns HTTP `429 Too Many Requests` upon breach.",
+  tip: "Always configure `legacyHeaders: false` and `standardHeaders: true` to comply with modern IETF rate-limiting header specifications.",
+  objective: "Implement global and route-specific rate limits to defend against DoS and abusive scraping.",
+  expectedOutcome: "Resilient API that gracefully throttles excessive requests with HTTP 429.",
+  codeSnippet: "import rateLimit from \"express-rate-limit\";\n\n// Global limiter: 100 requests per 15 minutes per IP\nexport const globalLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 minutes\n  max: 100, // Max 100 requests per IP per window\n  standardHeaders: true, // Return standard RateLimit-* headers\n  legacyHeaders: false, // Disable X-RateLimit-* headers\n  message: {\n    status: 429,\n    message: \"Too many requests from this IP, please try again after 15 minutes\"\n  }\n});\n\napp.use(\"/api\", globalLimiter);",
+};
+
+```javascript
+import rateLimit from "express-rate-limit";
+
+// Global limiter: 100 requests per 15 minutes per IP
+export const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Max 100 requests per IP per window
+  standardHeaders: true, // Return standard RateLimit-* headers
+  legacyHeaders: false, // Disable X-RateLimit-* headers
+  message: {
+    status: 429,
+    message: "Too many requests from this IP, please try again after 15 minutes"
+  }
+});
+
+app.use("/api", globalLimiter);
+```

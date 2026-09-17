@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M26-05",
+  number: "05",
+  title: "BullMQ",
+  khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ BullMQ ទំនើប",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "BullMQ is the fastest, most reliable, TypeScript-native Redis-based queue library for Node.js. It features automatic parent-child job flows, rate-limited queues, concurrency controls, cron-based repeatable scheduling, sandboxed worker processes, and pause/resume capabilities.",
+  tip: "Use BullMQ instead of the legacy 'bull' library. BullMQ is written from scratch in modern TypeScript with better Redis Stream support and lower memory overhead.",
+  objective: "Understand the core architecture and features of the BullMQ queue system.",
+  expectedOutcome: "Familiarity with BullMQ Queue, Worker, and QueueEvents abstractions.",
+  codeSnippet: "// Core BullMQ Primitives:\n// 1. Queue:       Used by producers to add jobs with options (delay, priority, retries)\n// 2. Worker:      Background process that consumes jobs and executes business logic\n// 3. QueueEvents: Emits lifecycle events ('completed', 'failed', 'progress') for monitoring",
+};
+
+```javascript
+// Core BullMQ Primitives:
+// 1. Queue:       Used by producers to add jobs with options (delay, priority, retries)
+// 2. Worker:      Background process that consumes jobs and executes business logic
+// 3. QueueEvents: Emits lifecycle events ('completed', 'failed', 'progress') for monitoring
+```

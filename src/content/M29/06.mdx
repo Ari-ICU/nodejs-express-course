@@ -1,30 +1,23 @@
 export const meta = {
   id: "M29-06",
   number: "06",
-  title: "Project 06: Full Production API (Capstone)",
-  khmerTitle: "គម្រោងទី ៦ ៖ Full Production API Capstone",
-  type: "lab",
+  title: "Project 06: Final Project (Production REST API)",
+  khmerTitle: "គម្រោងទី ៦ ៖ Final Production REST API Capstone",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "The capstone project integrates every concept from the entire course into a single production-grade application: Express REST API with authentication, RBAC, MongoDB + Mongoose, Redis caching, BullMQ jobs, Socket.IO real-time, file uploads, Swagger docs, Vitest integration tests, Docker containerization with Compose, Nginx reverse proxy, and GitHub Actions CI/CD. This codebase demonstrates senior backend engineering patterns and serves as a portfolio piece.",
-  tip: "Before deploying, run through the production checklist: all env vars validated on startup, graceful shutdown handlers for SIGTERM/SIGINT, database connection pooling configured, rate limiting on all API routes, Helmet security headers, structured error logging to Sentry or Datadog, and health check endpoint at /health returning DB + Redis status.",
+  summary: "The capstone project integrates every concept from the entire course into a single production-grade application: Express REST API with authentication, RBAC, MongoDB + Mongoose, Redis caching, BullMQ background jobs, Socket.IO real-time features, file uploads, Swagger docs, Vitest integration tests, Docker containerization with Compose, Nginx reverse proxy, and GitHub Actions CI/CD.",
+  tip: "Before deploying, run through the production checklist: env validation, graceful shutdown handlers, connection pooling, rate limiting, Helmet security headers, structured logging, and health check endpoints.",
   objective: "Ship a complete, production-grade Node.js API integrating all course technologies end-to-end.",
   expectedOutcome: "A portfolio-ready, full-featured backend deployed to production with CI/CD automation.",
-  codeSnippet: "// Production startup with graceful shutdown\n\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/database.js\";\nimport { redis } from \"./config/redis.js\";\nimport { startWorkers, stopWorkers } from \"./queues/index.js\";\n\n// Validate critical env vars on startup — fail fast!\nconst required = [\"MONGODB_URI\", \"JWT_ACCESS_SECRET\", \"JWT_REFRESH_SECRET\", \"REDIS_URL\"];\nfor (const key of required) {\n  if (!process.env[key]) throw new Error(`Missing required env var: ${key}`);\n}\n\nconst server = app.listen(process.env.PORT || 5000, async () => {\n  await connectDB();\n  await redis.connect();\n  await startWorkers();\n  console.log(`Server running on port ${process.env.PORT || 5000} [${process.env.NODE_ENV}]`);\n});\n\n// Graceful shutdown — finish in-flight requests before exit\nconst shutdown = async (signal) => {\n  console.log(`${signal}: shutting down gracefully...`);\n  server.close(async () => {\n    await stopWorkers();\n    await redis.quit();\n    process.exit(0);\n  });\n  setTimeout(() => process.exit(1), 10_000); // Force exit after 10s\n};\n\nprocess.on(\"SIGTERM\", () => shutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => shutdown(\"SIGINT\"));\nprocess.on(\"unhandledRejection\", (err) => { console.error(err); shutdown(\"UNCAUGHT\"); });",
+  codeSnippet: "// Production startup with graceful shutdown\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/database.js\";\nimport { redis } from \"./config/redis.js\";\nimport { startWorkers, stopWorkers } from \"./queues/index.js\";\n\nconst server = app.listen(process.env.PORT || 5000, async () => {\n  await connectDB();\n  await redis.connect();\n  await startWorkers();\n  console.log(`Server running on port ${process.env.PORT || 5000} [${process.env.NODE_ENV}]`);\n});\n\nconst shutdown = async (signal) => {\n  console.log(`${signal}: shutting down gracefully...`);\n  server.close(async () => {\n    await stopWorkers();\n    await redis.quit();\n    process.exit(0);\n  });\n  setTimeout(() => process.exit(1), 10_000);\n};\n\nprocess.on(\"SIGTERM\", () => shutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => shutdown(\"SIGINT\"));",
 };
 
 ```javascript
 // Production startup with graceful shutdown
-
 import app from "./app.js";
 import { connectDB } from "./config/database.js";
 import { redis } from "./config/redis.js";
 import { startWorkers, stopWorkers } from "./queues/index.js";
-
-// Validate critical env vars on startup — fail fast!
-const required = ["MONGODB_URI", "JWT_ACCESS_SECRET", "JWT_REFRESH_SECRET", "REDIS_URL"];
-for (const key of required) {
-  if (!process.env[key]) throw new Error(`Missing required env var: ${key}`);
-}
 
 const server = app.listen(process.env.PORT || 5000, async () => {
   await connectDB();
@@ -33,7 +26,6 @@ const server = app.listen(process.env.PORT || 5000, async () => {
   console.log(`Server running on port ${process.env.PORT || 5000} [${process.env.NODE_ENV}]`);
 });
 
-// Graceful shutdown — finish in-flight requests before exit
 const shutdown = async (signal) => {
   console.log(`${signal}: shutting down gracefully...`);
   server.close(async () => {
@@ -41,10 +33,9 @@ const shutdown = async (signal) => {
     await redis.quit();
     process.exit(0);
   });
-  setTimeout(() => process.exit(1), 10_000); // Force exit after 10s
+  setTimeout(() => process.exit(1), 10_000);
 };
 
 process.on("SIGTERM", () => shutdown("SIGTERM"));
 process.on("SIGINT", () => shutdown("SIGINT"));
-process.on("unhandledRejection", (err) => { console.error(err); shutdown("UNCAUGHT"); });
 ```

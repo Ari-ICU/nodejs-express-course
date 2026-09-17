@@ -1,0 +1,18 @@
+export const meta = {
+  id: "M28-11",
+  number: "11",
+  title: "MongoDB Container",
+  khmerTitle: "ការរៀបចំ MongoDB Container ជាមួយ Persistent Volumes",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "Running MongoDB in Docker requires persistent volumes to store database files permanently on host disk. Without volumes, deleting or updating the MongoDB container permanently destroys all database records. Configuring root authentication credentials ensures database security inside the container network.",
+  tip: "Always configure `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD` when booting MongoDB containers.",
+  objective: "Deploy MongoDB inside a Docker container with persistent storage volumes and authentication.",
+  expectedOutcome: "Persistent, secure containerized database ready for application connections.",
+  codeSnippet: "# Run MongoDB with persistent named volume and authentication:\ndocker run -d   --name production-mongo   -p 27017:27017   -v mongo_data:/data/db   -e MONGO_INITDB_ROOT_USERNAME=admin   -e MONGO_INITDB_ROOT_PASSWORD=SuperSecretPassword123!   --restart always   mongo:7-jammy",
+};
+
+```bash
+# Run MongoDB with persistent named volume and authentication:
+docker run -d   --name production-mongo   -p 27017:27017   -v mongo_data:/data/db   -e MONGO_INITDB_ROOT_USERNAME=admin   -e MONGO_INITDB_ROOT_PASSWORD=SuperSecretPassword123!   --restart always   mongo:7-jammy
+```

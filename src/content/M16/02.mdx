@@ -1,41 +1,24 @@
 export const meta = {
   id: "M16-02",
   number: "02",
-  title: "JWT & HttpOnly Refresh Token Cookies",
-  khmerTitle: "JWT Tokens និង HttpOnly Cookies សម្រាប់ Refresh Tokens",
-  type: "lab",
+  title: "Password Hashing",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ Password Hashing",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "JSON Web Tokens (JWT) are self-contained, cryptographically signed tokens that allow stateless authentication. A short-lived Access Token (15 minutes) travels in Authorization headers. A long-lived Refresh Token (7 days) lives in an HttpOnly cookie — inaccessible to JavaScript, defeating XSS credential theft. When the access token expires, the client silently exchanges the cookie-based refresh token for a new access token without re-login.",
-  tip: "Storing refresh tokens in HttpOnly cookies prevents stolen credentials even if an attacker executes XSS on the frontend. Always set secure: true and sameSite: strict in production.",
-  objective: "Implement resilient dual-token JWT authentication with automatic refresh and XSS protection.",
-  expectedOutcome: "Industry-grade stateless authentication resilient against XSS attacks.",
-  codeSnippet: "import jwt from \"jsonwebtoken\";\n\n// Issue Access Token (short-lived: 15 minutes)\nconst accessToken = jwt.sign(\n  { userId: user._id, role: user.role },\n  process.env.JWT_ACCESS_SECRET,\n  { expiresIn: \"15m\" }\n);\n\n// Issue Refresh Token (long-lived: 7 days)\nconst refreshToken = jwt.sign(\n  { userId: user._id },\n  process.env.JWT_REFRESH_SECRET,\n  { expiresIn: \"7d\" }\n);\n\n// Store in HttpOnly cookie — inaccessible to JavaScript XSS attacks!\nres.cookie(\"refreshToken\", refreshToken, {\n  httpOnly: true,\n  secure: process.env.NODE_ENV === \"production\",\n  sameSite: \"strict\",\n  maxAge: 7 * 24 * 60 * 60 * 1000\n});\n\nres.json({ success: true, accessToken });",
+  summary: "Password hashing transforms a plaintext password into an irreversible, fixed-length alphanumeric string using a one-way cryptographic mathematical function. Unlike encryption which is two-way and reversible with a secret key, secure hashing is permanently irreversible. Storing passwords in plaintext or using fast algorithms like MD5/SHA-1 exposes users to instant credential theft during database leaks.",
+  tip: "Never use encryption (AES/DES) or fast hash algorithms (MD5/SHA256) for passwords. Fast hashes allow attackers to calculate billions of guesses per second via GPU brute-forcing.",
+  objective: "Understand why one-way slow cryptographic hash functions are mandatory for credential storage.",
+  expectedOutcome: "Solid grasp of cryptographic hashing vs encryption and resistance to brute-force attacks.",
+  codeSnippet: "// Plaintext vs Irreversible One-Way Hash:\n// Plaintext: \"SecretP@ss123\" -> stored directly (FATAL SECURITY FLAW)\n// MD5/SHA256: \"SecretP@ss123\" -> fast hash (VULNERABLE to GPU rainbow tables)\n// bcrypt:    \"SecretP@ss123\" -> $2a$12$e8YkZ... (SLOW, SALTED, INDUSTRY STANDARD)\n\n// One-way verification principle:\n// We NEVER decrypt: Decrypt(hash) -> Impossible!\n// Instead we re-hash: bcrypt.compare(incomingCandidate, storedHash);",
 };
 
 ```javascript
-import jwt from "jsonwebtoken";
+// Plaintext vs Irreversible One-Way Hash:
+// Plaintext: "SecretP@ss123" -> stored directly (FATAL SECURITY FLAW)
+// MD5/SHA256: "SecretP@ss123" -> fast hash (VULNERABLE to GPU rainbow tables)
+// bcrypt:    "SecretP@ss123" -> $2a$12$e8YkZ... (SLOW, SALTED, INDUSTRY STANDARD)
 
-// Issue Access Token (short-lived: 15 minutes)
-const accessToken = jwt.sign(
-  { userId: user._id, role: user.role },
-  process.env.JWT_ACCESS_SECRET,
-  { expiresIn: "15m" }
-);
-
-// Issue Refresh Token (long-lived: 7 days)
-const refreshToken = jwt.sign(
-  { userId: user._id },
-  process.env.JWT_REFRESH_SECRET,
-  { expiresIn: "7d" }
-);
-
-// Store in HttpOnly cookie — inaccessible to JavaScript XSS attacks!
-res.cookie("refreshToken", refreshToken, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
-  maxAge: 7 * 24 * 60 * 60 * 1000
-});
-
-res.json({ success: true, accessToken });
+// One-way verification principle:
+// We NEVER decrypt: Decrypt(hash) -> Impossible!
+// Instead we re-hash: bcrypt.compare(incomingCandidate, storedHash);
 ```

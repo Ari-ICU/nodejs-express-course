@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M17-06",
+  number: "06",
+  title: "Authorization Middleware",
+  khmerTitle: "ការបង្កើត restrictTo Middleware Factory",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "The `restrictTo(...roles)` middleware factory accepts a list of permitted roles and returns an Express middleware function. It checks if the already-authenticated `req.user.role` is included in the allowed list. If not, it throws a 403 Forbidden error immediately, halting execution before the controller is reached.",
+  tip: "Always run `protect` BEFORE `restrictTo`. If `req.user` is undefined, `restrictTo` cannot evaluate roles.",
+  objective: "Build a reusable restrictTo middleware factory supporting multiple permitted roles.",
+  expectedOutcome: "Flexible, declarative role authorization middleware for Express routes.",
+  codeSnippet: "// middleware/role.middleware.js\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    // req.user was populated by protect middleware\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return next(\n        new AppError(\n          `Forbidden: Role '${req.user?.role || \"anonymous\"}' does not have permission`,\n          403\n        )\n      );\n    }\n    next();\n  };\n};\n\n// Usage in routes:\n// router.delete(\"/products/:id\", protect, restrictTo(\"admin\"), deleteProduct);",
+};
+
+```javascript
+// middleware/role.middleware.js
+import { AppError } from "../utils/AppError.js";
+
+export const restrictTo = (...allowedRoles) => {
+  return (req, res, next) => {
+    // req.user was populated by protect middleware
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return next(
+        new AppError(
+          `Forbidden: Role '${req.user?.role || "anonymous"}' does not have permission`,
+          403
+        )
+      );
+    }
+    next();
+  };
+};
+
+// Usage in routes:
+// router.delete("/products/:id", protect, restrictTo("admin"), deleteProduct);
+```

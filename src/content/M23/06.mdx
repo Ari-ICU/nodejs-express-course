@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M23-06",
+  number: "06",
+  title: "Testing CRUD APIs",
+  khmerTitle: "លំហូរនៃការធ្វើតេស្ត CRUD APIs ជាខ្សែសង្វាក់ក្នុង Postman",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Testing CRUD APIs effectively involves chaining requests: POST creates an entity and writes its ID to `{{entity_id}}`, subsequent GET/PUT requests reference `{{entity_id}}`, and DELETE removes it. This verifies the complete lifecycle in a continuous workflow.",
+  tip: "Use Postman Collection Runner to execute your entire CRUD workflow from start to finish with a single click.",
+  objective: "Chain CRUD operations together using dynamic Postman variables.",
+  expectedOutcome: "Automated end-to-end CRUD verification sequence.",
+  codeSnippet: "// In POST /products Tests tab:\nconst jsonData = pm.response.json();\npm.test(\"Product created successfully\", () => {\n  pm.response.to.have.status(201);\n  // Store created ID for subsequent GET/PATCH/DELETE calls:\n  pm.environment.set(\"product_id\", jsonData.data.product._id);\n});\n\n// In next request:\n// GET {{base_url}}/api/v1/products/{{product_id}}",
+};
+
+```javascript
+// In POST /products Tests tab:
+const jsonData = pm.response.json();
+pm.test("Product created successfully", () => {
+  pm.response.to.have.status(201);
+  // Store created ID for subsequent GET/PATCH/DELETE calls:
+  pm.environment.set("product_id", jsonData.data.product._id);
+});
+
+// In next request:
+// GET {{base_url}}/api/v1/products/{{product_id}}
+```

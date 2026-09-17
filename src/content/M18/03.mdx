@@ -1,0 +1,41 @@
+export const meta = {
+  id: "M18-03",
+  number: "03",
+  title: "Helmet",
+  khmerTitle: "ការការពារ HTTP Headers ជាមួយ Helmet",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Helmet is a collection of 15 smaller middleware functions that set secure HTTP response headers. It hides the revealing `X-Powered-By: Express` header, enforces HTTPS via HTTP Strict Transport Security (HSTS), blocks clickjacking with `X-Frame-Options`, prevents MIME-sniffing with `X-Content-Type-Options`, and configures Content Security Policy (CSP).",
+  tip: "Place `app.use(helmet())` at the very top of your Express middleware stack to protect all downstream responses, including error responses.",
+  objective: "Harden HTTP response headers using the helmet middleware package.",
+  expectedOutcome: "Elimination of header-based information leaks and improved security scanning score.",
+  codeSnippet: "import express from \"express\";\nimport helmet from \"helmet\";\n\nconst app = express();\n\n// Enable all standard 15 security headers with sensible defaults\napp.use(helmet());\n\n// Or customize individual header policies:\napp.use(\n  helmet({\n    contentSecurityPolicy: {\n      directives: {\n        defaultSrc: [\"'self'\"],\n        scriptSrc: [\"'self'\", \"https://cdn.trusted.com\"],\n      },\n    },\n    crossOriginEmbedderPolicy: false,\n    hsts: {\n      maxAge: 31536000, // 1 year\n      includeSubDomains: true,\n      preload: true,\n    },\n  })\n);",
+};
+
+```javascript
+import express from "express";
+import helmet from "helmet";
+
+const app = express();
+
+// Enable all standard 15 security headers with sensible defaults
+app.use(helmet());
+
+// Or customize individual header policies:
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://cdn.trusted.com"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    hsts: {
+      maxAge: 31536000, // 1 year
+      includeSubDomains: true,
+      preload: true,
+    },
+  })
+);
+```

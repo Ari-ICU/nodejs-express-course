@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M27-14",
+  number: "14",
+  title: "Environment Configuration",
+  khmerTitle: "ការគ្រប់គ្រងបរិស្ថាន Development, Staging, Production",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Applications behave differently across environments: development enables verbose error traces and mock SMTP servers; staging mirrors production configuration against isolated test databases; production enforces strict SSL, rate limiting, and structured JSON logging.",
+  tip: "Never conditionally check `if (env === 'dev')` everywhere in code. Instead, define an environment configuration matrix that supplies environment-specific constants cleanly.",
+  objective: "Architect multi-stage environment configurations with environment-specific behaviors.",
+  expectedOutcome: "Clean environment segregation without hardcoded stage checks.",
+  codeSnippet: "// config/environments.js\nconst configs = {\n  development: {\n    logLevel: \"debug\",\n    corsOrigin: \"http://localhost:3000\",\n    emailService: \"mailtrap\",\n  },\n  production: {\n    logLevel: \"error\",\n    corsOrigin: \"https://myenterprise.com\",\n    emailService: \"sendgrid\",\n  },\n};\n\nexport const currentConfig = configs[process.env.NODE_ENV || \"development\"];",
+};
+
+```javascript
+// config/environments.js
+const configs = {
+  development: {
+    logLevel: "debug",
+    corsOrigin: "http://localhost:3000",
+    emailService: "mailtrap",
+  },
+  production: {
+    logLevel: "error",
+    corsOrigin: "https://myenterprise.com",
+    emailService: "sendgrid",
+  },
+};
+
+export const currentConfig = configs[process.env.NODE_ENV || "development"];
+```

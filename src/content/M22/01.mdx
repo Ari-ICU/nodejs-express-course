@@ -1,50 +1,22 @@
 export const meta = {
   id: "M22-01",
   number: "01",
-  title: "API Testing with Vitest & Supertest",
-  khmerTitle: "ការធ្វើតេស្ត API ជាមួយ Vitest និង Supertest",
-  type: "lab",
+  title: "Why Test APIs?",
+  khmerTitle: "សារៈសំខាន់នៃការធ្វើតេស្ត API (Software Quality & Confidence)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Production APIs require automated tests to catch regressions. Vitest is a blazing-fast test runner with native ESM and Jest-compatible APIs. Supertest simulates HTTP requests against your Express app without starting a real server. Unit tests isolate service business logic; integration tests verify the full route → middleware → controller → database → response stack. Tests run in CI pipelines on every git push, preventing broken code from reaching production.",
-  tip: "Use mongodb-memory-server for integration tests to avoid polluting your dev database. Reset the database between test suites with beforeEach hooks to ensure test isolation and reproducible results.",
-  objective: "Write comprehensive unit and integration tests covering happy paths, validation, and auth failures.",
-  expectedOutcome: "Automated test suite with coverage reporting integrated into CI/CD pipeline.",
-  codeSnippet: "import { describe, it, expect, beforeAll, afterAll } from \"vitest\";\nimport request from \"supertest\";\nimport app from \"../src/app.js\";\nimport { connectTestDB, disconnectTestDB, clearDB } from \"./helpers/db.js\";\n\nbeforeAll(async () => await connectTestDB());\nafterAll(async () => await disconnectTestDB());\n\ndescribe(\"Auth API\", () => {\n  it(\"POST /register — creates user and returns token\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/auth/register\")\n      .send({ name: \"Sokha\", email: \"sokha@test.com\", password: \"Test1234!\" });\n\n    expect(res.status).toBe(201);\n    expect(res.body.success).toBe(true);\n    expect(res.body.data).toHaveProperty(\"accessToken\");\n    expect(res.body.data.user.password).toBeUndefined(); // Never leak password\n  });\n\n  it(\"POST /login — rejects wrong password with 401\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/auth/login\")\n      .send({ email: \"sokha@test.com\", password: \"WrongPass\" });\n\n    expect(res.status).toBe(401);\n    expect(res.body.success).toBe(false);\n  });\n\n  it(\"GET /users/me — returns 401 without token\", async () => {\n    const res = await request(app).get(\"/api/v1/users/me\");\n    expect(res.status).toBe(401);\n  });\n});",
+  summary: "Automated API testing ensures your backend behaves correctly under all conditions, catches regressions before deployments, and provides the confidence to refactor code without fear. Relying solely on manual Postman clicking is slow, error-prone, and cannot scale as endpoints multiply.",
+  tip: "Automated tests act as executable specifications — they prove how your code actually runs, unlike comments that easily become outdated.",
+  objective: "Understand the software quality pyramid and the return on investment (ROI) of automated tests.",
+  expectedOutcome: "Appreciation of testing as a foundational engineering discipline.",
+  codeSnippet: "// The Testing Pyramid:\n//\n//        ///       /       E2E Tests (Supertest across complete flows)\n//      /----//     /         Integration Tests (Routes + Middleware + DB queries)\n//    /--------//   /           Unit Tests (Services, utility functions, pure logic)\n//  --------------",
 };
 
 ```javascript
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import request from "supertest";
-import app from "../src/app.js";
-import { connectTestDB, disconnectTestDB, clearDB } from "./helpers/db.js";
-
-beforeAll(async () => await connectTestDB());
-afterAll(async () => await disconnectTestDB());
-
-describe("Auth API", () => {
-  it("POST /register — creates user and returns token", async () => {
-    const res = await request(app)
-      .post("/api/v1/auth/register")
-      .send({ name: "Sokha", email: "sokha@test.com", password: "Test1234!" });
-
-    expect(res.status).toBe(201);
-    expect(res.body.success).toBe(true);
-    expect(res.body.data).toHaveProperty("accessToken");
-    expect(res.body.data.user.password).toBeUndefined(); // Never leak password
-  });
-
-  it("POST /login — rejects wrong password with 401", async () => {
-    const res = await request(app)
-      .post("/api/v1/auth/login")
-      .send({ email: "sokha@test.com", password: "WrongPass" });
-
-    expect(res.status).toBe(401);
-    expect(res.body.success).toBe(false);
-  });
-
-  it("GET /users/me — returns 401 without token", async () => {
-    const res = await request(app).get("/api/v1/users/me");
-    expect(res.status).toBe(401);
-  });
-});
+// The Testing Pyramid:
+//
+//        ///       /       E2E Tests (Supertest across complete flows)
+//      /----//     /         Integration Tests (Routes + Middleware + DB queries)
+//    /--------//   /           Unit Tests (Services, utility functions, pure logic)
+//  --------------
 ```

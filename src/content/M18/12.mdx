@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M18-12",
+  number: "12",
+  title: "NoSQL Injection",
+  khmerTitle: "ការទប់ស្កាត់ការវាយប្រហារ NoSQL Injection",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "NoSQL injection occurs when attackers submit MongoDB operator objects (like `{\"$gt\": \"\"}`) in place of string parameters. In a query like `User.findOne({ email: req.body.email, password: req.body.password })`, sending `{\"$ne\": null}` as the password satisfies the condition and bypasses authentication. Sanitizing inputs with `express-mongo-sanitize` strips all `$` and `.` characters.",
+  tip: "Install `express-mongo-sanitize` and mount it globally to automatically strip `$` operators from `req.body`, `req.query`, and `req.params`.",
+  objective: "Identify NoSQL injection mechanics and deploy automated sanitization middleware.",
+  expectedOutcome: "Complete immunity against MongoDB operator injection attacks.",
+  codeSnippet: "import mongoSanitize from \"express-mongo-sanitize\";\n\n// Attack scenario if unsanitized:\n// Attacker sends POST body: { \"email\": \"admin@app.com\", \"password\": { \"$ne\": null } }\n// MongoDB interprets: Find admin where password is not null -> LOGIN BYPASSED!\n\n// Defense: Mount express-mongo-sanitize\n// Replaces prohibited characters ($, .) with underscores or removes them entirely\napp.use(mongoSanitize());\n\n// Also enforce strict string schemas with Zod:\nconst loginSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(1), // Rejects objects like {\"$ne\": null} with 400 Bad Request!\n});",
+};
+
+```javascript
+import mongoSanitize from "express-mongo-sanitize";
+
+// Attack scenario if unsanitized:
+// Attacker sends POST body: { "email": "admin@app.com", "password": { "$ne": null } }
+// MongoDB interprets: Find admin where password is not null -> LOGIN BYPASSED!
+
+// Defense: Mount express-mongo-sanitize
+// Replaces prohibited characters ($, .) with underscores or removes them entirely
+app.use(mongoSanitize());
+
+// Also enforce strict string schemas with Zod:
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1), // Rejects objects like {"$ne": null} with 400 Bad Request!
+});
+```

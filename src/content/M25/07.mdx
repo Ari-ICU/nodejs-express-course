@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M25-07",
+  number: "07",
+  title: "Caching",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ Caching (Cache-Aside Pattern & TTL)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Caching stores copies of frequently accessed data in high-speed, volatile storage layers (such as RAM) so future requests can be served instantly without querying the primary database. In the Cache-Aside pattern, the application checks the cache first: if found (cache hit), it returns data immediately; if missing (cache miss), it queries the database, populates the cache with a Time-To-Live (TTL), and responds.",
+  tip: "Always configure a Time-To-Live (TTL) on cached items to prevent stale data from lingering permanently.",
+  objective: "Master the Cache-Aside pattern, cache hit/miss flows, and TTL expiration strategies.",
+  expectedOutcome: "Solid theoretical and practical grasp of distributed caching concepts.",
+  codeSnippet: "// Cache-Aside Workflow:\n//\n// Client Request -> [Check Cache (Redis)]\n//                         │\n//            ┌────────────┴────────────┐\n//         Hit (Data exists)        Miss (Not in cache)\n//            │                         │\n//            ↓                         ↓\n//     Return cached data      Query Primary Database (MongoDB)\n//                                      │\n//                                      ↓\n//                             Save to Cache (with TTL)\n//                                      │\n//                                      ↓\n//                             Return data to client",
+};
+
+```javascript
+// Cache-Aside Workflow:
+//
+// Client Request -> [Check Cache (Redis)]
+//                         │
+//            ┌────────────┴────────────┐
+//         Hit (Data exists)        Miss (Not in cache)
+//            │                         │
+//            ↓                         ↓
+//     Return cached data      Query Primary Database (MongoDB)
+//                                      │
+//                                      ↓
+//                             Save to Cache (with TTL)
+//                                      │
+//                                      ↓
+//                             Return data to client
+```

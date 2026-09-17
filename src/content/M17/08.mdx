@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M17-08",
+  number: "08",
+  title: "Role-based API Design",
+  khmerTitle: "ស្ថាបត្យកម្មរចនា API ប្រកបដោយសុវត្ថិភាពតាមតួនាទី",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Well-designed role-based APIs clearly separate public, authenticated, and privileged endpoints. Consistent route naming, standardized error responses, clear permission matrices, and automated permission tests prevent accidental exposure of privileged capabilities across the application lifecycle.",
+  tip: "Document required permissions in your Swagger/OpenAPI annotations for every route to ensure frontend developers know authentication requirements upfront.",
+  objective: "Design scalable, secure API route architectures applying defense-in-depth authorization.",
+  expectedOutcome: "Clean, documented, and resilient API architecture enforcing role safety.",
+  codeSnippet: "// Architectural Overview:\n//\n// 1. Public Tier (No Auth):\n//    GET  /api/v1/products\n//    POST /api/v1/auth/login\n//\n// 2. Authenticated Tier (protect):\n//    GET  /api/v1/users/me\n//    POST /api/v1/orders\n//\n// 3. Ownership Tier (protect + checkOwner):\n//    PATCH  /api/v1/posts/:id (author only)\n//    DELETE /api/v1/orders/:id (buyer only)\n//\n// 4. Privileged Admin Tier (protect + restrictTo('admin')):\n//    POST   /api/v1/admin/products\n//    PATCH  /api/v1/admin/users/:id/role",
+};
+
+```javascript
+// Architectural Overview:
+//
+// 1. Public Tier (No Auth):
+//    GET  /api/v1/products
+//    POST /api/v1/auth/login
+//
+// 2. Authenticated Tier (protect):
+//    GET  /api/v1/users/me
+//    POST /api/v1/orders
+//
+// 3. Ownership Tier (protect + checkOwner):
+//    PATCH  /api/v1/posts/:id (author only)
+//    DELETE /api/v1/orders/:id (buyer only)
+//
+// 4. Privileged Admin Tier (protect + restrictTo('admin')):
+//    POST   /api/v1/admin/products
+//    PATCH  /api/v1/admin/users/:id/role
+```

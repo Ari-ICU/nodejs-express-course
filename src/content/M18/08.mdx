@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M18-08",
+  number: "08",
+  title: "JWT Security",
+  khmerTitle: "ការការពារសុវត្ថិភាព JWT (Algorithm Confusion & Secret Entropy)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Common JWT security vulnerabilities include using weak signing secrets (crackable in seconds via hashcat), allowing the insecure 'none' algorithm, failing to validate the token's expiration timestamp, and storing sensitive PII in unencrypted payloads. JWT secrets must be at least 256 bits (32 random bytes) of cryptographically secure entropy.",
+  tip: "Generate cryptographic secrets using Node.js crypto: `node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"`.",
+  objective: "Harden JWT creation and verification against algorithm confusion and secret brute-forcing.",
+  expectedOutcome: "Cryptographically sound JWT configuration immune to common attack vectors.",
+  codeSnippet: "// 1. Generate strong secret (run in terminal):\n// node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"\n\n// 2. Explicitly specify allowed algorithms during verification:\nimport jwt from \"jsonwebtoken\";\n\nexport const verifyTokenSecurely = (token) => {\n  return jwt.verify(token, process.env.JWT_ACCESS_SECRET, {\n    algorithms: [\"HS256\"], // Strictly enforce algorithm (defeats 'none' and RS/HS confusion)\n    issuer: \"api.myenterprise.com\",\n    audience: \"myenterprise-client\",\n  });\n};",
+};
+
+```javascript
+// 1. Generate strong secret (run in terminal):
+// node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+// 2. Explicitly specify allowed algorithms during verification:
+import jwt from "jsonwebtoken";
+
+export const verifyTokenSecurely = (token) => {
+  return jwt.verify(token, process.env.JWT_ACCESS_SECRET, {
+    algorithms: ["HS256"], // Strictly enforce algorithm (defeats 'none' and RS/HS confusion)
+    issuer: "api.myenterprise.com",
+    audience: "myenterprise-client",
+  });
+};
+```

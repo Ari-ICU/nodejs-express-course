@@ -1,57 +1,21 @@
 export const meta = {
   id: "M24-01",
   number: "01",
-  title: "Real-Time with WebSockets & Socket.IO",
-  khmerTitle: "Real-Time Communication ជាមួយ WebSockets និង Socket.IO",
-  type: "lab",
+  title: "Real-time Applications",
+  khmerTitle: "ស្វែងយល់ពីកម្មវិធី Real-time (Polling vs WebSockets)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Traditional HTTP is request-response: the client asks, server answers, connection closes. WebSockets establish a persistent full-duplex TCP connection allowing both server and client to push data at any time — essential for chat, live dashboards, collaborative editing, and multiplayer games. Socket.IO abstracts WebSocket with automatic reconnection, rooms (logical groups), namespaces (separated channels), and elegant event-driven APIs on both server and client.",
-  tip: "Use Socket.IO rooms to group connections logically (socket.join(roomId)) rather than tracking socket IDs manually. The server broadcasts to all room members with io.to(roomId).emit(event, data) — clean and horizontally scalable with Redis adapter.",
-  objective: "Build bidirectional real-time features with Socket.IO authentication, rooms, and broadcasting.",
-  expectedOutcome: "Working real-time chat with room management, presence tracking, and typing indicators.",
-  codeSnippet: "import { createServer } from \"http\";\nimport { Server } from \"socket.io\";\n\nconst app = express();\nconst httpServer = createServer(app);\nconst io = new Server(httpServer, {\n  cors: { origin: \"http://localhost:3000\", credentials: true }\n});\n\nconst onlineUsers = new Map();\n\nio.on(\"connection\", (socket) => {\n  socket.on(\"user:join\", ({ userId, username }) => {\n    onlineUsers.set(socket.id, { userId, username });\n    io.emit(\"users:online\", Array.from(onlineUsers.values()));\n  });\n\n  socket.on(\"room:join\", (roomId) => {\n    socket.join(roomId);\n    socket.to(roomId).emit(\"room:message\", {\n      type: \"system\",\n      text: `${onlineUsers.get(socket.id)?.username} joined`\n    });\n  });\n\n  socket.on(\"message:send\", ({ roomId, text }) => {\n    const user = onlineUsers.get(socket.id);\n    io.to(roomId).emit(\"room:message\", { user, text, time: new Date() });\n  });\n\n  socket.on(\"typing:start\", ({ roomId }) =>\n    socket.to(roomId).emit(\"typing:user\", { user: onlineUsers.get(socket.id)?.username })\n  );\n\n  socket.on(\"disconnect\", () => {\n    onlineUsers.delete(socket.id);\n    io.emit(\"users:online\", Array.from(onlineUsers.values()));\n  });\n});\n\nhttpServer.listen(5000);",
+  summary: "Traditional HTTP is a unidirectional request-response protocol: the client must initiate every interaction, and the server cannot push data proactively. While short-polling or long-polling periodically checks for updates, they create massive HTTP overhead. True real-time applications (chat, live tracking, financial tickers, collaborative editing) require persistent, bidirectional communication channels.",
+  tip: "Don't use HTTP short-polling for real-time features! Polling every 2 seconds consumes massive bandwidth and wastes server CPU.",
+  objective: "Understand the differences between HTTP Polling, Server-Sent Events (SSE), and WebSockets.",
+  expectedOutcome: "Clear criteria for choosing between HTTP, SSE, and full-duplex WebSockets.",
+  codeSnippet: "// Comparison:\n// 1. Short Polling:   Client asks every 2s: \"New data? New data? New data?\" (High overhead)\n// 2. Long Polling:    Client asks; server holds connection open until data arrives (Moderate)\n// 3. SSE:             Unidirectional server-to-client streaming over HTTP (Great for tickers)\n// 4. WebSocket:       Bi-directional, persistent TCP connection with sub-millisecond frames (Ideal for chat/gaming)",
 };
 
 ```javascript
-import { createServer } from "http";
-import { Server } from "socket.io";
-
-const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000", credentials: true }
-});
-
-const onlineUsers = new Map();
-
-io.on("connection", (socket) => {
-  socket.on("user:join", ({ userId, username }) => {
-    onlineUsers.set(socket.id, { userId, username });
-    io.emit("users:online", Array.from(onlineUsers.values()));
-  });
-
-  socket.on("room:join", (roomId) => {
-    socket.join(roomId);
-    socket.to(roomId).emit("room:message", {
-      type: "system",
-      text: `${onlineUsers.get(socket.id)?.username} joined`
-    });
-  });
-
-  socket.on("message:send", ({ roomId, text }) => {
-    const user = onlineUsers.get(socket.id);
-    io.to(roomId).emit("room:message", { user, text, time: new Date() });
-  });
-
-  socket.on("typing:start", ({ roomId }) =>
-    socket.to(roomId).emit("typing:user", { user: onlineUsers.get(socket.id)?.username })
-  );
-
-  socket.on("disconnect", () => {
-    onlineUsers.delete(socket.id);
-    io.emit("users:online", Array.from(onlineUsers.values()));
-  });
-});
-
-httpServer.listen(5000);
+// Comparison:
+// 1. Short Polling:   Client asks every 2s: "New data? New data? New data?" (High overhead)
+// 2. Long Polling:    Client asks; server holds connection open until data arrives (Moderate)
+// 3. SSE:             Unidirectional server-to-client streaming over HTTP (Great for tickers)
+// 4. WebSocket:       Bi-directional, persistent TCP connection with sub-millisecond frames (Ideal for chat/gaming)
 ```

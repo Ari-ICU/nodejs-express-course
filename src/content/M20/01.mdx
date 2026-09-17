@@ -1,46 +1,23 @@
 export const meta = {
   id: "M20-01",
   number: "01",
-  title: "Email with Nodemailer & SMTP",
-  khmerTitle: "ការផ្ញើ Email ជាមួយ Nodemailer និង SMTP",
-  type: "lab",
+  title: "Email Architecture",
+  khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធផ្ញើ Email ក្នុង Web Application",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "Transactional emails (verification, password reset, welcome messages) are a core backend responsibility. Nodemailer is the standard Node.js library for sending emails via SMTP. In production, use providers like Resend, SendGrid, or Mailgun for reliability and deliverability. Password reset flows require generating cryptographically secure tokens, storing their SHA-256 hash in the database, and sending the plain token in the email link — never store the plain token.",
-  tip: "Always generate a cryptographically secure token (crypto.randomBytes(32).toString('hex')) for password reset links. Store only the SHA-256 hash of the token in your database, and set a short expiry (10-60 minutes) to limit attack windows.",
-  objective: "Implement complete transactional email flows with secure token generation and HTML templates.",
-  expectedOutcome: "Working email delivery system with password reset flow and verification emails.",
-  codeSnippet: "import nodemailer from \"nodemailer\";\nimport crypto from \"node:crypto\";\n\nconst transporter = nodemailer.createTransport({\n  host: process.env.SMTP_HOST,\n  port: 587,\n  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }\n});\n\n// Forgot password flow\nexport const forgotPassword = catchAsync(async (req, res) => {\n  const user = await User.findOne({ email: req.body.email });\n  if (!user) throw new AppError(\"No user with that email\", 404);\n\n  // Generate secure token — store only the hash\n  const resetToken = crypto.randomBytes(32).toString(\"hex\");\n  user.passwordResetToken = crypto.createHash(\"sha256\").update(resetToken).digest(\"hex\");\n  user.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes\n  await user.save({ validateBeforeSave: false });\n\n  const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;\n  await transporter.sendMail({\n    from: '\"Support\" <no-reply@myapp.com>',\n    to: user.email,\n    subject: \"Password Reset (expires in 10 minutes)\",\n    html: `<p>Reset your password: <a href=\"${resetURL}\">${resetURL}</a></p>`\n  });\n\n  res.json({ success: true, message: \"Reset link sent to email\" });\n});",
+  summary: "Sending transactional emails (password resets, welcome messages, purchase receipts) requires reliable transport architecture. Calling external SMTP servers synchronously blocks HTTP request threads, slowing response times by several seconds. Production architectures decouple email generation from delivery using asynchronous background message queues.",
+  tip: "Never `await` email delivery directly inside customer-facing HTTP requests. Offload email tasks to background workers (BullMQ/Redis) so API responses remain sub-100ms.",
+  objective: "Understand synchronous vs asynchronous email delivery architectures in Node.js.",
+  expectedOutcome: "High-performance architecture where slow SMTP handshakes never block HTTP responses.",
+  codeSnippet: "// Asynchronous Email Architecture:\n//\n// 1. Client POST /register\n// 2. Express Controller validates & saves user to MongoDB\n// 3. Controller dispatches email job to Redis Queue: emailQueue.add(\"welcome\", { email, name })\n// 4. Controller immediately returns 201 Created (<50ms!)\n// 5. Background BullMQ Worker consumes job and dispatches email via SMTP in parallel",
 };
 
 ```javascript
-import nodemailer from "nodemailer";
-import crypto from "node:crypto";
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: 587,
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-});
-
-// Forgot password flow
-export const forgotPassword = catchAsync(async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) throw new AppError("No user with that email", 404);
-
-  // Generate secure token — store only the hash
-  const resetToken = crypto.randomBytes(32).toString("hex");
-  user.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-  user.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
-  await user.save({ validateBeforeSave: false });
-
-  const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
-  await transporter.sendMail({
-    from: '"Support" <no-reply@myapp.com>',
-    to: user.email,
-    subject: "Password Reset (expires in 10 minutes)",
-    html: `<p>Reset your password: <a href="${resetURL}">${resetURL}</a></p>`
-  });
-
-  res.json({ success: true, message: "Reset link sent to email" });
-});
+// Asynchronous Email Architecture:
+//
+// 1. Client POST /register
+// 2. Express Controller validates & saves user to MongoDB
+// 3. Controller dispatches email job to Redis Queue: emailQueue.add("welcome", { email, name })
+// 4. Controller immediately returns 201 Created (<50ms!)
+// 5. Background BullMQ Worker consumes job and dispatches email via SMTP in parallel
 ```

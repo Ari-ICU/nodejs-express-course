@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M19-09",
+  number: "09",
+  title: "Local Storage",
+  khmerTitle: "ការរៀបចំ Multer DiskStorage លើ Local Filesystem",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Multer's `diskStorage` engine gives complete control over where files are written and how they are named. Custom `destination` callbacks dynamically route files into organized subdirectories (e.g. `uploads/avatars`), while `filename` callbacks prepend unique timestamps or UUIDs to avoid name collision overwrites.",
+  tip: "Always generate random filenames (e.g. `user-123-1773729600.jpg`) rather than saving `file.originalname`, which may contain spaces or path traversal characters (`../../`).",
+  objective: "Configure Multer diskStorage with deterministic path generation and collision-free names.",
+  expectedOutcome: "Organized on-disk storage with sanitized, collision-free file naming.",
+  codeSnippet: "import multer from \"multer\";\nimport path from \"node:path\";\nimport crypto from \"node:crypto\";\n\nconst storage = multer.diskStorage({\n  destination: (req, file, cb) => {\n    cb(null, \"public/uploads/avatars\");\n  },\n  filename: (req, file, cb) => {\n    // Generate: user-<id>-<randomHex><ext>\n    const uniqueSuffix = crypto.randomBytes(8).toString(\"hex\");\n    const ext = path.extname(file.originalname).toLowerCase();\n    cb(null, `user-${req.user?._id || \"anon\"}-${uniqueSuffix}${ext}`);\n  },\n});\n\nexport const uploadAvatarLocal = multer({ storage });",
+};
+
+```javascript
+import multer from "multer";
+import path from "node:path";
+import crypto from "node:crypto";
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads/avatars");
+  },
+  filename: (req, file, cb) => {
+    // Generate: user-<id>-<randomHex><ext>
+    const uniqueSuffix = crypto.randomBytes(8).toString("hex");
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, `user-${req.user?._id || "anon"}-${uniqueSuffix}${ext}`);
+  },
+});
+
+export const uploadAvatarLocal = multer({ storage });
+```

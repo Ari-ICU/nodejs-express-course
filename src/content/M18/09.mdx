@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M18-09",
+  number: "09",
+  title: "Cookie Security",
+  khmerTitle: "ការការពារសុវត្ថិភាព Cookies (HttpOnly, Secure, SameSite)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Cookies carrying session identifiers or refresh tokens must be hardened against theft and misuse. The `HttpOnly` attribute blocks client script extraction, the `Secure` attribute ensures cookies are only transmitted over TLS/HTTPS encrypted connections, and `SameSite=Strict` or `Lax` governs whether cookies are sent across origin boundaries, preventing CSRF.",
+  tip: "Use `SameSite=Lax` for standard web apps where users might follow external links to your site, or `SameSite=Strict` for sensitive single-page APIs.",
+  objective: "Master the triumvirate of cookie security flags: HttpOnly, Secure, and SameSite.",
+  expectedOutcome: "Cookies that cannot be hijacked by XSS or forged by cross-origin CSRF attacks.",
+  codeSnippet: "// Express Cookie Security Best Practice:\nres.cookie(\"token\", value, {\n  httpOnly: true,                         // Defeats XSS (No JS access)\n  secure: process.env.NODE_ENV === \"production\", // Defeats Sniffing (HTTPS only)\n  sameSite: \"strict\",                    // Defeats CSRF (Never sent cross-site)\n  domain: \".myenterprise.com\",           // Restrict to trusted subdomains\n  path: \"/\",\n  maxAge: 3600000,                       // 1 hour\n});",
+};
+
+```javascript
+// Express Cookie Security Best Practice:
+res.cookie("token", value, {
+  httpOnly: true,                         // Defeats XSS (No JS access)
+  secure: process.env.NODE_ENV === "production", // Defeats Sniffing (HTTPS only)
+  sameSite: "strict",                    // Defeats CSRF (Never sent cross-site)
+  domain: ".myenterprise.com",           // Restrict to trusted subdomains
+  path: "/",
+  maxAge: 3600000,                       // 1 hour
+});
+```

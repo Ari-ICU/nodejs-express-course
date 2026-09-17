@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M24-05",
+  number: "05",
+  title: "Socket.IO Client",
+  khmerTitle: "ការភ្ជាប់ Client ទៅកាន់ Socket.IO Server",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Frontend clients connect using the `socket.io-client` library. The client establishes a persistent connection, listens for server-dispatched events via `socket.on()`, and transmits client events using `socket.emit()`.",
+  tip: "Always clean up socket listeners (`socket.off()`) when unmounting React components to prevent memory leaks and duplicate event firings.",
+  objective: "Connect frontend clients to Socket.IO and establish bidirectional event communication.",
+  expectedOutcome: "Operational client-server socket connection handling connect and disconnect states.",
+  codeSnippet: "// In Frontend (React or Vanilla JS):\nimport { io } from \"socket.io-client\";\n\nconst socket = io(\"http://localhost:5000\", {\n  autoConnect: true,\n  reconnectionAttempts: 5,\n  reconnectionDelay: 1000,\n});\n\nsocket.on(\"connect\", () => {\n  console.log(\"Connected to server with ID:\", socket.id);\n});\n\nsocket.on(\"connect_error\", (err) => {\n  console.error(\"Connection failed:\", err.message);\n});",
+};
+
+```javascript
+// In Frontend (React or Vanilla JS):
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000", {
+  autoConnect: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 1000,
+});
+
+socket.on("connect", () => {
+  console.log("Connected to server with ID:", socket.id);
+});
+
+socket.on("connect_error", (err) => {
+  console.error("Connection failed:", err.message);
+});
+```

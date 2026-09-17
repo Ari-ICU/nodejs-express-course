@@ -1,0 +1,45 @@
+export const meta = {
+  id: "M19-12",
+  number: "12",
+  title: "Image URLs",
+  khmerTitle: "ការបង្កើត និងរក្សាទុក Image URLs ក្នុង Database",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Databases should never store binary image data directly in document fields as Base64 strings, which inflates document sizes by 33% and bogs down MongoDB RAM cache. Instead, the database stores clean, relative or absolute URL path strings pointing to where the static file is served.",
+  tip: "Store relative paths (`/uploads/avatars/pic.jpg`) in the database so if your domain or CDN changes, you won't need to run database-wide migration scripts.",
+  objective: "Persist clean URL pointers in Mongoose schemas rather than raw binary data.",
+  expectedOutcome: "High-performance schema storing lightweight URL references to uploaded media.",
+  codeSnippet: "// 1. Mongoose Model stores only URL string\nconst userSchema = new mongoose.Schema({\n  name: String,\n  avatarUrl: {\n    type: String,\n    default: \"/images/default-avatar.png\",\n  },\n});\n\n// 2. Controller uploads file and persists URL:\nexport const updateAvatar = async (req, res, next) => {\n  try {\n    if (!req.file) throw new AppError(\"Please provide an image\", 400);\n\n    // Upload to Cloudflare R2\n    const publicUrl = await uploadToR2(req.file.buffer, req.file.originalname, req.file.mimetype);\n\n    // Persist URL in MongoDB\n    const user = await User.findByIdAndUpdate(\n      req.user._id,\n      { avatarUrl: publicUrl },\n      { new: true }\n    );\n\n    res.json({ status: \"success\", data: { avatarUrl: user.avatarUrl } });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+// 1. Mongoose Model stores only URL string
+const userSchema = new mongoose.Schema({
+  name: String,
+  avatarUrl: {
+    type: String,
+    default: "/images/default-avatar.png",
+  },
+});
+
+// 2. Controller uploads file and persists URL:
+export const updateAvatar = async (req, res, next) => {
+  try {
+    if (!req.file) throw new AppError("Please provide an image", 400);
+
+    // Upload to Cloudflare R2
+    const publicUrl = await uploadToR2(req.file.buffer, req.file.originalname, req.file.mimetype);
+
+    // Persist URL in MongoDB
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { avatarUrl: publicUrl },
+      { new: true }
+    );
+
+    res.json({ status: "success", data: { avatarUrl: user.avatarUrl } });
+  } catch (err) {
+    next(err);
+  }
+};
+```

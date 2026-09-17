@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M21-07",
+  number: "07",
+  title: "Response Documentation",
+  khmerTitle: "ការសរសេរឯកសារ HTTP Responses (200, 201, 400, 404, 500)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Endpoints must document every possible HTTP status response, including both successful outcomes (200 OK, 201 Created) and failure scenarios. Response bodies should link to component schemas or define clear JSON response structures.",
+  tip: "Document common error codes (400, 401, 403, 404) for every endpoint so frontend engineers can handle all branch conditions.",
+  objective: "Document standard success and failure HTTP responses with payload schemas.",
+  expectedOutcome: "Predictable API contracts defining both happy path and failure scenarios.",
+  codeSnippet: "/**\n * @openapi\n * /api/v1/products:\n *   post:\n *     summary: Create a new product\n *     tags: [Products]\n *     responses:\n *       201:\n *         description: Product created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Product'\n *       400:\n *         description: Bad Request (Validation failure)\n */",
+};
+
+```javascript
+/**
+ * @openapi
+ * /api/v1/products:
+ *   post:
+ *     summary: Create a new product
+ *     tags: [Products]
+ *     responses:
+ *       201:
+ *         description: Product created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Bad Request (Validation failure)
+ */
+```

@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M16-08",
+  number: "08",
+  title: "Access Tokens",
+  khmerTitle: "ការបង្កើត និងប្រើប្រាស់ Access Tokens",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "An Access Token is a short-lived bearer credential sent by the client on every HTTP request inside the `Authorization: Bearer <token>` header. Because access tokens are stateless, the backend validates them purely via cryptographic signature verification without performing a database lookup on every single request. To limit damage if intercepted, access token lifetimes should be kept between 10 and 15 minutes.",
+  tip: "Keep access token lifespans short (10-15m). If an access token is leaked, the attacker's window of vulnerability expires automatically in a few minutes.",
+  objective: "Generate short-lived access tokens containing minimal claims for stateless authorization.",
+  expectedOutcome: "Production-ready access token signing utility with expiry guarantees.",
+  codeSnippet: "import jwt from \"jsonwebtoken\";\n\nexport const generateAccessToken = (userId, role) => {\n  return jwt.sign(\n    { \n      sub: userId, \n      role: role \n    },\n    process.env.JWT_ACCESS_SECRET,\n    { \n      expiresIn: \"15m\", // Short lifespan for security\n      issuer: \"api.myenterprise.com\",\n      audience: \"myenterprise-client\"\n    }\n  );\n};\n\n// Client sends in header:\n// Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+};
+
+```javascript
+import jwt from "jsonwebtoken";
+
+export const generateAccessToken = (userId, role) => {
+  return jwt.sign(
+    { 
+      sub: userId, 
+      role: role 
+    },
+    process.env.JWT_ACCESS_SECRET,
+    { 
+      expiresIn: "15m", // Short lifespan for security
+      issuer: "api.myenterprise.com",
+      audience: "myenterprise-client"
+    }
+  );
+};
+
+// Client sends in header:
+// Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```

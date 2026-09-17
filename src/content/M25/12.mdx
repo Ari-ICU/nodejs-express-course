@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M25-12",
+  number: "12",
+  title: "Performance Monitoring",
+  khmerTitle: "ការតាមដាន Performance តាមរយៈ APM (Prometheus & Grafana)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Continuous performance monitoring tracks production application health. Application Performance Monitoring (APM) tools (Prometheus, Grafana, New Relic, Datadog) measure endpoint latency distributions, error rates, throughput (requests per second), and database query times to detect performance regressions before users complain.",
+  tip: "Expose a `/metrics` endpoint using `prom-client` to scrape runtime metrics into Prometheus and visualize real-time dashboards in Grafana.",
+  objective: "Architect performance instrumentation and application telemetry collection.",
+  expectedOutcome: "Production-ready observability monitoring latency, memory, and throughput.",
+  codeSnippet: "// Instrumentation with prom-client:\nimport client from \"prom-client\";\n\n// Collect default Node.js system metrics (event loop, memory, CPU)\nclient.collectDefaultMetrics({ prefix: \"app_\" });\n\n// Custom HTTP request duration histogram\nexport const httpRequestDuration = new client.Histogram({\n  name: \"http_request_duration_seconds\",\n  help: \"Duration of HTTP requests in seconds\",\n  labelNames: [\"method\", \"route\", \"status_code\"],\n  buckets: [0.05, 0.1, 0.3, 0.5, 1, 2, 5],\n});\n\n// Expose /metrics endpoint for Prometheus scraping\napp.get(\"/metrics\", async (req, res) => {\n  res.set(\"Content-Type\", client.register.contentType);\n  res.end(await client.register.metrics());\n});",
+};
+
+```javascript
+// Instrumentation with prom-client:
+import client from "prom-client";
+
+// Collect default Node.js system metrics (event loop, memory, CPU)
+client.collectDefaultMetrics({ prefix: "app_" });
+
+// Custom HTTP request duration histogram
+export const httpRequestDuration = new client.Histogram({
+  name: "http_request_duration_seconds",
+  help: "Duration of HTTP requests in seconds",
+  labelNames: ["method", "route", "status_code"],
+  buckets: [0.05, 0.1, 0.3, 0.5, 1, 2, 5],
+});
+
+// Expose /metrics endpoint for Prometheus scraping
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", client.register.contentType);
+  res.end(await client.register.metrics());
+});
+```

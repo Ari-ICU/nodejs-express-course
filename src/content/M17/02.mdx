@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M17-02",
+  number: "02",
+  title: "Role-based Access Control",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ Role-based Access Control (RBAC)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Role-based Access Control (RBAC) regulates user operations based on roles assigned to individuals within an organization. Instead of assigning granular permissions directly to every user, permissions are grouped into roles, and users are assigned those roles. RBAC simplifies authorization audits, scales seamlessly, and aligns with enterprise compliance requirements.",
+  tip: "Keep role hierarchies flat and clear initially. Introduce permission matrices only when role definitions begin to blur across departments.",
+  objective: "Understand how RBAC decouples user identities from system permissions.",
+  expectedOutcome: "Comprehensive understanding of RBAC models and permission inheritance.",
+  codeSnippet: "// RBAC Conceptual Model:\n// User -> Has Role -> Has Permissions -> Can Access Resource\n//\n// Alice (User)   -> [Role: \"user\"]      -> Read own profile, place order\n// Bob (Support)  -> [Role: \"moderator\"] -> View all orders, issue refunds\n// Carol (SysOps) -> [Role: \"admin\"]     -> Delete products, view metrics, ban users\n//\n// In middleware:\n// if (!roles.includes(req.user.role)) return 403 Forbidden",
+};
+
+```javascript
+// RBAC Conceptual Model:
+// User -> Has Role -> Has Permissions -> Can Access Resource
+//
+// Alice (User)   -> [Role: "user"]      -> Read own profile, place order
+// Bob (Support)  -> [Role: "moderator"] -> View all orders, issue refunds
+// Carol (SysOps) -> [Role: "admin"]     -> Delete products, view metrics, ban users
+//
+// In middleware:
+// if (!roles.includes(req.user.role)) return 403 Forbidden
+```

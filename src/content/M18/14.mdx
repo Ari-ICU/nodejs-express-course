@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M18-14",
+  number: "14",
+  title: "CSRF",
+  khmerTitle: "ការយល់ដឹង និងការពារ Cross-Site Request Forgery (CSRF)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Cross-Site Request Forgery (CSRF) tricks a user's browser into executing unwanted actions on an authenticated web app where the user is logged in via ambient cookies. Modern Single Page Applications (SPAs) communicating via `Authorization: Bearer <token>` headers are inherently immune to CSRF because browsers never attach authorization headers automatically across cross-origin requests.",
+  tip: "If using cookies for authentication, set `SameSite: 'strict'` or `'lax'` — this modern browser standard eliminates the need for complex CSRF tokens in 99% of web apps.",
+  objective: "Understand the mechanics of CSRF and modern defenses like SameSite cookies and custom headers.",
+  expectedOutcome: "Solid understanding of when CSRF protection is required vs when Bearer tokens render it moot.",
+  codeSnippet: "// Why Bearer Tokens in headers are immune to CSRF:\n// 1. In CSRF, a malicious website triggers: <form action=\"https://bank.com/transfer\" method=\"POST\">\n// 2. The browser automatically attaches COOKIES.\n// 3. The browser NEVER automatically attaches custom HEADERS like:\n//    \"Authorization: Bearer <token>\"\n//\n// Therefore:\n// - Bearer Auth (in Header): Immune to CSRF by design.\n// - Cookie Auth: Requires SameSite=\"strict\" or Anti-CSRF Synchronizer Tokens.",
+};
+
+```javascript
+// Why Bearer Tokens in headers are immune to CSRF:
+// 1. In CSRF, a malicious website triggers: <form action="https://bank.com/transfer" method="POST">
+// 2. The browser automatically attaches COOKIES.
+// 3. The browser NEVER automatically attaches custom HEADERS like:
+//    "Authorization: Bearer <token>"
+//
+// Therefore:
+// - Bearer Auth (in Header): Immune to CSRF by design.
+// - Cookie Auth: Requires SameSite="strict" or Anti-CSRF Synchronizer Tokens.
+```

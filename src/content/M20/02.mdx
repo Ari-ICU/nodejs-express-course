@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M20-02",
+  number: "02",
+  title: "SMTP",
+  khmerTitle: "ការស្វែងយល់ពី Simple Mail Transfer Protocol (SMTP)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Simple Mail Transfer Protocol (SMTP) is the internet standard communication protocol for electronic mail transmission. An SMTP client establishes an encrypted TLS connection with an SMTP relay server (e.g. Brevo, SendGrid, Amazon SES, Mailgun) on port 587 or 465, performs SASL authentication, and transmits RFC 5322 MIME messages.",
+  tip: "Do not use your personal Gmail account for production application emails! Google imposes daily sending quotas and blocks rapid programmatic requests. Use dedicated transactional providers like Brevo, Resend, or SES.",
+  objective: "Understand SMTP protocols, connection ports (587, 465), and authentication mechanisms.",
+  expectedOutcome: "Solid grasp of mail relays and production SMTP configuration.",
+  codeSnippet: "// Standard SMTP Configuration Parameters:\n// Host:     smtp-relay.brevo.com (or smtp.mailgun.org, email-smtp.us-east-1.amazonaws.com)\n// Port:     587 (STARTTLS - recommended) or 465 (SSL/TLS direct)\n// Secure:   false for 587 (upgrades via STARTTLS), true for 465\n// Auth:     User (API Key / Username) & Password (Secret Key)\n// From:     \"MyEnterprise Support <no-reply@myenterprise.com>\"",
+};
+
+```javascript
+// Standard SMTP Configuration Parameters:
+// Host:     smtp-relay.brevo.com (or smtp.mailgun.org, email-smtp.us-east-1.amazonaws.com)
+// Port:     587 (STARTTLS - recommended) or 465 (SSL/TLS direct)
+// Secure:   false for 587 (upgrades via STARTTLS), true for 465
+// Auth:     User (API Key / Username) & Password (Secret Key)
+// From:     "MyEnterprise Support <no-reply@myenterprise.com>"
+```

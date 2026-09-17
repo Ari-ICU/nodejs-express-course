@@ -1,0 +1,41 @@
+export const meta = {
+  id: "M20-08",
+  number: "08",
+  title: "Verification Email",
+  khmerTitle: "ការផ្ទៀងផ្ទាត់អាសយដ្ឋាន Email (Email Verification)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Email verification ensures that users actually own the email address they registered with. Until verified, sensitive application capabilities (like posting public content or making payments) are restricted. Upon clicking the verification link, the backend updates `isEmailVerified: true` and invalidates the single-use verification token.",
+  tip: "Set `isVerified: false` by default in your user schema. Include verification status checks in protected route middleware where verified emails are mandatory.",
+  objective: "Build an email verification system with single-use confirmation tokens.",
+  expectedOutcome: "Account verification pipeline preventing registration with fake or typoed emails.",
+  codeSnippet: "// GET /api/v1/auth/verify-email?token=<token>\nexport const verifyEmail = async (req, res, next) => {\n  try {\n    const hashedToken = crypto\n      .createHash(\"sha256\")\n      .update(req.query.token)\n      .digest(\"hex\");\n\n    const user = await User.findOne({\n      emailVerificationToken: hashedToken,\n      emailVerificationExpires: { $gt: Date.now() },\n    });\n\n    if (!user) throw new AppError(\"Token is invalid or has expired\", 400);\n\n    user.isEmailVerified = true;\n    user.emailVerificationToken = undefined;\n    user.emailVerificationExpires = undefined;\n    await user.save();\n\n    res.json({ status: \"success\", message: \"Email verified successfully!\" });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+// GET /api/v1/auth/verify-email?token=<token>
+export const verifyEmail = async (req, res, next) => {
+  try {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.query.token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpires: { $gt: Date.now() },
+    });
+
+    if (!user) throw new AppError("Token is invalid or has expired", 400);
+
+    user.isEmailVerified = true;
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
+    await user.save();
+
+    res.json({ status: "success", message: "Email verified successfully!" });
+  } catch (err) {
+    next(err);
+  }
+};
+```

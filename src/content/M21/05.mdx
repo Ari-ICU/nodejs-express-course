@@ -1,0 +1,40 @@
+export const meta = {
+  id: "M21-05",
+  number: "05",
+  title: "API Schemas",
+  khmerTitle: "ការកំណត់ Schemas និង DTOs ក្នុង Swagger Components",
+  type: "lab",
+  codeLanguage: "yaml",
+  summary: "OpenAPI schemas define the shape, types, and constraints of data models used across endpoints. Centralizing data models inside `components.schemas` promotes reuse and avoids duplicating object definitions across multiple route annotations.",
+  tip: "Reference reusable schemas using the `$ref` pointer (e.g. `'$ref': '#/components/schemas/User'`) to keep route docs DRY and maintainable.",
+  objective: "Define reusable data schemas with typed properties and validation rules in OpenAPI.",
+  expectedOutcome: "Consistent, reusable component schemas reflecting database and DTO models.",
+  codeSnippet: "/**\n * @openapi\n * components:\n *   schemas:\n *     Product:\n *       type: object\n *       required:\n *         - title\n *         - price\n *       properties:\n *         id:\n *           type: string\n *           example: \"64f1a2b3c4d5e6f7a8b9c0d1\"\n *         title:\n *           type: string\n *           example: \"Wireless Mechanical Keyboard\"\n *         price:\n *           type: number\n *           example: 89.99\n *         category:\n *           type: string\n *           enum: [Electronics, Furniture, Clothing]\n *           example: \"Electronics\"\n */",
+};
+
+```yaml
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       required:
+ *         - title
+ *         - price
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "64f1a2b3c4d5e6f7a8b9c0d1"
+ *         title:
+ *           type: string
+ *           example: "Wireless Mechanical Keyboard"
+ *         price:
+ *           type: number
+ *           example: 89.99
+ *         category:
+ *           type: string
+ *           enum: [Electronics, Furniture, Clothing]
+ *           example: "Electronics"
+ */
+```

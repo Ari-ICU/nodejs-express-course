@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M25-02",
+  number: "02",
+  title: "Event Loop Performance",
+  khmerTitle: "ការទប់ស្កាត់ការស្ទះ Event Loop (Blocking the Event Loop)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Because JavaScript runs on a single main thread, any synchronous CPU-intensive computation (complex regex, synchronous file reading `fs.readFileSync`, heavy JSON stringification, cryptography) freezes the entire event loop. While blocked, the server cannot accept new requests or process timers, causing all concurrent users to experience connection timeouts.",
+  tip: "Never use synchronous methods (`readFileSync`, `crypto.pbkdf2Sync`, `bcrypt.hashSync`) inside Express request handlers in production.",
+  objective: "Diagnose and prevent Event Loop starvation caused by synchronous operations.",
+  expectedOutcome: "Non-blocking codebase keeping the main thread free to handle concurrent requests.",
+  codeSnippet: "// DANGEROUS: Blocks the entire server for all concurrent users!\napp.get(\"/bad\", (req, res) => {\n  const data = fs.readFileSync(\"/huge-file.csv\"); // Event loop BLOCKED!\n  res.send(data);\n});\n\n// PROPER: Non-blocking asynchronous I/O allows thousands of concurrent requests\napp.get(\"/good\", async (req, res) => {\n  const data = await fs.promises.readFile(\"/huge-file.csv\"); // Event loop stays FREE!\n  res.send(data);\n});",
+};
+
+```javascript
+// DANGEROUS: Blocks the entire server for all concurrent users!
+app.get("/bad", (req, res) => {
+  const data = fs.readFileSync("/huge-file.csv"); // Event loop BLOCKED!
+  res.send(data);
+});
+
+// PROPER: Non-blocking asynchronous I/O allows thousands of concurrent requests
+app.get("/good", async (req, res) => {
+  const data = await fs.promises.readFile("/huge-file.csv"); // Event loop stays FREE!
+  res.send(data);
+});
+```

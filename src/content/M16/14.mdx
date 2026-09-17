@@ -1,0 +1,37 @@
+export const meta = {
+  id: "M16-14",
+  number: "14",
+  title: "Protected Routes",
+  khmerTitle: "ការរៀបចំរចនាសម្ព័ន្ធ Protected Routes ក្នុង Express Router",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "In Express, route protection can be applied at the individual endpoint level or across entire router modules using router-level middleware (`router.use(protect)`). Organizing public routes (login, register, forgot-password) separately from protected routes (profile, orders, checkout) enforces strict security boundaries and eliminates repetitive middleware definitions.",
+  tip: "Use `router.use(protect)` at the top of protected route files to safeguard all subsequent routes in that router automatically.",
+  objective: "Architect clear boundaries between public and protected routes in modular Express applications.",
+  expectedOutcome: "Clean, maintainable route declarations with zero unprotected private routes.",
+  codeSnippet: "// routes/user.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport * as userController from \"../controllers/user.controller.js\";\nimport * as authController from \"../controllers/auth.controller.js\";\n\nconst router = express.Router();\n\n// --- PUBLIC ROUTES ---\nrouter.post(\"/register\", authController.register);\nrouter.post(\"/login\", authController.login);\nrouter.post(\"/refresh\", authController.refreshTokenHandler);\n\n// --- PROTECTED ROUTES (all routes below require valid JWT) ---\nrouter.use(protect);\n\nrouter.get(\"/me\", userController.getProfile);\nrouter.patch(\"/update-me\", userController.updateProfile);\nrouter.delete(\"/delete-me\", userController.deleteAccount);\n\nexport default router;",
+};
+
+```javascript
+// routes/user.routes.js
+import express from "express";
+import { protect } from "../middleware/auth.middleware.js";
+import * as userController from "../controllers/user.controller.js";
+import * as authController from "../controllers/auth.controller.js";
+
+const router = express.Router();
+
+// --- PUBLIC ROUTES ---
+router.post("/register", authController.register);
+router.post("/login", authController.login);
+router.post("/refresh", authController.refreshTokenHandler);
+
+// --- PROTECTED ROUTES (all routes below require valid JWT) ---
+router.use(protect);
+
+router.get("/me", userController.getProfile);
+router.patch("/update-me", userController.updateProfile);
+router.delete("/delete-me", userController.deleteAccount);
+
+export default router;
+```

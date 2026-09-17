@@ -1,0 +1,39 @@
+export const meta = {
+  id: "M26-06",
+  number: "06",
+  title: "Producers",
+  khmerTitle: "ការបង្កើត Job Producer ដើម្បីបញ្ជូន Tasks ទៅកាន់ Queue",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "A producer is any service that constructs and pushes tasks into a BullMQ queue using `queue.add(name, data, opts)`. The Express controller or service layer functions as the producer, submitting jobs with options such as retry counts, exponential backoff, and execution delays.",
+  tip: "Always pass serializable JSON data (strings, numbers, plain objects) into `queue.add()` — never pass complex class instances or database connection handles.",
+  objective: "Construct BullMQ producer utilities pushing payloads with retry options.",
+  expectedOutcome: "Fast job creation that returns immediate HTTP confirmation to clients.",
+  codeSnippet: "import { Queue } from \"bullmq\";\nimport { redisConnection } from \"../config/redis.js\";\n\n// Initialize Queue instance\nexport const videoQueue = new Queue(\"video-processing\", {\n  connection: redisConnection,\n});\n\n// Producer function called from Express controller:\nexport const enqueueVideoTranscode = async (videoId, filePath, targetResolution) => {\n  const job = await videoQueue.add(\n    \"transcode\",\n    { videoId, filePath, targetResolution },\n    {\n      attempts: 3, // Retry up to 3 times on crash\n      backoff: { type: \"exponential\", delay: 2000 }, // 2s, 4s, 8s\n      removeOnComplete: true, // Auto-cleanup succeeded jobs\n    }\n  );\n\n  console.log(`Job enqueued: ${job.id}`);\n  return job.id;\n};",
+};
+
+```javascript
+import { Queue } from "bullmq";
+import { redisConnection } from "../config/redis.js";
+
+// Initialize Queue instance
+export const videoQueue = new Queue("video-processing", {
+  connection: redisConnection,
+});
+
+// Producer function called from Express controller:
+export const enqueueVideoTranscode = async (videoId, filePath, targetResolution) => {
+  const job = await videoQueue.add(
+    "transcode",
+    { videoId, filePath, targetResolution },
+    {
+      attempts: 3, // Retry up to 3 times on crash
+      backoff: { type: "exponential", delay: 2000 }, // 2s, 4s, 8s
+      removeOnComplete: true, // Auto-cleanup succeeded jobs
+    }
+  );
+
+  console.log(`Job enqueued: ${job.id}`);
+  return job.id;
+};
+```

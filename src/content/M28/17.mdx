@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M28-17",
+  number: "17",
+  title: "Ubuntu Server",
+  khmerTitle: "ការរៀបចំ Ubuntu Server (Security Hardening & Swap Memory)",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "Securing an Ubuntu server requires creating a non-root user with `sudo` privileges, configuring automatic security updates via `unattended-upgrades`, and creating a Swap memory file to prevent Out-Of-Memory (OOM) kernel kills on entry-level 1GB/2GB RAM cloud servers.",
+  tip: "Add a 2GB Swap file on 1GB/2GB VPS instances — this prevents the Linux kernel from killing Node.js when memory spikes during builds.",
+  objective: "Harden an Ubuntu server and configure Swap memory for resource resilience.",
+  expectedOutcome: "Hardened Ubuntu server resistant to OOM kernel termination.",
+  codeSnippet: "# Create a 2GB Swap File on Ubuntu:\nsudo fallocate -l 2G /swapfile\nsudo chmod 600 /swapfile\nsudo mkswap /swapfile\nsudo swapon /swapfile\n\n# Make swap permanent across reboots:\necho '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab\n\n# Verify swap active:\nfree -h",
+};
+
+```bash
+# Create a 2GB Swap File on Ubuntu:
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Make swap permanent across reboots:
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# Verify swap active:
+free -h
+```

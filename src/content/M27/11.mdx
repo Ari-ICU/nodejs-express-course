@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M27-11",
+  number: "11",
+  title: "Jobs",
+  khmerTitle: "ការរៀបចំ Jobs Directory សម្រាប់ Background Queues និង Workers",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The Jobs directory groups queue definitions, job producers, and worker processors. Keeping job definitions organized by domain (e.g. `jobs/email.job.js`, `jobs/report.job.js`) provides clear separation between scheduled cron tasks and transactional queue processing.",
+  tip: "Separate your worker startup script (`npm run worker`) from your web server startup (`npm start`) so they can run in isolated Docker containers.",
+  objective: "Organize background queue producers and worker processors into dedicated job modules.",
+  expectedOutcome: "Structured background task architecture supporting independent worker scaling.",
+  codeSnippet: "src/jobs/\n├── index.js          # Initializes all queues and workers\n├── email/\n│   ├── email.queue.js   # Queue initialization & producer helpers\n│   └── email.worker.js  # Worker logic processing email delivery\n└── reports/\n    ├── report.queue.js\n    └── report.worker.js",
+};
+
+```javascript
+src/jobs/
+├── index.js          # Initializes all queues and workers
+├── email/
+│   ├── email.queue.js   # Queue initialization & producer helpers
+│   └── email.worker.js  # Worker logic processing email delivery
+└── reports/
+    ├── report.queue.js
+    └── report.worker.js
+```

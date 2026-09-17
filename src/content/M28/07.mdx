@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M28-07",
+  number: "07",
+  title: "Docker",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ Containerization ជាមួយ Docker",
+  type: "concept",
+  codeLanguage: "dockerfile",
+  summary: "Docker containerizes applications by bundling backend source code, runtime dependencies, system libraries, and configurations into lightweight, standalone executable images. This guarantees identical behavior across development machines, CI runners, and production cloud servers ('works on my machine' eliminated permanently).",
+  tip: "Containers are lightweight compared to Virtual Machines: they share the host OS kernel and boot in milliseconds with minimal memory overhead.",
+  objective: "Understand containerization principles: images, containers, volumes, and networks.",
+  expectedOutcome: "Conceptual foundation for containerized application delivery.",
+  codeSnippet: "// Virtual Machine vs Docker Container:\n// VM:         [App] -> [Bins/Libs] -> [Guest OS (GBs)] -> [Hypervisor] -> [Host OS]\n// Container:  [App] -> [Bins/Libs] -> [Docker Engine]  -> [Host OS Kernel]\n// Result: Containers boot in 1 second and consume megabytes rather than gigabytes.",
+};
+
+```dockerfile
+// Virtual Machine vs Docker Container:
+// VM:         [App] -> [Bins/Libs] -> [Guest OS (GBs)] -> [Hypervisor] -> [Host OS]
+// Container:  [App] -> [Bins/Libs] -> [Docker Engine]  -> [Host OS Kernel]
+// Result: Containers boot in 1 second and consume megabytes rather than gigabytes.
+```

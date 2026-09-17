@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M24-10",
+  number: "10",
+  title: "Chat Application",
+  khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Real-time Chat ពេញលេញ",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "An enterprise real-time chat architecture combines persistent database storage with WebSocket delivery. When a message is sent, the server validates the payload, persists the chat document to MongoDB for conversation history, and broadcasts the event to the chat room via Socket.IO for sub-100ms real-time delivery.",
+  tip: "Always persist messages to MongoDB BEFORE broadcasting over Socket.IO so message history is guaranteed even if a client disconnects mid-delivery.",
+  objective: "Architect a full-featured real-time chat pipeline uniting MongoDB persistence with Socket.IO rooms.",
+  expectedOutcome: "End-to-end chat engine with message persistence, typing indicators, and delivery receipts.",
+  codeSnippet: "// Complete Real-Time Chat Handler:\nsocket.on(\"send_chat_message\", async ({ conversationId, text }, ack) => {\n  try {\n    // 1. Persist message in MongoDB\n    const message = await Message.create({\n      conversation: conversationId,\n      sender: socket.user.id,\n      text,\n      createdAt: new Date(),\n    });\n\n    // 2. Broadcast to all members in this conversation room\n    io.to(`conversation:${conversationId}`).emit(\"new_chat_message\", message);\n\n    // 3. Acknowledge back to sender\n    if (ack) ack({ success: true, messageId: message._id });\n  } catch (err) {\n    if (ack) ack({ success: false, error: err.message });\n  }\n});",
+};
+
+```javascript
+// Complete Real-Time Chat Handler:
+socket.on("send_chat_message", async ({ conversationId, text }, ack) => {
+  try {
+    // 1. Persist message in MongoDB
+    const message = await Message.create({
+      conversation: conversationId,
+      sender: socket.user.id,
+      text,
+      createdAt: new Date(),
+    });
+
+    // 2. Broadcast to all members in this conversation room
+    io.to(`conversation:${conversationId}`).emit("new_chat_message", message);
+
+    // 3. Acknowledge back to sender
+    if (ack) ack({ success: true, messageId: message._id });
+  } catch (err) {
+    if (ack) ack({ success: false, error: err.message });
+  }
+});
+```

@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M18-10",
+  number: "10",
+  title: "Environment Variables",
+  khmerTitle: "ការគ្រប់គ្រង Secret Keys និង Environment Variables ដោយសុវត្ថិភាព",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Secrets like database connection URIs, JWT signing keys, and payment gateway tokens must never be hardcoded in source code or committed to Git repositories. Storing them in `.env` files locally and environment variables in production keeps source code repos safe from catastrophic secret leaks.",
+  tip: "Add `.env*` to your `.gitignore` immediately upon project initialization. Provide a sanitized `.env.example` template with dummy values for team onboarding.",
+  objective: "Establish secure environment configuration workflows preventing credential leakage to version control.",
+  expectedOutcome: "Zero hardcoded credentials in source code and clean environment segregation.",
+  codeSnippet: "# .env.example (Safe to commit to Git)\nNODE_ENV=development\nPORT=5000\nMONGODB_URI=mongodb://localhost:27017/app_dev\nJWT_ACCESS_SECRET=replace_with_min_32_bytes_random_hex_key\nJWT_REFRESH_SECRET=replace_with_min_32_bytes_random_hex_key\n\n# .gitignore (MANDATORY)\n.env\n.env.local\n.env.production",
+};
+
+```javascript
+# .env.example (Safe to commit to Git)
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/app_dev
+JWT_ACCESS_SECRET=replace_with_min_32_bytes_random_hex_key
+JWT_REFRESH_SECRET=replace_with_min_32_bytes_random_hex_key
+
+# .gitignore (MANDATORY)
+.env
+.env.local
+.env.production
+```

@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M16-04",
+  number: "04",
+  title: "Salt & Hash",
+  khmerTitle: "ការបង្កើត Salt និង Hashing ក្នុង bcrypt",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "A cryptographic salt is a random string of bits generated uniquely for every user before hashing. Salting ensures that two identical passwords (e.g. 'password123') produce completely different hash outputs, completely neutralizing precomputed Rainbow Table attacks. In bcrypt, the salt, algorithm identifier, cost factor, and hash are all concatenated into a single string formatted like `$2a$12$salt...hash...`.",
+  tip: "You never need a separate database column for the salt with bcrypt! The generated hash string already includes the salt and work factor in its header prefix.",
+  objective: "Understand how random cryptographic salts eliminate rainbow table and dictionary attacks.",
+  expectedOutcome: "Clear understanding of the anatomy of a bcrypt hash string ($2b$12$...).",
+  codeSnippet: "// Anatomy of a bcrypt hash string:\n// $2b$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy\n// ├── 2b     -> bcrypt algorithm revision identifier\n// ├── 12     -> Cost factor (2^12 = 4,096 iterations)\n// ├── N9qo8uLOickgx2ZMRZoMye -> 22-character cryptographic salt (16 bytes base64)\n// └── IjZAgcfl7p92ldGxad68... -> 31-character encrypted hash string\n\n// Notice: No separate salt table or column is required in your database schema.",
+};
+
+```javascript
+// Anatomy of a bcrypt hash string:
+// $2b$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
+// ├── 2b     -> bcrypt algorithm revision identifier
+// ├── 12     -> Cost factor (2^12 = 4,096 iterations)
+// ├── N9qo8uLOickgx2ZMRZoMye -> 22-character cryptographic salt (16 bytes base64)
+// └── IjZAgcfl7p92ldGxad68... -> 31-character encrypted hash string
+
+// Notice: No separate salt table or column is required in your database schema.
+```

@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M22-07",
+  number: "07",
+  title: "Supertest",
+  khmerTitle: "ការធ្វើតេស្ត HTTP Requests ជាមួយ Supertest",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Supertest provides high-level HTTP abstractions for testing Node.js Express applications without binding to a physical network port. It boots the Express app in-memory, transmits simulated HTTP requests, and asserts against status codes and headers in a fluent chainable syntax.",
+  tip: "Pass your `app` instance directly to `request(app)` without calling `app.listen()` — this avoids port collision errors when running tests concurrently.",
+  objective: "Use Supertest to dispatch HTTP verbs (GET, POST, PUT, DELETE) and assert responses.",
+  expectedOutcome: "Fast in-memory HTTP endpoint testing without opening network sockets.",
+  codeSnippet: "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport app from \"../src/app.js\";\n\ndescribe(\"GET /api/v1/health\", () => {\n  it(\"should return 200 OK with system status\", async () => {\n    const res = await request(app)\n      .get(\"/api/v1/health\")\n      .expect(\"Content-Type\", /json/)\n      .expect(200);\n\n    expect(res.body.status).toBe(\"success\");\n    expect(res.body.data).toHaveProperty(\"uptime\");\n  });\n});",
+};
+
+```javascript
+import request from "supertest";
+import { describe, it, expect } from "vitest";
+import app from "../src/app.js";
+
+describe("GET /api/v1/health", () => {
+  it("should return 200 OK with system status", async () => {
+    const res = await request(app)
+      .get("/api/v1/health")
+      .expect("Content-Type", /json/)
+      .expect(200);
+
+    expect(res.body.status).toBe("success");
+    expect(res.body.data).toHaveProperty("uptime");
+  });
+});
+```

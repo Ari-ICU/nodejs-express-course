@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M28-16",
+  number: "16",
+  title: "VPS Deployment",
+  khmerTitle: "ការរៀបចំ និងដាក់ឱ្យដំណើរការលើ Virtual Private Server (VPS)",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "Deploying to a Virtual Private Server (VPS from DigitalOcean, Linode, AWS EC2, or Hetzner) gives total root control over your hosting infrastructure. The workflow involves provisioning an Ubuntu server, configuring SSH key authentication, setting up firewalls (UFW), installing Docker, and pulling application images.",
+  tip: "Always disable password authentication in `/etc/ssh/sshd_config` (`PasswordAuthentication no`) and use SSH keys exclusively to protect against SSH brute-force attacks.",
+  objective: "Provision, secure, and deploy a containerized backend on a live cloud VPS.",
+  expectedOutcome: "Live production server reachable at a public IP/domain running your backend.",
+  codeSnippet: "# 1. Connect to VPS via SSH Key:\nssh -i ~/.ssh/id_ed25519 deploy@your-server-ip\n\n# 2. Configure Uncomplicated Firewall (UFW):\nsudo ufw default deny incoming\nsudo ufw default allow outgoing\nsudo ufw allow ssh        # Port 22\nsudo ufw allow http       # Port 80\nsudo ufw allow https      # Port 443\nsudo ufw enable",
+};
+
+```bash
+# 1. Connect to VPS via SSH Key:
+ssh -i ~/.ssh/id_ed25519 deploy@your-server-ip
+
+# 2. Configure Uncomplicated Firewall (UFW):
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh        # Port 22
+sudo ufw allow http       # Port 80
+sudo ufw allow https      # Port 443
+sudo ufw enable
+```

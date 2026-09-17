@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M26-08",
+  number: "08",
+  title: "Job Processing",
+  khmerTitle: "ការតាមដាន Job Progress និងការបញ្ជូនទិន្នន័យត្រឡប់មកវិញ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "During execution, long-running jobs can report real-time progress percentages using `job.updateProgress(percent)`. Workers return a final result object upon completion, or throw an error to signal failure. Clients can query job progress via polling or real-time Socket.IO broadcasts.",
+  tip: "Emit `job.updateProgress()` during multi-step jobs so frontend progress bars can update dynamically via WebSockets.",
+  objective: "Track and broadcast job execution progress in real-time.",
+  expectedOutcome: "Granular progress monitoring for long-running backend processes.",
+  codeSnippet: "const reportWorker = new Worker(\"reports\", async (job) => {\n  await job.updateProgress(10); // 10%\n\n  const data = await queryLargeDataset();\n  await job.updateProgress(50); // 50%\n\n  const pdfBuffer = await generatePdf(data);\n  await job.updateProgress(90); // 90%\n\n  const fileUrl = await uploadToCloud(pdfBuffer);\n  await job.updateProgress(100); // 100%\n\n  return { reportUrl: fileUrl };\n}, { connection: redisConnection });",
+};
+
+```javascript
+const reportWorker = new Worker("reports", async (job) => {
+  await job.updateProgress(10); // 10%
+
+  const data = await queryLargeDataset();
+  await job.updateProgress(50); // 50%
+
+  const pdfBuffer = await generatePdf(data);
+  await job.updateProgress(90); // 90%
+
+  const fileUrl = await uploadToCloud(pdfBuffer);
+  await job.updateProgress(100); // 100%
+
+  return { reportUrl: fileUrl };
+}, { connection: redisConnection });
+```

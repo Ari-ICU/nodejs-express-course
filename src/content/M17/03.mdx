@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M17-03",
+  number: "03",
+  title: "Permissions",
+  khmerTitle: "ការគ្រប់គ្រងសិទ្ធិលម្អិត (Fine-grained Permissions)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "When static roles become insufficient for complex applications, fine-grained permission systems map actions to resources using verbs like `products:create`, `orders:refund`, or `users:ban`. An access matrix evaluates whether a user's assigned role or direct permission set contains the required resource action before proceeding.",
+  tip: "Use colon notation for granular permissions: `<resource>:<action>` (e.g. `articles:publish`, `finance:export`).",
+  objective: "Model granular resource-action permission strings and role permission mappings.",
+  expectedOutcome: "Scalable permission matrix capable of fine-grained access control beyond simple roles.",
+  codeSnippet: "// config/permissions.js\nexport const ROLE_PERMISSIONS = {\n  user: [\"products:read\", \"orders:create\", \"orders:read_own\"],\n  moderator: [\"products:read\", \"reviews:moderate\", \"comments:delete\"],\n  admin: [\n    \"products:create\", \"products:update\", \"products:delete\",\n    \"orders:read_all\", \"orders:refund\", \"users:manage\"\n  ]\n};\n\nexport const hasPermission = (userRole, requiredPermission) => {\n  const permissions = ROLE_PERMISSIONS[userRole] || [];\n  return permissions.includes(requiredPermission);\n};",
+};
+
+```javascript
+// config/permissions.js
+export const ROLE_PERMISSIONS = {
+  user: ["products:read", "orders:create", "orders:read_own"],
+  moderator: ["products:read", "reviews:moderate", "comments:delete"],
+  admin: [
+    "products:create", "products:update", "products:delete",
+    "orders:read_all", "orders:refund", "users:manage"
+  ]
+};
+
+export const hasPermission = (userRole, requiredPermission) => {
+  const permissions = ROLE_PERMISSIONS[userRole] || [];
+  return permissions.includes(requiredPermission);
+};
+```

@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M28-04",
+  number: "04",
+  title: "Logging",
+  khmerTitle: "ការកត់ត្រា Logs ប្រកបដោយស្តង់ដារជាមួយ Winston ឬ Pino",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "In production, `console.log()` is synchronous and can block the event loop under heavy throughput. Structured logging libraries like `pino` or `winston` output logs as machine-readable JSON strings formatted with timestamps, log levels (info, warn, error), request IDs, and context metadata for indexing in Datadog, ELK, or Logstash.",
+  tip: "Use `pino` for maximum performance — it is up to 5x faster than Winston and produces minimal CPU overhead under heavy traffic.",
+  objective: "Configure structured JSON logging with request tracing and error diagnostics.",
+  expectedOutcome: "High-performance structured logs ready for cloud log aggregator indexing.",
+  codeSnippet: "import pino from \"pino\";\n\nexport const logger = pino({\n  level: process.env.LOG_LEVEL || \"info\",\n  timestamp: pino.stdTimeFunctions.isoTime,\n  formatters: {\n    level: (label) => ({ level: label.toUpperCase() }),\n  },\n});\n\n// Usage across application:\n// logger.info({ userId: \"123\", action: \"ORDER_PLACED\" }, \"User completed purchase\");\n// logger.error({ err, route: \"/checkout\" }, \"Payment gateway timeout\");",
+};
+
+```javascript
+import pino from "pino";
+
+export const logger = pino({
+  level: process.env.LOG_LEVEL || "info",
+  timestamp: pino.stdTimeFunctions.isoTime,
+  formatters: {
+    level: (label) => ({ level: label.toUpperCase() }),
+  },
+});
+
+// Usage across application:
+// logger.info({ userId: "123", action: "ORDER_PLACED" }, "User completed purchase");
+// logger.error({ err, route: "/checkout" }, "Payment gateway timeout");
+```

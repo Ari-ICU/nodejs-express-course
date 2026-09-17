@@ -1,0 +1,47 @@
+export const meta = {
+  id: "M28-03",
+  number: "03",
+  title: "Production Configuration",
+  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Production (Graceful Shutdown & Keep-Alive)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Production configuration requires handling process signals like `SIGTERM` and `SIGINT` gracefully. When a server restarts or redeploys, a graceful shutdown handler stops accepting new HTTP requests, waits for in-flight requests to complete, flushes background queues, closes database connection pools, and exits cleanly.",
+  tip: "Implement a 10-second timeout on graceful shutdown: if pending requests do not complete within 10 seconds, force exit (`process.exit(1)`) to avoid hanging deployments.",
+  objective: "Implement graceful shutdown handlers for zero-downtime rolling deployments.",
+  expectedOutcome: "Clean shutdown mechanics preserving in-flight transactions during redeployment.",
+  codeSnippet: "// Graceful Shutdown Implementation:\nconst server = app.listen(PORT, () => console.log(`Listening on port ${PORT}`));\n\nconst handleShutdown = async (signal) => {\n  console.log(`Received ${signal}. Starting graceful shutdown...`);\n  \n  // 1. Stop accepting new HTTP requests\n  server.close(async () => {\n    console.log(\"HTTP server closed.\");\n\n    try {\n      // 2. Disconnect from database and cache\n      await mongoose.connection.close();\n      await redis.quit();\n      console.log(\"Database and Redis connections closed.\");\n      process.exit(0);\n    } catch (err) {\n      console.error(\"Error during graceful shutdown:\", err);\n      process.exit(1);\n    }\n  });\n\n  // Force exit after 10s if connections hang\n  setTimeout(() => {\n    console.error(\"Forced shutdown after 10s timeout\");\n    process.exit(1);\n  }, 10000);\n};\n\nprocess.on(\"SIGTERM\", () => handleShutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => handleShutdown(\"SIGINT\"));",
+};
+
+```javascript
+// Graceful Shutdown Implementation:
+const server = app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+const handleShutdown = async (signal) => {
+  console.log(`Received ${signal}. Starting graceful shutdown...`);
+  
+  // 1. Stop accepting new HTTP requests
+  server.close(async () => {
+    console.log("HTTP server closed.");
+
+    try {
+      // 2. Disconnect from database and cache
+      await mongoose.connection.close();
+      await redis.quit();
+      console.log("Database and Redis connections closed.");
+      process.exit(0);
+    } catch (err) {
+      console.error("Error during graceful shutdown:", err);
+      process.exit(1);
+    }
+  });
+
+  // Force exit after 10s if connections hang
+  setTimeout(() => {
+    console.error("Forced shutdown after 10s timeout");
+    process.exit(1);
+  }, 10000);
+};
+
+process.on("SIGTERM", () => handleShutdown("SIGTERM"));
+process.on("SIGINT", () => handleShutdown("SIGINT"));
+```

@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M21-02",
+  number: "02",
+  title: "OpenAPI",
+  khmerTitle: "ស្វែងយល់ពី OpenAPI Specification (OAS 3.0)",
+  type: "concept",
+  codeLanguage: "yaml",
+  summary: "The OpenAPI Specification (formerly Swagger) is the broadly adopted, vendor-neutral standard for describing RESTful APIs. Written in YAML or JSON, an OpenAPI document describes endpoints, HTTP methods, input parameters, request payloads, response bodies, status codes, and authentication mechanisms in a machine-readable format.",
+  tip: "Use OpenAPI 3.0+ rather than legacy Swagger 2.0. OAS 3.0 offers better component reusability, multiple server URLs, and flexible request body definitions.",
+  objective: "Learn the core anatomy and schema structure of OpenAPI 3.0 specifications.",
+  expectedOutcome: "Ability to read and structure machine-readable OpenAPI contracts.",
+  codeSnippet: "openapi: 3.0.3\ninfo:\n  title: E-Commerce REST API\n  version: 1.0.0\n  description: Enterprise backend API for products and orders\nservers:\n  - url: http://localhost:5000/api/v1\n    description: Development server\n  - url: https://api.myenterprise.com/v1\n    description: Production server\npaths:\n  /products:\n    get:\n      summary: Retrieve all products\n      responses:\n        '200':\n          description: A list of products",
+};
+
+```yaml
+openapi: 3.0.3
+info:
+  title: E-Commerce REST API
+  version: 1.0.0
+  description: Enterprise backend API for products and orders
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Development server
+  - url: https://api.myenterprise.com/v1
+    description: Production server
+paths:
+  /products:
+    get:
+      summary: Retrieve all products
+      responses:
+        '200':
+          description: A list of products
+```

@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M25-03",
+  number: "03",
+  title: "Async Best Practices",
+  khmerTitle: "ការអនុវត្ត Async ល្អបំផុត (Promise.all vs Sequential Await)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "A common performance anti-pattern is sequentially awaiting independent asynchronous operations one after another. If fetching user details takes 100ms and fetching user orders takes 100ms, sequential awaits total 200ms. Running independent promises concurrently via `Promise.all()` executes them in parallel, reducing total latency to just 100ms.",
+  tip: "Use `Promise.all([promise1, promise2])` whenever two or more async operations do not depend on each other's return values.",
+  objective: "Optimize async execution workflows using parallel promise resolution.",
+  expectedOutcome: "Halved endpoint latency by eliminating sequential waterfalls.",
+  codeSnippet: "// SLOW: Waterfall execution (Total: ~200ms)\nconst user = await User.findById(userId);       // 100ms\nconst orders = await Order.find({ user: userId }); // 100ms\n\n// FAST: Parallel concurrent execution (Total: ~100ms!)\nconst [user, orders] = await Promise.all([\n  User.findById(userId),\n  Order.find({ user: userId }),\n]);",
+};
+
+```javascript
+// SLOW: Waterfall execution (Total: ~200ms)
+const user = await User.findById(userId);       // 100ms
+const orders = await Order.find({ user: userId }); // 100ms
+
+// FAST: Parallel concurrent execution (Total: ~100ms!)
+const [user, orders] = await Promise.all([
+  User.findById(userId),
+  Order.find({ user: userId }),
+]);
+```

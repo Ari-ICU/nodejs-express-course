@@ -1,0 +1,43 @@
+export const meta = {
+  id: "M22-10",
+  number: "10",
+  title: "Testing API Endpoints",
+  khmerTitle: "ការធ្វើតេស្ត CRUD Endpoints ពេញលេញ (Full CRUD Test Suite)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "A complete CRUD test suite covers the entire lifecycle of a resource: creating a new record (POST 201), fetching the collection (GET 200), retrieving by ID (GET 200), modifying properties (PATCH 200), and deleting the record (DELETE 204 or 200).",
+  tip: "Save the created resource's `_id` in a variable during the POST test and reuse it across GET by ID, PATCH, and DELETE tests.",
+  objective: "Construct an end-to-end CRUD test suite exercising all REST operations.",
+  expectedOutcome: "Comprehensive test suite guaranteeing functional integrity of CRUD endpoints.",
+  codeSnippet: "describe(\"Products CRUD API\", () => {\n  let createdProductId = \"\";\n\n  it(\"POST /api/products -> 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/products\")\n      .send({ title: \"Gaming Mouse\", price: 49.99 })\n      .expect(201);\n\n    createdProductId = res.body.data.product._id;\n    expect(createdProductId).toBeDefined();\n  });\n\n  it(\"GET /api/products/:id -> 200 OK\", async () => {\n    const res = await request(app)\n      .get(`/api/products/${createdProductId}`)\n      .expect(200);\n\n    expect(res.body.data.product.title).toBe(\"Gaming Mouse\");\n  });\n\n  it(\"DELETE /api/products/:id -> 200 OK\", async () => {\n    await request(app)\n      .delete(`/api/products/${createdProductId}`)\n      .expect(200);\n  });\n});",
+};
+
+```javascript
+describe("Products CRUD API", () => {
+  let createdProductId = "";
+
+  it("POST /api/products -> 201 Created", async () => {
+    const res = await request(app)
+      .post("/api/products")
+      .send({ title: "Gaming Mouse", price: 49.99 })
+      .expect(201);
+
+    createdProductId = res.body.data.product._id;
+    expect(createdProductId).toBeDefined();
+  });
+
+  it("GET /api/products/:id -> 200 OK", async () => {
+    const res = await request(app)
+      .get(`/api/products/${createdProductId}`)
+      .expect(200);
+
+    expect(res.body.data.product.title).toBe("Gaming Mouse");
+  });
+
+  it("DELETE /api/products/:id -> 200 OK", async () => {
+    await request(app)
+      .delete(`/api/products/${createdProductId}`)
+      .expect(200);
+  });
+});
+```

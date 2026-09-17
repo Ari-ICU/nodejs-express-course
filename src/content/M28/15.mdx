@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M28-15",
+  number: "15",
+  title: "HTTPS",
+  khmerTitle: "ការដំឡើង HTTPS / SSL ដោយឥតគិតថ្លៃជាមួយ Certbot & Let's Encrypt",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "HTTPS encrypts network traffic between browser and server, preventing eavesdropping and man-in-the-middle attacks. Let's Encrypt provides free SSL certificates, and Certbot automates certificate issuance, Nginx SSL configuration, and automated 90-day renewals.",
+  tip: "Certbot installs a systemd timer that automatically renews your SSL certificate before expiration — test renewals with `certbot renew --dry-run`.",
+  objective: "Provision free Let's Encrypt SSL certificates and enforce HTTPS redirects via Certbot.",
+  expectedOutcome: "A+ rated SSL configuration with automatic certificate renewals.",
+  codeSnippet: "# 1. Install Certbot for Nginx on Ubuntu:\nsudo apt update\nsudo apt install certbot python3-certbot-nginx -y\n\n# 2. Automatically obtain and configure SSL in Nginx:\nsudo certbot --nginx -d api.myenterprise.com\n\n# 3. Test automated certificate renewal:\nsudo certbot renew --dry-run",
+};
+
+```bash
+# 1. Install Certbot for Nginx on Ubuntu:
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+
+# 2. Automatically obtain and configure SSL in Nginx:
+sudo certbot --nginx -d api.myenterprise.com
+
+# 3. Test automated certificate renewal:
+sudo certbot renew --dry-run
+```

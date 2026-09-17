@@ -1,0 +1,42 @@
+export const meta = {
+  id: "M19-13",
+  number: "13",
+  title: "Delete Uploaded Files",
+  khmerTitle: "ការលុបឯកសារចាស់ៗ (File Deletion & Storage Cleanup)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "When users update their avatar or delete a product, the previous image file must be deleted from storage to prevent orphaned files from accumulating. For local files, use `fs.promises.unlink()`. For cloud storage, execute an S3 `DeleteObjectCommand`. Always wrap deletions in error-safe try/catch blocks so file deletion failures do not abort database updates.",
+  tip: "Always wrap file unlinking in try/catch — if an old file is missing on disk, your API should log a warning instead of failing the user's update request.",
+  objective: "Implement automated file cleanup routines for updated or deleted resources.",
+  expectedOutcome: "Zero storage leaks from orphaned files across product and user updates.",
+  codeSnippet: "import fs from \"node:fs/promises\";\nimport path from \"node:path\";\nimport { DeleteObjectCommand } from \"@aws-sdk/client-s3\";\n\n// 1. Local filesystem deletion helper:\nexport const deleteLocalFile = async (relativeFilePath) => {\n  try {\n    const fullPath = path.resolve(relativeFilePath);\n    await fs.unlink(fullPath);\n    console.log(`Deleted local file: ${fullPath}`);\n  } catch (err) {\n    console.warn(`Warning: Could not delete local file ${relativeFilePath}: ${err.message}`);\n  }\n};\n\n// 2. Cloudflare R2 / S3 deletion helper:\nexport const deleteFromR2 = async (fileKey) => {\n  try {\n    await r2.send(new DeleteObjectCommand({\n      Bucket: process.env.R2_BUCKET_NAME,\n      Key: fileKey,\n    }));\n  } catch (err) {\n    console.error(`Failed to delete R2 object ${fileKey}:`, err);\n  }\n};",
+};
+
+```javascript
+import fs from "node:fs/promises";
+import path from "node:path";
+import { DeleteObjectCommand } from "@aws-sdk/client-s3";
+
+// 1. Local filesystem deletion helper:
+export const deleteLocalFile = async (relativeFilePath) => {
+  try {
+    const fullPath = path.resolve(relativeFilePath);
+    await fs.unlink(fullPath);
+    console.log(`Deleted local file: ${fullPath}`);
+  } catch (err) {
+    console.warn(`Warning: Could not delete local file ${relativeFilePath}: ${err.message}`);
+  }
+};
+
+// 2. Cloudflare R2 / S3 deletion helper:
+export const deleteFromR2 = async (fileKey) => {
+  try {
+    await r2.send(new DeleteObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: fileKey,
+    }));
+  } catch (err) {
+    console.error(`Failed to delete R2 object ${fileKey}:`, err);
+  }
+};
+```

@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M22-03",
+  number: "03",
+  title: "Integration Testing",
+  khmerTitle: "គោលការណ៍ Integration Testing លើ API Endpoints",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Integration testing verifies that multiple system components work harmoniously together — for example, confirming that an Express route handler correctly passes through middleware, executes database queries via Mongoose, and formats JSON responses.",
+  tip: "Integration tests give the highest confidence per line of test code because they test the real HTTP request-response pipeline.",
+  objective: "Understand how integration tests validate cross-layer interactions in web backends.",
+  expectedOutcome: "Solid grasp of integration testing strategies for Express and MongoDB.",
+  codeSnippet: "// Integration Test Flow:\n// HTTP Request -> Routing -> Auth Middleware -> Validation -> Controller -> MongoDB -> JSON Response\n//\n// Unlike unit tests, integration tests run through the entire pipeline,\n// confirming that middleware and database queries work together as intended.",
+};
+
+```javascript
+// Integration Test Flow:
+// HTTP Request -> Routing -> Auth Middleware -> Validation -> Controller -> MongoDB -> JSON Response
+//
+// Unlike unit tests, integration tests run through the entire pipeline,
+// confirming that middleware and database queries work together as intended.
+```

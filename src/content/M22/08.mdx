@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M22-08",
+  number: "08",
+  title: "Testing Controllers",
+  khmerTitle: "ការធ្វើតេស្ត Controllers តាមរយៈ Supertest",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Testing controllers verifies that request parameters, body payloads, and query filters are processed correctly and appropriate status codes and JSON envelopes are returned. Mocking underlying service methods allows testing controller edge cases like validation errors and custom exceptions.",
+  tip: "Export your Express `app` from `app.js` without calling `listen()`, and create a separate `server.js` for startup. This allows tests to import `app` cleanly.",
+  objective: "Write targeted tests validating controller responses, status codes, and JSON bodies.",
+  expectedOutcome: "Verified controllers handling both valid inputs and error conditions.",
+  codeSnippet: "describe(\"POST /api/v1/products\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidProduct = { price: 29.99 };\n\n    const res = await request(app)\n      .post(\"/api/v1/products\")\n      .send(invalidProduct)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});",
+};
+
+```javascript
+describe("POST /api/v1/products", () => {
+  it("should return 400 when title is missing", async () => {
+    const invalidProduct = { price: 29.99 };
+
+    const res = await request(app)
+      .post("/api/v1/products")
+      .send(invalidProduct)
+      .expect(400);
+
+    expect(res.body.status).toBe("fail");
+    expect(res.body.message).toMatch(/title is required/i);
+  });
+});
+```

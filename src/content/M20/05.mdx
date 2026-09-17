@@ -1,0 +1,50 @@
+export const meta = {
+  id: "M20-05",
+  number: "05",
+  title: "Email Templates",
+  khmerTitle: "ការបង្កើត Responsive HTML Email Templates",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "HTML emails require specialized inline CSS styles and table-based layouts because modern email clients (like Outlook and Gmail) strip out `<style>` tags, CSS Grid, and Flexbox. Using template functions or templating engines (Pug, EJS, Handlebars) allows injecting dynamic user data into responsive email templates.",
+  tip: "Use inline styles (`style=\"...\"`) on all HTML email elements. External stylesheets and `<style>` blocks are frequently ignored by email clients.",
+  objective: "Build modular, responsive HTML email templates with dynamic variable interpolation.",
+  expectedOutcome: "Clean, cross-client compatible HTML templates with inline styles.",
+  codeSnippet: "export const generateEmailTemplate = ({ title, bodyHtml, buttonText, buttonUrl }) => {\n  return `\n  <!DOCTYPE html>\n  <html>\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  </head>\n  <body style=\"font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px;\">\n    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n      <tr>\n        <td align=\"center\">\n          <table width=\"600\" style=\"background-color: #ffffff; border-radius: 8px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);\">\n            <tr>\n              <td>\n                <h1 style=\"color: #1e293b; margin-top: 0;\">${title}</h1>\n                <div style=\"color: #475569; font-size: 16px; line-height: 1.6;\">\n                  ${bodyHtml}\n                </div>\n                ${buttonUrl ? `\n                <div style=\"margin: 30px 0; text-align: center;\">\n                  <a href=\"${buttonUrl}\" style=\"background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;\">${buttonText}</a>\n                </div>` : \"\"}\n                <hr style=\"border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;\">\n                <p style=\"color: #94a3b8; font-size: 12px; margin: 0;\">If you did not request this email, please ignore it.</p>\n              </td>\n            </tr>\n          </table>\n        </td>\n      </tr>\n    </table>\n  </body>\n  </html>`;\n};",
+};
+
+```javascript
+export const generateEmailTemplate = ({ title, bodyHtml, buttonText, buttonUrl }) => {
+  return `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body style="font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center">
+          <table width="600" style="background-color: #ffffff; border-radius: 8px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <tr>
+              <td>
+                <h1 style="color: #1e293b; margin-top: 0;">${title}</h1>
+                <div style="color: #475569; font-size: 16px; line-height: 1.6;">
+                  ${bodyHtml}
+                </div>
+                ${buttonUrl ? `
+                <div style="margin: 30px 0; text-align: center;">
+                  <a href="${buttonUrl}" style="background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">${buttonText}</a>
+                </div>` : ""}
+                <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+                <p style="color: #94a3b8; font-size: 12px; margin: 0;">If you did not request this email, please ignore it.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+  </html>`;
+};
+```

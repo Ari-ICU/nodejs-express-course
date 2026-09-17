@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M20-06",
+  number: "06",
+  title: "Registration Email",
+  khmerTitle: "ការផ្ញើ Welcome Email បន្ទាប់ពីចុះឈ្មោះជោគជ័យ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "A welcome email greets new users immediately following account creation. It provides initial onboarding links, documentation references, and establishes trusted domain reputation. Triggering the welcome email from the registration controller reinforces user engagement.",
+  tip: "Fire welcome emails asynchronously without awaiting them in the registration response to keep signup latency minimal.",
+  objective: "Wire dynamic user welcome emails into the account registration lifecycle.",
+  expectedOutcome: "Automated delivery of branded onboarding emails upon registration.",
+  codeSnippet: "// services/mail.service.js\nexport const sendWelcomeEmail = async (user) => {\n  const html = generateEmailTemplate({\n    title: `Welcome to ${process.env.APP_NAME}, ${user.name}!`,\n    bodyHtml: \"<p>We're thrilled to have you on board. Explore your new dashboard and start building your projects today.</p>\",\n    buttonText: \"Go to Dashboard\",\n    buttonUrl: `${process.env.CLIENT_URL}/dashboard`,\n  });\n\n  await sendEmail({\n    to: user.email,\n    subject: `Welcome to ${process.env.APP_NAME}!`,\n    text: `Hi ${user.name}, Welcome to our platform! Log in at: ${process.env.CLIENT_URL}/login`,\n    html,\n  });\n};",
+};
+
+```javascript
+// services/mail.service.js
+export const sendWelcomeEmail = async (user) => {
+  const html = generateEmailTemplate({
+    title: `Welcome to ${process.env.APP_NAME}, ${user.name}!`,
+    bodyHtml: "<p>We're thrilled to have you on board. Explore your new dashboard and start building your projects today.</p>",
+    buttonText: "Go to Dashboard",
+    buttonUrl: `${process.env.CLIENT_URL}/dashboard`,
+  });
+
+  await sendEmail({
+    to: user.email,
+    subject: `Welcome to ${process.env.APP_NAME}!`,
+    text: `Hi ${user.name}, Welcome to our platform! Log in at: ${process.env.CLIENT_URL}/login`,
+    html,
+  });
+};
+```

@@ -1,0 +1,18 @@
+export const meta = {
+  id: "M28-12",
+  number: "12",
+  title: "Redis Container",
+  khmerTitle: "ការរៀបចំ Redis Container សម្រាប់ Caching និង Queues",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "Deploying Redis via Docker provides an instant in-memory cache and queue engine. Configuring a password (`requirepass`), enabling AOF persistence (`--appendonly yes`), and attaching a data volume ensures Redis state survives restarts.",
+  tip: "Always append `--appendonly yes` to your Redis container command to ensure job queues persist across host reboots.",
+  objective: "Deploy an authenticated Redis container with persistent append-only storage.",
+  expectedOutcome: "Secure, durable Redis cache container ready for BullMQ and session caching.",
+  codeSnippet: "# Run authenticated Redis container with AOF persistence:\ndocker run -d   --name production-redis   -p 6379:6379   -v redis_data:/data   --restart always   redis:alpine   redis-server --appendonly yes --requirepass \"RedisSecurePassword2026!\"",
+};
+
+```bash
+# Run authenticated Redis container with AOF persistence:
+docker run -d   --name production-redis   -p 6379:6379   -v redis_data:/data   --restart always   redis:alpine   redis-server --appendonly yes --requirepass "RedisSecurePassword2026!"
+```

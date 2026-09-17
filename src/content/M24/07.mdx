@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M24-07",
+  number: "07",
+  title: "Rooms",
+  khmerTitle: "ការគ្រប់គ្រង Channels តាមរយៈ Socket.IO Rooms",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Rooms are virtual server-side channels that sockets can join (`socket.join('room-id')`) and leave (`socket.leave('room-id')`). Broadcasting to a room (`io.to('room-id').emit(...)`) delivers messages only to the clients currently subscribed to that specific room, ideal for private chat rooms or order tracking.",
+  tip: "Every socket automatically joins a private room identified by its own `socket.id`. You can send a direct private message to any user with `io.to(recipientSocketId).emit(...)`.",
+  objective: "Implement room subscriptions for targeted channel messaging.",
+  expectedOutcome: "Isolated communication channels delivering messages strictly to room members.",
+  codeSnippet: "io.on(\"connection\", (socket) => {\n  // Join a specific chat channel or project room\n  socket.on(\"join_room\", (roomId) => {\n    socket.join(roomId);\n    console.log(`Socket ${socket.id} joined room: ${roomId}`);\n\n    // Notify others in that room only\n    socket.to(roomId).emit(\"user_joined\", { userId: socket.id });\n  });\n\n  // Send message strictly to members of this room\n  socket.on(\"chat_in_room\", ({ roomId, message }) => {\n    io.to(roomId).emit(\"receive_room_message\", {\n      sender: socket.id,\n      message,\n      sentAt: new Date(),\n    });\n  });\n});",
+};
+
+```javascript
+io.on("connection", (socket) => {
+  // Join a specific chat channel or project room
+  socket.on("join_room", (roomId) => {
+    socket.join(roomId);
+    console.log(`Socket ${socket.id} joined room: ${roomId}`);
+
+    // Notify others in that room only
+    socket.to(roomId).emit("user_joined", { userId: socket.id });
+  });
+
+  // Send message strictly to members of this room
+  socket.on("chat_in_room", ({ roomId, message }) => {
+    io.to(roomId).emit("receive_room_message", {
+      sender: socket.id,
+      message,
+      sentAt: new Date(),
+    });
+  });
+});
+```

@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M24-03",
+  number: "03",
+  title: "Socket.IO",
+  khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ Socket.IO",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Socket.IO is a feature-rich library that builds on top of WebSocket and HTTP long-polling fallbacks. Unlike raw WebSockets, Socket.IO provides automatic reconnection, connection buffering, heartbeat packet heartbeats, event-based multiplexing, rooms, and namespaces out of the box.",
+  tip: "Socket.IO is NOT a raw WebSocket implementation — a raw WebSocket client cannot connect to a Socket.IO server. Both client and server must use Socket.IO libraries.",
+  objective: "Understand Socket.IO advantages over raw WebSockets in production applications.",
+  expectedOutcome: "Knowledge of Socket.IO primitives: fallbacks, events, rooms, and auto-reconnection.",
+  codeSnippet: "// Why Socket.IO over raw ws:\n// 1. Reliability: Falls back to HTTP long-polling if corporate firewalls block WebSockets\n// 2. Auto-reconnect: Automatically reconnects and flushes buffered messages\n// 3. Named Events: emit(\"order:paid\", payload) instead of JSON.stringify({ type: ... })\n// 4. Broadcasting: Easily emit to all clients EXCEPT sender: socket.broadcast.emit(...)\n// 5. Rooms: Group sockets into virtual channels: socket.join(\"room-123\")",
+};
+
+```javascript
+// Why Socket.IO over raw ws:
+// 1. Reliability: Falls back to HTTP long-polling if corporate firewalls block WebSockets
+// 2. Auto-reconnect: Automatically reconnects and flushes buffered messages
+// 3. Named Events: emit("order:paid", payload) instead of JSON.stringify({ type: ... })
+// 4. Broadcasting: Easily emit to all clients EXCEPT sender: socket.broadcast.emit(...)
+// 5. Rooms: Group sockets into virtual channels: socket.join("room-123")
+```

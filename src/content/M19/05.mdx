@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M19-05",
+  number: "05",
+  title: "Upload Documents",
+  khmerTitle: "ការ Upload ឯកសារ PDF និង Office Documents",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Document uploads (e.g. PDF resumes, spreadsheets, Word documents) require distinct validation compared to images. Checking the MIME type and file extension ensures executable binaries (like `.exe` or `.sh`) disguised as documents are promptly rejected before reaching storage.",
+  tip: "Do not trust file extensions alone! Always check the MIME type (`file.mimetype`) and inspect the file magic bytes buffer for bulletproof security.",
+  objective: "Build document upload routes strictly accepting verified PDF and Office formats.",
+  expectedOutcome: "Secure document ingestion rejecting unauthorized executable files.",
+  codeSnippet: "const documentFilter = (req, file, cb) => {\n  const allowedMimeTypes = [\n    \"application/pdf\",\n    \"application/msword\",\n    \"application/vnd.openxmlformats-officedocument.wordprocessingml.document\",\n  ];\n\n  if (allowedMimeTypes.includes(file.mimetype)) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Invalid file format. Only PDF and Word documents are permitted!\", 400), false);\n  }\n};\n\nexport const uploadDocument = multer({\n  storage: multer.memoryStorage(),\n  fileFilter: documentFilter,\n  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit for documents\n});",
+};
+
+```javascript
+const documentFilter = (req, file, cb) => {
+  const allowedMimeTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
+
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Invalid file format. Only PDF and Word documents are permitted!", 400), false);
+  }
+};
+
+export const uploadDocument = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: documentFilter,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit for documents
+});
+```

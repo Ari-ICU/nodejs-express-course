@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M19-08",
+  number: "08",
+  title: "File Storage",
+  khmerTitle: "យុទ្ធសាស្ត្រជ្រើសរើសទីតាំងផ្ទុកឯកសារ (Local vs Cloud Storage)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Modern backend architectures choose between storing uploads on local server disks or offloading them to managed cloud object storage (AWS S3, Cloudflare R2). Local disk storage is simple for development, but in production, containerized deployments (Docker/Kubernetes) lose local files on restart unless persistent volumes are attached. Cloud object storage provides infinite durability and global CDN delivery.",
+  tip: "Never store production user uploads on the ephemeral local container filesystem. Always use object storage like S3 or R2 for production backends.",
+  objective: "Evaluate trade-offs between local filesystem storage and cloud object stores.",
+  expectedOutcome: "Architectural strategy suited for stateless, scalable container deployments.",
+  codeSnippet: "// Comparison Matrix:\n// Feature            | Local Disk Storage       | Cloud Object Storage (S3/R2)\n// -------------------+--------------------------+------------------------------\n// Setup Complexity   | Zero (built-in)          | Requires cloud credentials & SDK\n// Scalability        | Limited to server disk   | Infinite, virtually unlimited\n// Docker Containers  | Ephemeral (Lost on reboot)| Persistent & stateless\n// Global CDN         | Needs reverse proxy setup| Built-in CDN edge distribution\n// Backup/Durability  | Manual backups required  | 99.999999999% (11 9s) durability",
+};
+
+```javascript
+// Comparison Matrix:
+// Feature            | Local Disk Storage       | Cloud Object Storage (S3/R2)
+// -------------------+--------------------------+------------------------------
+// Setup Complexity   | Zero (built-in)          | Requires cloud credentials & SDK
+// Scalability        | Limited to server disk   | Infinite, virtually unlimited
+// Docker Containers  | Ephemeral (Lost on reboot)| Persistent & stateless
+// Global CDN         | Needs reverse proxy setup| Built-in CDN edge distribution
+// Backup/Durability  | Manual backups required  | 99.999999999% (11 9s) durability
+```

@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M26-07",
+  number: "07",
+  title: "Workers",
+  khmerTitle: "ការបង្កើត Background Worker ដើម្បីទាញយក និងដំណើរការ Jobs",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "A Worker is a background process that listens to a specific BullMQ queue and processes incoming jobs. Workers run in separate Node.js processes or separate Docker containers, ensuring CPU-heavy job execution never impacts the responsiveness of user-facing Express API servers.",
+  tip: "Set `concurrency: 5` (or match your server CPU cores) in worker options to process multiple jobs simultaneously on a single worker instance.",
+  objective: "Build dedicated BullMQ worker processes with concurrency configuration.",
+  expectedOutcome: "Asynchronous worker consuming and processing jobs concurrently in the background.",
+  codeSnippet: "import { Worker } from \"bullmq\";\nimport { redisConnection } from \"../config/redis.js\";\n\nexport const videoWorker = new Worker(\n  \"video-processing\",\n  async (job) => {\n    console.log(`[Worker] Processing job ${job.id}: transcode ${job.data.videoId}`);\n\n    // Simulate heavy CPU transcoding\n    await transcodeVideoFile(job.data.filePath, job.data.targetResolution);\n\n    console.log(`[Worker] Job ${job.id} completed successfully!`);\n    return { status: \"processed\", path: `/videos/${job.data.videoId}.mp4` };\n  },\n  {\n    connection: redisConnection,\n    concurrency: 4, // Process 4 video jobs concurrently\n  }\n);",
+};
+
+```javascript
+import { Worker } from "bullmq";
+import { redisConnection } from "../config/redis.js";
+
+export const videoWorker = new Worker(
+  "video-processing",
+  async (job) => {
+    console.log(`[Worker] Processing job ${job.id}: transcode ${job.data.videoId}`);
+
+    // Simulate heavy CPU transcoding
+    await transcodeVideoFile(job.data.filePath, job.data.targetResolution);
+
+    console.log(`[Worker] Job ${job.id} completed successfully!`);
+    return { status: "processed", path: `/videos/${job.data.videoId}.mp4` };
+  },
+  {
+    connection: redisConnection,
+    concurrency: 4, // Process 4 video jobs concurrently
+  }
+);
+```

@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M26-03",
+  number: "03",
+  title: "Queue Concept",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ Message Queue (FIFO, Priority, Dead Letter)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "A Message Queue acts as a durable buffer between job producers (Express API) and consumers (background workers). Queues adhere to First-In-First-Out (FIFO) ordering by default, but support priority scheduling (e.g. password resets jump ahead of marketing newsletters) and Dead Letter Queues (DLQ) for isolating permanently failing jobs.",
+  tip: "Use Dead Letter Queues (DLQ) to capture jobs that failed all retry attempts so developers can inspect error payloads and replay them once fixed.",
+  objective: "Master message queue patterns: FIFO ordering, priority queues, and dead letter queues.",
+  expectedOutcome: "Architectural blueprint for reliable distributed task queues.",
+  codeSnippet: "// Message Queue Lifecycle:\n//\n// [Producer (Express API)]\n//          │\n//          ↓ (Enqueues Job)\n// [Redis Queue: \"reports\"]\n//          │\n//          ├── Job 1 (Priority: Low)\n//          ├── Job 2 (Priority: Normal)\n//          └── Job 3 (Priority: Urgent - Jumps to Front!)\n//          │\n//          ↓ (Pulls Job)\n// [Worker Process (Node.js)] ─── Fails 5x ───> [Dead Letter Queue (DLQ)]",
+};
+
+```javascript
+// Message Queue Lifecycle:
+//
+// [Producer (Express API)]
+//          │
+//          ↓ (Enqueues Job)
+// [Redis Queue: "reports"]
+//          │
+//          ├── Job 1 (Priority: Low)
+//          ├── Job 2 (Priority: Normal)
+//          └── Job 3 (Priority: Urgent - Jumps to Front!)
+//          │
+//          ↓ (Pulls Job)
+// [Worker Process (Node.js)] ─── Fails 5x ───> [Dead Letter Queue (DLQ)]
+```

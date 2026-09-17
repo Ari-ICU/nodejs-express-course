@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M27-02",
+  number: "02",
+  title: "Routes",
+  khmerTitle: "តួនាទី និងការរៀបចំ Routes Layer",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The Routes layer defines the API's public URL surface and maps incoming HTTP verbs and paths to corresponding controller handlers. Route files should remain lean: they declare paths, mount validation and auth middleware, and delegate immediately to controllers without executing business logic.",
+  tip: "Group related endpoints using `router.route('/path').get(...).post(...)` for clean, readable endpoint declarations.",
+  objective: "Structure declarative Express routers free of embedded business logic.",
+  expectedOutcome: "Clean, readable route definitions acting purely as HTTP routing maps.",
+  codeSnippet: "// routes/product.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createProductSchema } from \"../validators/product.validator.js\";\nimport * as productController from \"../controllers/product.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(productController.getAllProducts)\n  .post(protect, restrictTo(\"admin\"), validate(createProductSchema), productController.createProduct);\n\nrouter.route(\"/:id\")\n  .get(productController.getProductById)\n  .patch(protect, restrictTo(\"admin\"), productController.updateProduct)\n  .delete(protect, restrictTo(\"admin\"), productController.deleteProduct);\n\nexport default router;",
+};
+
+```javascript
+// routes/product.routes.js
+import express from "express";
+import { protect } from "../middleware/auth.js";
+import { restrictTo } from "../middleware/role.js";
+import { validate } from "../middleware/validate.js";
+import { createProductSchema } from "../validators/product.validator.js";
+import * as productController from "../controllers/product.controller.js";
+
+const router = express.Router();
+
+router.route("/")
+  .get(productController.getAllProducts)
+  .post(protect, restrictTo("admin"), validate(createProductSchema), productController.createProduct);
+
+router.route("/:id")
+  .get(productController.getProductById)
+  .patch(protect, restrictTo("admin"), productController.updateProduct)
+  .delete(protect, restrictTo("admin"), productController.deleteProduct);
+
+export default router;
+```

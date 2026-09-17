@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M21-10",
+  number: "10",
+  title: "Complete API Documentation",
+  khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Documentation ពេញលេញកម្រិត Production",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "A production-grade API documentation architecture automates spec generation from route files, exposes interactive Swagger UI for development, and generates static HTML or Markdown for public developer portals. Versioning your documentation (`/api/v1/docs`, `/api/v2/docs`) guarantees backward compatibility for enterprise consumers.",
+  tip: "Export your generated OpenAPI specification as a raw JSON file (`/api/docs.json`) so external tools like Postman and SDK generators can import it automatically.",
+  objective: "Architect a comprehensive, versioned API documentation system in Node.js.",
+  expectedOutcome: "Self-updating, interactive, and exportable API documentation for production backends.",
+  codeSnippet: "// Expose raw spec for Postman / SDK generators\napp.get(\"/api/docs.json\", (req, res) => {\n  res.setHeader(\"Content-Type\", \"application/json\");\n  res.send(swaggerSpec);\n});\n\n// Mount interactive documentation UI\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {\n  explorer: true,\n  customCss: \".swagger-ui .topbar { display: none }\", // Clean look\n  customSiteTitle: \"Enterprise REST API Documentation\",\n}));",
+};
+
+```javascript
+// Expose raw spec for Postman / SDK generators
+app.get("/api/docs.json", (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(swaggerSpec);
+});
+
+// Mount interactive documentation UI
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  explorer: true,
+  customCss: ".swagger-ui .topbar { display: none }", // Clean look
+  customSiteTitle: "Enterprise REST API Documentation",
+}));
+```

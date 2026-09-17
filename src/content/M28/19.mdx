@@ -1,0 +1,46 @@
+export const meta = {
+  id: "M28-19",
+  number: "19",
+  title: "GitHub Actions",
+  khmerTitle: "ការបង្កើត GitHub Actions Workflow សម្រាប់ Test និង Auto-deploy",
+  type: "lab",
+  codeLanguage: "yaml",
+  summary: "GitHub Actions automates your software workflows directly within your GitHub repository. A `.github/workflows/deploy.yml` file defines automated triggers (`push: branches: [main]`), spins up Ubuntu runners, executes tests, builds Docker images, and deploys the passing image to your VPS over SSH.",
+  tip: "Store sensitive deployment credentials (SSH private keys, Docker tokens) securely in GitHub Repository Secrets (`Settings -> Secrets and variables -> Actions`).",
+  objective: "Author an automated GitHub Actions workflow running tests and deploying to a server.",
+  expectedOutcome: "Automated pipeline that tests and deploys code on every push to main.",
+  codeSnippet: "name: CI/CD Pipeline\n\non:\n  push:\n    branches: [main]\n\njobs:\n  test-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: \"npm\"\n\n      - run: npm ci\n      - run: npm run test:run\n\n      - name: Deploy to VPS over SSH\n        uses: appleboy/ssh-action@master\n        with:\n          host: ${{ secrets.VPS_HOST }}\n          username: ${{ secrets.VPS_USER }}\n          key: ${{ secrets.VPS_SSH_KEY }}\n          script: |\n            cd /opt/enterprise-app\n            git pull origin main\n            docker compose down\n            docker compose up -d --build",
+};
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run test:run
+
+      - name: Deploy to VPS over SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/enterprise-app
+            git pull origin main
+            docker compose down
+            docker compose up -d --build
+```

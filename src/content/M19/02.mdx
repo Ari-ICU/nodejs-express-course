@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M19-02",
+  number: "02",
+  title: "Multipart Form Data",
+  khmerTitle: "ការស្វែងយល់ពីទម្រង់ Multipart Form Data",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "A `multipart/form-data` payload breaks an HTTP message body into multiple distinct sections delimited by unique boundary strings. Each section contains its own mini-headers (e.g. `Content-Disposition`, `Content-Type`) followed by that field's text or raw binary contents. This allows text form fields and multiple files to be submitted concurrently in a single HTTP request.",
+  tip: "Ensure frontend clients do NOT manually set `Content-Type: multipart/form-data` with `fetch` or `axios` — let the browser set it automatically with the correct dynamic boundary string.",
+  objective: "Learn how the HTTP boundary delimiter splits form fields and binary payloads.",
+  expectedOutcome: "Accurate debugging of multipart headers and frontend payload preparation.",
+  codeSnippet: "// Frontend form data preparation:\nconst formData = new FormData();\nformData.append(\"title\", \"My Summer Vacation\"); // Regular text field\nformData.append(\"coverImage\", fileInput.files[0]); // Binary file field\n\n// Using fetch: DO NOT explicitly set Content-Type! Browser appends boundary automatically!\nconst res = await fetch(\"/api/v1/posts\", {\n  method: \"POST\",\n  body: formData, // Browser sets: 'multipart/form-data; boundary=----WebKitFormBoundary...'\n});",
+};
+
+```javascript
+// Frontend form data preparation:
+const formData = new FormData();
+formData.append("title", "My Summer Vacation"); // Regular text field
+formData.append("coverImage", fileInput.files[0]); // Binary file field
+
+// Using fetch: DO NOT explicitly set Content-Type! Browser appends boundary automatically!
+const res = await fetch("/api/v1/posts", {
+  method: "POST",
+  body: formData, // Browser sets: 'multipart/form-data; boundary=----WebKitFormBoundary...'
+});
+```

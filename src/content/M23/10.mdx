@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M23-10",
+  number: "10",
+  title: "API Testing Workflow",
+  khmerTitle: "ស្ថាបត្យកម្ម API Testing Workflow និង Newman CLI ក្នុង CI/CD",
+  type: "architecture",
+  codeLanguage: "bash",
+  summary: "Newman is the command-line collection runner for Postman. It allows running Postman test suites directly from terminal scripts and automated GitHub Actions CI/CD pipelines, outputting structured test reports and failing pull requests if any assertion breaks.",
+  tip: "Run `npx newman run collection.json -e env.json` in your GitHub Actions pipeline to run your API tests on every pull request.",
+  objective: "Integrate Newman CLI into automated continuous integration workflows.",
+  expectedOutcome: "Automated API regression testing integrated into CI/CD pipelines.",
+  codeSnippet: "# Run Postman Collection headless via Newman CLI\nnpx newman run ./docs/postman/collection.json   --environment ./docs/postman/local-env.json   --reporters cli,htmlextra   --reporter-htmlextra-export ./reports/api-test-report.html\n\n# In GitHub Actions:\n# - name: Run Postman Tests via Newman\n#   run: npx newman run ./docs/postman/collection.json -e ./docs/postman/ci-env.json",
+};
+
+```bash
+# Run Postman Collection headless via Newman CLI
+npx newman run ./docs/postman/collection.json   --environment ./docs/postman/local-env.json   --reporters cli,htmlextra   --reporter-htmlextra-export ./reports/api-test-report.html
+
+# In GitHub Actions:
+# - name: Run Postman Tests via Newman
+#   run: npx newman run ./docs/postman/collection.json -e ./docs/postman/ci-env.json
+```

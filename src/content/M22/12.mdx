@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M22-12",
+  number: "12",
+  title: "Mocking",
+  khmerTitle: "ការ Mock 3rd-party Services (Stripe, Email, SMS) ជាមួយ vi.fn()",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Mocking replaces real external dependencies (payment gateways like Stripe, email providers like SendGrid, or SMS APIs) with dummy simulations during tests. This prevents tests from incurring financial costs, sending real emails to users, or failing when third-party servers experience outages.",
+  tip: "Never call real payment gateways or SMTP servers during automated tests! Always mock external network calls.",
+  objective: "Mock third-party services using Vitest vi.spyOn and vi.mock.",
+  expectedOutcome: "Reliable, isolated test suites that execute without external network dependencies.",
+  codeSnippet: "import { describe, it, expect, vi } from \"vitest\";\nimport * as mailService from \"../services/mail.service.js\";\n\ndescribe(\"Registration with Email Mock\", () => {\n  it(\"should register user and dispatch welcome email\", async () => {\n    // Spy on mailService.sendEmail and mock its implementation\n    const emailSpy = vi.spyOn(mailService, \"sendEmail\").mockResolvedValue({ success: true });\n\n    const res = await request(app)\n      .post(\"/api/v1/auth/register\")\n      .send({ name: \"Alice\", email: \"alice@test.com\", password: \"Password123!\" })\n      .expect(201);\n\n    // Verify email was sent with right params without actually contacting SMTP server\n    expect(emailSpy).toHaveBeenCalledTimes(1);\n    expect(emailSpy).toHaveBeenCalledWith(expect.objectContaining({ to: \"alice@test.com\" }));\n\n    emailSpy.mockRestore(); // Restore original function\n  });\n});",
+};
+
+```javascript
+import { describe, it, expect, vi } from "vitest";
+import * as mailService from "../services/mail.service.js";
+
+describe("Registration with Email Mock", () => {
+  it("should register user and dispatch welcome email", async () => {
+    // Spy on mailService.sendEmail and mock its implementation
+    const emailSpy = vi.spyOn(mailService, "sendEmail").mockResolvedValue({ success: true });
+
+    const res = await request(app)
+      .post("/api/v1/auth/register")
+      .send({ name: "Alice", email: "alice@test.com", password: "Password123!" })
+      .expect(201);
+
+    // Verify email was sent with right params without actually contacting SMTP server
+    expect(emailSpy).toHaveBeenCalledTimes(1);
+    expect(emailSpy).toHaveBeenCalledWith(expect.objectContaining({ to: "alice@test.com" }));
+
+    emailSpy.mockRestore(); // Restore original function
+  });
+});
+```

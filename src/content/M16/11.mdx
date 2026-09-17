@@ -1,0 +1,45 @@
+export const meta = {
+  id: "M16-11",
+  number: "11",
+  title: "Logout",
+  khmerTitle: "ការចាកចេញពីប្រព័ន្ធ (Logout and Cookie Invalidation)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "In a token-based authentication system, logging out requires two simultaneous steps: invalidating the persistent refresh token in the backend database/cache, and instructing the client browser to immediately purge the HttpOnly cookie by sending an expired cookie header (`maxAge: 0`). For maximum security, you can also store access tokens on a short-lived Redis denylist.",
+  tip: "Setting `res.clearCookie()` alone is not enough! You must also nullify the stored refresh token in MongoDB so that an intercepted copy cannot be reused.",
+  objective: "Build an explicit logout route that clears client cookies and revokes database tokens.",
+  expectedOutcome: "Complete session destruction on both client and server.",
+  codeSnippet: "// POST /api/v1/auth/logout\nexport const logout = async (req, res, next) => {\n  try {\n    const rawRefreshToken = req.cookies.refreshToken;\n\n    if (rawRefreshToken) {\n      // 1. Remove refresh token from database user document\n      await User.findOneAndUpdate(\n        { refreshToken: rawRefreshToken },\n        { $unset: { refreshToken: 1 } }\n      );\n    }\n\n    // 2. Instruct browser to destroy cookie immediately\n    res.clearCookie(\"refreshToken\", {\n      httpOnly: true,\n      secure: process.env.NODE_ENV === \"production\",\n      sameSite: \"strict\",\n      path: \"/api/v1/auth\",\n    });\n\n    res.status(200).json({\n      status: \"success\",\n      message: \"Logged out successfully\",\n    });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+// POST /api/v1/auth/logout
+export const logout = async (req, res, next) => {
+  try {
+    const rawRefreshToken = req.cookies.refreshToken;
+
+    if (rawRefreshToken) {
+      // 1. Remove refresh token from database user document
+      await User.findOneAndUpdate(
+        { refreshToken: rawRefreshToken },
+        { $unset: { refreshToken: 1 } }
+      );
+    }
+
+    // 2. Instruct browser to destroy cookie immediately
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/api/v1/auth",
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Logged out successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+```

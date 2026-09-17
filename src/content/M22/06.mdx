@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M22-06",
+  number: "06",
+  title: "Jest",
+  khmerTitle: "ការប្រៀបធៀប Jest និង Vitest ក្នុង Node.js Backends",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Jest has historically been the standard testing framework in Node.js. While highly feature-rich, configuring Jest with modern ECMAScript Modules (ESM) often requires complex Babel or ts-jest configurations. Vitest provides identical APIs (`describe`, `it`, `expect`, `vi.fn()`) while handling ESM and TypeScript natively.",
+  tip: "Vitest is 99% API-compatible with Jest. If migrating from Jest, simply replace `jest.fn()` with `vi.fn()`.",
+  objective: "Understand differences between Jest and Vitest and learn to write compatible test suites.",
+  expectedOutcome: "Fluency with modern JavaScript testing assertions and mock APIs.",
+  codeSnippet: "// Vitest / Jest Compatible Test:\nimport { describe, it, expect, vi } from \"vitest\";\n\ndescribe(\"User Notification\", () => {\n  it(\"should trigger callback when user registers\", () => {\n    const mockNotifier = vi.fn(); // Mock function\n\n    mockNotifier(\"user@example.com\");\n\n    expect(mockNotifier).toHaveBeenCalledTimes(1);\n    expect(mockNotifier).toHaveBeenCalledWith(\"user@example.com\");\n  });\n});",
+};
+
+```javascript
+// Vitest / Jest Compatible Test:
+import { describe, it, expect, vi } from "vitest";
+
+describe("User Notification", () => {
+  it("should trigger callback when user registers", () => {
+    const mockNotifier = vi.fn(); // Mock function
+
+    mockNotifier("user@example.com");
+
+    expect(mockNotifier).toHaveBeenCalledTimes(1);
+    expect(mockNotifier).toHaveBeenCalledWith("user@example.com");
+  });
+});
+```

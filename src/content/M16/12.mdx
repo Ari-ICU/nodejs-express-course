@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M16-12",
+  number: "12",
+  title: "Token Expiration",
+  khmerTitle: "ការគ្រប់គ្រង Token Expiration និង Error Handling",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "When a JWT passes its `exp` timestamp, `jwt.verify()` throws a `TokenExpiredError`. A robust backend catches this specific error and translates it into a distinct 401 response code (e.g. `TOKEN_EXPIRED`), signaling to frontend API interceptors (like Axios) to trigger silent token refresh without interrupting the active user.",
+  tip: "Give expired token responses a unique error code string like `code: 'TOKEN_EXPIRED'` so frontend Axios interceptors know exactly when to trigger silent refresh.",
+  objective: "Catch and gracefully handle TokenExpiredError and JsonWebTokenError exceptions in Express.",
+  expectedOutcome: "Deterministic error responses enabling seamless client-side token refresh.",
+  codeSnippet: "// middleware/errorHandler.js\nexport const handleJwtError = (err, req, res, next) => {\n  if (err.name === \"TokenExpiredError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_EXPIRED\",\n      message: \"Access token has expired. Please refresh your token.\",\n    });\n  }\n\n  if (err.name === \"JsonWebTokenError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_INVALID\",\n      message: \"Invalid token. Please log in again.\",\n    });\n  }\n\n  next(err);\n};",
+};
+
+```javascript
+// middleware/errorHandler.js
+export const handleJwtError = (err, req, res, next) => {
+  if (err.name === "TokenExpiredError") {
+    return res.status(401).json({
+      status: "fail",
+      code: "TOKEN_EXPIRED",
+      message: "Access token has expired. Please refresh your token.",
+    });
+  }
+
+  if (err.name === "JsonWebTokenError") {
+    return res.status(401).json({
+      status: "fail",
+      code: "TOKEN_INVALID",
+      message: "Invalid token. Please log in again.",
+    });
+  }
+
+  next(err);
+};
+```

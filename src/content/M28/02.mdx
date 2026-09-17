@@ -1,55 +1,21 @@
 export const meta = {
   id: "M28-02",
   number: "02",
-  title: "Docker Compose, Nginx & CI/CD",
-  khmerTitle: "Docker Compose, Nginx, និង GitHub Actions CI/CD",
+  title: "Environment Variables",
+  khmerTitle: "ការគ្រប់គ្រង Environment Variables ក្នុង Production",
   type: "lab",
-  codeLanguage: "yaml",
-  summary: "Docker Compose defines multi-container environments declaratively — a single docker-compose.yml links the Node.js API, MongoDB, and Redis with a shared network and health-checked startup order. Nginx acts as a reverse proxy and TLS terminator, routing HTTPS traffic to the Node.js container. GitHub Actions automates testing, Docker image building, pushing to a registry, and SSH deployment on every push to main — achieving continuous deployment from git push to live production.",
-  tip: "Use depends_on with condition: service_healthy to ensure Node.js starts only after MongoDB and Redis pass their health checks. This eliminates race condition startup failures in fresh deployments.",
-  objective: "Deploy a Node.js API with Docker Compose orchestration, Nginx reverse proxy, and CI/CD automation.",
-  expectedOutcome: "Fully automated deployment pipeline: git push triggers tests, build, and production deployment.",
-  codeSnippet: "# docker-compose.yml\nservices:\n  api:\n    build: .\n    ports: [\"5000:5000\"]\n    env_file: .env\n    depends_on:\n      mongo: { condition: service_healthy }\n      redis: { condition: service_healthy }\n    restart: unless-stopped\n\n  mongo:\n    image: mongo:7\n    volumes: [\"mongo_data:/data/db\"]\n    healthcheck:\n      test: [\"CMD\", \"mongosh\", \"--eval\", \"db.adminCommand('ping')\"]\n      interval: 10s\n      retries: 5\n\n  redis:\n    image: redis:7-alpine\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"ping\"]\n\nvolumes:\n  mongo_data:\n\n# .github/workflows/deploy.yml\n# on:\n#   push:\n#     branches: [main]\n# jobs:\n#   deploy:\n#     steps:\n#       - uses: actions/checkout@v4\n#       - run: npm test\n#       - run: docker build -t myapp .\n#       - run: docker push registry.example.com/myapp\n#       - run: ssh user@server \"docker compose pull && docker compose up -d\"",
+  codeLanguage: "bash",
+  summary: "In production, environment variables should be injected directly by the hosting platform (Docker environment flags, Kubernetes secrets, or VPS systemd environment configurations) rather than read from physical `.env` files on disk. This prevents secrets from persisting in container images or leaking via file permissions.",
+  tip: "Never commit `.env` files into Docker images or Git repositories. Use Docker Compose `environment:` or pass `--env-file` at runtime.",
+  objective: "Inject production environment variables securely via container runtimes and VPS environments.",
+  expectedOutcome: "Secure credential management without plaintext files in images or repositories.",
+  codeSnippet: "# 1. Passing env vars to Docker container at runtime:\ndocker run -d   -p 5000:5000   -e NODE_ENV=production   -e MONGODB_URI=\"mongodb+srv://admin:secret@cluster.mongodb.net/prod\"   --name my-api   my-enterprise-api:latest\n\n# 2. Or using Docker Compose secrets / env_file:\n# docker compose --env-file .env.production up -d",
 };
 
-```yaml
-# docker-compose.yml
-services:
-  api:
-    build: .
-    ports: ["5000:5000"]
-    env_file: .env
-    depends_on:
-      mongo: { condition: service_healthy }
-      redis: { condition: service_healthy }
-    restart: unless-stopped
+```bash
+# 1. Passing env vars to Docker container at runtime:
+docker run -d   -p 5000:5000   -e NODE_ENV=production   -e MONGODB_URI="mongodb+srv://admin:secret@cluster.mongodb.net/prod"   --name my-api   my-enterprise-api:latest
 
-  mongo:
-    image: mongo:7
-    volumes: ["mongo_data:/data/db"]
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      retries: 5
-
-  redis:
-    image: redis:7-alpine
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-
-volumes:
-  mongo_data:
-
-# .github/workflows/deploy.yml
-# on:
-#   push:
-#     branches: [main]
-# jobs:
-#   deploy:
-#     steps:
-#       - uses: actions/checkout@v4
-#       - run: npm test
-#       - run: docker build -t myapp .
-#       - run: docker push registry.example.com/myapp
-#       - run: ssh user@server "docker compose pull && docker compose up -d"
+# 2. Or using Docker Compose secrets / env_file:
+# docker compose --env-file .env.production up -d
 ```

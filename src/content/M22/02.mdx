@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M22-02",
+  number: "02",
+  title: "Unit Testing",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ Unit Testing",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Unit testing verifies individual units of source code — typically isolated functions or service classes — in complete isolation from external dependencies like databases, file systems, or network sockets. By mocking out external systems, unit tests execute in milliseconds.",
+  tip: "Keep unit tests deterministic: given the same input, a unit test must always produce the exact same assertion output regardless of environment.",
+  objective: "Learn the principles of isolated unit testing and the Arrange-Act-Assert (AAA) pattern.",
+  expectedOutcome: "Ability to identify testable units and write fast, deterministic unit tests.",
+  codeSnippet: "// Arrange - Act - Assert (AAA) Pattern:\nimport { describe, it, expect } from \"vitest\";\nimport { calculateDiscount } from \"../services/pricing.service.js\";\n\ndescribe(\"calculateDiscount\", () => {\n  it(\"should apply 20% discount for orders exceeding $100\", () => {\n    // 1. Arrange\n    const originalPrice = 120;\n    const discountRate = 0.20;\n\n    // 2. Act\n    const finalPrice = calculateDiscount(originalPrice, discountRate);\n\n    // 3. Assert\n    expect(finalPrice).toBe(96);\n  });\n});",
+};
+
+```javascript
+// Arrange - Act - Assert (AAA) Pattern:
+import { describe, it, expect } from "vitest";
+import { calculateDiscount } from "../services/pricing.service.js";
+
+describe("calculateDiscount", () => {
+  it("should apply 20% discount for orders exceeding $100", () => {
+    // 1. Arrange
+    const originalPrice = 120;
+    const discountRate = 0.20;
+
+    // 2. Act
+    const finalPrice = calculateDiscount(originalPrice, discountRate);
+
+    // 3. Assert
+    expect(finalPrice).toBe(96);
+  });
+});
+```

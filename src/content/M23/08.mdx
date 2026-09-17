@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M23-08",
+  number: "08",
+  title: "Postman Scripts",
+  khmerTitle: "ការសរសេរ Pre-request Scripts និង Test Scripts (Chai Assertions)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Postman scripts execute JavaScript before requests are dispatched (Pre-request scripts) and after responses arrive (Test scripts). Using the built-in Chai assertion library, tests validate response latency, status codes, and data types automatically.",
+  tip: "Pre-request scripts can compute timestamps, MD5 hashes, or dynamic random data using `pm.variables.replaceIn('{{$randomEmail}}')`.",
+  objective: "Write advanced JavaScript pre-request workflows and Chai test assertions.",
+  expectedOutcome: "Automated assertion suites validating contract rules on every request execution.",
+  codeSnippet: "// Postman Test Script using Chai BDD syntax:\npm.test(\"Response time is under 200ms\", () => {\n  pm.expect(pm.response.responseTime).to.be.below(200);\n});\n\npm.test(\"Response has required schema properties\", () => {\n  const json = pm.response.json();\n  pm.expect(json).to.have.property(\"status\", \"success\");\n  pm.expect(json.data).to.be.an(\"object\");\n  pm.expect(json.data.user.email).to.match(/@/);\n});",
+};
+
+```javascript
+// Postman Test Script using Chai BDD syntax:
+pm.test("Response time is under 200ms", () => {
+  pm.expect(pm.response.responseTime).to.be.below(200);
+});
+
+pm.test("Response has required schema properties", () => {
+  const json = pm.response.json();
+  pm.expect(json).to.have.property("status", "success");
+  pm.expect(json.data).to.be.an("object");
+  pm.expect(json.data.user.email).to.match(/@/);
+});
+```

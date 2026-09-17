@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M20-07",
+  number: "07",
+  title: "Password Reset Email",
+  khmerTitle: "លំហូរ Password Reset ជាមួយ Cryptographic Token",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Password reset flows generate an unguessable cryptographic token (`crypto.randomBytes(32).toString('hex')`), store a SHA-256 hash of that token in the database alongside a 10-minute expiration timestamp, and email the plaintext token inside a secure reset link. When the user clicks the link, the backend re-hashes the submitted token and verifies its validity.",
+  tip: "Never store the raw reset token in your database! Hash it with SHA-256 before saving, exactly like passwords, so a database leak doesn't permit account takeovers.",
+  objective: "Implement a secure password reset workflow using hashed tokens and time limits.",
+  expectedOutcome: "Cryptographically sound forgot/reset password system.",
+  codeSnippet: "import crypto from \"node:crypto\";\n\n// 1. Generate reset token in User Model method:\nuserSchema.methods.createPasswordResetToken = function () {\n  const resetToken = crypto.randomBytes(32).toString(\"hex\");\n\n  // Hash token before saving to database\n  this.passwordResetToken = crypto\n    .createHash(\"sha256\")\n    .update(resetToken)\n    .digest(\"hex\");\n\n  // Token expires in 10 minutes\n  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;\n\n  return resetToken; // Return unhashed token to send via email\n};\n\n// 2. Controller sends reset link:\nconst resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;",
+};
+
+```javascript
+import crypto from "node:crypto";
+
+// 1. Generate reset token in User Model method:
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  // Hash token before saving to database
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  // Token expires in 10 minutes
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken; // Return unhashed token to send via email
+};
+
+// 2. Controller sends reset link:
+const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
+```

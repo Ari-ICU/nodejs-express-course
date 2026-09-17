@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M28-08",
+  number: "08",
+  title: "Dockerfile",
+  khmerTitle: "ការបង្កើត Multi-stage Dockerfile សម្រាប់ Node.js",
+  type: "lab",
+  codeLanguage: "dockerfile",
+  summary: "A production Dockerfile uses multi-stage builds to separate the build phase (compiling TypeScript, installing devDependencies) from the final production runtime. Multi-stage builds produce tiny, secure container images (<150MB) containing only production dependencies and compiled JavaScript.",
+  tip: "Always copy `package*.json` and run `npm ci` BEFORE copying source code — this leverages Docker layer caching so subsequent builds take 2 seconds instead of reinstalling dependencies.",
+  objective: "Author an optimized, secure multi-stage Dockerfile for Node.js backends.",
+  expectedOutcome: "Minimal, secure production Docker image with layer caching.",
+  codeSnippet: "# Stage 1: Build & Dependencies\nFROM node:20-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\n\n# Stage 2: Production Runtime\nFROM node:20-alpine AS runner\nWORKDIR /app\nENV NODE_ENV=production\n# Run as non-root user for security\nUSER node\nCOPY --chown=node:node package*.json ./\nRUN npm ci --only=production\nCOPY --chown=node:node --from=builder /app/src ./src\n\nEXPOSE 5000\nCMD [\"node\", \"src/server.js\"]",
+};
+
+```dockerfile
+# Stage 1: Build & Dependencies
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+
+# Stage 2: Production Runtime
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+# Run as non-root user for security
+USER node
+COPY --chown=node:node package*.json ./
+RUN npm ci --only=production
+COPY --chown=node:node --from=builder /app/src ./src
+
+EXPOSE 5000
+CMD ["node", "src/server.js"]
+```

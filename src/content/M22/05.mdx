@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M22-05",
+  number: "05",
+  title: "Vitest",
+  khmerTitle: "ការដំឡើង និងដំណើរការ Vitest ក្នុង Node.js",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Vitest is a blazing-fast, modern next-generation test runner powered by Vite. It features out-of-the-box native TypeScript and ES Modules support, instantaneous hot module reloading (watch mode), Jest-compatible assertion syntax, and multi-threaded test execution.",
+  tip: "Add `\"test\": \"vitest run\"` and `\"test:watch\": \"vitest\"` to your `package.json` scripts for lightning-fast test execution.",
+  objective: "Install, configure, and execute automated test suites using Vitest.",
+  expectedOutcome: "Configured Vitest environment running tests with sub-second execution speeds.",
+  codeSnippet: "// vitest.config.js\nimport { defineConfig } from \"vitest/config\";\n\nexport default defineConfig({\n  test: {\n    globals: true,\n    environment: \"node\",\n    testTimeout: 10000,\n    coverage: {\n      provider: \"v8\",\n      reporter: [\"text\", \"json\", \"html\"],\n    },\n  },\n});",
+};
+
+```javascript
+// vitest.config.js
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: "node",
+    testTimeout: 10000,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+    },
+  },
+});
+```

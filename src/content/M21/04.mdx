@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M21-04",
+  number: "04",
+  title: "Swagger UI",
+  khmerTitle: "ការដំឡើង Swagger UI ក្នុង Express ជាមួយ swagger-ui-express",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Swagger UI generates an interactive, human-readable documentation website directly from your OpenAPI specification. Developers can explore endpoints, inspect schemas, and test live HTTP requests directly within the browser using the built-in 'Try it out' console.",
+  tip: "Mount your Swagger documentation at `/api/docs` and restrict access in production environments using basic authentication if the API is internal.",
+  objective: "Mount Swagger UI interactive documentation in an Express application.",
+  expectedOutcome: "Working interactive API documentation hosted live at /api/docs.",
+  codeSnippet: "import express from \"express\";\nimport swaggerUi from \"swagger-ui-express\";\nimport swaggerJsdoc from \"swagger-jsdoc\";\n\nconst app = express();\n\nconst swaggerOptions = {\n  definition: {\n    openapi: \"3.0.0\",\n    info: {\n      title: \"Node.js Express API Documentation\",\n      version: \"1.0.0\",\n      description: \"Interactive documentation with live request testing\",\n    },\n  },\n  apis: [\"./src/routes/*.js\"], // Scan route files for JSDoc annotations\n};\n\nconst swaggerSpec = swaggerJsdoc(swaggerOptions);\n\n// Serve Swagger UI at /api/docs\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec));",
+};
+
+```javascript
+import express from "express";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+
+const app = express();
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Node.js Express API Documentation",
+      version: "1.0.0",
+      description: "Interactive documentation with live request testing",
+    },
+  },
+  apis: ["./src/routes/*.js"], // Scan route files for JSDoc annotations
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Serve Swagger UI at /api/docs
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+```

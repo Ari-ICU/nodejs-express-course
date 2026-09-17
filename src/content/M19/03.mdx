@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M19-03",
+  number: "03",
+  title: "Multer",
+  khmerTitle: "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ Multer Middleware",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Multer is the standard Node.js middleware for handling `multipart/form-data`. It integrates with Express by parsing incoming streams and attaching a `req.file` (for single files) or `req.files` (for multiple files) object containing metadata such as original filename, MIME type, size, and destination path or buffer.",
+  tip: "Multer ignores any form that is NOT `multipart/form-data`. Ensure all upload forms specify the correct enctype.",
+  objective: "Configure Multer middleware for single and multi-file upload routes.",
+  expectedOutcome: "Successful integration of Multer processing single and multi-part payloads.",
+  codeSnippet: "import multer from \"multer\";\n\n// Basic in-memory storage configuration\nconst upload = multer({\n  storage: multer.memoryStorage(),\n  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB max\n});\n\n// Single file upload route\napp.post(\"/api/upload-avatar\", upload.single(\"avatar\"), (req, res) => {\n  console.log(\"Uploaded file metadata:\", req.file);\n  console.log(\"Text fields:\", req.body);\n\n  res.json({\n    status: \"success\",\n    filename: req.file.originalname,\n    size: req.file.size,\n    mimetype: req.file.mimetype,\n  });\n});",
+};
+
+```javascript
+import multer from "multer";
+
+// Basic in-memory storage configuration
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB max
+});
+
+// Single file upload route
+app.post("/api/upload-avatar", upload.single("avatar"), (req, res) => {
+  console.log("Uploaded file metadata:", req.file);
+  console.log("Text fields:", req.body);
+
+  res.json({
+    status: "success",
+    filename: req.file.originalname,
+    size: req.file.size,
+    mimetype: req.file.mimetype,
+  });
+});
+```

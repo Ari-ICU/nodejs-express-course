@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M26-10",
+  number: "10",
+  title: "Failed Jobs",
+  khmerTitle: "ការគ្រប់គ្រង និងត្រួតពិនិត្យ Failed Jobs (Bull Board)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "When a job exhausts all configured retry attempts, it moves to the 'failed' state with the error stack trace attached. Mounting the `Bull Board` web dashboard provides a visual admin interface to inspect failed job payloads, view error stack traces, and manually retry jobs with a single click.",
+  tip: "Protect your Bull Board dashboard route (`/admin/queues`) behind admin authentication and IP whitelisting in production.",
+  objective: "Monitor failed jobs and mount Bull Board UI inside an Express application.",
+  expectedOutcome: "Visual web dashboard for queue inspection, metrics, and manual job retries.",
+  codeSnippet: "import { createBullBoard } from \"@bull-board/api\";\nimport { BullMQAdapter } from \"@bull-board/api/bullMQAdapter.js\";\nimport { ExpressAdapter } from \"@bull-board/express\";\n\nconst serverAdapter = new ExpressAdapter();\nserverAdapter.setBasePath(\"/admin/queues\");\n\ncreateBullBoard({\n  queues: [new BullMQAdapter(emailQueue), new BullMQAdapter(videoQueue)],\n  serverAdapter,\n});\n\n// Protect with admin auth guard and mount:\napp.use(\"/admin/queues\", protect, restrictTo(\"admin\"), serverAdapter.getRouter());",
+};
+
+```javascript
+import { createBullBoard } from "@bull-board/api";
+import { BullMQAdapter } from "@bull-board/api/bullMQAdapter.js";
+import { ExpressAdapter } from "@bull-board/express";
+
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath("/admin/queues");
+
+createBullBoard({
+  queues: [new BullMQAdapter(emailQueue), new BullMQAdapter(videoQueue)],
+  serverAdapter,
+});
+
+// Protect with admin auth guard and mount:
+app.use("/admin/queues", protect, restrictTo("admin"), serverAdapter.getRouter());
+```

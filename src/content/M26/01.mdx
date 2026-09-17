@@ -1,46 +1,22 @@
 export const meta = {
   id: "M26-01",
   number: "01",
-  title: "Background Jobs with BullMQ",
-  khmerTitle: "ការដំណើរការ Background Jobs ជាមួយ BullMQ",
-  type: "lab",
+  title: "Background Jobs",
+  khmerTitle: "ការស្វែងយល់ពី Background Jobs ក្នុង Web Backend",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Long-running tasks (image processing, email campaigns, PDF generation) block the request-response cycle if executed synchronously. BullMQ provides a robust, Redis-backed job queue: producers add jobs to a queue instantly, dedicated worker processes execute them asynchronously in the background. Features include automatic retries with exponential backoff, job prioritization, cron scheduling, concurrency control, and dead-letter queues for failed job inspection.",
-  tip: "Run BullMQ workers as separate Node.js processes — not inside the main Express process — so they don't compete for the event loop. This enables independent horizontal scaling of API servers and worker fleets.",
-  objective: "Offload time-consuming operations to background job queues with retry and monitoring.",
-  expectedOutcome: "Non-blocking API that delegates heavy work to resilient, monitored background workers.",
-  codeSnippet: "import { Queue, Worker } from \"bullmq\";\nimport { redis } from \"./config/redis.js\";\n\n// Producer: Add jobs instantly — don't await the work!\nconst emailQueue = new Queue(\"emails\", { connection: redis });\n\nexport const register = async (req, res) => {\n  const user = await User.create(req.body);\n\n  // Add to queue and return immediately\n  await emailQueue.add(\"welcome-email\", {\n    to: user.email, name: user.name\n  }, {\n    attempts: 3,\n    backoff: { type: \"exponential\", delay: 2000 }  // 2s, 4s, 8s retries\n  });\n\n  res.status(201).json({ success: true, data: sanitizeUser(user) });\n};\n\n// Worker: Runs in a SEPARATE process\nconst emailWorker = new Worker(\"emails\", async (job) => {\n  const { to, name } = job.data;\n  await sendWelcomeEmail({ to, name });\n  console.log(`Email sent to ${to}`);\n}, { connection: redis, concurrency: 5 });\n\nemailWorker.on(\"failed\", (job, err) => {\n  console.error(`Job ${job.id} failed after ${job.attemptsMade} attempts:`, err.message);\n});",
+  summary: "Background jobs are asynchronous tasks that execute outside the critical request-response cycle of an HTTP server. Heavy computations (video transcoding, large CSV generation, external API syncs, batch emails) that take seconds or minutes to complete are moved out of HTTP handlers so users receive instant HTTP responses.",
+  tip: "If a task takes longer than 200ms to complete, offload it to a background job instead of holding the HTTP connection open.",
+  objective: "Understand why long-running computational tasks must run asynchronously in the background.",
+  expectedOutcome: "Clear criteria for identifying tasks that should be offloaded from HTTP threads.",
+  codeSnippet: "// Synchronous (Bad UX - 5s delay):\n// POST /checkout -> [Charge Card] -> [Generate PDF Invoice (4s)] -> [Send Email (1s)] -> 200 OK (5.2s total!)\n\n// Asynchronous Background Jobs (Great UX - 50ms):\n// POST /checkout -> [Charge Card] -> [Enqueue Job: invoice + email] -> 200 OK (50ms!)\n// [Background Worker] consumes job in background and emails PDF without blocking user.",
 };
 
 ```javascript
-import { Queue, Worker } from "bullmq";
-import { redis } from "./config/redis.js";
+// Synchronous (Bad UX - 5s delay):
+// POST /checkout -> [Charge Card] -> [Generate PDF Invoice (4s)] -> [Send Email (1s)] -> 200 OK (5.2s total!)
 
-// Producer: Add jobs instantly — don't await the work!
-const emailQueue = new Queue("emails", { connection: redis });
-
-export const register = async (req, res) => {
-  const user = await User.create(req.body);
-
-  // Add to queue and return immediately
-  await emailQueue.add("welcome-email", {
-    to: user.email, name: user.name
-  }, {
-    attempts: 3,
-    backoff: { type: "exponential", delay: 2000 }  // 2s, 4s, 8s retries
-  });
-
-  res.status(201).json({ success: true, data: sanitizeUser(user) });
-};
-
-// Worker: Runs in a SEPARATE process
-const emailWorker = new Worker("emails", async (job) => {
-  const { to, name } = job.data;
-  await sendWelcomeEmail({ to, name });
-  console.log(`Email sent to ${to}`);
-}, { connection: redis, concurrency: 5 });
-
-emailWorker.on("failed", (job, err) => {
-  console.error(`Job ${job.id} failed after ${job.attemptsMade} attempts:`, err.message);
-});
+// Asynchronous Background Jobs (Great UX - 50ms):
+// POST /checkout -> [Charge Card] -> [Enqueue Job: invoice + email] -> 200 OK (50ms!)
+// [Background Worker] consumes job in background and emails PDF without blocking user.
 ```

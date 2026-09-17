@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M28-18",
+  number: "18",
+  title: "CI/CD",
+  khmerTitle: "គោលការណ៍ Continuous Integration & Continuous Deployment",
+  type: "concept",
+  codeLanguage: "yaml",
+  summary: "Continuous Integration (CI) automatically builds and tests code on every Git commit or pull request. Continuous Deployment (CD) automatically pushes passing code to staging or production servers without manual intervention. CI/CD catches regressions early and shortens delivery cycles from weeks to minutes.",
+  tip: "Require all CI checks (linting, TypeScript check, unit tests) to pass before permitting pull request merges to the `main` branch.",
+  objective: "Understand the CI/CD pipeline lifecycle from commit to production deployment.",
+  expectedOutcome: "Familiarity with automated testing, building, and deployment workflows.",
+  codeSnippet: "// Modern CI/CD Pipeline Lifecycle:\n//\n// 1. Developer pushes commit to 'main'\n// 2. GitHub Actions CI triggers automatically:\n//    ├── Runs ESLint check\n//    ├── Runs TypeScript check (tsc --noEmit)\n//    ├── Runs Vitest automated test suite\n//    └── Builds Docker image\n// 3. CD step deploys passing container to VPS / Cloud via SSH / Webhook\n// 4. Zero-downtime rolling update completes in under 2 minutes!",
+};
+
+```yaml
+// Modern CI/CD Pipeline Lifecycle:
+//
+// 1. Developer pushes commit to 'main'
+// 2. GitHub Actions CI triggers automatically:
+//    ├── Runs ESLint check
+//    ├── Runs TypeScript check (tsc --noEmit)
+//    ├── Runs Vitest automated test suite
+//    └── Builds Docker image
+// 3. CD step deploys passing container to VPS / Cloud via SSH / Webhook
+// 4. Zero-downtime rolling update completes in under 2 minutes!
+```

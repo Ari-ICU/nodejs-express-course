@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M25-11",
+  number: "11",
+  title: "Compression",
+  khmerTitle: "ការបង្រួម HTTP Responses ជាមួយ compression (Gzip / Brotli)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "The `compression` middleware compresses HTTP response bodies using Gzip or Brotli algorithms before transmitting them over the network. Compressing JSON payloads reduces transfer sizes by 60% to 80%, resulting in dramatically faster page loads on mobile networks and reduced cloud bandwidth costs.",
+  tip: "Place `app.use(compression())` near the top of your middleware stack to compress all responses exceeding 1KB.",
+  objective: "Enable Gzip compression in Express to reduce data payload size.",
+  expectedOutcome: "Up to 80% reduction in transmitted network byte sizes for JSON responses.",
+  codeSnippet: "import express from \"express\";\nimport compression from \"compression\";\n\nconst app = express();\n\n// Compress all HTTP responses exceeding 1KB\napp.use(\n  compression({\n    level: 6, // Optimal balance between compression ratio and CPU usage\n    threshold: 1024, // Only compress responses larger than 1KB\n    filter: (req, res) => {\n      if (req.headers[\"x-no-compression\"]) return false;\n      return compression.filter(req, res);\n    },\n  })\n);",
+};
+
+```javascript
+import express from "express";
+import compression from "compression";
+
+const app = express();
+
+// Compress all HTTP responses exceeding 1KB
+app.use(
+  compression({
+    level: 6, // Optimal balance between compression ratio and CPU usage
+    threshold: 1024, // Only compress responses larger than 1KB
+    filter: (req, res) => {
+      if (req.headers["x-no-compression"]) return false;
+      return compression.filter(req, res);
+    },
+  })
+);
+```

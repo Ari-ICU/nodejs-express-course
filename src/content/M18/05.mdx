@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M18-05",
+  number: "05",
+  title: "Brute-force Protection",
+  khmerTitle: "ការទប់ស្កាត់ការវាយប្រហារ Brute-force លើ Login Routes",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Authentication routes require aggressive rate limiting compared to general API endpoints. An attacker submitting thousands of password combinations can crack weak passwords or saturate server CPU with bcrypt operations. Strict limiters (e.g. 5 attempts per 15 minutes) or progressive delay mechanisms stop automated brute-force attacks in their tracks.",
+  tip: "Apply strict rate limiting specifically to `/api/v1/auth/login` and `/api/v1/auth/forgot-password` to neutralize automated password dictionary attacks.",
+  objective: "Configure specialized high-friction rate limiters on credential verification routes.",
+  expectedOutcome: "Hardened authentication endpoints that lock out brute-force attackers.",
+  codeSnippet: "import rateLimit from \"express-rate-limit\";\n\n// Strict limiter for sensitive auth routes: 5 attempts per 15 minutes\nexport const authLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 minutes\n  max: 5, // Limit each IP to 5 login requests per window\n  skipSuccessfulRequests: true, // Only count failed logins!\n  message: {\n    status: 429,\n    message: \"Too many failed login attempts. Please try again after 15 minutes.\"\n  }\n});\n\n// Apply exclusively to authentication routes\napp.use(\"/api/v1/auth/login\", authLimiter);\napp.use(\"/api/v1/auth/reset-password\", authLimiter);",
+};
+
+```javascript
+import rateLimit from "express-rate-limit";
+
+// Strict limiter for sensitive auth routes: 5 attempts per 15 minutes
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Limit each IP to 5 login requests per window
+  skipSuccessfulRequests: true, // Only count failed logins!
+  message: {
+    status: 429,
+    message: "Too many failed login attempts. Please try again after 15 minutes."
+  }
+});
+
+// Apply exclusively to authentication routes
+app.use("/api/v1/auth/login", authLimiter);
+app.use("/api/v1/auth/reset-password", authLimiter);
+```

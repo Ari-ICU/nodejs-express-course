@@ -1,43 +1,22 @@
 export const meta = {
   id: "M23-01",
   number: "01",
-  title: "API Development Tools: Postman",
-  khmerTitle: "ការប្រើ Postman សម្រាប់ API Development",
-  type: "lab",
+  title: "Postman",
+  khmerTitle: "ការស្វែងយល់ពីឧបករណ៍ Postman សម្រាប់ API Development",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Postman is the industry-standard GUI tool for API development, manual testing, and documentation. Organize all endpoints in a Collection with folders per resource. Environment variables store base URLs and tokens across local, staging, and production environments. Pre-request scripts automatically refresh expired JWT tokens before each request. Test scripts assert response status, body structure, and data integrity — creating an automated regression suite runnable via Newman in CI pipelines.",
-  tip: "Store your access token via a test script on the login endpoint: pm.environment.set('accessToken', json.accessToken). Then reference it in all requests as {{accessToken}}. This eliminates manual copy-pasting of tokens between requests.",
-  objective: "Master Postman for professional API development with environments, scripts, and automated testing.",
-  expectedOutcome: "Complete Postman collection with auto-token refresh and automated test assertions.",
-  codeSnippet: "// Postman → Login Request → Tests tab (JavaScript)\n\n// Auto-save token after login\npm.test(\"Login succeeds\", () => pm.response.to.have.status(200));\nconst json = pm.response.json();\npm.environment.set(\"accessToken\", json.accessToken);\npm.environment.set(\"tokenExpiry\", Date.now() + 14 * 60 * 1000); // 14 min\n\n// ---\n// Any protected request → Pre-request Script (auto-refresh expired token):\nconst expiry = pm.environment.get(\"tokenExpiry\");\nif (!expiry || Date.now() > parseInt(expiry)) {\n  pm.sendRequest({\n    url: pm.environment.get(\"baseUrl\") + \"/auth/refresh\",\n    method: \"POST\"\n  }, (err, res) => {\n    const data = res.json();\n    pm.environment.set(\"accessToken\", data.accessToken);\n    pm.environment.set(\"tokenExpiry\", Date.now() + 14 * 60 * 1000);\n  });\n}\n\n// ---\n// Run entire collection via Newman in CI:\n// npx newman run MyAPI.postman_collection.json \\\n//   --environment production.postman_environment.json \\\n//   --reporters cli,junit",
+  summary: "Postman is the industry-leading API development and testing platform. It provides a visual graphical interface to compose HTTP requests, inspect headers and JSON responses, organize endpoints into hierarchical collections, manage environment variables, and automate assertions using JavaScript.",
+  tip: "Use the Postman desktop client rather than the web version to avoid CORS limitations when testing local `localhost` servers.",
+  objective: "Understand Postman features for interactive testing, debugging, and team collaboration.",
+  expectedOutcome: "Proficiency navigating Postman workspaces, requests, and consoles.",
+  codeSnippet: "// Postman Core Capabilities:\n// 1. Request Builder: Formulate GET, POST, PUT, DELETE with headers & bodies\n// 2. Collections: Group related API endpoints into shareable folders\n// 3. Environments: Toggle seamlessly between Local, Staging, and Production\n// 4. Scripts: Automate pre-request token generation and test assertions\n// 5. Runner & Newman: Execute test suites in batch from the terminal/CI",
 };
 
 ```javascript
-// Postman → Login Request → Tests tab (JavaScript)
-
-// Auto-save token after login
-pm.test("Login succeeds", () => pm.response.to.have.status(200));
-const json = pm.response.json();
-pm.environment.set("accessToken", json.accessToken);
-pm.environment.set("tokenExpiry", Date.now() + 14 * 60 * 1000); // 14 min
-
-// ---
-// Any protected request → Pre-request Script (auto-refresh expired token):
-const expiry = pm.environment.get("tokenExpiry");
-if (!expiry || Date.now() > parseInt(expiry)) {
-  pm.sendRequest({
-    url: pm.environment.get("baseUrl") + "/auth/refresh",
-    method: "POST"
-  }, (err, res) => {
-    const data = res.json();
-    pm.environment.set("accessToken", data.accessToken);
-    pm.environment.set("tokenExpiry", Date.now() + 14 * 60 * 1000);
-  });
-}
-
-// ---
-// Run entire collection via Newman in CI:
-// npx newman run MyAPI.postman_collection.json \
-//   --environment production.postman_environment.json \
-//   --reporters cli,junit
+// Postman Core Capabilities:
+// 1. Request Builder: Formulate GET, POST, PUT, DELETE with headers & bodies
+// 2. Collections: Group related API endpoints into shareable folders
+// 3. Environments: Toggle seamlessly between Local, Staging, and Production
+// 4. Scripts: Automate pre-request token generation and test assertions
+// 5. Runner & Newman: Execute test suites in batch from the terminal/CI
 ```

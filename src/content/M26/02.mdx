@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M26-02",
+  number: "02",
+  title: "Why Background Jobs?",
+  khmerTitle: "មូលហេតុចម្បងដែលត្រូវប្រើប្រាស់ Background Processing",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Background jobs solve three critical production challenges: responsiveness, reliability, and scalability. Responsiveness ensures end-users experience snappy, sub-100ms API responses. Reliability ensures transient failures (e.g. SMTP outages) are automatically retried without losing user actions. Scalability allows workers to scale independently from API web servers.",
+  tip: "Separating API web servers from background workers lets you scale worker CPU independently during heavy batch workloads without impacting web API throughput.",
+  objective: "Analyze responsiveness, reliability, and resource isolation benefits of job architectures.",
+  expectedOutcome: "Understanding of enterprise asynchronous job decoupling and fault tolerance.",
+  codeSnippet: "// 3 Pillars of Background Jobs:\n// 1. User Responsiveness: Return 202 Accepted or 201 Created immediately\n// 2. Failure Resilience: Automated retries with exponential backoff on network dropouts\n// 3. Rate-Limiting External APIs: Throttle outgoing requests to avoid 3rd-party rate limits",
+};
+
+```javascript
+// 3 Pillars of Background Jobs:
+// 1. User Responsiveness: Return 202 Accepted or 201 Created immediately
+// 2. Failure Resilience: Automated retries with exponential backoff on network dropouts
+// 3. Rate-Limiting External APIs: Throttle outgoing requests to avoid 3rd-party rate limits
+```

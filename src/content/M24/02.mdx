@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M24-02",
+  number: "02",
+  title: "WebSocket Concept",
+  khmerTitle: "គោលការណ៍គ្រឹះនៃ WebSocket Protocol (RFC 6455)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "The WebSocket protocol (RFC 6455) provides full-duplex communication over a single long-lived TCP connection. It begins with an HTTP Upgrade handshake (`Upgrade: websocket`). Once established, tiny 2-to-10 byte binary frames replace bloated 1KB+ HTTP headers, enabling lightning-fast real-time messaging with minimal latency.",
+  tip: "WebSocket connections use the `ws://` (unencrypted) or `wss://` (TLS encrypted) URL schemes. Always use `wss://` in production.",
+  objective: "Understand the WebSocket upgrade handshake and frame architecture.",
+  expectedOutcome: "Technical understanding of low-overhead full-duplex socket protocols.",
+  codeSnippet: "// WebSocket Upgrade Handshake:\n// Client -> GET /chat HTTP/1.1\n//           Host: server.example.com\n//           Upgrade: websocket\n//           Connection: Upgrade\n//           Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n//           Sec-WebSocket-Version: 13\n//\n// Server -> HTTP/1.1 101 Switching Protocols\n//           Upgrade: websocket\n//           Connection: Upgrade\n//           Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\n//\n// Connection upgraded! Direct TCP full-duplex streaming begins.",
+};
+
+```javascript
+// WebSocket Upgrade Handshake:
+// Client -> GET /chat HTTP/1.1
+//           Host: server.example.com
+//           Upgrade: websocket
+//           Connection: Upgrade
+//           Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+//           Sec-WebSocket-Version: 13
+//
+// Server -> HTTP/1.1 101 Switching Protocols
+//           Upgrade: websocket
+//           Connection: Upgrade
+//           Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+//
+// Connection upgraded! Direct TCP full-duplex streaming begins.
+```

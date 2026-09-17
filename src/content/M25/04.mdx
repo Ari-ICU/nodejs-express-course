@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M25-04",
+  number: "04",
+  title: "MongoDB Query Optimization",
+  khmerTitle: "ការបង្កើនល្បឿន MongoDB Queries ជាមួយ Lean និង Projections",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "By default, Mongoose wraps query results in full Mongoose Document instances complete with change tracking, getters, and schema methods. For read-heavy endpoints, appending `.lean()` skips document instantiation and returns plain JavaScript objects, reducing memory allocation and improving query execution speeds by up to 400%.",
+  tip: "Always append `.lean()` to GET queries where you do not need to call `.save()` on the returned documents.",
+  objective: "Apply query optimizations including .lean(), field projections (.select()), and limit clauses.",
+  expectedOutcome: "Substantially reduced memory footprint and faster JSON serialization.",
+  codeSnippet: "// High Performance Query:\n// 1. .select() only fetches necessary fields (reduces network transfer)\n// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)\n// 3. .limit() restricts total document count\nconst products = await Product.find({ isPublished: true })\n  .select(\"title price thumbnail rating\") // Field projection\n  .limit(20)\n  .lean(); // 3-4x faster than default find()!",
+};
+
+```javascript
+// High Performance Query:
+// 1. .select() only fetches necessary fields (reduces network transfer)
+// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)
+// 3. .limit() restricts total document count
+const products = await Product.find({ isPublished: true })
+  .select("title price thumbnail rating") // Field projection
+  .limit(20)
+  .lean(); // 3-4x faster than default find()!
+```

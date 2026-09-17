@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M23-04",
+  number: "04",
+  title: "Testing API Requests",
+  khmerTitle: "ការផ្ញើ និងត្រួតពិនិត្យ HTTP Requests ក្នុង Postman",
+  type: "lab",
+  codeLanguage: "json",
+  summary: "Inspecting API responses requires examining status codes, response times (ms), payload sizes (KB), and HTTP response headers. Postman's pretty-printed JSON viewer highlights syntax, formats responses, and renders cookies sent by the server.",
+  tip: "Use the Postman Console (`Ctrl+Alt+C` or `Cmd+Option+C`) to view raw network traffic, exact headers sent, and `console.log()` outputs.",
+  objective: "Analyze HTTP response metrics, headers, and payload structures in Postman.",
+  expectedOutcome: "Detailed diagnostic capability when debugging live backend endpoints.",
+  codeSnippet: "// Response Inspection Checklist:\n// Status:       200 OK\n// Time:         48 ms (< 200 ms is optimal)\n// Size:         1.24 KB\n// Headers:      Content-Type: application/json; charset=utf-8\n//               X-RateLimit-Remaining: 99\n// Body:         { \"status\": \"success\", \"results\": 10, \"data\": [...] }",
+};
+
+```json
+// Response Inspection Checklist:
+// Status:       200 OK
+// Time:         48 ms (< 200 ms is optimal)
+// Size:         1.24 KB
+// Headers:      Content-Type: application/json; charset=utf-8
+//               X-RateLimit-Remaining: 99
+// Body:         { "status": "success", "results": 10, "data": [...] }
+```

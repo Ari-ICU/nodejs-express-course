@@ -1,33 +1,30 @@
 export const meta = {
   id: "M16-01",
   number: "01",
-  title: "Password Hashing with bcrypt",
-  khmerTitle: "ការ Hash ពាក្យសម្ងាត់ជាមួយ bcrypt",
-  type: "lab",
+  title: "Authentication vs Authorization",
+  khmerTitle: "ភាពខុសគ្នារវាង Authentication និង Authorization",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Passwords must never be stored as plain text in a database. `bcrypt` is a battle-tested adaptive hashing algorithm that intentionally runs slowly to defeat brute-force and rainbow table attacks. It automatically generates and embeds a cryptographic salt into every hash, meaning two identical passwords produce completely different hash outputs. The `saltRounds` (work factor) controls computation time — 10 to 12 is the industry standard balancing security with response latency.",
-  tip: "Never store plaintext passwords! A salt round of 10 to 12 provides the optimal balance between security and server latency. Do NOT use MD5 or SHA-256 for passwords — they are too fast and brute-forceable.",
-  objective: "Safely hash and verify user passwords with bcrypt before persisting credentials.",
-  expectedOutcome: "Zero plaintext credentials stored in the database; bcrypt-verified login flow.",
-  codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// On Registration: Hash the password before saving\nconst salt = await bcrypt.genSalt(12);\nconst hashedPassword = await bcrypt.hash(rawPassword, salt);\nawait User.create({ email, password: hashedPassword });\n\n// On Login: Compare submitted password to stored hash\nconst user = await User.findOne({ email });\nif (!user) throw new AppError(\"Invalid credentials\", 401);\n\nconst isMatch = await bcrypt.compare(submittedPassword, user.password);\nif (!isMatch) throw new AppError(\"Invalid email or password\", 401);\n\n// Never return the hashed password in responses!\nconst { password: _, ...safeUser } = user.toObject();\nres.json({ success: true, data: safeUser });",
+  summary: "Authentication (AuthN) answers 'Who are you?' by verifying identity through credentials like email/password or tokens. Authorization (AuthZ) answers 'What are you allowed to do?' by evaluating privileges, roles, and permissions against resources. In standard backend flows, Authentication must always succeed before Authorization evaluation begins.",
+  tip: "Remember: 401 Unauthorized strictly means unauthenticated (missing or invalid token). 403 Forbidden means authenticated, but lacking sufficient permissions for that resource.",
+  objective: "Distinguish between identity verification (AuthN) and access entitlement (AuthZ) in backend system design.",
+  expectedOutcome: "Accurate architectural separation and correct HTTP status code usage (401 vs 403).",
+  codeSnippet: "// Concept breakdown in Express middleware flow:\n// 1. Authentication (Who are you?) -> returns 401 if unauthenticated\napp.use(\"/api/admin/*\", verifyAuthToken);\n\n// 2. Authorization (What can you do?) -> returns 403 if unauthorized\napp.delete(\"/api/admin/users/:id\", (req, res) => {\n  if (req.user.role !== \"superadmin\") {\n    return res.status(403).json({\n      status: \"fail\",\n      message: \"Forbidden: Only superadmins can delete user accounts\"\n    });\n  }\n  // Proceed with deletion...\n});",
 };
 
 ```javascript
-import bcrypt from "bcryptjs";
+// Concept breakdown in Express middleware flow:
+// 1. Authentication (Who are you?) -> returns 401 if unauthenticated
+app.use("/api/admin/*", verifyAuthToken);
 
-// On Registration: Hash the password before saving
-const salt = await bcrypt.genSalt(12);
-const hashedPassword = await bcrypt.hash(rawPassword, salt);
-await User.create({ email, password: hashedPassword });
-
-// On Login: Compare submitted password to stored hash
-const user = await User.findOne({ email });
-if (!user) throw new AppError("Invalid credentials", 401);
-
-const isMatch = await bcrypt.compare(submittedPassword, user.password);
-if (!isMatch) throw new AppError("Invalid email or password", 401);
-
-// Never return the hashed password in responses!
-const { password: _, ...safeUser } = user.toObject();
-res.json({ success: true, data: safeUser });
+// 2. Authorization (What can you do?) -> returns 403 if unauthorized
+app.delete("/api/admin/users/:id", (req, res) => {
+  if (req.user.role !== "superadmin") {
+    return res.status(403).json({
+      status: "fail",
+      message: "Forbidden: Only superadmins can delete user accounts"
+    });
+  }
+  // Proceed with deletion...
+});
 ```

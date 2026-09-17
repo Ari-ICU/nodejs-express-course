@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M25-09",
+  number: "09",
+  title: "Redis with Node.js",
+  khmerTitle: "ការភ្ជាប់ និងប្រើប្រាស់ Redis ក្នុង Node.js (ioredis)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "`ioredis` is a robust, full-featured Redis client for Node.js. It features built-in support for Promises, cluster configurations, sentinel failover, and automatic reconnection. Establishing a single shared Redis client singleton provides high-throughput caching throughout your Express services.",
+  tip: "Use `ioredis` instead of the legacy `redis` package for superior cluster management and better TypeScript support.",
+  objective: "Connect to a Redis instance from Node.js using ioredis with error handling.",
+  expectedOutcome: "Operational Redis client connection handling read/write operations.",
+  codeSnippet: "import Redis from \"ioredis\";\n\nexport const redis = new Redis({\n  host: process.env.REDIS_HOST || \"localhost\",\n  port: Number(process.env.REDIS_PORT) || 6379,\n  password: process.env.REDIS_PASSWORD || undefined,\n  retryStrategy: (times) => Math.min(times * 50, 2000), // Exponential backoff\n});\n\nredis.on(\"connect\", () => console.log(\"Connected to Redis successfully!\"));\nredis.on(\"error\", (err) => console.error(\"Redis connection error:\", err));",
+};
+
+```javascript
+import Redis from "ioredis";
+
+export const redis = new Redis({
+  host: process.env.REDIS_HOST || "localhost",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  password: process.env.REDIS_PASSWORD || undefined,
+  retryStrategy: (times) => Math.min(times * 50, 2000), // Exponential backoff
+});
+
+redis.on("connect", () => console.log("Connected to Redis successfully!"));
+redis.on("error", (err) => console.error("Redis connection error:", err));
+```

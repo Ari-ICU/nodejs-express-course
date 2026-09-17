@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M18-07",
+  number: "07",
+  title: "Password Security",
+  khmerTitle: "គោលការណ៍សុវត្ថិភាពពាក្យសម្ងាត់ (NIST Guidelines)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Modern password security aligns with NIST Special Publication 800-63B standards. Key recommendations include requiring a minimum of 8 to 12 characters, permitting long passphrases (up to 64+ characters), allowing all printable ASCII and Unicode characters, checking against lists of breached/compromised passwords, and eliminating arbitrary periodic expiration rules.",
+  tip: "Do not enforce frustrating rules like 'must contain 1 special character and 1 uppercase letter' without allowing long passphrases. Length provides far more entropy than character complexity.",
+  objective: "Understand and implement contemporary password strength guidelines based on NIST standards.",
+  expectedOutcome: "User-friendly yet mathematically robust password validation schemas.",
+  codeSnippet: "import { z } from \"zod\";\n\n// NIST-aligned password schema:\nexport const passwordSchema = z\n  .string()\n  .min(10, \"Password must be at least 10 characters long\")\n  .max(128, \"Password cannot exceed 128 characters\")\n  .refine((val) => !/^(password|12345678|qwerty|admin)/i.test(val), {\n    message: \"Password is too common and easily guessable\",\n  });",
+};
+
+```javascript
+import { z } from "zod";
+
+// NIST-aligned password schema:
+export const passwordSchema = z
+  .string()
+  .min(10, "Password must be at least 10 characters long")
+  .max(128, "Password cannot exceed 128 characters")
+  .refine((val) => !/^(password|12345678|qwerty|admin)/i.test(val), {
+    message: "Password is too common and easily guessable",
+  });
+```

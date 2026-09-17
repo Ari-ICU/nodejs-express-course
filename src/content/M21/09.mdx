@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M21-09",
+  number: "09",
+  title: "Error Documentation",
+  khmerTitle: "ការរៀបចំទម្រង់ Error Response ជាលក្ខណៈស្តង់ដារក្នុង Swagger",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Standardized error responses streamline API troubleshooting. Documenting a centralized `ErrorResponse` component schema with `status`, `message`, and optional `errors` array provides a consistent blueprint that all 4xx and 5xx responses conform to.",
+  tip: "Ensure your global Express error middleware emits the exact same JSON keys documented in your OpenAPI `ErrorResponse` schema.",
+  objective: "Define and reference unified error response schemas across all endpoints.",
+  expectedOutcome: "Consistent error documentation matching real runtime Express errors.",
+  codeSnippet: "/**\n * @openapi\n * components:\n *   schemas:\n *     ErrorResponse:\n *       type: object\n *       properties:\n *         status:\n *           type: string\n *           example: \"fail\"\n *         statusCode:\n *           type: integer\n *           example: 404\n *         message:\n *           type: string\n *           example: \"Resource not found\"\n *         errors:\n *           type: array\n *           items:\n *             type: string\n *           example: [\"Email already registered\"]\n */",
+};
+
+```javascript
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         status:
+ *           type: string
+ *           example: "fail"
+ *         statusCode:
+ *           type: integer
+ *           example: 404
+ *         message:
+ *           type: string
+ *           example: "Resource not found"
+ *         errors:
+ *           type: array
+ *           items:
+ *             type: string
+ *           example: ["Email already registered"]
+ */
+```

@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M18-11",
+  number: "11",
+  title: "Sensitive Information",
+  khmerTitle: "ការការពារទិន្នន័យសម្ងាត់ (Data Masking & Sanitization)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Sensitive information like passwords, credit card numbers, national IDs, and internal server paths must never appear in HTTP responses, error logs, or query strings. In Mongoose, schema definitions should mark sensitive fields with `select: false` so queries never retrieve them by default.",
+  tip: "Use `select: false` on Mongoose password fields. When logging errors in production, strip headers that contain `Authorization` or `Cookie` tokens.",
+  objective: "Prevent sensitive credential and system data leaks across API responses and logs.",
+  expectedOutcome: "Clean response payloads with automatic exclusion of internal hashes and secrets.",
+  codeSnippet: "// 1. In Mongoose Schema:\nconst userSchema = new mongoose.Schema({\n  email: { type: String, required: true },\n  password: { type: String, required: true, select: false }, // Never selected by default\n  passwordResetToken: { type: String, select: false },\n});\n\n// 2. In Model JSON transformation:\nuserSchema.set(\"toJSON\", {\n  transform: (doc, ret) => {\n    delete ret.password;\n    delete ret.__v;\n    return ret;\n  }\n});",
+};
+
+```javascript
+// 1. In Mongoose Schema:
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true },
+  password: { type: String, required: true, select: false }, // Never selected by default
+  passwordResetToken: { type: String, select: false },
+});
+
+// 2. In Model JSON transformation:
+userSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    delete ret.password;
+    delete ret.__v;
+    return ret;
+  }
+});
+```

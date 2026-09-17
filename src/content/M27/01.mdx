@@ -1,45 +1,27 @@
 export const meta = {
   id: "M27-01",
   number: "01",
-  title: "Enterprise Backend Architecture",
-  khmerTitle: "ស្ថាបត្យកម្ម Backend កម្រិត Enterprise",
+  title: "Backend Folder Structure",
+  khmerTitle: "រចនាសម្ព័ន្ធ Folder ស្តង់ដារសម្រាប់ Enterprise Backend",
   type: "architecture",
-  codeLanguage: "javascript",
-  summary: "Production Node.js backends require deliberate architectural organization to remain maintainable as teams grow. The feature-based layered architecture separates code by domain (users, products, orders) and responsibility (routes → controllers → services → models). This enables independent feature development, clean dependency patterns, isolated unit testing, and clear onboarding. Each layer has a single, well-defined responsibility — controllers handle HTTP I/O, services contain business logic, models interface with the database.",
-  tip: "Place all business logic exclusively in the service layer. Controllers should be thin — they only parse req, call a service, and format res. This makes services independently testable without mocking HTTP objects, and reusable from CLI scripts, cron jobs, or webhooks.",
-  objective: "Design a scalable, maintainable enterprise backend structure with strict separation of concerns.",
-  expectedOutcome: "A clean, navigable codebase that scales from solo developer to a 10+ person engineering team.",
-  codeSnippet: "/* Production Node.js Backend Directory Structure:\n\nsrc/\n├── config/\n│   ├── database.js       # MongoDB connection with retry logic\n│   └── redis.js          # Redis client singleton\n├── middleware/\n│   ├── auth.js           # protect() + restrictTo() guards\n│   ├── errorHandler.js   # Global error middleware\n│   └── rateLimiter.js    # Route-level rate limiters\n├── modules/              # Feature-based domain modules\n│   ├── users/\n│   │   ├── user.model.js      # Mongoose schema + indexes\n│   │   ├── user.service.js    # Business logic (pure JS, no req/res)\n│   │   ├── user.controller.js # Thin HTTP handlers only\n│   │   ├── user.routes.js     # Route + middleware composition\n│   │   └── user.validation.js # Zod schemas per endpoint\n│   ├── products/\n│   └── orders/\n├── lib/\n│   ├── AppError.js       # Custom operational error class\n│   ├── catchAsync.js     # try/catch wrapper for async handlers\n│   ├── apiFeatures.js    # Filter, Sort, Paginate utility class\n│   └── email.js          # Email sending helper\n├── queues/\n│   ├── email.queue.js    # Queue definitions\n│   └── email.worker.js   # Worker (separate process)\n└── app.js                # Express app + global middleware\n*/",
+  codeLanguage: "bash",
+  summary: "A scalable backend codebase enforces strict Separation of Concerns (SoC). Organizing code into discrete layers (`config`, `routes`, `controllers`, `services`, `models`, `middleware`, `validators`, `utils`) prevents messy monolithic files and ensures code remains testable and maintainable as the project grows.",
+  tip: "Keep business logic strictly inside `services/` and HTTP protocol logic inside `controllers/`. This makes swapping Express for Fastify or writing unit tests trivial.",
+  objective: "Organize a modular, production-ready directory structure for Node.js Express projects.",
+  expectedOutcome: "Standardized enterprise project layout adopted across all features.",
+  codeSnippet: "src/\n├── config/         # Environment vars, database connections, logger\n├── controllers/    # Request/response handling, HTTP status codes\n├── services/       # Core business logic, data calculations, 3rd party APIs\n├── models/         # Mongoose schemas and database models\n├── routes/         # Express router endpoint definitions\n├── middleware/     # Auth, error handling, rate limiters, upload guards\n├── validators/     # Zod/Joi request validation schemas\n├── utils/          # AppError class, formatters, helpers\n├── jobs/           # BullMQ queue producers and workers\n└── app.js          # Express app assembly (no listen())",
 };
 
-```javascript
-/* Production Node.js Backend Directory Structure:
-
+```bash
 src/
-├── config/
-│   ├── database.js       # MongoDB connection with retry logic
-│   └── redis.js          # Redis client singleton
-├── middleware/
-│   ├── auth.js           # protect() + restrictTo() guards
-│   ├── errorHandler.js   # Global error middleware
-│   └── rateLimiter.js    # Route-level rate limiters
-├── modules/              # Feature-based domain modules
-│   ├── users/
-│   │   ├── user.model.js      # Mongoose schema + indexes
-│   │   ├── user.service.js    # Business logic (pure JS, no req/res)
-│   │   ├── user.controller.js # Thin HTTP handlers only
-│   │   ├── user.routes.js     # Route + middleware composition
-│   │   └── user.validation.js # Zod schemas per endpoint
-│   ├── products/
-│   └── orders/
-├── lib/
-│   ├── AppError.js       # Custom operational error class
-│   ├── catchAsync.js     # try/catch wrapper for async handlers
-│   ├── apiFeatures.js    # Filter, Sort, Paginate utility class
-│   └── email.js          # Email sending helper
-├── queues/
-│   ├── email.queue.js    # Queue definitions
-│   └── email.worker.js   # Worker (separate process)
-└── app.js                # Express app + global middleware
-*/
+├── config/         # Environment vars, database connections, logger
+├── controllers/    # Request/response handling, HTTP status codes
+├── services/       # Core business logic, data calculations, 3rd party APIs
+├── models/         # Mongoose schemas and database models
+├── routes/         # Express router endpoint definitions
+├── middleware/     # Auth, error handling, rate limiters, upload guards
+├── validators/     # Zod/Joi request validation schemas
+├── utils/          # AppError class, formatters, helpers
+├── jobs/           # BullMQ queue producers and workers
+└── app.js          # Express app assembly (no listen())
 ```

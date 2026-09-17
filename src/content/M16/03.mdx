@@ -1,0 +1,34 @@
+export const meta = {
+  id: "M16-03",
+  number: "03",
+  title: "bcrypt",
+  khmerTitle: "ការប្រើប្រាស់បណ្ណាល័យ bcrypt",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "bcrypt is an adaptive cryptographic hashing algorithm designed by Niels Provos and David Mazières based on the Blowfish cipher. Its critical feature is the configurable 'work factor' (cost), which exponentially increases calculation time as computing hardware becomes faster. In Node.js, `bcryptjs` provides a pure JavaScript implementation or `bcrypt` for native C++ bindings.",
+  tip: "Use a cost factor (salt rounds) of 12 for modern production servers. It takes roughly 250-350ms per hash, protecting against offline brute-forcing while remaining responsive.",
+  objective: "Install and use bcrypt in Node.js to hash submitted passwords and compare login credentials.",
+  expectedOutcome: "Working credential hashing pipeline with optimal salt rounds configuration.",
+  codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// 1. Generate salt and hash during registration\nconst SALT_ROUNDS = 12;\nconst plainPassword = \"SecurePassword2026!\";\n\nconst salt = await bcrypt.genSalt(SALT_ROUNDS);\nconst passwordHash = await bcrypt.hash(plainPassword, salt);\nconsole.log(\"Hashed Password:\", passwordHash);\n\n// 2. Verify during user login\nconst candidatePassword = \"SecurePassword2026!\";\nconst isMatch = await bcrypt.compare(candidatePassword, passwordHash);\n\nif (!isMatch) {\n  throw new Error(\"Invalid email or password\");\n}\nconsole.log(\"Authentication successful!\");",
+};
+
+```javascript
+import bcrypt from "bcryptjs";
+
+// 1. Generate salt and hash during registration
+const SALT_ROUNDS = 12;
+const plainPassword = "SecurePassword2026!";
+
+const salt = await bcrypt.genSalt(SALT_ROUNDS);
+const passwordHash = await bcrypt.hash(plainPassword, salt);
+console.log("Hashed Password:", passwordHash);
+
+// 2. Verify during user login
+const candidatePassword = "SecurePassword2026!";
+const isMatch = await bcrypt.compare(candidatePassword, passwordHash);
+
+if (!isMatch) {
+  throw new Error("Invalid email or password");
+}
+console.log("Authentication successful!");
+```

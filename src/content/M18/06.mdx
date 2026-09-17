@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M18-06",
+  number: "06",
+  title: "Input Validation",
+  khmerTitle: "ការការពារប្រព័ន្ធតាមរយៈ Input Validation",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Rigorous input validation is the primary line of defense against injection attacks, buffer anomalies, and data corruption. By defining strict schema contracts using Zod or Joi, every incoming field must adhere to expected data types, string length boundaries, regex patterns, and allowable values before any business logic executes.",
+  tip: "Strip unexpected properties automatically using strict schema parsers (`schema.parse()`) to prevent Mass Assignment attacks where users inject unauthorized fields like `isAdmin: true`.",
+  objective: "Enforce strict schema validation rules to prevent malicious payloads from reaching application layers.",
+  expectedOutcome: "Zero unvalidated data penetrating beyond the Express middleware layer.",
+  codeSnippet: "import { z } from \"zod\";\n\nexport const updateProfileSchema = z.object({\n  name: z.string().trim().min(2).max(50),\n  bio: z.string().trim().max(300).optional(),\n  website: z.string().url().optional(),\n}).strict(); // .strict() rejects any payload containing unknown fields like 'role'!\n\nexport const validateUpdateProfile = (req, res, next) => {\n  const result = updateProfileSchema.safeParse(req.body);\n  if (!result.success) {\n    return res.status(400).json({\n      status: \"fail\",\n      errors: result.error.flatten().fieldErrors,\n    });\n  }\n  req.body = result.data; // replace with sanitized data\n  next();\n};",
+};
+
+```javascript
+import { z } from "zod";
+
+export const updateProfileSchema = z.object({
+  name: z.string().trim().min(2).max(50),
+  bio: z.string().trim().max(300).optional(),
+  website: z.string().url().optional(),
+}).strict(); // .strict() rejects any payload containing unknown fields like 'role'!
+
+export const validateUpdateProfile = (req, res, next) => {
+  const result = updateProfileSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(400).json({
+      status: "fail",
+      errors: result.error.flatten().fieldErrors,
+    });
+  }
+  req.body = result.data; // replace with sanitized data
+  next();
+};
+```

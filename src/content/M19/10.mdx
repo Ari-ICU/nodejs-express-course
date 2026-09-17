@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M19-10",
+  number: "10",
+  title: "Cloud Storage",
+  khmerTitle: "ស្ថាបត្យកម្ម Cloud Object Storage (S3-Compatible)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Cloud object storage stores files as objects within buckets identified by keys. Modern cloud providers (AWS S3, Cloudflare R2, MinIO, Google Cloud Storage) support the S3-compatible API standard. Node.js applications use the `@aws-sdk/client-s3` library to programmatically upload, retrieve, and delete files via secure HTTPS requests.",
+  tip: "Use MinIO locally via Docker to test S3-compatible cloud uploads on your development machine without incurring cloud bills.",
+  objective: "Understand S3-compatible object storage concepts: buckets, keys, and access policies.",
+  expectedOutcome: "Readiness to integrate any S3-compatible cloud storage provider into Node.js.",
+  codeSnippet: "// S3 Object Storage Concept:\n//\n// Endpoint: https://<account_id>.r2.cloudflarestorage.com\n// Bucket:   \"my-enterprise-bucket\"\n// Key:      \"avatars/64f1a2b3-avatar.webp\"\n//\n// Client Upload Request -> Node.js API -> S3 PutObjectCommand -> Cloudflare R2 / AWS S3\n// Web Browser <- Cloudflare CDN Edge (https://cdn.myapp.com/avatars/64f1a2b3-avatar.webp)",
+};
+
+```javascript
+// S3 Object Storage Concept:
+//
+// Endpoint: https://<account_id>.r2.cloudflarestorage.com
+// Bucket:   "my-enterprise-bucket"
+// Key:      "avatars/64f1a2b3-avatar.webp"
+//
+// Client Upload Request -> Node.js API -> S3 PutObjectCommand -> Cloudflare R2 / AWS S3
+// Web Browser <- Cloudflare CDN Edge (https://cdn.myapp.com/avatars/64f1a2b3-avatar.webp)
+```

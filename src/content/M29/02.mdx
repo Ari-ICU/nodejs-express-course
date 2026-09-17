@@ -1,34 +1,33 @@
 export const meta = {
   id: "M29-02",
   number: "02",
-  title: "Project 02: Auth API with JWT",
-  khmerTitle: "គម្រោងទី ២ ៖ Full Auth System ជាមួយ JWT",
+  title: "Project 02: Student Management API",
+  khmerTitle: "គម្រោងទី ២ ៖ Student Management API ជាមួយ Swagger",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build a complete authentication system: registration with bcrypt hashing, login with dual JWT tokens (access + refresh in HttpOnly cookie), protected /me endpoint, logout (clear cookie), forgot password (email token), and reset password. This is the authentication backbone shared by all subsequent projects. Test all edge cases: expired tokens, invalid signatures, missing auth headers, and wrong passwords.",
-  tip: "Test your token expiry logic thoroughly — simulate expired access tokens, cookie-based refresh, and the full re-authentication cycle. Ensure your protect middleware handles all token error types gracefully with appropriate HTTP status codes.",
-  objective: "Implement a complete, production-grade JWT authentication system with all standard flows.",
-  expectedOutcome: "Secure authentication API: register, login, refresh, logout, forgot/reset password.",
-  codeSnippet: "// Auth API endpoint map:\n// POST /api/v1/auth/register          → Hash password, create user, return tokens\n// POST /api/v1/auth/login             → Verify credentials, issue access + refresh tokens\n// POST /api/v1/auth/refresh           → Exchange HttpOnly cookie for new access token\n// POST /api/v1/auth/logout            → Clear refresh token cookie\n// POST /api/v1/auth/forgot-password   → Generate reset token, send email\n// PATCH /api/v1/auth/reset-password/:token → Validate token hash, update password\n// GET  /api/v1/users/me               → Protected: return current user (no password)\n\nexport const login = async ({ email, password }) => {\n  const user = await User.findOne({ email }).select(\"+password\");\n  if (!user || !(await bcrypt.compare(password, user.password))) {\n    throw new AppError(\"Invalid email or password\", 401);\n  }\n  const accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: \"15m\" });\n  const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: \"7d\" });\n  return { user: sanitizeUser(user), accessToken, refreshToken };\n};",
+  summary: "Build a Student Management API with comprehensive CRUD, full-text student search, course enrollment relationships with Mongoose population, grade tracking, Zod schema validation, and complete OpenAPI/Swagger interactive documentation. Demonstrates professional data modeling and interactive documentation.",
+  tip: "Use Mongoose pre-populate middleware on find queries so course details are attached automatically without repeating populate() in every controller.",
+  objective: "Construct an educational records API with relational population and interactive Swagger documentation.",
+  expectedOutcome: "Fully documented Student Management API with relational data integrity.",
+  codeSnippet: "// routes/student.routes.js with OpenAPI annotations\n/**\n * @openapi\n * /api/v1/students:\n *   get:\n *     summary: Retrieve paginated students with course population\n *     tags: [Students]\n *     parameters:\n *       - in: query\n *         name: search\n *         schema:\n *           type: string\n *     responses:\n *       200:\n *         description: List of students\n */\nrouter.get(\"/students\", studentController.getStudents);",
 };
 
 ```javascript
-// Auth API endpoint map:
-// POST /api/v1/auth/register          → Hash password, create user, return tokens
-// POST /api/v1/auth/login             → Verify credentials, issue access + refresh tokens
-// POST /api/v1/auth/refresh           → Exchange HttpOnly cookie for new access token
-// POST /api/v1/auth/logout            → Clear refresh token cookie
-// POST /api/v1/auth/forgot-password   → Generate reset token, send email
-// PATCH /api/v1/auth/reset-password/:token → Validate token hash, update password
-// GET  /api/v1/users/me               → Protected: return current user (no password)
-
-export const login = async ({ email, password }) => {
-  const user = await User.findOne({ email }).select("+password");
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new AppError("Invalid email or password", 401);
-  }
-  const accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: "15m" });
-  const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: "7d" });
-  return { user: sanitizeUser(user), accessToken, refreshToken };
-};
+// routes/student.routes.js with OpenAPI annotations
+/**
+ * @openapi
+ * /api/v1/students:
+ *   get:
+ *     summary: Retrieve paginated students with course population
+ *     tags: [Students]
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: List of students
+ */
+router.get("/students", studentController.getStudents);
 ```

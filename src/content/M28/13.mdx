@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M28-13",
+  number: "13",
+  title: "Nginx",
+  khmerTitle: "ការស្វែងយល់ពីតួនាទីរបស់ Nginx ក្នុង Production Architecture",
+  type: "concept",
+  codeLanguage: "nginx",
+  summary: "Nginx is a high-performance HTTP web server and reverse proxy. Sitting between the public internet and your Node.js API, Nginx handles SSL/TLS termination, HTTP request routing, static file caching, client payload buffering, and Gzip compression, shielding Node.js from slow clients and DoS floods.",
+  tip: "Never expose Node.js directly to public port 80/443 in production. Always place Nginx or Cloudflare in front as a reverse proxy.",
+  objective: "Understand the architectural benefits of Nginx reverse proxying in front of Node.js.",
+  expectedOutcome: "Clear rationale for reverse proxy architecture separating web tier from application tier.",
+  codeSnippet: "// Architecture Flow:\n// [Public Internet Client] (HTTPS Port 443)\n//           │\n//           ↓\n// [Nginx Reverse Proxy]\n//   ├── Terminates SSL / TLS encryption\n//   ├── Serves static assets directly (/public)\n//   ├── Buffers slow client uploads\n//   └── Proxies clean requests via internal network -> [Node.js Express (Port 5000)]",
+};
+
+```nginx
+// Architecture Flow:
+// [Public Internet Client] (HTTPS Port 443)
+//           │
+//           ↓
+// [Nginx Reverse Proxy]
+//   ├── Terminates SSL / TLS encryption
+//   ├── Serves static assets directly (/public)
+//   ├── Buffers slow client uploads
+//   └── Proxies clean requests via internal network -> [Node.js Express (Port 5000)]
+```

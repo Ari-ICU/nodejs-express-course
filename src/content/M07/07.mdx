@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M07-07",
+  number: "07",
+  title: "Route Parameters",
+  khmerTitle: "ការទាញយក Route Parameters ពី URL (:id)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Route parameters are named URL segments used to capture values specified at their position in the URL. Captured values are populated in the `req.params` object.",
+  tip: "Always validate that route parameters match expected formats (e.g. MongoDB ObjectId or integer IDs) to prevent database casting errors.",
+  objective: "Extract dynamic route parameters from incoming request URLs.",
+  expectedOutcome: "Precise parameter extraction for single-resource operations.",
+  codeSnippet: "app.get(\"/api/v1/courses/:courseId/modules/:moduleId\", (req, res) => {\n  const { courseId, moduleId } = req.params;\n  res.json({ courseId, moduleId });\n});",
+};
+
+```javascript
+app.get("/api/v1/courses/:courseId/modules/:moduleId", (req, res) => {
+  const { courseId, moduleId } = req.params;
+  res.json({ courseId, moduleId });
+});
+```

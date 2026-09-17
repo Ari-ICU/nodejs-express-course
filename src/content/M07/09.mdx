@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M07-09",
+  number: "09",
+  title: "Multiple Routes",
+  khmerTitle: "ការគ្រប់គ្រង Routes ច្រើនក្នុងកម្មវិធី",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Managing multiple routes cleanly requires logical grouping so that URL paths remain intuitive, predictable, and maintainable as the application scales.",
+  tip: "Define a consistent API version prefix (e.g. `/api/v1`) across all routes.",
+  objective: "Organize extensive route collections without naming collisions.",
+  expectedOutcome: "Clean, consistent API path namespaces across the entire project.",
+  codeSnippet: "// Mounting domain routers under versioned namespaces\napp.use(\"/api/v1/users\", userRouter);\napp.use(\"/api/v1/products\", productRouter);\napp.use(\"/api/v1/orders\", orderRouter);",
+};
+
+```javascript
+// Mounting domain routers under versioned namespaces
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/products", productRouter);
+app.use("/api/v1/orders", orderRouter);
+```

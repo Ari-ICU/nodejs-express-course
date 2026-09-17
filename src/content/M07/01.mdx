@@ -1,33 +1,19 @@
 export const meta = {
   id: "M07-01",
   number: "01",
-  title: "express.Router() & Route Modularization",
-  khmerTitle: "ការបំបែក Routes ដោយប្រើ express.Router()",
-  type: "lab",
+  title: "Basic Routes",
+  khmerTitle: "ការបង្កើត Basic Routes",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Organize API endpoints by business domain (e.g. `/api/v1/auth`, `/api/v1/users`, `/api/v1/products`).",
-  tip: "Using `router.route('/path').get().post()` prevents duplicate URL path declarations.",
-  objective: "Modularize routes into dedicated domain files.",
-  expectedOutcome: "Clean, maintainable, scalable API endpoint hierarchy.",
-  codeSnippet: "// routes/product.routes.js\nimport { Router } from \"express\";\nconst router = Router();\n\nrouter.route(\"/\")\n  .get(getProducts)\n  .post(createProduct);\n\nrouter.route(\"/:id\")\n  .get(getProductById)\n  .put(updateProduct)\n  .delete(deleteProduct);\n\nexport default router;\n\n// app.js\napp.use(\"/api/v1/products\", productRoutes);",
+  summary: "Basic routing matches a URI path and an HTTP method to a specific handler callback that returns data or executes business logic.",
+  tip: "Keep route definitions declarative and delegate handler logic to dedicated controller functions.",
+  objective: "Define basic static GET and POST routes in an Express application.",
+  expectedOutcome: "Working static endpoints responding to HTTP requests.",
+  codeSnippet: "app.get(\"/api/health\", (req, res) => {\n  res.json({ status: \"healthy\", timestamp: new Date() });\n});",
 };
 
 ```javascript
-// routes/product.routes.js
-import { Router } from "express";
-const router = Router();
-
-router.route("/")
-  .get(getProducts)
-  .post(createProduct);
-
-router.route("/:id")
-  .get(getProductById)
-  .put(updateProduct)
-  .delete(deleteProduct);
-
-export default router;
-
-// app.js
-app.use("/api/v1/products", productRoutes);
+app.get("/api/health", (req, res) => {
+  res.json({ status: "healthy", timestamp: new Date() });
+});
 ```

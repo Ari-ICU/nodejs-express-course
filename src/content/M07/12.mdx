@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M07-12",
+  number: "12",
+  title: "Nested Routes",
+  khmerTitle: "ការបង្កើត Nested Routes (Parent-Child Relationships)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Nested routes represent hierarchical relationships (e.g. `/tours/:tourId/reviews`). Express supports merging parent parameters into child routers using `{ mergeParams: true }`.",
+  tip: "Always pass `{ mergeParams: true }` to `Router()` when mounting nested child routers so child handlers can access parent route parameters (like `:tourId`).",
+  objective: "Construct hierarchical REST routes for parent-child data models.",
+  expectedOutcome: "Accurate modeling of relational resources in RESTful endpoints.",
+  codeSnippet: "// routes/review.routes.js\nimport { Router } from \"express\";\n\n// mergeParams: true allows access to :tourId from parent route!\nconst router = Router({ mergeParams: true });\n\nrouter.route(\"/\")\n  .get(getReviews)\n  .post(createReview);\n\nexport default router;\n\n// routes/tour.routes.js:\n// router.use(\"/:tourId/reviews\", reviewRouter);",
+};
+
+```javascript
+// routes/review.routes.js
+import { Router } from "express";
+
+// mergeParams: true allows access to :tourId from parent route!
+const router = Router({ mergeParams: true });
+
+router.route("/")
+  .get(getReviews)
+  .post(createReview);
+
+export default router;
+
+// routes/tour.routes.js:
+// router.use("/:tourId/reviews", reviewRouter);
+```

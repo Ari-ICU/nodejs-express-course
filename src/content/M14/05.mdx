@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M14-05",
+  number: "05",
+  title: "Parameter Validation",
+  khmerTitle: "ការផ្ទៀងផ្ទាត់ Route Parameters (:id)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Ensuring route parameters match expected patterns (e.g. UUID or MongoDB ObjectId) before executing queries.",
+  tip: "Rejecting invalid IDs at the middleware level avoids slow, wasted database queries.",
+  objective: "Validate route parameter formats using regex or schema rules.",
+  expectedOutcome: "Immediate 400 Bad Request responses for malformed IDs.",
+  codeSnippet: "export const mongoIdSchema = z.object({\n  id: z.string().regex(/^[0-9a-fA-F]{24}$/, \"Invalid MongoDB ObjectId\")\n});",
+};
+
+```javascript
+export const mongoIdSchema = z.object({
+  id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ObjectId")
+});
+```

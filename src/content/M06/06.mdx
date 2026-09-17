@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M06-06",
+  number: "06",
+  title: "Request Object",
+  khmerTitle: "ការស្វែងយល់ពី Request Object (req)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "The `req` object represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, cookies, and IP address. Express decorates Node's native `http.IncomingMessage` with intuitive helpers.",
+  tip: "Use `req.get('Header-Name')` to retrieve headers in a case-insensitive manner.",
+  objective: "Access all incoming client metadata through the request object.",
+  expectedOutcome: "Mastery of `req.body`, `req.params`, `req.query`, and `req.headers`.",
+  codeSnippet: "app.post(\"/api/items/:id\", (req, res) => {\n  console.log(\"Route param ID:\", req.params.id);\n  console.log(\"Query search:\", req.query.search);\n  console.log(\"Request payload:\", req.body);\n  console.log(\"Client IP:\", req.ip);\n  console.log(\"Auth header:\", req.get(\"Authorization\"));\n  res.sendStatus(200);\n});",
+};
+
+```javascript
+app.post("/api/items/:id", (req, res) => {
+  console.log("Route param ID:", req.params.id);
+  console.log("Query search:", req.query.search);
+  console.log("Request payload:", req.body);
+  console.log("Client IP:", req.ip);
+  console.log("Auth header:", req.get("Authorization"));
+  res.sendStatus(200);
+});
+```

@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M12-18",
+  number: "18",
+  title: "Mongoose Methods",
+  khmerTitle: "ការបង្កើត Instance Methods & Static Methods",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Instance methods operate on an individual document instance (`user.comparePassword()`), while Static methods operate on the Model collection (`User.findByEmail()`).",
+  tip: "Encapsulate authentication checks like password verification as an instance method on the User model.",
+  objective: "Add custom domain logic directly onto Mongoose Models.",
+  expectedOutcome: "Rich Domain Model encapsulation.",
+  codeSnippet: "import bcrypt from \"bcrypt\";\n\n// Instance method (operates on document instance):\nuserSchema.methods.comparePassword = async function(candidatePassword) {\n  return await bcrypt.compare(candidatePassword, this.password);\n};\n\n// Static method (operates on model):\nuserSchema.statics.findByRole = function(role) {\n  return this.find({ role });\n};",
+};
+
+```javascript
+import bcrypt from "bcrypt";
+
+// Instance method (operates on document instance):
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Static method (operates on model):
+userSchema.statics.findByRole = function(role) {
+  return this.find({ role });
+};
+```

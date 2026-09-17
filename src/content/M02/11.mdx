@@ -5,19 +5,21 @@ export const meta = {
   khmerTitle: "ប្រព័ន្ធម៉ូឌុល CommonJS (require / module.exports)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The legacy Node.js module system using synchronous `require()` and `module.exports`.",
-  tip: "CommonJS is synchronous and cannot easily tree-shake unused exports.",
-  objective: "Understand legacy CommonJS codebases and migration strategies.",
-  expectedOutcome: "Ability to read and maintain legacy Node.js code.",
-  codeSnippet: "// math.js\nconst add = (a, b) => a + b;\nmodule.exports = { add };\n\n// app.js\nconst { add } = require(\"./math\");\nconsole.log(add(5, 10)); // 15",
+  summary: "CommonJS is the legacy module system originally designed for Node.js. It loads modules synchronously using `require()` and exposes public APIs via `module.exports` or `exports`.",
+  tip: "While still widely supported, new backend projects should adopt modern ES Modules (`import`/`export`) for tree-shaking and standard ECMAScript compliance.",
+  objective: "Understand legacy CommonJS syntax and how it compares to ES Modules.",
+  expectedOutcome: "Ability to maintain or migrate legacy CommonJS codebases.",
+  codeSnippet: "// math.js (CommonJS export)\nfunction add(a, b) {\n  return a + b;\n}\nmodule.exports = { add };\n\n// app.js (CommonJS import)\nconst { add } = require(\"./math\");\nconsole.log(add(5, 10)); // 15",
 };
 
 ```javascript
-// math.js
-const add = (a, b) => a + b;
+// math.js (CommonJS export)
+function add(a, b) {
+  return a + b;
+}
 module.exports = { add };
 
-// app.js
+// app.js (CommonJS import)
 const { add } = require("./math");
 console.log(add(5, 10)); // 15
 ```

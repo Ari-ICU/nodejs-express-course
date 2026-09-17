@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M08-13",
+  number: "13",
+  title: "Middleware Best Practices",
+  khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ប្រព័ន្ធ Middleware",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Industry guidelines for middleware: keep functions focused on a single responsibility, handle errors promptly, never mutate global state, and encapsulate configurable middleware inside factory functions.",
+  tip: "Use middleware factory functions (functions that return a middleware) to pass configuration options dynamically.",
+  objective: "Apply enterprise patterns to author clean, modular middleware packages.",
+  expectedOutcome: "Reusable, highly configurable middleware components.",
+  codeSnippet: "// Middleware Factory Pattern:\nexport const rateLimiter = (options = { maxRequests: 100, windowMs: 60000 }) => {\n  const requests = new Map();\n  return (req, res, next) => {\n    // Custom rate limit logic using options\n    next();\n  };\n};",
+};
+
+```javascript
+// Middleware Factory Pattern:
+export const rateLimiter = (options = { maxRequests: 100, windowMs: 60000 }) => {
+  const requests = new Map();
+  return (req, res, next) => {
+    // Custom rate limit logic using options
+    next();
+  };
+};
+```

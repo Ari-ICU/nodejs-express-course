@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M03-13",
+  number: "13",
+  title: "Writing Files",
+  khmerTitle: "ការសរសេរ និងកែប្រែឯកសារ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Writing structured data (logs, exports, CSV files) safely to disk with atomic write patterns to avoid file corruption.",
+  tip: "To prevent partial writes during unexpected server restarts, write to a temporary file first, then use `fs.rename()` to overwrite atomically.",
+  objective: "Persist logs and structured reports to the file system.",
+  expectedOutcome: "Reliable write workflows preventing corrupted or partially-written files.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\nconst userLog = { userId: \"U_102\", action: \"LOGIN\", timestamp: new Date() };\n\n// Write formatted JSON\nawait fs.writeFile(\n  \"user-session.json\",\n  JSON.stringify(userLog, null, 2),\n  \"utf-8\"\n);\nconsole.log(\"Session saved successfully!\");",
+};
+
+```javascript
+import fs from "node:fs/promises";
+
+const userLog = { userId: "U_102", action: "LOGIN", timestamp: new Date() };
+
+// Write formatted JSON
+await fs.writeFile(
+  "user-session.json",
+  JSON.stringify(userLog, null, 2),
+  "utf-8"
+);
+console.log("Session saved successfully!");
+```

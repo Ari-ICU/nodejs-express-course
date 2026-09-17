@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M08-05",
+  number: "05",
+  title: "express.json()",
+  khmerTitle: "ការប្រើប្រាស់ express.json() សម្រាប់ Body Parsing",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "`express.json()` is a built-in middleware based on `body-parser`. It parses incoming requests with JSON payloads and populates `req.body` with the resulting JavaScript object.",
+  tip: "Always set a reasonable payload size limit (`{ limit: '10kb' }`) to protect your server from memory overflow attacks.",
+  objective: "Configure JSON body parsing with payload size limits.",
+  expectedOutcome: "Automatic population of `req.body` with security size caps.",
+  codeSnippet: "// Restrict JSON payload size to 100kb for security\napp.use(express.json({ limit: \"100kb\" }));\n\napp.post(\"/api/echo\", (req, res) => {\n  res.json({ received: req.body });\n});",
+};
+
+```javascript
+// Restrict JSON payload size to 100kb for security
+app.use(express.json({ limit: "100kb" }));
+
+app.post("/api/echo", (req, res) => {
+  res.json({ received: req.body });
+});
+```

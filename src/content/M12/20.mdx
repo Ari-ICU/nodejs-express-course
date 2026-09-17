@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M12-20",
+  number: "20",
+  title: "Population",
+  khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងឯកសារជាមួយ .populate()",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Population is Mongoose's replacement for SQL JOINs. It automatically replaces specified document path references with the actual referenced documents from other collections.",
+  tip: "Use field selection inside populate (`.populate('author', 'name email')`) to avoid fetching unwanted fields like passwords.",
+  objective: "Resolve referenced documents using population.",
+  expectedOutcome: "Seamless hydration of relational foreign key references.",
+  codeSnippet: "// Replaces author ObjectId with the actual User document!\nconst post = await Post.findById(postId)\n  .populate(\"author\", \"name email avatar\")\n  .populate(\"comments.user\", \"name\");",
+};
+
+```javascript
+// Replaces author ObjectId with the actual User document!
+const post = await Post.findById(postId)
+  .populate("author", "name email avatar")
+  .populate("comments.user", "name");
+```

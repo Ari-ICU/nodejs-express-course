@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M14-10",
+  number: "10",
+  title: "Sanitization",
+  khmerTitle: "ការធ្វើ Data Sanitization ដើម្បីការពារ Injection",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Sanitizing user inputs (trimming whitespaces, lowercasing emails, stripping HTML tags, escaping MongoDB operators) to prevent XSS and NoSQL injection.",
+  tip: "Always trim and lowercase email strings to avoid duplicate account collisions caused by casing differences.",
+  objective: "Implement automated data sanitization on incoming text.",
+  expectedOutcome: "Clean, normalized input data stored in the database.",
+  codeSnippet: "export const sanitizeEmail = (email) => {\n  return typeof email === \"string\" ? email.trim().toLowerCase() : \"\";\n};",
+};
+
+```javascript
+export const sanitizeEmail = (email) => {
+  return typeof email === "string" ? email.trim().toLowerCase() : "";
+};
+```

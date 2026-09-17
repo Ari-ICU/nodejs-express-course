@@ -1,26 +1,26 @@
 export const meta = {
   id: "M02-14",
   number: "14",
-  title: ".env & dotenv",
+  title: ".env",
   khmerTitle: "ការគ្រប់គ្រង .env ជាមួយបណ្ណាល័យ dotenv",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Store secrets in `.env` files for local development, with a documented `.env.example` committed to git.",
-  tip: "Always commit a `.env.example` file showing required keys with dummy values so teammates know what to configure.",
-  objective: "Configure local secrets cleanly without leaking credentials.",
-  expectedOutcome: "Zero secrets checked into git repositories.",
-  codeSnippet: "# .env file\nPORT=5000\nMONGODB_URI=mongodb://localhost:27017/shopdb\nJWT_SECRET=super_secret_signing_key_9021\nNODE_ENV=development\n\n# In server.js (Node 20+ has native --env-file=.env flag!)\n# node --env-file=.env server.js\n# Or using dotenv:\nimport \"dotenv/config\";",
+  summary: "The `.env` file stores local key-value environment variables. Libraries like `dotenv` or native Node.js `--env-file` parse this file at startup and populate `process.env`.",
+  tip: "Always create a `.env.example` file committing template keys without sensitive secrets so team members know which variables are required.",
+  objective: "Configure local environment files and load them into Node applications.",
+  expectedOutcome: "Secure secret management with automated local configuration loading.",
+  codeSnippet: "# .env file:\n# PORT=5000\n# DATABASE_URL=mongodb://localhost:27017/shop\n# JWT_SECRET=super_secret_key_123\n\n// Loading via dotenv in code:\nimport \"dotenv/config\";\n\n// OR using native Node 20+ CLI argument (zero dependencies!):\n// node --env-file=.env server.js",
 };
 
 ```javascript
-# .env file
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/shopdb
-JWT_SECRET=super_secret_signing_key_9021
-NODE_ENV=development
+# .env file:
+# PORT=5000
+# DATABASE_URL=mongodb://localhost:27017/shop
+# JWT_SECRET=super_secret_key_123
 
-# In server.js (Node 20+ has native --env-file=.env flag!)
-# node --env-file=.env server.js
-# Or using dotenv:
+// Loading via dotenv in code:
 import "dotenv/config";
+
+// OR using native Node 20+ CLI argument (zero dependencies!):
+// node --env-file=.env server.js
 ```

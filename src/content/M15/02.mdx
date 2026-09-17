@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M15-02",
+  number: "02",
+  title: "JavaScript Errors",
+  khmerTitle: "Native JavaScript Error Objects (Error, TypeError, SyntaxError)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Understanding the native JavaScript `Error` object, its `message`, `name`, and `stack` trace properties, and how subclasses like `TypeError` and `RangeError` behave.",
+  tip: "Always pass a descriptive string to `new Error('Description')` to aid in debugging logs.",
+  objective: "Utilize native JavaScript error objects and stack traces.",
+  expectedOutcome: "Proficiency in inspecting error stacks for root-cause analysis.",
+  codeSnippet: "const err = new Error(\"Database query timed out\");\nconsole.log(\"Error Name:\", err.name);       // \"Error\"\nconsole.log(\"Error Message:\", err.message); // \"Database query timed out\"\nconsole.log(\"Stack Trace:\", err.stack);",
+};
+
+```javascript
+const err = new Error("Database query timed out");
+console.log("Error Name:", err.name);       // "Error"
+console.log("Error Message:", err.message); // "Database query timed out"
+console.log("Stack Trace:", err.stack);
+```

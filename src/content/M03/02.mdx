@@ -5,18 +5,23 @@ export const meta = {
   khmerTitle: "ម៉ូឌុលគ្រប់គ្រងឯកសារ fs Module",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "File system operations with synchronous, callback, and modern promise-based flavors (`node:fs/promises`).",
-  tip: "Always prefer `node:fs/promises` with `async/await` in modern asynchronous code.",
-  objective: "Perform non-blocking read/write disk operations.",
-  expectedOutcome: "Safe and fast file operations.",
-  codeSnippet: "import fs from \"node:fs/promises\";\n\n// Asynchronous promise-based file write and read\nawait fs.writeFile(\"config.json\", JSON.stringify({ theme: \"dark\" }));\nconst content = await fs.readFile(\"config.json\", \"utf-8\");\nconsole.log(\"Config read:\", JSON.parse(content));",
+  summary: "The `node:fs` module provides comprehensive file system APIs to create, read, update, rename, and delete files and directories, offering synchronous, callback, and promise-based interfaces.",
+  tip: "Always import `node:fs/promises` for clean, readable async/await code instead of nesting callbacks.",
+  objective: "Perform CRUD operations on the local server filesystem.",
+  expectedOutcome: "Competency with file operations using modern async/await patterns.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\n// Write a file\nawait fs.writeFile(\"app.log\", \"System started successfully\\n\", \"utf-8\");\n\n// Append data\nawait fs.appendFile(\"app.log\", \"User logged in\\n\");\n\n// Read content\nconst content = await fs.readFile(\"app.log\", \"utf-8\");\nconsole.log(content);",
 };
 
 ```javascript
 import fs from "node:fs/promises";
 
-// Asynchronous promise-based file write and read
-await fs.writeFile("config.json", JSON.stringify({ theme: "dark" }));
-const content = await fs.readFile("config.json", "utf-8");
-console.log("Config read:", JSON.parse(content));
+// Write a file
+await fs.writeFile("app.log", "System started successfully\n", "utf-8");
+
+// Append data
+await fs.appendFile("app.log", "User logged in\n");
+
+// Read content
+const content = await fs.readFile("app.log", "utf-8");
+console.log(content);
 ```

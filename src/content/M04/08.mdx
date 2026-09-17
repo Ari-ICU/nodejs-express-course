@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M04-08",
+  number: "08",
+  title: "Event Queue",
+  khmerTitle: "ជួរការងារ Event Queue និង Task Queues",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Asynchronous tasks place their callbacks onto task queues when I/O completes. The event loop pulls callbacks from these queues and executes them whenever the call stack is empty.",
+  tip: "If the JavaScript call stack is busy executing a long synchronous loop, the Event Queue backs up, degrading server latency.",
+  objective: "Understand how tasks wait in queues and move to the call stack.",
+  expectedOutcome: "Clarity on asynchronous scheduling and queue prioritization.",
+  codeSnippet: "console.log(\"A: Stack execution\");\n\nsetTimeout(() => {\n  console.log(\"C: Task queue callback executed\");\n}, 0);\n\nconsole.log(\"B: Stack execution continues\");\n// Output order: A -> B -> C",
+};
+
+```javascript
+console.log("A: Stack execution");
+
+setTimeout(() => {
+  console.log("C: Task queue callback executed");
+}, 0);
+
+console.log("B: Stack execution continues");
+// Output order: A -> B -> C
+```

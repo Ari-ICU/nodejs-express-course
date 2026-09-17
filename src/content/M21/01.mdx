@@ -1,30 +1,55 @@
 export const meta = {
   id: "M21-01",
   number: "01",
-  title: "Interactive Swagger UI Setup",
-  khmerTitle: "ការរៀបចំ Swagger UI សម្រាប់ Express",
+  title: "API Documentation with OpenAPI & Swagger",
+  khmerTitle: "ការសរសេរ API Documentation ជាមួយ OpenAPI Swagger",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Generate interactive web documentation directly from JSDoc code comments using `swagger-jsdoc` and `swagger-ui-express`.",
-  tip: "A well-documented Swagger UI allows frontend developers and QA engineers to test endpoints without bothering backend developers.",
-  objective: "Serve interactive API documentation at `/api/docs`.",
-  expectedOutcome: "Self-documenting, testable API interfaces.",
-  codeSnippet: "import swaggerUi from \"swagger-ui-express\";\nimport swaggerJsdoc from \"swagger-jsdoc\";\n\nconst options = {\n  definition: {\n    openapi: \"3.0.0\",\n    info: { title: \"Course REST API\", version: \"1.0.0\" },\n    servers: [{ url: \"http://localhost:5000/api/v1\" }]\n  },\n  apis: [\"./src/routes/*.js\"]\n};\n\nconst swaggerSpec = swaggerJsdoc(options);\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec));",
+  summary: "OpenAPI 3.0 is the industry standard for describing REST APIs in machine-readable YAML/JSON specification. swagger-jsdoc generates an OpenAPI spec from JSDoc annotations in your route files. swagger-ui-express renders an interactive documentation page at /api-docs where developers can explore endpoints, view schemas, and test calls directly from the browser. Self-documenting APIs reduce integration time and onboarding friction for frontend teams and external API consumers.",
+  tip: "Maintain Swagger annotations alongside your route definitions — never let documentation drift from the actual implementation. Protect /api-docs with basic auth or IP allowlisting in production to prevent public exposure of internal API structure.",
+  objective: "Generate comprehensive interactive API documentation automatically from code annotations.",
+  expectedOutcome: "Self-documenting REST API with Swagger UI, schema definitions, and authentication support.",
+  codeSnippet: "import swaggerJSDoc from \"swagger-jsdoc\";\nimport swaggerUi from \"swagger-ui-express\";\n\nconst swaggerSpec = swaggerJSDoc({\n  definition: {\n    openapi: \"3.0.0\",\n    info: { title: \"My REST API\", version: \"1.0.0\" },\n    servers: [{ url: \"http://localhost:5000/api/v1\" }],\n    components: {\n      securitySchemes: {\n        bearerAuth: { type: \"http\", scheme: \"bearer\", bearerFormat: \"JWT\" }\n      }\n    }\n  },\n  apis: [\"./src/routes/*.js\"],\n});\n\napp.use(\"/api-docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec));\n\n// In your route file — JSDoc annotation:\n/**\n * @swagger\n * /products:\n *   get:\n *     summary: List all products\n *     tags: [Products]\n *     security: [{ bearerAuth: [] }]\n *     parameters:\n *       - in: query\n *         name: page\n *         schema: { type: integer, default: 1 }\n *       - in: query\n *         name: category\n *         schema: { type: string }\n *     responses:\n *       200:\n *         description: Paginated product list\n */\nrouter.get(\"/products\", protect, getProducts);",
 };
 
 ```javascript
+import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import swaggerJsdoc from "swagger-jsdoc";
 
-const options = {
+const swaggerSpec = swaggerJSDoc({
   definition: {
     openapi: "3.0.0",
-    info: { title: "Course REST API", version: "1.0.0" },
-    servers: [{ url: "http://localhost:5000/api/v1" }]
+    info: { title: "My REST API", version: "1.0.0" },
+    servers: [{ url: "http://localhost:5000/api/v1" }],
+    components: {
+      securitySchemes: {
+        bearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" }
+      }
+    }
   },
-  apis: ["./src/routes/*.js"]
-};
+  apis: ["./src/routes/*.js"],
+});
 
-const swaggerSpec = swaggerJsdoc(options);
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// In your route file — JSDoc annotation:
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: List all products
+ *     tags: [Products]
+ *     security: [{ bearerAuth: [] }]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *       - in: query
+ *         name: category
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Paginated product list
+ */
+router.get("/products", protect, getProducts);
 ```

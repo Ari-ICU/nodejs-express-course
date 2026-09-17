@@ -1,15 +1,15 @@
 export const meta = {
   id: "M06-01",
   number: "01",
-  title: "What is Express.js & Why Use It?",
+  title: "What is Express.js?",
   khmerTitle: "អ្វីជា Express.js និងហេតុអ្វីត្រូវប្រើវា?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Fast, unopinionated, minimalist web framework for Node.js offering robust routing, middleware pipelines, and HTTP utilities.",
-  tip: "Express provides maximum freedom; organizing into clean controllers and services is key to avoiding spaghetti code.",
-  objective: "Bootstrap a production Express server in under 10 lines of code.",
-  expectedOutcome: "Running web server with HTTP request handling.",
-  codeSnippet: "import express from \"express\";\n\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\napp.get(\"/\", (req, res) => {\n  res.json({ message: \"Welcome to Express API!\" });\n});\n\napp.listen(PORT, () => {\n  console.log(`Server running on http://localhost:${PORT}`);\n});",
+  summary: "Express.js is the de facto standard web application framework for Node.js. Designed as a minimal, flexible, and unopinionated abstraction layer on top of native `node:http`, it provides a powerful routing engine, middleware pipeline architecture, and comprehensive HTTP request/response helper utilities.",
+  tip: "Express does not enforce strict folder structures or database conventions; adopting clean architectural boundaries (controllers and services) is essential to avoid spaghetti code.",
+  objective: "Understand how Express abstracts native HTTP mechanics into an intuitive API.",
+  expectedOutcome: "Comprehensive mental model of Express as a middleware pipeline.",
+  codeSnippet: "import express from \"express\";\n\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\napp.get(\"/\", (req, res) => {\n  res.json({ message: \"Welcome to Express.js API!\" });\n});\n\napp.listen(PORT, () => {\n  console.log(`Server running on http://localhost:${PORT}`);\n});",
 };
 
 ```javascript
@@ -19,7 +19,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Express API!" });
+  res.json({ message: "Welcome to Express.js API!" });
 });
 
 app.listen(PORT, () => {

@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M14-07",
+  number: "07",
+  title: "Joi",
+  khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ Joi Schema Validation",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Joi is a powerful schema description language and data validator for JavaScript, widely used in legacy and enterprise Node.js services.",
+  tip: "Joi is powerful for pure JavaScript projects, but Zod has largely superseded it for modern TypeScript and ESM applications.",
+  objective: "Understand Joi schema definitions and validation methods.",
+  expectedOutcome: "Familiarity with Joi schemas for maintaining legacy codebases.",
+  codeSnippet: "import Joi from \"joi\";\n\nconst schema = Joi.object({\n  username: Joi.string().alphanum().min(3).max(30).required(),\n  email: Joi.string().email().required()\n});",
+};
+
+```javascript
+import Joi from "joi";
+
+const schema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  email: Joi.string().email().required()
+});
+```

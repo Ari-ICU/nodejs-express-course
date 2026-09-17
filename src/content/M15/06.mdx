@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M15-06",
+  number: "06",
+  title: "Error Middleware",
+  khmerTitle: "ការបង្កើត Global Error Handling Middleware",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Building the centralized error handling middleware that catches all unhandled exceptions, formats responses, and hides internal stack traces in production.",
+  tip: "Check `process.env.NODE_ENV === 'production'` to strip stack traces before sending responses to clients.",
+  objective: "Implement a centralized error handling middleware.",
+  expectedOutcome: "Standardized JSON error responses across all failure cases.",
+  codeSnippet: "export const globalErrorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const message = err.isOperational ? err.message : \"Internal Server Error\";\n\n  res.status(statusCode).json({\n    success: false,\n    error: message,\n    ...(process.env.NODE_ENV === \"development\" && { stack: err.stack })\n  });\n};",
+};
+
+```javascript
+export const globalErrorHandler = (err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.isOperational ? err.message : "Internal Server Error";
+
+  res.status(statusCode).json({
+    success: false,
+    error: message,
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack })
+  });
+};
+```

@@ -5,21 +5,22 @@ export const meta = {
   khmerTitle: "អាគុយម៉ង់បន្ទាត់ពាក្យបញ្ជា (Command Line Arguments)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Parse CLI arguments passed to `node app.js --port 8080 --mode test` using `process.argv` or `util.parseArgs`.",
-  tip: "Node 18.3+ has `node:util/parseArgs` built-in, no external libraries needed for argument parsing.",
-  objective: "Build CLI-configurable server startup scripts.",
-  expectedOutcome: "Flexible command-line parameter handling.",
-  codeSnippet: "import { parseArgs } from \"node:util\";\n\nconst options = {\n  port: { type: \"string\", short: \"p\", default: \"3000\" },\n  env: { type: \"string\", short: \"e\", default: \"dev\" },\n};\n\nconst { values } = parseArgs({ options });\nconsole.log(\"Running on port:\", values.port, \"in mode:\", values.env);",
+  summary: "Command line arguments passed when launching a script (`node script.js --port 8080`) are accessible in `process.argv`. Modern Node.js provides `util.parseArgs()` to parse flags, booleans, and string values natively.",
+  tip: "Use `util.parseArgs()` introduced in Node.js 18+ to parse flags natively without external packages like yargs.",
+  objective: "Parse custom command-line options and flags in CLI tools and scripts.",
+  expectedOutcome: "Ability to write versatile command-line utilities and migration scripts.",
+  codeSnippet: "import { parseArgs } from \"node:util\";\n\nconst options = {\n  port: { type: \"string\", short: \"p\", default: \"5000\" },\n  migrate: { type: \"boolean\", default: false }\n};\n\nconst { values } = parseArgs({ options });\nconsole.log(\"Configured Port:\", values.port);\nconsole.log(\"Run Migration?\", values.migrate);",
 };
 
 ```javascript
 import { parseArgs } from "node:util";
 
 const options = {
-  port: { type: "string", short: "p", default: "3000" },
-  env: { type: "string", short: "e", default: "dev" },
+  port: { type: "string", short: "p", default: "5000" },
+  migrate: { type: "boolean", default: false }
 };
 
 const { values } = parseArgs({ options });
-console.log("Running on port:", values.port, "in mode:", values.env);
+console.log("Configured Port:", values.port);
+console.log("Run Migration?", values.migrate);
 ```

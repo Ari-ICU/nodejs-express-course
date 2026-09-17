@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M11-03",
+  number: "03",
+  title: "MongoDB Architecture",
+  khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ MongoDB",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "MongoDB achieves high availability through Replica Sets (automated failover between primary and secondary nodes) and horizontal scalability through Sharding (partitioning data collections across independent cluster nodes).",
+  tip: "In production, always deploy a Replica Set with at least 3 nodes to ensure automated failover and zero downtime.",
+  objective: "Understand MongoDB replica sets, sharding, and cluster architecture.",
+  expectedOutcome: "Knowledge of enterprise MongoDB high availability patterns.",
+  codeSnippet: "/* MongoDB Replica Set Architecture:\n   [Client Request (Node.js)]\n              │\n              ▼\n   ┌───────────────────────┐\n   │    PRIMARY NODE       │ (Handles all Writes & primary Reads)\n   └──────────┬────────────┘\n              │ (Asynchronous Replication via Oplog)\n        ┌─────┴─────┐\n        ▼           ▼\n   [SECONDARY] [SECONDARY] (High Availability & Read Scalability)\n*/",
+};
+
+```javascript
+/* MongoDB Replica Set Architecture:
+   [Client Request (Node.js)]
+              │
+              ▼
+   ┌───────────────────────┐
+   │    PRIMARY NODE       │ (Handles all Writes & primary Reads)
+   └──────────┬────────────┘
+              │ (Asynchronous Replication via Oplog)
+        ┌─────┴─────┐
+        ▼           ▼
+   [SECONDARY] [SECONDARY] (High Availability & Read Scalability)
+*/
+```

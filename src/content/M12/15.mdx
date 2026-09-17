@@ -1,0 +1,18 @@
+export const meta = {
+  id: "M12-15",
+  number: "15",
+  title: "Reading Documents",
+  khmerTitle: "ការទាញយកឯកសារ (Single & Multiple)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Retrieving records using specific criteria, projecting selected fields (`.select('+password')` or `.select('-__v')`), and checking existence.",
+  tip: "Use `.select('-password')` by default on user models so confidential hashes are never sent to clients.",
+  objective: "Read and project specific fields from documents.",
+  expectedOutcome: "Secure data retrieval excluding sensitive fields.",
+  codeSnippet: "// Find user by ID excluding internal fields\nconst user = await User.findById(userId).select(\"-password -__v\");",
+};
+
+```javascript
+// Find user by ID excluding internal fields
+const user = await User.findById(userId).select("-password -__v");
+```

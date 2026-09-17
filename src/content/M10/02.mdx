@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M10-02",
+  number: "02",
+  title: "Controllers",
+  khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Controllers",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Controllers are the entry point of HTTP requests. Their sole responsibility is to extract data from `req` (params, query, body), validate inputs, delegate to domain services, and format the HTTP response with appropriate status codes.",
+  tip: "A controller should never contain SQL queries or Mongoose `.find()` calls directly; keep controllers slim and services rich.",
+  objective: "Write clean, slim controllers focused exclusively on HTTP mechanics.",
+  expectedOutcome: "Readable controller handlers with zero direct database queries.",
+  codeSnippet: "export const getProductById = async (req, res, next) => {\n  try {\n    const product = await productService.getById(req.params.id);\n    if (!product) {\n      return res.status(404).json({ success: false, error: \"Product not found\" });\n    }\n    res.json({ success: true, data: product });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+export const getProductById = async (req, res, next) => {
+  try {
+    const product = await productService.getById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ success: false, error: "Product not found" });
+    }
+    res.json({ success: true, data: product });
+  } catch (err) {
+    next(err);
+  }
+};
+```

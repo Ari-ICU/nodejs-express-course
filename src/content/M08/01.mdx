@@ -1,11 +1,11 @@
 export const meta = {
   id: "M08-01",
   number: "01",
-  title: "What is Middleware & The next() Function",
+  title: "What is Middleware?",
   khmerTitle: "អ្វីជា Middleware និងតួនាទីរបស់អនុគមន៍ next()",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Functions that have access to `req`, `res`, and the `next` function in the application's request-response cycle.",
+  summary: "Middleware functions are the building blocks of an Express application. They sit between the incoming request and the final route handler, inspecting requests, modifying headers, verifying auth tokens, parsing bodies, and managing errors.",
   tip: "Always call `next()` or send a response with `res.json()`. Otherwise the HTTP connection hangs indefinitely.",
   objective: "Understand middleware chaining and execution order.",
   expectedOutcome: "Mastery of request interceptor pipelines.",

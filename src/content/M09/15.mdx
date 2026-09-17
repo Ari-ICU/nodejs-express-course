@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M09-15",
+  number: "15",
+  title: "Filtering",
+  khmerTitle: "ការបង្កើត Query Filtering សម្រាប់ Search & Categories",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Filtering allows clients to query resources matching specific criteria (e.g. `?category=electronics&price[gte]=100&inStock=true`).",
+  tip: "Never pass raw `req.query` directly into MongoDB queries; sanitize keys to prevent NoSQL injection.",
+  objective: "Build flexible query filters supporting ranges and categories.",
+  expectedOutcome: "Powerful, safe database query filtering.",
+  codeSnippet: "app.get(\"/api/v1/products\", async (req, res) => {\n  const filter = {};\n  if (req.query.category) filter.category = req.query.category;\n  if (req.query.inStock) filter.inStock = req.query.inStock === \"true\";\n  if (req.query.minPrice) filter.price = { $gte: Number(req.query.minPrice) };\n\n  const products = await Product.find(filter);\n  res.json({ success: true, count: products.length, data: products });\n});",
+};
+
+```javascript
+app.get("/api/v1/products", async (req, res) => {
+  const filter = {};
+  if (req.query.category) filter.category = req.query.category;
+  if (req.query.inStock) filter.inStock = req.query.inStock === "true";
+  if (req.query.minPrice) filter.price = { $gte: Number(req.query.minPrice) };
+
+  const products = await Product.find(filter);
+  res.json({ success: true, count: products.length, data: products });
+});
+```

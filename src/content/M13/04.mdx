@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M13-04",
+  number: "04",
+  title: "Creating Models",
+  khmerTitle: "ការបង្កើត និងរៀបចំ Data Models ក្នុងគម្រោង",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Defining structured Mongoose models for application entities (Users, Products, Categories, Orders) with schema indexes.",
+  tip: "Create compound indexes on frequently co-queried fields (e.g. `{ category: 1, price: -1 }`).",
+  objective: "Construct production entity models with appropriate indexes.",
+  expectedOutcome: "Indexed, validated schema definitions ready for CRUD APIs.",
+  codeSnippet: "// models/product.model.js\nimport { Schema, model } from \"mongoose\";\n\nconst productSchema = new Schema({\n  name: { type: String, required: true, trim: true, index: true },\n  price: { type: Number, required: true, min: 0 },\n  category: { type: Schema.Types.ObjectId, ref: \"Category\", required: true }\n}, { timestamps: true });\n\nexport const Product = model(\"Product\", productSchema);",
+};
+
+```javascript
+// models/product.model.js
+import { Schema, model } from "mongoose";
+
+const productSchema = new Schema({
+  name: { type: String, required: true, trim: true, index: true },
+  price: { type: Number, required: true, min: 0 },
+  category: { type: Schema.Types.ObjectId, ref: "Category", required: true }
+}, { timestamps: true });
+
+export const Product = model("Product", productSchema);
+```

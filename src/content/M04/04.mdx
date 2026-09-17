@@ -1,26 +1,29 @@
 export const meta = {
   id: "M04-04",
   number: "04",
-  title: "Event Loop & Phases",
-  khmerTitle: "ដំណើរការ Libuv Event Loop និងដំណាក់កាលនីមួយៗ",
-  type: "architecture",
+  title: "Promises",
+  khmerTitle: "ស្ថាបត្យកម្ម Promises (Pending, Fulfilled, Rejected)",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "The 6 phases of libuv event loop: Timers -> Pending I/O -> Idle/Prepare -> Poll -> Check -> Close callbacks.",
-  tip: "`process.nextTick()` fires BEFORE the next event loop tick, even ahead of `Promise.then()`.",
-  objective: "Trace execution priority through the event loop.",
-  expectedOutcome: "Mastery of Node.js concurrency internals.",
-  codeSnippet: "/* Libuv Event Loop Cycle:\n   1. Timers (setTimeout, setInterval)\n   2. Pending Callbacks (deferred OS I/O)\n   3. Idle / Prepare (internal)\n   4. Poll (retrieve new I/O events, sockets)\n   5. Check (setImmediate callbacks)\n   6. Close Callbacks (socket.on('close'))\n   \n   * Microtasks (process.nextTick, Promise) run between every phase!\n*/",
+  summary: "A Promise represents the eventual completion or failure of an asynchronous operation and its resulting value. Promises have three mutually exclusive states: pending, fulfilled, or rejected.",
+  tip: "Use `Promise.all()` to run independent async operations in parallel, cutting total response time significantly.",
+  objective: "Create, resolve, reject, and chain Promises effectively.",
+  expectedOutcome: "Ability to handle asynchronous tasks with clean `.then()` and `.catch()` pipelines.",
+  codeSnippet: "const verifyStock = (productId, quantity) => {\n  return new Promise((resolve, reject) => {\n    if (quantity <= 5) {\n      resolve({ available: true, productId });\n    } else {\n      reject(new Error(\"Insufficient warehouse stock\"));\n    }\n  });\n};\n\nverifyStock(\"P_99\", 2)\n  .then(res => console.log(\"Stock confirmed:\", res))\n  .catch(err => console.error(\"Order failed:\", err.message));",
 };
 
 ```javascript
-/* Libuv Event Loop Cycle:
-   1. Timers (setTimeout, setInterval)
-   2. Pending Callbacks (deferred OS I/O)
-   3. Idle / Prepare (internal)
-   4. Poll (retrieve new I/O events, sockets)
-   5. Check (setImmediate callbacks)
-   6. Close Callbacks (socket.on('close'))
-   
-   * Microtasks (process.nextTick, Promise) run between every phase!
-*/
+const verifyStock = (productId, quantity) => {
+  return new Promise((resolve, reject) => {
+    if (quantity <= 5) {
+      resolve({ available: true, productId });
+    } else {
+      reject(new Error("Insufficient warehouse stock"));
+    }
+  });
+};
+
+verifyStock("P_99", 2)
+  .then(res => console.log("Stock confirmed:", res))
+  .catch(err => console.error("Order failed:", err.message));
 ```

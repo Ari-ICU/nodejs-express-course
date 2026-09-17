@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M07-11",
+  number: "11",
+  title: "Route Groups",
+  khmerTitle: "ការរៀបចំ Route Groups ជាមួយ Common Prefixes",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Mounting routers under common path prefixes (e.g. `/api/v1/auth`) eliminates redundant path typing inside the individual route definitions.",
+  tip: "All middleware applied to a mounted router executes for every sub-route inside that group.",
+  objective: "Group related endpoints under common prefixes and shared middleware guards.",
+  expectedOutcome: "DRY routing declarations with scoped middleware protection.",
+  codeSnippet: "// Mount admin router with shared admin authentication guard\nimport adminRouter from \"./routes/admin.routes.js\";\nimport { verifyAdmin } from \"./middleware/auth.js\";\n\napp.use(\"/api/v1/admin\", verifyAdmin, adminRouter);",
+};
+
+```javascript
+// Mount admin router with shared admin authentication guard
+import adminRouter from "./routes/admin.routes.js";
+import { verifyAdmin } from "./middleware/auth.js";
+
+app.use("/api/v1/admin", verifyAdmin, adminRouter);
+```

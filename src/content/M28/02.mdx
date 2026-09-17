@@ -1,39 +1,55 @@
 export const meta = {
   id: "M28-02",
   number: "02",
-  title: "Nginx Reverse Proxy & SSL Configuration",
-  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Nginx Reverse Proxy និង SSL",
+  title: "Docker Compose, Nginx & CI/CD",
+  khmerTitle: "Docker Compose, Nginx, និង GitHub Actions CI/CD",
   type: "lab",
-  codeLanguage: "bash",
-  summary: "Route incoming public traffic on port 80/443 through Nginx to internal Node.js cluster processes with gzip and rate limiting.",
-  tip: "Nginx handles SSL termination and static file serving much faster than Node.js, freeing CPU cycles for business logic.",
-  objective: "Configure a production reverse proxy with automated SSL certificate renewal.",
-  expectedOutcome: "Secure HTTPS endpoint with load balancing capability.",
-  codeSnippet: "server {\n    listen 80;\n    server_name api.yourdomain.com;\n    return 301 https://$host$request_uri;\n}\n\nserver {\n    listen 443 ssl http2;\n    server_name api.yourdomain.com;\n\n    ssl_certificate /etc/letsencrypt/live/api.yourdomain.com/fullchain.pem;\n    ssl_certificate_key /etc/letsencrypt/live/api.yourdomain.com/privkey.pem;\n\n    location / {\n        proxy_pass http://127.0.0.1:5000;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection 'upgrade';\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    }\n}",
+  codeLanguage: "yaml",
+  summary: "Docker Compose defines multi-container environments declaratively — a single docker-compose.yml links the Node.js API, MongoDB, and Redis with a shared network and health-checked startup order. Nginx acts as a reverse proxy and TLS terminator, routing HTTPS traffic to the Node.js container. GitHub Actions automates testing, Docker image building, pushing to a registry, and SSH deployment on every push to main — achieving continuous deployment from git push to live production.",
+  tip: "Use depends_on with condition: service_healthy to ensure Node.js starts only after MongoDB and Redis pass their health checks. This eliminates race condition startup failures in fresh deployments.",
+  objective: "Deploy a Node.js API with Docker Compose orchestration, Nginx reverse proxy, and CI/CD automation.",
+  expectedOutcome: "Fully automated deployment pipeline: git push triggers tests, build, and production deployment.",
+  codeSnippet: "# docker-compose.yml\nservices:\n  api:\n    build: .\n    ports: [\"5000:5000\"]\n    env_file: .env\n    depends_on:\n      mongo: { condition: service_healthy }\n      redis: { condition: service_healthy }\n    restart: unless-stopped\n\n  mongo:\n    image: mongo:7\n    volumes: [\"mongo_data:/data/db\"]\n    healthcheck:\n      test: [\"CMD\", \"mongosh\", \"--eval\", \"db.adminCommand('ping')\"]\n      interval: 10s\n      retries: 5\n\n  redis:\n    image: redis:7-alpine\n    healthcheck:\n      test: [\"CMD\", \"redis-cli\", \"ping\"]\n\nvolumes:\n  mongo_data:\n\n# .github/workflows/deploy.yml\n# on:\n#   push:\n#     branches: [main]\n# jobs:\n#   deploy:\n#     steps:\n#       - uses: actions/checkout@v4\n#       - run: npm test\n#       - run: docker build -t myapp .\n#       - run: docker push registry.example.com/myapp\n#       - run: ssh user@server \"docker compose pull && docker compose up -d\"",
 };
 
-```bash
-server {
-    listen 80;
-    server_name api.yourdomain.com;
-    return 301 https://$host$request_uri;
-}
+```yaml
+# docker-compose.yml
+services:
+  api:
+    build: .
+    ports: ["5000:5000"]
+    env_file: .env
+    depends_on:
+      mongo: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    restart: unless-stopped
 
-server {
-    listen 443 ssl http2;
-    server_name api.yourdomain.com;
+  mongo:
+    image: mongo:7
+    volumes: ["mongo_data:/data/db"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      retries: 5
 
-    ssl_certificate /etc/letsencrypt/live/api.yourdomain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.yourdomain.com/privkey.pem;
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
 
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
-}
+volumes:
+  mongo_data:
+
+# .github/workflows/deploy.yml
+# on:
+#   push:
+#     branches: [main]
+# jobs:
+#   deploy:
+#     steps:
+#       - uses: actions/checkout@v4
+#       - run: npm test
+#       - run: docker build -t myapp .
+#       - run: docker push registry.example.com/myapp
+#       - run: ssh user@server "docker compose pull && docker compose up -d"
 ```

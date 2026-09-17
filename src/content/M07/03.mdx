@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M07-03",
+  number: "03",
+  title: "POST Routes",
+  khmerTitle: "ការបង្កើត POST Routes សម្រាប់បញ្ចូលទិន្នន័យ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "POST routes receive data payloads from `req.body`, validate input schemas, persist new records into the database, and return a `201 Created` status code.",
+  tip: "Always parse JSON with `express.json()` before accessing `req.body` in POST routes.",
+  objective: "Build resource creation endpoints with input handling.",
+  expectedOutcome: "Secure creation endpoints returning created entities with HTTP 201.",
+  codeSnippet: "app.post(\"/api/v1/articles\", async (req, res) => {\n  const newArticle = await articleService.createArticle(req.body);\n  res.status(201).json({ success: true, data: newArticle });\n});",
+};
+
+```javascript
+app.post("/api/v1/articles", async (req, res) => {
+  const newArticle = await articleService.createArticle(req.body);
+  res.status(201).json({ success: true, data: newArticle });
+});
+```

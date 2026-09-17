@@ -5,20 +5,18 @@ export const meta = {
   khmerTitle: "អថេរកំណត់បរិស្ថាន (Environment Variables)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Dynamically configure ports, database credentials, JWT secrets, and external API keys outside the codebase.",
-  tip: "Never hardcode passwords or API keys in source code.",
-  objective: "Extract dynamic configuration into environment variables.",
-  expectedOutcome: "Secure, 12-factor application configuration.",
-  codeSnippet: "// Access environment variables via process.env\nconst PORT = process.env.PORT || 5000;\nconst DB_URI = process.env.DATABASE_URL;\nconst NODE_ENV = process.env.NODE_ENV || \"development\";\n\nif (!DB_URI) {\n  throw new Error(\"DATABASE_URL must be defined!\");\n}",
+  summary: "Environment variables externalize dynamic configuration (database URLs, port numbers, API secret keys, log levels) from source code, adhering to the 12-Factor App methodology for secure multi-environment deployments.",
+  tip: "Never hardcode database passwords or secret keys in your source code files.",
+  objective: "Separate application code from environment-specific configuration.",
+  expectedOutcome: "Configurable application behavior across local, staging, and production environments.",
+  codeSnippet: "// Accessing environment variables via process.env\nconst PORT = process.env.PORT || 5000;\nconst DB_URI = process.env.DATABASE_URL;\nconst IS_PROD = process.env.NODE_ENV === \"production\";\n\nconsole.log(`Server starting on port ${PORT} in ${IS_PROD ? \"PROD\" : \"DEV\"} mode`);",
 };
 
 ```javascript
-// Access environment variables via process.env
+// Accessing environment variables via process.env
 const PORT = process.env.PORT || 5000;
 const DB_URI = process.env.DATABASE_URL;
-const NODE_ENV = process.env.NODE_ENV || "development";
+const IS_PROD = process.env.NODE_ENV === "production";
 
-if (!DB_URI) {
-  throw new Error("DATABASE_URL must be defined!");
-}
+console.log(`Server starting on port ${PORT} in ${IS_PROD ? "PROD" : "DEV"} mode`);
 ```

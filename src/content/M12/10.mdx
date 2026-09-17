@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M12-10",
+  number: "10",
+  title: "Validation",
+  khmerTitle: "ប្រព័ន្ធ Validation ភ្ជាប់ស្រាប់ (min, max, enum, match)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Mongoose provides built-in validators for strings (`enum`, `minlength`, `maxlength`, `match`), numbers (`min`, `max`), and dates.",
+  tip: "Use the `enum` validator to restrict field values to a predetermined list of allowed strings (e.g. `['user', 'admin', 'instructor']`).",
+  objective: "Utilize built-in validators to constrain document values.",
+  expectedOutcome: "Enforcement of business constraints at the model layer.",
+  codeSnippet: "const productSchema = new Schema({\n  price: { type: Number, min: [0, \"Price cannot be negative\"] },\n  role: {\n    type: String,\n    enum: { values: [\"user\", \"admin\", \"guide\"], message: \"{VALUE} is not a valid role\" },\n    default: \"user\"\n  }\n});",
+};
+
+```javascript
+const productSchema = new Schema({
+  price: { type: Number, min: [0, "Price cannot be negative"] },
+  role: {
+    type: String,
+    enum: { values: ["user", "admin", "guide"], message: "{VALUE} is not a valid role" },
+    default: "user"
+  }
+});
+```

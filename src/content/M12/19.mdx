@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M12-19",
+  number: "19",
+  title: "Mongoose Middleware",
+  khmerTitle: "Mongoose Hooks (Pre & Post Middleware)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Mongoose middleware (pre and post hooks) intercept execution during document lifecycle events like `save`, `validate`, `remove`, and `findOneAndUpdate`.",
+  tip: "Use a `pre('save')` hook to automatically hash passwords before persisting to the database.",
+  objective: "Implement automated lifecycle hooks on database models.",
+  expectedOutcome: "Automated password hashing and data sanitization.",
+  codeSnippet: "import bcrypt from \"bcrypt\";\n\nuserSchema.pre(\"save\", async function(next) {\n  // Only hash password if it was actually modified\n  if (!this.isModified(\"password\")) return next();\n  this.password = await bcrypt.hash(this.password, 12);\n  next();\n});",
+};
+
+```javascript
+import bcrypt from "bcrypt";
+
+userSchema.pre("save", async function(next) {
+  // Only hash password if it was actually modified
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+```

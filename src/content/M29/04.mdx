@@ -1,24 +1,46 @@
 export const meta = {
   id: "M29-04",
   number: "04",
-  title: "Project 04: Product Management API",
-  khmerTitle: "គម្រោងទី ៤ ៖ Product Management API ជាមួយ File Upload",
+  title: "Project 04: Real-Time Chat",
+  khmerTitle: "គម្រោងទី ៤ ៖ Real-Time Chat Application",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Product inventory management with Category relationships, image uploads via Multer, pricing filters, and role-based permissions.",
-  tip: "Generate thumbnail images automatically during upload to save bandwidth on mobile devices.",
-  objective: "Handle multipart uploads combined with relational Mongoose population.",
-  expectedOutcome: "Robust catalog management system.",
-  codeSnippet: "// Upload product image with validation\nrouter.post(\n  \"/\",\n  authenticate,\n  authorize(\"admin\"),\n  upload.array(\"images\", 5),\n  createProductController\n);",
+  summary: "Build a complete real-time chat application combining REST API (room management, message history) and Socket.IO (real-time events). Features: JWT-authenticated WebSocket connections, persistent room management stored in MongoDB, message history with pagination, online presence tracking, typing indicators, and read receipts. Demonstrates the integration of RESTful and event-driven architectures into a unified backend.",
+  tip: "Authenticate WebSocket connections using the Socket.IO io.use() middleware — pass the JWT in the socket.handshake.auth.token field from the client. This runs before any event handler and ensures every connection is authenticated.",
+  objective: "Build a production chat system combining REST endpoints and Socket.IO real-time events.",
+  expectedOutcome: "Full-featured chat with rooms, online presence, typing indicators, and persisted history.",
+  codeSnippet: "// Authenticated Socket.IO chat\n\n// Middleware: authenticate every WebSocket connection\nio.use(async (socket, next) => {\n  try {\n    const token = socket.handshake.auth.token;\n    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);\n    socket.user = await User.findById(decoded.userId).select(\"-password\");\n    next();\n  } catch { next(new Error(\"Authentication failed\")); }\n});\n\nio.on(\"connection\", (socket) => {\n  socket.on(\"room:join\", async ({ roomId }) => {\n    socket.join(roomId);\n    const history = await Message.find({ room: roomId })\n      .sort(\"-createdAt\").limit(50).populate(\"sender\", \"name avatar\");\n    socket.emit(\"room:history\", history.reverse());\n    socket.to(roomId).emit(\"room:userJoined\", socket.user.name);\n  });\n\n  socket.on(\"message:send\", async ({ roomId, text }) => {\n    const msg = await Message.create({ room: roomId, sender: socket.user._id, text });\n    io.to(roomId).emit(\"message:new\", await msg.populate(\"sender\", \"name avatar\"));\n  });\n\n  socket.on(\"typing:start\", ({ roomId }) =>\n    socket.to(roomId).emit(\"typing:user\", { name: socket.user.name, typing: true })\n  );\n});",
 };
 
 ```javascript
-// Upload product image with validation
-router.post(
-  "/",
-  authenticate,
-  authorize("admin"),
-  upload.array("images", 5),
-  createProductController
-);
+// Authenticated Socket.IO chat
+
+// Middleware: authenticate every WebSocket connection
+io.use(async (socket, next) => {
+  try {
+    const token = socket.handshake.auth.token;
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    socket.user = await User.findById(decoded.userId).select("-password");
+    next();
+  } catch { next(new Error("Authentication failed")); }
+});
+
+io.on("connection", (socket) => {
+  socket.on("room:join", async ({ roomId }) => {
+    socket.join(roomId);
+    const history = await Message.find({ room: roomId })
+      .sort("-createdAt").limit(50).populate("sender", "name avatar");
+    socket.emit("room:history", history.reverse());
+    socket.to(roomId).emit("room:userJoined", socket.user.name);
+  });
+
+  socket.on("message:send", async ({ roomId, text }) => {
+    const msg = await Message.create({ room: roomId, sender: socket.user._id, text });
+    io.to(roomId).emit("message:new", await msg.populate("sender", "name avatar"));
+  });
+
+  socket.on("typing:start", ({ roomId }) =>
+    socket.to(roomId).emit("typing:user", { name: socket.user.name, typing: true })
+  );
+});
 ```

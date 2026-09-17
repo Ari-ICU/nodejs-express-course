@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M10-10",
+  number: "10",
+  title: "Backend Architecture Best Practices",
+  khmerTitle: "ការអនុវត្តស្ថាបត្យកម្មល្អបំផុតសម្រាប់ Backend",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Enterprise principles for scalable backend development: dependency injection, single responsibility, environment isolation, database connection pooling, and continuous automated testing.",
+  tip: "When code files grow beyond 250 lines, it is usually time to extract helper functions or split services.",
+  objective: "Adopt industry-standard architectural best practices for maintainability.",
+  expectedOutcome: "Maintainable, testable, and scalable enterprise backend codebase.",
+  codeSnippet: "/* Enterprise Backend Architecture Checklist:\n   ✅ Separation of Concerns (Routes -> Controllers -> Services -> Models)\n   ✅ Centralized Error Handling (Single error middleware)\n   ✅ Environment-driven Configuration (Never hardcode secrets)\n   ✅ Input Validation (Zod schemas before controllers)\n   ✅ Automated Integration Tests (Vitest + Supertest)\n*/",
+};
+
+```javascript
+/* Enterprise Backend Architecture Checklist:
+   ✅ Separation of Concerns (Routes -> Controllers -> Services -> Models)
+   ✅ Centralized Error Handling (Single error middleware)
+   ✅ Environment-driven Configuration (Never hardcode secrets)
+   ✅ Input Validation (Zod schemas before controllers)
+   ✅ Automated Integration Tests (Vitest + Supertest)
+*/
+```

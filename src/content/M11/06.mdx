@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M11-06",
+  number: "06",
+  title: "Documents",
+  khmerTitle: "រចនាសម្ព័ន្ធនៃ Document",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "A document is an individual record inside a MongoDB collection, composed of field-and-value pairs stored in Binary JSON (BSON). The maximum document size in MongoDB is 16MB.",
+  tip: "The 16MB document size limit ensures that individual queries never exhaust server memory.",
+  objective: "Understand BSON document structure and limits.",
+  expectedOutcome: "Clean document modeling within BSON capacity limits.",
+  codeSnippet: "// Document structure\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Node.js Masterclass\",\n  \"author\": \"Sokha\",\n  \"published\": true,\n  \"views\": 1540\n}",
+};
+
+```javascript
+// Document structure
+{
+  "_id": ObjectId("6648e58319f3a9e224e78891"),
+  "title": "Node.js Masterclass",
+  "author": "Sokha",
+  "published": true,
+  "views": 1540
+}
+```

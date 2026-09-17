@@ -1,25 +1,43 @@
 export const meta = {
   id: "M23-01",
   number: "01",
-  title: "Postman Collections & Auto-Token Injection",
-  khmerTitle: "ការប្រើប្រាស់ Postman Collection និង Script ចាប់ Token",
+  title: "API Development Tools: Postman",
+  khmerTitle: "ការប្រើ Postman សម្រាប់ API Development",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Automatically save JWT tokens into Postman environment variables upon login for seamless authenticated requests.",
-  tip: "Export your Postman collections to your Git repository so the whole engineering team shares the exact same test suites.",
-  objective: "Create synchronized team API collections with test assertions.",
-  expectedOutcome: "Rapid debugging and zero manual token copy-pasting.",
-  codeSnippet: "// Postman Tests Tab (Runs automatically after Login request):\nconst response = pm.response.json();\nif (response.accessToken) {\n  pm.environment.set(\"jwt_token\", response.accessToken);\n  console.log(\"Token automatically saved to environment!\");\n}\n\n// In subsequent requests Headers:\n// Authorization: Bearer {{jwt_token}}",
+  summary: "Postman is the industry-standard GUI tool for API development, manual testing, and documentation. Organize all endpoints in a Collection with folders per resource. Environment variables store base URLs and tokens across local, staging, and production environments. Pre-request scripts automatically refresh expired JWT tokens before each request. Test scripts assert response status, body structure, and data integrity — creating an automated regression suite runnable via Newman in CI pipelines.",
+  tip: "Store your access token via a test script on the login endpoint: pm.environment.set('accessToken', json.accessToken). Then reference it in all requests as {{accessToken}}. This eliminates manual copy-pasting of tokens between requests.",
+  objective: "Master Postman for professional API development with environments, scripts, and automated testing.",
+  expectedOutcome: "Complete Postman collection with auto-token refresh and automated test assertions.",
+  codeSnippet: "// Postman → Login Request → Tests tab (JavaScript)\n\n// Auto-save token after login\npm.test(\"Login succeeds\", () => pm.response.to.have.status(200));\nconst json = pm.response.json();\npm.environment.set(\"accessToken\", json.accessToken);\npm.environment.set(\"tokenExpiry\", Date.now() + 14 * 60 * 1000); // 14 min\n\n// ---\n// Any protected request → Pre-request Script (auto-refresh expired token):\nconst expiry = pm.environment.get(\"tokenExpiry\");\nif (!expiry || Date.now() > parseInt(expiry)) {\n  pm.sendRequest({\n    url: pm.environment.get(\"baseUrl\") + \"/auth/refresh\",\n    method: \"POST\"\n  }, (err, res) => {\n    const data = res.json();\n    pm.environment.set(\"accessToken\", data.accessToken);\n    pm.environment.set(\"tokenExpiry\", Date.now() + 14 * 60 * 1000);\n  });\n}\n\n// ---\n// Run entire collection via Newman in CI:\n// npx newman run MyAPI.postman_collection.json \\\n//   --environment production.postman_environment.json \\\n//   --reporters cli,junit",
 };
 
 ```javascript
-// Postman Tests Tab (Runs automatically after Login request):
-const response = pm.response.json();
-if (response.accessToken) {
-  pm.environment.set("jwt_token", response.accessToken);
-  console.log("Token automatically saved to environment!");
+// Postman → Login Request → Tests tab (JavaScript)
+
+// Auto-save token after login
+pm.test("Login succeeds", () => pm.response.to.have.status(200));
+const json = pm.response.json();
+pm.environment.set("accessToken", json.accessToken);
+pm.environment.set("tokenExpiry", Date.now() + 14 * 60 * 1000); // 14 min
+
+// ---
+// Any protected request → Pre-request Script (auto-refresh expired token):
+const expiry = pm.environment.get("tokenExpiry");
+if (!expiry || Date.now() > parseInt(expiry)) {
+  pm.sendRequest({
+    url: pm.environment.get("baseUrl") + "/auth/refresh",
+    method: "POST"
+  }, (err, res) => {
+    const data = res.json();
+    pm.environment.set("accessToken", data.accessToken);
+    pm.environment.set("tokenExpiry", Date.now() + 14 * 60 * 1000);
+  });
 }
 
-// In subsequent requests Headers:
-// Authorization: Bearer {{jwt_token}}
+// ---
+// Run entire collection via Newman in CI:
+// npx newman run MyAPI.postman_collection.json \
+//   --environment production.postman_environment.json \
+//   --reporters cli,junit
 ```

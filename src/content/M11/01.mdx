@@ -1,28 +1,24 @@
 export const meta = {
   id: "M11-01",
   number: "01",
-  title: "SQL vs NoSQL & MongoDB Architecture",
-  khmerTitle: "ការប្រៀបធៀប SQL vs NoSQL និងស្ថាបត្យកម្ម MongoDB",
+  title: "What is MongoDB?",
+  khmerTitle: "អ្វីជាប្រព័ន្ធទិន្នន័យ MongoDB?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "NoSQL document stores format data as flexible JSON-like BSON documents, allowing nested objects and arrays without complex joins.",
-  tip: "Data that is queried together should generally be stored together (embedding), unless the array grows unbounded.",
-  objective: "Design flexible document schemas.",
-  expectedOutcome: "Understanding the balance between normalization and denormalization.",
-  codeSnippet: "// A MongoDB Document (BSON):\n{\n  \"_id\": ObjectId(\"65f1a2b3c4d5e6f7a8b9c0d1\"),\n  \"title\": \"MacBook Pro M3\",\n  \"price\": 1999.00,\n  \"tags\": [\"laptop\", \"apple\", \"hardware\"],\n  \"specs\": { \"ram\": \"32GB\", \"storage\": \"1TB SSD\" },\n  \"reviews\": [\n    { \"user\": \"Chann\", \"rating\": 5, \"comment\": \"Blazing fast!\" }\n  ],\n  \"createdAt\": ISODate(\"2026-03-15T08:00:00Z\")\n}",
+  summary: "MongoDB is a modern, general-purpose, document-oriented NoSQL database. It stores data in flexible, JSON-like BSON (Binary JSON) documents, allowing data structures to evolve fluidly without rigid tabular migrations.",
+  tip: "MongoDB's flexible schema makes it ideal for fast-moving startups and agile applications, but enforcing strong validation via schemas (like Mongoose) is critical for data integrity.",
+  objective: "Understand MongoDB's document database model.",
+  expectedOutcome: "Clear grasp of document-based persistence compared to relational tables.",
+  codeSnippet: "// A MongoDB document looks and feels just like a native JavaScript object!\n{\n  \"_id\": \"6648e58319f3a9e224e78891\",\n  \"name\": \"Mechanical Keyboard\",\n  \"price\": 129.99,\n  \"inStock\": true,\n  \"tags\": [\"hardware\", \"accessories\"]\n}",
 };
 
 ```javascript
-// A MongoDB Document (BSON):
+// A MongoDB document looks and feels just like a native JavaScript object!
 {
-  "_id": ObjectId("65f1a2b3c4d5e6f7a8b9c0d1"),
-  "title": "MacBook Pro M3",
-  "price": 1999.00,
-  "tags": ["laptop", "apple", "hardware"],
-  "specs": { "ram": "32GB", "storage": "1TB SSD" },
-  "reviews": [
-    { "user": "Chann", "rating": 5, "comment": "Blazing fast!" }
-  ],
-  "createdAt": ISODate("2026-03-15T08:00:00Z")
+  "_id": "6648e58319f3a9e224e78891",
+  "name": "Mechanical Keyboard",
+  "price": 129.99,
+  "inStock": true,
+  "tags": ["hardware", "accessories"]
 }
 ```

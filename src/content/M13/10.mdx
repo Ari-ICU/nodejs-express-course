@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M13-10",
+  number: "10",
+  title: "Get Resource by ID",
+  khmerTitle: "ការអនុវត្ត Get Single Resource by ID",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Retrieving single resources by ObjectId with validation and 404 handling.",
+  tip: "Verify `mongoose.isValidObjectId(req.params.id)` before querying to avoid 500 casting errors.",
+  objective: "Implement single-entity retrieval endpoints with ID validation.",
+  expectedOutcome: "Clean 404 responses for non-existent entities.",
+  codeSnippet: "export const getProductById = async (req, res) => {\n  const product = await Product.findById(req.params.id).lean();\n  if (!product) return res.status(404).json({ success: false, error: \"Not Found\" });\n  res.json({ success: true, data: product });\n};",
+};
+
+```javascript
+export const getProductById = async (req, res) => {
+  const product = await Product.findById(req.params.id).lean();
+  if (!product) return res.status(404).json({ success: false, error: "Not Found" });
+  res.json({ success: true, data: product });
+};
+```

@@ -5,17 +5,20 @@ export const meta = {
   khmerTitle: "ការប្រៀបធៀប Synchronous និង Asynchronous",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Synchronous code halts thread execution until finished; Asynchronous code delegates work and continues execution.",
-  tip: "A single synchronous call in an Express handler freezes the entire server for ALL connected clients.",
-  objective: "Distinguish blocking from non-blocking execution models.",
-  expectedOutcome: "Elimination of accidental blocking calls.",
-  codeSnippet: "// Synchronous (Blocks the entire server!)\nconst data = fs.readFileSync(\"heavy.txt\");\n\n// Asynchronous (Server continues serving 10,000 other users)\nconst data = await fs.readFile(\"heavy.txt\");",
+  summary: "Synchronous code executes line-by-line, blocking execution until the current operation completes. Asynchronous code registers operations with the underlying runtime and continues immediately, processing the result via callbacks, Promises, or async/await when ready.",
+  tip: "Synchronous operations freeze the entire Node.js server, preventing any other user request from being answered during that time.",
+  objective: "Understand the critical execution difference between blocking synchronous and non-blocking asynchronous code.",
+  expectedOutcome: "Intuitive grasp of why web servers must be strictly asynchronous.",
+  codeSnippet: "// Synchronous (BLOCKS the thread for 2 seconds):\n// const data = fs.readFileSync(\"heavy-file.bin\"); // Server is frozen!\n\n// Asynchronous (NON-BLOCKING):\nfs.readFile(\"heavy-file.bin\", (err, data) => {\n  console.log(\"Data loaded without freezing the server!\");\n});\nconsole.log(\"Server immediately keeps handling other clients!\");",
 };
 
 ```javascript
-// Synchronous (Blocks the entire server!)
-const data = fs.readFileSync("heavy.txt");
+// Synchronous (BLOCKS the thread for 2 seconds):
+// const data = fs.readFileSync("heavy-file.bin"); // Server is frozen!
 
-// Asynchronous (Server continues serving 10,000 other users)
-const data = await fs.readFile("heavy.txt");
+// Asynchronous (NON-BLOCKING):
+fs.readFile("heavy-file.bin", (err, data) => {
+  console.log("Data loaded without freezing the server!");
+});
+console.log("Server immediately keeps handling other clients!");
 ```

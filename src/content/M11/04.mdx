@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M11-04",
+  number: "04",
+  title: "Database",
+  khmerTitle: "ការបង្កើត និងគ្រប់គ្រង Database",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "In MongoDB, a database is a physical container for collections. A single MongoDB server cluster can host multiple independent databases (e.g. `auth_db`, `ecommerce_db`).",
+  tip: "In MongoDB, a database is created automatically the first time you insert a document into any of its collections.",
+  objective: "Navigate and create MongoDB databases.",
+  expectedOutcome: "Proficiency with database selection and namespace segregation.",
+  codeSnippet: "// In MongoDB Shell (mongosh):\nuse ecommerce_db; // Switch or create database\ndb.getName();     // Confirms active database",
+};
+
+```javascript
+// In MongoDB Shell (mongosh):
+use ecommerce_db; // Switch or create database
+db.getName();     // Confirms active database
+```

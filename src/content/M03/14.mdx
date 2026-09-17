@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M03-14",
+  number: "14",
+  title: "Working with Directories",
+  khmerTitle: "ការគ្រប់គ្រង និងស្វែងរកថត Folders",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Creating directories recursively, listing contents with file types, and cleaning up temporary folders.",
+  tip: "Always use `{ recursive: true }` when creating directories with `fs.mkdir()` so nested paths are created automatically without error.",
+  objective: "Create, scan, and manage directory trees programmatically.",
+  expectedOutcome: "Proficiency with recursive directory creation and cleanup.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\n// Create nested directory safely\nawait fs.mkdir(\"public/uploads/avatars\", { recursive: true });\n\n// Read directory entries with types\nconst entries = await fs.readdir(\"src\", { withFileTypes: true });\nfor (const entry of entries) {\n  console.log(entry.isDirectory() ? \"📁 [DIR]\" : \"📄 [FILE]\", entry.name);\n}",
+};
+
+```javascript
+import fs from "node:fs/promises";
+
+// Create nested directory safely
+await fs.mkdir("public/uploads/avatars", { recursive: true });
+
+// Read directory entries with types
+const entries = await fs.readdir("src", { withFileTypes: true });
+for (const entry of entries) {
+  console.log(entry.isDirectory() ? "📁 [DIR]" : "📄 [FILE]", entry.name);
+}
+```

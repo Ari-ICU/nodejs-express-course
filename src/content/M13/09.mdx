@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M13-09",
+  number: "09",
+  title: "Get Resources",
+  khmerTitle: "ការអនុវត្ត Get Collection Endpoint ជាមួយ Filters",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Implementing GET list endpoints with query filtering, sorting, and pagination.",
+  tip: "Always use `.lean()` on collection queries to conserve memory and boost performance.",
+  objective: "Build scalable collection endpoints.",
+  expectedOutcome: "Fast collection queries supporting client filters.",
+  codeSnippet: "export const getProducts = async (req, res) => {\n  const products = await Product.find(req.query).lean();\n  res.json({ success: true, count: products.length, data: products });\n};",
+};
+
+```javascript
+export const getProducts = async (req, res) => {
+  const products = await Product.find(req.query).lean();
+  res.json({ success: true, count: products.length, data: products });
+};
+```

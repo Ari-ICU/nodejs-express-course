@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M09-13",
+  number: "13",
+  title: "API Error Structure",
+  khmerTitle: "ទម្រង់ឆ្លើយតបកំហុសស្តង់ដារ Error Envelope",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Standardizing error responses (`{ success: false, error: 'Message', details: [] }`) provides detailed feedback for form validation without exposing internal stack traces.",
+  tip: "Include a field-by-field breakdown in `details` when validation fails so frontends can highlight specific inputs.",
+  objective: "Construct standardized error payloads with field-level validation breakdowns.",
+  expectedOutcome: "Actionable error messages for API consumers.",
+  codeSnippet: "// Standard Error Envelope\nconst errorResponse = {\n  success: false,\n  error: \"Validation Error\",\n  statusCode: 422,\n  details: [\n    { field: \"email\", message: \"Invalid email format\" },\n    { field: \"password\", message: \"Password must be at least 8 characters\" }\n  ]\n};",
+};
+
+```javascript
+// Standard Error Envelope
+const errorResponse = {
+  success: false,
+  error: "Validation Error",
+  statusCode: 422,
+  details: [
+    { field: "email", message: "Invalid email format" },
+    { field: "password", message: "Password must be at least 8 characters" }
+  ]
+};
+```

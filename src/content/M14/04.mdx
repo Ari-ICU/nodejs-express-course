@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M14-04",
+  number: "04",
+  title: "Query Validation",
+  khmerTitle: "ការផ្ទៀងផ្ទាត់ Query Parameters",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Validating and coercing query string parameters (parsing numbers, enforcing allowable sort fields and limits).",
+  tip: "Use Zod's `z.coerce.number()` to automatically parse string query parameters into numbers.",
+  objective: "Validate query parameters and coerce types safely.",
+  expectedOutcome: "Type-safe query parameters with safe pagination caps.",
+  codeSnippet: "export const querySchema = z.object({\n  page: z.coerce.number().int().positive().default(1),\n  limit: z.coerce.number().int().min(1).max(100).default(10),\n  sort: z.enum([\"createdAt\", \"-createdAt\", \"price\", \"-price\"]).optional()\n});",
+};
+
+```javascript
+export const querySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
+  sort: z.enum(["createdAt", "-createdAt", "price", "-price"]).optional()
+});
+```

@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M12-09",
+  number: "09",
+  title: "Required Fields",
+  khmerTitle: "ការកំណត់ Required Fields និង Custom Error Messages",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Marking fields as mandatory with custom validation error messages (`[true, 'Please provide an email address']`).",
+  tip: "Always provide custom error messages in the array format `[true, 'Custom error message']` for friendly client responses.",
+  objective: "Enforce required field rules with clear error messages.",
+  expectedOutcome: "Rejection of incomplete documents with explicit error messages.",
+  codeSnippet: "const userSchema = new Schema({\n  email: {\n    type: String,\n    required: [true, \"Email address is strictly required\"]\n  }\n});",
+};
+
+```javascript
+const userSchema = new Schema({
+  email: {
+    type: String,
+    required: [true, "Email address is strictly required"]
+  }
+});
+```

@@ -1,27 +1,30 @@
 export const meta = {
   id: "M03-10",
   number: "10",
-  title: "Working with Files & Directories",
-  khmerTitle: "ការគ្រប់គ្រងឯកសារ និង Folders",
+  title: "EventEmitter",
+  khmerTitle: "ការបង្កើត Custom EventEmitter Class",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Creating directories recursively, listing files, checking existence, and removing folders safely.",
-  tip: "Pass `{ recursive: true }` to `mkdir` to create full directory trees without checking parent existence.",
-  objective: "Perform robust directory creation and recursive traversal.",
-  expectedOutcome: "Reliable local storage and upload folder management.",
-  codeSnippet: "import fs from \"node:fs/promises\";\nimport path from \"node:path\";\n\nconst targetDir = path.join(process.cwd(), \"storage\", \"reports\");\n\n// Create nested directories if they don't exist\nawait fs.mkdir(targetDir, { recursive: true });\n\n// Read directory contents\nconst files = await fs.readdir(targetDir);\nconsole.log(\"Directory contents:\", files);",
+  summary: "Subclassing `EventEmitter` allows you to create enterprise service classes (e.g. PaymentService, NotificationService) that notify other parts of your application when state changes occur.",
+  tip: "Always handle the special `'error'` event on EventEmitters, otherwise Node treats unhandled errors as uncaught exceptions and crashes.",
+  objective: "Build custom domain classes that inherit from EventEmitter.",
+  expectedOutcome: "Decoupled domain services communicating via event publishing.",
+  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nclass PaymentGateway extends EventEmitter {\n  processPayment(amount, user) {\n    // Simulate transaction\n    setTimeout(() => {\n      this.emit(\"payment:success\", { transactionId: \"TX_1092\", amount, user });\n    }, 200);\n  }\n}\n\nconst gateway = new PaymentGateway();\ngateway.on(\"payment:success\", (tx) => console.log(\"Transaction verified:\", tx));\ngateway.processPayment(99.99, \"Sokha\");",
 };
 
 ```javascript
-import fs from "node:fs/promises";
-import path from "node:path";
+import { EventEmitter } from "node:events";
 
-const targetDir = path.join(process.cwd(), "storage", "reports");
+class PaymentGateway extends EventEmitter {
+  processPayment(amount, user) {
+    // Simulate transaction
+    setTimeout(() => {
+      this.emit("payment:success", { transactionId: "TX_1092", amount, user });
+    }, 200);
+  }
+}
 
-// Create nested directories if they don't exist
-await fs.mkdir(targetDir, { recursive: true });
-
-// Read directory contents
-const files = await fs.readdir(targetDir);
-console.log("Directory contents:", files);
+const gateway = new PaymentGateway();
+gateway.on("payment:success", (tx) => console.log("Transaction verified:", tx));
+gateway.processPayment(99.99, "Sokha");
 ```

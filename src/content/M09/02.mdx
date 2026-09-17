@@ -1,28 +1,24 @@
 export const meta = {
   id: "M09-02",
   number: "02",
-  title: "Standardized API Response & Pagination",
-  khmerTitle: "ទម្រង់ឆ្លើយតបស្តង់ដារ និង Pagination",
-  type: "lab",
+  title: "REST Principles",
+  khmerTitle: "គោលការណ៍គ្រឹះទាំង ៦ នៃ REST",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Consistent JSend/JSON-API envelopes with success boolean, data payload, meta information, and status codes.",
-  tip: "Always wrap array responses in a `{ data: [] }` property to allow future metadata additions without breaking clients.",
-  objective: "Implement uniform response formatting across all endpoints.",
-  expectedOutcome: "Predictable API consumption for frontend teams.",
-  codeSnippet: "// Consistent envelope pattern\nres.status(200).json({\n  success: true,\n  statusCode: 200,\n  meta: {\n    page: 1,\n    limit: 10,\n    totalRecords: 142,\n    totalPages: 15\n  },\n  data: items\n});",
+  summary: "The six guiding constraints of REST: Client-Server, Stateless, Cacheable, Uniform Interface, Layered System, and Code on Demand. Adhering to these principles ensures scalability, portability, and reliability.",
+  tip: "Statelessness enables simple horizontal scaling: any server instance in a cluster can handle any incoming request.",
+  objective: "Apply the six foundational REST principles to API design.",
+  expectedOutcome: "Scalable API architecture designed for distributed cloud deployment.",
+  codeSnippet: "// Stateless Request Example:\n// Every request carries its own credentials, eliminating sticky sessions\nfetch(\"/api/v1/orders\", {\n  headers: {\n    \"Authorization\": \"Bearer eyJhbGciOi...\",\n    \"Content-Type\": \"application/json\"\n  }\n});",
 };
 
 ```javascript
-// Consistent envelope pattern
-res.status(200).json({
-  success: true,
-  statusCode: 200,
-  meta: {
-    page: 1,
-    limit: 10,
-    totalRecords: 142,
-    totalPages: 15
-  },
-  data: items
+// Stateless Request Example:
+// Every request carries its own credentials, eliminating sticky sessions
+fetch("/api/v1/orders", {
+  headers: {
+    "Authorization": "Bearer eyJhbGciOi...",
+    "Content-Type": "application/json"
+  }
 });
 ```

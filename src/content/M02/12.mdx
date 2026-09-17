@@ -5,22 +5,24 @@ export const meta = {
   khmerTitle: "ប្រព័ន្ធម៉ូឌុលទំនើប ES Modules (import / export)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "The official ECMAScript standard for modules supporting asynchronous loading, top-level await, and tree-shaking.",
-  tip: "In Node ESM, always include the file extension `.js` in relative imports: `import x from \"./file.js\";`.",
-  objective: "Write modern ES Modules code with top-level await.",
-  expectedOutcome: "Modern, standard-compliant JavaScript backend code.",
-  codeSnippet: "// utils/math.js\nexport const add = (a, b) => a + b;\nexport const multiply = (a, b) => a * b;\n\n// server.js\nimport { add } from \"./utils/math.js\";\n\n// Top-level await is supported in ESM!\nconst connection = await connectDatabase();\nconsole.log(add(10, 20));",
+  summary: "ECMAScript Modules (ESM) is the standardized official module system of JavaScript. It supports static analysis, top-level `await`, asynchronous loading, and unified syntax across frontend and backend environments.",
+  tip: "In native Node.js ESM, always remember to include the `.js` file extension in relative imports (e.g. `import { auth } from './auth.js'`).",
+  objective: "Master ES Module exports, default exports, named imports, and top-level await in Node.js.",
+  expectedOutcome: "Clean, modern, future-proof module authoring.",
+  codeSnippet: "// utils.js\nexport const calculateTax = (price, rate = 0.1) => price * rate;\nexport default function formatCurrency(amount) {\n  return `$${amount.toFixed(2)}`;\n}\n\n// server.js\nimport formatCurrency, { calculateTax } from \"./utils.js\";\n\n// Top-level await is natively supported in ESM!\nconst tax = calculateTax(100);\nconsole.log(\"Tax:\", formatCurrency(tax));",
 };
 
 ```javascript
-// utils/math.js
-export const add = (a, b) => a + b;
-export const multiply = (a, b) => a * b;
+// utils.js
+export const calculateTax = (price, rate = 0.1) => price * rate;
+export default function formatCurrency(amount) {
+  return `$${amount.toFixed(2)}`;
+}
 
 // server.js
-import { add } from "./utils/math.js";
+import formatCurrency, { calculateTax } from "./utils.js";
 
-// Top-level await is supported in ESM!
-const connection = await connectDatabase();
-console.log(add(10, 20));
+// Top-level await is natively supported in ESM!
+const tax = calculateTax(100);
+console.log("Tax:", formatCurrency(tax));
 ```

@@ -1,31 +1,29 @@
 export const meta = {
   id: "M04-03",
   number: "03",
-  title: "Promises & async / await",
-  khmerTitle: "Promises និងការប្រើប្រាស់ async / await",
-  type: "lab",
+  title: "Callback Problems",
+  khmerTitle: "បញ្ហា Callback Hell និង Inversion of Control",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Representing future values with pending/fulfilled/rejected states, clean chaining, and linear async/await syntax.",
-  tip: "Use `Promise.all()` to run independent queries concurrently instead of awaiting them in sequential series.",
-  objective: "Write clean async/await code with parallel execution optimizations.",
-  expectedOutcome: "High-speed concurrent API route handlers.",
-  codeSnippet: "// Modern, linear, readable flow\nasync function fetchCustomerDashboard(userId) {\n  try {\n    const user = await getUser(userId);\n    // Parallel fetching for high performance!\n    const [orders, notifications] = await Promise.all([\n      getOrders(user.id),\n      getNotifications(user.id)\n    ]);\n    return { user, orders, notifications };\n  } catch (error) {\n    console.error(\"Dashboard error:\", error);\n    throw error;\n  }\n}",
+  summary: "Nesting multiple sequential asynchronous callbacks leads to the 'Pyramid of Doom' (Callback Hell), making code unreadable, difficult to trace, and prone to unhandled errors.",
+  tip: "Refactor nested callback chains into Promise chains or async/await to flatten code structure.",
+  objective: "Diagnose and resolve the architectural pitfalls of deeply nested callbacks.",
+  expectedOutcome: "Clear recognition of why Promises and async/await became the modern standard.",
+  codeSnippet: "// The \"Pyramid of Doom\" (Anti-pattern):\ngetUser(userId, (err, user) => {\n  if (err) return handleErr(err);\n  getOrders(user.id, (err, orders) => {\n    if (err) return handleErr(err);\n    getInvoice(orders[0].id, (err, invoice) => {\n      if (err) return handleErr(err);\n      sendEmail(user.email, invoice, (err) => {\n        // Deeply nested, unmaintainable code!\n      });\n    });\n  });\n});",
 };
 
 ```javascript
-// Modern, linear, readable flow
-async function fetchCustomerDashboard(userId) {
-  try {
-    const user = await getUser(userId);
-    // Parallel fetching for high performance!
-    const [orders, notifications] = await Promise.all([
-      getOrders(user.id),
-      getNotifications(user.id)
-    ]);
-    return { user, orders, notifications };
-  } catch (error) {
-    console.error("Dashboard error:", error);
-    throw error;
-  }
-}
+// The "Pyramid of Doom" (Anti-pattern):
+getUser(userId, (err, user) => {
+  if (err) return handleErr(err);
+  getOrders(user.id, (err, orders) => {
+    if (err) return handleErr(err);
+    getInvoice(orders[0].id, (err, invoice) => {
+      if (err) return handleErr(err);
+      sendEmail(user.email, invoice, (err) => {
+        // Deeply nested, unmaintainable code!
+      });
+    });
+  });
+});
 ```

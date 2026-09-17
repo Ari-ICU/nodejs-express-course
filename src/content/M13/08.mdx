@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M13-08",
+  number: "08",
+  title: "Create Resource",
+  khmerTitle: "ការអនុវត្ត Create Resource Endpoint",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Implementing POST endpoints with payload validation, model persistence, and HTTP 201 responses.",
+  tip: "Ensure unique constraints (like duplicate emails or slugs) are handled gracefully with 409 Conflict status codes.",
+  objective: "Build resource creation APIs with duplicate error handling.",
+  expectedOutcome: "Secure resource creation endpoints.",
+  codeSnippet: "export const createProduct = async (req, res) => {\n  const product = await Product.create(req.body);\n  res.status(201).json({ success: true, data: product });\n};",
+};
+
+```javascript
+export const createProduct = async (req, res) => {
+  const product = await Product.create(req.body);
+  res.status(201).json({ success: true, data: product });
+};
+```

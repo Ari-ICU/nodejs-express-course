@@ -5,15 +5,21 @@ export const meta = {
   khmerTitle: "ការពឹងផ្អែកសម្រាប់តែការអភិវឌ្ឍ (Dev Dependencies)",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Tools only needed during development (linters, test frameworks, TypeScript compiler). Omitted in production containers.",
-  tip: "Ensure your production Docker build uses `NODE_ENV=production` to omit devDependencies.",
-  objective: "Optimize deployment image size.",
-  expectedOutcome: "Faster deployments and lower memory footprints.",
-  codeSnippet: "# In production container Dockerfile:\nnpm ci --only=production\n# This skips all devDependencies, saving hundreds of Megabytes!",
+  summary: "Development dependencies listed under `\"devDependencies\"` are tooling packages used only during local development and testing (linters, test frameworks, type definitions, hot reloaders) and are excluded from production artifacts.",
+  tip: "Install development tooling with `npm i -D <package>` or `npm install --save-dev <package>`.",
+  objective: "Configure development dependencies correctly without polluting production builds.",
+  expectedOutcome: "Minimal production image size and faster deployment build times.",
+  codeSnippet: "# Install development-only tools\nnpm install -D vitest supertest eslint prettier\n\n# package.json result:\n# \"devDependencies\": {\n#   \"eslint\": \"^9.3.0\",\n#   \"supertest\": \"^7.0.0\",\n#   \"vitest\": \"^1.6.0\"\n# }",
 };
 
 ```bash
-# In production container Dockerfile:
-npm ci --only=production
-# This skips all devDependencies, saving hundreds of Megabytes!
+# Install development-only tools
+npm install -D vitest supertest eslint prettier
+
+# package.json result:
+# "devDependencies": {
+#   "eslint": "^9.3.0",
+#   "supertest": "^7.0.0",
+#   "vitest": "^1.6.0"
+# }
 ```

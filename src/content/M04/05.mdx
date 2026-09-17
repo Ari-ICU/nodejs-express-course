@@ -1,25 +1,29 @@
 export const meta = {
   id: "M04-05",
   number: "05",
-  title: "Microtasks & Timers",
-  khmerTitle: "ជួរការងារ Microtasks (Promises) និង Timers",
+  title: "async / await",
+  khmerTitle: "ការប្រើប្រាស់ async / await ទំនើប",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Understanding the difference between macrotasks (`setTimeout`, `setImmediate`) and microtasks (`Promise.then`, `nextTick`).",
-  tip: "`process.nextTick` has the highest priority and drains completely before the event loop advances.",
-  objective: "Demonstrate and predict microtask queue draining behavior.",
-  expectedOutcome: "Zero race conditions in asynchronous initialization.",
-  codeSnippet: "console.log(\"1. Synchronous\");\n\nsetTimeout(() => console.log(\"4. Timer Macrotask\"), 0);\nsetImmediate(() => console.log(\"5. Immediate Macrotask\"));\n\nPromise.resolve().then(() => console.log(\"3. Promise Microtask\"));\nprocess.nextTick(() => console.log(\"2. NextTick Microtask\"));\n\n// Output: 1 -> 2 -> 3 -> 4 -> 5",
+  summary: "Syntactic sugar over Promises that allows asynchronous code to be read and structured synchronously. Async functions always return a Promise, and `await` pauses execution until the Promise settles.",
+  tip: "Combine `Promise.all()` with `await` when calling multiple independent services concurrently.",
+  objective: "Write clean, linear asynchronous backend services using async/await.",
+  expectedOutcome: "Production-ready asynchronous controller and service implementations.",
+  codeSnippet: "async function fetchDashboardData(userId) {\n  try {\n    // Run both queries concurrently!\n    const [user, orders] = await Promise.all([\n      db.users.findById(userId),\n      db.orders.find({ userId })\n    ]);\n    return { user, orders };\n  } catch (error) {\n    console.error(\"Dashboard query failed:\", error);\n    throw error;\n  }\n}",
 };
 
 ```javascript
-console.log("1. Synchronous");
-
-setTimeout(() => console.log("4. Timer Macrotask"), 0);
-setImmediate(() => console.log("5. Immediate Macrotask"));
-
-Promise.resolve().then(() => console.log("3. Promise Microtask"));
-process.nextTick(() => console.log("2. NextTick Microtask"));
-
-// Output: 1 -> 2 -> 3 -> 4 -> 5
+async function fetchDashboardData(userId) {
+  try {
+    // Run both queries concurrently!
+    const [user, orders] = await Promise.all([
+      db.users.findById(userId),
+      db.orders.find({ userId })
+    ]);
+    return { user, orders };
+  } catch (error) {
+    console.error("Dashboard query failed:", error);
+    throw error;
+  }
+}
 ```

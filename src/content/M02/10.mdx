@@ -5,17 +5,17 @@ export const meta = {
   khmerTitle: "សារៈសំខាន់នៃ package-lock.json",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Locks the exact dependency tree down to the specific commit/checksum, ensuring identical installs on all machines.",
-  tip: "Always commit `package-lock.json` into version control and use `npm ci` in CI/CD pipelines.",
-  objective: "Prevent 'works on my machine' dependency version discrepancies.",
-  expectedOutcome: "Reproducible builds across local and cloud environments.",
-  codeSnippet: "# Install exact locked versions (best for CI/CD)\nnpm ci\n\n# Regular install (might update versions within SemVer range)\nnpm install",
+  summary: "`package-lock.json` locks the exact versions, integrity hashes (SHA-512), and nested dependency trees installed on your system. It guarantees that every developer, CI server, and production Docker container installs the exact same dependency tree.",
+  tip: "Never delete `package-lock.json` on purpose; commit it to Git and use `npm ci` in CI/CD pipelines instead of `npm install`.",
+  objective: "Appreciate the role of lockfiles in deterministic, reproducible builds.",
+  expectedOutcome: "Elimination of 'it works on my machine' version mismatch issues.",
+  codeSnippet: "# In CI/CD and Dockerfiles, ALWAYS use npm ci:\n# - Faster than npm install\n# - Throws error if package.json and package-lock.json are out of sync\n# - Never modifies the lockfile\nnpm ci --omit=dev",
 };
 
 ```bash
-# Install exact locked versions (best for CI/CD)
-npm ci
-
-# Regular install (might update versions within SemVer range)
-npm install
+# In CI/CD and Dockerfiles, ALWAYS use npm ci:
+# - Faster than npm install
+# - Throws error if package.json and package-lock.json are out of sync
+# - Never modifies the lockfile
+npm ci --omit=dev
 ```

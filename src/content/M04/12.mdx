@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M04-12",
+  number: "12",
+  title: "Async Best Practices",
+  khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ Async Node.js",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Essential rules for writing scalable async code: never mix callbacks and promises, always return or await promises, configure timeouts for all external HTTP requests, and avoid creating floating unhandled promises.",
+  tip: "Always add timeouts to database queries and external HTTP requests with `AbortController` so stuck network sockets don't accumulate.",
+  objective: "Apply enterprise async design patterns across the codebase.",
+  expectedOutcome: "Resilient asynchronous code free of dangling promises and memory leaks.",
+  codeSnippet: "// Using AbortController for timeout protection on external fetch\nconst controller = new AbortController();\nconst timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout\n\ntry {\n  const response = await fetch(\"https://api.partner.com/data\", {\n    signal: controller.signal\n  });\n  const data = await response.json();\n} catch (err) {\n  if (err.name === \"AbortError\") {\n    console.error(\"Request timed out after 3000ms!\");\n  }\n} finally {\n  clearTimeout(timeoutId);\n}",
+};
+
+```javascript
+// Using AbortController for timeout protection on external fetch
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout
+
+try {
+  const response = await fetch("https://api.partner.com/data", {
+    signal: controller.signal
+  });
+  const data = await response.json();
+} catch (err) {
+  if (err.name === "AbortError") {
+    console.error("Request timed out after 3000ms!");
+  }
+} finally {
+  clearTimeout(timeoutId);
+}
+```

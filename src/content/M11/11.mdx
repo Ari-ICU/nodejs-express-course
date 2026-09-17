@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M11-11",
+  number: "11",
+  title: "MongoDB CRUD",
+  khmerTitle: "ប្រតិបត្តិការ CRUD មូលដ្ឋានក្នុង MongoDB",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Executing core queries using `insertOne()`, `insertMany()`, `find()`, `findOne()`, `updateOne()`, and `deleteOne()` in MongoDB.",
+  tip: "Always use query filters with `deleteOne()` and `updateOne()` to avoid unintended mass modifications.",
+  objective: "Perform CRUD operations via MongoDB query operators.",
+  expectedOutcome: "Proficiency with native MongoDB query language.",
+  codeSnippet: "// Insert\ndb.users.insertOne({ name: \"Sokha\", role: \"admin\" });\n\n// Find\ndb.users.find({ role: \"admin\" });\n\n// Update\ndb.users.updateOne({ name: \"Sokha\" }, { $set: { verified: true } });\n\n// Delete\ndb.users.deleteOne({ name: \"Sokha\" });",
+};
+
+```javascript
+// Insert
+db.users.insertOne({ name: "Sokha", role: "admin" });
+
+// Find
+db.users.find({ role: "admin" });
+
+// Update
+db.users.updateOne({ name: "Sokha" }, { $set: { verified: true } });
+
+// Delete
+db.users.deleteOne({ name: "Sokha" });
+```

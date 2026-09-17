@@ -1,22 +1,23 @@
 export const meta = {
   id: "M09-01",
   number: "01",
-  title: "REST Principles & HTTP Verbs",
-  khmerTitle: "គោលការណ៍ REST និងកិរិយាស័ព្ទ HTTP",
+  title: "What is REST?",
+  khmerTitle: "អ្វីជាស្ថាបត្យកម្ម REST?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Resource-oriented endpoints: GET (retrieve), POST (create), PUT (replace), PATCH (partial update), DELETE (remove).",
-  tip: "Use nouns for resources (e.g. `/articles`, `/users`), never verbs like `/getArticles` or `/deleteUser`.",
-  objective: "Design predictable RESTful API contracts.",
-  expectedOutcome: "Industry-standard API naming and behavior.",
-  codeSnippet: "// Consistent REST design\n// GET    /api/v1/articles        -> List articles\n// POST   /api/v1/articles        -> Create new article\n// GET    /api/v1/articles/:id    -> Get single article\n// PATCH  /api/v1/articles/:id    -> Partial update\n// DELETE /api/v1/articles/:id    -> Remove article",
+  summary: "Representational State Transfer (REST) is an architectural style for distributed hypermedia systems introduced by Roy Fielding. It relies on a stateless, client-server, cacheable communications protocol (HTTP).",
+  tip: "REST is an architectural pattern, not a strict protocol; consistency across resource naming and status codes is what makes an API truly RESTful.",
+  objective: "Understand the core concepts of Representational State Transfer.",
+  expectedOutcome: "Solid grasp of REST architectural conventions.",
+  codeSnippet: "/* REST Architecture Core Tenets:\n   - Client-Server Separation\n   - Statelessness (No client state stored on server)\n   - Cacheability\n   - Uniform Interface (Standard HTTP verbs & resource URIs)\n   - Layered System (Proxies, gateways, caches)\n*/",
 };
 
 ```javascript
-// Consistent REST design
-// GET    /api/v1/articles        -> List articles
-// POST   /api/v1/articles        -> Create new article
-// GET    /api/v1/articles/:id    -> Get single article
-// PATCH  /api/v1/articles/:id    -> Partial update
-// DELETE /api/v1/articles/:id    -> Remove article
+/* REST Architecture Core Tenets:
+   - Client-Server Separation
+   - Statelessness (No client state stored on server)
+   - Cacheability
+   - Uniform Interface (Standard HTTP verbs & resource URIs)
+   - Layered System (Proxies, gateways, caches)
+*/
 ```

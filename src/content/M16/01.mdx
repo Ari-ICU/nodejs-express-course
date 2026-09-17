@@ -5,21 +5,29 @@ export const meta = {
   khmerTitle: "ការ Hash ពាក្យសម្ងាត់ជាមួយ bcrypt",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "One-way cryptographic hashing with automated salt generation to protect passwords against rainbow table attacks.",
-  tip: "Never store plaintext passwords! A salt round of 10 to 12 provides the optimal balance between security and server latency.",
-  objective: "Safely hash and verify user passwords.",
-  expectedOutcome: "Zero plaintext credentials in database.",
-  codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// Hashing with salt factor of 12 (computationally expensive to brute-force)\nconst salt = await bcrypt.genSalt(12);\nconst hashedPassword = await bcrypt.hash(rawPassword, salt);\n\n// Comparing on login\nconst isMatch = await bcrypt.compare(submittedPassword, user.password);\nif (!isMatch) throw new AppError(\"Invalid email or password\", 401);",
+  summary: "Passwords must never be stored as plain text in a database. `bcrypt` is a battle-tested adaptive hashing algorithm that intentionally runs slowly to defeat brute-force and rainbow table attacks. It automatically generates and embeds a cryptographic salt into every hash, meaning two identical passwords produce completely different hash outputs. The `saltRounds` (work factor) controls computation time — 10 to 12 is the industry standard balancing security with response latency.",
+  tip: "Never store plaintext passwords! A salt round of 10 to 12 provides the optimal balance between security and server latency. Do NOT use MD5 or SHA-256 for passwords — they are too fast and brute-forceable.",
+  objective: "Safely hash and verify user passwords with bcrypt before persisting credentials.",
+  expectedOutcome: "Zero plaintext credentials stored in the database; bcrypt-verified login flow.",
+  codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// On Registration: Hash the password before saving\nconst salt = await bcrypt.genSalt(12);\nconst hashedPassword = await bcrypt.hash(rawPassword, salt);\nawait User.create({ email, password: hashedPassword });\n\n// On Login: Compare submitted password to stored hash\nconst user = await User.findOne({ email });\nif (!user) throw new AppError(\"Invalid credentials\", 401);\n\nconst isMatch = await bcrypt.compare(submittedPassword, user.password);\nif (!isMatch) throw new AppError(\"Invalid email or password\", 401);\n\n// Never return the hashed password in responses!\nconst { password: _, ...safeUser } = user.toObject();\nres.json({ success: true, data: safeUser });",
 };
 
 ```javascript
 import bcrypt from "bcryptjs";
 
-// Hashing with salt factor of 12 (computationally expensive to brute-force)
+// On Registration: Hash the password before saving
 const salt = await bcrypt.genSalt(12);
 const hashedPassword = await bcrypt.hash(rawPassword, salt);
+await User.create({ email, password: hashedPassword });
 
-// Comparing on login
+// On Login: Compare submitted password to stored hash
+const user = await User.findOne({ email });
+if (!user) throw new AppError("Invalid credentials", 401);
+
 const isMatch = await bcrypt.compare(submittedPassword, user.password);
 if (!isMatch) throw new AppError("Invalid email or password", 401);
+
+// Never return the hashed password in responses!
+const { password: _, ...safeUser } = user.toObject();
+res.json({ success: true, data: safeUser });
 ```

@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M03-11",
+  number: "11",
+  title: "Working with Files",
+  khmerTitle: "ការគ្រប់គ្រងឯកសារក្នុង Server",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Enterprise servers frequently verify file existence, inspect metadata (file sizes, modification times, permissions), and manage temporary directories before uploading files to cloud storage.",
+  tip: "Use `fs.stat()` to check file sizes and file vs directory types before reading into memory.",
+  objective: "Inspect file stats, permissions, and existence safely.",
+  expectedOutcome: "Ability to inspect and validate filesystem objects prior to processing.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\ntry {\n  const stats = await fs.stat(\"package.json\");\n  console.log(\"Is File?\", stats.isFile());\n  console.log(\"Size in bytes:\", stats.size);\n  console.log(\"Last Modified:\", stats.mtime);\n} catch (err) {\n  if (err.code === \"ENOENT\") console.log(\"File does not exist!\");\n}",
+};
+
+```javascript
+import fs from "node:fs/promises";
+
+try {
+  const stats = await fs.stat("package.json");
+  console.log("Is File?", stats.isFile());
+  console.log("Size in bytes:", stats.size);
+  console.log("Last Modified:", stats.mtime);
+} catch (err) {
+  if (err.code === "ENOENT") console.log("File does not exist!");
+}
+```

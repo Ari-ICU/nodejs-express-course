@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M03-12",
+  number: "12",
+  title: "Reading Files",
+  khmerTitle: "ការអានឯកសារ (Text & JSON)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Reading configuration files and text assets reliably using async methods, properly handling JSON parsing and character encodings.",
+  tip: "Always specify the `'utf-8'` encoding when reading text files, otherwise `fs.readFile()` returns a raw binary Buffer.",
+  objective: "Read and parse text and JSON files asynchronously.",
+  expectedOutcome: "Error-resilient reading and parsing of configuration data.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\nasync function loadConfig() {\n  try {\n    const raw = await fs.readFile(\"./package.json\", \"utf-8\");\n    const pkg = JSON.parse(raw);\n    console.log(\"Loaded package:\", pkg.name, \"v\" + pkg.version);\n  } catch (error) {\n    console.error(\"Failed to load config:\", error.message);\n  }\n}\nloadConfig();",
+};
+
+```javascript
+import fs from "node:fs/promises";
+
+async function loadConfig() {
+  try {
+    const raw = await fs.readFile("./package.json", "utf-8");
+    const pkg = JSON.parse(raw);
+    console.log("Loaded package:", pkg.name, "v" + pkg.version);
+  } catch (error) {
+    console.error("Failed to load config:", error.message);
+  }
+}
+loadConfig();
+```

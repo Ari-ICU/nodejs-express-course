@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M13-18",
+  number: "18",
+  title: "Database Error Handling",
+  khmerTitle: "ការគ្រប់គ្រងកំហុស Database (CastError, DuplicateKey, ValidationError)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Translating MongoDB-specific driver errors (CastError, code 11000 duplicate key, ValidationError) into user-friendly HTTP 400/409/422 responses.",
+  tip: "Catch MongoDB error code `11000` to inform users that an email or username already exists with a 409 status.",
+  objective: "Translate low-level MongoDB driver errors into clean HTTP error payloads.",
+  expectedOutcome: "Zero raw database stack traces leaked to clients.",
+  codeSnippet: "export const handleDbError = (err) => {\n  if (err.name === \"CastError\") {\n    return { statusCode: 400, message: `Invalid ${err.path}: ${err.value}` };\n  }\n  if (err.code === 11000) {\n    const field = Object.keys(err.keyValue)[0];\n    return { statusCode: 409, message: `Duplicate value for ${field}. Please use another value.` };\n  }\n  return { statusCode: 500, message: \"Database Error\" };\n};",
+};
+
+```javascript
+export const handleDbError = (err) => {
+  if (err.name === "CastError") {
+    return { statusCode: 400, message: `Invalid ${err.path}: ${err.value}` };
+  }
+  if (err.code === 11000) {
+    const field = Object.keys(err.keyValue)[0];
+    return { statusCode: 409, message: `Duplicate value for ${field}. Please use another value.` };
+  }
+  return { statusCode: 500, message: "Database Error" };
+};
+```

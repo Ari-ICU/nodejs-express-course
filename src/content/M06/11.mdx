@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M06-11",
+  number: "11",
+  title: "HTTP Methods",
+  khmerTitle: "ការប្រើប្រាស់ HTTP Methods ក្នុង Express",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Express provides routing methods corresponding to all standard HTTP verbs: `app.get()`, `app.post()`, `app.put()`, `app.patch()`, `app.delete()`, as well as `app.all()` to catch all HTTP verbs on a route.",
+  tip: "Use `app.all('*', (req, res) => res.status(404).json(...))` as the final route to catch unhandled endpoints.",
+  objective: "Map REST operations to their respective Express HTTP method helpers.",
+  expectedOutcome: "Proper HTTP verb semantics across all endpoints.",
+  codeSnippet: "app.get(\"/users\", listUsers);\napp.post(\"/users\", createUser);\napp.put(\"/users/:id\", replaceUser);\napp.patch(\"/users/:id\", updateUserFields);\napp.delete(\"/users/:id\", deleteUser);",
+};
+
+```javascript
+app.get("/users", listUsers);
+app.post("/users", createUser);
+app.put("/users/:id", replaceUser);
+app.patch("/users/:id", updateUserFields);
+app.delete("/users/:id", deleteUser);
+```

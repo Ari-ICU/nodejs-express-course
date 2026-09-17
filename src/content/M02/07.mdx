@@ -5,20 +5,22 @@ export const meta = {
   khmerTitle: "ការពឹងផ្អែកចាំបាច់ (Dependencies)",
   type: "concept",
   codeLanguage: "json",
-  summary: "Packages required for the application to function in production (e.g., Express, Mongoose, bcrypt, jsonwebtoken).",
-  tip: "The caret `^` allows non-breaking minor and patch upgrades; tilde `~` allows only patch upgrades.",
-  objective: "Understand semantic versioning (SemVer: MAJOR.MINOR.PATCH).",
-  expectedOutcome: "Avoid unexpected breaking changes during builds.",
-  codeSnippet: "\"dependencies\": {\n  \"bcryptjs\": \"^2.4.3\",\n  \"cors\": \"^2.8.5\",\n  \"dotenv\": \"^16.4.5\",\n  \"express\": \"^4.19.2\",\n  \"jsonwebtoken\": \"^9.0.2\",\n  \"mongoose\": \"^8.3.0\"\n}",
+  summary: "Production dependencies listed under `\"dependencies\"` are required for the application to function in production environments (e.g. web frameworks, database drivers, security utilities).",
+  tip: "In Docker and CI/CD pipelines, run `npm ci --omit=dev` to only install production dependencies, saving container memory and disk space.",
+  objective: "Identify and isolate production-critical dependencies.",
+  expectedOutcome: "Clean separation between production runtime requirements and development tooling.",
+  codeSnippet: "{\n  \"dependencies\": {\n    \"bcrypt\": \"^5.1.1\",\n    \"cors\": \"^2.8.5\",\n    \"express\": \"^4.19.2\",\n    \"jsonwebtoken\": \"^9.0.2\",\n    \"mongoose\": \"^8.4.0\",\n    \"zod\": \"^3.23.8\"\n  }\n}",
 };
 
 ```json
-"dependencies": {
-  "bcryptjs": "^2.4.3",
-  "cors": "^2.8.5",
-  "dotenv": "^16.4.5",
-  "express": "^4.19.2",
-  "jsonwebtoken": "^9.0.2",
-  "mongoose": "^8.3.0"
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "zod": "^3.23.8"
+  }
 }
 ```

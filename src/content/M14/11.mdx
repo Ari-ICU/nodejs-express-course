@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M14-11",
+  number: "11",
+  title: "Validation Best Practices",
+  khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ Data Validation",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Enterprise validation principles: validate early at the middleware boundary, return clean field-level error messages, strip unrecognized fields, and sanitize strings.",
+  tip: "Combine middleware validation with Mongoose model validation for two layers of defense (Defense in Depth).",
+  objective: "Adopt layered validation patterns across the application.",
+  expectedOutcome: "Bulletproof data integrity across all endpoints.",
+  codeSnippet: "/* Validation Defense in Depth:\n   Layer 1: Express Middleware (Zod schema validates input structure)\n   Layer 2: Controller / Service (Business logic rules & permissions)\n   Layer 3: Mongoose Model (Database constraint enforcement)\n*/",
+};
+
+```javascript
+/* Validation Defense in Depth:
+   Layer 1: Express Middleware (Zod schema validates input structure)
+   Layer 2: Controller / Service (Business logic rules & permissions)
+   Layer 3: Mongoose Model (Database constraint enforcement)
+*/
+```

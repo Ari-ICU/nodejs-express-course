@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M08-06",
+  number: "06",
+  title: "express.urlencoded()",
+  khmerTitle: "ការប្រើប្រាស់ express.urlencoded()",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "`express.urlencoded()` parses incoming requests with URL-encoded payloads (typically submitted from standard HTML `<form>` elements).",
+  tip: "Always specify `{ extended: true }` to allow parsing rich objects and arrays using the `qs` library.",
+  objective: "Parse HTML form submissions safely in Express.",
+  expectedOutcome: "Seamless parsing of form payloads into `req.body`.",
+  codeSnippet: "// Parses application/x-www-form-urlencoded\napp.use(express.urlencoded({ extended: true }));\n\napp.post(\"/submit-form\", (req, res) => {\n  console.log(\"Form data:\", req.body);\n  res.redirect(\"/success\");\n});",
+};
+
+```javascript
+// Parses application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+app.post("/submit-form", (req, res) => {
+  console.log("Form data:", req.body);
+  res.redirect("/success");
+});
+```

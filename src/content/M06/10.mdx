@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M06-10",
+  number: "10",
+  title: "Route Handlers",
+  khmerTitle: "ការសរសេរ Route Handlers ជាមួយ Callbacks ច្រើន",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Route handlers can take the form of a function, an array of functions, or combinations of both. This allows chaining authentication guards and validation checks directly before the final controller function.",
+  tip: "Pass multiple middleware functions to a route definition to enforce authentication and validation cleanly.",
+  objective: "Chain middleware functions and controller handlers on a single route.",
+  expectedOutcome: "Modular route definitions with reusable middleware guards.",
+  codeSnippet: "const requireAuth = (req, res, next) => {\n  if (!req.headers.authorization) return res.status(401).json({ error: \"Unauthorized\" });\n  next();\n};\n\nconst validateBody = (req, res, next) => {\n  if (!req.body.title) return res.status(400).json({ error: \"Title required\" });\n  next();\n};\n\n// Chaining middleware directly on route\napp.post(\"/api/posts\", requireAuth, validateBody, (req, res) => {\n  res.status(201).json({ id: 1, title: req.body.title });\n});",
+};
+
+```javascript
+const requireAuth = (req, res, next) => {
+  if (!req.headers.authorization) return res.status(401).json({ error: "Unauthorized" });
+  next();
+};
+
+const validateBody = (req, res, next) => {
+  if (!req.body.title) return res.status(400).json({ error: "Title required" });
+  next();
+};
+
+// Chaining middleware directly on route
+app.post("/api/posts", requireAuth, validateBody, (req, res) => {
+  res.status(201).json({ id: 1, title: req.body.title });
+});
+```

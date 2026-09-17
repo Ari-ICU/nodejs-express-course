@@ -1,28 +1,20 @@
 export const meta = {
   id: "M06-02",
   number: "02",
-  title: "Request & Response Objects",
-  khmerTitle: "វត្ថុ Request (req) និង Response (res)",
+  title: "Why Express.js?",
+  khmerTitle: "គុណសម្បត្តិនៃការប្រើប្រាស់ Express.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Mastering `req.params`, `req.query`, `req.body`, `req.headers`, and `res.status()`, `res.json()`, `res.send()`, `res.set()`.",
-  tip: "Always return `res.json()` or `res.end()` to prevent the client's HTTP request from hanging until timeout.",
-  objective: "Extract parameters, query arguments, and body data with type safety.",
-  expectedOutcome: "Complete mastery of request inspection and response construction.",
-  codeSnippet: "app.post(\"/api/users/:role\", (req, res) => {\n  const { role } = req.params;          // Route parameter\n  const { notify } = req.query;          // Query parameter ?notify=true\n  const { name, email } = req.body;     // Parsed JSON body\n  const authToken = req.headers.authorization; // Header\n\n  res.status(201).json({\n    success: true,\n    user: { name, email, role },\n    notified: notify === \"true\"\n  });\n});",
+  summary: "Express dramatically simplifies backend engineering by eliminating hundreds of lines of boilerplate required in native `node:http`. Its massive ecosystem of tested middleware (CORS, Helmet, Morgan), simplicity, high speed, and vast community make it the industry baseline for Node backends.",
+  tip: "Over 80% of enterprise Node.js APIs rely on Express or frameworks built on top of Express principles.",
+  objective: "Contrast raw Node HTTP servers with Express.js productivity.",
+  expectedOutcome: "Clear technical rationale for choosing Express for REST API development.",
+  codeSnippet: "// Native HTTP: ~20 lines to parse JSON and route paths\n// Express: 2 lines to do the same!\napp.use(express.json());\napp.post(\"/users\", (req, res) => res.status(201).json(req.body));",
 };
 
 ```javascript
-app.post("/api/users/:role", (req, res) => {
-  const { role } = req.params;          // Route parameter
-  const { notify } = req.query;          // Query parameter ?notify=true
-  const { name, email } = req.body;     // Parsed JSON body
-  const authToken = req.headers.authorization; // Header
-
-  res.status(201).json({
-    success: true,
-    user: { name, email, role },
-    notified: notify === "true"
-  });
-});
+// Native HTTP: ~20 lines to parse JSON and route paths
+// Express: 2 lines to do the same!
+app.use(express.json());
+app.post("/users", (req, res) => res.status(201).json(req.body));
 ```

@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M15-03",
+  number: "03",
+  title: "HTTP Errors",
+  khmerTitle: "ការផ្សារភ្ជាប់ Errors ជាមួយ HTTP Status Codes",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Mapping application exceptions to accurate HTTP status codes: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 409 Conflict, 429 Too Many Requests, 500 Internal Server Error.",
+  tip: "Never return HTTP 500 for a client error (e.g. invalid password); 500 indicates a server-side bug or service crash.",
+  objective: "Assign accurate HTTP status codes to all operational exceptions.",
+  expectedOutcome: "Standardized error code classification across the API.",
+  codeSnippet: "// Mapping exceptions to status codes\nconst errorStatusMap = {\n  ValidationError: 400,\n  AuthenticationError: 401,\n  ForbiddenError: 403,\n  NotFoundError: 404,\n  ConflictError: 409\n};",
+};
+
+```javascript
+// Mapping exceptions to status codes
+const errorStatusMap = {
+  ValidationError: 400,
+  AuthenticationError: 401,
+  ForbiddenError: 403,
+  NotFoundError: 404,
+  ConflictError: 409
+};
+```

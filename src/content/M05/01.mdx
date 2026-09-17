@@ -1,28 +1,29 @@
 export const meta = {
   id: "M05-01",
   number: "01",
-  title: "HTTP Fundamentals & Lifecycle",
+  title: "HTTP Fundamentals",
   khmerTitle: "មូលដ្ឋានគ្រឹះពិធីការ HTTP និងដំណើរការ Request-Response",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Stateless client-server protocol over TCP. Request headers, request body, status line, response headers, and payload.",
-  tip: "Every request contains metadata in headers and optionally data in the body.",
-  objective: "Inspect raw HTTP wire packets and protocol headers.",
-  expectedOutcome: "Solid intuition for HTTP network transport.",
-  codeSnippet: "/* Raw HTTP Request:\nGET /api/v1/users?page=1 HTTP/1.1\nHost: api.example.com\nAuthorization: Bearer eyJhbGciOi...\nAccept: application/json\n\nHTTP/1.1 200 OK\nContent-Type: application/json; charset=utf-8\nContent-Length: 48\n\n{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Dev\"}]}\n*/",
+  summary: "Hypertext Transfer Protocol (HTTP) is the stateless, application-layer protocol powering the World Wide Web. Clients send request packets containing a method, path, headers, and optional body; servers evaluate the request and return an HTTP status code, response headers, and payload.",
+  tip: "HTTP is stateless: every request must contain its own authorization and context, allowing servers to scale horizontally across multiple instances.",
+  objective: "Understand the request-response lifecycle and anatomy of HTTP network packets.",
+  expectedOutcome: "Solid mental model of client-server HTTP transactions.",
+  codeSnippet: "/* Anatomy of an HTTP Request / Response:\n   CLIENT REQUEST:\n   POST /api/v1/orders HTTP/1.1\n   Host: api.store.com\n   Content-Type: application/json\n   Authorization: Bearer eyJhbGci...\n   {\"item\": \"Keyboard\", \"qty\": 1}\n\n   SERVER RESPONSE:\n   HTTP/1.1 201 Created\n   Content-Type: application/json\n   {\"success\": true, \"orderId\": \"ORD-55\"}\n*/",
 };
 
 ```javascript
-/* Raw HTTP Request:
-GET /api/v1/users?page=1 HTTP/1.1
-Host: api.example.com
-Authorization: Bearer eyJhbGciOi...
-Accept: application/json
+/* Anatomy of an HTTP Request / Response:
+   CLIENT REQUEST:
+   POST /api/v1/orders HTTP/1.1
+   Host: api.store.com
+   Content-Type: application/json
+   Authorization: Bearer eyJhbGci...
+   {"item": "Keyboard", "qty": 1}
 
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-Content-Length: 48
-
-{"status":"success","data":[{"id":1,"name":"Dev"}]}
+   SERVER RESPONSE:
+   HTTP/1.1 201 Created
+   Content-Type: application/json
+   {"success": true, "orderId": "ORD-55"}
 */
 ```

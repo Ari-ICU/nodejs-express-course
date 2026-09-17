@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M09-12",
+  number: "12",
+  title: "API Response Structure",
+  khmerTitle: "ទម្រង់ឆ្លើយតបស្តង់ដារ JSON Envelope",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Encapsulating all API responses inside a consistent JSON envelope structure (`{ success: true, data: ..., meta: ... }`) makes client consumption predictable across web and mobile apps.",
+  tip: "Always include a boolean `success` flag at the root of the JSON response for fast frontend evaluation.",
+  objective: "Standardize JSON response payloads across all controllers.",
+  expectedOutcome: "Uniform response contract across the entire API.",
+  codeSnippet: "// Standard Success Envelope\nconst response = {\n  success: true,\n  data: {\n    id: \"P_102\",\n    name: \"Wireless Mouse\",\n    price: 29.99\n  },\n  meta: {\n    timestamp: new Date().toISOString()\n  }\n};",
+};
+
+```javascript
+// Standard Success Envelope
+const response = {
+  success: true,
+  data: {
+    id: "P_102",
+    name: "Wireless Mouse",
+    price: 29.99
+  },
+  meta: {
+    timestamp: new Date().toISOString()
+  }
+};
+```

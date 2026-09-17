@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M08-07",
+  number: "07",
+  title: "Custom Middleware",
+  khmerTitle: "ការបង្កើត Custom Middleware ផ្ទាល់ខ្លួន",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Custom middleware functions encapsulate cross-cutting concerns (request timing, user context injection, audit logging, rate limiting) into reusable components.",
+  tip: "Attach custom properties to `req` (e.g. `req.user`, `req.startTime`) to share contextual data across downstream middleware and controllers.",
+  objective: "Author custom middleware functions that inspect and mutate request contexts.",
+  expectedOutcome: "Reusable request processing utilities.",
+  codeSnippet: "// Middleware to attach a unique Request ID for tracing logs\nimport crypto from \"node:crypto\";\n\nexport const requestIdMiddleware = (req, res, next) => {\n  req.id = req.headers[\"x-request-id\"] || crypto.randomUUID();\n  res.setHeader(\"X-Request-Id\", req.id);\n  next();\n};",
+};
+
+```javascript
+// Middleware to attach a unique Request ID for tracing logs
+import crypto from "node:crypto";
+
+export const requestIdMiddleware = (req, res, next) => {
+  req.id = req.headers["x-request-id"] || crypto.randomUUID();
+  res.setHeader("X-Request-Id", req.id);
+  next();
+};
+```

@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M08-09",
+  number: "09",
+  title: "Authorization Middleware",
+  khmerTitle: "ការបង្កើត Authorization Middleware តាម Role",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Authorization middleware inspects the authenticated user's role (e.g. `admin`, `moderator`) and verifies whether they have permission to access the requested resource.",
+  tip: "Return `403 Forbidden` when the user is authenticated but lacks required permissions.",
+  objective: "Implement Role-Based Access Control (RBAC) guards on routes.",
+  expectedOutcome: "Fine-grained permission gating across administrative endpoints.",
+  codeSnippet: "export const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return res.status(403).json({\n        success: false,\n        error: \"Forbidden: Insufficient privileges\"\n      });\n    }\n    next();\n  };\n};\n\n// Usage on route:\n// router.delete(\"/users/:id\", authenticate, restrictTo(\"admin\"), deleteUser);",
+};
+
+```javascript
+export const restrictTo = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        error: "Forbidden: Insufficient privileges"
+      });
+    }
+    next();
+  };
+};
+
+// Usage on route:
+// router.delete("/users/:id", authenticate, restrictTo("admin"), deleteUser);
+```

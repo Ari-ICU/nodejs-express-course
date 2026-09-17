@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M15-11",
+  number: "11",
+  title: "Production Error Responses",
+  khmerTitle: "ការបែងចែកទម្រង់ Error រវាង Development និង Production",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Sending detailed error information (stack trace, error name, raw details) in development, while returning generic, safe error messages in production.",
+  tip: "Leaking stack traces in production exposes file paths, database schemas, and vulnerable libraries to attackers.",
+  objective: "Implement environment-aware error responses.",
+  expectedOutcome: "Rich debugging data locally with bulletproof security in production.",
+  codeSnippet: "const sendDevError = (err, res) => {\n  res.status(err.statusCode || 500).json({\n    success: false,\n    error: err.message,\n    stack: err.stack,\n    err\n  });\n};\n\nconst sendProdError = (err, res) => {\n  if (err.isOperational) {\n    res.status(err.statusCode).json({ success: false, error: err.message });\n  } else {\n    // Unknown bug: don't leak details!\n    res.status(500).json({ success: false, error: \"Something went wrong!\" });\n  }\n};",
+};
+
+```javascript
+const sendDevError = (err, res) => {
+  res.status(err.statusCode || 500).json({
+    success: false,
+    error: err.message,
+    stack: err.stack,
+    err
+  });
+};
+
+const sendProdError = (err, res) => {
+  if (err.isOperational) {
+    res.status(err.statusCode).json({ success: false, error: err.message });
+  } else {
+    // Unknown bug: don't leak details!
+    res.status(500).json({ success: false, error: "Something went wrong!" });
+  }
+};
+```

@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M13-13",
+  number: "13",
+  title: "Search",
+  khmerTitle: "ការអនុវត្ត Search Pipeline ជាមួយ Text Indexes",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Implementing text search across MongoDB documents using `$regex` or `$text` indexes.",
+  tip: "Compound text indexes across multiple fields (`title: 'text', description: 'text'`) allow searching across all product attributes.",
+  objective: "Build multi-field search queries.",
+  expectedOutcome: "Fast search endpoints for catalogs and directories.",
+  codeSnippet: "export const searchProducts = async (req, res) => {\n  const { q } = req.query;\n  const products = await Product.find({\n    $text: { $search: q }\n  }).lean();\n  res.json({ success: true, data: products });\n};",
+};
+
+```javascript
+export const searchProducts = async (req, res) => {
+  const { q } = req.query;
+  const products = await Product.find({
+    $text: { $search: q }
+  }).lean();
+  res.json({ success: true, data: products });
+};
+```

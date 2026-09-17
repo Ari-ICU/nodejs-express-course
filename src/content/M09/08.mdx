@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M09-08",
+  number: "08",
+  title: "PUT",
+  khmerTitle: "ការអនុវត្ត PUT Endpoint ស្តង់ដារ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Building PUT endpoints that completely overwrite a resource with the new representation, returning 404 if the resource does not exist.",
+  tip: "PUT operations must be idempotent: sending the exact same PUT payload multiple times must leave the resource in the exact same state.",
+  objective: "Implement idempotent full resource replacement.",
+  expectedOutcome: "Idempotent resource replacement adhering to HTTP RFC standards.",
+  codeSnippet: "app.put(\"/api/v1/products/:id\", async (req, res) => {\n  const updated = await Product.findOneAndReplace({ _id: req.params.id }, req.body, { new: true, runValidators: true });\n  if (!updated) return res.status(404).json({ success: false, error: \"Product not found\" });\n  res.json({ success: true, data: updated });\n});",
+};
+
+```javascript
+app.put("/api/v1/products/:id", async (req, res) => {
+  const updated = await Product.findOneAndReplace({ _id: req.params.id }, req.body, { new: true, runValidators: true });
+  if (!updated) return res.status(404).json({ success: false, error: "Product not found" });
+  res.json({ success: true, data: updated });
+});
+```

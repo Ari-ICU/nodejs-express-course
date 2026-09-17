@@ -1,32 +1,42 @@
 export const meta = {
   id: "M28-01",
   number: "01",
-  title: "Multi-Stage Dockerfile for Node.js",
-  khmerTitle: "ការសរសេរ Multi-Stage Dockerfile កម្រិត Production",
+  title: "Dockerizing Node.js",
+  khmerTitle: "ការ Containerize Node.js API ជាមួយ Docker",
   type: "lab",
   codeLanguage: "dockerfile",
-  summary: "Build ultra-lean, non-root production container images without leaking dev tools or source maps.",
-  tip: "Always run as non-root user `USER node` to prevent container breakout vulnerabilities.",
-  objective: "Create secure, lightweight (~120MB) Docker containers.",
-  expectedOutcome: "Fast, secure containerized deployments.",
-  codeSnippet: "# Multi-stage Dockerfile\nFROM node:22-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\n\nFROM node:22-alpine AS runner\nWORKDIR /app\nENV NODE_ENV=production\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY src ./src\nUSER node\nEXPOSE 5000\nCMD [\"node\", \"src/server.js\"]",
+  summary: "Docker packages your application and all dependencies into a portable, immutable container image that runs identically across development, CI pipelines, and production servers. A multi-stage Dockerfile uses a full Node.js image to install dependencies, then copies only production artifacts into a minimal Alpine final image — dramatically reducing size and attack surface. Docker Compose orchestrates Node.js + MongoDB + Redis as a unified local environment with a single command.",
+  tip: "Always create a .dockerignore file excluding node_modules, .env, .git, and logs/ from the build context. This prevents baking secrets into images and speeds up build times significantly. Use a non-root user inside the container for security.",
+  objective: "Package a Node.js Express API as a production-ready, multi-stage Docker container.",
+  expectedOutcome: "Containerized API deployable to any cloud provider with docker compose up.",
+  codeSnippet: "# Multi-stage Dockerfile for production Node.js\n\n# Stage 1: Install dependencies\nFROM node:20-alpine AS deps\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\n# Stage 2: Final production image (minimal)\nFROM node:20-alpine AS runner\nWORKDIR /app\n\n# Non-root user for security\nRUN addgroup -S appgroup && adduser -S appuser -G appgroup\nUSER appuser\n\nCOPY --from=deps /app/node_modules ./node_modules\nCOPY . .\n\nEXPOSE 5000\nENV NODE_ENV=production\n\nHEALTHCHECK --interval=30s --timeout=3s \\\n  CMD wget -qO- http://localhost:5000/health || exit 1\n\nCMD [\"node\", \"src/app.js\"]",
 };
 
 ```dockerfile
-# Multi-stage Dockerfile
-FROM node:22-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+# Multi-stage Dockerfile for production Node.js
 
-FROM node:22-alpine AS runner
+# Stage 1: Install dependencies
+FROM node:20-alpine AS deps
 WORKDIR /app
-ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm ci --only=production
-COPY --from=builder /app/node_modules ./node_modules
-COPY src ./src
-USER node
+
+# Stage 2: Final production image (minimal)
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+# Non-root user for security
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
 EXPOSE 5000
-CMD ["node", "src/server.js"]
+ENV NODE_ENV=production
+
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget -qO- http://localhost:5000/health || exit 1
+
+CMD ["node", "src/app.js"]
 ```

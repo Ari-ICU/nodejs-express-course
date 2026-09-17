@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M12-16",
+  number: "16",
+  title: "Updating Documents",
+  khmerTitle: "ការកែប្រែទិន្នន័យ (findByIdAndUpdate, updateOne)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Updating documents using `findByIdAndUpdate()`, `updateOne()`, and `updateMany()`. Configuring `{ new: true, runValidators: true }`.",
+  tip: "By default, update queries do NOT run schema validators. You MUST pass `{ runValidators: true }` to enforce schema rules on updates!",
+  objective: "Update existing documents while maintaining schema validation.",
+  expectedOutcome: "Safe document mutation enforcing validation rules.",
+  codeSnippet: "const updatedProduct = await Product.findByIdAndUpdate(\n  productId,\n  { $set: req.body },\n  { new: true, runValidators: true } // Return updated doc & run validations!\n);",
+};
+
+```javascript
+const updatedProduct = await Product.findByIdAndUpdate(
+  productId,
+  { $set: req.body },
+  { new: true, runValidators: true } // Return updated doc & run validations!
+);
+```

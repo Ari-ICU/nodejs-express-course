@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ឯកសារកំណត់រចនាសម្ព័ន្ធ package.json",
   type: "concept",
   codeLanguage: "json",
-  summary: "The project manifest storing metadata, dependencies, scripts, engine compatibility, and module format.",
-  tip: "Always set `\"type\": \"module\"` to write modern ES Module syntax (`import`/`export`) natively.",
-  objective: "Craft a production-ready package.json configuration.",
-  expectedOutcome: "Correct configuration of entry points, scripts, and module types.",
+  summary: "The `package.json` file is the central manifest of every Node.js project. It defines project metadata, dependencies, scripts, engines, repository URLs, and specifies whether the project uses ES Modules (`\"type\": \"module\"`) or CommonJS.",
+  tip: "Always declare `\"type\": \"module\"` to use modern ES Module syntax (`import`/`export`) natively without transpilers.",
+  objective: "Construct a robust package.json configuration file for a backend application.",
+  expectedOutcome: "Thorough understanding of every critical field in package.json.",
   codeSnippet: "{\n  \"name\": \"ecommerce-api\",\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"main\": \"src/server.js\",\n  \"scripts\": {\n    \"dev\": \"node --watch src/server.js\",\n    \"start\": \"NODE_ENV=production node src/server.js\",\n    \"test\": \"vitest run\"\n  },\n  \"engines\": {\n    \"node\": \">=20.0.0\"\n  }\n}",
 };
 

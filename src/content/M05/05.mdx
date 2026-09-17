@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M05-05",
+  number: "05",
+  title: "HTTP Headers",
+  khmerTitle: "សារៈសំខាន់នៃ HTTP Headers",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "HTTP headers allow clients and servers to exchange control metadata: content negotiation (`Accept`, `Content-Type`), authentication (`Authorization`), caching (`Cache-Control`, `ETag`), and security policies (`CORS`, `CSP`).",
+  tip: "Header names are case-insensitive in HTTP specs, but Node.js automatically lowercases all incoming header keys for consistent access.",
+  objective: "Leverage headers for authentication, caching, and content negotiation.",
+  expectedOutcome: "Fluent reading and setting of request and response headers.",
+  codeSnippet: "// Reading Authorization header safely\nconst authHeader = req.headers[\"authorization\"]; // e.g. \"Bearer eyJhb...\"\n\nif (!authHeader || !authHeader.startsWith(\"Bearer \")) {\n  res.writeHead(401, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Missing or invalid Bearer token\" }));\n}",
+};
+
+```javascript
+// Reading Authorization header safely
+const authHeader = req.headers["authorization"]; // e.g. "Bearer eyJhb..."
+
+if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  res.writeHead(401, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ error: "Missing or invalid Bearer token" }));
+}
+```

@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M12-14",
+  number: "14",
+  title: "Creating Documents",
+  khmerTitle: "ការបញ្ចូលឯកសារថ្មី (Model.create & new Model)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Creating documents using `Model.create(payload)` (which instantiates and saves in one step) versus `new Model(payload)` followed by `.save()`.",
+  tip: "`Model.create()` accepts an array of objects to perform bulk insertions with validation.",
+  objective: "Persist new documents to MongoDB.",
+  expectedOutcome: "Clean entity creation with schema validation.",
+  codeSnippet: "// Method 1: Direct create\nconst user = await User.create({ name: \"Sokha\", email: \"sokha@test.com\" });\n\n// Method 2: Instantiate, mutate, save\nconst product = new Product({ name: \"Phone\" });\nproduct.price = 599;\nawait product.save();",
+};
+
+```javascript
+// Method 1: Direct create
+const user = await User.create({ name: "Sokha", email: "sokha@test.com" });
+
+// Method 2: Instantiate, mutate, save
+const product = new Product({ name: "Phone" });
+product.price = 599;
+await product.save();
+```

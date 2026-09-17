@@ -5,16 +5,24 @@ export const meta = {
   khmerTitle: "បរិស្ថានប្រតិបត្តិការ Node.js Runtime",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Combines V8 (JS engine), libuv (event loop & thread pool), and internal C++ bindings (fs, net, crypto).",
-  tip: "While JavaScript runs on a single thread, libuv offloads file system and crypto operations to a thread pool.",
-  objective: "Deconstruct the internal components of the Node.js binary.",
-  expectedOutcome: "Understand how single-threaded JS achieves multi-threaded background capability.",
-  codeSnippet: "// Node.js Architecture Layers:\n// 1. JavaScript API (fs, http, path, events)\n// 2. Node.js C++ Bindings (OpenSSL, zlib, c-ares)\n// 3. V8 (Engine) & Libuv (Event Loop + 4-thread Pool)",
+  summary: "The Node.js runtime consists of Google's V8 engine (compiling JS to machine code), libuv (a C library providing the event loop and thread pool), core C++ bindings, and built-in JavaScript API modules (fs, http, crypto, path).",
+  tip: "JavaScript execution in Node is single-threaded, but libuv offloads blocking file and network operations to background C++ threads.",
+  objective: "Dissect the internal components of the Node.js runtime environment.",
+  expectedOutcome: "Understanding how V8 and libuv collaborate to execute asynchronous JavaScript.",
+  codeSnippet: "/* Node.js Runtime Composition:\n┌───────────────────────────────────────────┐\n│              JavaScript Code              │\n├───────────────────────────────────────────┤\n│        Node.js Core API (fs, http)        │\n├───────────────────────────────────────────┤\n│         C++ Node.js Bindings              │\n├─────────────────────┬─────────────────────┤\n│   V8 Engine (JIT)   │    libuv (Event     │\n│   JavaScript Engine │    Loop & Threads)  │\n└─────────────────────┴─────────────────────┘\n*/",
 };
 
 ```javascript
-// Node.js Architecture Layers:
-// 1. JavaScript API (fs, http, path, events)
-// 2. Node.js C++ Bindings (OpenSSL, zlib, c-ares)
-// 3. V8 (Engine) & Libuv (Event Loop + 4-thread Pool)
+/* Node.js Runtime Composition:
+┌───────────────────────────────────────────┐
+│              JavaScript Code              │
+├───────────────────────────────────────────┤
+│        Node.js Core API (fs, http)        │
+├───────────────────────────────────────────┤
+│         C++ Node.js Bindings              │
+├─────────────────────┬─────────────────────┤
+│   V8 Engine (JIT)   │    libuv (Event     │
+│   JavaScript Engine │    Loop & Threads)  │
+└─────────────────────┴─────────────────────┘
+*/
 ```

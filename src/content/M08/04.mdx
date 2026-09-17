@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M08-04",
+  number: "04",
+  title: "Built-in Middleware",
+  khmerTitle: "Middleware ដែលភ្ជាប់មកស្រាប់ជាមួយ Express",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Modern Express includes essential built-in middleware functions: `express.json()` (parses JSON bodies), `express.urlencoded()` (parses form data), and `express.static()` (serves static files like images and CSS).",
+  tip: "Use `express.static('public')` to serve static uploaded files without writing manual file-serving routes.",
+  objective: "Utilize built-in Express middleware for parsing and static asset delivery.",
+  expectedOutcome: "Efficient handling of incoming payloads and static assets without external libraries.",
+  codeSnippet: "// Serve static files from \"public\" directory\napp.use(express.static(\"public\"));\n\n// Parse incoming payloads\napp.use(express.json({ limit: \"10mb\" }));\napp.use(express.urlencoded({ extended: true, limit: \"10mb\" }));",
+};
+
+```javascript
+// Serve static files from "public" directory
+app.use(express.static("public"));
+
+// Parse incoming payloads
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+```

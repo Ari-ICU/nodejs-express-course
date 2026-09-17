@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M14-08",
+  number: "08",
+  title: "Zod",
+  khmerTitle: "ការប្រើប្រាស់បណ្ណាល័យ Zod ទំនើប",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Zod is the modern TypeScript-first schema declaration and validation library. It supports static type inference, coercion, detailed error maps, and zero dependencies.",
+  tip: "Use `z.infer<typeof schema>` to automatically generate TypeScript types from your validation schemas.",
+  objective: "Define robust validation schemas using Zod.",
+  expectedOutcome: "Type-safe validation schemas for backend requests.",
+  codeSnippet: "import { z } from \"zod\";\n\nexport const productSchema = z.object({\n  name: z.string().trim().min(3, \"Name must be at least 3 characters\"),\n  price: z.number().positive(\"Price must be greater than zero\"),\n  category: z.string().min(1, \"Category is required\")\n});",
+};
+
+```javascript
+import { z } from "zod";
+
+export const productSchema = z.object({
+  name: z.string().trim().min(3, "Name must be at least 3 characters"),
+  price: z.number().positive("Price must be greater than zero"),
+  category: z.string().min(1, "Category is required")
+});
+```

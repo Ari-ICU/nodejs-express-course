@@ -1,36 +1,52 @@
 export const meta = {
   id: "M25-01",
   number: "01",
-  title: "Redis Response Caching Middleware",
-  khmerTitle: "ការប្រើប្រាស់ Redis Caching ដើម្បីកាត់បន្ថយបន្ទុក Database",
+  title: "Performance & Caching with Redis",
+  khmerTitle: "ការបង្កើនប្រសិទ្ធភាព API ជាមួយ Redis Cache",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Cache expensive database query responses in in-memory Redis keys with automated TTL expiration.",
-  tip: "Remember to invalidate cache keys when mutating data (e.g. clear `cache:/api/v1/products*` when a new product is added).",
-  objective: "Accelerate read endpoints by up to 100x using Redis caching.",
-  expectedOutcome: "Sub-5ms response times under heavy concurrent loads.",
-  codeSnippet: "import { createClient } from \"redis\";\nconst redisClient = createClient({ url: process.env.REDIS_URL });\nawait redisClient.connect();\n\nexport const cache = (ttlSeconds = 300) => async (req, res, next) => {\n  const key = `cache:${req.originalUrl}`;\n  const cachedData = await redisClient.get(key);\n\n  if (cachedData) {\n    return res.json(JSON.parse(cachedData)); // Returns in 2ms instead of 150ms DB query!\n  }\n\n  // Intercept res.json to cache response\n  const originalJson = res.json.bind(res);\n  res.json = (body) => {\n    redisClient.setEx(key, ttlSeconds, JSON.stringify(body));\n    return originalJson(body);\n  };\n  next();\n};",
+  summary: "Redis is a lightning-fast in-memory data store that reduces database load for frequently accessed, slowly changing data. The cache-aside pattern: check Redis first (cache HIT → instant return), otherwise query MongoDB, store result in Redis with a TTL expiry (cache MISS → query + cache). MongoDB compound indexes are the second critical lever — they allow the database engine to find documents without scanning the entire collection, reducing query time from O(n) to O(log n).",
+  tip: "Cache aggressively at the route level for read-heavy public endpoints. Always set TTL on cached data to prevent stale cache poisoning. Invalidate relevant cache keys on write operations (create/update/delete) to maintain consistency.",
+  objective: "Implement Redis response caching and MongoDB index optimization for high-traffic APIs.",
+  expectedOutcome: "API response times reduced from hundreds of milliseconds to under 5ms for cached routes.",
+  codeSnippet: "import { createClient } from \"redis\";\n\nconst redis = createClient({ url: process.env.REDIS_URL });\nawait redis.connect();\n\n// Cache-aside middleware factory\nexport const cacheRoute = (ttlSeconds = 60) => async (req, res, next) => {\n  const cacheKey = `cache:${req.originalUrl}`;\n  const cached = await redis.get(cacheKey);\n\n  if (cached) {\n    console.log(\"CACHE HIT:\", cacheKey);\n    return res.json(JSON.parse(cached));\n  }\n\n  // Intercept res.json to store response in cache\n  const originalJson = res.json.bind(res);\n  res.json = (body) => {\n    redis.setEx(cacheKey, ttlSeconds, JSON.stringify(body));\n    return originalJson(body);\n  };\n  next();\n};\n\n// Apply to public routes\nrouter.get(\"/products\", cacheRoute(60), getProducts);\n\n// Invalidate cache on mutation\nexport const createProduct = catchAsync(async (req, res) => {\n  const product = await Product.create(req.body);\n  await redis.del(\"cache:/api/v1/products\");  // Clear stale cache\n  res.status(201).json({ success: true, data: product });\n});\n\n// Mongoose compound index for fast filtered queries:\nproductSchema.index({ category: 1, price: -1, createdAt: -1 });",
 };
 
 ```javascript
 import { createClient } from "redis";
-const redisClient = createClient({ url: process.env.REDIS_URL });
-await redisClient.connect();
 
-export const cache = (ttlSeconds = 300) => async (req, res, next) => {
-  const key = `cache:${req.originalUrl}`;
-  const cachedData = await redisClient.get(key);
+const redis = createClient({ url: process.env.REDIS_URL });
+await redis.connect();
 
-  if (cachedData) {
-    return res.json(JSON.parse(cachedData)); // Returns in 2ms instead of 150ms DB query!
+// Cache-aside middleware factory
+export const cacheRoute = (ttlSeconds = 60) => async (req, res, next) => {
+  const cacheKey = `cache:${req.originalUrl}`;
+  const cached = await redis.get(cacheKey);
+
+  if (cached) {
+    console.log("CACHE HIT:", cacheKey);
+    return res.json(JSON.parse(cached));
   }
 
-  // Intercept res.json to cache response
+  // Intercept res.json to store response in cache
   const originalJson = res.json.bind(res);
   res.json = (body) => {
-    redisClient.setEx(key, ttlSeconds, JSON.stringify(body));
+    redis.setEx(cacheKey, ttlSeconds, JSON.stringify(body));
     return originalJson(body);
   };
   next();
 };
+
+// Apply to public routes
+router.get("/products", cacheRoute(60), getProducts);
+
+// Invalidate cache on mutation
+export const createProduct = catchAsync(async (req, res) => {
+  const product = await Product.create(req.body);
+  await redis.del("cache:/api/v1/products");  // Clear stale cache
+  res.status(201).json({ success: true, data: product });
+});
+
+// Mongoose compound index for fast filtered queries:
+productSchema.index({ category: 1, price: -1, createdAt: -1 });
 ```

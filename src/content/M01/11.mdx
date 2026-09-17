@@ -5,22 +5,22 @@ export const meta = {
   khmerTitle: "ការដំឡើង Node.js ជាមួយ NVM",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Using Node Version Manager (NVM) or official installers to manage multiple LTS (Long-Term Support) versions.",
-  tip: "Always use even-numbered LTS versions (e.g. Node 20, 22, 24) for production systems.",
-  objective: "Set up and manage Node versions cleanly using NVM.",
-  expectedOutcome: "A healthy, version-isolated developer workstation.",
-  codeSnippet: "# Install NVM (macOS / Linux)\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash\n\n# Install and switch to latest LTS\nnvm install --lts\nnvm use --lts\n\n# Verify active versions\nnode -v\nnpm -v",
+  summary: "Installing Node.js using Node Version Manager (NVM) allows developers to seamlessly switch between multiple Node versions (LTS vs Current) across different client and server projects without permission issues or system conflicts.",
+  tip: "Always standardize on active LTS (Long Term Support) versions for production deployments to ensure security patches and stability.",
+  objective: "Install Node.js LTS and verify proper system PATH configuration using NVM.",
+  expectedOutcome: "Clean, multi-version development environment with npm and node CLI tools installed.",
+  codeSnippet: "# Install Node Version Manager (nvm)\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash\n\n# Install the latest Long-Term Support (LTS) version\nnvm install --lts\nnvm use --lts\n\n# Verify installation\nnode -v\nnpm -v",
 };
 
 ```bash
-# Install NVM (macOS / Linux)
+# Install Node Version Manager (nvm)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
-# Install and switch to latest LTS
+# Install the latest Long-Term Support (LTS) version
 nvm install --lts
 nvm use --lts
 
-# Verify active versions
+# Verify installation
 node -v
 npm -v
 ```

@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M13-05",
+  number: "05",
+  title: "Creating Controllers",
+  khmerTitle: "ការបង្កើត Controllers សម្រាប់ Database Endpoints",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Authoring slim controller handlers that parse request inputs and orchestrate database responses.",
+  tip: "Wrap controller functions in an async handler utility to eliminate redundant `try/catch` boilerplate.",
+  objective: "Build controllers that handle HTTP parameters and return database results.",
+  expectedOutcome: "Clean, consistent controller handlers.",
+  codeSnippet: "export const getProducts = async (req, res, next) => {\n  try {\n    const products = await productService.listProducts(req.query);\n    res.json({ success: true, data: products });\n  } catch (err) {\n    next(err);\n  }\n};",
+};
+
+```javascript
+export const getProducts = async (req, res, next) => {
+  try {
+    const products = await productService.listProducts(req.query);
+    res.json({ success: true, data: products });
+  } catch (err) {
+    next(err);
+  }
+};
+```

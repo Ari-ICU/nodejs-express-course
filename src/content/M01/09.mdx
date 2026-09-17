@@ -5,23 +5,22 @@ export const meta = {
   khmerTitle: "ប្រតិបត្តិការមិនរាំងស្ទះ (Non-blocking I/O)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "I/O operations (network, disk) return immediately without waiting, invoking callbacks or resolving promises when done.",
-  tip: "Never use sync methods like `fs.readFileSync` in production Express route handlers.",
-  objective: "Observe execution order in asynchronous non-blocking calls.",
-  expectedOutcome: "Predicting console output order accurately for non-blocking I/O.",
-  codeSnippet: "import fs from \"node:fs\";\n\nconsole.log(\"1. Starting read...\");\n\n// Non-blocking asynchronous readFile\nfs.readFile(\"large-file.txt\", \"utf-8\", (err, data) => {\n  if (err) return console.error(err);\n  console.log(\"3. File read complete! Size:\", data.length);\n});\n\nconsole.log(\"2. Continuing other work immediately!\");",
+  summary: "Non-blocking I/O allows Node.js to initiate an operation (reading a disk file, querying a database, calling an external payment gateway) and immediately proceed to handle other requests without waiting for the operation to finish.",
+  tip: "Always use async variants (e.g. `fs.promises.readFile`) in web servers instead of synchronous ones (e.g. `fs.readFileSync`).",
+  objective: "Demonstrate synchronous blocking versus asynchronous non-blocking execution.",
+  expectedOutcome: "Clear empirical proof that non-blocking code keeps the server responsive.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\nconsole.log(\"1. Starting non-blocking read...\");\n\n// Initiates I/O and continues immediately\nfs.readFile(\"package.json\", \"utf-8\").then((data) => {\n  console.log(\"3. File read complete! Size:\", data.length, \"characters\");\n});\n\nconsole.log(\"2. Main thread continues serving other clients!\");",
 };
 
 ```javascript
-import fs from "node:fs";
+import fs from "node:fs/promises";
 
-console.log("1. Starting read...");
+console.log("1. Starting non-blocking read...");
 
-// Non-blocking asynchronous readFile
-fs.readFile("large-file.txt", "utf-8", (err, data) => {
-  if (err) return console.error(err);
-  console.log("3. File read complete! Size:", data.length);
+// Initiates I/O and continues immediately
+fs.readFile("package.json", "utf-8").then((data) => {
+  console.log("3. File read complete! Size:", data.length, "characters");
 });
 
-console.log("2. Continuing other work immediately!");
+console.log("2. Main thread continues serving other clients!");
 ```

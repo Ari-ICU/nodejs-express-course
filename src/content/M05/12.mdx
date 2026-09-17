@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M05-12",
+  number: "12",
+  title: "Content-Type",
+  khmerTitle: "សារៈសំខាន់នៃ Header Content-Type",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "The `Content-Type` header informs the recipient how to interpret the binary bytes in the request or response body (e.g. `application/json`, `text/html`, `multipart/form-data`, `application/pdf`).",
+  tip: "When building APIs, always set `res.setHeader('Content-Type', 'application/json')` so client HTTP libraries parse the response as JSON automatically.",
+  objective: "Configure appropriate Content-Type headers for varied payload formats.",
+  expectedOutcome: "Correct MIME type negotiation across all endpoints.",
+  codeSnippet: "// Sending JSON\nres.writeHead(200, { \"Content-Type\": \"application/json\" });\nres.end(JSON.stringify({ success: true }));\n\n// Sending HTML\n// res.writeHead(200, { \"Content-Type\": \"text/html\" });\n// res.end(\"<h1>Welcome to API</h1>\");",
+};
+
+```javascript
+// Sending JSON
+res.writeHead(200, { "Content-Type": "application/json" });
+res.end(JSON.stringify({ success: true }));
+
+// Sending HTML
+// res.writeHead(200, { "Content-Type": "text/html" });
+// res.end("<h1>Welcome to API</h1>");
+```

@@ -1,26 +1,26 @@
 export const meta = {
   id: "M04-02",
   number: "02",
-  title: "Callbacks & Callback Problems",
-  khmerTitle: "Callbacks និងបញ្ហា 'Callback Hell'",
+  title: "Callbacks",
+  khmerTitle: "មូលដ្ឋានគ្រឹះ Callbacks ក្នុង Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Error-first callback conventions `(err, data) => {}` and why deeply nested callbacks cause unreadable, fragile code.",
-  tip: "Modern Node code uses Promises and async/await; callbacks are legacy or low-level primitives.",
-  objective: "Identify callback pyramid anti-patterns and refactor them.",
-  expectedOutcome: "Refactoring callbacks to modern asynchronous syntax.",
-  codeSnippet: "// The dreaded Callback Pyramid of Doom:\ngetUser(userId, (err, user) => {\n  if (err) return handleError(err);\n  getOrders(user.id, (err, orders) => {\n    if (err) return handleError(err);\n    getOrderDetails(orders[0].id, (err, details) => {\n      // Hard to read, hard to catch errors!\n    });\n  });\n});",
+  summary: "A callback is a function passed as an argument to an asynchronous function, invoked when the background task completes. Traditional Node.js APIs follow the error-first callback convention `(err, result) => {}`.",
+  tip: "Always check `if (err) return callback(err)` as the first line of any error-first callback handler.",
+  objective: "Understand the error-first callback convention foundational to early Node.js.",
+  expectedOutcome: "Fluency in reading and maintaining callback-based Node libraries.",
+  codeSnippet: "import fs from \"node:fs\";\n\n// Node.js Error-First Callback pattern:\nfs.readFile(\"config.json\", \"utf-8\", (err, data) => {\n  if (err) {\n    console.error(\"Error reading file:\", err.message);\n    return;\n  }\n  console.log(\"File content:\", data);\n});",
 };
 
 ```javascript
-// The dreaded Callback Pyramid of Doom:
-getUser(userId, (err, user) => {
-  if (err) return handleError(err);
-  getOrders(user.id, (err, orders) => {
-    if (err) return handleError(err);
-    getOrderDetails(orders[0].id, (err, details) => {
-      // Hard to read, hard to catch errors!
-    });
-  });
+import fs from "node:fs";
+
+// Node.js Error-First Callback pattern:
+fs.readFile("config.json", "utf-8", (err, data) => {
+  if (err) {
+    console.error("Error reading file:", err.message);
+    return;
+  }
+  console.log("File content:", data);
 });
 ```

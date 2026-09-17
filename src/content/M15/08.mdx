@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M15-08",
+  number: "08",
+  title: "Validation Errors",
+  khmerTitle: "ការគ្រប់គ្រង និងកែច្នៃកំហុស Validation",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Intercepting Zod and Mongoose validation errors inside the central error handler and converting them into clean, client-friendly error lists.",
+  tip: "Transform raw validation error objects into an array of `{ field, message }` items for frontend forms.",
+  objective: "Normalize validation errors into a standard schema.",
+  expectedOutcome: "User-friendly validation error messages.",
+  codeSnippet: "if (err.name === \"ValidationError\") {\n  const issues = Object.values(err.errors).map(el => ({\n    field: el.path,\n    message: el.message\n  }));\n  return res.status(400).json({ success: false, error: \"Validation Error\", issues });\n}",
+};
+
+```javascript
+if (err.name === "ValidationError") {
+  const issues = Object.values(err.errors).map(el => ({
+    field: el.path,
+    message: el.message
+  }));
+  return res.status(400).json({ success: false, error: "Validation Error", issues });
+}
+```

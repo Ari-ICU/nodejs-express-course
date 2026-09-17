@@ -1,0 +1,18 @@
+export const meta = {
+  id: "M11-13",
+  number: "13",
+  title: "MongoDB Atlas",
+  khmerTitle: "ការរៀបចំ Cloud Database ជាមួយ MongoDB Atlas",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "MongoDB Atlas is a fully managed cloud database service deployed on AWS, GCP, or Azure, providing automated backups, replication, monitoring, and scaling.",
+  tip: "In Atlas, remember to configure the IP Access List (whitelist `0.0.0.0/0` during development or specific server static IPs in production).",
+  objective: "Provision and connect a cloud MongoDB Atlas cluster.",
+  expectedOutcome: "Live cloud database cluster ready for production deployments.",
+  codeSnippet: "# Connect string format for MongoDB Atlas:\nDATABASE_URL=mongodb+srv://admin_user:SecurePassword123@cluster0.abcde.mongodb.net/prod_db?retryWrites=true&w=majority",
+};
+
+```bash
+# Connect string format for MongoDB Atlas:
+DATABASE_URL=mongodb+srv://admin_user:SecurePassword123@cluster0.abcde.mongodb.net/prod_db?retryWrites=true&w=majority
+```

@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M13-14",
+  number: "14",
+  title: "Filtering",
+  khmerTitle: "ការអនុវត្ត Advanced Filtering ($gte, $lte, $in)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Supporting advanced query filters using MongoDB operators (`$gte`, `$lte`, `$in`, `$ne`).",
+  tip: "Transform incoming query parameters (`price[gte]=50`) into MongoDB operators (`{ price: { $gte: 50 } }`).",
+  objective: "Translate URL query filters into MongoDB comparison operators.",
+  expectedOutcome: "Rich filtering capabilities matching modern e-commerce standards.",
+  codeSnippet: "// Converts ?price[gte]=100 into { price: { $gte: 100 } }\nexport const filterQuery = (queryObj) => {\n  let queryStr = JSON.stringify(queryObj);\n  queryStr = queryStr.replace(/\\b(gte|gt|lte|lt|in)\\b/g, match => `$${match}`);\n  return JSON.parse(queryStr);\n};",
+};
+
+```javascript
+// Converts ?price[gte]=100 into { price: { $gte: 100 } }
+export const filterQuery = (queryObj) => {
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt|in)\b/g, match => `$${match}`);
+  return JSON.parse(queryStr);
+};
+```

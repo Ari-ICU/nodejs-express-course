@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M12-11",
+  number: "11",
+  title: "Custom Validation",
+  khmerTitle: "ការបង្កើត Custom Validators ក្នុង Mongoose",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Writing custom synchronous or asynchronous validation functions for complex business checks (e.g. validating phone numbers or discount constraints).",
+  tip: "Custom validator functions must return `true` if valid or `false` if invalid.",
+  objective: "Implement custom domain validators on schema fields.",
+  expectedOutcome: "Validation of complex business rules before persisting to database.",
+  codeSnippet: "const userSchema = new Schema({\n  phoneNumber: {\n    type: String,\n    validate: {\n      validator: function(v) {\n        return /^[0-9]{9,10}$/.test(v); // Cambodian phone number check\n      },\n      message: props => `${props.value} is not a valid phone number!`\n    }\n  }\n});",
+};
+
+```javascript
+const userSchema = new Schema({
+  phoneNumber: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{9,10}$/.test(v); // Cambodian phone number check
+      },
+      message: props => `${props.value} is not a valid phone number!`
+    }
+  }
+});
+```

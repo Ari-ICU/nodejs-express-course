@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M12-12",
+  number: "12",
+  title: "Timestamps",
+  khmerTitle: "ការគ្រប់គ្រង Timestamps (createdAt & updatedAt)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Setting `{ timestamps: true }` in schema options causes Mongoose to automatically generate and maintain `createdAt` and `updatedAt` Date fields.",
+  tip: "Never manually manage updated dates; let Mongoose timestamps handle it automatically on updates.",
+  objective: "Enable automated audit timestamps on all entity models.",
+  expectedOutcome: "Consistent creation and modification tracking across all database collections.",
+  codeSnippet: "const schema = new Schema({ name: String }, { timestamps: true });\n// Automatically adds:\n// createdAt: Date\n// updatedAt: Date",
+};
+
+```javascript
+const schema = new Schema({ name: String }, { timestamps: true });
+// Automatically adds:
+// createdAt: Date
+// updatedAt: Date
+```

@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M12-06",
+  number: "06",
+  title: "Documents",
+  khmerTitle: "ការគ្រប់គ្រង Mongoose Document Instances",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "A Mongoose document is an instance of a Model with built-in helper methods like `.save()`, `.remove()`, and `.isModified()`.",
+  tip: "Use `.isModified('password')` in pre-save middleware to only hash passwords when the user actually changes their password.",
+  objective: "Instantiate and mutate model document instances.",
+  expectedOutcome: "Proficiency working with active document instances.",
+  codeSnippet: "const user = new User({ name: \"Sokha\", email: \"sokha@test.com\" });\nuser.name = \"Sokha Mean\";\nconsole.log(\"Is name modified?\", user.isModified(\"name\")); // true\nawait user.save();",
+};
+
+```javascript
+const user = new User({ name: "Sokha", email: "sokha@test.com" });
+user.name = "Sokha Mean";
+console.log("Is name modified?", user.isModified("name")); // true
+await user.save();
+```

@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M05-13",
+  number: "13",
+  title: "Creating an HTTP Server",
+  khmerTitle: "ការបង្កើត HTTP Server តាមរយៈ Native 'node:http'",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Node's built-in `node:http` module provides `createServer()`, allowing you to instantiate a listening TCP server that dispatches incoming connections to request handler callbacks.",
+  tip: "Pass `0.0.0.0` as the host when running inside Docker containers so external container networks can access your server.",
+  objective: "Build a raw HTTP web server from scratch without third-party frameworks.",
+  expectedOutcome: "Deep foundational appreciation of how Express works under the hood.",
+  codeSnippet: "import http from \"node:http\";\n\nconst PORT = process.env.PORT || 4000;\n\nconst server = http.createServer((req, res) => {\n  res.writeHead(200, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ message: \"Hello from native Node.js HTTP server!\" }));\n});\n\nserver.listen(PORT, () => {\n  console.log(`Server running at http://localhost:${PORT}`);\n});",
+};
+
+```javascript
+import http from "node:http";
+
+const PORT = process.env.PORT || 4000;
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ message: "Hello from native Node.js HTTP server!" }));
+});
+
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+```

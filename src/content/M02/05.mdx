@@ -5,19 +5,22 @@ export const meta = {
   khmerTitle: "ការសរសេរ npm Scripts សម្រាប់ស្វ័យប្រវត្តិកម្ម",
   type: "lab",
   codeLanguage: "json",
-  summary: "Automate builds, database migrations, linting, seedings, and test suites with custom npm scripts.",
-  tip: "Pre- and post-hooks run automatically before and after commands (e.g. `predev` runs before `npm run dev`).",
-  objective: "Create chaining workflow scripts for full dev pipelines.",
-  expectedOutcome: "Streamlined single-command project workflows.",
-  codeSnippet: "\"scripts\": {\n  \"predev\": \"npm run db:check\",\n  \"dev\": \"node --watch src/server.js\",\n  \"db:seed\": \"node scripts/seed.js\",\n  \"lint\": \"eslint src/\",\n  \"build\": \"tsc\"\n}",
+  summary: "npm scripts provide custom alias commands to automate repetitive tasks: starting dev servers, running test suites, executing migrations, linting code, and building production bundles.",
+  tip: "You can chain scripts using `&&` (sequential) or use `pre` and `post` lifecycle hooks like `pretest` and `postbuild`.",
+  objective: "Automate development, build, and test workflows using npm scripts.",
+  expectedOutcome: "Streamlined team developer experience with single-command workflows.",
+  codeSnippet: "{\n  \"scripts\": {\n    \"dev\": \"node --watch --env-file=.env src/server.js\",\n    \"start\": \"NODE_ENV=production node src/server.js\",\n    \"lint\": \"eslint src/\",\n    \"lint:fix\": \"eslint src/ --fix\",\n    \"test\": \"vitest run\",\n    \"test:watch\": \"vitest\"\n  }\n}",
 };
 
 ```json
-"scripts": {
-  "predev": "npm run db:check",
-  "dev": "node --watch src/server.js",
-  "db:seed": "node scripts/seed.js",
-  "lint": "eslint src/",
-  "build": "tsc"
+{
+  "scripts": {
+    "dev": "node --watch --env-file=.env src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  }
 }
 ```

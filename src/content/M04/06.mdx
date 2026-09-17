@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M04-06",
+  number: "06",
+  title: "Error Handling",
+  khmerTitle: "ការគ្រប់គ្រងកំហុស Asynchronous Error Handling",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Handling errors in asynchronous code using `try/catch` blocks and catching unhandled rejections prevents server crashes.",
+  tip: "Unhandled Promise rejections in modern Node.js versions will terminate the process with a non-zero exit code.",
+  objective: "Implement resilient error boundaries around asynchronous operations.",
+  expectedOutcome: "Crash-proof async error handling in all controllers.",
+  codeSnippet: "process.on(\"unhandledRejection\", (reason, promise) => {\n  console.error(\"CRITICAL: Unhandled Promise Rejection at:\", promise, \"reason:\", reason);\n  // Gracefully log and restart process\n});\n\n// Always wrap async route logic in try/catch or async wrapper\nasync function handler(req, res, next) {\n  try {\n    const result = await riskyOperation();\n    res.json(result);\n  } catch (err) {\n    next(err); // Hand off to central error middleware\n  }\n}",
+};
+
+```javascript
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("CRITICAL: Unhandled Promise Rejection at:", promise, "reason:", reason);
+  // Gracefully log and restart process
+});
+
+// Always wrap async route logic in try/catch or async wrapper
+async function handler(req, res, next) {
+  try {
+    const result = await riskyOperation();
+    res.json(result);
+  } catch (err) {
+    next(err); // Hand off to central error middleware
+  }
+}
+```

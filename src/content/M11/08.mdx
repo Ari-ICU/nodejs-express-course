@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M11-08",
+  number: "08",
+  title: "ObjectId",
+  khmerTitle: "ការស្វែងយល់ពី ObjectId (12-byte BSON Identifier)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "The default `_id` field in MongoDB is a 12-byte BSON ObjectId. It consists of a 4-byte timestamp, 5-byte random value, and a 3-byte incrementing counter, guaranteeing global uniqueness across distributed server nodes.",
+  tip: "You can extract the exact creation timestamp from any ObjectId using `objectId.getTimestamp()` without storing a separate creation date field.",
+  objective: "Understand the anatomy and advantages of distributed ObjectIds.",
+  expectedOutcome: "Ability to extract timestamps and inspect ObjectIds.",
+  codeSnippet: "// In mongosh:\nconst id = ObjectId(\"6648e58319f3a9e224e78891\");\nconsole.log(\"Timestamp embedded in ID:\", id.getTimestamp());",
+};
+
+```javascript
+// In mongosh:
+const id = ObjectId("6648e58319f3a9e224e78891");
+console.log("Timestamp embedded in ID:", id.getTimestamp());
+```

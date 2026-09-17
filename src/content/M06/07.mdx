@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M06-07",
+  number: "07",
+  title: "Response Object",
+  khmerTitle: "ការស្វែងយល់ពី Response Object (res)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "The `res` object represents the HTTP response that an Express app sends when it gets an HTTP request. It provides chainable methods like `res.status()`, `res.json()`, `res.send()`, `res.cookie()`, and `res.redirect()`.",
+  tip: "Always remember that `res.json()` or `res.send()` completes the response; trying to call them twice in one handler causes `ERR_HTTP_HEADERS_SENT`.",
+  objective: "Utilize Express response helper methods to return varied data formats.",
+  expectedOutcome: "Error-free response dispatching with proper HTTP headers.",
+  codeSnippet: "app.get(\"/api/download\", (req, res) => {\n  // Setting headers and cookies\n  res.cookie(\"sessionId\", \"xyz123\", { httpOnly: true });\n  res.setHeader(\"X-Custom-Header\", \"NodePulse\");\n  res.status(200).json({ success: true });\n});",
+};
+
+```javascript
+app.get("/api/download", (req, res) => {
+  // Setting headers and cookies
+  res.cookie("sessionId", "xyz123", { httpOnly: true });
+  res.setHeader("X-Custom-Header", "NodePulse");
+  res.status(200).json({ success: true });
+});
+```

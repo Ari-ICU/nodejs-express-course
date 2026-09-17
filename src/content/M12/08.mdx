@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M12-08",
+  number: "08",
+  title: "Default Values",
+  khmerTitle: "ការកំណត់ Default Values ក្នុង Schema",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Configuring default values that Mongoose automatically applies when creating new documents if the field is not provided.",
+  tip: "You can pass a function to `default` (e.g. `default: () => Date.now() + 7*24*60*60*1000`) to compute dynamic default values.",
+  objective: "Set static and dynamic default values on schema fields.",
+  expectedOutcome: "Predictable initialization of document state.",
+  codeSnippet: "const postSchema = new Schema({\n  views: { type: Number, default: 0 },\n  status: { type: String, default: \"draft\" },\n  publishedAt: { type: Date, default: Date.now }\n});",
+};
+
+```javascript
+const postSchema = new Schema({
+  views: { type: Number, default: 0 },
+  status: { type: String, default: "draft" },
+  publishedAt: { type: Date, default: Date.now }
+});
+```

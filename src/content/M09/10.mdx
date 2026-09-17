@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M09-10",
+  number: "10",
+  title: "DELETE",
+  khmerTitle: "ការអនុវត្ត DELETE Endpoint ស្តង់ដារ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Building DELETE endpoints that remove resources from the database and return `204 No Content` upon successful deletion.",
+  tip: "DELETE should be idempotent: deleting an already-deleted resource can return 204 or 404 depending on API contract conventions.",
+  objective: "Implement resource deletion endpoints.",
+  expectedOutcome: "Clean entity removal with proper HTTP 204 signaling.",
+  codeSnippet: "app.delete(\"/api/v1/products/:id\", async (req, res) => {\n  const deleted = await Product.findByIdAndDelete(req.params.id);\n  if (!deleted) return res.status(404).json({ success: false, error: \"Product not found\" });\n  res.status(204).send();\n});",
+};
+
+```javascript
+app.delete("/api/v1/products/:id", async (req, res) => {
+  const deleted = await Product.findByIdAndDelete(req.params.id);
+  if (!deleted) return res.status(404).json({ success: false, error: "Product not found" });
+  res.status(204).send();
+});
+```

@@ -5,19 +5,18 @@ export const meta = {
   khmerTitle: "ទិន្នន័យប៊ីណារី Buffer",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Fixed-size chunks of raw memory allocated outside V8 for handling binary data, images, and network packets.",
-  tip: "Never use `Buffer.allocUnsafe()` unless you immediately overwrite every byte; it may expose old memory data.",
-  objective: "Convert between UTF-8, Hex, and Base64 representations.",
-  expectedOutcome: "Accurate handling of binary file uploads.",
-  codeSnippet: "// Create buffer from string\nconst buf = Buffer.from(\"Hello Node.js!\", \"utf-8\");\nconsole.log(\"Hex bytes:\", buf.toString(\"hex\"));\nconsole.log(\"Base64:\", buf.toString(\"base64\"));\n\n// Allocate blank buffer\nconst blank = Buffer.alloc(10); // 10 bytes initialized with zeros",
+  summary: "A `Buffer` represents a fixed-size chunk of raw binary memory allocated outside V8's JavaScript heap. Buffers are used when handling raw binary data like uploaded files, image buffers, and network TCP packets.",
+  tip: "Use `Buffer.from(str, 'utf-8')` to convert strings to binary, and `.toString('base64')` for Base64 encoding.",
+  objective: "Manipulate raw binary data and convert between character encodings.",
+  expectedOutcome: "Solid foundation for handling binary uploads and payload encodings.",
+  codeSnippet: "// Create buffer from string\nconst buf = Buffer.from(\"Node.js Backend\", \"utf-8\");\n\nconsole.log(\"Raw hex bytes:\", buf);\nconsole.log(\"Base64 representation:\", buf.toString(\"base64\"));\nconsole.log(\"Decoded back to string:\", buf.toString(\"utf-8\"));",
 };
 
 ```javascript
 // Create buffer from string
-const buf = Buffer.from("Hello Node.js!", "utf-8");
-console.log("Hex bytes:", buf.toString("hex"));
-console.log("Base64:", buf.toString("base64"));
+const buf = Buffer.from("Node.js Backend", "utf-8");
 
-// Allocate blank buffer
-const blank = Buffer.alloc(10); // 10 bytes initialized with zeros
+console.log("Raw hex bytes:", buf);
+console.log("Base64 representation:", buf.toString("base64"));
+console.log("Decoded back to string:", buf.toString("utf-8"));
 ```

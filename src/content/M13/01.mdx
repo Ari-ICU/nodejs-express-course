@@ -1,32 +1,23 @@
 export const meta = {
   id: "M13-01",
   number: "01",
-  title: "Full CRUD API Implementation",
-  khmerTitle: "ការអនុវត្ត CRUD API ពេញលេញ",
+  title: "Connecting Express to MongoDB",
+  khmerTitle: "ការភ្ជាប់ Express App ទៅកាន់ MongoDB Database",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Create, Read with filtering/search/pagination, Update, and Delete with proper HTTP status codes and error handling.",
-  tip: "Always run `find()` and `countDocuments()` concurrently with `Promise.all()` to halve your response latency.",
-  objective: "Write enterprise-grade query pipelines with search and pagination.",
-  expectedOutcome: "Scalable list endpoints capable of filtering thousands of records.",
-  codeSnippet: "export const getProducts = async (req, res) => {\n  const { search, category, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = {};\n  \n  if (search) filter.name = { $regex: search, $options: \"i\" };\n  if (category) filter.category = category;\n\n  const skip = (Number(page) - 1) * Number(limit);\n\n  const [products, total] = await Promise.all([\n    Product.find(filter).sort(sort).skip(skip).limit(Number(limit)),\n    Product.countDocuments(filter)\n  ]);\n\n  res.json({ success: true, meta: { total, page: Number(page), pages: Math.ceil(total / limit) }, data: products });\n};",
+  summary: "Bootstrapping an Express application with persistent MongoDB connection pooling, verifying database availability before listening on the port.",
+  tip: "Always connect to the database before calling `app.listen()` to guarantee no incoming requests hit an uninitialized database.",
+  objective: "Wire Express server startup to MongoDB connection readiness.",
+  expectedOutcome: "Resilient server startup with verified database connectivity.",
+  codeSnippet: "import app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\nawait connectDB(); // Await DB connection first!\napp.listen(PORT, () => console.log(`Server on port ${PORT}`));",
 };
 
 ```javascript
-export const getProducts = async (req, res) => {
-  const { search, category, sort = "-createdAt", page = 1, limit = 10 } = req.query;
-  const filter = {};
-  
-  if (search) filter.name = { $regex: search, $options: "i" };
-  if (category) filter.category = category;
+import app from "./app.js";
+import { connectDB } from "./config/db.js";
 
-  const skip = (Number(page) - 1) * Number(limit);
+const PORT = process.env.PORT || 5000;
 
-  const [products, total] = await Promise.all([
-    Product.find(filter).sort(sort).skip(skip).limit(Number(limit)),
-    Product.countDocuments(filter)
-  ]);
-
-  res.json({ success: true, meta: { total, page: Number(page), pages: Math.ceil(total / limit) }, data: products });
-};
+await connectDB(); // Await DB connection first!
+app.listen(PORT, () => console.log(`Server on port ${PORT}`));
 ```

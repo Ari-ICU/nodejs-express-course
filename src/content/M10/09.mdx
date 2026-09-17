@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M10-09",
+  number: "09",
+  title: "Project Organization",
+  khmerTitle: "ការរៀបចំ Directory និងឯកសារ Controller-Service",
+  type: "architecture",
+  codeLanguage: "bash",
+  summary: "Organizing files by feature or technical layer with consistent naming conventions (`product.controller.js`, `product.service.js`, `product.routes.js`).",
+  tip: "Keep related controller, service, and route files in close proximity or clearly paired naming.",
+  objective: "Establish consistent naming and file structure standards.",
+  expectedOutcome: "Intuitive file discovery across large team codebases.",
+  codeSnippet: "src/\n├── controllers/\n│   ├── auth.controller.js\n│   └── product.controller.js\n├── services/\n│   ├── auth.service.js\n│   └── product.service.js\n└── routes/\n    ├── auth.routes.js\n    └── product.routes.js",
+};
+
+```bash
+src/
+├── controllers/
+│   ├── auth.controller.js
+│   └── product.controller.js
+├── services/
+│   ├── auth.service.js
+│   └── product.service.js
+└── routes/
+    ├── auth.routes.js
+    └── product.routes.js
+```

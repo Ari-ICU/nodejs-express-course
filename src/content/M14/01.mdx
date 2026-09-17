@@ -1,35 +1,21 @@
 export const meta = {
   id: "M14-01",
   number: "01",
-  title: "Request Validation with Zod",
-  khmerTitle: "ការប្រើប្រាស់ Zod Schema Validation Middleware",
-  type: "lab",
+  title: "Why Validate Data?",
+  khmerTitle: "ហេតុអ្វីត្រូវផ្ទៀងផ្ទាត់ទិន្នន័យ (Data Validation)?",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Validate request bodies, params, and queries before your controller is even touched.",
-  tip: "Validate data at the edge before touching your database to protect against invalid data, injection, and wasted CPU cycles.",
-  objective: "Build schema-driven validation middleware.",
-  expectedOutcome: "100% type-safe and validated endpoint inputs.",
-  codeSnippet: "import { z } from \"zod\";\n\nexport const CreateUserSchema = z.object({\n  body: z.object({\n    name: z.string().min(2, \"Name must be at least 2 characters\"),\n    email: z.string().email(\"Invalid email format\"),\n    password: z.string().min(8, \"Password must be at least 8 characters\")\n  })\n});\n\n// Middleware Factory\nexport const validate = (schema) => (req, res, next) => {\n  try {\n    schema.parse({ body: req.body, query: req.query, params: req.params });\n    next();\n  } catch (err) {\n    return res.status(400).json({ success: false, errors: err.errors.map(e => e.message) });\n  }\n};",
+  summary: "Validating incoming data protects backend systems from invalid types, SQL/NoSQL injection, unexpected undefined errors, and corrupted database state. Never trust client input.",
+  tip: "Validate data at the network edge in middleware before it ever reaches your controllers or database models.",
+  objective: "Understand the security and stability necessity of input validation.",
+  expectedOutcome: "Zero trust security approach to all incoming client payloads.",
+  codeSnippet: "// BAD: Blindly trusting client input\napp.post(\"/users\", async (req, res) => {\n  // If req.body is missing required fields, DB throws unhandled errors!\n  await User.create(req.body);\n});",
 };
 
 ```javascript
-import { z } from "zod";
-
-export const CreateUserSchema = z.object({
-  body: z.object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email format"),
-    password: z.string().min(8, "Password must be at least 8 characters")
-  })
+// BAD: Blindly trusting client input
+app.post("/users", async (req, res) => {
+  // If req.body is missing required fields, DB throws unhandled errors!
+  await User.create(req.body);
 });
-
-// Middleware Factory
-export const validate = (schema) => (req, res, next) => {
-  try {
-    schema.parse({ body: req.body, query: req.query, params: req.params });
-    next();
-  } catch (err) {
-    return res.status(400).json({ success: false, errors: err.errors.map(e => e.message) });
-  }
-};
 ```

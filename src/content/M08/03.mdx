@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M08-03",
+  number: "03",
+  title: "Router Middleware",
+  khmerTitle: "ការប្រើប្រាស់ Router-level Middleware",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Router-level middleware works identically to application-level middleware, but is bound to an instance of `express.Router()`. It only affects routes defined on that specific router.",
+  tip: "Use router-level middleware to enforce authentication and authorization exclusively on private feature modules.",
+  objective: "Scope middleware execution to specific feature routers.",
+  expectedOutcome: "Isolated security controls without affecting public endpoints.",
+  codeSnippet: "import { Router } from \"express\";\nimport { authenticate } from \"./auth.js\";\n\nconst accountRouter = Router();\n\n// Middleware applied ONLY to routes inside accountRouter\naccountRouter.use(authenticate);\n\naccountRouter.get(\"/settings\", getSettings);\naccountRouter.patch(\"/password\", updatePassword);",
+};
+
+```javascript
+import { Router } from "express";
+import { authenticate } from "./auth.js";
+
+const accountRouter = Router();
+
+// Middleware applied ONLY to routes inside accountRouter
+accountRouter.use(authenticate);
+
+accountRouter.get("/settings", getSettings);
+accountRouter.patch("/password", updatePassword);
+```

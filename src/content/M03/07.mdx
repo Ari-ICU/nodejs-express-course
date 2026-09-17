@@ -5,22 +5,22 @@ export const meta = {
   khmerTitle: "ម៉ូឌុលគ្រីបតូហ្គ្រាហ្វ៊ី crypto Module",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Cryptographic algorithms: random UUIDs, SHA-256 hashing, HMAC signatures, and encryption.",
-  tip: "Use `crypto.timingSafeEqual()` when verifying HMAC signatures or reset tokens to prevent timing attacks.",
-  objective: "Generate cryptographically secure hashes and tokens.",
-  expectedOutcome: "Tamper-proof token generation.",
-  codeSnippet: "import crypto from \"node:crypto\";\n\n// Generate secure random tokens\nconst token = crypto.randomBytes(32).toString(\"hex\");\n\n// Create SHA-256 hash\nconst hash = crypto.createHash(\"sha256\").update(\"my-password\").digest(\"hex\");\n\n// Secure UUID\nconst uuid = crypto.randomUUID();",
+  summary: "The `node:crypto` module provides production-grade cryptographic functionality: generating cryptographically secure random bytes, UUIDs, SHA-256 hashes, HMAC signatures, and asymmetric key pairs.",
+  tip: "Never use `Math.random()` for security tokens or password resets; always use `crypto.randomBytes()` or `crypto.randomUUID()`.",
+  objective: "Implement secure hashing and token generation using native cryptography.",
+  expectedOutcome: "Secure creation of verification tokens and cryptographic hashes.",
+  codeSnippet: "import crypto from \"node:crypto\";\n\n// Generate secure random reset token (hex)\nconst resetToken = crypto.randomBytes(32).toString(\"hex\");\n\n// Generate SHA-256 hash\nconst hash = crypto.createHash(\"sha256\").update(resetToken).digest(\"hex\");\n\nconsole.log(\"Token:\", resetToken);\nconsole.log(\"SHA-256 Hash:\", hash);",
 };
 
 ```javascript
 import crypto from "node:crypto";
 
-// Generate secure random tokens
-const token = crypto.randomBytes(32).toString("hex");
+// Generate secure random reset token (hex)
+const resetToken = crypto.randomBytes(32).toString("hex");
 
-// Create SHA-256 hash
-const hash = crypto.createHash("sha256").update("my-password").digest("hex");
+// Generate SHA-256 hash
+const hash = crypto.createHash("sha256").update(resetToken).digest("hex");
 
-// Secure UUID
-const uuid = crypto.randomUUID();
+console.log("Token:", resetToken);
+console.log("SHA-256 Hash:", hash);
 ```

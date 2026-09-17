@@ -1,23 +1,24 @@
 export const meta = {
   id: "M02-15",
   number: "15",
-  title: "process Object",
+  title: "process",
   khmerTitle: "វត្ថុប្រព័ន្ធ process ក្នុង Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Global object providing information and control over the current Node.js process, memory, signals, and uptime.",
-  tip: "Listening to `SIGTERM` and `SIGINT` allows Kubernetes and Docker to shut down your app cleanly without dropping active requests.",
-  objective: "Handle process signals and graceful termination.",
-  expectedOutcome: "Zero-downtime rolling restart compatibility.",
-  codeSnippet: "// Graceful shutdown handling\nprocess.on(\"SIGTERM\", () => {\n  console.log(\"SIGTERM received. Closing HTTP server gracefully...\");\n  server.close(() => {\n    mongoose.connection.close();\n    process.exit(0);\n  });\n});",
+  summary: "The global `process` object provides programmatic access to the executing Node.js process. It gives access to runtime information, standard input/output streams, memory usage, CPU architecture, and process lifecycle events like graceful shutdown.",
+  tip: "Listen to `process.on('SIGTERM')` to gracefully close open database connections and finish in-flight requests when deploying new container revisions.",
+  objective: "Leverage the process object for lifecycle monitoring and graceful shutdown handling.",
+  expectedOutcome: "Robust server resilience during deployment shutdowns and terminations.",
+  codeSnippet: "// Graceful shutdown handling\nprocess.on(\"SIGTERM\", async () => {\n  console.log(\"SIGTERM received. Closing database connections gracefully...\");\n  await db.disconnect();\n  server.close(() => {\n    console.log(\"HTTP server closed. Exiting process.\");\n    process.exit(0);\n  });\n});",
 };
 
 ```javascript
 // Graceful shutdown handling
-process.on("SIGTERM", () => {
-  console.log("SIGTERM received. Closing HTTP server gracefully...");
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received. Closing database connections gracefully...");
+  await db.disconnect();
   server.close(() => {
-    mongoose.connection.close();
+    console.log("HTTP server closed. Exiting process.");
     process.exit(0);
   });
 });

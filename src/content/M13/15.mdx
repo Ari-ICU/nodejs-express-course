@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M13-15",
+  number: "15",
+  title: "Sorting",
+  khmerTitle: "ការអនុវត្ត Multi-field Sorting",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Parsing comma-separated sorting directives into Mongoose sort options.",
+  tip: "Always provide a stable fallback sort (e.g. `-_id` or `-createdAt`) so paginated results never change order unexpectedly.",
+  objective: "Implement multi-field sorting.",
+  expectedOutcome: "Deterministic, client-controlled result sorting.",
+  codeSnippet: "export const buildSort = (sortParam) => {\n  return sortParam ? sortParam.split(\",\").join(\" \") : \"-createdAt\";\n};",
+};
+
+```javascript
+export const buildSort = (sortParam) => {
+  return sortParam ? sortParam.split(",").join(" ") : "-createdAt";
+};
+```

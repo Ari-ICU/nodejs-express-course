@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M12-17",
+  number: "17",
+  title: "Deleting Documents",
+  khmerTitle: "ការលុបទិន្នន័យ (findByIdAndDelete, deleteOne)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Removing documents from collections using `findByIdAndDelete()`, `deleteOne()`, and `deleteMany()`.",
+  tip: "In production systems, consider soft deletes (`isDeleted: true`) to preserve foreign-key relationships and order histories.",
+  objective: "Delete records from database collections.",
+  expectedOutcome: "Proper removal of database entities.",
+  codeSnippet: "// Hard delete\nawait Product.findByIdAndDelete(productId);\n\n// Soft delete (Alternative production pattern)\nawait Product.findByIdAndUpdate(productId, { isDeleted: true, deletedAt: new Date() });",
+};
+
+```javascript
+// Hard delete
+await Product.findByIdAndDelete(productId);
+
+// Soft delete (Alternative production pattern)
+await Product.findByIdAndUpdate(productId, { isDeleted: true, deletedAt: new Date() });
+```

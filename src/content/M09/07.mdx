@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M09-07",
+  number: "07",
+  title: "POST",
+  khmerTitle: "ការអនុវត្ត POST Endpoint ស្តង់ដារ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Building POST endpoints that validate input data, create database records, generate unique IDs, and return HTTP `201 Created` with the newly created resource.",
+  tip: "Set the `Location` response header to the URL of the newly created resource (`res.setHeader('Location', '/api/v1/products/' + item.id)`).",
+  objective: "Build creation endpoints returning 201 Created status codes.",
+  expectedOutcome: "Reliable resource creation with validation and location headers.",
+  codeSnippet: "app.post(\"/api/v1/products\", async (req, res) => {\n  const newProduct = await Product.create(req.body);\n  res.setHeader(\"Location\", `/api/v1/products/${newProduct._id}`);\n  res.status(201).json({ success: true, data: newProduct });\n});",
+};
+
+```javascript
+app.post("/api/v1/products", async (req, res) => {
+  const newProduct = await Product.create(req.body);
+  res.setHeader("Location", `/api/v1/products/${newProduct._id}`);
+  res.status(201).json({ success: true, data: newProduct });
+});
+```

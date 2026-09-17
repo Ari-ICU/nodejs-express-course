@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M11-05",
+  number: "05",
+  title: "Collections",
+  khmerTitle: "ការគ្រប់គ្រង Collections",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "A collection is a grouping of MongoDB documents, analogous to a table in a relational database. Collections do not enforce a strict schema at the database engine level, allowing documents with different fields to coexist.",
+  tip: "Always name collections with lowercase plural nouns (e.g. `users`, `products`, `orders`).",
+  objective: "Create, inspect, and drop collections in MongoDB.",
+  expectedOutcome: "Safe management of database collections.",
+  codeSnippet: "// Create and inspect collections\ndb.createCollection(\"products\");\nshow collections;\ndb.products.drop(); // Drop collection",
+};
+
+```javascript
+// Create and inspect collections
+db.createCollection("products");
+show collections;
+db.products.drop(); // Drop collection
+```

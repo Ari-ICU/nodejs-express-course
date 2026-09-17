@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M04-10",
+  number: "10",
+  title: "Timers",
+  khmerTitle: "ការប្រើប្រាស់ Timers (setTimeout, setInterval, setImmediate)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Node.js provides `setTimeout`, `setInterval`, and `setImmediate`. While `setTimeout(fn, 0)` is checked in the Timers phase, `setImmediate(fn)` runs in the Check phase immediately after I/O polling.",
+  tip: "Inside an I/O callback (e.g. `fs.readFile`), `setImmediate()` is always guaranteed to execute before `setTimeout(fn, 0)`.",
+  objective: "Select the appropriate timer API for scheduling delayed or immediate background work.",
+  expectedOutcome: "Accurate control over scheduled and deferred task execution.",
+  codeSnippet: "import fs from \"node:fs\";\n\nfs.readFile(\"package.json\", () => {\n  // Inside I/O cycle: setImmediate ALWAYS fires first!\n  setTimeout(() => console.log(\"Timer phase: setTimeout\"), 0);\n  setImmediate(() => console.log(\"Check phase: setImmediate\"));\n});",
+};
+
+```javascript
+import fs from "node:fs";
+
+fs.readFile("package.json", () => {
+  // Inside I/O cycle: setImmediate ALWAYS fires first!
+  setTimeout(() => console.log("Timer phase: setTimeout"), 0);
+  setImmediate(() => console.log("Check phase: setImmediate"));
+});
+```

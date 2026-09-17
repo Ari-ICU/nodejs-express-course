@@ -5,17 +5,19 @@ export const meta = {
   khmerTitle: "ថតផ្ទុកកូដ node_modules",
   type: "concept",
   codeLanguage: "bash",
-  summary: "The directory where npm stores all downloaded third-party code and transitive dependencies.",
-  tip: "NEVER commit `node_modules` to Git! Always list it in `.gitignore`.",
-  objective: "Understand node_modules resolution and git discipline.",
-  expectedOutcome: "Clean Git repositories without multi-gigabyte bloat.",
-  codeSnippet: "# .gitignore\nnode_modules/\n.env\ndist/\ncoverage/",
+  summary: "The `node_modules` directory holds the installed physical code of all direct and transitive dependencies. Because it is reproducible via `npm install`, it should never be committed to Git.",
+  tip: "Always include `node_modules/` in your `.gitignore` file to prevent committing hundreds of megabytes of third-party code.",
+  objective: "Understand dependency resolution, nested trees, and why node_modules must be gitignored.",
+  expectedOutcome: "Clean Git repository history free of external vendor directories.",
+  codeSnippet: "# Ensure .gitignore has node_modules\necho \"node_modules/\" >> .gitignore\necho \".env\" >> .gitignore\n\n# Completely refresh dependencies if corrupted\nrm -rf node_modules package-lock.json\nnpm install",
 };
 
 ```bash
-# .gitignore
-node_modules/
-.env
-dist/
-coverage/
+# Ensure .gitignore has node_modules
+echo "node_modules/" >> .gitignore
+echo ".env" >> .gitignore
+
+# Completely refresh dependencies if corrupted
+rm -rf node_modules package-lock.json
+npm install
 ```

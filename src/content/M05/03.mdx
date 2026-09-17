@@ -1,31 +1,27 @@
 export const meta = {
   id: "M05-03",
   number: "03",
-  title: "Handling Request Body & Streams",
-  khmerTitle: "ការទទួលទិន្នន័យ Request Body តាមរយៈ Data Chunks",
-  type: "lab",
+  title: "HTTP Response",
+  khmerTitle: "រចនាសម្ព័ន្ធនៃ HTTP Response (res)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "In raw Node.js, `req` is a readable stream. Data arrives in binary chunks that must be gathered and parsed.",
-  tip: "This stream-gathering is why Express requires `express.json()` middleware.",
-  objective: "Understand how JSON bodies are streamed over TCP sockets.",
-  expectedOutcome: "Clarity on body parser mechanics.",
-  codeSnippet: "let body = \"\";\n\nreq.on(\"data\", (chunk) => {\n  body += chunk.toString();\n});\n\nreq.on(\"end\", () => {\n  try {\n    const parsedData = JSON.parse(body);\n    console.log(\"Received POST JSON:\", parsedData);\n  } catch (err) {\n    res.writeHead(400);\n    res.end(\"Invalid JSON payload\");\n  }\n});",
+  summary: "An HTTP response communicates the status of the requested operation to the client via a 3-digit status code, status message, response headers (defining content encoding, caching policies, security rules), and response data.",
+  tip: "Always set the `Content-Type` header before sending the body so clients parse JSON or HTML accurately.",
+  objective: "Construct standardized HTTP responses with accurate status codes and headers.",
+  expectedOutcome: "Properly formatted server responses adhering to HTTP standards.",
+  codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  // Set status code and headers\n  res.writeHead(200, {\n    \"Content-Type\": \"application/json\",\n    \"X-Powered-By\": \"Node.js Native\"\n  });\n  // Send body and finalize response\n  res.end(JSON.stringify({ status: \"online\", timestamp: Date.now() }));\n});",
 };
 
 ```javascript
-let body = "";
+import http from "node:http";
 
-req.on("data", (chunk) => {
-  body += chunk.toString();
-});
-
-req.on("end", () => {
-  try {
-    const parsedData = JSON.parse(body);
-    console.log("Received POST JSON:", parsedData);
-  } catch (err) {
-    res.writeHead(400);
-    res.end("Invalid JSON payload");
-  }
+const server = http.createServer((req, res) => {
+  // Set status code and headers
+  res.writeHead(200, {
+    "Content-Type": "application/json",
+    "X-Powered-By": "Node.js Native"
+  });
+  // Send body and finalize response
+  res.end(JSON.stringify({ status: "online", timestamp: Date.now() }));
 });
 ```

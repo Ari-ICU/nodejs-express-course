@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M04-09",
+  number: "09",
+  title: "Microtasks",
+  khmerTitle: "ជួរការងារ Microtasks (process.nextTick & Promises)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Microtask queues (`process.nextTick` and resolved Promise callbacks) have higher priority than the Event Loop macro-tasks (timers, I/O). Microtasks are drained completely before the Event Loop transitions between phases.",
+  tip: "`process.nextTick` executes before Promise microtasks, and microtasks execute before any `setTimeout` or I/O callback.",
+  objective: "Understand microtask execution priority relative to timers and I/O.",
+  expectedOutcome: "Precise prediction and mastery of async execution timing.",
+  codeSnippet: "console.log(\"1. Synchronous\");\n\nsetTimeout(() => console.log(\"4. Macrotask (setTimeout)\"), 0);\n\nPromise.resolve().then(() => console.log(\"3. Microtask (Promise)\"));\n\nprocess.nextTick(() => console.log(\"2. NextTick Microtask\"));\n\n// Execution order: 1 -> 2 -> 3 -> 4",
+};
+
+```javascript
+console.log("1. Synchronous");
+
+setTimeout(() => console.log("4. Macrotask (setTimeout)"), 0);
+
+Promise.resolve().then(() => console.log("3. Microtask (Promise)"));
+
+process.nextTick(() => console.log("2. NextTick Microtask"));
+
+// Execution order: 1 -> 2 -> 3 -> 4
+```

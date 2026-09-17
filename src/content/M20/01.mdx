@@ -1,35 +1,46 @@
 export const meta = {
   id: "M20-01",
   number: "01",
-  title: "Transactional Email with Nodemailer",
-  khmerTitle: "ការផ្ញើ Email ជាមួយ Nodemailer និង HTML Templates",
+  title: "Email with Nodemailer & SMTP",
+  khmerTitle: "ការផ្ញើ Email ជាមួយ Nodemailer និង SMTP",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Send branded transactional emails (welcome messages, password reset links) via SMTP gateways like Resend or SendGrid.",
-  tip: "Always send emails asynchronously through background queues so the HTTP request completes immediately without waiting 2 seconds for SMTP.",
-  objective: "Integrate SMTP transactional emails.",
-  expectedOutcome: "Automated account verification and password reset workflows.",
-  codeSnippet: "import nodemailer from \"nodemailer\";\n\nconst transporter = nodemailer.createTransport({\n  host: process.env.SMTP_HOST,\n  port: Number(process.env.SMTP_PORT),\n  auth: {\n    user: process.env.SMTP_USER,\n    pass: process.env.SMTP_PASS\n  }\n});\n\nexport const sendResetPasswordEmail = async (email, resetUrl) => {\n  await transporter.sendMail({\n    from: '\"NodePulse Security\" <noreply@nodepulse.com>',\n    to: email,\n    subject: \"Reset your password (valid for 10 minutes)\",\n    html: `<p>Click here to reset: <a href=\"${resetUrl}\">Reset Password</a></p>`\n  });\n};",
+  summary: "Transactional emails (verification, password reset, welcome messages) are a core backend responsibility. Nodemailer is the standard Node.js library for sending emails via SMTP. In production, use providers like Resend, SendGrid, or Mailgun for reliability and deliverability. Password reset flows require generating cryptographically secure tokens, storing their SHA-256 hash in the database, and sending the plain token in the email link — never store the plain token.",
+  tip: "Always generate a cryptographically secure token (crypto.randomBytes(32).toString('hex')) for password reset links. Store only the SHA-256 hash of the token in your database, and set a short expiry (10-60 minutes) to limit attack windows.",
+  objective: "Implement complete transactional email flows with secure token generation and HTML templates.",
+  expectedOutcome: "Working email delivery system with password reset flow and verification emails.",
+  codeSnippet: "import nodemailer from \"nodemailer\";\nimport crypto from \"node:crypto\";\n\nconst transporter = nodemailer.createTransport({\n  host: process.env.SMTP_HOST,\n  port: 587,\n  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }\n});\n\n// Forgot password flow\nexport const forgotPassword = catchAsync(async (req, res) => {\n  const user = await User.findOne({ email: req.body.email });\n  if (!user) throw new AppError(\"No user with that email\", 404);\n\n  // Generate secure token — store only the hash\n  const resetToken = crypto.randomBytes(32).toString(\"hex\");\n  user.passwordResetToken = crypto.createHash(\"sha256\").update(resetToken).digest(\"hex\");\n  user.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes\n  await user.save({ validateBeforeSave: false });\n\n  const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;\n  await transporter.sendMail({\n    from: '\"Support\" <no-reply@myapp.com>',\n    to: user.email,\n    subject: \"Password Reset (expires in 10 minutes)\",\n    html: `<p>Reset your password: <a href=\"${resetURL}\">${resetURL}</a></p>`\n  });\n\n  res.json({ success: true, message: \"Reset link sent to email\" });\n});",
 };
 
 ```javascript
 import nodemailer from "nodemailer";
+import crypto from "node:crypto";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
+  port: 587,
+  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
 });
 
-export const sendResetPasswordEmail = async (email, resetUrl) => {
+// Forgot password flow
+export const forgotPassword = catchAsync(async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) throw new AppError("No user with that email", 404);
+
+  // Generate secure token — store only the hash
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  user.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+  user.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+  await user.save({ validateBeforeSave: false });
+
+  const resetURL = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
   await transporter.sendMail({
-    from: '"NodePulse Security" <noreply@nodepulse.com>',
-    to: email,
-    subject: "Reset your password (valid for 10 minutes)",
-    html: `<p>Click here to reset: <a href="${resetUrl}">Reset Password</a></p>`
+    from: '"Support" <no-reply@myapp.com>',
+    to: user.email,
+    subject: "Password Reset (expires in 10 minutes)",
+    html: `<p>Reset your password: <a href="${resetURL}">${resetURL}</a></p>`
   });
-};
+
+  res.json({ success: true, message: "Reset link sent to email" });
+});
 ```

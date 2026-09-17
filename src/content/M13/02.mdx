@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M13-02",
+  number: "02",
+  title: "Database Configuration",
+  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Database Configuration",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Configuring MongoDB connection options: connection pool size, socket timeouts, keepAlive, and retry logic.",
+  tip: "Configure `maxPoolSize: 50` in production to handle concurrent traffic without exhausting database connections.",
+  objective: "Configure connection pooling options for high-concurrency production.",
+  expectedOutcome: "Optimized database driver configuration.",
+  codeSnippet: "const mongooseOptions = {\n  maxPoolSize: 50,          // Maintain up to 50 socket connections\n  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5s\n  socketTimeoutMS: 45000,   // Close sockets after 45s of inactivity\n};\nawait mongoose.connect(process.env.DATABASE_URL, mongooseOptions);",
+};
+
+```javascript
+const mongooseOptions = {
+  maxPoolSize: 50,          // Maintain up to 50 socket connections
+  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5s
+  socketTimeoutMS: 45000,   // Close sockets after 45s of inactivity
+};
+await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);
+```

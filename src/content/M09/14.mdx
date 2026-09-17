@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M09-14",
+  number: "14",
+  title: "Pagination",
+  khmerTitle: "ការរៀបចំ Pagination (Limit & Skip)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Pagination breaks massive database collections into manageable pages using `page` and `limit` query parameters, preventing server memory crashes and slow page loads.",
+  tip: "Always calculate total pages with `Math.ceil(totalCount / limit)` and include pagination metadata in the response.",
+  objective: "Implement pagination using skip and limit parameters.",
+  expectedOutcome: "High-throughput collection queries capable of handling millions of records.",
+  codeSnippet: "app.get(\"/api/v1/items\", async (req, res) => {\n  const page = Math.max(1, Number(req.query.page) || 1);\n  const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));\n  const skip = (page - 1) * limit;\n\n  const [items, total] = await Promise.all([\n    Item.find().skip(skip).limit(limit),\n    Item.countDocuments()\n  ]);\n\n  res.json({\n    success: true,\n    meta: { total, page, limit, totalPages: Math.ceil(total / limit) },\n    data: items\n  });\n});",
+};
+
+```javascript
+app.get("/api/v1/items", async (req, res) => {
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));
+  const skip = (page - 1) * limit;
+
+  const [items, total] = await Promise.all([
+    Item.find().skip(skip).limit(limit),
+    Item.countDocuments()
+  ]);
+
+  res.json({
+    success: true,
+    meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
+    data: items
+  });
+});
+```

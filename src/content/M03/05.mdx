@@ -5,20 +5,21 @@ export const meta = {
   khmerTitle: "ម៉ូឌុល URL និង SearchParams",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Parse and construct standard URLs, query strings, protocols, and hostnames using the WHATWG URL API.",
-  tip: "Use the standard WHATWG `URL` class instead of legacy `url.parse()`.",
-  objective: "Parse and manipulate query parameters safely.",
-  expectedOutcome: "Sanitized URL generation and query parsing.",
-  codeSnippet: "const myUrl = new URL(\"https://api.example.com:8080/v1/products?category=electronics&sort=asc\");\n\nconsole.log(\"Host:\", myUrl.host);              // api.example.com:8080\nconsole.log(\"Path:\", myUrl.pathname);          // /v1/products\nconsole.log(\"Sort Param:\", myUrl.searchParams.get(\"sort\")); // asc\n\nmyUrl.searchParams.append(\"limit\", \"20\");\nconsole.log(\"Modified:\", myUrl.toString());",
+  summary: "The WHATWG compliant `URL` and `URLSearchParams` classes provide safe parsing, serialization, and query string manipulation for incoming HTTP request URLs and external API calls.",
+  tip: "Use `URLSearchParams` to safely encode query parameters without manual URI escaping bugs.",
+  objective: "Parse and construct complex URLs with query parameters.",
+  expectedOutcome: "Robust handling of query strings and URL components.",
+  codeSnippet: "const myUrl = new URL(\"https://api.example.com/v1/users?role=admin&active=true\");\n\nconsole.log(\"Host:\", myUrl.hostname);\nconsole.log(\"Path:\", myUrl.pathname);\nconsole.log(\"Role param:\", myUrl.searchParams.get(\"role\"));\n\n// Appending query parameters safely\nmyUrl.searchParams.append(\"page\", \"2\");\nconsole.log(\"Updated URL:\", myUrl.toString());",
 };
 
 ```javascript
-const myUrl = new URL("https://api.example.com:8080/v1/products?category=electronics&sort=asc");
+const myUrl = new URL("https://api.example.com/v1/users?role=admin&active=true");
 
-console.log("Host:", myUrl.host);              // api.example.com:8080
-console.log("Path:", myUrl.pathname);          // /v1/products
-console.log("Sort Param:", myUrl.searchParams.get("sort")); // asc
+console.log("Host:", myUrl.hostname);
+console.log("Path:", myUrl.pathname);
+console.log("Role param:", myUrl.searchParams.get("role"));
 
-myUrl.searchParams.append("limit", "20");
-console.log("Modified:", myUrl.toString());
+// Appending query parameters safely
+myUrl.searchParams.append("page", "2");
+console.log("Updated URL:", myUrl.toString());
 ```

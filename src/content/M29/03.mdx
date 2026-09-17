@@ -1,23 +1,43 @@
 export const meta = {
   id: "M29-03",
   number: "03",
-  title: "Project 03: Authentication API",
-  khmerTitle: "គម្រោងទី ៣ ៖ Authentication & Authorization API",
+  title: "Project 03: E-Commerce Product API",
+  khmerTitle: "គម្រោងទី ៣ ៖ E-Commerce Catalog API",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Complete user auth system: bcrypt hashing, JWT access tokens, HttpOnly cookie refresh tokens, role-based access, and password resets.",
-  tip: "Store hashed reset tokens in MongoDB with a 10-minute expiration index (`{ expireAfterSeconds: 600 }`).",
-  objective: "Build a production auth microservice with refresh token rotation.",
-  expectedOutcome: "Battle-tested authentication service.",
-  codeSnippet: "// Auth API Routes:\n// POST /api/v1/auth/register\n// POST /api/v1/auth/login\n// POST /api/v1/auth/refresh-token\n// POST /api/v1/auth/forgot-password\n// POST /api/v1/auth/reset-password\n// POST /api/v1/auth/logout",
+  summary: "Build a full-featured e-commerce product catalog API with multi-image upload to Cloudflare R2, nested category management, full-text search with MongoDB $text index, compound indexes for fast queries, advanced filtering (price range, tags, stock), Redis response caching on public endpoints, and RBAC admin guards for write operations. Represents the real-world API patterns used by production e-commerce platforms.",
+  tip: "Pre-index the fields you filter and sort most frequently: { category: 1, price: -1, inStock: 1 }. Apply the Redis cache-aside pattern on GET /products with a 60-second TTL, and invalidate the cache on every create/update/delete operation.",
+  objective: "Build a complete product catalog API with search, filtering, image uploads, and Redis caching.",
+  expectedOutcome: "High-performance product API with sub-10ms cached responses and admin RBAC.",
+  codeSnippet: "// GET /api/v1/products?search=keyboard&category=hardware&minPrice=50&maxPrice=500&page=1\n\nexport const getProducts = catchAsync(async (req, res) => {\n  const { search, category, minPrice, maxPrice, inStock, sort, page = 1, limit = 20 } = req.query;\n\n  const filter = {};\n  if (search) filter.$text = { $search: search };\n  if (category) filter.category = new mongoose.Types.ObjectId(category);\n  if (inStock === \"true\") filter.stock = { $gt: 0 };\n  if (minPrice || maxPrice) filter.price = {\n    ...(minPrice && { $gte: Number(minPrice) }),\n    ...(maxPrice && { $lte: Number(maxPrice) })\n  };\n\n  const cacheKey = `products:${JSON.stringify(req.query)}`;\n  const cached = await redis.get(cacheKey);\n  if (cached) return res.json(JSON.parse(cached));\n\n  const products = await Product.find(filter)\n    .sort(sort || \"-createdAt\")\n    .skip((page - 1) * limit).limit(Number(limit))\n    .populate(\"category\", \"name slug\");\n\n  const body = { success: true, count: products.length, data: products };\n  await redis.setEx(cacheKey, 60, JSON.stringify(body));\n  res.json(body);\n});",
 };
 
 ```javascript
-// Auth API Routes:
-// POST /api/v1/auth/register
-// POST /api/v1/auth/login
-// POST /api/v1/auth/refresh-token
-// POST /api/v1/auth/forgot-password
-// POST /api/v1/auth/reset-password
-// POST /api/v1/auth/logout
+// GET /api/v1/products?search=keyboard&category=hardware&minPrice=50&maxPrice=500&page=1
+
+export const getProducts = catchAsync(async (req, res) => {
+  const { search, category, minPrice, maxPrice, inStock, sort, page = 1, limit = 20 } = req.query;
+
+  const filter = {};
+  if (search) filter.$text = { $search: search };
+  if (category) filter.category = new mongoose.Types.ObjectId(category);
+  if (inStock === "true") filter.stock = { $gt: 0 };
+  if (minPrice || maxPrice) filter.price = {
+    ...(minPrice && { $gte: Number(minPrice) }),
+    ...(maxPrice && { $lte: Number(maxPrice) })
+  };
+
+  const cacheKey = `products:${JSON.stringify(req.query)}`;
+  const cached = await redis.get(cacheKey);
+  if (cached) return res.json(JSON.parse(cached));
+
+  const products = await Product.find(filter)
+    .sort(sort || "-createdAt")
+    .skip((page - 1) * limit).limit(Number(limit))
+    .populate("category", "name slug");
+
+  const body = { success: true, count: products.length, data: products };
+  await redis.setEx(cacheKey, 60, JSON.stringify(body));
+  res.json(body);
+});
 ```

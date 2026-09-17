@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M09-06",
+  number: "06",
+  title: "GET",
+  khmerTitle: "ការអនុវត្ត GET Endpoint ស្តង់ដារ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Building GET endpoints for retrieving collections with filtering, as well as single resources by unique ID with proper 404 handling.",
+  tip: "If a resource with the requested ID does not exist, return `404 Not Found` rather than an empty object or null with 200.",
+  objective: "Implement robust single and collection retrieval routes.",
+  expectedOutcome: "Accurate query handling and clean 404 responses for missing entities.",
+  codeSnippet: "app.get(\"/api/v1/products/:id\", async (req, res) => {\n  const product = await Product.findById(req.params.id);\n  if (!product) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n  res.json({ success: true, data: product });\n});",
+};
+
+```javascript
+app.get("/api/v1/products/:id", async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    return res.status(404).json({ success: false, error: "Product not found" });
+  }
+  res.json({ success: true, data: product });
+});
+```

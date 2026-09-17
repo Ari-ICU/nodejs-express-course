@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M05-10",
+  number: "10",
+  title: "Request Body",
+  khmerTitle: "ការទទួលទិន្នន័យ Request Body តាមរយៈ Streams",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "HTTP POST, PUT, and PATCH requests transmit payloads in the request body. In native Node.js, the request object is an event-driven stream that emits `'data'` buffer chunks until the `'end'` event fires.",
+  tip: "Always enforce a maximum payload size limit when accumulating request body chunks to prevent Denial of Service (DoS) memory exhaustion attacks.",
+  objective: "Collect and assemble incoming request body chunks asynchronously.",
+  expectedOutcome: "Ability to parse raw HTTP request payloads from native streams.",
+  codeSnippet: "import http from \"node:http\";\n\nhttp.createServer((req, res) => {\n  if (req.method === \"POST\") {\n    let body = \"\";\n    req.on(\"data\", chunk => {\n      body += chunk.toString(); // Collect stream chunks\n    });\n    req.on(\"end\", () => {\n      console.log(\"Complete Body received:\", body);\n      res.end(\"Body parsed successfully\");\n    });\n  }\n});",
+};
+
+```javascript
+import http from "node:http";
+
+http.createServer((req, res) => {
+  if (req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => {
+      body += chunk.toString(); // Collect stream chunks
+    });
+    req.on("end", () => {
+      console.log("Complete Body received:", body);
+      res.end("Body parsed successfully");
+    });
+  }
+});
+```

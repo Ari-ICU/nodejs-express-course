@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M06-12",
+  number: "12",
+  title: "JSON Responses",
+  khmerTitle: "ការបញ្ជូនទិន្នន័យ JSON ជាមួយ res.json()",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "`res.json()` sends a JSON response. It converts the parameter to a JSON string using `JSON.stringify()`, automatically sets the `Content-Type` header to `application/json; charset=utf-8`, and formats null or undefined values safely.",
+  tip: "Always prefer `res.json()` over `res.send()` when building REST APIs for explicit formatting.",
+  objective: "Send formatted JSON data structures to clients.",
+  expectedOutcome: "Consistent JSON serialization with proper charset headers.",
+  codeSnippet: "app.get(\"/api/profile\", (req, res) => {\n  res.json({\n    success: true,\n    user: { id: 101, name: \"Dara\", verified: true }\n  });\n});",
+};
+
+```javascript
+app.get("/api/profile", (req, res) => {
+  res.json({
+    success: true,
+    user: { id: 101, name: "Dara", verified: true }
+  });
+});
+```

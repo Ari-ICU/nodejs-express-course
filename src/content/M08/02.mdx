@@ -1,26 +1,25 @@
 export const meta = {
   id: "M08-02",
   number: "02",
-  title: "Built-in & Third-Party Middleware",
-  khmerTitle: "Middleware ដែលភ្ជាប់មកស្រាប់ និងកញ្ចប់ខាងក្រៅ",
-  type: "lab",
+  title: "Application Middleware",
+  khmerTitle: "ការប្រើប្រាស់ Application-level Middleware (app.use)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "`express.json()`, `express.urlencoded()`, `cors()`, `helmet()`, and `morgan()`.",
-  tip: "Order matters: security middleware like `helmet` and `cors` should run BEFORE your routes.",
-  objective: "Configure a secure standard Express middleware stack.",
-  expectedOutcome: "Production-ready base server security.",
-  codeSnippet: "import express from \"express\";\nimport cors from \"cors\";\nimport helmet from \"helmet\";\n\nconst app = express();\n\napp.use(helmet()); // Sets 15+ HTTP security headers\napp.use(cors({ origin: \"http://localhost:3000\", credentials: true }));\napp.use(express.json({ limit: \"10mb\" })); // Parse JSON payloads up to 10MB\napp.use(express.urlencoded({ extended: true }));",
+  summary: "Application-level middleware is bound to an instance of the `app` object using `app.use()` and `app.METHOD()`. It executes for every incoming request matching the path specification.",
+  tip: "Mount global application middleware at the very top of `app.js` before any route definitions.",
+  objective: "Configure application-wide request interceptors.",
+  expectedOutcome: "Global security, parsing, and logging applied to all routes.",
+  codeSnippet: "// Global application middleware\napp.use(express.json());\napp.use(express.urlencoded({ extended: true }));\n\n// Path-scoped application middleware\napp.use(\"/api\", (req, res, next) => {\n  console.log(\"API Access detected\");\n  next();\n});",
 };
 
 ```javascript
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-
-const app = express();
-
-app.use(helmet()); // Sets 15+ HTTP security headers
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json({ limit: "10mb" })); // Parse JSON payloads up to 10MB
+// Global application middleware
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Path-scoped application middleware
+app.use("/api", (req, res, next) => {
+  console.log("API Access detected");
+  next();
+});
 ```

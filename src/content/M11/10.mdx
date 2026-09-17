@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M11-10",
+  number: "10",
+  title: "References",
+  khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងតាមរយៈ References (Normalization)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Referencing stores related data in separate collections and links them using the target document's `_id` (e.g. storing `userId` on an Order document). This prevents unbounded document growth.",
+  tip: "Use references when the child dataset can grow indefinitely (1-to-millions) or when child data is shared across multiple parents.",
+  objective: "Model 1-to-many and many-to-many relationships using document references.",
+  expectedOutcome: "Normalized data models preventing unbounded 16MB document overflow.",
+  codeSnippet: "// Referencing Pattern:\n// User Document: { _id: ObjectId(\"U1\"), name: \"Dara\" }\n// Order Document:\n{\n  \"_id\": ObjectId(\"ORD_99\"),\n  \"userId\": ObjectId(\"U1\"), // Reference to User collection\n  \"total\": 150.00\n}",
+};
+
+```javascript
+// Referencing Pattern:
+// User Document: { _id: ObjectId("U1"), name: "Dara" }
+// Order Document:
+{
+  "_id": ObjectId("ORD_99"),
+  "userId": ObjectId("U1"), // Reference to User collection
+  "total": 150.00
+}
+```

@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M15-09",
+  number: "09",
+  title: "Database Errors",
+  khmerTitle: "ការគ្រប់គ្រងកំហុស Database ក្នុង Central Handler",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Handling MongoDB duplicate key errors (code 11000), cast errors (invalid ObjectId), and connection timeouts gracefully.",
+  tip: "Never expose raw MongoDB database error messages to public API consumers.",
+  objective: "Sanitize database errors before sending client responses.",
+  expectedOutcome: "Secure error handling protecting internal database schema details.",
+  codeSnippet: "// Handling MongoDB duplicate key (e.g. unique email)\nif (err.code === 11000) {\n  const value = Object.values(err.keyValue)[0];\n  return res.status(409).json({\n    success: false,\n    error: `Duplicate value '${value}'. Please use another value.`\n  });\n}",
+};
+
+```javascript
+// Handling MongoDB duplicate key (e.g. unique email)
+if (err.code === 11000) {
+  const value = Object.values(err.keyValue)[0];
+  return res.status(409).json({
+    success: false,
+    error: `Duplicate value '${value}'. Please use another value.`
+  });
+}
+```

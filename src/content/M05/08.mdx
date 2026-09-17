@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M05-08",
+  number: "08",
+  title: "Query Parameters",
+  khmerTitle: "ការប្រើប្រាស់ Query Parameters សម្រាប់ Filter & Sort",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Query parameters appear after the `?` delimiter in a URL (`/products?category=shoes&limit=10`). They are used for non-hierarchical options such as filtering, searching, sorting, and pagination.",
+  tip: "Query parameters are always strings by default; remember to parse numbers (`Number(limit)`) and booleans (`active === 'true'`).",
+  objective: "Extract and sanitize query parameters for filtering and pagination.",
+  expectedOutcome: "Flexible list endpoints supporting dynamic search, filter, and pagination options.",
+  codeSnippet: "const url = new URL(\"https://api.com/items?category=books&minPrice=15&inStock=true\");\n\nconst category = url.searchParams.get(\"category\"); // \"books\"\nconst minPrice = Number(url.searchParams.get(\"minPrice\")); // 15\nconst inStock = url.searchParams.get(\"inStock\") === \"true\"; // true\n\nconsole.log({ category, minPrice, inStock });",
+};
+
+```javascript
+const url = new URL("https://api.com/items?category=books&minPrice=15&inStock=true");
+
+const category = url.searchParams.get("category"); // "books"
+const minPrice = Number(url.searchParams.get("minPrice")); // 15
+const inStock = url.searchParams.get("inStock") === "true"; // true
+
+console.log({ category, minPrice, inStock });
+```

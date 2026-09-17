@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M10-05",
+  number: "05",
+  title: "Separation of Concerns",
+  khmerTitle: "ការបែងចែកទំនួលខុសត្រូវ (Separation of Concerns)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Separation of Concerns (SoC) mandates that distinct layers manage distinct aspects of software execution: Routes handle URL matching, Controllers handle HTTP transport, Services handle business rules, and Models handle data storage.",
+  tip: "When a feature changes (e.g. switching from MongoDB to PostgreSQL), only the Service/Model layer changes, leaving routes and controllers untouched.",
+  objective: "Enforce strict separation between routing, controllers, services, and models.",
+  expectedOutcome: "Highly maintainable code with isolated change boundaries.",
+  codeSnippet: "/* Layered Separation of Concerns:\n   [HTTP Request]\n         ▼\n   [Route Definition]  --> Maps path to controller\n         ▼\n   [Controller]        --> Extracts req data & returns res.json()\n         ▼\n   [Service]           --> Business logic, rules, calculations\n         ▼\n   [Model / Database]  --> Queries & persists to MongoDB/PostgreSQL\n*/",
+};
+
+```javascript
+/* Layered Separation of Concerns:
+   [HTTP Request]
+         ▼
+   [Route Definition]  --> Maps path to controller
+         ▼
+   [Controller]        --> Extracts req data & returns res.json()
+         ▼
+   [Service]           --> Business logic, rules, calculations
+         ▼
+   [Model / Database]  --> Queries & persists to MongoDB/PostgreSQL
+*/
+```

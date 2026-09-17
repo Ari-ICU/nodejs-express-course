@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M14-06",
+  number: "06",
+  title: "Validation Errors",
+  khmerTitle: "ទម្រង់ឆ្លើយតបកំហុស Validation (Field-level feedback)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Formatting validation errors into field-level error messages so frontends can highlight the specific input fields that failed.",
+  tip: "Return HTTP `422 Unprocessable Entity` or `400 Bad Request` with an array of issues.",
+  objective: "Construct actionable field-level validation error responses.",
+  expectedOutcome: "Clear, field-by-field error payloads for API consumers.",
+  codeSnippet: "// Formatted error response\n{\n  \"success\": false,\n  \"error\": \"Validation failed\",\n  \"issues\": [\n    { \"field\": \"email\", \"message\": \"Invalid email address\" },\n    { \"field\": \"password\", \"message\": \"Must be at least 8 characters\" }\n  ]\n}",
+};
+
+```javascript
+// Formatted error response
+{
+  "success": false,
+  "error": "Validation failed",
+  "issues": [
+    { "field": "email", "message": "Invalid email address" },
+    { "field": "password", "message": "Must be at least 8 characters" }
+  ]
+}
+```

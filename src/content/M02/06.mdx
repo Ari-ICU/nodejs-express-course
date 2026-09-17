@@ -5,20 +5,20 @@ export const meta = {
   khmerTitle: "ការដំឡើងកញ្ចប់បណ្ណាល័យ (Packages)",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Installing runtime packages versus development tools with appropriate semantic versioning.",
-  tip: "Avoid installing libraries globally (`-g`) whenever possible to prevent machine-level version conflicts.",
-  objective: "Correctly categorize dependencies into runtime vs dev.",
-  expectedOutcome: "Lean production deployment images.",
-  codeSnippet: "# Install runtime dependency\nnpm install express dotenv cors\n\n# Install dev dependency\nnpm install -D nodemon vitest @types/node\n\n# Install global CLI tool\nnpm install -g pm2",
+  summary: "Installing packages allows you to incorporate battle-tested libraries (Express, Mongoose, Zod, bcrypt) into your codebase, locking specific semantic versions to ensure consistent builds across development and production.",
+  tip: "Use exact version locking with `--save-exact` if you want to prevent unexpected minor version regressions.",
+  objective: "Install packages with specific semantic version flags and update them safely.",
+  expectedOutcome: "Confidence installing, updating, and removing dependencies cleanly.",
+  codeSnippet: "# Install a runtime dependency\nnpm install express dotenv cors\n\n# Install a specific version\nnpm install jsonwebtoken@9.0.2\n\n# Uninstall a package\nnpm uninstall lodash",
 };
 
 ```bash
-# Install runtime dependency
+# Install a runtime dependency
 npm install express dotenv cors
 
-# Install dev dependency
-npm install -D nodemon vitest @types/node
+# Install a specific version
+npm install jsonwebtoken@9.0.2
 
-# Install global CLI tool
-npm install -g pm2
+# Uninstall a package
+npm uninstall lodash
 ```

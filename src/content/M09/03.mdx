@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M09-03",
+  number: "03",
+  title: "RESTful API Design",
+  khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Effective REST API design uses lowercase plural nouns for resources (`/users`, `/orders`), handles relationships intuitively (`/users/5/orders`), and provides clean pagination, sorting, and filtering options.",
+  tip: "Always use hyphens (kebab-case) in URLs rather than underscores or camelCase (e.g. `/order-items` instead of `/order_items`).",
+  objective: "Design intuitive, developer-friendly REST API specifications.",
+  expectedOutcome: "Professional REST endpoints following industry best practices.",
+  codeSnippet: "/* RESTful URL Design Guide:\n   Good: /api/v1/user-profiles\n   Good: /api/v1/customers/12/invoices\n   Bad:  /api/v1/getUserProfiles\n   Bad:  /api/v1/invoices?customerId=12 (use nested URI if strictly owned)\n*/",
+};
+
+```javascript
+/* RESTful URL Design Guide:
+   Good: /api/v1/user-profiles
+   Good: /api/v1/customers/12/invoices
+   Bad:  /api/v1/getUserProfiles
+   Bad:  /api/v1/invoices?customerId=12 (use nested URI if strictly owned)
+*/
+```

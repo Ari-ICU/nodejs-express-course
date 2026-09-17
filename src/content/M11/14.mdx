@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M11-14",
+  number: "14",
+  title: "Database Design",
+  khmerTitle: "គោលការណ៍រចនា Database (Embedding vs Referencing Rule)",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The fundamental rule of MongoDB schema design: 'Data that is accessed together should be stored together.' Design schemas around your application's query access patterns rather than purely abstract entity normalization.",
+  tip: "Ask yourself: 'Will this array grow beyond 1,000 items?' If yes, use references; if no, embed.",
+  objective: "Make informed architectural decisions between embedding and referencing.",
+  expectedOutcome: "High-performance MongoDB schemas optimized for real-world application queries.",
+  codeSnippet: "/* Schema Design Decision Framework:\n   1:1  (User:Profile)     ➔ Embed inside parent document\n   1:Few (Order:Items)      ➔ Embed array of sub-documents\n   1:Many (Post:Comments)   ➔ Reference (comments store postId)\n   1:Huge (Sensor:Logs)     ➔ Parent-reference (logs store sensorId)\n*/",
+};
+
+```javascript
+/* Schema Design Decision Framework:
+   1:1  (User:Profile)     ➔ Embed inside parent document
+   1:Few (Order:Items)      ➔ Embed array of sub-documents
+   1:Many (Post:Comments)   ➔ Reference (comments store postId)
+   1:Huge (Sensor:Logs)     ➔ Parent-reference (logs store sensorId)
+*/
+```

@@ -5,20 +5,19 @@ export const meta = {
   khmerTitle: "ករណីប្រើប្រាស់សមស្របសម្រាប់ Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Ideal for REST/GraphQL APIs, Real-time chat (WebSockets), Streaming, IoT gateways, and BFF (Backend-For-Frontend).",
-  tip: "For heavy CPU workloads (image processing, ML inference), combine Node.js with Python or Go microservices.",
-  objective: "Match technical problem domains to optimal technology stacks.",
-  expectedOutcome: "Solid architectural decision making.",
-  codeSnippet: "// Typical Node.js Sweet Spots:\nconst useCases = [\n  \"RESTful & GraphQL API Gateways\",\n  \"Real-time Chat & Collaboration (Socket.IO)\",\n  \"Video / Audio Streaming Pipelines\",\n  \"Microservices & Serverless Functions\",\n  \"CLI Developer Tools (npm, vite, next)\"\n];",
+  summary: "Node.js is ideal for I/O-heavy, data-intensive, and real-time applications such as REST APIs, GraphQL services, chat applications, streaming servers, microservices, and IoT dashboards. It is less suitable for heavy CPU computation like video encoding or machine learning model training on the main thread.",
+  tip: "For heavy CPU operations (crypto mining, image transformation), delegate work to Node.js Worker Threads or dedicated microservices.",
+  objective: "Identify the ideal system architectures and projects where Node.js delivers the highest ROI.",
+  expectedOutcome: "Strategic capability to evaluate system requirements and select the proper backend technology.",
+  codeSnippet: "/* Ideal Node.js Workloads:\n   ✅ REST & GraphQL APIs (High concurrency, DB read/writes)\n   ✅ Real-time Chat & WebSockets (Socket.IO, notifications)\n   ✅ Streaming services (Audio/Video file pipelines)\n   ✅ Microservices & API Gateways (Fast HTTP proxying)\n   ❌ Heavy 3D Graphics Rendering (Blocks single thread)\n*/",
 };
 
 ```javascript
-// Typical Node.js Sweet Spots:
-const useCases = [
-  "RESTful & GraphQL API Gateways",
-  "Real-time Chat & Collaboration (Socket.IO)",
-  "Video / Audio Streaming Pipelines",
-  "Microservices & Serverless Functions",
-  "CLI Developer Tools (npm, vite, next)"
-];
+/* Ideal Node.js Workloads:
+   ✅ REST & GraphQL APIs (High concurrency, DB read/writes)
+   ✅ Real-time Chat & WebSockets (Socket.IO, notifications)
+   ✅ Streaming services (Audio/Video file pipelines)
+   ✅ Microservices & API Gateways (Fast HTTP proxying)
+   ❌ Heavy 3D Graphics Rendering (Blocks single thread)
+*/
 ```

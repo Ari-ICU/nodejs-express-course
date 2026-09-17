@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M13-07",
+  number: "07",
+  title: "CRUD API with MongoDB",
+  khmerTitle: "ស្ថាបត្យកម្ម CRUD API ពេញលេញជាមួយ MongoDB",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "End-to-end architecture connecting routes, controllers, services, and Mongoose models for a full CRUD resource.",
+  tip: "Always use standard HTTP verbs and RESTful URL paths across all CRUD resources.",
+  objective: "Assemble complete CRUD API flows from HTTP to MongoDB and back.",
+  expectedOutcome: "Complete end-to-end CRUD capability for any application entity.",
+  codeSnippet: "/* Complete CRUD Flow:\n   1. Client: POST /api/v1/products -> \n   2. Route: validates body -> \n   3. Controller: extracts req.body -> \n   4. Service: calls Product.create() -> \n   5. DB: persists document -> \n   6. Client: receives 201 Created JSON\n*/",
+};
+
+```javascript
+/* Complete CRUD Flow:
+   1. Client: POST /api/v1/products -> 
+   2. Route: validates body -> 
+   3. Controller: extracts req.body -> 
+   4. Service: calls Product.create() -> 
+   5. DB: persists document -> 
+   6. Client: receives 201 Created JSON
+*/
+```

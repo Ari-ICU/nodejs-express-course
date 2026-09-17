@@ -1,36 +1,47 @@
 export const meta = {
   id: "M19-01",
   number: "01",
-  title: "File Upload with Multer & Cloudflare R2",
-  khmerTitle: "ការ Upload រូបភាពជាមួយ Multer និង Cloudflare R2",
+  title: "File Uploads with Multer & Cloud Storage",
+  khmerTitle: "ការ Upload ឯកសារ ជាមួយ Multer និង Cloud Storage",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Accept image files, validate MIME types and sizes, generate unique file keys, and upload to S3-compatible cloud buckets.",
-  tip: "Never store user uploads on local container disks in production; container rebuilds will erase the files. Use S3 or Cloudflare R2.",
-  objective: "Build cloud-ready multipart file upload pipelines.",
-  expectedOutcome: "Scalable object storage integration.",
-  codeSnippet: "import multer from \"multer\";\n\nconst storage = multer.memoryStorage(); // Keep in memory to stream directly to S3/R2\n\nconst fileFilter = (req, file, cb) => {\n  if (file.mimetype.startsWith(\"image/\")) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Only image files are allowed!\", 400), false);\n  }\n};\n\nexport const upload = multer({\n  storage,\n  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit\n  fileFilter\n});\n\n// Route:\nrouter.post(\"/avatar\", authenticate, upload.single(\"avatar\"), uploadAvatarController);",
+  summary: "File uploads use multipart/form-data encoding rather than JSON. Multer is Express middleware that parses multipart bodies and exposes files as req.file or req.files. For production, files are streamed directly to cloud storage (Cloudflare R2 or AWS S3) instead of local disk. Always validate MIME type, enforce file size limits, and generate unique filenames using crypto.randomUUID() to prevent filename collisions and directory traversal attacks.",
+  tip: "Never trust the originalname from the client — always generate unique filenames server-side. Validate the MIME type from the file buffer itself using the 'file-type' library, not just the client-reported mimetype.",
+  objective: "Build a complete file upload pipeline from multipart parsing to cloud storage with validation.",
+  expectedOutcome: "Secure file upload endpoint storing files in cloud storage with unique keys.",
+  codeSnippet: "import multer from \"multer\";\nimport { S3Client, PutObjectCommand } from \"@aws-sdk/client-s3\";\nimport { randomUUID } from \"node:crypto\";\n\nconst upload = multer({\n  storage: multer.memoryStorage(),\n  limits: { fileSize: 5 * 1024 * 1024 },     // 5MB max\n  fileFilter: (req, file, cb) => {\n    const allowed = [\"image/jpeg\", \"image/png\", \"image/webp\"];\n    if (!allowed.includes(file.mimetype)) {\n      return cb(new AppError(\"Only JPEG, PNG, and WebP images allowed\", 400));\n    }\n    cb(null, true);\n  }\n});\n\nconst s3 = new S3Client({\n  region: \"auto\",\n  endpoint: process.env.R2_ENDPOINT,\n  credentials: { accessKeyId: process.env.R2_KEY, secretAccessKey: process.env.R2_SECRET }\n});\n\napp.post(\"/api/v1/uploads/avatar\", protect, upload.single(\"avatar\"), async (req, res) => {\n  const ext = req.file.mimetype.split(\"/\")[1];\n  const key = `avatars/${randomUUID()}.${ext}`;\n  await s3.send(new PutObjectCommand({\n    Bucket: process.env.R2_BUCKET, Key: key,\n    Body: req.file.buffer, ContentType: req.file.mimetype\n  }));\n  res.status(201).json({ success: true, url: `${process.env.R2_PUBLIC_URL}/${key}` });\n});",
 };
 
 ```javascript
 import multer from "multer";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { randomUUID } from "node:crypto";
 
-const storage = multer.memoryStorage(); // Keep in memory to stream directly to S3/R2
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },     // 5MB max
+  fileFilter: (req, file, cb) => {
+    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowed.includes(file.mimetype)) {
+      return cb(new AppError("Only JPEG, PNG, and WebP images allowed", 400));
+    }
     cb(null, true);
-  } else {
-    cb(new AppError("Only image files are allowed!", 400), false);
   }
-};
-
-export const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter
 });
 
-// Route:
-router.post("/avatar", authenticate, upload.single("avatar"), uploadAvatarController);
+const s3 = new S3Client({
+  region: "auto",
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: { accessKeyId: process.env.R2_KEY, secretAccessKey: process.env.R2_SECRET }
+});
+
+app.post("/api/v1/uploads/avatar", protect, upload.single("avatar"), async (req, res) => {
+  const ext = req.file.mimetype.split("/")[1];
+  const key = `avatars/${randomUUID()}.${ext}`;
+  await s3.send(new PutObjectCommand({
+    Bucket: process.env.R2_BUCKET, Key: key,
+    Body: req.file.buffer, ContentType: req.file.mimetype
+  }));
+  res.status(201).json({ success: true, url: `${process.env.R2_PUBLIC_URL}/${key}` });
+});
 ```

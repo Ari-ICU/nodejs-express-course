@@ -1,24 +1,25 @@
 export const meta = {
   id: "M02-04",
   number: "04",
-  title: "npm (Node Package Manager)",
+  title: "npm",
   khmerTitle: "ការគ្រប់គ្រងកញ្ចប់កូដជាមួយ npm",
   type: "concept",
   codeLanguage: "bash",
-  summary: "The default package manager for Node.js, managing open-source registry downloads and dependency resolutions.",
-  tip: "Use `npm audit` periodically to scan your installed packages for known vulnerabilities.",
-  objective: "Manage libraries efficiently via CLI.",
-  expectedOutcome: "Mastery of npm lifecycle commands.",
-  codeSnippet: "# Initialize project interactively or with defaults\nnpm init -y\n\n# Search for packages\nnpm search express\n\n# View package details\nnpm view mongoose version",
+  summary: "Node Package Manager (npm) is the default package registry and command-line package manager for Node.js. It facilitates installing, sharing, updating, and auditing third-party open-source libraries across applications.",
+  tip: "Run `npm audit` periodically to scan your installed dependencies for known security vulnerabilities.",
+  objective: "Master essential npm commands for dependency management and lifecycle scripts.",
+  expectedOutcome: "Fluidity in managing third-party libraries and running audit security checks.",
+  codeSnippet: "# Initialize a new package.json with defaults\nnpm init -y\n\n# Search registry packages\nnpm search express\n\n# Audit project dependencies for security advisories\nnpm audit\nnpm audit fix",
 };
 
 ```bash
-# Initialize project interactively or with defaults
+# Initialize a new package.json with defaults
 npm init -y
 
-# Search for packages
+# Search registry packages
 npm search express
 
-# View package details
-npm view mongoose version
+# Audit project dependencies for security advisories
+npm audit
+npm audit fix
 ```

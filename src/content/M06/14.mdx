@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M06-14",
+  number: "14",
+  title: "Express Project Structure",
+  khmerTitle: "រចនាសម្ព័ន្ធគម្រោង Express.js កម្រិត Enterprise",
+  type: "architecture",
+  codeLanguage: "bash",
+  summary: "Scalable enterprise layout for Express: decoupling routing logic from database execution and HTTP response writing across controllers, services, models, and middleware.",
+  tip: "Never write database queries directly inside route callback functions; delegate to services.",
+  objective: "Organize an Express project into modular, maintainable architectural directories.",
+  expectedOutcome: "Clean, scalable project structure adhering to industry best practices.",
+  codeSnippet: "src/\n├── controllers/    # Request/Response orchestration\n├── services/       # Business logic & Database transactions\n├── routes/         # Express router definitions\n├── middleware/     # Auth, error, logging middleware\n├── models/         # Database models (Mongoose)\n├── utils/          # Helper functions & custom errors\n├── app.js          # Express app configuration\n└── server.js       # Entry point & port binding",
+};
+
+```bash
+src/
+├── controllers/    # Request/Response orchestration
+├── services/       # Business logic & Database transactions
+├── routes/         # Express router definitions
+├── middleware/     # Auth, error, logging middleware
+├── models/         # Database models (Mongoose)
+├── utils/          # Helper functions & custom errors
+├── app.js          # Express app configuration
+└── server.js       # Entry point & port binding
+```

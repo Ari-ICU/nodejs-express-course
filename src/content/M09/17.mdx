@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M09-17",
+  number: "17",
+  title: "Sorting",
+  khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting (Ascending & Descending)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Sorting allows clients to control the presentation order of retrieved resources (`?sort=-createdAt,price`).",
+  tip: "Use `-` prefix conventions (e.g. `sort=-price`) for descending order and plain field names for ascending.",
+  objective: "Parse client sort strings into database sort directives.",
+  expectedOutcome: "Flexible sorting across multiple entity fields.",
+  codeSnippet: "// Handling sort strings: ?sort=-price,createdAt\napp.get(\"/api/v1/products\", async (req, res) => {\n  let sortQuery = \"-createdAt\"; // Default newest first\n  if (req.query.sort) {\n    sortQuery = req.query.sort.split(\",\").join(\" \");\n  }\n\n  const products = await Product.find().sort(sortQuery);\n  res.json({ success: true, data: products });\n});",
+};
+
+```javascript
+// Handling sort strings: ?sort=-price,createdAt
+app.get("/api/v1/products", async (req, res) => {
+  let sortQuery = "-createdAt"; // Default newest first
+  if (req.query.sort) {
+    sortQuery = req.query.sort.split(",").join(" ");
+  }
+
+  const products = await Product.find().sort(sortQuery);
+  res.json({ success: true, data: products });
+});
+```

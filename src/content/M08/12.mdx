@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M08-12",
+  number: "12",
+  title: "Middleware Order",
+  khmerTitle: "សារៈសំខាន់នៃលំដាប់លំដោយ Middleware Order",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Middleware order in Express is strictly sequential. Requests flow top-to-bottom through middleware registered via `app.use()`. Security and parsing middleware must run before routes, and error middleware must be registered last.",
+  tip: "Placing `express.json()` after route definitions will result in `req.body` being `undefined` in your handlers.",
+  objective: "Arrange middleware registration in the correct execution order.",
+  expectedOutcome: "Predictable execution pipeline free of undefined body or unhandled error bugs.",
+  codeSnippet: "/* Standard Express Middleware Registration Order:\n   1. Security headers (helmet, cors)\n   2. Body parsers (express.json, express.urlencoded)\n   3. Request logging (morgan)\n   4. Application routes (app.use('/api', routes))\n   5. 404 handler (Catch unhandled paths)\n   6. Global error handler (errorHandler - ALWAYS LAST!)\n*/",
+};
+
+```javascript
+/* Standard Express Middleware Registration Order:
+   1. Security headers (helmet, cors)
+   2. Body parsers (express.json, express.urlencoded)
+   3. Request logging (morgan)
+   4. Application routes (app.use('/api', routes))
+   5. 404 handler (Catch unhandled paths)
+   6. Global error handler (errorHandler - ALWAYS LAST!)
+*/
+```

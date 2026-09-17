@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M15-05",
+  number: "05",
+  title: "Custom Error Classes",
+  khmerTitle: "ការបង្កើត Custom AppError Class",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Creating a custom `AppError` class that inherits from `Error`, encapsulating an HTTP status code, operational status flag, and capturing the stack trace.",
+  tip: "Flagging custom errors with `this.isOperational = true` allows error middleware to distinguish known errors from unexpected crashes.",
+  objective: "Build a reusable custom AppError class.",
+  expectedOutcome: "Clean error instantiation with attached status codes.",
+  codeSnippet: "export class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true; // Marks this as a known, trusted error!\n\n    Error.captureStackTrace(this, this.constructor);\n  }\n}",
+};
+
+```javascript
+export class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
+    this.isOperational = true; // Marks this as a known, trusted error!
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+```

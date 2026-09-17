@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M15-10",
+  number: "10",
+  title: "404 Errors",
+  khmerTitle: "ការបង្កើត 404 Route Not Found Handler",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Catching all unhandled URL routes using a wildcard fallback middleware (`app.all('*')`) that throws a 404 `AppError`.",
+  tip: "Register the 404 catch-all route immediately after all route definitions and right before the global error handler.",
+  objective: "Catch all unhandled API routes with a standard 404 response.",
+  expectedOutcome: "Consistent 404 responses for invalid endpoints.",
+  codeSnippet: "// 404 Catch-All Route (Must be placed after all active routes)\napp.all(\"*\", (req, res, next) => {\n  next(new AppError(`Cannot find ${req.method} ${req.originalUrl} on this server!`, 404));\n});",
+};
+
+```javascript
+// 404 Catch-All Route (Must be placed after all active routes)
+app.all("*", (req, res, next) => {
+  next(new AppError(`Cannot find ${req.method} ${req.originalUrl} on this server!`, 404));
+});
+```

@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M05-09",
+  number: "09",
+  title: "Route Parameters",
+  khmerTitle: "ការប្រើប្រាស់ Route Parameters សម្រាប់កំណត់អត្តសញ្ញាណ",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Route parameters (e.g. `/users/:id` or `/orders/:orderId`) capture dynamic segments directly from the URL path, identifying specific unique resources.",
+  tip: "Use Route parameters for unique resource identification (`/users/42`), and Query parameters for optional filters (`/users?role=admin`).",
+  objective: "Differentiate Route parameters from Query parameters.",
+  expectedOutcome: "Clean, intuitive REST resource addressing schemes.",
+  codeSnippet: "/* Resource URL Strategy:\n   Route Parameter (Specific Resource ID):\n   GET /api/v1/orders/ORD-9821\n   \n   Query Parameter (Filter / Search Criteria):\n   GET /api/v1/orders?status=shipped&limit=20\n*/",
+};
+
+```javascript
+/* Resource URL Strategy:
+   Route Parameter (Specific Resource ID):
+   GET /api/v1/orders/ORD-9821
+   
+   Query Parameter (Filter / Search Criteria):
+   GET /api/v1/orders?status=shipped&limit=20
+*/
+```

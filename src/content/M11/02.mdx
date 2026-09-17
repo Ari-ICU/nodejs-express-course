@@ -1,27 +1,24 @@
 export const meta = {
   id: "M11-02",
   number: "02",
-  title: "Embedded Documents vs References",
-  khmerTitle: "ការបង្កប់ឯកសារ (Embedding) vs ការយោង (Referencing)",
+  title: "SQL vs NoSQL",
+  khmerTitle: "ការប្រៀបធៀប SQL vs NoSQL",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "One-to-Few relationships benefit from embedding; One-to-Many or Many-to-Many relationships require ObjectId references.",
-  tip: "Avoid MongoDB 16MB document size limit by referencing collections when data can grow indefinitely.",
-  objective: "Choose between embedding and referencing with confidence.",
-  expectedOutcome: "High-performance database schema architecture.",
-  codeSnippet: "// 1. EMBEDDED: Order Items (never queried without their parent Order)\n{\n  orderNumber: \"ORD-991\",\n  items: [{ productId: \"...\", qty: 2, price: 49.99 }]\n}\n\n// 2. REFERENCED: User Posts (a user may write 100,000 posts)\n{\n  title: \"Building Microservices\",\n  author: ObjectId(\"65f1a2b3c4d5e6f7a8b9c0d1\") // Reference to User collection\n}",
+  summary: "Relational SQL databases (PostgreSQL, MySQL) store data in strict tables with foreign keys and multi-table JOINs. Document NoSQL databases (MongoDB) store self-contained polymorphic documents, optimizing for horizontal sharding and fast single-query reads.",
+  tip: "Use SQL for deeply relational financial ledgers requiring ACID across many tables; use MongoDB for hierarchical catalogs, user profiles, content management, and rapid prototyping.",
+  objective: "Evaluate architectural trade-offs between SQL and NoSQL databases.",
+  expectedOutcome: "Confident database selection based on workload characteristics.",
+  codeSnippet: "/* SQL vs NoSQL Conceptual Comparison:\n   SQL (PostgreSQL/MySQL):      NoSQL (MongoDB):\n   - Database                   - Database\n   - Table                      - Collection\n   - Row / Record               - Document (BSON)\n   - Column                     - Field\n   - Foreign Key JOIN           - Embedded Document or $lookup Reference\n*/",
 };
 
 ```javascript
-// 1. EMBEDDED: Order Items (never queried without their parent Order)
-{
-  orderNumber: "ORD-991",
-  items: [{ productId: "...", qty: 2, price: 49.99 }]
-}
-
-// 2. REFERENCED: User Posts (a user may write 100,000 posts)
-{
-  title: "Building Microservices",
-  author: ObjectId("65f1a2b3c4d5e6f7a8b9c0d1") // Reference to User collection
-}
+/* SQL vs NoSQL Conceptual Comparison:
+   SQL (PostgreSQL/MySQL):      NoSQL (MongoDB):
+   - Database                   - Database
+   - Table                      - Collection
+   - Row / Record               - Document (BSON)
+   - Column                     - Field
+   - Foreign Key JOIN           - Embedded Document or $lookup Reference
+*/
 ```

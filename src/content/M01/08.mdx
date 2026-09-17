@@ -5,23 +5,28 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មជំរុញដោយព្រឹត្តិការណ៍ (Event-driven)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Systems react to events emitted by subjects, invoking registered callback handlers asynchronously.",
-  tip: "Event emitters decouple modules, making code cleanly extendable.",
-  objective: "Implement a decoupled event publisher and subscriber.",
-  expectedOutcome: "Clean modular architecture using event listeners.",
-  codeSnippet: "import EventEmitter from \"node:events\";\n\nconst serverEmitter = new EventEmitter();\n\n// Listener\nserverEmitter.on(\"orderPlaced\", (order) => {\n  console.log(\"Dispatching email for order #\", order.id);\n});\n\n// Trigger\nserverEmitter.emit(\"orderPlaced\", { id: \"ORD-9021\", total: 49.99 });",
+  summary: "In an event-driven architecture, the server constantly listens for events (incoming HTTP requests, socket connections, timer completions, database responses) and triggers associated callback handlers when events occur.",
+  tip: "Decoupling components using event emitters prevents tight coupling between data producers and consumers.",
+  objective: "Master the mechanics of event-driven programming and publisher-subscriber patterns.",
+  expectedOutcome: "Ability to structure backend logic reactively around events.",
+  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst orderEmitter = new EventEmitter();\n\n// Listener 1: Send confirmation email\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`Sending invoice email for order #${order.id}`);\n});\n\n// Listener 2: Update warehouse inventory\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`Deducting item ${order.item} from inventory`);\n});\n\n// Trigger event\norderEmitter.emit(\"order:placed\", { id: 9812, item: \"MacBook Pro\" });",
 };
 
 ```javascript
-import EventEmitter from "node:events";
+import { EventEmitter } from "node:events";
 
-const serverEmitter = new EventEmitter();
+const orderEmitter = new EventEmitter();
 
-// Listener
-serverEmitter.on("orderPlaced", (order) => {
-  console.log("Dispatching email for order #", order.id);
+// Listener 1: Send confirmation email
+orderEmitter.on("order:placed", (order) => {
+  console.log(`Sending invoice email for order #${order.id}`);
 });
 
-// Trigger
-serverEmitter.emit("orderPlaced", { id: "ORD-9021", total: 49.99 });
+// Listener 2: Update warehouse inventory
+orderEmitter.on("order:placed", (order) => {
+  console.log(`Deducting item ${order.item} from inventory`);
+});
+
+// Trigger event
+orderEmitter.emit("order:placed", { id: 9812, item: "MacBook Pro" });
 ```

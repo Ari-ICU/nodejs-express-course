@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M09-18",
+  number: "18",
+  title: "API Versioning",
+  khmerTitle: "ការគ្រប់គ្រងកំណែ API Versioning (URI vs Header)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "API versioning allows developers to introduce breaking changes without disrupting existing mobile or web clients. URI path versioning (`/api/v1/`) is the most transparent and widely adopted method.",
+  tip: "Always version your API from day one (start with `/api/v1`) to prevent painful migration refactors later.",
+  objective: "Design backwards-compatible versioning schemes.",
+  expectedOutcome: "Future-proof API architecture capable of supporting multiple client generations.",
+  codeSnippet: "// Mounting versioned routes\nimport v1Routes from \"./routes/v1/index.js\";\nimport v2Routes from \"./routes/v2/index.js\";\n\napp.use(\"/api/v1\", v1Routes);\napp.use(\"/api/v2\", v2Routes);",
+};
+
+```javascript
+// Mounting versioned routes
+import v1Routes from "./routes/v1/index.js";
+import v2Routes from "./routes/v2/index.js";
+
+app.use("/api/v1", v1Routes);
+app.use("/api/v2", v2Routes);
+```

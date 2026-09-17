@@ -5,16 +5,17 @@ export const meta = {
   khmerTitle: "អ្វីទៅជា Node.js?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Node.js is an open-source, cross-platform JavaScript runtime environment built on Google Chrome's V8 JavaScript engine.",
-  tip: "Node.js is neither a programming language nor a framework; it is an asynchronous C++ runtime wrapper for V8.",
-  objective: "Inspect the Node.js runtime process object.",
-  expectedOutcome: "Ability to run JavaScript outside the browser without window or DOM APIs.",
-  codeSnippet: "// Check your Node environment\nconsole.log(\"Node Version:\", process.version);\nconsole.log(\"Platform:\", process.platform);\nconsole.log(\"Memory Usage:\", process.memoryUsage());",
+  summary: "Node.js is an open-source, cross-platform JavaScript runtime environment built on Google Chrome's high-performance V8 JavaScript engine and libuv. It executes JavaScript outside the web browser, allowing developers to build lightning-fast, highly scalable network servers using JavaScript.",
+  tip: "Node.js is NOT a language or framework—it is a C++ runtime that provides system APIs like filesystem, network sockets, and process management to JavaScript.",
+  objective: "Understand what makes Node.js distinct from in-browser JavaScript engines.",
+  expectedOutcome: "Clear grasp of Node.js as a native server execution environment.",
+  codeSnippet: "// Inspect your Node environment\nconsole.log(\"Node version:\", process.version);\nconsole.log(\"Platform:\", process.platform);\nconsole.log(\"Architecture:\", process.arch);\nconsole.log(\"Memory Usage:\", process.memoryUsage().heapUsed / 1024 / 1024, \"MB\");",
 };
 
 ```javascript
-// Check your Node environment
-console.log("Node Version:", process.version);
+// Inspect your Node environment
+console.log("Node version:", process.version);
 console.log("Platform:", process.platform);
-console.log("Memory Usage:", process.memoryUsage());
+console.log("Architecture:", process.arch);
+console.log("Memory Usage:", process.memoryUsage().heapUsed / 1024 / 1024, "MB");
 ```

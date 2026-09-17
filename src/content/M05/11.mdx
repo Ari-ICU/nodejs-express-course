@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M05-11",
+  number: "11",
+  title: "JSON",
+  khmerTitle: "ទម្រង់ទិន្នន័យ JSON ក្នុង Web APIs",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "JavaScript Object Notation (JSON) is the universal, language-agnostic data interchange format used by modern RESTful APIs. Node.js natively parses and stringifies JSON with `JSON.parse()` and `JSON.stringify()`.",
+  tip: "Always wrap `JSON.parse()` in a `try/catch` block, because invalid or malformed JSON payloads will throw a syntax error and crash the server.",
+  objective: "Serialize and parse JSON payloads safely in HTTP workflows.",
+  expectedOutcome: "Safe handling of JSON communication between client and backend.",
+  codeSnippet: "function parseJsonSafely(rawJson) {\n  try {\n    return { data: JSON.parse(rawJson), error: null };\n  } catch (err) {\n    return { data: null, error: \"Invalid JSON format\" };\n  }\n}",
+};
+
+```javascript
+function parseJsonSafely(rawJson) {
+  try {
+    return { data: JSON.parse(rawJson), error: null };
+  } catch (err) {
+    return { data: null, error: "Invalid JSON format" };
+  }
+}
+```

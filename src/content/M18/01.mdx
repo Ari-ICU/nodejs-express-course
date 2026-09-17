@@ -1,28 +1,43 @@
 export const meta = {
   id: "M18-01",
   number: "01",
-  title: "Rate Limiting & NoSQL Injection Protection",
-  khmerTitle: "ការទប់ស្កាត់ Rate Limit និង NoSQL Injection",
+  title: "API Security: Helmet, CORS & Rate Limiting",
+  khmerTitle: "សុវត្ថិភាព API: Helmet, CORS, Rate Limiting",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Prevent brute-force attacks on login routes with `express-rate-limit` and sanitize MongoDB query objects with `express-mongo-sanitize`.",
-  tip: "Attackers can send `{\"password\": {\"$ne\": null}}` to bypass MongoDB password checks if input is unsanitized.",
-  objective: "Harden APIs against brute-force attacks and query injection.",
-  expectedOutcome: "Bulletproof defense against common automated bot attacks.",
-  codeSnippet: "import rateLimit from \"express-rate-limit\";\nimport mongoSanitize from \"express-mongo-sanitize\";\n\n// Rate limit: Max 5 login attempts per 15 minutes per IP\nexport const authLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 5,\n  message: { success: false, message: \"Too many login attempts. Please try again after 15 minutes.\" }\n});\n\n// Protect against NoSQL injection: strips out prohibited \"$\" and \".\" characters\napp.use(mongoSanitize());",
+  summary: "Production APIs face constant attack vectors: clickjacking, XSS via response headers, DDoS via unrestricted requests, and unauthorized cross-origin requests. Helmet sets 14 HTTP security headers in one call. CORS enforces a strict allowlist of trusted origins. express-rate-limit blocks request flooding by IP. Combined, these three middleware layers form the baseline security posture for every public Node.js API.",
+  tip: "Always configure CORS with an explicit origin allowlist in production — never use origin: '*' in authenticated APIs. Apply stricter rate limits to auth routes (max 10 per hour) vs general API routes (max 100 per 15 minutes).",
+  objective: "Harden an Express API against common web vulnerabilities with standard security middleware.",
+  expectedOutcome: "Production-hardened API with security headers, CORS enforcement, and request throttling.",
+  codeSnippet: "import express from \"express\";\nimport helmet from \"helmet\";\nimport cors from \"cors\";\nimport rateLimit from \"express-rate-limit\";\n\nconst app = express();\n\n// 1. Helmet: Sets 14 security HTTP response headers\napp.use(helmet());\n\n// 2. CORS: Allow only trusted origins\napp.use(cors({\n  origin: [\"https://myapp.com\", \"https://admin.myapp.com\"],\n  methods: [\"GET\", \"POST\", \"PUT\", \"PATCH\", \"DELETE\"],\n  credentials: true,\n}));\n\n// 3. Rate Limiting: 100 requests per 15 minutes per IP\napp.use(\"/api\", rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 100,\n  message: { success: false, error: \"Too many requests, please try again later.\" },\n  standardHeaders: true,\n}));\n\n// 4. Stricter limit on auth endpoints\napp.use(\"/api/v1/auth\", rateLimit({ windowMs: 60 * 60 * 1000, max: 10 }));",
 };
 
 ```javascript
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
 import rateLimit from "express-rate-limit";
-import mongoSanitize from "express-mongo-sanitize";
 
-// Rate limit: Max 5 login attempts per 15 minutes per IP
-export const authLimiter = rateLimit({
+const app = express();
+
+// 1. Helmet: Sets 14 security HTTP response headers
+app.use(helmet());
+
+// 2. CORS: Allow only trusted origins
+app.use(cors({
+  origin: ["https://myapp.com", "https://admin.myapp.com"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  credentials: true,
+}));
+
+// 3. Rate Limiting: 100 requests per 15 minutes per IP
+app.use("/api", rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
-  message: { success: false, message: "Too many login attempts. Please try again after 15 minutes." }
-});
+  max: 100,
+  message: { success: false, error: "Too many requests, please try again later." },
+  standardHeaders: true,
+}));
 
-// Protect against NoSQL injection: strips out prohibited "$" and "." characters
-app.use(mongoSanitize());
+// 4. Stricter limit on auth endpoints
+app.use("/api/v1/auth", rateLimit({ windowMs: 60 * 60 * 1000, max: 10 }));
 ```

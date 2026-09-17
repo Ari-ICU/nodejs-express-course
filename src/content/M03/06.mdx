@@ -1,30 +1,25 @@
 export const meta = {
   id: "M03-06",
   number: "06",
-  title: "events Module & EventEmitter",
-  khmerTitle: "ម៉ូឌុល Events និង EventEmitter",
+  title: "events Module",
+  khmerTitle: "ម៉ូឌុល Events",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Create custom event dispatchers for asynchronous decoupled messaging inside the application.",
-  tip: "Always remove listeners or use `.once()` when creating transient subscriptions to prevent memory leaks.",
-  objective: "Build modular pub-sub event architectures.",
-  expectedOutcome: "Decoupled software design with event channels.",
-  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nclass PaymentGateway extends EventEmitter {\n  processPayment(amount) {\n    // Simulate transaction\n    setTimeout(() => {\n      this.emit(\"success\", { amount, transactionId: \"TX-892\" });\n    }, 100);\n  }\n}\n\nconst payment = new PaymentGateway();\npayment.on(\"success\", (data) => console.log(\"Receipt sent for\", data));\npayment.processPayment(99.00);",
+  summary: "The `node:events` module forms the backbone of Node.js event-driven architecture. Almost all streaming and networking objects in Node (HTTP requests, server sockets, streams) inherit from EventEmitter.",
+  tip: "Always remove event listeners (`emitter.off()`) when tearing down components to prevent memory leaks.",
+  objective: "Understand how the events module powers Node's internal communication.",
+  expectedOutcome: "Ability to publish and subscribe to custom lifecycle events.",
+  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst serverEmitter = new EventEmitter();\n\nserverEmitter.on(\"user:signup\", (user) => {\n  console.log(\"Send welcome notification to:\", user.email);\n});\n\nserverEmitter.emit(\"user:signup\", { email: \"sokha@gmail.com\" });",
 };
 
 ```javascript
 import { EventEmitter } from "node:events";
 
-class PaymentGateway extends EventEmitter {
-  processPayment(amount) {
-    // Simulate transaction
-    setTimeout(() => {
-      this.emit("success", { amount, transactionId: "TX-892" });
-    }, 100);
-  }
-}
+const serverEmitter = new EventEmitter();
 
-const payment = new PaymentGateway();
-payment.on("success", (data) => console.log("Receipt sent for", data));
-payment.processPayment(99.00);
+serverEmitter.on("user:signup", (user) => {
+  console.log("Send welcome notification to:", user.email);
+});
+
+serverEmitter.emit("user:signup", { email: "sokha@gmail.com" });
 ```

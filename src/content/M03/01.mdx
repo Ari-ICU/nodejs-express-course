@@ -5,15 +5,15 @@ export const meta = {
   khmerTitle: "ទិដ្ឋភាពទូទៅនៃ Core Modules",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Built-in packages compiled into the Node.js binary requiring no npm installation: `fs`, `path`, `os`, `http`, `crypto`, `events`.",
-  tip: "Always prefix core module imports with `node:` (e.g. `node:fs`) to avoid collisions with any npm package of the same name.",
-  objective: "Identify and import Node's native built-in standard library.",
-  expectedOutcome: "Confidence using native APIs without bloated dependencies.",
-  codeSnippet: "// Use the 'node:' protocol prefix for clarity and performance\nimport fs from \"node:fs/promises\";\nimport path from \"node:path\";\nimport os from \"node:os\";\nimport crypto from \"node:crypto\";",
+  summary: "Core modules are compiled directly into the Node.js binary, providing low-level access to the operating system, network, cryptographic hardware, and filesystem without requiring external npm packages.",
+  tip: "Always prefix core imports with `node:` (e.g. `node:fs`, `node:path`, `node:crypto`) to guarantee loading the native module and avoid collision with npm packages.",
+  objective: "Explore the built-in standard library of Node.js.",
+  expectedOutcome: "Familiarity with Node's native capabilities before reaching for external dependencies.",
+  codeSnippet: "// Preferred modern syntax with \"node:\" prefix\nimport fs from \"node:fs/promises\";\nimport path from \"node:path\";\nimport os from \"node:os\";\nimport crypto from \"node:crypto\";",
 };
 
 ```javascript
-// Use the 'node:' protocol prefix for clarity and performance
+// Preferred modern syntax with "node:" prefix
 import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";

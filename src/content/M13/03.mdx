@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M13-03",
+  number: "03",
+  title: "Environment Variables",
+  khmerTitle: "ការគ្រប់គ្រង Database Credentials ក្នុង .env",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "Securing database credentials, connection strings, replica set names, and authentication sources in environment variables.",
+  tip: "Never commit database passwords or Atlas connection strings to source control.",
+  objective: "Externalize all database connection strings into environment variables.",
+  expectedOutcome: "Secure database credential management.",
+  codeSnippet: "# .env configuration:\nDATABASE_URL=mongodb+srv://admin:StrongPass99@cluster.net/shop_db\nPORT=5000",
+};
+
+```bash
+# .env configuration:
+DATABASE_URL=mongodb+srv://admin:StrongPass99@cluster.net/shop_db
+PORT=5000
+```

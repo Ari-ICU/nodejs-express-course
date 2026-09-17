@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M09-16",
+  number: "16",
+  title: "Searching",
+  khmerTitle: "ការស្វែងរកទិន្នន័យ (Regex & Text Index Search)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Text searching across multiple resource fields (name, description) using case-insensitive regex or dedicated MongoDB full-text indexes.",
+  tip: "Use MongoDB `$text` index search instead of regex for large datasets for logarithmic search speed.",
+  objective: "Implement keyword search across database records.",
+  expectedOutcome: "Fast text search across product catalogs and user directories.",
+  codeSnippet: "app.get(\"/api/v1/search\", async (req, res) => {\n  const { q } = req.query;\n  if (!q) return res.json({ success: true, data: [] });\n\n  // Case-insensitive regex search\n  const results = await Product.find({\n    name: { $regex: q, $options: \"i\" }\n  }).limit(20);\n\n  res.json({ success: true, count: results.length, data: results });\n});",
+};
+
+```javascript
+app.get("/api/v1/search", async (req, res) => {
+  const { q } = req.query;
+  if (!q) return res.json({ success: true, data: [] });
+
+  // Case-insensitive regex search
+  const results = await Product.find({
+    name: { $regex: q, $options: "i" }
+  }).limit(20);
+
+  res.json({ success: true, count: results.length, data: results });
+});
+```

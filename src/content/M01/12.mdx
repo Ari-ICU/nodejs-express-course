@@ -5,27 +5,25 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធ Folder គម្រោង Node.js",
   type: "architecture",
   codeLanguage: "bash",
-  summary: "Standard repository layout with src, config, routes, controllers, services, middleware, and tests.",
-  tip: "Keep `app.js` (Express configuration) separate from `server.js` (listening on port) for easy testability with Supertest.",
-  objective: "Structure a modular, enterprise-grade backend directory.",
-  expectedOutcome: "Scalable codebase ready for multi-developer collaboration.",
-  codeSnippet: "my-backend-app/\n├── package.json\n├── package-lock.json\n├── .env.example\n├── .gitignore\n├── src/\n│   ├── config/        # DB, env, redis configurations\n│   ├── controllers/   # Request/response mapping\n│   ├── services/      # Business logic & db queries\n│   ├── models/        # Mongoose/Prisma schemas\n│   ├── routes/        # API endpoint definitions\n│   ├── middleware/    # Auth, validation, error handler\n│   ├── utils/         # Helpers & logger\n│   └── app.js         # Express app initialization\n└── server.js          # Entrypoint (port listen)",
+  summary: "A professional Node.js backend organizes source code into modular layers: controllers, services, routes, models, middleware, validators, configuration, and utilities, strictly separating transport protocols from business domain rules.",
+  tip: "Keep entry points (`server.js` or `index.js`) slim by only connecting database instances and binding the HTTP port.",
+  objective: "Bootstrap a clean, maintainable directory structure for a production-grade Node.js project.",
+  expectedOutcome: "Production-ready repository layout adhering to separation of concerns.",
+  codeSnippet: "my-backend-app/\n├── src/\n│   ├── config/       # Environment variables & DB connectors\n│   ├── controllers/  # HTTP request/response handlers\n│   ├── middleware/   # Auth, logging, rate limiting\n│   ├── models/       # Database schemas (Mongoose)\n│   ├── routes/       # Express route definitions\n│   ├── services/     # Pure business logic & database queries\n│   └── app.js        # Express app initialization\n├── tests/            # Automated Vitest / Supertest files\n├── .env.example      # Sample environment configuration\n├── package.json      # Dependencies and scripts\n└── server.js         # HTTP server entrypoint",
 };
 
 ```bash
 my-backend-app/
-├── package.json
-├── package-lock.json
-├── .env.example
-├── .gitignore
 ├── src/
-│   ├── config/        # DB, env, redis configurations
-│   ├── controllers/   # Request/response mapping
-│   ├── services/      # Business logic & db queries
-│   ├── models/        # Mongoose/Prisma schemas
-│   ├── routes/        # API endpoint definitions
-│   ├── middleware/    # Auth, validation, error handler
-│   ├── utils/         # Helpers & logger
-│   └── app.js         # Express app initialization
-└── server.js          # Entrypoint (port listen)
+│   ├── config/       # Environment variables & DB connectors
+│   ├── controllers/  # HTTP request/response handlers
+│   ├── middleware/   # Auth, logging, rate limiting
+│   ├── models/       # Database schemas (Mongoose)
+│   ├── routes/       # Express route definitions
+│   ├── services/     # Pure business logic & database queries
+│   └── app.js        # Express app initialization
+├── tests/            # Automated Vitest / Supertest files
+├── .env.example      # Sample environment configuration
+├── package.json      # Dependencies and scripts
+└── server.js         # HTTP server entrypoint
 ```

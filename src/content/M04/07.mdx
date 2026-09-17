@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M04-07",
+  number: "07",
+  title: "Event Loop",
+  khmerTitle: "ដំណើរការ Event Loop របស់ Node.js",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "The libuv Event Loop is the heart of Node.js. It continuously coordinates execution between JavaScript code and the operating system across distinct phases: Timers, Pending Callbacks, Poll, Check (setImmediate), and Close Callbacks.",
+  tip: "Understanding Event Loop phases enables you to diagnose latency spikes and avoid blocking operations.",
+  objective: "Master the mechanics of how the Event Loop orchestrates async execution.",
+  expectedOutcome: "Deep structural knowledge of Node's execution timeline.",
+  codeSnippet: "/* Libuv Event Loop Phases:\n   ┌───────────────────────────┐\n   │          Timers           │ (setTimeout, setInterval)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │     Pending Callbacks     │ (I/O callbacks deferred)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │           Poll            │ (Retrieve new I/O events; execute I/O)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │           Check           │ (setImmediate callbacks)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │      Close Callbacks      │ (socket.on('close'))\n   └───────────────────────────┘\n*/",
+};
+
+```javascript
+/* Libuv Event Loop Phases:
+   ┌───────────────────────────┐
+   │          Timers           │ (setTimeout, setInterval)
+   └─────────────┬─────────────┘
+   ┌─────────────┴─────────────┐
+   │     Pending Callbacks     │ (I/O callbacks deferred)
+   └─────────────┬─────────────┘
+   ┌─────────────┴─────────────┐
+   │           Poll            │ (Retrieve new I/O events; execute I/O)
+   └─────────────┬─────────────┘
+   ┌─────────────┴─────────────┐
+   │           Check           │ (setImmediate callbacks)
+   └─────────────┬─────────────┘
+   ┌─────────────┴─────────────┐
+   │      Close Callbacks      │ (socket.on('close'))
+   └───────────────────────────┘
+*/
+```

@@ -1,28 +1,23 @@
 export const meta = {
   id: "M12-01",
   number: "01",
-  title: "Schema & Model Definition",
-  khmerTitle: "ការបង្កើត Schema និង Model ជាមួយ Mongoose",
-  type: "lab",
+  title: "What is Mongoose?",
+  khmerTitle: "អ្វីជា Mongoose ODM?",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Define strongly-typed document structures, validation rules, default values, and indexes.",
-  tip: "Always enable `{ timestamps: true }` in your schema options to track record creation and modification times.",
-  objective: "Construct validated Mongoose models.",
-  expectedOutcome: "Bulletproof data schemas with automated timestamps.",
-  codeSnippet: "import mongoose, { Schema } from \"mongoose\";\n\nconst productSchema = new Schema({\n  name: { type: String, required: [true, \"Product name is required\"], trim: true },\n  slug: { type: String, unique: true, lowercase: true },\n  price: { type: Number, required: true, min: [0, \"Price cannot be negative\"] },\n  category: { type: Schema.Types.ObjectId, ref: \"Category\", required: true },\n  isFeatured: { type: Boolean, default: false }\n}, {\n  timestamps: true // Adds createdAt and updatedAt automatically!\n});\n\nexport const Product = mongoose.model(\"Product\", productSchema);",
+  summary: "Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It manages relationships between data, provides schema validation, translates between code objects and MongoDB representations, and coordinates middleware hooks.",
+  tip: "Mongoose brings type-safety and business validation to MongoDB's schema-less engine.",
+  objective: "Understand the role of Mongoose in Node.js backend development.",
+  expectedOutcome: "Clear grasp of Object Data Modeling benefits.",
+  codeSnippet: "import mongoose, { Schema } from \"mongoose\";\n\nconst productSchema = new Schema({\n  name: { type: String, required: true },\n  price: { type: Number, min: 0 }\n});\n\nexport const Product = mongoose.model(\"Product\", productSchema);",
 };
 
 ```javascript
 import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema({
-  name: { type: String, required: [true, "Product name is required"], trim: true },
-  slug: { type: String, unique: true, lowercase: true },
-  price: { type: Number, required: true, min: [0, "Price cannot be negative"] },
-  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
-  isFeatured: { type: Boolean, default: false }
-}, {
-  timestamps: true // Adds createdAt and updatedAt automatically!
+  name: { type: String, required: true },
+  price: { type: Number, min: 0 }
 });
 
 export const Product = mongoose.model("Product", productSchema);

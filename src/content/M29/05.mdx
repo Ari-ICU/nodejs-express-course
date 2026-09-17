@@ -1,28 +1,42 @@
 export const meta = {
   id: "M29-05",
   number: "05",
-  title: "Project 05: E-Commerce Backend",
-  khmerTitle: "គម្រោងទី ៥ ៖ ប្រព័ន្ធ E-Commerce Backend ពេញលេញ",
+  title: "Project 05: Job Queue & Notifications",
+  khmerTitle: "គម្រោងទី ៥ ៖ Background Job Queue System",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Users, Products, Categories, Cart, Wishlist, Order checkout, Payment webhook integration, and Admin analytics.",
-  tip: "Use MongoDB multi-document transactions to ensure inventory stock is never oversold.",
-  objective: "Build atomic e-commerce transaction workflows.",
-  expectedOutcome: "Resilient digital commerce backend.",
-  codeSnippet: "// Transactional checkout using MongoDB Sessions:\nconst session = await mongoose.startSession();\nsession.startTransaction();\ntry {\n  // Deduct product stock\n  // Create Order\n  // Clear User Cart\n  await session.commitTransaction();\n} catch (err) {\n  await session.abortTransaction();\n  throw err;\n}",
+  summary: "Build a notification and background job processing system using BullMQ with Redis. The system handles email campaigns, push notifications, scheduled reminders, and webhook delivery asynchronously. Features include priority queues (critical vs normal), retry with exponential backoff, Bull Board admin dashboard for job monitoring, and a Dead Letter Queue for failed job inspection and replay.",
+  tip: "Separate queues by priority tier: critical (password resets, security alerts — max 1 concurrency, no rate limit), high (transactional emails — concurrency 5), default (marketing campaigns — concurrency 10 with outbound rate limiting).",
+  objective: "Architect a production notification system with priority queues, retries, and admin monitoring.",
+  expectedOutcome: "Scalable background job system handling async tasks with zero message loss and monitoring.",
+  codeSnippet: "import { Queue, Worker, QueueEvents } from \"bullmq\";\n\nconst criticalQueue = new Queue(\"notifications:critical\", { connection: redis });\nconst emailQueue = new Queue(\"notifications:email\", { connection: redis });\n\n// Producer: queue jobs instantly\nexport const sendNotification = async (type, payload, priority = \"normal\") => {\n  const queue = priority === \"critical\" ? criticalQueue : emailQueue;\n  return queue.add(type, payload, {\n    priority: priority === \"critical\" ? 1 : 10,\n    attempts: 5,\n    backoff: { type: \"exponential\", delay: 1000 },\n    removeOnComplete: { age: 24 * 3600 },\n    removeOnFail: { age: 7 * 24 * 3600 }\n  });\n};\n\n// Worker: processes in separate process\nconst worker = new Worker(\"notifications:email\", async (job) => {\n  switch (job.name) {\n    case \"welcome\":  return sendWelcomeEmail(job.data);\n    case \"reset\":    return sendResetEmail(job.data);\n    case \"campaign\": return sendCampaignEmail(job.data);\n    default: throw new Error(`Unknown job type: ${job.name}`);\n  }\n}, { connection: redis, concurrency: 10 });",
 };
 
 ```javascript
-// Transactional checkout using MongoDB Sessions:
-const session = await mongoose.startSession();
-session.startTransaction();
-try {
-  // Deduct product stock
-  // Create Order
-  // Clear User Cart
-  await session.commitTransaction();
-} catch (err) {
-  await session.abortTransaction();
-  throw err;
-}
+import { Queue, Worker, QueueEvents } from "bullmq";
+
+const criticalQueue = new Queue("notifications:critical", { connection: redis });
+const emailQueue = new Queue("notifications:email", { connection: redis });
+
+// Producer: queue jobs instantly
+export const sendNotification = async (type, payload, priority = "normal") => {
+  const queue = priority === "critical" ? criticalQueue : emailQueue;
+  return queue.add(type, payload, {
+    priority: priority === "critical" ? 1 : 10,
+    attempts: 5,
+    backoff: { type: "exponential", delay: 1000 },
+    removeOnComplete: { age: 24 * 3600 },
+    removeOnFail: { age: 7 * 24 * 3600 }
+  });
+};
+
+// Worker: processes in separate process
+const worker = new Worker("notifications:email", async (job) => {
+  switch (job.name) {
+    case "welcome":  return sendWelcomeEmail(job.data);
+    case "reset":    return sendResetEmail(job.data);
+    case "campaign": return sendCampaignEmail(job.data);
+    default: throw new Error(`Unknown job type: ${job.name}`);
+  }
+}, { connection: redis, concurrency: 10 });
 ```

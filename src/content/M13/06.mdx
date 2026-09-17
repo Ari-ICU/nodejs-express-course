@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M13-06",
+  number: "06",
+  title: "Creating Services",
+  khmerTitle: "ការបង្កើត Services សម្រាប់អនុវត្ត Database Queries",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Encapsulating Mongoose database queries, aggregations, and business checks inside dedicated service modules.",
+  tip: "Services should be responsible for database transactions and business validations.",
+  objective: "Isolate all database querying logic inside dedicated services.",
+  expectedOutcome: "Reusable, testable database service functions.",
+  codeSnippet: "// services/product.service.js\nimport { Product } from \"../models/product.model.js\";\n\nexport const listProducts = async (filters) => {\n  const query = {};\n  if (filters.category) query.category = filters.category;\n  return await Product.find(query).lean();\n};",
+};
+
+```javascript
+// services/product.service.js
+import { Product } from "../models/product.model.js";
+
+export const listProducts = async (filters) => {
+  const query = {};
+  if (filters.category) query.category = filters.category;
+  return await Product.find(query).lean();
+};
+```

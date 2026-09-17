@@ -5,19 +5,16 @@ export const meta = {
   khmerTitle: "ហេតុអ្វីត្រូវជ្រើសរើស Node.js?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Unified full-stack language (JS everywhere), massive npm ecosystem, high I/O throughput, and fast prototyping.",
-  tip: "Node.js excels at I/O-intensive workloads like REST APIs, chat servers, streaming, and microservices.",
-  objective: "Evaluate when to choose Node.js over multi-threaded runtimes like Java or Go.",
-  expectedOutcome: "Strategic justification for Node.js in high-concurrency systems.",
-  codeSnippet: "// Unified Full-Stack: Share validation schemas between frontend and backend\nimport { z } from \"zod\";\n\nexport const UserSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(8),\n}); // Can be imported in React and Express!",
+  summary: "Node.js empowers teams to use a unified language (JavaScript/TypeScript) across both client and server. Its asynchronous, non-blocking I/O architecture handles tens of thousands of concurrent connections on minimal hardware, making it the industry standard for APIs, microservices, and real-time platforms.",
+  tip: "Full-stack code sharing (validation schemas, TypeScript types, utilities) drastically reduces engineering overhead.",
+  objective: "Evaluate the technical and business advantages of choosing Node.js for backend projects.",
+  expectedOutcome: "Ability to articulate why Node.js excels in I/O-intensive web services.",
+  codeSnippet: "// Example: Sharing validation schemas across Frontend and Backend\nexport const validateUsername = (name) => {\n  return typeof name === \"string\" && name.trim().length >= 3 && name.trim().length <= 30;\n};",
 };
 
 ```javascript
-// Unified Full-Stack: Share validation schemas between frontend and backend
-import { z } from "zod";
-
-export const UserSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-}); // Can be imported in React and Express!
+// Example: Sharing validation schemas across Frontend and Backend
+export const validateUsername = (name) => {
+  return typeof name === "string" && name.trim().length >= 3 && name.trim().length <= 30;
+};
 ```

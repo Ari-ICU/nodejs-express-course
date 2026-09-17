@@ -4,20 +4,21 @@ export const meta = {
   title: "Running JavaScript with Node.js",
   khmerTitle: "ការដំណើរការ JavaScript ជាមួយ Node.js",
   type: "lab",
-  codeLanguage: "javascript",
-  summary: "Execute scripts directly using `node <filename>` or with the experimental watch mode `node --watch`.",
-  tip: "Node 18+ has built-in `--watch` flag, eliminating the need for `nodemon` in simple projects.",
-  objective: "Execute and live-reload JavaScript server scripts.",
-  expectedOutcome: "Fast feedback loop during local development.",
-  codeSnippet: "// index.js\nconst serverName = \"NodePulse Core\";\nconsole.log(`[SERVER] ${serverName} initialized at ${new Date().toISOString()}`);\n\n// Terminal:\n// node index.js\n// node --watch index.js (auto-reloads on file save!)",
+  codeLanguage: "bash",
+  summary: "Running JavaScript through the `node` CLI executes files directly against the V8 engine and operating system APIs, providing full access to filesystem, networking, and system environments without a web browser.",
+  tip: "Use the native `--watch` flag in Node.js 18+ to auto-reload on file changes without third-party packages like nodemon.",
+  objective: "Execute JavaScript scripts from the terminal using the Node CLI.",
+  expectedOutcome: "Comfortable command-line script execution with hot-reloading support.",
+  codeSnippet: "# Run a JavaScript script directly\nnode app.js\n\n# Run with native file-watcher auto-reload (Node.js 18.11+)\nnode --watch app.js\n\n# Evaluate inline JavaScript expressions\nnode -e \"console.log('Today is:', new Date().toISOString())\"",
 };
 
-```javascript
-// index.js
-const serverName = "NodePulse Core";
-console.log(`[SERVER] ${serverName} initialized at ${new Date().toISOString()}`);
+```bash
+# Run a JavaScript script directly
+node app.js
 
-// Terminal:
-// node index.js
-// node --watch index.js (auto-reloads on file save!)
+# Run with native file-watcher auto-reload (Node.js 18.11+)
+node --watch app.js
+
+# Evaluate inline JavaScript expressions
+node -e "console.log('Today is:', new Date().toISOString())"
 ```

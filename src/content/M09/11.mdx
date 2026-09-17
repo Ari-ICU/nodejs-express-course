@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M09-11",
+  number: "11",
+  title: "HTTP Status Codes",
+  khmerTitle: "ការជ្រើសរើស Status Codes ត្រឹមត្រូវក្នុង REST APIs",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Accurate status codes are essential: 200 (OK), 201 (Created), 204 (No Content), 400 (Bad Request / Validation), 401 (Unauthenticated), 403 (Forbidden), 404 (Not Found), 409 (Conflict), 422 (Unprocessable Entity), 500 (Internal Error).",
+  tip: "Return `409 Conflict` when a user attempts to register with an email address that is already registered.",
+  objective: "Map business failure and success states to accurate status codes.",
+  expectedOutcome: "Predictable, transparent API signaling.",
+  codeSnippet: "// Email collision:\nif (emailExists) {\n  return res.status(409).json({ success: false, error: \"Email already registered\" });\n}",
+};
+
+```javascript
+// Email collision:
+if (emailExists) {
+  return res.status(409).json({ success: false, error: "Email already registered" });
+}
+```

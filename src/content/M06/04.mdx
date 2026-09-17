@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M06-04",
+  number: "04",
+  title: "Express Application",
+  khmerTitle: "ការបង្កើត Application Instance",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Calling `express()` creates an application instance. The `app` object holds configuration settings, registers middleware pipelines, defines HTTP routes, and delegates listening sockets to the operating system.",
+  tip: "Keep `app.js` dedicated to middleware configuration and route binding, and bind the network port in a separate `server.js` file for seamless testing.",
+  objective: "Instantiate and configure the central Express application instance.",
+  expectedOutcome: "Clean application initialization pattern separated from server listening.",
+  codeSnippet: "// src/app.js\nimport express from \"express\";\n\nconst app = express();\n\n// Application settings\napp.disable(\"x-powered-by\"); // Hide Express signature for security\napp.use(express.json());\n\nexport default app;",
+};
+
+```javascript
+// src/app.js
+import express from "express";
+
+const app = express();
+
+// Application settings
+app.disable("x-powered-by"); // Hide Express signature for security
+app.use(express.json());
+
+export default app;
+```

@@ -1,38 +1,26 @@
 export const meta = {
   id: "M15-01",
   number: "01",
-  title: "Custom AppError & Centralized Error Middleware",
-  khmerTitle: "Custom AppError Class និង Error Middleware កណ្តាល",
-  type: "lab",
+  title: "Types of Errors",
+  khmerTitle: "ការយល់ដឹងអំពីប្រភេទនៃកំហុសក្នុង Server",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Eliminate repetitive try/catch blocks with an async wrapper and centralized error handling middleware.",
-  tip: "Never leak the raw stack trace (`err.stack`) in production environments; it exposes file paths and internal logic to attackers.",
-  objective: "Implement a clean centralized error management system.",
-  expectedOutcome: "Zero server crashes from unhandled errors.",
-  codeSnippet: "// utils/AppError.js\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.isOperational = true; // Distinguishes bugs from operational errors\n    Error.captureStackTrace(this, this.constructor);\n  }\n}\n\n// middleware/error.middleware.js (must have 4 arguments!)\nexport const errorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const message = err.message || \"Internal Server Error\";\n\n  res.status(statusCode).json({\n    success: false,\n    statusCode,\n    message,\n    ...(process.env.NODE_ENV === \"development\" && { stack: err.stack })\n  });\n};",
+  summary: "Server errors fall into two distinct categories: Operational Errors (predictable runtime failures like invalid user input, expired tokens, missing resources) and Programmer Errors (bugs, syntax errors, reading properties of undefined).",
+  tip: "Operational errors should be caught and returned as friendly JSON messages; programmer errors indicate bugs requiring developer fixes.",
+  objective: "Distinguish operational errors from programming bugs.",
+  expectedOutcome: "Clear error classification strategy for all server failures.",
+  codeSnippet: "/* Error Classification:\n   Operational Errors (Expected):\n   - 400 Invalid email format\n   - 404 User not found in DB\n   - 401 Expired JWT token\n\n   Programmer Errors (Bugs):\n   - TypeError: Cannot read property of undefined\n   - SyntaxError: Invalid JSON string\n*/",
 };
 
 ```javascript
-// utils/AppError.js
-export class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-    this.isOperational = true; // Distinguishes bugs from operational errors
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
+/* Error Classification:
+   Operational Errors (Expected):
+   - 400 Invalid email format
+   - 404 User not found in DB
+   - 401 Expired JWT token
 
-// middleware/error.middleware.js (must have 4 arguments!)
-export const errorHandler = (err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
-
-  res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message,
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack })
-  });
-};
+   Programmer Errors (Bugs):
+   - TypeError: Cannot read property of undefined
+   - SyntaxError: Invalid JSON string
+*/
 ```

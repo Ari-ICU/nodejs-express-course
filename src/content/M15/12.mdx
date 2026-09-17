@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M15-12",
+  number: "12",
+  title: "Error Logging",
+  khmerTitle: "ការកត់ត្រាកំហុស (Logging) ជាមួយ Winston / Sentry",
+  type: "architecture",
+  codeLanguage: "javascript",
+  summary: "Logging production errors to durable log files or cloud monitoring services (Sentry, Datadog) for instant alerting and post-mortem debugging.",
+  tip: "Log programmer errors at the `'error'` level and operational errors at the `'warn'` level.",
+  objective: "Integrate structured error logging for production monitoring.",
+  expectedOutcome: "Instant visibility into server exceptions in production environments.",
+  codeSnippet: "import winston from \"winston\";\n\nconst logger = winston.createLogger({\n  level: \"error\",\n  format: winston.format.json(),\n  transports: [\n    new winston.transports.File({ filename: \"logs/error.log\" })\n  ]\n});\n\n// Inside error middleware:\nlogger.error({ message: err.message, stack: err.stack, url: req.url });",
+};
+
+```javascript
+import winston from "winston";
+
+const logger = winston.createLogger({
+  level: "error",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: "logs/error.log" })
+  ]
+});
+
+// Inside error middleware:
+logger.error({ message: err.message, stack: err.stack, url: req.url });
+```

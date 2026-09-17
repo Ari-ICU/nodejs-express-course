@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M05-06",
+  number: "06",
+  title: "HTTP Status Codes",
+  khmerTitle: "លេខកូដស្ថានភាព HTTP Status Codes",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "HTTP status codes communicate the outcome of a request: 2xx indicates Success (200 OK, 201 Created, 204 No Content), 3xx Redirection (301, 304), 4xx Client Errors (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 422 Unprocessable Entity), and 5xx Server Errors (500 Internal Error, 503 Unavailable).",
+  tip: "Never return 200 OK with `{ error: 'Invalid password' }` in the body; use appropriate 4xx status codes so HTTP clients can react properly.",
+  objective: "Return precise, standard HTTP status codes for every API response.",
+  expectedOutcome: "Predictable API contracts for frontend clients and automated API consumers.",
+  codeSnippet: "/* Standard HTTP Status Code Ranges:\n   200 OK           -> Standard successful response\n   201 Created      -> Resource successfully created (POST)\n   204 No Content   -> Successful action with no response body (DELETE)\n   400 Bad Request  -> Invalid client syntax or schema\n   401 Unauthorized -> Client must authenticate\n   403 Forbidden    -> Authenticated, but lacks required role/permission\n   404 Not Found    -> Resource does not exist\n   500 Server Error -> Unhandled server exception\n*/",
+};
+
+```javascript
+/* Standard HTTP Status Code Ranges:
+   200 OK           -> Standard successful response
+   201 Created      -> Resource successfully created (POST)
+   204 No Content   -> Successful action with no response body (DELETE)
+   400 Bad Request  -> Invalid client syntax or schema
+   401 Unauthorized -> Client must authenticate
+   403 Forbidden    -> Authenticated, but lacks required role/permission
+   404 Not Found    -> Resource does not exist
+   500 Server Error -> Unhandled server exception
+*/
+```

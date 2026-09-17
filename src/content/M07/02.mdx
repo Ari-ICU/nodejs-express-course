@@ -1,22 +1,20 @@
 export const meta = {
   id: "M07-02",
   number: "02",
-  title: "Route Parameters & Query Parameters",
-  khmerTitle: "ប៉ារ៉ាម៉ែត្រ Route និង Query Parameters",
-  type: "concept",
+  title: "GET Routes",
+  khmerTitle: "ការបង្កើត GET Routes សម្រាប់ទាញយកទិន្នន័យ",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "Use route parameters (`/products/:id`) for specific resource identification; use query parameters (`?category=tech&page=2`) for filtering/paging.",
-  tip: "Route parameters are always returned as strings; convert to numbers or ObjectIds where appropriate.",
-  objective: "Design semantic URLs adhering to REST conventions.",
-  expectedOutcome: "Clean, intuitive URL structures for API consumers.",
-  codeSnippet: "// GET /api/v1/courses/nodejs/lessons/07?view=compact\napp.get(\"/api/v1/courses/:courseSlug/lessons/:lessonNumber\", (req, res) => {\n  const { courseSlug, lessonNumber } = req.params;\n  const { view } = req.query;\n  res.json({ course: courseSlug, lesson: Number(lessonNumber), viewMode: view || \"full\" });\n});",
+  summary: "GET routes retrieve resources without mutating database state. They support filtering and pagination via query parameters.",
+  tip: "GET requests must never modify server state or mutate database records.",
+  objective: "Implement read endpoints supporting collection and single-resource retrieval.",
+  expectedOutcome: "Idempotent, cache-friendly data retrieval endpoints.",
+  codeSnippet: "app.get(\"/api/v1/articles\", async (req, res) => {\n  const articles = await articleService.getAllArticles(req.query);\n  res.json({ success: true, count: articles.length, data: articles });\n});",
 };
 
 ```javascript
-// GET /api/v1/courses/nodejs/lessons/07?view=compact
-app.get("/api/v1/courses/:courseSlug/lessons/:lessonNumber", (req, res) => {
-  const { courseSlug, lessonNumber } = req.params;
-  const { view } = req.query;
-  res.json({ course: courseSlug, lesson: Number(lessonNumber), viewMode: view || "full" });
+app.get("/api/v1/articles", async (req, res) => {
+  const articles = await articleService.getAllArticles(req.query);
+  res.json({ success: true, count: articles.length, data: articles });
 });
 ```

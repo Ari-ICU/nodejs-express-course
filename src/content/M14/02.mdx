@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M14-02",
+  number: "02",
+  title: "Request Validation",
+  khmerTitle: "យុទ្ធសាស្ត្រផ្ទៀងផ្ទាត់ Request (Body, Query, Params)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "A complete request validation strategy validates all three input sources: `req.body` (payloads), `req.query` (filters), and `req.params` (identifiers).",
+  tip: "Validate route params (e.g. checking that `:id` is a valid 24-character hexadecimal ObjectId) before querying the database.",
+  objective: "Identify all client input vectors requiring validation.",
+  expectedOutcome: "Comprehensive protection across body, query, and parameter vectors.",
+  codeSnippet: "/* Three Input Vectors to Validate:\n   1. req.body   -> Payloads on POST, PUT, PATCH\n   2. req.query  -> Filters and pagination on GET\n   3. req.params -> Resource identifiers in URL paths\n*/",
+};
+
+```javascript
+/* Three Input Vectors to Validate:
+   1. req.body   -> Payloads on POST, PUT, PATCH
+   2. req.query  -> Filters and pagination on GET
+   3. req.params -> Resource identifiers in URL paths
+*/
+```

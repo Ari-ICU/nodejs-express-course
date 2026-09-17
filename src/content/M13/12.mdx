@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M13-12",
+  number: "12",
+  title: "Delete Resource",
+  khmerTitle: "ការអនុវត្ត Delete Resource Endpoint (DELETE)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Deleting documents from MongoDB collections with HTTP 204 responses.",
+  tip: "Always return `204 No Content` for successful deletes.",
+  objective: "Build resource deletion endpoints.",
+  expectedOutcome: "Clean resource removal.",
+  codeSnippet: "export const deleteProduct = async (req, res) => {\n  const product = await Product.findByIdAndDelete(req.params.id);\n  if (!product) return res.status(404).json({ success: false, error: \"Not Found\" });\n  res.status(204).send();\n};",
+};
+
+```javascript
+export const deleteProduct = async (req, res) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
+  if (!product) return res.status(404).json({ success: false, error: "Not Found" });
+  res.status(204).send();
+};
+```

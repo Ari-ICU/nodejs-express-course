@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M05-07",
+  number: "07",
+  title: "URL",
+  khmerTitle: "រចនាសម្ព័ន្ធ URL (Protocol, Host, Port, Path, Query)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Uniform Resource Locators (URLs) uniquely identify network resources. A complete URL includes protocol (`https://`), domain host (`api.store.com`), optional port (`:443`), resource path (`/v1/products`), and query parameters (`?sort=desc`).",
+  tip: "Always parse incoming request URLs using the native `new URL(req.url, 'http://localhost')` for safe extraction of paths and query parameters.",
+  objective: "Dissect and inspect all components of request URLs.",
+  expectedOutcome: "Precise URL parsing without regex vulnerabilities.",
+  codeSnippet: "import http from \"node:http\";\n\nhttp.createServer((req, res) => {\n  const parsed = new URL(req.url, `http://${req.headers.host}`);\n  console.log(\"Pathname:\", parsed.pathname); // e.g. /api/products\n  console.log(\"Search query:\", parsed.search); // e.g. ?page=2\n  res.end(\"Parsed\");\n});",
+};
+
+```javascript
+import http from "node:http";
+
+http.createServer((req, res) => {
+  const parsed = new URL(req.url, `http://${req.headers.host}`);
+  console.log("Pathname:", parsed.pathname); // e.g. /api/products
+  console.log("Search query:", parsed.search); // e.g. ?page=2
+  res.end("Parsed");
+});
+```

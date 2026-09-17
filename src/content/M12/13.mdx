@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M12-13",
+  number: "13",
+  title: "Querying",
+  khmerTitle: "ការសរសេរ Mongoose Queries (find, findOne, findById)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Mongoose models provide rich query helpers: `find()`, `findOne()`, `findById()`, and chainable query builders like `.where()`, `.sort()`, `.select()`, and `.lean()`.",
+  tip: "Always append `.lean()` to read-only queries (`Product.find().lean()`) to skip creating heavy Mongoose document instances, accelerating query execution by up to 5x.",
+  objective: "Construct optimized database read queries.",
+  expectedOutcome: "High-performance queries utilizing `.lean()` for read operations.",
+  codeSnippet: "// High-performance read-only query\nconst activeProducts = await Product.find({ inStock: true })\n  .select(\"name price category\")\n  .sort(\"-createdAt\")\n  .limit(10)\n  .lean();",
+};
+
+```javascript
+// High-performance read-only query
+const activeProducts = await Product.find({ inStock: true })
+  .select("name price category")
+  .sort("-createdAt")
+  .limit(10)
+  .lean();
+```

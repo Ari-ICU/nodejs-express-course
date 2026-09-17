@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M11-09",
+  number: "09",
+  title: "Embedded Documents",
+  khmerTitle: "ការបង្កប់ឯកសារ (Embedding / Denormalization)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Embedding stores related data directly inside a single document (e.g. storing address sub-documents inside a user document). This allows fetching all related data in a single high-speed query without JOINs.",
+  tip: "Embed data when relationships are 1-to-few and the child data is always accessed together with the parent document.",
+  objective: "Model 1-to-few relationships using embedded sub-documents.",
+  expectedOutcome: "High-performance queries without relational overhead.",
+  codeSnippet: "// Embedded Sub-Document pattern:\n{\n  \"_id\": ObjectId(\"...\"),\n  \"name\": \"Dara\",\n  \"shippingAddress\": {\n    \"street\": \"123 Norodom Blvd\",\n    \"city\": \"Phnom Penh\",\n    \"country\": \"Cambodia\"\n  }\n}",
+};
+
+```javascript
+// Embedded Sub-Document pattern:
+{
+  "_id": ObjectId("..."),
+  "name": "Dara",
+  "shippingAddress": {
+    "street": "123 Norodom Blvd",
+    "city": "Phnom Penh",
+    "country": "Cambodia"
+  }
+}
+```

@@ -5,16 +5,16 @@ export const meta = {
   khmerTitle: "អ្វីជាការអភិវឌ្ឍ Backend?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Backend development handles server-side logic, database interactions, user authentication, business rules, and API endpoints.",
-  tip: "Backend focuses on reliability, security, data integrity, and throughput rather than UI aesthetics.",
-  objective: "Understand how backend code operates silently behind every modern mobile & web application.",
-  expectedOutcome: "Clear mental model of server responsibilities and request lifecycles.",
-  codeSnippet: "// A minimal HTTP response conceptual model\n// Client sends Request -> Server executes logic -> Server returns Response\nconst response = {\n  status: 200,\n  headers: { \"Content-Type\": \"application/json\" },\n  data: { user: \"Sokha\", role: \"Developer\", access: true }\n};",
+  summary: "Backend development powers the hidden server-side engine behind modern applications. It coordinates business logic, communicates with databases, manages authentication and sessions, processes external API integrations, and ensures high availability, data security, and low latency for client interfaces.",
+  tip: "Backend engineering prioritizes correctness, security, data integrity, idempotency, and throughput over visual aesthetics.",
+  objective: "Understand how backend code operates silently behind web and mobile applications.",
+  expectedOutcome: "Clear mental model of server responsibilities, network boundaries, and data processing lifecycles.",
+  codeSnippet: "// A minimal HTTP response conceptual model\n// Client sends Request -> Server executes business logic -> Server returns Response\nconst response = {\n  status: 200,\n  headers: { \"Content-Type\": \"application/json\" },\n  data: { user: \"Sokha\", role: \"Developer\", access: true }\n};",
 };
 
 ```javascript
 // A minimal HTTP response conceptual model
-// Client sends Request -> Server executes logic -> Server returns Response
+// Client sends Request -> Server executes business logic -> Server returns Response
 const response = {
   status: 200,
   headers: { "Content-Type": "application/json" },

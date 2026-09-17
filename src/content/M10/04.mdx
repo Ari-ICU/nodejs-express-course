@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M10-04",
+  number: "04",
+  title: "Routes",
+  khmerTitle: "តួនាទីនៃ Route Definitions",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Routes serve purely as routing tables that map HTTP paths and verbs to middleware guards and controller handlers.",
+  tip: "Route files should contain zero business logic—only URL path definitions and middleware bindings.",
+  objective: "Maintain lean, declarative route definition files.",
+  expectedOutcome: "Clean routing declarations reading like an API table of contents.",
+  codeSnippet: "import { Router } from \"express\";\nimport * as productController from \"../controllers/product.controller.js\";\nimport { authenticate } from \"../middleware/auth.js\";\n\nconst router = Router();\n\nrouter.get(\"/\", productController.getAllProducts);\nrouter.post(\"/\", authenticate, productController.createProduct);\n\nexport default router;",
+};
+
+```javascript
+import { Router } from "express";
+import * as productController from "../controllers/product.controller.js";
+import { authenticate } from "../middleware/auth.js";
+
+const router = Router();
+
+router.get("/", productController.getAllProducts);
+router.post("/", authenticate, productController.createProduct);
+
+export default router;
+```

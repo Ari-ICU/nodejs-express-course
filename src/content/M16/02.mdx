@@ -5,23 +5,31 @@ export const meta = {
   khmerTitle: "JWT Tokens និង HttpOnly Cookies សម្រាប់ Refresh Tokens",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Issue a 15-minute Access Token for API requests, and an HttpOnly SameSite Refresh Token in cookies to combat XSS.",
-  tip: "Storing refresh tokens in `HttpOnly` cookies prevents stolen credentials even if an attacker executes XSS on the frontend.",
-  objective: "Implement resilient JWT auth with automatic token refreshing.",
-  expectedOutcome: "Industry-grade authentication resilient against XSS.",
-  codeSnippet: "import jwt from \"jsonwebtoken\";\n\n// Issue Access Token (short-lived: 15m)\nconst accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: \"15m\" });\n\n// Issue Refresh Token (long-lived: 7d)\nconst refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: \"7d\" });\n\n// Set in HttpOnly cookie (inaccessible to JavaScript XSS attacks!)\nres.cookie(\"refreshToken\", refreshToken, {\n  httpOnly: true,\n  secure: process.env.NODE_ENV === \"production\",\n  sameSite: \"strict\",\n  maxAge: 7 * 24 * 60 * 60 * 1000\n});\n\nres.json({ success: true, accessToken });",
+  summary: "JSON Web Tokens (JWT) are self-contained, cryptographically signed tokens that allow stateless authentication. A short-lived Access Token (15 minutes) travels in Authorization headers. A long-lived Refresh Token (7 days) lives in an HttpOnly cookie — inaccessible to JavaScript, defeating XSS credential theft. When the access token expires, the client silently exchanges the cookie-based refresh token for a new access token without re-login.",
+  tip: "Storing refresh tokens in HttpOnly cookies prevents stolen credentials even if an attacker executes XSS on the frontend. Always set secure: true and sameSite: strict in production.",
+  objective: "Implement resilient dual-token JWT authentication with automatic refresh and XSS protection.",
+  expectedOutcome: "Industry-grade stateless authentication resilient against XSS attacks.",
+  codeSnippet: "import jwt from \"jsonwebtoken\";\n\n// Issue Access Token (short-lived: 15 minutes)\nconst accessToken = jwt.sign(\n  { userId: user._id, role: user.role },\n  process.env.JWT_ACCESS_SECRET,\n  { expiresIn: \"15m\" }\n);\n\n// Issue Refresh Token (long-lived: 7 days)\nconst refreshToken = jwt.sign(\n  { userId: user._id },\n  process.env.JWT_REFRESH_SECRET,\n  { expiresIn: \"7d\" }\n);\n\n// Store in HttpOnly cookie — inaccessible to JavaScript XSS attacks!\nres.cookie(\"refreshToken\", refreshToken, {\n  httpOnly: true,\n  secure: process.env.NODE_ENV === \"production\",\n  sameSite: \"strict\",\n  maxAge: 7 * 24 * 60 * 60 * 1000\n});\n\nres.json({ success: true, accessToken });",
 };
 
 ```javascript
 import jwt from "jsonwebtoken";
 
-// Issue Access Token (short-lived: 15m)
-const accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: "15m" });
+// Issue Access Token (short-lived: 15 minutes)
+const accessToken = jwt.sign(
+  { userId: user._id, role: user.role },
+  process.env.JWT_ACCESS_SECRET,
+  { expiresIn: "15m" }
+);
 
-// Issue Refresh Token (long-lived: 7d)
-const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: "7d" });
+// Issue Refresh Token (long-lived: 7 days)
+const refreshToken = jwt.sign(
+  { userId: user._id },
+  process.env.JWT_REFRESH_SECRET,
+  { expiresIn: "7d" }
+);
 
-// Set in HttpOnly cookie (inaccessible to JavaScript XSS attacks!)
+// Store in HttpOnly cookie — inaccessible to JavaScript XSS attacks!
 res.cookie("refreshToken", refreshToken, {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",

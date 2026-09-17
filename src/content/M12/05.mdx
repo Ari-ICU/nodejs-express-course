@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M12-05",
+  number: "05",
+  title: "Model",
+  khmerTitle: "ការបង្កើត Model ពី Schema",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Models are fancy constructors compiled from Schema definitions. An instance of a model is called a document. Models are responsible for creating and reading documents from the underlying MongoDB database.",
+  tip: "The first argument to `mongoose.model('User', schema)` is singular; Mongoose automatically creates the pluralized, lowercased collection `users`.",
+  objective: "Compile Schemas into queryable Mongoose Models.",
+  expectedOutcome: "Executable Models capable of querying the database.",
+  codeSnippet: "import mongoose from \"mongoose\";\n\n// Compiles into \"users\" collection in MongoDB\nexport const User = mongoose.model(\"User\", userSchema);",
+};
+
+```javascript
+import mongoose from "mongoose";
+
+// Compiles into "users" collection in MongoDB
+export const User = mongoose.model("User", userSchema);
+```

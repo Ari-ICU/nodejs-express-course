@@ -5,15 +5,16 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Node.js",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Single-Threaded Event Loop architecture designed for massive concurrent network sockets without thread contention.",
-  tip: "Avoid CPU-heavy mathematical computations on the main thread; offload to Worker Threads.",
-  objective: "Map out the lifecycle of a request through the libuv event loop.",
-  expectedOutcome: "Clear understanding of high-concurrency efficiency.",
-  codeSnippet: "// Comparison:\n// Thread-per-request (Apache/Tomcat): 10,000 connections = 10,000 threads (Gigabytes of RAM)\n// Single-threaded Event Loop (Node.js): 10,000 connections handled by 1 thread with epoll/kqueue",
+  summary: "Node.js uses a Single-Threaded Event Loop architecture. Rather than dedicating an operating system thread per request (like Apache or traditional Java/PHP models), Node processes thousands of incoming connections on a single main thread by delegating asynchronous tasks to libuv workers.",
+  tip: "Because there is only one main JavaScript thread, never write CPU-intensive loops that block the thread.",
+  objective: "Contrast the single-threaded event loop model with multi-threaded thread-per-request servers.",
+  expectedOutcome: "Deep understanding of how Node achieves massive concurrency with minimal memory.",
+  codeSnippet: "/* Single Threaded Event Loop vs Multi-Threaded:\n   Multi-Threaded (Apache):  [Req 1 -> Thread 1]  [Req 2 -> Thread 2] (~2MB RAM/thread)\n   Single-Thread (Node.js): [Req 1, 2, 3... -> Single Event Loop -> Non-blocking I/O]\n*/",
 };
 
 ```javascript
-// Comparison:
-// Thread-per-request (Apache/Tomcat): 10,000 connections = 10,000 threads (Gigabytes of RAM)
-// Single-threaded Event Loop (Node.js): 10,000 connections handled by 1 thread with epoll/kqueue
+/* Single Threaded Event Loop vs Multi-Threaded:
+   Multi-Threaded (Apache):  [Req 1 -> Thread 1]  [Req 2 -> Thread 2] (~2MB RAM/thread)
+   Single-Thread (Node.js): [Req 1, 2, 3... -> Single Event Loop -> Non-blocking I/O]
+*/
 ```

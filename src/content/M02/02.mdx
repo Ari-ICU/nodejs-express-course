@@ -5,19 +5,21 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Node.js REPL",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Read-Eval-Print-Loop provides an interactive shell for testing snippets, checking crypto hashes, and debugging.",
+  summary: "The Read-Eval-Print Loop (REPL) provides an interactive command-line environment for quickly testing JavaScript expressions, exploring Node.js core APIs, debugging algorithms, and prototyping ideas without creating temporary files.",
   tip: "In the REPL, the special variable `_` (underscore) stores the result of the last evaluated expression.",
-  objective: "Use the REPL for rapid prototyping and validation.",
-  expectedOutcome: "Confidence in quick JavaScript experiments directly in terminal.",
-  codeSnippet: "# Open REPL\n$ node\n> crypto.randomUUID()\n'550e8400-e29b-41d4-a716-446655440000'\n> 2 ** 10\n1024\n> .exit",
+  objective: "Utilize the Node.js REPL for rapid experimentation and debugging.",
+  expectedOutcome: "Proficiency with REPL commands, multiline mode, and interactive inspection.",
+  codeSnippet: "# Launch the interactive REPL\n$ node\n> 10 + 25\n35\n> _ * 2\n70\n> crypto.randomUUID()\n'd5727670-6548-4df2-8cb6-02a8ebcfcdae'\n> .exit",
 };
 
 ```bash
-# Open REPL
+# Launch the interactive REPL
 $ node
+> 10 + 25
+35
+> _ * 2
+70
 > crypto.randomUUID()
-'550e8400-e29b-41d4-a716-446655440000'
-> 2 ** 10
-1024
+'d5727670-6548-4df2-8cb6-02a8ebcfcdae'
 > .exit
 ```

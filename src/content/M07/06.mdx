@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M07-06",
+  number: "06",
+  title: "DELETE Routes",
+  khmerTitle: "ការបង្កើត DELETE Routes សម្រាប់លុបទិន្នន័យ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "DELETE routes remove resources from storage. They typically return `204 No Content` or `200 OK` with confirmation metadata.",
+  tip: "Consider implementing soft deletion (`deletedAt: Date`) in production to preserve audit trails and prevent catastrophic data loss.",
+  objective: "Implement resource deletion endpoints with proper status codes.",
+  expectedOutcome: "Reliable resource removal with HTTP 204 or 200 responses.",
+  codeSnippet: "app.delete(\"/api/v1/articles/:id\", async (req, res) => {\n  await articleService.deleteArticle(req.params.id);\n  res.status(204).send(); // 204 No Content\n});",
+};
+
+```javascript
+app.delete("/api/v1/articles/:id", async (req, res) => {
+  await articleService.deleteArticle(req.params.id);
+  res.status(204).send(); // 204 No Content
+});
+```

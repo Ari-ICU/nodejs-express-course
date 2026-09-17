@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M14-03",
+  number: "03",
+  title: "Body Validation",
+  khmerTitle: "ការផ្ទៀងផ្ទាត់ Request Body",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Enforcing required fields, string lengths, email formats, and number ranges on incoming request bodies.",
+  tip: "Strip unpermitted fields from `req.body` to prevent mass assignment vulnerabilities.",
+  objective: "Validate and sanitize request body payloads.",
+  expectedOutcome: "Strict schema compliance for all incoming payloads.",
+  codeSnippet: "// Validating body schema with Zod:\nimport { z } from \"zod\";\n\nexport const createUserSchema = z.object({\n  name: z.string().min(2).max(50),\n  email: z.string().email(),\n  password: z.string().min(8)\n});",
+};
+
+```javascript
+// Validating body schema with Zod:
+import { z } from "zod";
+
+export const createUserSchema = z.object({
+  name: z.string().min(2).max(50),
+  email: z.string().email(),
+  password: z.string().min(8)
+});
+```

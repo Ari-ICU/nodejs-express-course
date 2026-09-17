@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M15-04",
+  number: "04",
+  title: "Express Error Handling",
+  khmerTitle: "យន្តការ Error Handling ក្នុង Express",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Express uses a specialized four-argument middleware signature `(err, req, res, next)`. When an error is passed to `next(err)`, Express skips all remaining regular route handlers and jumps straight to the error middleware.",
+  tip: "Always define error middleware at the very bottom of `app.js` after all routes have been registered.",
+  objective: "Understand Express error propagation via next(err).",
+  expectedOutcome: "Accurate implementation of Express error delegation.",
+  codeSnippet: "app.get(\"/api/test\", (req, res, next) => {\n  const error = new Error(\"Something went wrong!\");\n  next(error); // Jumps directly to central error middleware!\n});",
+};
+
+```javascript
+app.get("/api/test", (req, res, next) => {
+  const error = new Error("Something went wrong!");
+  next(error); // Jumps directly to central error middleware!
+});
+```

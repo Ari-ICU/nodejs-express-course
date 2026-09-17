@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M10-07",
+  number: "07",
+  title: "Reusable Business Logic",
+  khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបាន",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "By isolating logic in service functions, features like sending receipts, generating invoices, or charging credit cards can be triggered by API requests, cron jobs, or CLI scripts.",
+  tip: "Services should be pure asynchronous functions that take raw JavaScript objects and return clean results.",
+  objective: "Author service methods reusable across multiple application contexts.",
+  expectedOutcome: "Single source of truth for business operations.",
+  codeSnippet: "// Can be called by:\n// 1. POST /api/orders controller\n// 2. Scheduled Cron Job (auto-renewal)\n// 3. Admin CLI tool\nexport const processOrderInvoice = async (orderId) => {\n  const order = await Order.findById(orderId);\n  const pdfBuffer = await generateInvoicePdf(order);\n  await emailService.sendInvoice(order.customerEmail, pdfBuffer);\n  return { processed: true, orderId };\n};",
+};
+
+```javascript
+// Can be called by:
+// 1. POST /api/orders controller
+// 2. Scheduled Cron Job (auto-renewal)
+// 3. Admin CLI tool
+export const processOrderInvoice = async (orderId) => {
+  const order = await Order.findById(orderId);
+  const pdfBuffer = await generateInvoicePdf(order);
+  await emailService.sendInvoice(order.customerEmail, pdfBuffer);
+  return { processed: true, orderId };
+};
+```

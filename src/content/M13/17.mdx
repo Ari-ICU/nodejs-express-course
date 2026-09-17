@@ -1,0 +1,19 @@
+export const meta = {
+  id: "M13-17",
+  number: "17",
+  title: "Population",
+  khmerTitle: "ការអនុវត្ត Relational Population ក្នុង API Responses",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Populating foreign key references before dispatching JSON responses to clients.",
+  tip: "Only populate necessary fields to avoid over-fetching and unnecessary database payload transfer.",
+  objective: "Hydrate related entity data in API responses.",
+  expectedOutcome: "Rich relational JSON responses without SQL JOINs.",
+  codeSnippet: "const order = await Order.findById(orderId)\n  .populate(\"user\", \"name email\")\n  .populate(\"items.product\", \"name price sku\");",
+};
+
+```javascript
+const order = await Order.findById(orderId)
+  .populate("user", "name email")
+  .populate("items.product", "name price sku");
+```

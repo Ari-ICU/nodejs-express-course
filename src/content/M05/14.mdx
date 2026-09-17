@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M05-14",
+  number: "14",
+  title: "Handling Requests",
+  khmerTitle: "ការគ្រប់គ្រងផ្លូវ Requests (Basic Routing)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Routing incoming requests in raw HTTP requires evaluating `req.url` and `req.method` conditionals to route traffic to appropriate logic blocks, highlighting why frameworks like Express were developed.",
+  tip: "Remember to handle unmatched routes with a 404 response to avoid hanging client requests.",
+  objective: "Implement basic URL and method routing in native Node.js.",
+  expectedOutcome: "Understanding why higher-level routing frameworks like Express are essential.",
+  codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  const { pathname } = new URL(req.url, `http://${req.headers.host}`);\n\n  if (req.method === \"GET\" && pathname === \"/\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    return res.end(JSON.stringify({ status: \"API Home\" }));\n  }\n\n  if (req.method === \"GET\" && pathname === \"/api/health\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    return res.end(JSON.stringify({ healthy: true, uptime: process.uptime() }));\n  }\n\n  // 404 Fallback\n  res.writeHead(404, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Route Not Found\" }));\n});",
+};
+
+```javascript
+import http from "node:http";
+
+const server = http.createServer((req, res) => {
+  const { pathname } = new URL(req.url, `http://${req.headers.host}`);
+
+  if (req.method === "GET" && pathname === "/") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ status: "API Home" }));
+  }
+
+  if (req.method === "GET" && pathname === "/api/health") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ healthy: true, uptime: process.uptime() }));
+  }
+
+  // 404 Fallback
+  res.writeHead(404, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ error: "Route Not Found" }));
+});
+```

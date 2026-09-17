@@ -5,11 +5,11 @@ export const meta = {
   khmerTitle: "ម៉ូឌុល Stream សម្រាប់ទិន្នន័យធំៗ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Process massive datasets chunk-by-chunk without loading the entire file into RAM (Readable, Writable, Transform).",
-  tip: "Streams prevent out-of-memory crashes when handling large file uploads or CSV exports.",
-  objective: "Pipe large file streams using modern `pipeline()` promise.",
-  expectedOutcome: "High-memory efficiency for multi-gigabyte data transfer.",
-  codeSnippet: "import fs from \"node:fs\";\nimport { pipeline } from \"node:stream/promises\";\nimport zlib from \"node:zlib\";\n\n// Compress a 5GB file using streams with constant ~20MB RAM usage!\nawait pipeline(\n  fs.createReadStream(\"huge-log.txt\"),\n  zlib.createGzip(),\n  fs.createWriteStream(\"huge-log.txt.gz\")\n);\nconsole.log(\"Stream pipeline completed!\");",
+  summary: "Streams process data incrementally in chunks rather than buffering entire files into RAM. This allows Node.js applications to process gigabyte-sized files, video streams, and database dumps with constant ~20MB memory usage.",
+  tip: "Use the modern `stream.promises.pipeline()` function to pipe streams with automatic error cleanup and resource release.",
+  objective: "Process large datasets efficiently with streaming pipelines.",
+  expectedOutcome: "Memory-efficient data pipelines that never crash from Out-of-Memory (OOM) errors.",
+  codeSnippet: "import fs from \"node:fs\";\nimport { pipeline } from \"node:stream/promises\";\nimport zlib from \"node:zlib\";\n\n// Compress a huge file using streams without loading it all in RAM\nawait pipeline(\n  fs.createReadStream(\"huge-log.txt\"),\n  zlib.createGzip(),\n  fs.createWriteStream(\"huge-log.txt.gz\")\n);\nconsole.log(\"Streaming compression complete!\");",
 };
 
 ```javascript
@@ -17,11 +17,11 @@ import fs from "node:fs";
 import { pipeline } from "node:stream/promises";
 import zlib from "node:zlib";
 
-// Compress a 5GB file using streams with constant ~20MB RAM usage!
+// Compress a huge file using streams without loading it all in RAM
 await pipeline(
   fs.createReadStream("huge-log.txt"),
   zlib.createGzip(),
   fs.createWriteStream("huge-log.txt.gz")
 );
-console.log("Stream pipeline completed!");
+console.log("Streaming compression complete!");
 ```

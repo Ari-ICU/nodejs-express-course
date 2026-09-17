@@ -1,31 +1,24 @@
 export const meta = {
   id: "M05-02",
   number: "02",
-  title: "Creating Native HTTP Server",
-  khmerTitle: "ការបង្កើត HTTP Server តាមរយៈ Native 'node:http'",
-  type: "lab",
+  title: "HTTP Request",
+  khmerTitle: "រចនាសម្ព័ន្ធនៃ HTTP Request (req)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "Build an HTTP server using `node:http` to understand what Express abstracts away under the hood.",
-  tip: "Express is simply a lightweight wrapper around this exact `http.createServer()` mechanism.",
-  objective: "Implement a barebones router and JSON responder in pure Node.",
-  expectedOutcome: "Deep appreciation for Express.js convenience and middleware.",
-  codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  const { method, url } = req;\n  \n  if (url === \"/api/health\" && method === \"GET\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    return res.end(JSON.stringify({ status: \"healthy\", uptime: process.uptime() }));\n  }\n\n  res.writeHead(404, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Route not found\" }));\n});\n\nserver.listen(4000, () => console.log(\"Server listening on port 4000\"));",
+  summary: "An HTTP request consists of an HTTP verb (GET, POST, etc.), a target URL path, headers providing metadata (content types, client user-agents, auth tokens), query string parameters, and an optional payload body.",
+  tip: "In native Node.js HTTP servers, `req` is an incoming Readable Stream, meaning large payloads arrive in chunks rather than all at once.",
+  objective: "Inspect and parse all components of incoming HTTP requests.",
+  expectedOutcome: "Ability to extract headers, client IP, path, and method from any request.",
+  codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  console.log(\"Method:\", req.method);\n  console.log(\"URL Path:\", req.url);\n  console.log(\"User-Agent:\", req.headers[\"user-agent\"]);\n  res.end(\"Request logged\");\n});",
 };
 
 ```javascript
 import http from "node:http";
 
 const server = http.createServer((req, res) => {
-  const { method, url } = req;
-  
-  if (url === "/api/health" && method === "GET") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify({ status: "healthy", uptime: process.uptime() }));
-  }
-
-  res.writeHead(404, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ error: "Route not found" }));
+  console.log("Method:", req.method);
+  console.log("URL Path:", req.url);
+  console.log("User-Agent:", req.headers["user-agent"]);
+  res.end("Request logged");
 });
-
-server.listen(4000, () => console.log("Server listening on port 4000"));
 ```

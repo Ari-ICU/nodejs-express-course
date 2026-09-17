@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M06-13",
+  number: "13",
+  title: "Status Codes",
+  khmerTitle: "ការកំណត់លេខកូដឆ្លើយតបជាមួយ res.status()",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "`res.status(code)` sets the HTTP status for the response. It is a chainable method that should be coupled with `res.json()` or `res.send()`.",
+  tip: "Always return `201 Created` for successful resource creations and `204 No Content` for successful deletes.",
+  objective: "Combine status codes and JSON payloads fluently.",
+  expectedOutcome: "Accurate HTTP status code signaling for all scenarios.",
+  codeSnippet: "// 201 Created\nres.status(201).json({ success: true, item: newItem });\n\n// 400 Bad Request\nres.status(400).json({ success: false, error: \"Validation failed\" });\n\n// 204 No Content\nres.status(204).send();",
+};
+
+```javascript
+// 201 Created
+res.status(201).json({ success: true, item: newItem });
+
+// 400 Bad Request
+res.status(400).json({ success: false, error: "Validation failed" });
+
+// 204 No Content
+res.status(204).send();
+```

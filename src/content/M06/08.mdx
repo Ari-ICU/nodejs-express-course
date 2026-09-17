@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M06-08",
+  number: "08",
+  title: "Middleware Concept",
+  khmerTitle: "ទស្សនទាន Middleware ក្នុង Express",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Middleware functions are functions that have access to the request object (`req`), the response object (`res`), and the `next` middleware function in the application's request-response cycle. They can execute code, make changes to request/response, end the cycle, or call `next()`.",
+  tip: "If a middleware does not end the request-response cycle with `res.send()` or `res.json()`, it MUST call `next()`, otherwise the request hangs forever.",
+  objective: "Understand how the sequential middleware pipeline processes incoming requests.",
+  expectedOutcome: "Deep structural grasp of the Onion/Pipeline architecture in Express.",
+  codeSnippet: "// Middleware structure\nconst myMiddleware = (req, res, next) => {\n  console.log(\"Request received at:\", new Date().toISOString());\n  req.requestTime = Date.now(); // Mutate request\n  next(); // Pass control to next handler in chain!\n};",
+};
+
+```javascript
+// Middleware structure
+const myMiddleware = (req, res, next) => {
+  console.log("Request received at:", new Date().toISOString());
+  req.requestTime = Date.now(); // Mutate request
+  next(); // Pass control to next handler in chain!
+};
+```

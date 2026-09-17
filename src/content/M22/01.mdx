@@ -1,31 +1,50 @@
 export const meta = {
   id: "M22-01",
   number: "01",
-  title: "Integration Testing with Vitest & Supertest",
-  khmerTitle: "ការធ្វើតេស្ត Integration ជាមួយ Vitest និង Supertest",
+  title: "API Testing with Vitest & Supertest",
+  khmerTitle: "ការធ្វើតេស្ត API ជាមួយ Vitest និង Supertest",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Spin up memory test databases and execute real HTTP assertions against your Express app without opening a real port.",
-  tip: "Export your Express `app` without `app.listen()` so `supertest(app)` can execute tests instantly in memory.",
-  objective: "Write automated integration test suites for endpoints.",
-  expectedOutcome: "High code confidence and regression prevention.",
-  codeSnippet: "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport app from \"../src/app.js\";\n\ndescribe(\"POST /api/v1/todos\", () => {\n  it(\"should create a new todo and return 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/todos\")\n      .send({ title: \"Learn Vitest\", completed: false });\n\n    expect(res.status).toBe(201);\n    expect(res.body.success).toBe(true);\n    expect(res.body.data.title).toBe(\"Learn Vitest\");\n  });\n});",
+  summary: "Production APIs require automated tests to catch regressions. Vitest is a blazing-fast test runner with native ESM and Jest-compatible APIs. Supertest simulates HTTP requests against your Express app without starting a real server. Unit tests isolate service business logic; integration tests verify the full route → middleware → controller → database → response stack. Tests run in CI pipelines on every git push, preventing broken code from reaching production.",
+  tip: "Use mongodb-memory-server for integration tests to avoid polluting your dev database. Reset the database between test suites with beforeEach hooks to ensure test isolation and reproducible results.",
+  objective: "Write comprehensive unit and integration tests covering happy paths, validation, and auth failures.",
+  expectedOutcome: "Automated test suite with coverage reporting integrated into CI/CD pipeline.",
+  codeSnippet: "import { describe, it, expect, beforeAll, afterAll } from \"vitest\";\nimport request from \"supertest\";\nimport app from \"../src/app.js\";\nimport { connectTestDB, disconnectTestDB, clearDB } from \"./helpers/db.js\";\n\nbeforeAll(async () => await connectTestDB());\nafterAll(async () => await disconnectTestDB());\n\ndescribe(\"Auth API\", () => {\n  it(\"POST /register — creates user and returns token\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/auth/register\")\n      .send({ name: \"Sokha\", email: \"sokha@test.com\", password: \"Test1234!\" });\n\n    expect(res.status).toBe(201);\n    expect(res.body.success).toBe(true);\n    expect(res.body.data).toHaveProperty(\"accessToken\");\n    expect(res.body.data.user.password).toBeUndefined(); // Never leak password\n  });\n\n  it(\"POST /login — rejects wrong password with 401\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/auth/login\")\n      .send({ email: \"sokha@test.com\", password: \"WrongPass\" });\n\n    expect(res.status).toBe(401);\n    expect(res.body.success).toBe(false);\n  });\n\n  it(\"GET /users/me — returns 401 without token\", async () => {\n    const res = await request(app).get(\"/api/v1/users/me\");\n    expect(res.status).toBe(401);\n  });\n});",
 };
 
 ```javascript
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import request from "supertest";
-import { describe, it, expect } from "vitest";
 import app from "../src/app.js";
+import { connectTestDB, disconnectTestDB, clearDB } from "./helpers/db.js";
 
-describe("POST /api/v1/todos", () => {
-  it("should create a new todo and return 201 Created", async () => {
+beforeAll(async () => await connectTestDB());
+afterAll(async () => await disconnectTestDB());
+
+describe("Auth API", () => {
+  it("POST /register — creates user and returns token", async () => {
     const res = await request(app)
-      .post("/api/v1/todos")
-      .send({ title: "Learn Vitest", completed: false });
+      .post("/api/v1/auth/register")
+      .send({ name: "Sokha", email: "sokha@test.com", password: "Test1234!" });
 
     expect(res.status).toBe(201);
     expect(res.body.success).toBe(true);
-    expect(res.body.data.title).toBe("Learn Vitest");
+    expect(res.body.data).toHaveProperty("accessToken");
+    expect(res.body.data.user.password).toBeUndefined(); // Never leak password
+  });
+
+  it("POST /login — rejects wrong password with 401", async () => {
+    const res = await request(app)
+      .post("/api/v1/auth/login")
+      .send({ email: "sokha@test.com", password: "WrongPass" });
+
+    expect(res.status).toBe(401);
+    expect(res.body.success).toBe(false);
+  });
+
+  it("GET /users/me — returns 401 without token", async () => {
+    const res = await request(app).get("/api/v1/users/me");
+    expect(res.status).toBe(401);
   });
 });
 ```

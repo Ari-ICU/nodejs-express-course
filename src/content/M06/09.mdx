@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M06-09",
+  number: "09",
+  title: "Routing",
+  khmerTitle: "មូលដ្ឋានគ្រឹះនៃការរៀបចំ Routing",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Routing refers to determining how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, and so on).",
+  tip: "Define more specific routes before general wildcard or parameterized routes (e.g. `/users/profile` before `/users/:id`).",
+  objective: "Structure URI routing endpoints in an Express application.",
+  expectedOutcome: "Clean, unambiguous route resolution for all incoming endpoints.",
+  codeSnippet: "app.get(\"/api/v1/products\", (req, res) => {\n  res.json({ products: [] });\n});\n\napp.post(\"/api/v1/products\", (req, res) => {\n  res.status(201).json({ message: \"Product created\" });\n});",
+};
+
+```javascript
+app.get("/api/v1/products", (req, res) => {
+  res.json({ products: [] });
+});
+
+app.post("/api/v1/products", (req, res) => {
+  res.status(201).json({ message: "Product created" });
+});
+```

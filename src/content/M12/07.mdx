@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M12-07",
+  number: "07",
+  title: "Schema Types",
+  khmerTitle: "ប្រភេទ BSON Types ក្នុង Mongoose (String, Number, Date, ObjectId)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Mongoose supports standard SchemaTypes: String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Array, Decimal128, and Map.",
+  tip: "Use `Schema.Types.ObjectId` with the `ref` option to establish relationships with other models.",
+  objective: "Select accurate SchemaTypes for varied data attributes.",
+  expectedOutcome: "Type-safe schema field definitions.",
+  codeSnippet: "const orderSchema = new Schema({\n  userId: { type: Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{ productId: Schema.Types.ObjectId, quantity: Number }],\n  paid: { type: Boolean, default: false },\n  metadata: { type: Schema.Types.Mixed } // Freeform object\n});",
+};
+
+```javascript
+const orderSchema = new Schema({
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  items: [{ productId: Schema.Types.ObjectId, quantity: Number }],
+  paid: { type: Boolean, default: false },
+  metadata: { type: Schema.Types.Mixed } // Freeform object
+});
+```

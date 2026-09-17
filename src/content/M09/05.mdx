@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M09-05",
+  number: "05",
+  title: "CRUD",
+  khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "CRUD (Create, Read, Update, Delete) maps directly to the foundational HTTP methods: Create ➔ POST, Read ➔ GET, Update ➔ PUT/PATCH, Delete ➔ DELETE.",
+  tip: "Keep CRUD endpoints consistent across all resources in your API to minimize the learning curve for frontend developers.",
+  objective: "Implement complete CRUD operations for any business entity.",
+  expectedOutcome: "Standardized CRUD capabilities across all API models.",
+  codeSnippet: "/* CRUD to HTTP Verb Mapping:\n   Create ➔ POST   /api/v1/products\n   Read   ➔ GET    /api/v1/products / /api/v1/products/:id\n   Update ➔ PATCH  /api/v1/products/:id\n   Delete ➔ DELETE /api/v1/products/:id\n*/",
+};
+
+```javascript
+/* CRUD to HTTP Verb Mapping:
+   Create ➔ POST   /api/v1/products
+   Read   ➔ GET    /api/v1/products / /api/v1/products/:id
+   Update ➔ PATCH  /api/v1/products/:id
+   Delete ➔ DELETE /api/v1/products/:id
+*/
+```

@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M07-05",
+  number: "05",
+  title: "PATCH Routes",
+  khmerTitle: "ការបង្កើត PATCH Routes សម្រាប់កែប្រែទិន្នន័យមួយផ្នែក",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "PATCH routes update only the specific fields supplied in the request body (e.g. updating an email address or toggling a status flag) without affecting untouched fields.",
+  tip: "PATCH is the preferred HTTP verb for updating partial resources in modern REST APIs.",
+  objective: "Build partial update endpoints that modify only specified fields.",
+  expectedOutcome: "Efficient entity mutation endpoints minimizing bandwidth and payload size.",
+  codeSnippet: "app.patch(\"/api/v1/users/:id\", async (req, res) => {\n  const updatedUser = await userService.updateUserFields(req.params.id, req.body);\n  res.json({ success: true, data: updatedUser });\n});",
+};
+
+```javascript
+app.patch("/api/v1/users/:id", async (req, res) => {
+  const updatedUser = await userService.updateUserFields(req.params.id, req.body);
+  res.json({ success: true, data: updatedUser });
+});
+```

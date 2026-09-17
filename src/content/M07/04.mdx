@@ -1,0 +1,20 @@
+export const meta = {
+  id: "M07-04",
+  number: "04",
+  title: "PUT Routes",
+  khmerTitle: "ការបង្កើត PUT Routes សម្រាប់ជំនួសទិន្នន័យចាស់ទាំងស្រុង",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "PUT routes replace an entire resource with the provided payload. Any existing fields omitted from the request body are overwritten or reset to defaults.",
+  tip: "Use PUT for complete replacements and PATCH for partial field updates.",
+  objective: "Implement idempotent full-replacement update routes.",
+  expectedOutcome: "Standardized resource replacement semantics.",
+  codeSnippet: "app.put(\"/api/v1/users/:id\", async (req, res) => {\n  const updatedUser = await userService.replaceUser(req.params.id, req.body);\n  res.json({ success: true, data: updatedUser });\n});",
+};
+
+```javascript
+app.put("/api/v1/users/:id", async (req, res) => {
+  const updatedUser = await userService.replaceUser(req.params.id, req.body);
+  res.json({ success: true, data: updatedUser });
+});
+```

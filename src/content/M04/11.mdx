@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M04-11",
+  number: "11",
+  title: "Non-blocking Operations",
+  khmerTitle: "ការធានាប្រតិបត្តិការមិនរាំងស្ទះ",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Strategies to prevent blocking the event loop: breaking massive CPU calculations into chunks with `setImmediate`, using Worker Threads for heavy computational math, and strictly using asynchronous database and file drivers.",
+  tip: "Use the `clinic.js` or Node built-in profiler to detect event loop lag caused by blocking operations.",
+  objective: "Keep the main thread responsive by eliminating blocking operations.",
+  expectedOutcome: "Sub-millisecond event loop latency under heavy concurrent request volumes.",
+  codeSnippet: "// Chunking a large array calculation across Event Loop ticks\nfunction processLargeArrayInChunks(items, batchSize = 1000) {\n  let index = 0;\n  function processChunk() {\n    const end = Math.min(index + batchSize, items.length);\n    for (; index < end; index++) {\n      // Process item\n    }\n    if (index < items.length) {\n      setImmediate(processChunk); // Yield control back to Event Loop!\n    }\n  }\n  processChunk();\n}",
+};
+
+```javascript
+// Chunking a large array calculation across Event Loop ticks
+function processLargeArrayInChunks(items, batchSize = 1000) {
+  let index = 0;
+  function processChunk() {
+    const end = Math.min(index + batchSize, items.length);
+    for (; index < end; index++) {
+      // Process item
+    }
+    if (index < items.length) {
+      setImmediate(processChunk); // Yield control back to Event Loop!
+    }
+  }
+  processChunk();
+}
+```

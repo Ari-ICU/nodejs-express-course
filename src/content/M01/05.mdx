@@ -4,17 +4,14 @@ export const meta = {
   title: "Why Node.js?",
   khmerTitle: "ហេតុអ្វីត្រូវជ្រើសរើស Node.js?",
   type: "concept",
-  codeLanguage: "javascript",
-  summary: "Node.js empowers teams to use a unified language (JavaScript/TypeScript) across both client and server. Its asynchronous, non-blocking I/O architecture handles tens of thousands of concurrent connections on minimal hardware, making it the industry standard for APIs, microservices, and real-time platforms.",
-  tip: "Full-stack code sharing (validation schemas, TypeScript types, utilities) drastically reduces engineering overhead.",
+  imageUrl: "/images/lessons/why-nodejs.png",
+  summary: `**Why Node.js is the Go-To Technology of the Enterprise:**
+- **Unified JavaScript Stack**: Use one programming language (JS/TS) across Frontend, Backend, and Database querying — enabling shared types, validation schemas, and unified teams.
+- **High Concurrency with Low Overhead**: Asynchronous non-blocking architecture processes tens of thousands of concurrent connections with minimal RAM and CPU consumption.
+- **Enterprise-Proven at Global Scale**: Mission-critical infrastructure for Netflix, PayPal, LinkedIn, Uber, NASA, and Walmart.
+- **JSON-Native Data Processing**: Seamless data pipeline from client request, through Express routes, to MongoDB documents without costly data transformations.
+- **Rapid Time-to-Market**: Over 2+ million reusable packages on NPM drastically accelerate product development cycles.`,
+  tip: "Full-stack code sharing (Zod validation schemas, TypeScript interfaces, shared utilities) drastically reduces engineering overhead.",
   objective: "Evaluate the technical and business advantages of choosing Node.js for backend projects.",
-  expectedOutcome: "Ability to articulate why Node.js excels in I/O-intensive web services.",
-  codeSnippet: "// Example: Sharing validation schemas across Frontend and Backend\nexport const validateUsername = (name) => {\n  return typeof name === \"string\" && name.trim().length >= 3 && name.trim().length <= 30;\n};",
+  expectedOutcome: "Ability to articulate why Node.js is the dominant choice for scalable, I/O-intensive enterprise services.",
 };
-
-```javascript
-// Example: Sharing validation schemas across Frontend and Backend
-export const validateUsername = (name) => {
-  return typeof name === "string" && name.trim().length >= 3 && name.trim().length <= 30;
-};
-```

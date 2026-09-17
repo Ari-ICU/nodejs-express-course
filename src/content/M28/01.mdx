@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always run as non-root user `USER node` to prevent container breakout vulnerabilities.",
   objective: "Create secure, lightweight (~120MB) Docker containers.",
   expectedOutcome: "Fast, secure containerized deployments.",
+  codeSnippet: "# Multi-stage Dockerfile\nFROM node:22-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\n\nFROM node:22-alpine AS runner\nWORKDIR /app\nENV NODE_ENV=production\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY src ./src\nUSER node\nEXPOSE 5000\nCMD [\"node\", \"src/server.js\"]",
 };
-
-Build ultra-lean, non-root production container images without leaking dev tools or source maps.
 
 ```dockerfile
 # Multi-stage Dockerfile

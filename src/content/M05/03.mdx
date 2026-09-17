@@ -9,9 +9,8 @@ export const meta = {
   tip: "This stream-gathering is why Express requires `express.json()` middleware.",
   objective: "Understand how JSON bodies are streamed over TCP sockets.",
   expectedOutcome: "Clarity on body parser mechanics.",
+  codeSnippet: "let body = \"\";\n\nreq.on(\"data\", (chunk) => {\n  body += chunk.toString();\n});\n\nreq.on(\"end\", () => {\n  try {\n    const parsedData = JSON.parse(body);\n    console.log(\"Received POST JSON:\", parsedData);\n  } catch (err) {\n    res.writeHead(400);\n    res.end(\"Invalid JSON payload\");\n  }\n});",
 };
-
-In raw Node.js, `req` is a readable stream. Data arrives in binary chunks that must be gathered and parsed.
 
 ```javascript
 let body = "";

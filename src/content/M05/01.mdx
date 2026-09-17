@@ -9,9 +9,8 @@ export const meta = {
   tip: "Every request contains metadata in headers and optionally data in the body.",
   objective: "Inspect raw HTTP wire packets and protocol headers.",
   expectedOutcome: "Solid intuition for HTTP network transport.",
+  codeSnippet: "/* Raw HTTP Request:\nGET /api/v1/users?page=1 HTTP/1.1\nHost: api.example.com\nAuthorization: Bearer eyJhbGciOi...\nAccept: application/json\n\nHTTP/1.1 200 OK\nContent-Type: application/json; charset=utf-8\nContent-Length: 48\n\n{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Dev\"}]}\n*/",
 };
-
-Stateless client-server protocol over TCP. Request headers, request body, status line, response headers, and payload.
 
 ```javascript
 /* Raw HTTP Request:

@@ -9,9 +9,8 @@ export const meta = {
   tip: "Express provides maximum freedom; organizing into clean controllers and services is key to avoiding spaghetti code.",
   objective: "Bootstrap a production Express server in under 10 lines of code.",
   expectedOutcome: "Running web server with HTTP request handling.",
+  codeSnippet: "import express from \"express\";\n\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\napp.get(\"/\", (req, res) => {\n  res.json({ message: \"Welcome to Express API!\" });\n});\n\napp.listen(PORT, () => {\n  console.log(`Server running on http://localhost:${PORT}`);\n});",
 };
-
-Fast, unopinionated, minimalist web framework for Node.js offering robust routing, middleware pipelines, and HTTP utilities.
 
 ```javascript
 import express from "express";

@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never concatenate paths with string concatenation like `'uploads/' + file`; always use `path.join()` or `path.resolve()`.",
   objective: "Build platform-independent path strings.",
   expectedOutcome: "Code runs identically on Windows, macOS, and Linux.",
+  codeSnippet: "import path from \"node:path\";\nimport { fileURLToPath } from \"node:url\";\n\nconst __filename = fileURLToPath(import.meta.url);\nconst __dirname = path.dirname(__filename);\n\n// Safe cross-platform path resolution\nconst uploadDir = path.join(__dirname, \"uploads\", \"images\", \"avatar.png\");\nconsole.log(\"File extension:\", path.extname(uploadDir)); // .png\nconsole.log(\"Base name:\", path.basename(uploadDir));       // avatar.png",
 };
-
-Cross-platform path resolution handling Windows backslashes (`\`) and POSIX forward slashes (`/`).
 
 ```javascript
 import path from "node:path";

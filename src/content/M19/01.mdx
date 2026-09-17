@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never store user uploads on local container disks in production; container rebuilds will erase the files. Use S3 or Cloudflare R2.",
   objective: "Build cloud-ready multipart file upload pipelines.",
   expectedOutcome: "Scalable object storage integration.",
+  codeSnippet: "import multer from \"multer\";\n\nconst storage = multer.memoryStorage(); // Keep in memory to stream directly to S3/R2\n\nconst fileFilter = (req, file, cb) => {\n  if (file.mimetype.startsWith(\"image/\")) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Only image files are allowed!\", 400), false);\n  }\n};\n\nexport const upload = multer({\n  storage,\n  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit\n  fileFilter\n});\n\n// Route:\nrouter.post(\"/avatar\", authenticate, upload.single(\"avatar\"), uploadAvatarController);",
 };
-
-Accept image files, validate MIME types and sizes, generate unique file keys, and upload to S3-compatible cloud buckets.
 
 ```javascript
 import multer from "multer";

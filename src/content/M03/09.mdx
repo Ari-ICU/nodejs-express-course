@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never use `Buffer.allocUnsafe()` unless you immediately overwrite every byte; it may expose old memory data.",
   objective: "Convert between UTF-8, Hex, and Base64 representations.",
   expectedOutcome: "Accurate handling of binary file uploads.",
+  codeSnippet: "// Create buffer from string\nconst buf = Buffer.from(\"Hello Node.js!\", \"utf-8\");\nconsole.log(\"Hex bytes:\", buf.toString(\"hex\"));\nconsole.log(\"Base64:\", buf.toString(\"base64\"));\n\n// Allocate blank buffer\nconst blank = Buffer.alloc(10); // 10 bytes initialized with zeros",
 };
-
-Fixed-size chunks of raw memory allocated outside V8 for handling binary data, images, and network packets.
 
 ```javascript
 // Create buffer from string

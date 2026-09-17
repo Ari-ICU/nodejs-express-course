@@ -9,9 +9,8 @@ export const meta = {
   tip: "401 means Unauthenticated (who are you?); 403 means Forbidden (I know who you are, but you cannot access this).",
   objective: "Guard administrative routes using role-based assertions.",
   expectedOutcome: "Strict role isolation across sensitive API endpoints.",
+  codeSnippet: "export const authorize = (...roles) => {\n  return (req, res, next) => {\n    if (!roles.includes(req.user.role)) {\n      return next(new AppError(\"You do not have permission to perform this action\", 403));\n    }\n    next();\n  };\n};\n\n// Protect route for Admins only:\nrouter.delete(\"/users/:id\", authenticate, authorize(\"admin\"), deleteUser);",
 };
-
-Restrict endpoint execution based on user roles (`admin`, `instructor`, `student`).
 
 ```javascript
 export const authorize = (...roles) => {

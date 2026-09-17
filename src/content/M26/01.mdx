@@ -9,9 +9,8 @@ export const meta = {
   tip: "Queue backoffs ensure that temporary SMTP network hiccups automatically retry without dropping user emails.",
   objective: "Separate HTTP API response time from heavy processing tasks.",
   expectedOutcome: "Ultra-responsive API that never blocks on external services.",
+  codeSnippet: "import { Queue, Worker } from \"bullmq\";\n\nconst connection = { host: \"127.0.0.1\", port: 6379 };\n\n// 1. PRODUCER (in Express Route - responds in 5ms!):\nexport const emailQueue = new Queue(\"emailQueue\", { connection });\nawait emailQueue.add(\"sendWelcome\", { email: \"student@example.com\", name: \"Dara\" }, {\n  attempts: 3,\n  backoff: { type: \"exponential\", delay: 2000 }\n});\n\n// 2. WORKER (Runs in background process):\nconst worker = new Worker(\"emailQueue\", async (job) => {\n  console.log(\"Processing background job:\", job.name);\n  await sendActualEmail(job.data.email);\n}, { connection });",
 };
-
-Offload slow tasks (image resizing, video encoding, email broadcasts) to a separate background worker queue.
 
 ```javascript
 import { Queue, Worker } from "bullmq";

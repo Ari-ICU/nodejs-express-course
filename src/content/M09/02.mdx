@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always wrap array responses in a `{ data: [] }` property to allow future metadata additions without breaking clients.",
   objective: "Implement uniform response formatting across all endpoints.",
   expectedOutcome: "Predictable API consumption for frontend teams.",
+  codeSnippet: "// Consistent envelope pattern\nres.status(200).json({\n  success: true,\n  statusCode: 200,\n  meta: {\n    page: 1,\n    limit: 10,\n    totalRecords: 142,\n    totalPages: 15\n  },\n  data: items\n});",
 };
-
-Consistent JSend/JSON-API envelopes with success boolean, data payload, meta information, and status codes.
 
 ```javascript
 // Consistent envelope pattern

@@ -9,9 +9,8 @@ export const meta = {
   tip: "Only select necessary fields in `populate('field', 'name avatar')` to avoid over-fetching database records.",
   objective: "Implement automated lifecycle hooks and cross-collection joins.",
   expectedOutcome: "Automated hashing and optimized database joins.",
+  codeSnippet: "// Pre-save hook to hash passwords\nuserSchema.pre(\"save\", async function (next) {\n  if (!this.isModified(\"password\")) return next();\n  this.password = await bcrypt.hash(this.password, 12);\n  next();\n});\n\n// Population: Joins User author into Post\nconst post = await Post.findById(postId).populate(\"author\", \"name email avatar\");",
 };
-
-Use `pre('save')` hooks to hash passwords, and `.populate()` to automatically join referenced documents.
 
 ```javascript
 // Pre-save hook to hash passwords

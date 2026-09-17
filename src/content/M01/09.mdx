@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never use sync methods like `fs.readFileSync` in production Express route handlers.",
   objective: "Observe execution order in asynchronous non-blocking calls.",
   expectedOutcome: "Predicting console output order accurately for non-blocking I/O.",
+  codeSnippet: "import fs from \"node:fs\";\n\nconsole.log(\"1. Starting read...\");\n\n// Non-blocking asynchronous readFile\nfs.readFile(\"large-file.txt\", \"utf-8\", (err, data) => {\n  if (err) return console.error(err);\n  console.log(\"3. File read complete! Size:\", data.length);\n});\n\nconsole.log(\"2. Continuing other work immediately!\");",
 };
-
-I/O operations (network, disk) return immediately without waiting, invoking callbacks or resolving promises when done.
 
 ```javascript
 import fs from "node:fs";

@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always commit `package-lock.json` into version control and use `npm ci` in CI/CD pipelines.",
   objective: "Prevent 'works on my machine' dependency version discrepancies.",
   expectedOutcome: "Reproducible builds across local and cloud environments.",
+  codeSnippet: "# Install exact locked versions (best for CI/CD)\nnpm ci\n\n# Regular install (might update versions within SemVer range)\nnpm install",
 };
-
-Locks the exact dependency tree down to the specific commit/checksum, ensuring identical installs on all machines.
 
 ```bash
 # Install exact locked versions (best for CI/CD)

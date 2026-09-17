@@ -9,9 +9,8 @@ export const meta = {
   tip: "Keep `app.js` (Express configuration) separate from `server.js` (listening on port) for easy testability with Supertest.",
   objective: "Structure a modular, enterprise-grade backend directory.",
   expectedOutcome: "Scalable codebase ready for multi-developer collaboration.",
+  codeSnippet: "my-backend-app/\n├── package.json\n├── package-lock.json\n├── .env.example\n├── .gitignore\n├── src/\n│   ├── config/        # DB, env, redis configurations\n│   ├── controllers/   # Request/response mapping\n│   ├── services/      # Business logic & db queries\n│   ├── models/        # Mongoose/Prisma schemas\n│   ├── routes/        # API endpoint definitions\n│   ├── middleware/    # Auth, validation, error handler\n│   ├── utils/         # Helpers & logger\n│   └── app.js         # Express app initialization\n└── server.js          # Entrypoint (port listen)",
 };
-
-Standard repository layout with src, config, routes, controllers, services, middleware, and tests.
 
 ```bash
 my-backend-app/

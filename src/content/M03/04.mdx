@@ -9,9 +9,8 @@ export const meta = {
   tip: "Cluster workers and PM2 instances are typically sized based on `os.cpus().length`.",
   objective: "Extract machine resource specs for auto-scaling and clustering.",
   expectedOutcome: "Resource-aware server application design.",
+  codeSnippet: "import os from \"node:os\";\n\nconsole.log(\"Platform:\", os.platform());\nconsole.log(\"CPUs count:\", os.cpus().length);\nconsole.log(\"Free Memory (MB):\", Math.round(os.freemem() / 1024 / 1024));\nconsole.log(\"Total Memory (MB):\", Math.round(os.totalmem() / 1024 / 1024));",
 };
-
-Inspect host hardware, CPU architecture, core counts, free memory, network interfaces, and system uptime.
 
 ```javascript
 import os from "node:os";

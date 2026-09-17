@@ -9,9 +9,8 @@ export const meta = {
   tip: "Streams prevent out-of-memory crashes when handling large file uploads or CSV exports.",
   objective: "Pipe large file streams using modern `pipeline()` promise.",
   expectedOutcome: "High-memory efficiency for multi-gigabyte data transfer.",
+  codeSnippet: "import fs from \"node:fs\";\nimport { pipeline } from \"node:stream/promises\";\nimport zlib from \"node:zlib\";\n\n// Compress a 5GB file using streams with constant ~20MB RAM usage!\nawait pipeline(\n  fs.createReadStream(\"huge-log.txt\"),\n  zlib.createGzip(),\n  fs.createWriteStream(\"huge-log.txt.gz\")\n);\nconsole.log(\"Stream pipeline completed!\");",
 };
-
-Process massive datasets chunk-by-chunk without loading the entire file into RAM (Readable, Writable, Transform).
 
 ```javascript
 import fs from "node:fs";

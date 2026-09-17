@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always run `find()` and `countDocuments()` concurrently with `Promise.all()` to halve your response latency.",
   objective: "Write enterprise-grade query pipelines with search and pagination.",
   expectedOutcome: "Scalable list endpoints capable of filtering thousands of records.",
+  codeSnippet: "export const getProducts = async (req, res) => {\n  const { search, category, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = {};\n  \n  if (search) filter.name = { $regex: search, $options: \"i\" };\n  if (category) filter.category = category;\n\n  const skip = (Number(page) - 1) * Number(limit);\n\n  const [products, total] = await Promise.all([\n    Product.find(filter).sort(sort).skip(skip).limit(Number(limit)),\n    Product.countDocuments(filter)\n  ]);\n\n  res.json({ success: true, meta: { total, page: Number(page), pages: Math.ceil(total / limit) }, data: products });\n};",
 };
-
-Create, Read with filtering/search/pagination, Update, and Delete with proper HTTP status codes and error handling.
 
 ```javascript
 export const getProducts = async (req, res) => {

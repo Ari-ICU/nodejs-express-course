@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never store plaintext passwords! A salt round of 10 to 12 provides the optimal balance between security and server latency.",
   objective: "Safely hash and verify user passwords.",
   expectedOutcome: "Zero plaintext credentials in database.",
+  codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// Hashing with salt factor of 12 (computationally expensive to brute-force)\nconst salt = await bcrypt.genSalt(12);\nconst hashedPassword = await bcrypt.hash(rawPassword, salt);\n\n// Comparing on login\nconst isMatch = await bcrypt.compare(submittedPassword, user.password);\nif (!isMatch) throw new AppError(\"Invalid email or password\", 401);",
 };
-
-One-way cryptographic hashing with automated salt generation to protect passwords against rainbow table attacks.
 
 ```javascript
 import bcrypt from "bcryptjs";

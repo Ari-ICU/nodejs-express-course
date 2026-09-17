@@ -9,9 +9,8 @@ export const meta = {
   tip: "Attackers can send `{\"password\": {\"$ne\": null}}` to bypass MongoDB password checks if input is unsanitized.",
   objective: "Harden APIs against brute-force attacks and query injection.",
   expectedOutcome: "Bulletproof defense against common automated bot attacks.",
+  codeSnippet: "import rateLimit from \"express-rate-limit\";\nimport mongoSanitize from \"express-mongo-sanitize\";\n\n// Rate limit: Max 5 login attempts per 15 minutes per IP\nexport const authLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 5,\n  message: { success: false, message: \"Too many login attempts. Please try again after 15 minutes.\" }\n});\n\n// Protect against NoSQL injection: strips out prohibited \"$\" and \".\" characters\napp.use(mongoSanitize());",
 };
-
-Prevent brute-force attacks on login routes with `express-rate-limit` and sanitize MongoDB query objects with `express-mongo-sanitize`.
 
 ```javascript
 import rateLimit from "express-rate-limit";

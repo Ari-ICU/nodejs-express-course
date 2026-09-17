@@ -9,9 +9,8 @@ export const meta = {
   tip: "Export your Postman collections to your Git repository so the whole engineering team shares the exact same test suites.",
   objective: "Create synchronized team API collections with test assertions.",
   expectedOutcome: "Rapid debugging and zero manual token copy-pasting.",
+  codeSnippet: "// Postman Tests Tab (Runs automatically after Login request):\nconst response = pm.response.json();\nif (response.accessToken) {\n  pm.environment.set(\"jwt_token\", response.accessToken);\n  console.log(\"Token automatically saved to environment!\");\n}\n\n// In subsequent requests Headers:\n// Authorization: Bearer {{jwt_token}}",
 };
-
-Automatically save JWT tokens into Postman environment variables upon login for seamless authenticated requests.
 
 ```javascript
 // Postman Tests Tab (Runs automatically after Login request):

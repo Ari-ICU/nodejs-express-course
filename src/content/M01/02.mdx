@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never store secrets, passwords, or database credentials on the Frontend.",
   objective: "Differentiate client execution boundaries from server execution boundaries.",
   expectedOutcome: "Confident identification of which tasks belong to server vs client.",
+  codeSnippet: "// FRONTEND (Browser):\n// Fetches data, manages UI state, triggers visual renders\nconst res = await fetch(\"/api/v1/products\");\nconst products = await res.json();\n\n// BACKEND (Node.js Server):\n// Validates token, queries MongoDB, hides secret API keys\napp.get(\"/api/v1/products\", verifyToken, async (req, res) => {\n  const products = await Product.find({ published: true });\n  res.json({ success: true, data: products });\n});",
 };
-
-Frontend runs inside the client browser (HTML, CSS, React), while Backend runs in protected server environments (Node.js, databases).
 
 ```javascript
 // FRONTEND (Browser):

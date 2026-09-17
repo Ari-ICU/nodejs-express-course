@@ -9,9 +9,8 @@ export const meta = {
   tip: "Statelessness is key: each HTTP request must carry all the metadata needed to fulfill it.",
   objective: "Trace the path of an HTTP packet from user tap to database query and back.",
   expectedOutcome: "Understanding the role of proxies, application servers, and persistence layers.",
+  codeSnippet: "/* Client-Server Communication Flow:\n   [Mobile App / React App] \n            │ (HTTP Request / HTTPS)\n            ▼\n   [Reverse Proxy (Nginx)]\n            │\n            ▼\n   [Node.js Server (Express)]\n            │\n      ┌─────┴─────┐\n      ▼           ▼\n   [MongoDB]   [Redis Cache]\n*/",
 };
-
-The fundamental distributed system model where clients initiate requests and centralized servers process and respond.
 
 ```javascript
 /* Client-Server Communication Flow:

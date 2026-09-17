@@ -9,9 +9,8 @@ export const meta = {
   tip: "Validate data at the edge before touching your database to protect against invalid data, injection, and wasted CPU cycles.",
   objective: "Build schema-driven validation middleware.",
   expectedOutcome: "100% type-safe and validated endpoint inputs.",
+  codeSnippet: "import { z } from \"zod\";\n\nexport const CreateUserSchema = z.object({\n  body: z.object({\n    name: z.string().min(2, \"Name must be at least 2 characters\"),\n    email: z.string().email(\"Invalid email format\"),\n    password: z.string().min(8, \"Password must be at least 8 characters\")\n  })\n});\n\n// Middleware Factory\nexport const validate = (schema) => (req, res, next) => {\n  try {\n    schema.parse({ body: req.body, query: req.query, params: req.params });\n    next();\n  } catch (err) {\n    return res.status(400).json({ success: false, errors: err.errors.map(e => e.message) });\n  }\n};",
 };
-
-Validate request bodies, params, and queries before your controller is even touched.
 
 ```javascript
 import { z } from "zod";

@@ -9,9 +9,8 @@ export const meta = {
   tip: "A single synchronous call in an Express handler freezes the entire server for ALL connected clients.",
   objective: "Distinguish blocking from non-blocking execution models.",
   expectedOutcome: "Elimination of accidental blocking calls.",
+  codeSnippet: "// Synchronous (Blocks the entire server!)\nconst data = fs.readFileSync(\"heavy.txt\");\n\n// Asynchronous (Server continues serving 10,000 other users)\nconst data = await fs.readFile(\"heavy.txt\");",
 };
-
-Synchronous code halts thread execution until finished; Asynchronous code delegates work and continues execution.
 
 ```javascript
 // Synchronous (Blocks the entire server!)

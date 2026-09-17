@@ -9,9 +9,8 @@ export const meta = {
   tip: "Use `crypto.timingSafeEqual()` when verifying HMAC signatures or reset tokens to prevent timing attacks.",
   objective: "Generate cryptographically secure hashes and tokens.",
   expectedOutcome: "Tamper-proof token generation.",
+  codeSnippet: "import crypto from \"node:crypto\";\n\n// Generate secure random tokens\nconst token = crypto.randomBytes(32).toString(\"hex\");\n\n// Create SHA-256 hash\nconst hash = crypto.createHash(\"sha256\").update(\"my-password\").digest(\"hex\");\n\n// Secure UUID\nconst uuid = crypto.randomUUID();",
 };
-
-Cryptographic algorithms: random UUIDs, SHA-256 hashing, HMAC signatures, and encryption.
 
 ```javascript
 import crypto from "node:crypto";

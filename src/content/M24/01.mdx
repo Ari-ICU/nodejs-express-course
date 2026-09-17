@@ -9,9 +9,8 @@ export const meta = {
   tip: "Socket.IO has built-in reconnection, fallback to long-polling, and automatic room management, making it far superior to raw WebSockets.",
   objective: "Implement real-time bi-directional chat communication.",
   expectedOutcome: "Live instant notifications and collaborative features.",
+  codeSnippet: "import { createServer } from \"node:http\";\nimport { Server } from \"socket.io\";\nimport app from \"./app.js\";\n\nconst httpServer = createServer(app);\nconst io = new Server(httpServer, { cors: { origin: \"*\" } });\n\nio.on(\"connection\", (socket) => {\n  console.log(\"User connected:\", socket.id);\n\n  socket.on(\"joinRoom\", (roomId) => {\n    socket.join(roomId);\n  });\n\n  socket.on(\"sendMessage\", ({ roomId, message, sender }) => {\n    // Broadcast ONLY to clients in this specific room!\n    io.to(roomId).emit(\"newMessage\", { message, sender, timestamp: new Date() });\n  });\n});",
 };
-
-Attach Socket.IO to an HTTP server and broadcast real-time events to specific chat rooms or user IDs.
 
 ```javascript
 import { createServer } from "node:http";

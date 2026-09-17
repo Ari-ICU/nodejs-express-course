@@ -9,9 +9,8 @@ export const meta = {
   tip: "Store hashed reset tokens in MongoDB with a 10-minute expiration index (`{ expireAfterSeconds: 600 }`).",
   objective: "Build a production auth microservice with refresh token rotation.",
   expectedOutcome: "Battle-tested authentication service.",
+  codeSnippet: "// Auth API Routes:\n// POST /api/v1/auth/register\n// POST /api/v1/auth/login\n// POST /api/v1/auth/refresh-token\n// POST /api/v1/auth/forgot-password\n// POST /api/v1/auth/reset-password\n// POST /api/v1/auth/logout",
 };
-
-Complete user auth system: bcrypt hashing, JWT access tokens, HttpOnly cookie refresh tokens, role-based access, and password resets.
 
 ```javascript
 // Auth API Routes:

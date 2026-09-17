@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always return `res.json()` or `res.end()` to prevent the client's HTTP request from hanging until timeout.",
   objective: "Extract parameters, query arguments, and body data with type safety.",
   expectedOutcome: "Complete mastery of request inspection and response construction.",
+  codeSnippet: "app.post(\"/api/users/:role\", (req, res) => {\n  const { role } = req.params;          // Route parameter\n  const { notify } = req.query;          // Query parameter ?notify=true\n  const { name, email } = req.body;     // Parsed JSON body\n  const authToken = req.headers.authorization; // Header\n\n  res.status(201).json({\n    success: true,\n    user: { name, email, role },\n    notified: notify === \"true\"\n  });\n});",
 };
-
-Mastering `req.params`, `req.query`, `req.body`, `req.headers`, and `res.status()`, `res.json()`, `res.send()`, `res.set()`.
 
 ```javascript
 app.post("/api/users/:role", (req, res) => {

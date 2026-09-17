@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always remove listeners or use `.once()` when creating transient subscriptions to prevent memory leaks.",
   objective: "Build modular pub-sub event architectures.",
   expectedOutcome: "Decoupled software design with event channels.",
+  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nclass PaymentGateway extends EventEmitter {\n  processPayment(amount) {\n    // Simulate transaction\n    setTimeout(() => {\n      this.emit(\"success\", { amount, transactionId: \"TX-892\" });\n    }, 100);\n  }\n}\n\nconst payment = new PaymentGateway();\npayment.on(\"success\", (data) => console.log(\"Receipt sent for\", data));\npayment.processPayment(99.00);",
 };
-
-Create custom event dispatchers for asynchronous decoupled messaging inside the application.
 
 ```javascript
 import { EventEmitter } from "node:events";

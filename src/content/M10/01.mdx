@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never access `req` or `res` directly inside a Service; keep Services completely decoupled from the HTTP transport layer.",
   objective: "Decouple HTTP mechanics from business logic.",
   expectedOutcome: "Testable services that can be unit-tested without mocking Express.",
+  codeSnippet: "// 1. Controller: ONLY handles HTTP inputs and responses\nexport const registerUser = async (req, res, next) => {\n  try {\n    const user = await authService.createUser(req.body);\n    res.status(201).json({ success: true, data: user });\n  } catch (err) {\n    next(err);\n  }\n};\n\n// 2. Service: Pure business logic, reusable in CLI, webhooks, or cron!\nexport const createUser = async (userData) => {\n  const existing = await User.findOne({ email: userData.email });\n  if (existing) throw new BadRequestError(\"Email already registered\");\n  const hashedPassword = await bcrypt.hash(userData.password, 12);\n  return await User.create({ ...userData, password: hashedPassword });\n};",
 };
-
-Routes handle URLs; Controllers handle HTTP request/response; Services execute business logic; Models interface with database.
 
 ```javascript
 // 1. Controller: ONLY handles HTTP inputs and responses

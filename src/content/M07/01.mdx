@@ -9,9 +9,8 @@ export const meta = {
   tip: "Using `router.route('/path').get().post()` prevents duplicate URL path declarations.",
   objective: "Modularize routes into dedicated domain files.",
   expectedOutcome: "Clean, maintainable, scalable API endpoint hierarchy.",
+  codeSnippet: "// routes/product.routes.js\nimport { Router } from \"express\";\nconst router = Router();\n\nrouter.route(\"/\")\n  .get(getProducts)\n  .post(createProduct);\n\nrouter.route(\"/:id\")\n  .get(getProductById)\n  .put(updateProduct)\n  .delete(deleteProduct);\n\nexport default router;\n\n// app.js\napp.use(\"/api/v1/products\", productRoutes);",
 };
-
-Organize API endpoints by business domain (e.g. `/api/v1/auth`, `/api/v1/users`, `/api/v1/products`).
 
 ```javascript
 // routes/product.routes.js

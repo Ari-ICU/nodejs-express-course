@@ -9,9 +9,8 @@ export const meta = {
   tip: "Export your Express `app` without `app.listen()` so `supertest(app)` can execute tests instantly in memory.",
   objective: "Write automated integration test suites for endpoints.",
   expectedOutcome: "High code confidence and regression prevention.",
+  codeSnippet: "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport app from \"../src/app.js\";\n\ndescribe(\"POST /api/v1/todos\", () => {\n  it(\"should create a new todo and return 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/todos\")\n      .send({ title: \"Learn Vitest\", completed: false });\n\n    expect(res.status).toBe(201);\n    expect(res.body.success).toBe(true);\n    expect(res.body.data.title).toBe(\"Learn Vitest\");\n  });\n});",
 };
-
-Spin up memory test databases and execute real HTTP assertions against your Express app without opening a real port.
 
 ```javascript
 import request from "supertest";

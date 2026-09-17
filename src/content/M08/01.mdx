@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always call `next()` or send a response with `res.json()`. Otherwise the HTTP connection hangs indefinitely.",
   objective: "Understand middleware chaining and execution order.",
   expectedOutcome: "Mastery of request interceptor pipelines.",
+  codeSnippet: "// Request Logger Middleware\nconst requestLogger = (req, res, next) => {\n  const start = Date.now();\n  res.on(\"finish\", () => {\n    const duration = Date.now() - start;\n    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);\n  });\n  next(); // Pass control to the next middleware!\n};\n\napp.use(requestLogger);",
 };
-
-Functions that have access to `req`, `res`, and the `next` function in the application's request-response cycle.
 
 ```javascript
 // Request Logger Middleware

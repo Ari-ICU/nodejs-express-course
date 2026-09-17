@@ -9,9 +9,8 @@ export const meta = {
   tip: "Node 18.3+ has `node:util/parseArgs` built-in, no external libraries needed for argument parsing.",
   objective: "Build CLI-configurable server startup scripts.",
   expectedOutcome: "Flexible command-line parameter handling.",
+  codeSnippet: "import { parseArgs } from \"node:util\";\n\nconst options = {\n  port: { type: \"string\", short: \"p\", default: \"3000\" },\n  env: { type: \"string\", short: \"e\", default: \"dev\" },\n};\n\nconst { values } = parseArgs({ options });\nconsole.log(\"Running on port:\", values.port, \"in mode:\", values.env);",
 };
-
-Parse CLI arguments passed to `node app.js --port 8080 --mode test` using `process.argv` or `util.parseArgs`.
 
 ```javascript
 import { parseArgs } from "node:util";

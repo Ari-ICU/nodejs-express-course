@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always set `\"type\": \"module\"` to write modern ES Module syntax (`import`/`export`) natively.",
   objective: "Craft a production-ready package.json configuration.",
   expectedOutcome: "Correct configuration of entry points, scripts, and module types.",
+  codeSnippet: "{\n  \"name\": \"ecommerce-api\",\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"main\": \"src/server.js\",\n  \"scripts\": {\n    \"dev\": \"node --watch src/server.js\",\n    \"start\": \"NODE_ENV=production node src/server.js\",\n    \"test\": \"vitest run\"\n  },\n  \"engines\": {\n    \"node\": \">=20.0.0\"\n  }\n}",
 };
-
-The project manifest storing metadata, dependencies, scripts, engine compatibility, and module format.
 
 ```json
 {

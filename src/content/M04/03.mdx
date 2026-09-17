@@ -9,9 +9,8 @@ export const meta = {
   tip: "Use `Promise.all()` to run independent queries concurrently instead of awaiting them in sequential series.",
   objective: "Write clean async/await code with parallel execution optimizations.",
   expectedOutcome: "High-speed concurrent API route handlers.",
+  codeSnippet: "// Modern, linear, readable flow\nasync function fetchCustomerDashboard(userId) {\n  try {\n    const user = await getUser(userId);\n    // Parallel fetching for high performance!\n    const [orders, notifications] = await Promise.all([\n      getOrders(user.id),\n      getNotifications(user.id)\n    ]);\n    return { user, orders, notifications };\n  } catch (error) {\n    console.error(\"Dashboard error:\", error);\n    throw error;\n  }\n}",
 };
-
-Representing future values with pending/fulfilled/rejected states, clean chaining, and linear async/await syntax.
 
 ```javascript
 // Modern, linear, readable flow

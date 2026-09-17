@@ -9,9 +9,8 @@ export const meta = {
   tip: "Pass `{ recursive: true }` to `mkdir` to create full directory trees without checking parent existence.",
   objective: "Perform robust directory creation and recursive traversal.",
   expectedOutcome: "Reliable local storage and upload folder management.",
+  codeSnippet: "import fs from \"node:fs/promises\";\nimport path from \"node:path\";\n\nconst targetDir = path.join(process.cwd(), \"storage\", \"reports\");\n\n// Create nested directories if they don't exist\nawait fs.mkdir(targetDir, { recursive: true });\n\n// Read directory contents\nconst files = await fs.readdir(targetDir);\nconsole.log(\"Directory contents:\", files);",
 };
-
-Creating directories recursively, listing files, checking existence, and removing folders safely.
 
 ```javascript
 import fs from "node:fs/promises";

@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always enable `{ timestamps: true }` in your schema options to track record creation and modification times.",
   objective: "Construct validated Mongoose models.",
   expectedOutcome: "Bulletproof data schemas with automated timestamps.",
+  codeSnippet: "import mongoose, { Schema } from \"mongoose\";\n\nconst productSchema = new Schema({\n  name: { type: String, required: [true, \"Product name is required\"], trim: true },\n  slug: { type: String, unique: true, lowercase: true },\n  price: { type: Number, required: true, min: [0, \"Price cannot be negative\"] },\n  category: { type: Schema.Types.ObjectId, ref: \"Category\", required: true },\n  isFeatured: { type: Boolean, default: false }\n}, {\n  timestamps: true // Adds createdAt and updatedAt automatically!\n});\n\nexport const Product = mongoose.model(\"Product\", productSchema);",
 };
-
-Define strongly-typed document structures, validation rules, default values, and indexes.
 
 ```javascript
 import mongoose, { Schema } from "mongoose";

@@ -9,9 +9,8 @@ export const meta = {
   tip: "Use MongoDB multi-document transactions to ensure inventory stock is never oversold.",
   objective: "Build atomic e-commerce transaction workflows.",
   expectedOutcome: "Resilient digital commerce backend.",
+  codeSnippet: "// Transactional checkout using MongoDB Sessions:\nconst session = await mongoose.startSession();\nsession.startTransaction();\ntry {\n  // Deduct product stock\n  // Create Order\n  // Clear User Cart\n  await session.commitTransaction();\n} catch (err) {\n  await session.abortTransaction();\n  throw err;\n}",
 };
-
-Users, Products, Categories, Cart, Wishlist, Order checkout, Payment webhook integration, and Admin analytics.
 
 ```javascript
 // Transactional checkout using MongoDB Sessions:

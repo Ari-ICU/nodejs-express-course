@@ -9,9 +9,8 @@ export const meta = {
   tip: "Listening to `SIGTERM` and `SIGINT` allows Kubernetes and Docker to shut down your app cleanly without dropping active requests.",
   objective: "Handle process signals and graceful termination.",
   expectedOutcome: "Zero-downtime rolling restart compatibility.",
+  codeSnippet: "// Graceful shutdown handling\nprocess.on(\"SIGTERM\", () => {\n  console.log(\"SIGTERM received. Closing HTTP server gracefully...\");\n  server.close(() => {\n    mongoose.connection.close();\n    process.exit(0);\n  });\n});",
 };
-
-Global object providing information and control over the current Node.js process, memory, signals, and uptime.
 
 ```javascript
 // Graceful shutdown handling

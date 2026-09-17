@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always prefer `node:fs/promises` with `async/await` in modern asynchronous code.",
   objective: "Perform non-blocking read/write disk operations.",
   expectedOutcome: "Safe and fast file operations.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\n// Asynchronous promise-based file write and read\nawait fs.writeFile(\"config.json\", JSON.stringify({ theme: \"dark\" }));\nconst content = await fs.readFile(\"config.json\", \"utf-8\");\nconsole.log(\"Config read:\", JSON.parse(content));",
 };
-
-File system operations with synchronous, callback, and modern promise-based flavors (`node:fs/promises`).
 
 ```javascript
 import fs from "node:fs/promises";

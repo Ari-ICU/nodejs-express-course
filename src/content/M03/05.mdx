@@ -9,9 +9,8 @@ export const meta = {
   tip: "Use the standard WHATWG `URL` class instead of legacy `url.parse()`.",
   objective: "Parse and manipulate query parameters safely.",
   expectedOutcome: "Sanitized URL generation and query parsing.",
+  codeSnippet: "const myUrl = new URL(\"https://api.example.com:8080/v1/products?category=electronics&sort=asc\");\n\nconsole.log(\"Host:\", myUrl.host);              // api.example.com:8080\nconsole.log(\"Path:\", myUrl.pathname);          // /v1/products\nconsole.log(\"Sort Param:\", myUrl.searchParams.get(\"sort\")); // asc\n\nmyUrl.searchParams.append(\"limit\", \"20\");\nconsole.log(\"Modified:\", myUrl.toString());",
 };
-
-Parse and construct standard URLs, query strings, protocols, and hostnames using the WHATWG URL API.
 
 ```javascript
 const myUrl = new URL("https://api.example.com:8080/v1/products?category=electronics&sort=asc");

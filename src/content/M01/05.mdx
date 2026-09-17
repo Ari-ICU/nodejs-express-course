@@ -9,9 +9,8 @@ export const meta = {
   tip: "Node.js excels at I/O-intensive workloads like REST APIs, chat servers, streaming, and microservices.",
   objective: "Evaluate when to choose Node.js over multi-threaded runtimes like Java or Go.",
   expectedOutcome: "Strategic justification for Node.js in high-concurrency systems.",
+  codeSnippet: "// Unified Full-Stack: Share validation schemas between frontend and backend\nimport { z } from \"zod\";\n\nexport const UserSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(8),\n}); // Can be imported in React and Express!",
 };
-
-Unified full-stack language (JS everywhere), massive npm ecosystem, high I/O throughput, and fast prototyping.
 
 ```javascript
 // Unified Full-Stack: Share validation schemas between frontend and backend

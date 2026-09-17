@@ -9,9 +9,8 @@ export const meta = {
   tip: "Ensure your production Docker build uses `NODE_ENV=production` to omit devDependencies.",
   objective: "Optimize deployment image size.",
   expectedOutcome: "Faster deployments and lower memory footprints.",
+  codeSnippet: "# In production container Dockerfile:\nnpm ci --only=production\n# This skips all devDependencies, saving hundreds of Megabytes!",
 };
-
-Tools only needed during development (linters, test frameworks, TypeScript compiler). Omitted in production containers.
 
 ```bash
 # In production container Dockerfile:

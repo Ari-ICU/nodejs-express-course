@@ -9,9 +9,8 @@ export const meta = {
   tip: "Storing refresh tokens in `HttpOnly` cookies prevents stolen credentials even if an attacker executes XSS on the frontend.",
   objective: "Implement resilient JWT auth with automatic token refreshing.",
   expectedOutcome: "Industry-grade authentication resilient against XSS.",
+  codeSnippet: "import jwt from \"jsonwebtoken\";\n\n// Issue Access Token (short-lived: 15m)\nconst accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: \"15m\" });\n\n// Issue Refresh Token (long-lived: 7d)\nconst refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: \"7d\" });\n\n// Set in HttpOnly cookie (inaccessible to JavaScript XSS attacks!)\nres.cookie(\"refreshToken\", refreshToken, {\n  httpOnly: true,\n  secure: process.env.NODE_ENV === \"production\",\n  sameSite: \"strict\",\n  maxAge: 7 * 24 * 60 * 60 * 1000\n});\n\nres.json({ success: true, accessToken });",
 };
-
-Issue a 15-minute Access Token for API requests, and an HttpOnly SameSite Refresh Token in cookies to combat XSS.
 
 ```javascript
 import jwt from "jsonwebtoken";

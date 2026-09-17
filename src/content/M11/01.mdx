@@ -9,9 +9,8 @@ export const meta = {
   tip: "Data that is queried together should generally be stored together (embedding), unless the array grows unbounded.",
   objective: "Design flexible document schemas.",
   expectedOutcome: "Understanding the balance between normalization and denormalization.",
+  codeSnippet: "// A MongoDB Document (BSON):\n{\n  \"_id\": ObjectId(\"65f1a2b3c4d5e6f7a8b9c0d1\"),\n  \"title\": \"MacBook Pro M3\",\n  \"price\": 1999.00,\n  \"tags\": [\"laptop\", \"apple\", \"hardware\"],\n  \"specs\": { \"ram\": \"32GB\", \"storage\": \"1TB SSD\" },\n  \"reviews\": [\n    { \"user\": \"Chann\", \"rating\": 5, \"comment\": \"Blazing fast!\" }\n  ],\n  \"createdAt\": ISODate(\"2026-03-15T08:00:00Z\")\n}",
 };
-
-NoSQL document stores format data as flexible JSON-like BSON documents, allowing nested objects and arrays without complex joins.
 
 ```javascript
 // A MongoDB Document (BSON):

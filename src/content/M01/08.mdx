@@ -9,9 +9,8 @@ export const meta = {
   tip: "Event emitters decouple modules, making code cleanly extendable.",
   objective: "Implement a decoupled event publisher and subscriber.",
   expectedOutcome: "Clean modular architecture using event listeners.",
+  codeSnippet: "import EventEmitter from \"node:events\";\n\nconst serverEmitter = new EventEmitter();\n\n// Listener\nserverEmitter.on(\"orderPlaced\", (order) => {\n  console.log(\"Dispatching email for order #\", order.id);\n});\n\n// Trigger\nserverEmitter.emit(\"orderPlaced\", { id: \"ORD-9021\", total: 49.99 });",
 };
-
-Systems react to events emitted by subjects, invoking registered callback handlers asynchronously.
 
 ```javascript
 import EventEmitter from "node:events";

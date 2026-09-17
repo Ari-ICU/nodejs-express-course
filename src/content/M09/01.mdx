@@ -9,9 +9,8 @@ export const meta = {
   tip: "Use nouns for resources (e.g. `/articles`, `/users`), never verbs like `/getArticles` or `/deleteUser`.",
   objective: "Design predictable RESTful API contracts.",
   expectedOutcome: "Industry-standard API naming and behavior.",
+  codeSnippet: "// Consistent REST design\n// GET    /api/v1/articles        -> List articles\n// POST   /api/v1/articles        -> Create new article\n// GET    /api/v1/articles/:id    -> Get single article\n// PATCH  /api/v1/articles/:id    -> Partial update\n// DELETE /api/v1/articles/:id    -> Remove article",
 };
-
-Resource-oriented endpoints: GET (retrieve), POST (create), PUT (replace), PATCH (partial update), DELETE (remove).
 
 ```javascript
 // Consistent REST design

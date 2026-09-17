@@ -9,9 +9,8 @@ export const meta = {
   tip: "Always prefix core module imports with `node:` (e.g. `node:fs`) to avoid collisions with any npm package of the same name.",
   objective: "Identify and import Node's native built-in standard library.",
   expectedOutcome: "Confidence using native APIs without bloated dependencies.",
+  codeSnippet: "// Use the 'node:' protocol prefix for clarity and performance\nimport fs from \"node:fs/promises\";\nimport path from \"node:path\";\nimport os from \"node:os\";\nimport crypto from \"node:crypto\";",
 };
-
-Built-in packages compiled into the Node.js binary requiring no npm installation: `fs`, `path`, `os`, `http`, `crypto`, `events`.
 
 ```javascript
 // Use the 'node:' protocol prefix for clarity and performance

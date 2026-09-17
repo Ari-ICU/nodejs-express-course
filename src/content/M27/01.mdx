@@ -9,9 +9,8 @@ export const meta = {
   tip: "When code files grow beyond 250 lines, it is usually time to extract a helper service or utility module.",
   objective: "Adopt industry-standard directory layouts for multi-developer teams.",
   expectedOutcome: "Clean, predictable code navigation across large codebases.",
+  codeSnippet: "src/\n├── config/        # Environment, Database, Redis, Logger configs\n├── routes/        # Express route definitions & versioning (v1, v2)\n├── controllers/   # Request/response validation & HTTP serialization\n├── services/      # Core business logic, computations, transactions\n├── models/        # Mongoose/Prisma schema definitions & indexes\n├── middleware/    # Auth, RBAC, error handling, rate limiting\n├── validators/    # Zod schemas for request body & query validation\n├── utils/         # Helper functions, formatters, custom error classes\n├── jobs/          # BullMQ queue producers & background workers\n├── database/      # Seeders, migrations, connection pool managers\n└── app.js         # Express setup without listen (for Supertest)\nserver.js          # Port listening, clustering, and graceful shutdown",
 };
-
-High-scale backend layout separating configuration, routes, controllers, services, models, middleware, validators, jobs, and utils.
 
 ```bash
 src/

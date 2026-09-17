@@ -9,9 +9,8 @@ export const meta = {
   tip: "Node 18+ has built-in `--watch` flag, eliminating the need for `nodemon` in simple projects.",
   objective: "Execute and live-reload JavaScript server scripts.",
   expectedOutcome: "Fast feedback loop during local development.",
+  codeSnippet: "// index.js\nconst serverName = \"NodePulse Core\";\nconsole.log(`[SERVER] ${serverName} initialized at ${new Date().toISOString()}`);\n\n// Terminal:\n// node index.js\n// node --watch index.js (auto-reloads on file save!)",
 };
-
-Execute scripts directly using `node <filename>` or with the experimental watch mode `node --watch`.
 
 ```javascript
 // index.js

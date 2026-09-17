@@ -9,9 +9,8 @@ export const meta = {
   tip: "Pre- and post-hooks run automatically before and after commands (e.g. `predev` runs before `npm run dev`).",
   objective: "Create chaining workflow scripts for full dev pipelines.",
   expectedOutcome: "Streamlined single-command project workflows.",
+  codeSnippet: "\"scripts\": {\n  \"predev\": \"npm run db:check\",\n  \"dev\": \"node --watch src/server.js\",\n  \"db:seed\": \"node scripts/seed.js\",\n  \"lint\": \"eslint src/\",\n  \"build\": \"tsc\"\n}",
 };
-
-Automate builds, database migrations, linting, seedings, and test suites with custom npm scripts.
 
 ```json
 "scripts": {

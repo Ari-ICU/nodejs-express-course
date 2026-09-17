@@ -9,9 +9,8 @@ export const meta = {
   tip: "In Node ESM, always include the file extension `.js` in relative imports: `import x from \"./file.js\";`.",
   objective: "Write modern ES Modules code with top-level await.",
   expectedOutcome: "Modern, standard-compliant JavaScript backend code.",
+  codeSnippet: "// utils/math.js\nexport const add = (a, b) => a + b;\nexport const multiply = (a, b) => a * b;\n\n// server.js\nimport { add } from \"./utils/math.js\";\n\n// Top-level await is supported in ESM!\nconst connection = await connectDatabase();\nconsole.log(add(10, 20));",
 };
-
-The official ECMAScript standard for modules supporting asynchronous loading, top-level await, and tree-shaking.
 
 ```javascript
 // utils/math.js

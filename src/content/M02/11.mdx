@@ -9,9 +9,8 @@ export const meta = {
   tip: "CommonJS is synchronous and cannot easily tree-shake unused exports.",
   objective: "Understand legacy CommonJS codebases and migration strategies.",
   expectedOutcome: "Ability to read and maintain legacy Node.js code.",
+  codeSnippet: "// math.js\nconst add = (a, b) => a + b;\nmodule.exports = { add };\n\n// app.js\nconst { add } = require(\"./math\");\nconsole.log(add(5, 10)); // 15",
 };
-
-The legacy Node.js module system using synchronous `require()` and `module.exports`.
 
 ```javascript
 // math.js

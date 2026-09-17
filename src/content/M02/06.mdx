@@ -9,9 +9,8 @@ export const meta = {
   tip: "Avoid installing libraries globally (`-g`) whenever possible to prevent machine-level version conflicts.",
   objective: "Correctly categorize dependencies into runtime vs dev.",
   expectedOutcome: "Lean production deployment images.",
+  codeSnippet: "# Install runtime dependency\nnpm install express dotenv cors\n\n# Install dev dependency\nnpm install -D nodemon vitest @types/node\n\n# Install global CLI tool\nnpm install -g pm2",
 };
-
-Installing runtime packages versus development tools with appropriate semantic versioning.
 
 ```bash
 # Install runtime dependency

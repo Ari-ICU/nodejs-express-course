@@ -9,9 +9,8 @@ export const meta = {
   tip: "Generate thumbnail images automatically during upload to save bandwidth on mobile devices.",
   objective: "Handle multipart uploads combined with relational Mongoose population.",
   expectedOutcome: "Robust catalog management system.",
+  codeSnippet: "// Upload product image with validation\nrouter.post(\n  \"/\",\n  authenticate,\n  authorize(\"admin\"),\n  upload.array(\"images\", 5),\n  createProductController\n);",
 };
-
-Product inventory management with Category relationships, image uploads via Multer, pricing filters, and role-based permissions.
 
 ```javascript
 // Upload product image with validation

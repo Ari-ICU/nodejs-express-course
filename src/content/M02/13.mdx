@@ -9,9 +9,8 @@ export const meta = {
   tip: "Never hardcode passwords or API keys in source code.",
   objective: "Extract dynamic configuration into environment variables.",
   expectedOutcome: "Secure, 12-factor application configuration.",
+  codeSnippet: "// Access environment variables via process.env\nconst PORT = process.env.PORT || 5000;\nconst DB_URI = process.env.DATABASE_URL;\nconst NODE_ENV = process.env.NODE_ENV || \"development\";\n\nif (!DB_URI) {\n  throw new Error(\"DATABASE_URL must be defined!\");\n}",
 };
-
-Dynamically configure ports, database credentials, JWT secrets, and external API keys outside the codebase.
 
 ```javascript
 // Access environment variables via process.env

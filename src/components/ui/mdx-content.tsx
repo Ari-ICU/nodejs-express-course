@@ -27,7 +27,7 @@ export const MdxContent: React.FC<MdxContentProps> = ({
         remarkPlugins={[remarkGfm]}
         components={{
           p: ({ children }) => (
-            <p className="text-slate-700 text-sm sm:text-base leading-relaxed mb-2 last:mb-0 font-sans">
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-3 last:mb-0 font-sans">
               {children}
             </p>
           ),
@@ -38,18 +38,18 @@ export const MdxContent: React.FC<MdxContentProps> = ({
             <em className="italic text-slate-600">{children}</em>
           ),
           ul: ({ children }) => (
-            <ul className="list-none space-y-1.5 mb-2 pl-0">
+            <ul className="list-none space-y-2 mb-3 pl-0">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal list-inside space-y-1.5 mb-2 pl-1 text-slate-700 text-sm">
+            <ol className="list-decimal list-inside space-y-2 mb-3 pl-1 text-slate-700 text-base sm:text-lg">
               {children}
             </ol>
           ),
           li: ({ children }) => (
-            <li className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed">
-              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+            <li className="flex items-start gap-2 text-base sm:text-lg text-slate-700 leading-relaxed">
+              <span className="mt-2 w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
               <span>{children}</span>
             </li>
           ),

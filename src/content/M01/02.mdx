@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាង Frontend និង Backend",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Frontend executes entirely inside the user's browser environment (HTML, CSS, React, Vue), rendering UI and managing interactive user state. Backend runs in secure, isolated server infrastructure (Node.js, databases, microservices), guarding secret API keys, enforcing business authorization, and handling durable storage.",
+  summary: "**Frontend** — executes inside the user's browser:\n- Built with HTML, CSS, JavaScript (React, Vue, Svelte)\n- Renders the UI, handles animations and user interactions\n- Manages client-side state (forms, carts, UI toggles)\n- Calls the backend via `fetch()` or Axios over HTTP/REST\n- Has **zero privacy** — all code is visible to the user\n\n**Backend** — runs on a secure, isolated server:\n- Powered by Node.js, Express, databases (MongoDB, PostgreSQL)\n- Validates requests, enforces auth tokens (`verifyToken`)\n- Reads and writes to databases (never exposed to the client)\n- Hides secret API keys, hashing salts, and credentials\n- Returns only the data the client is authorized to receive",
   tip: "Never store private API keys, database credentials, or secret hashing salts on the frontend.",
   objective: "Differentiate client execution boundaries from server execution boundaries.",
   expectedOutcome: "Confident identification of which responsibilities belong to the server versus the client.",

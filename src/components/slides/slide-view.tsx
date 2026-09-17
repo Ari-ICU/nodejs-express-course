@@ -339,7 +339,21 @@ export const SlideView: React.FC<SlideViewProps> = ({
 
           {/* Right Panel (55% -> 7 cols on 12-grid) */}
           <div className="lg:col-span-7 flex flex-col space-y-4">
-            {activeModule.id === "M28" && safeSlideIndex === 0 ? (
+            {(mdxMeta?.imageUrl || activeTopic.imageUrl) ? (
+              <div className="relative group rounded-2xl border border-slate-700/60 bg-[#0d1117] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-4 sm:p-8 min-h-[460px]">
+                <div className="absolute top-3 left-4 flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                  <span className="font-mono text-xs text-slate-400 ml-2">Visual Concept</span>
+                </div>
+                <img
+                  src={mdxMeta?.imageUrl || activeTopic.imageUrl}
+                  alt={activeTopic.title}
+                  className="rounded-xl max-h-[440px] w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 group-hover:scale-[1.01]"
+                />
+              </div>
+            ) : activeModule.id === "M28" && safeSlideIndex === 0 ? (
               <DeploymentAnim accent="#10b981" />
             ) : activeModule.id === "M08" && safeSlideIndex === 0 ? (
               <MiddlewarePipeline />

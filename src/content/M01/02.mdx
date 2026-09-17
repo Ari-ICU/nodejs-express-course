@@ -4,24 +4,21 @@ export const meta = {
   title: "Frontend vs Backend",
   khmerTitle: "ភាពខុសគ្នារវាង Frontend និង Backend",
   type: "concept",
-  codeLanguage: "javascript",
-  summary: "**Frontend** — executes inside the user's browser:\n- Built with HTML, CSS, JavaScript (React, Vue, Svelte)\n- Renders the UI, handles animations and user interactions\n- Manages client-side state (forms, carts, UI toggles)\n- Calls the backend via `fetch()` or Axios over HTTP/REST\n- Has **zero privacy** — all code is visible to the user\n\n**Backend** — runs on a secure, isolated server:\n- Powered by Node.js, Express, databases (MongoDB, PostgreSQL)\n- Validates requests, enforces auth tokens (`verifyToken`)\n- Reads and writes to databases (never exposed to the client)\n- Hides secret API keys, hashing salts, and credentials\n- Returns only the data the client is authorized to receive",
+  imageUrl: "/images/lessons/frontend-vs-backend.png",
+  summary: `**Frontend** — executes inside the user's browser:
+- Built with HTML, CSS, JavaScript (React, Next.js, Vue)
+- Renders user interfaces, animations, and form inputs
+- Manages client-side state and browser cookies
+- Sends requests to the backend via HTTP/REST APIs
+- Has **zero privacy** — all source code is readable by users
+
+**Backend** — runs on a secure, private server:
+- Built with Node.js, Express, databases (MongoDB, PostgreSQL)
+- Enforces authentication, authorization, and data validation
+- Executes database reads/writes with ACID transactions
+- Safely protects private API secrets and payment keys
+- Transmits sanitized JSON responses back to the client`,
   tip: "Never store private API keys, database credentials, or secret hashing salts on the frontend.",
   objective: "Differentiate client execution boundaries from server execution boundaries.",
   expectedOutcome: "Confident identification of which responsibilities belong to the server versus the client.",
-  codeSnippet: "// FRONTEND (Browser):\n// Fetches data, manages UI state, triggers visual renders\nconst res = await fetch(\"/api/v1/products\");\nconst products = await res.json();\n\n// BACKEND (Node.js Server):\n// Validates token, queries MongoDB, hides secret API keys\napp.get(\"/api/v1/products\", verifyToken, async (req, res) => {\n  const products = await Product.find({ published: true });\n  res.json({ success: true, data: products });\n});",
 };
-
-```javascript
-// FRONTEND (Browser):
-// Fetches data, manages UI state, triggers visual renders
-const res = await fetch("/api/v1/products");
-const products = await res.json();
-
-// BACKEND (Node.js Server):
-// Validates token, queries MongoDB, hides secret API keys
-app.get("/api/v1/products", verifyToken, async (req, res) => {
-  const products = await Product.find({ published: true });
-  res.json({ success: true, data: products });
-});
-```

@@ -29,6 +29,8 @@ export interface TopicMeta {
   tip?: string;
   objective?: string;
   expectedOutcome?: string;
+  diagramType?: string;
+  imageUrl?: string;
 }
 
 export interface LoadedTopic {

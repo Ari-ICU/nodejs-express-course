@@ -4,20 +4,9 @@ export const meta = {
   title: "What is Backend Development?",
   khmerTitle: "អ្វីជាការអភិវឌ្ឍ Backend?",
   type: "concept",
-  codeLanguage: "javascript",
+  imageUrl: "/images/lessons/what-is-backend.png",
   summary: "Backend development powers the hidden server-side engine behind modern applications. It coordinates business logic, communicates with databases, manages authentication and sessions, processes external API integrations, and ensures high availability, data security, and low latency for client interfaces.",
   tip: "Backend engineering prioritizes correctness, security, data integrity, idempotency, and throughput over visual aesthetics.",
   objective: "Understand how backend code operates silently behind web and mobile applications.",
   expectedOutcome: "Clear mental model of server responsibilities, network boundaries, and data processing lifecycles.",
-  codeSnippet: "// A minimal HTTP response conceptual model\n// Client sends Request -> Server executes business logic -> Server returns Response\nconst response = {\n  status: 200,\n  headers: { \"Content-Type\": \"application/json\" },\n  data: { user: \"Sokha\", role: \"Developer\", access: true }\n};",
 };
-
-```javascript
-// A minimal HTTP response conceptual model
-// Client sends Request -> Server executes business logic -> Server returns Response
-const response = {
-  status: 200,
-  headers: { "Content-Type": "application/json" },
-  data: { user: "Sokha", role: "Developer", access: true }
-};
-```

@@ -166,7 +166,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
 
   // Load the MDX content for the current slide
   const topicNum = String(safeSlideIndex + 1).padStart(2, "0");
-  const { Content: MdxSlideContent, loading: mdxLoading } = useMdxContent(
+  const { Content: MdxSlideContent, meta: mdxMeta, loading: mdxLoading } = useMdxContent(
     currentModuleId,
     topicNum
   );
@@ -315,7 +315,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
 
               {/* Main Narrative Explanation — sourced from MDX meta.summary */}
               <div className="mt-4">
-                <MdxContent content={mdxMeta?.summary ?? activeTopic.summary} />
+                <MdxContent content={mdxMeta?.summary ?? activeTopic.summary ?? ""} />
               </div>
             </div>
           </div>
@@ -350,7 +350,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
               /* ── Fallback: static CodeBlock while MDX loads ── */
               <div className="space-y-4">
                 <CodeBlock
-                  code={activeTopic.codeSnippet}
+                  code={activeTopic.codeSnippet || "// Loading lesson..."}
                   language={activeTopic.codeLanguage || "javascript"}
                   filename={`${activeModule.id.toLowerCase()}-topic-${activeTopic.number}.${activeTopic.codeLanguage === "bash" ? "sh" : "js"}`}
                 />

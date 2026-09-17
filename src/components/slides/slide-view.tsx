@@ -28,6 +28,7 @@ import { DeploymentAnim } from "./deployment-anim";
 import { MiddlewarePipeline } from "@/components/visualizers/middleware-pipeline";
 import { EventLoopVisualizer } from "@/components/visualizers/event-loop-visualizer";
 import { ClientServerDiagram } from "@/components/visualizers/client-server-diagram";
+import { getAssetUrl } from "@/lib/utils";
 import {
   getStoredProgress,
   saveProgress,
@@ -348,7 +349,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
                   <span className="font-mono text-xs text-slate-400 ml-2">Visual Concept</span>
                 </div>
                 <img
-                  src={mdxMeta?.imageUrl || activeTopic.imageUrl}
+                  src={getAssetUrl(mdxMeta?.imageUrl || activeTopic.imageUrl)}
                   alt={activeTopic.title}
                   className="rounded-xl max-h-[440px] w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 group-hover:scale-[1.01]"
                 />

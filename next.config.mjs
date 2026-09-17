@@ -1,11 +1,15 @@
 import createMDX from "@next/mdx";
 
 const isGithubActions = process.env.GITHUB_ACTIONS === "true";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || (isGithubActions ? "/nodejs-express-course" : "");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH || (isGithubActions ? "/nodejs-express-course" : ""),
+  basePath,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   images: {
     unoptimized: true,
   },

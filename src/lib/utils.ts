@@ -10,3 +10,13 @@ export function formatTime(seconds: number): string {
   const secs = seconds % 60;
   return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 }
+
+export function getAssetUrl(path?: string): string {
+  if (!path) return "";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  if (basePath && path.startsWith("/") && !path.startsWith(basePath)) {
+    return `${basePath}${path}`;
+  }
+  return path;
+}
+

@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M02-02",
+  number: "02",
+  title: "Node.js REPL",
+  khmerTitle: "ការប្រើប្រាស់ Node.js REPL",
+  type: "lab",
+  codeLanguage: "bash",
+  tip: "In the REPL, the special variable `_` (underscore) stores the result of the last evaluated expression.",
+  objective: "Use the REPL for rapid prototyping and validation.",
+  expectedOutcome: "Confidence in quick JavaScript experiments directly in terminal.",
+};
+
+Read-Eval-Print-Loop provides an interactive shell for testing snippets, checking crypto hashes, and debugging.
+
+```bash
+# Open REPL
+$ node
+> crypto.randomUUID()
+'550e8400-e29b-41d4-a716-446655440000'
+> 2 ** 10
+1024
+> .exit
+```

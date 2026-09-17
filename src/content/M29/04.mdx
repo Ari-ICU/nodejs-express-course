@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M29-04",
+  number: "04",
+  title: "Project 04: Product Management API",
+  khmerTitle: "គម្រោងទី ៤ ៖ Product Management API ជាមួយ File Upload",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Generate thumbnail images automatically during upload to save bandwidth on mobile devices.",
+  objective: "Handle multipart uploads combined with relational Mongoose population.",
+  expectedOutcome: "Robust catalog management system.",
+};
+
+Product inventory management with Category relationships, image uploads via Multer, pricing filters, and role-based permissions.
+
+```javascript
+// Upload product image with validation
+router.post(
+  "/",
+  authenticate,
+  authorize("admin"),
+  upload.array("images", 5),
+  createProductController
+);
+```

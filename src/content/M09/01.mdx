@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M09-01",
+  number: "01",
+  title: "REST Principles & HTTP Verbs",
+  khmerTitle: "គោលការណ៍ REST និងកិរិយាស័ព្ទ HTTP",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Use nouns for resources (e.g. `/articles`, `/users`), never verbs like `/getArticles` or `/deleteUser`.",
+  objective: "Design predictable RESTful API contracts.",
+  expectedOutcome: "Industry-standard API naming and behavior.",
+};
+
+Resource-oriented endpoints: GET (retrieve), POST (create), PUT (replace), PATCH (partial update), DELETE (remove).
+
+```javascript
+// Consistent REST design
+// GET    /api/v1/articles        -> List articles
+// POST   /api/v1/articles        -> Create new article
+// GET    /api/v1/articles/:id    -> Get single article
+// PATCH  /api/v1/articles/:id    -> Partial update
+// DELETE /api/v1/articles/:id    -> Remove article
+```

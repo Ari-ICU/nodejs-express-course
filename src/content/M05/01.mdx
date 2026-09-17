@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M05-01",
+  number: "01",
+  title: "HTTP Fundamentals & Lifecycle",
+  khmerTitle: "មូលដ្ឋានគ្រឹះពិធីការ HTTP និងដំណើរការ Request-Response",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Every request contains metadata in headers and optionally data in the body.",
+  objective: "Inspect raw HTTP wire packets and protocol headers.",
+  expectedOutcome: "Solid intuition for HTTP network transport.",
+};
+
+Stateless client-server protocol over TCP. Request headers, request body, status line, response headers, and payload.
+
+```javascript
+/* Raw HTTP Request:
+GET /api/v1/users?page=1 HTTP/1.1
+Host: api.example.com
+Authorization: Bearer eyJhbGciOi...
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Length: 48
+
+{"status":"success","data":[{"id":1,"name":"Dev"}]}
+*/
+```

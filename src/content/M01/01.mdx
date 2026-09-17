@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M01-01",
+  number: "01",
+  title: "What is Backend Development?",
+  khmerTitle: "អ្វីជាការអភិវឌ្ឍ Backend?",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Backend focuses on reliability, security, data integrity, and throughput rather than UI aesthetics.",
+  objective: "Understand how backend code operates silently behind every modern mobile & web application.",
+  expectedOutcome: "Clear mental model of server responsibilities and request lifecycles.",
+};
+
+Backend development handles server-side logic, database interactions, user authentication, business rules, and API endpoints.
+
+```javascript
+// A minimal HTTP response conceptual model
+// Client sends Request -> Server executes logic -> Server returns Response
+const response = {
+  status: 200,
+  headers: { "Content-Type": "application/json" },
+  data: { user: "Sokha", role: "Developer", access: true }
+};
+```

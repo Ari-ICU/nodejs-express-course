@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M29-05",
+  number: "05",
+  title: "Project 05: E-Commerce Backend",
+  khmerTitle: "គម្រោងទី ៥ ៖ ប្រព័ន្ធ E-Commerce Backend ពេញលេញ",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Use MongoDB multi-document transactions to ensure inventory stock is never oversold.",
+  objective: "Build atomic e-commerce transaction workflows.",
+  expectedOutcome: "Resilient digital commerce backend.",
+};
+
+Users, Products, Categories, Cart, Wishlist, Order checkout, Payment webhook integration, and Admin analytics.
+
+```javascript
+// Transactional checkout using MongoDB Sessions:
+const session = await mongoose.startSession();
+session.startTransaction();
+try {
+  // Deduct product stock
+  // Create Order
+  // Clear User Cart
+  await session.commitTransaction();
+} catch (err) {
+  await session.abortTransaction();
+  throw err;
+}
+```

@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M27-01",
+  number: "01",
+  title: "Enterprise Clean Folder Structure",
+  khmerTitle: "រចនាសម្ព័ន្ធ Folder ស្តង់ដារ Enterprise",
+  type: "architecture",
+  codeLanguage: "bash",
+  tip: "When code files grow beyond 250 lines, it is usually time to extract a helper service or utility module.",
+  objective: "Adopt industry-standard directory layouts for multi-developer teams.",
+  expectedOutcome: "Clean, predictable code navigation across large codebases.",
+};
+
+High-scale backend layout separating configuration, routes, controllers, services, models, middleware, validators, jobs, and utils.
+
+```bash
+src/
+├── config/        # Environment, Database, Redis, Logger configs
+├── routes/        # Express route definitions & versioning (v1, v2)
+├── controllers/   # Request/response validation & HTTP serialization
+├── services/      # Core business logic, computations, transactions
+├── models/        # Mongoose/Prisma schema definitions & indexes
+├── middleware/    # Auth, RBAC, error handling, rate limiting
+├── validators/    # Zod schemas for request body & query validation
+├── utils/         # Helper functions, formatters, custom error classes
+├── jobs/          # BullMQ queue producers & background workers
+├── database/      # Seeders, migrations, connection pool managers
+└── app.js         # Express setup without listen (for Supertest)
+server.js          # Port listening, clustering, and graceful shutdown
+```

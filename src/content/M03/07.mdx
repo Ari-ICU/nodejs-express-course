@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M03-07",
+  number: "07",
+  title: "crypto Module",
+  khmerTitle: "ម៉ូឌុលគ្រីបតូហ្គ្រាហ្វ៊ី crypto Module",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Use `crypto.timingSafeEqual()` when verifying HMAC signatures or reset tokens to prevent timing attacks.",
+  objective: "Generate cryptographically secure hashes and tokens.",
+  expectedOutcome: "Tamper-proof token generation.",
+};
+
+Cryptographic algorithms: random UUIDs, SHA-256 hashing, HMAC signatures, and encryption.
+
+```javascript
+import crypto from "node:crypto";
+
+// Generate secure random tokens
+const token = crypto.randomBytes(32).toString("hex");
+
+// Create SHA-256 hash
+const hash = crypto.createHash("sha256").update("my-password").digest("hex");
+
+// Secure UUID
+const uuid = crypto.randomUUID();
+```

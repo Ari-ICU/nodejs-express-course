@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M03-05",
+  number: "05",
+  title: "url Module",
+  khmerTitle: "ម៉ូឌុល URL និង SearchParams",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Use the standard WHATWG `URL` class instead of legacy `url.parse()`.",
+  objective: "Parse and manipulate query parameters safely.",
+  expectedOutcome: "Sanitized URL generation and query parsing.",
+};
+
+Parse and construct standard URLs, query strings, protocols, and hostnames using the WHATWG URL API.
+
+```javascript
+const myUrl = new URL("https://api.example.com:8080/v1/products?category=electronics&sort=asc");
+
+console.log("Host:", myUrl.host);              // api.example.com:8080
+console.log("Path:", myUrl.pathname);          // /v1/products
+console.log("Sort Param:", myUrl.searchParams.get("sort")); // asc
+
+myUrl.searchParams.append("limit", "20");
+console.log("Modified:", myUrl.toString());
+```

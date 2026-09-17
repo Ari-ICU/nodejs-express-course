@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M07-02",
+  number: "02",
+  title: "Route Parameters & Query Parameters",
+  khmerTitle: "ប៉ារ៉ាម៉ែត្រ Route និង Query Parameters",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Route parameters are always returned as strings; convert to numbers or ObjectIds where appropriate.",
+  objective: "Design semantic URLs adhering to REST conventions.",
+  expectedOutcome: "Clean, intuitive URL structures for API consumers.",
+};
+
+Use route parameters (`/products/:id`) for specific resource identification; use query parameters (`?category=tech&page=2`) for filtering/paging.
+
+```javascript
+// GET /api/v1/courses/nodejs/lessons/07?view=compact
+app.get("/api/v1/courses/:courseSlug/lessons/:lessonNumber", (req, res) => {
+  const { courseSlug, lessonNumber } = req.params;
+  const { view } = req.query;
+  res.json({ course: courseSlug, lesson: Number(lessonNumber), viewMode: view || "full" });
+});
+```

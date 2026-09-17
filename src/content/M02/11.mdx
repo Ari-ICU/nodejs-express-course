@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M02-11",
+  number: "11",
+  title: "CommonJS",
+  khmerTitle: "ប្រព័ន្ធម៉ូឌុល CommonJS (require / module.exports)",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "CommonJS is synchronous and cannot easily tree-shake unused exports.",
+  objective: "Understand legacy CommonJS codebases and migration strategies.",
+  expectedOutcome: "Ability to read and maintain legacy Node.js code.",
+};
+
+The legacy Node.js module system using synchronous `require()` and `module.exports`.
+
+```javascript
+// math.js
+const add = (a, b) => a + b;
+module.exports = { add };
+
+// app.js
+const { add } = require("./math");
+console.log(add(5, 10)); // 15
+```

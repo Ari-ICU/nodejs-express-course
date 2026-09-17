@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M02-05",
+  number: "05",
+  title: "npm Scripts",
+  khmerTitle: "ការសរសេរ npm Scripts សម្រាប់ស្វ័យប្រវត្តិកម្ម",
+  type: "lab",
+  codeLanguage: "json",
+  tip: "Pre- and post-hooks run automatically before and after commands (e.g. `predev` runs before `npm run dev`).",
+  objective: "Create chaining workflow scripts for full dev pipelines.",
+  expectedOutcome: "Streamlined single-command project workflows.",
+};
+
+Automate builds, database migrations, linting, seedings, and test suites with custom npm scripts.
+
+```json
+"scripts": {
+  "predev": "npm run db:check",
+  "dev": "node --watch src/server.js",
+  "db:seed": "node scripts/seed.js",
+  "lint": "eslint src/",
+  "build": "tsc"
+}
+```

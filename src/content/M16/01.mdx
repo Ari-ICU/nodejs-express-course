@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M16-01",
+  number: "01",
+  title: "Password Hashing with bcrypt",
+  khmerTitle: "ការ Hash ពាក្យសម្ងាត់ជាមួយ bcrypt",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Never store plaintext passwords! A salt round of 10 to 12 provides the optimal balance between security and server latency.",
+  objective: "Safely hash and verify user passwords.",
+  expectedOutcome: "Zero plaintext credentials in database.",
+};
+
+One-way cryptographic hashing with automated salt generation to protect passwords against rainbow table attacks.
+
+```javascript
+import bcrypt from "bcryptjs";
+
+// Hashing with salt factor of 12 (computationally expensive to brute-force)
+const salt = await bcrypt.genSalt(12);
+const hashedPassword = await bcrypt.hash(rawPassword, salt);
+
+// Comparing on login
+const isMatch = await bcrypt.compare(submittedPassword, user.password);
+if (!isMatch) throw new AppError("Invalid email or password", 401);
+```

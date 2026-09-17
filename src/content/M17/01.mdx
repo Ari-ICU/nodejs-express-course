@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M17-01",
+  number: "01",
+  title: "Role-Based Access Control Middleware",
+  khmerTitle: "Middleware គ្រប់គ្រងសិទ្ធិតាម Role",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "401 means Unauthenticated (who are you?); 403 means Forbidden (I know who you are, but you cannot access this).",
+  objective: "Guard administrative routes using role-based assertions.",
+  expectedOutcome: "Strict role isolation across sensitive API endpoints.",
+};
+
+Restrict endpoint execution based on user roles (`admin`, `instructor`, `student`).
+
+```javascript
+export const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError("You do not have permission to perform this action", 403));
+    }
+    next();
+  };
+};
+
+// Protect route for Admins only:
+router.delete("/users/:id", authenticate, authorize("admin"), deleteUser);
+```

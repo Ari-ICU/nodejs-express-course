@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M18-01",
+  number: "01",
+  title: "Rate Limiting & NoSQL Injection Protection",
+  khmerTitle: "ការទប់ស្កាត់ Rate Limit និង NoSQL Injection",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Attackers can send `{\"password\": {\"$ne\": null}}` to bypass MongoDB password checks if input is unsanitized.",
+  objective: "Harden APIs against brute-force attacks and query injection.",
+  expectedOutcome: "Bulletproof defense against common automated bot attacks.",
+};
+
+Prevent brute-force attacks on login routes with `express-rate-limit` and sanitize MongoDB query objects with `express-mongo-sanitize`.
+
+```javascript
+import rateLimit from "express-rate-limit";
+import mongoSanitize from "express-mongo-sanitize";
+
+// Rate limit: Max 5 login attempts per 15 minutes per IP
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { success: false, message: "Too many login attempts. Please try again after 15 minutes." }
+});
+
+// Protect against NoSQL injection: strips out prohibited "$" and "." characters
+app.use(mongoSanitize());
+```

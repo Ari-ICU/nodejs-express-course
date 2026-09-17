@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M03-04",
+  number: "04",
+  title: "os Module",
+  khmerTitle: "ម៉ូឌុលព័ត៌មានប្រព័ន្ធប្រតិបត្តិការ os Module",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Cluster workers and PM2 instances are typically sized based on `os.cpus().length`.",
+  objective: "Extract machine resource specs for auto-scaling and clustering.",
+  expectedOutcome: "Resource-aware server application design.",
+};
+
+Inspect host hardware, CPU architecture, core counts, free memory, network interfaces, and system uptime.
+
+```javascript
+import os from "node:os";
+
+console.log("Platform:", os.platform());
+console.log("CPUs count:", os.cpus().length);
+console.log("Free Memory (MB):", Math.round(os.freemem() / 1024 / 1024));
+console.log("Total Memory (MB):", Math.round(os.totalmem() / 1024 / 1024));
+```

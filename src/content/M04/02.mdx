@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M04-02",
+  number: "02",
+  title: "Callbacks & Callback Problems",
+  khmerTitle: "Callbacks និងបញ្ហា 'Callback Hell'",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Modern Node code uses Promises and async/await; callbacks are legacy or low-level primitives.",
+  objective: "Identify callback pyramid anti-patterns and refactor them.",
+  expectedOutcome: "Refactoring callbacks to modern asynchronous syntax.",
+};
+
+Error-first callback conventions `(err, data) => {}` and why deeply nested callbacks cause unreadable, fragile code.
+
+```javascript
+// The dreaded Callback Pyramid of Doom:
+getUser(userId, (err, user) => {
+  if (err) return handleError(err);
+  getOrders(user.id, (err, orders) => {
+    if (err) return handleError(err);
+    getOrderDetails(orders[0].id, (err, details) => {
+      // Hard to read, hard to catch errors!
+    });
+  });
+});
+```

@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M21-01",
+  number: "01",
+  title: "Interactive Swagger UI Setup",
+  khmerTitle: "ការរៀបចំ Swagger UI សម្រាប់ Express",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "A well-documented Swagger UI allows frontend developers and QA engineers to test endpoints without bothering backend developers.",
+  objective: "Serve interactive API documentation at `/api/docs`.",
+  expectedOutcome: "Self-documenting, testable API interfaces.",
+};
+
+Generate interactive web documentation directly from JSDoc code comments using `swagger-jsdoc` and `swagger-ui-express`.
+
+```javascript
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: { title: "Course REST API", version: "1.0.0" },
+    servers: [{ url: "http://localhost:5000/api/v1" }]
+  },
+  apis: ["./src/routes/*.js"]
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+```

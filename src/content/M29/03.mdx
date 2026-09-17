@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M29-03",
+  number: "03",
+  title: "Project 03: Authentication API",
+  khmerTitle: "គម្រោងទី ៣ ៖ Authentication & Authorization API",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Store hashed reset tokens in MongoDB with a 10-minute expiration index (`{ expireAfterSeconds: 600 }`).",
+  objective: "Build a production auth microservice with refresh token rotation.",
+  expectedOutcome: "Battle-tested authentication service.",
+};
+
+Complete user auth system: bcrypt hashing, JWT access tokens, HttpOnly cookie refresh tokens, role-based access, and password resets.
+
+```javascript
+// Auth API Routes:
+// POST /api/v1/auth/register
+// POST /api/v1/auth/login
+// POST /api/v1/auth/refresh-token
+// POST /api/v1/auth/forgot-password
+// POST /api/v1/auth/reset-password
+// POST /api/v1/auth/logout
+```

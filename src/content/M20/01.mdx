@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M20-01",
+  number: "01",
+  title: "Transactional Email with Nodemailer",
+  khmerTitle: "ការផ្ញើ Email ជាមួយ Nodemailer និង HTML Templates",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Always send emails asynchronously through background queues so the HTTP request completes immediately without waiting 2 seconds for SMTP.",
+  objective: "Integrate SMTP transactional emails.",
+  expectedOutcome: "Automated account verification and password reset workflows.",
+};
+
+Send branded transactional emails (welcome messages, password reset links) via SMTP gateways like Resend or SendGrid.
+
+```javascript
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT),
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
+  }
+});
+
+export const sendResetPasswordEmail = async (email, resetUrl) => {
+  await transporter.sendMail({
+    from: '"NodePulse Security" <noreply@nodepulse.com>',
+    to: email,
+    subject: "Reset your password (valid for 10 minutes)",
+    html: `<p>Click here to reset: <a href="${resetUrl}">Reset Password</a></p>`
+  });
+};
+```

@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M04-03",
+  number: "03",
+  title: "Promises & async / await",
+  khmerTitle: "Promises និងការប្រើប្រាស់ async / await",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Use `Promise.all()` to run independent queries concurrently instead of awaiting them in sequential series.",
+  objective: "Write clean async/await code with parallel execution optimizations.",
+  expectedOutcome: "High-speed concurrent API route handlers.",
+};
+
+Representing future values with pending/fulfilled/rejected states, clean chaining, and linear async/await syntax.
+
+```javascript
+// Modern, linear, readable flow
+async function fetchCustomerDashboard(userId) {
+  try {
+    const user = await getUser(userId);
+    // Parallel fetching for high performance!
+    const [orders, notifications] = await Promise.all([
+      getOrders(user.id),
+      getNotifications(user.id)
+    ]);
+    return { user, orders, notifications };
+  } catch (error) {
+    console.error("Dashboard error:", error);
+    throw error;
+  }
+}
+```

@@ -1,0 +1,30 @@
+export const meta = {
+  id: "M02-03",
+  number: "03",
+  title: "package.json",
+  khmerTitle: "ឯកសារកំណត់រចនាសម្ព័ន្ធ package.json",
+  type: "concept",
+  codeLanguage: "json",
+  tip: "Always set `\"type\": \"module\"` to write modern ES Module syntax (`import`/`export`) natively.",
+  objective: "Craft a production-ready package.json configuration.",
+  expectedOutcome: "Correct configuration of entry points, scripts, and module types.",
+};
+
+The project manifest storing metadata, dependencies, scripts, engine compatibility, and module format.
+
+```json
+{
+  "name": "ecommerce-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
+```

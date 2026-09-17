@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M12-02",
+  number: "02",
+  title: "Mongoose Middleware & Population",
+  khmerTitle: "Mongoose Hooks (Pre/Post) និង Population",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Only select necessary fields in `populate('field', 'name avatar')` to avoid over-fetching database records.",
+  objective: "Implement automated lifecycle hooks and cross-collection joins.",
+  expectedOutcome: "Automated hashing and optimized database joins.",
+};
+
+Use `pre('save')` hooks to hash passwords, and `.populate()` to automatically join referenced documents.
+
+```javascript
+// Pre-save hook to hash passwords
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
+
+// Population: Joins User author into Post
+const post = await Post.findById(postId).populate("author", "name email avatar");
+```

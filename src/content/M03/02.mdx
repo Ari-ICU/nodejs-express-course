@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M03-02",
+  number: "02",
+  title: "fs Module",
+  khmerTitle: "ម៉ូឌុលគ្រប់គ្រងឯកសារ fs Module",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Always prefer `node:fs/promises` with `async/await` in modern asynchronous code.",
+  objective: "Perform non-blocking read/write disk operations.",
+  expectedOutcome: "Safe and fast file operations.",
+};
+
+File system operations with synchronous, callback, and modern promise-based flavors (`node:fs/promises`).
+
+```javascript
+import fs from "node:fs/promises";
+
+// Asynchronous promise-based file write and read
+await fs.writeFile("config.json", JSON.stringify({ theme: "dark" }));
+const content = await fs.readFile("config.json", "utf-8");
+console.log("Config read:", JSON.parse(content));
+```

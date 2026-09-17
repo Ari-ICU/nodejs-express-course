@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M04-04",
+  number: "04",
+  title: "Event Loop & Phases",
+  khmerTitle: "ដំណើរការ Libuv Event Loop និងដំណាក់កាលនីមួយៗ",
+  type: "architecture",
+  codeLanguage: "javascript",
+  tip: "`process.nextTick()` fires BEFORE the next event loop tick, even ahead of `Promise.then()`.",
+  objective: "Trace execution priority through the event loop.",
+  expectedOutcome: "Mastery of Node.js concurrency internals.",
+};
+
+The 6 phases of libuv event loop: Timers -> Pending I/O -> Idle/Prepare -> Poll -> Check -> Close callbacks.
+
+```javascript
+/* Libuv Event Loop Cycle:
+   1. Timers (setTimeout, setInterval)
+   2. Pending Callbacks (deferred OS I/O)
+   3. Idle / Prepare (internal)
+   4. Poll (retrieve new I/O events, sockets)
+   5. Check (setImmediate callbacks)
+   6. Close Callbacks (socket.on('close'))
+   
+   * Microtasks (process.nextTick, Promise) run between every phase!
+*/
+```

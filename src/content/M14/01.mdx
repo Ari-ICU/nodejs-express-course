@@ -1,0 +1,35 @@
+export const meta = {
+  id: "M14-01",
+  number: "01",
+  title: "Request Validation with Zod",
+  khmerTitle: "ការប្រើប្រាស់ Zod Schema Validation Middleware",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Validate data at the edge before touching your database to protect against invalid data, injection, and wasted CPU cycles.",
+  objective: "Build schema-driven validation middleware.",
+  expectedOutcome: "100% type-safe and validated endpoint inputs.",
+};
+
+Validate request bodies, params, and queries before your controller is even touched.
+
+```javascript
+import { z } from "zod";
+
+export const CreateUserSchema = z.object({
+  body: z.object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Invalid email format"),
+    password: z.string().min(8, "Password must be at least 8 characters")
+  })
+});
+
+// Middleware Factory
+export const validate = (schema) => (req, res, next) => {
+  try {
+    schema.parse({ body: req.body, query: req.query, params: req.params });
+    next();
+  } catch (err) {
+    return res.status(400).json({ success: false, errors: err.errors.map(e => e.message) });
+  }
+};
+```

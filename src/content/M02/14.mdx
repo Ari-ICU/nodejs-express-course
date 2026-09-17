@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M02-14",
+  number: "14",
+  title: ".env & dotenv",
+  khmerTitle: "ការគ្រប់គ្រង .env ជាមួយបណ្ណាល័យ dotenv",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Always commit a `.env.example` file showing required keys with dummy values so teammates know what to configure.",
+  objective: "Configure local secrets cleanly without leaking credentials.",
+  expectedOutcome: "Zero secrets checked into git repositories.",
+};
+
+Store secrets in `.env` files for local development, with a documented `.env.example` committed to git.
+
+```javascript
+# .env file
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/shopdb
+JWT_SECRET=super_secret_signing_key_9021
+NODE_ENV=development
+
+# In server.js (Node 20+ has native --env-file=.env flag!)
+# node --env-file=.env server.js
+# Or using dotenv:
+import "dotenv/config";
+```

@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M03-03",
+  number: "03",
+  title: "path Module",
+  khmerTitle: "ម៉ូឌុលផ្លូវឯកសារ path Module",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Never concatenate paths with string concatenation like `'uploads/' + file`; always use `path.join()` or `path.resolve()`.",
+  objective: "Build platform-independent path strings.",
+  expectedOutcome: "Code runs identically on Windows, macOS, and Linux.",
+};
+
+Cross-platform path resolution handling Windows backslashes (`\`) and POSIX forward slashes (`/`).
+
+```javascript
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Safe cross-platform path resolution
+const uploadDir = path.join(__dirname, "uploads", "images", "avatar.png");
+console.log("File extension:", path.extname(uploadDir)); // .png
+console.log("Base name:", path.basename(uploadDir));       // avatar.png
+```

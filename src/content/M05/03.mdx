@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M05-03",
+  number: "03",
+  title: "Handling Request Body & Streams",
+  khmerTitle: "ការទទួលទិន្នន័យ Request Body តាមរយៈ Data Chunks",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "This stream-gathering is why Express requires `express.json()` middleware.",
+  objective: "Understand how JSON bodies are streamed over TCP sockets.",
+  expectedOutcome: "Clarity on body parser mechanics.",
+};
+
+In raw Node.js, `req` is a readable stream. Data arrives in binary chunks that must be gathered and parsed.
+
+```javascript
+let body = "";
+
+req.on("data", (chunk) => {
+  body += chunk.toString();
+});
+
+req.on("end", () => {
+  try {
+    const parsedData = JSON.parse(body);
+    console.log("Received POST JSON:", parsedData);
+  } catch (err) {
+    res.writeHead(400);
+    res.end("Invalid JSON payload");
+  }
+});
+```

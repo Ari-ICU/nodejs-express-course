@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M03-10",
+  number: "10",
+  title: "Working with Files & Directories",
+  khmerTitle: "ការគ្រប់គ្រងឯកសារ និង Folders",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Pass `{ recursive: true }` to `mkdir` to create full directory trees without checking parent existence.",
+  objective: "Perform robust directory creation and recursive traversal.",
+  expectedOutcome: "Reliable local storage and upload folder management.",
+};
+
+Creating directories recursively, listing files, checking existence, and removing folders safely.
+
+```javascript
+import fs from "node:fs/promises";
+import path from "node:path";
+
+const targetDir = path.join(process.cwd(), "storage", "reports");
+
+// Create nested directories if they don't exist
+await fs.mkdir(targetDir, { recursive: true });
+
+// Read directory contents
+const files = await fs.readdir(targetDir);
+console.log("Directory contents:", files);
+```

@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M12-01",
+  number: "01",
+  title: "Schema & Model Definition",
+  khmerTitle: "ការបង្កើត Schema និង Model ជាមួយ Mongoose",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Always enable `{ timestamps: true }` in your schema options to track record creation and modification times.",
+  objective: "Construct validated Mongoose models.",
+  expectedOutcome: "Bulletproof data schemas with automated timestamps.",
+};
+
+Define strongly-typed document structures, validation rules, default values, and indexes.
+
+```javascript
+import mongoose, { Schema } from "mongoose";
+
+const productSchema = new Schema({
+  name: { type: String, required: [true, "Product name is required"], trim: true },
+  slug: { type: String, unique: true, lowercase: true },
+  price: { type: Number, required: true, min: [0, "Price cannot be negative"] },
+  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+  isFeatured: { type: Boolean, default: false }
+}, {
+  timestamps: true // Adds createdAt and updatedAt automatically!
+});
+
+export const Product = mongoose.model("Product", productSchema);
+```

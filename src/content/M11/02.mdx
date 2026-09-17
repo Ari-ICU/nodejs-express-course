@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M11-02",
+  number: "02",
+  title: "Embedded Documents vs References",
+  khmerTitle: "ការបង្កប់ឯកសារ (Embedding) vs ការយោង (Referencing)",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Avoid MongoDB 16MB document size limit by referencing collections when data can grow indefinitely.",
+  objective: "Choose between embedding and referencing with confidence.",
+  expectedOutcome: "High-performance database schema architecture.",
+};
+
+One-to-Few relationships benefit from embedding; One-to-Many or Many-to-Many relationships require ObjectId references.
+
+```javascript
+// 1. EMBEDDED: Order Items (never queried without their parent Order)
+{
+  orderNumber: "ORD-991",
+  items: [{ productId: "...", qty: 2, price: 49.99 }]
+}
+
+// 2. REFERENCED: User Posts (a user may write 100,000 posts)
+{
+  title: "Building Microservices",
+  author: ObjectId("65f1a2b3c4d5e6f7a8b9c0d1") // Reference to User collection
+}
+```

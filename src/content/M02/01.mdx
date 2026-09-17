@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M02-01",
+  number: "01",
+  title: "Running JavaScript with Node.js",
+  khmerTitle: "ការដំណើរការ JavaScript ជាមួយ Node.js",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Node 18+ has built-in `--watch` flag, eliminating the need for `nodemon` in simple projects.",
+  objective: "Execute and live-reload JavaScript server scripts.",
+  expectedOutcome: "Fast feedback loop during local development.",
+};
+
+Execute scripts directly using `node <filename>` or with the experimental watch mode `node --watch`.
+
+```javascript
+// index.js
+const serverName = "NodePulse Core";
+console.log(`[SERVER] ${serverName} initialized at ${new Date().toISOString()}`);
+
+// Terminal:
+// node index.js
+// node --watch index.js (auto-reloads on file save!)
+```

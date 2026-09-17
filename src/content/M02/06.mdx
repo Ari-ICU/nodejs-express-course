@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M02-06",
+  number: "06",
+  title: "Installing Packages",
+  khmerTitle: "ការដំឡើងកញ្ចប់បណ្ណាល័យ (Packages)",
+  type: "lab",
+  codeLanguage: "bash",
+  tip: "Avoid installing libraries globally (`-g`) whenever possible to prevent machine-level version conflicts.",
+  objective: "Correctly categorize dependencies into runtime vs dev.",
+  expectedOutcome: "Lean production deployment images.",
+};
+
+Installing runtime packages versus development tools with appropriate semantic versioning.
+
+```bash
+# Install runtime dependency
+npm install express dotenv cors
+
+# Install dev dependency
+npm install -D nodemon vitest @types/node
+
+# Install global CLI tool
+npm install -g pm2
+```

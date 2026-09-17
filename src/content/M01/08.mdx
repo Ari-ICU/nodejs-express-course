@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M01-08",
+  number: "08",
+  title: "Event-driven Architecture",
+  khmerTitle: "ស្ថាបត្យកម្មជំរុញដោយព្រឹត្តិការណ៍ (Event-driven)",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Event emitters decouple modules, making code cleanly extendable.",
+  objective: "Implement a decoupled event publisher and subscriber.",
+  expectedOutcome: "Clean modular architecture using event listeners.",
+};
+
+Systems react to events emitted by subjects, invoking registered callback handlers asynchronously.
+
+```javascript
+import EventEmitter from "node:events";
+
+const serverEmitter = new EventEmitter();
+
+// Listener
+serverEmitter.on("orderPlaced", (order) => {
+  console.log("Dispatching email for order #", order.id);
+});
+
+// Trigger
+serverEmitter.emit("orderPlaced", { id: "ORD-9021", total: 49.99 });
+```

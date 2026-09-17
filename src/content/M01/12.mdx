@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M01-12",
+  number: "12",
+  title: "Node.js Project Structure",
+  khmerTitle: "រចនាសម្ព័ន្ធ Folder គម្រោង Node.js",
+  type: "architecture",
+  codeLanguage: "bash",
+  tip: "Keep `app.js` (Express configuration) separate from `server.js` (listening on port) for easy testability with Supertest.",
+  objective: "Structure a modular, enterprise-grade backend directory.",
+  expectedOutcome: "Scalable codebase ready for multi-developer collaboration.",
+};
+
+Standard repository layout with src, config, routes, controllers, services, middleware, and tests.
+
+```bash
+my-backend-app/
+├── package.json
+├── package-lock.json
+├── .env.example
+├── .gitignore
+├── src/
+│   ├── config/        # DB, env, redis configurations
+│   ├── controllers/   # Request/response mapping
+│   ├── services/      # Business logic & db queries
+│   ├── models/        # Mongoose/Prisma schemas
+│   ├── routes/        # API endpoint definitions
+│   ├── middleware/    # Auth, validation, error handler
+│   ├── utils/         # Helpers & logger
+│   └── app.js         # Express app initialization
+└── server.js          # Entrypoint (port listen)
+```

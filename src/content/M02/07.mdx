@@ -1,0 +1,24 @@
+export const meta = {
+  id: "M02-07",
+  number: "07",
+  title: "Dependencies",
+  khmerTitle: "ការពឹងផ្អែកចាំបាច់ (Dependencies)",
+  type: "concept",
+  codeLanguage: "json",
+  tip: "The caret `^` allows non-breaking minor and patch upgrades; tilde `~` allows only patch upgrades.",
+  objective: "Understand semantic versioning (SemVer: MAJOR.MINOR.PATCH).",
+  expectedOutcome: "Avoid unexpected breaking changes during builds.",
+};
+
+Packages required for the application to function in production (e.g., Express, Mongoose, bcrypt, jsonwebtoken).
+
+```json
+"dependencies": {
+  "bcryptjs": "^2.4.3",
+  "cors": "^2.8.5",
+  "dotenv": "^16.4.5",
+  "express": "^4.19.2",
+  "jsonwebtoken": "^9.0.2",
+  "mongoose": "^8.3.0"
+}
+```

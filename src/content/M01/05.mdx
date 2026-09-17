@@ -1,0 +1,23 @@
+export const meta = {
+  id: "M01-05",
+  number: "05",
+  title: "Why Node.js?",
+  khmerTitle: "ហេតុអ្វីត្រូវជ្រើសរើស Node.js?",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Node.js excels at I/O-intensive workloads like REST APIs, chat servers, streaming, and microservices.",
+  objective: "Evaluate when to choose Node.js over multi-threaded runtimes like Java or Go.",
+  expectedOutcome: "Strategic justification for Node.js in high-concurrency systems.",
+};
+
+Unified full-stack language (JS everywhere), massive npm ecosystem, high I/O throughput, and fast prototyping.
+
+```javascript
+// Unified Full-Stack: Share validation schemas between frontend and backend
+import { z } from "zod";
+
+export const UserSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+}); // Can be imported in React and Express!
+```

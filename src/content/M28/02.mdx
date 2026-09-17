@@ -1,0 +1,39 @@
+export const meta = {
+  id: "M28-02",
+  number: "02",
+  title: "Nginx Reverse Proxy & SSL Configuration",
+  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Nginx Reverse Proxy និង SSL",
+  type: "lab",
+  codeLanguage: "bash",
+  tip: "Nginx handles SSL termination and static file serving much faster than Node.js, freeing CPU cycles for business logic.",
+  objective: "Configure a production reverse proxy with automated SSL certificate renewal.",
+  expectedOutcome: "Secure HTTPS endpoint with load balancing capability.",
+};
+
+Route incoming public traffic on port 80/443 through Nginx to internal Node.js cluster processes with gzip and rate limiting.
+
+```bash
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name api.yourdomain.com;
+
+    ssl_certificate /etc/letsencrypt/live/api.yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.yourdomain.com/privkey.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```

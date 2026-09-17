@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M19-01",
+  number: "01",
+  title: "File Upload with Multer & Cloudflare R2",
+  khmerTitle: "ការ Upload រូបភាពជាមួយ Multer និង Cloudflare R2",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Never store user uploads on local container disks in production; container rebuilds will erase the files. Use S3 or Cloudflare R2.",
+  objective: "Build cloud-ready multipart file upload pipelines.",
+  expectedOutcome: "Scalable object storage integration.",
+};
+
+Accept image files, validate MIME types and sizes, generate unique file keys, and upload to S3-compatible cloud buckets.
+
+```javascript
+import multer from "multer";
+
+const storage = multer.memoryStorage(); // Keep in memory to stream directly to S3/R2
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Only image files are allowed!", 400), false);
+  }
+};
+
+export const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter
+});
+
+// Route:
+router.post("/avatar", authenticate, upload.single("avatar"), uploadAvatarController);
+```

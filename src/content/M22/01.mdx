@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M22-01",
+  number: "01",
+  title: "Integration Testing with Vitest & Supertest",
+  khmerTitle: "ការធ្វើតេស្ត Integration ជាមួយ Vitest និង Supertest",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Export your Express `app` without `app.listen()` so `supertest(app)` can execute tests instantly in memory.",
+  objective: "Write automated integration test suites for endpoints.",
+  expectedOutcome: "High code confidence and regression prevention.",
+};
+
+Spin up memory test databases and execute real HTTP assertions against your Express app without opening a real port.
+
+```javascript
+import request from "supertest";
+import { describe, it, expect } from "vitest";
+import app from "../src/app.js";
+
+describe("POST /api/v1/todos", () => {
+  it("should create a new todo and return 201 Created", async () => {
+    const res = await request(app)
+      .post("/api/v1/todos")
+      .send({ title: "Learn Vitest", completed: false });
+
+    expect(res.status).toBe(201);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.title).toBe("Learn Vitest");
+  });
+});
+```

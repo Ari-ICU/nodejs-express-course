@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M01-03",
+  number: "03",
+  title: "Client-Server Architecture",
+  khmerTitle: "ស្ថាបត្យកម្ម Client-Server",
+  type: "architecture",
+  codeLanguage: "javascript",
+  tip: "Statelessness is key: each HTTP request must carry all the metadata needed to fulfill it.",
+  objective: "Trace the path of an HTTP packet from user tap to database query and back.",
+  expectedOutcome: "Understanding the role of proxies, application servers, and persistence layers.",
+};
+
+The fundamental distributed system model where clients initiate requests and centralized servers process and respond.
+
+```javascript
+/* Client-Server Communication Flow:
+   [Mobile App / React App] 
+            │ (HTTP Request / HTTPS)
+            ▼
+   [Reverse Proxy (Nginx)]
+            │
+            ▼
+   [Node.js Server (Express)]
+            │
+      ┌─────┴─────┐
+      ▼           ▼
+   [MongoDB]   [Redis Cache]
+*/
+```

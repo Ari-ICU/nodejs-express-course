@@ -1,0 +1,38 @@
+export const meta = {
+  id: "M15-01",
+  number: "01",
+  title: "Custom AppError & Centralized Error Middleware",
+  khmerTitle: "Custom AppError Class និង Error Middleware កណ្តាល",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Never leak the raw stack trace (`err.stack`) in production environments; it exposes file paths and internal logic to attackers.",
+  objective: "Implement a clean centralized error management system.",
+  expectedOutcome: "Zero server crashes from unhandled errors.",
+};
+
+Eliminate repetitive try/catch blocks with an async wrapper and centralized error handling middleware.
+
+```javascript
+// utils/AppError.js
+export class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.isOperational = true; // Distinguishes bugs from operational errors
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+// middleware/error.middleware.js (must have 4 arguments!)
+export const errorHandler = (err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+
+  res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack })
+  });
+};
+```

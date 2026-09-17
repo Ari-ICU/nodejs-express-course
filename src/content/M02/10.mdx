@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M02-10",
+  number: "10",
+  title: "package-lock.json",
+  khmerTitle: "សារៈសំខាន់នៃ package-lock.json",
+  type: "concept",
+  codeLanguage: "bash",
+  tip: "Always commit `package-lock.json` into version control and use `npm ci` in CI/CD pipelines.",
+  objective: "Prevent 'works on my machine' dependency version discrepancies.",
+  expectedOutcome: "Reproducible builds across local and cloud environments.",
+};
+
+Locks the exact dependency tree down to the specific commit/checksum, ensuring identical installs on all machines.
+
+```bash
+# Install exact locked versions (best for CI/CD)
+npm ci
+
+# Regular install (might update versions within SemVer range)
+npm install
+```

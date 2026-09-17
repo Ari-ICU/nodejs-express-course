@@ -1,0 +1,36 @@
+export const meta = {
+  id: "M25-01",
+  number: "01",
+  title: "Redis Response Caching Middleware",
+  khmerTitle: "ការប្រើប្រាស់ Redis Caching ដើម្បីកាត់បន្ថយបន្ទុក Database",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Remember to invalidate cache keys when mutating data (e.g. clear `cache:/api/v1/products*` when a new product is added).",
+  objective: "Accelerate read endpoints by up to 100x using Redis caching.",
+  expectedOutcome: "Sub-5ms response times under heavy concurrent loads.",
+};
+
+Cache expensive database query responses in in-memory Redis keys with automated TTL expiration.
+
+```javascript
+import { createClient } from "redis";
+const redisClient = createClient({ url: process.env.REDIS_URL });
+await redisClient.connect();
+
+export const cache = (ttlSeconds = 300) => async (req, res, next) => {
+  const key = `cache:${req.originalUrl}`;
+  const cachedData = await redisClient.get(key);
+
+  if (cachedData) {
+    return res.json(JSON.parse(cachedData)); // Returns in 2ms instead of 150ms DB query!
+  }
+
+  // Intercept res.json to cache response
+  const originalJson = res.json.bind(res);
+  res.json = (body) => {
+    redisClient.setEx(key, ttlSeconds, JSON.stringify(body));
+    return originalJson(body);
+  };
+  next();
+};
+```

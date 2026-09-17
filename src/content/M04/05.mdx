@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M04-05",
+  number: "05",
+  title: "Microtasks & Timers",
+  khmerTitle: "ជួរការងារ Microtasks (Promises) និង Timers",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "`process.nextTick` has the highest priority and drains completely before the event loop advances.",
+  objective: "Demonstrate and predict microtask queue draining behavior.",
+  expectedOutcome: "Zero race conditions in asynchronous initialization.",
+};
+
+Understanding the difference between macrotasks (`setTimeout`, `setImmediate`) and microtasks (`Promise.then`, `nextTick`).
+
+```javascript
+console.log("1. Synchronous");
+
+setTimeout(() => console.log("4. Timer Macrotask"), 0);
+setImmediate(() => console.log("5. Immediate Macrotask"));
+
+Promise.resolve().then(() => console.log("3. Promise Microtask"));
+process.nextTick(() => console.log("2. NextTick Microtask"));
+
+// Output: 1 -> 2 -> 3 -> 4 -> 5
+```

@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M05-02",
+  number: "02",
+  title: "Creating Native HTTP Server",
+  khmerTitle: "ការបង្កើត HTTP Server តាមរយៈ Native 'node:http'",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Express is simply a lightweight wrapper around this exact `http.createServer()` mechanism.",
+  objective: "Implement a barebones router and JSON responder in pure Node.",
+  expectedOutcome: "Deep appreciation for Express.js convenience and middleware.",
+};
+
+Build an HTTP server using `node:http` to understand what Express abstracts away under the hood.
+
+```javascript
+import http from "node:http";
+
+const server = http.createServer((req, res) => {
+  const { method, url } = req;
+  
+  if (url === "/api/health" && method === "GET") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ status: "healthy", uptime: process.uptime() }));
+  }
+
+  res.writeHead(404, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ error: "Route not found" }));
+});
+
+server.listen(4000, () => console.log("Server listening on port 4000"));
+```

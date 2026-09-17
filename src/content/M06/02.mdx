@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M06-02",
+  number: "02",
+  title: "Request & Response Objects",
+  khmerTitle: "វត្ថុ Request (req) និង Response (res)",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Always return `res.json()` or `res.end()` to prevent the client's HTTP request from hanging until timeout.",
+  objective: "Extract parameters, query arguments, and body data with type safety.",
+  expectedOutcome: "Complete mastery of request inspection and response construction.",
+};
+
+Mastering `req.params`, `req.query`, `req.body`, `req.headers`, and `res.status()`, `res.json()`, `res.send()`, `res.set()`.
+
+```javascript
+app.post("/api/users/:role", (req, res) => {
+  const { role } = req.params;          // Route parameter
+  const { notify } = req.query;          // Query parameter ?notify=true
+  const { name, email } = req.body;     // Parsed JSON body
+  const authToken = req.headers.authorization; // Header
+
+  res.status(201).json({
+    success: true,
+    user: { name, email, role },
+    notified: notify === "true"
+  });
+});
+```

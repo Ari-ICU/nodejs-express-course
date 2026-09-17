@@ -20,6 +20,7 @@ import {
 import { COURSE_MODULES, CourseModule, LessonTopic } from "@/data/curriculum";
 import { CodeBlock } from "@/components/ui/code-block";
 import { MdxContent } from "@/components/ui/mdx-content";
+import { useMdxContent } from "@/hooks/useMdxContent";
 import { SlideNavOverlay } from "./slide-nav-overlay";
 import { FieldNotes } from "./field-notes";
 import { DeploymentAnim } from "./deployment-anim";
@@ -162,6 +163,13 @@ export const SlideView: React.FC<SlideViewProps> = ({
 
   const isCompleted = progressData.completedTopics.includes(activeTopic.id);
   const isBookmarked = progressData.bookmarks.includes(activeTopic.id);
+
+  // Load the MDX content for the current slide
+  const topicNum = String(safeSlideIndex + 1).padStart(2, "0");
+  const { Content: MdxSlideContent, loading: mdxLoading } = useMdxContent(
+    currentModuleId,
+    topicNum
+  );
 
   // Fullscreen toggle
   const toggleFullscreenMode = () => {
@@ -320,12 +328,31 @@ export const SlideView: React.FC<SlideViewProps> = ({
               <MiddlewarePipeline />
             ) : activeModule.id === "M04" && safeSlideIndex === 3 ? (
               <EventLoopVisualizer />
+            ) : MdxSlideContent && !mdxLoading ? (
+              /* ── MDX rendered content (summary prose + Shiki code block) ── */
+              <div className="mdx-slide-content rounded-2xl border border-slate-700/60 bg-[#0d1117] overflow-hidden shadow-lg">
+                {/* Filename bar */}
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-[#161b22] border-b border-slate-700/60">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                  </div>
+                  <span className="font-mono text-slate-300 text-xs font-medium ml-1">
+                    {activeModule.id.toLowerCase()}-topic-{activeTopic.number}.{activeTopic.codeLanguage === "bash" ? "sh" : activeTopic.codeLanguage || "js"}
+                  </span>
+                </div>
+                <div className="mdx-slide-body">
+                  <MdxSlideContent />
+                </div>
+              </div>
             ) : (
+              /* ── Fallback: static CodeBlock while MDX loads ── */
               <div className="space-y-4">
                 <CodeBlock
                   code={activeTopic.codeSnippet}
                   language={activeTopic.codeLanguage || "javascript"}
-                  filename={`${activeModule.id.toLowerCase()}-topic-${activeTopic.number}.js`}
+                  filename={`${activeModule.id.toLowerCase()}-topic-${activeTopic.number}.${activeTopic.codeLanguage === "bash" ? "sh" : "js"}`}
                 />
               </div>
             )}

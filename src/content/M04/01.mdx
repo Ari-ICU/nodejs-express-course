@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M04-01",
+  number: "01",
+  title: "Synchronous vs Asynchronous",
+  khmerTitle: "ការប្រៀបធៀប Synchronous និង Asynchronous",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "A single synchronous call in an Express handler freezes the entire server for ALL connected clients.",
+  objective: "Distinguish blocking from non-blocking execution models.",
+  expectedOutcome: "Elimination of accidental blocking calls.",
+};
+
+Synchronous code halts thread execution until finished; Asynchronous code delegates work and continues execution.
+
+```javascript
+// Synchronous (Blocks the entire server!)
+const data = fs.readFileSync("heavy.txt");
+
+// Asynchronous (Server continues serving 10,000 other users)
+const data = await fs.readFile("heavy.txt");
+```

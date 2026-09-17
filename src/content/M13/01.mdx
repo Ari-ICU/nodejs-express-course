@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M13-01",
+  number: "01",
+  title: "Full CRUD API Implementation",
+  khmerTitle: "ការអនុវត្ត CRUD API ពេញលេញ",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Always run `find()` and `countDocuments()` concurrently with `Promise.all()` to halve your response latency.",
+  objective: "Write enterprise-grade query pipelines with search and pagination.",
+  expectedOutcome: "Scalable list endpoints capable of filtering thousands of records.",
+};
+
+Create, Read with filtering/search/pagination, Update, and Delete with proper HTTP status codes and error handling.
+
+```javascript
+export const getProducts = async (req, res) => {
+  const { search, category, sort = "-createdAt", page = 1, limit = 10 } = req.query;
+  const filter = {};
+  
+  if (search) filter.name = { $regex: search, $options: "i" };
+  if (category) filter.category = category;
+
+  const skip = (Number(page) - 1) * Number(limit);
+
+  const [products, total] = await Promise.all([
+    Product.find(filter).sort(sort).skip(skip).limit(Number(limit)),
+    Product.countDocuments(filter)
+  ]);
+
+  res.json({ success: true, meta: { total, page: Number(page), pages: Math.ceil(total / limit) }, data: products });
+};
+```

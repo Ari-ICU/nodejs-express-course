@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M01-02",
+  number: "02",
+  title: "Frontend vs Backend",
+  khmerTitle: "ភាពខុសគ្នារវាង Frontend និង Backend",
+  type: "concept",
+  codeLanguage: "javascript",
+  tip: "Never store secrets, passwords, or database credentials on the Frontend.",
+  objective: "Differentiate client execution boundaries from server execution boundaries.",
+  expectedOutcome: "Confident identification of which tasks belong to server vs client.",
+};
+
+Frontend runs inside the client browser (HTML, CSS, React), while Backend runs in protected server environments (Node.js, databases).
+
+```javascript
+// FRONTEND (Browser):
+// Fetches data, manages UI state, triggers visual renders
+const res = await fetch("/api/v1/products");
+const products = await res.json();
+
+// BACKEND (Node.js Server):
+// Validates token, queries MongoDB, hides secret API keys
+app.get("/api/v1/products", verifyToken, async (req, res) => {
+  const products = await Product.find({ published: true });
+  res.json({ success: true, data: products });
+});
+```

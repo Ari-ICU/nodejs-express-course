@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M26-01",
+  number: "01",
+  title: "BullMQ Job Queues & Workers",
+  khmerTitle: "ការប្រើប្រាស់ BullMQ សម្រាប់ Email Queue & Heavy Processing",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Queue backoffs ensure that temporary SMTP network hiccups automatically retry without dropping user emails.",
+  objective: "Separate HTTP API response time from heavy processing tasks.",
+  expectedOutcome: "Ultra-responsive API that never blocks on external services.",
+};
+
+Offload slow tasks (image resizing, video encoding, email broadcasts) to a separate background worker queue.
+
+```javascript
+import { Queue, Worker } from "bullmq";
+
+const connection = { host: "127.0.0.1", port: 6379 };
+
+// 1. PRODUCER (in Express Route - responds in 5ms!):
+export const emailQueue = new Queue("emailQueue", { connection });
+await emailQueue.add("sendWelcome", { email: "student@example.com", name: "Dara" }, {
+  attempts: 3,
+  backoff: { type: "exponential", delay: 2000 }
+});
+
+// 2. WORKER (Runs in background process):
+const worker = new Worker("emailQueue", async (job) => {
+  console.log("Processing background job:", job.name);
+  await sendActualEmail(job.data.email);
+}, { connection });
+```

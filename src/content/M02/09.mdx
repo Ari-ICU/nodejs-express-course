@@ -1,0 +1,21 @@
+export const meta = {
+  id: "M02-09",
+  number: "09",
+  title: "node_modules",
+  khmerTitle: "ថតផ្ទុកកូដ node_modules",
+  type: "concept",
+  codeLanguage: "bash",
+  tip: "NEVER commit `node_modules` to Git! Always list it in `.gitignore`.",
+  objective: "Understand node_modules resolution and git discipline.",
+  expectedOutcome: "Clean Git repositories without multi-gigabyte bloat.",
+};
+
+The directory where npm stores all downloaded third-party code and transitive dependencies.
+
+```bash
+# .gitignore
+node_modules/
+.env
+dist/
+coverage/
+```

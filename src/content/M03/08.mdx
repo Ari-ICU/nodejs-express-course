@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M03-08",
+  number: "08",
+  title: "stream Module",
+  khmerTitle: "ម៉ូឌុល Stream សម្រាប់ទិន្នន័យធំៗ",
+  type: "architecture",
+  codeLanguage: "javascript",
+  tip: "Streams prevent out-of-memory crashes when handling large file uploads or CSV exports.",
+  objective: "Pipe large file streams using modern `pipeline()` promise.",
+  expectedOutcome: "High-memory efficiency for multi-gigabyte data transfer.",
+};
+
+Process massive datasets chunk-by-chunk without loading the entire file into RAM (Readable, Writable, Transform).
+
+```javascript
+import fs from "node:fs";
+import { pipeline } from "node:stream/promises";
+import zlib from "node:zlib";
+
+// Compress a 5GB file using streams with constant ~20MB RAM usage!
+await pipeline(
+  fs.createReadStream("huge-log.txt"),
+  zlib.createGzip(),
+  fs.createWriteStream("huge-log.txt.gz")
+);
+console.log("Stream pipeline completed!");
+```

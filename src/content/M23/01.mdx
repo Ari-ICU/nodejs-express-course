@@ -1,0 +1,25 @@
+export const meta = {
+  id: "M23-01",
+  number: "01",
+  title: "Postman Collections & Auto-Token Injection",
+  khmerTitle: "ការប្រើប្រាស់ Postman Collection និង Script ចាប់ Token",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Export your Postman collections to your Git repository so the whole engineering team shares the exact same test suites.",
+  objective: "Create synchronized team API collections with test assertions.",
+  expectedOutcome: "Rapid debugging and zero manual token copy-pasting.",
+};
+
+Automatically save JWT tokens into Postman environment variables upon login for seamless authenticated requests.
+
+```javascript
+// Postman Tests Tab (Runs automatically after Login request):
+const response = pm.response.json();
+if (response.accessToken) {
+  pm.environment.set("jwt_token", response.accessToken);
+  console.log("Token automatically saved to environment!");
+}
+
+// In subsequent requests Headers:
+// Authorization: Bearer {{jwt_token}}
+```

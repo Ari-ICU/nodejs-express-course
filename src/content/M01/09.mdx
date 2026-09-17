@@ -1,0 +1,27 @@
+export const meta = {
+  id: "M01-09",
+  number: "09",
+  title: "Non-blocking I/O",
+  khmerTitle: "ប្រតិបត្តិការមិនរាំងស្ទះ (Non-blocking I/O)",
+  type: "lab",
+  codeLanguage: "javascript",
+  tip: "Never use sync methods like `fs.readFileSync` in production Express route handlers.",
+  objective: "Observe execution order in asynchronous non-blocking calls.",
+  expectedOutcome: "Predicting console output order accurately for non-blocking I/O.",
+};
+
+I/O operations (network, disk) return immediately without waiting, invoking callbacks or resolving promises when done.
+
+```javascript
+import fs from "node:fs";
+
+console.log("1. Starting read...");
+
+// Non-blocking asynchronous readFile
+fs.readFile("large-file.txt", "utf-8", (err, data) => {
+  if (err) return console.error(err);
+  console.log("3. File read complete! Size:", data.length);
+});
+
+console.log("2. Continuing other work immediately!");
+```

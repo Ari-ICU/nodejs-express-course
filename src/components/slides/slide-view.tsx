@@ -28,6 +28,8 @@ import { DeploymentAnim } from "./deployment-anim";
 import { MiddlewarePipeline } from "@/components/visualizers/middleware-pipeline";
 import { EventLoopVisualizer } from "@/components/visualizers/event-loop-visualizer";
 import { ClientServerDiagram } from "@/components/visualizers/client-server-diagram";
+import { ThreadArchitectureDiagram } from "@/components/visualizers/thread-architecture-diagram";
+import { EventDrivenVisualizer } from "@/components/visualizers/event-driven-visualizer";
 import { getAssetUrl } from "@/lib/utils";
 import {
   getStoredProgress,
@@ -362,6 +364,10 @@ export const SlideView: React.FC<SlideViewProps> = ({
               <EventLoopVisualizer />
             ) : activeModule.id === "M01" && safeSlideIndex === 2 ? (
               <ClientServerDiagram />
+            ) : activeTopic.id === "M01-07" || (activeModule.id === "M01" && safeSlideIndex === 6) ? (
+              <ThreadArchitectureDiagram />
+            ) : activeTopic.id === "M01-08" || (activeModule.id === "M01" && safeSlideIndex === 7) ? (
+              <EventDrivenVisualizer />
             ) : (
               <div className="space-y-4">
                 <CodeBlock

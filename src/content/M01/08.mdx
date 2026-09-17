@@ -9,24 +9,31 @@ export const meta = {
   tip: "Decoupling components using event emitters prevents tight coupling between data producers and consumers.",
   objective: "Master the mechanics of event-driven programming and publisher-subscriber patterns.",
   expectedOutcome: "Ability to structure backend logic reactively around events.",
-  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst orderEmitter = new EventEmitter();\n\n// Listener 1: Send confirmation email\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`Sending invoice email for order #${order.id}`);\n});\n\n// Listener 2: Update warehouse inventory\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`Deducting item ${order.item} from inventory`);\n});\n\n// Trigger event\norderEmitter.emit(\"order:placed\", { id: 9812, item: \"MacBook Pro\" });",
+  codeSnippet: "import { EventEmitter } from \"node:events\";\n\n// Central Domain Event Bus\nconst orderEmitter = new EventEmitter();\n\n// Subscriber 1: Notification Service\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`📧 [Email] Confirmation sent to customer for order #${order.id}`);\n});\n\n// Subscriber 2: Inventory & Warehouse\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`📦 [Warehouse] SKU reserved for item \"${order.item}\"`);\n});\n\n// Subscriber 3: Analytics & Revenue Telemetry\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`📊 [Analytics] Conversion recorded: $${order.price}`);\n});\n\n// Producer: Dispatches event without waiting or coupling to consumers\norderEmitter.emit(\"order:placed\", { id: 9812, item: \"MacBook Pro\", price: 2499 });",
 };
 
 ```javascript
 import { EventEmitter } from "node:events";
 
+// Central Domain Event Bus
 const orderEmitter = new EventEmitter();
 
-// Listener 1: Send confirmation email
+// Subscriber 1: Notification Service
 orderEmitter.on("order:placed", (order) => {
-  console.log(`Sending invoice email for order #${order.id}`);
+  console.log(`📧 [Email] Confirmation sent to customer for order #${order.id}`);
 });
 
-// Listener 2: Update warehouse inventory
+// Subscriber 2: Inventory & Warehouse
 orderEmitter.on("order:placed", (order) => {
-  console.log(`Deducting item ${order.item} from inventory`);
+  console.log(`📦 [Warehouse] SKU reserved for item "${order.item}"`);
 });
 
-// Trigger event
-orderEmitter.emit("order:placed", { id: 9812, item: "MacBook Pro" });
+// Subscriber 3: Analytics & Revenue Telemetry
+orderEmitter.on("order:placed", (order) => {
+  console.log(`📊 [Analytics] Conversion recorded: $${order.price}`);
+});
+
+// Producer: Dispatches event without waiting or coupling to consumers
+orderEmitter.emit("order:placed", { id: 9812, item: "MacBook Pro", price: 2499 });
 ```
+

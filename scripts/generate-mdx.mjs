@@ -49,12 +49,11 @@ function generateMdx(module, topic) {
   type: "${topic.type}",
   codeLanguage: "${lang}",
   summary: ${JSON.stringify(summary)},
+  codeSnippet: ${JSON.stringify(safeCode)},
   tip: ${JSON.stringify(tip)},
   objective: ${JSON.stringify(objective)},
   expectedOutcome: ${JSON.stringify(expectedOutcome)},
 };
-
-${summary}
 
 \`\`\`${lang}
 ${safeCode}

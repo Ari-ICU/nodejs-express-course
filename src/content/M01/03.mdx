@@ -9,21 +9,26 @@ export const meta = {
   tip: "Statelessness is key in modern REST: each HTTP request must carry all authentication metadata necessary to fulfill it independently.",
   objective: "Trace the path of an HTTP packet from client interaction to database query and response.",
   expectedOutcome: "Deep comprehension of reverse proxies, application servers, and persistence layers.",
-  codeSnippet: "/* Client-Server Communication Flow:\n   [Mobile App / React App] \n            │ (HTTP Request / HTTPS)\n            ▼\n   [Reverse Proxy (Nginx)]\n            │\n            ▼\n   [Node.js Server (Express)]\n            │\n      ┌─────┴─────┐\n      ▼           ▼\n   [MongoDB]   [Redis Cache]\n*/",
+  codeSnippet: "// CLIENT (Browser / React App)\nconst response = await fetch(\"https://api.myapp.com/products\", {\n  method: \"GET\",\n  headers: { Authorization: `Bearer ${token}` },\n});\nconst data = await response.json();\n\n// ─── HTTP travels over TCP/IP → Nginx → Node.js ───\n\n// SERVER (Node.js + Express)\napp.get(\"/products\", verifyToken, async (req, res) => {\n  const cached = await redis.get(\"products\");\n  if (cached) return res.json(JSON.parse(cached));\n\n  const products = await Product.find({ active: true }); // MongoDB\n  await redis.setEx(\"products\", 60, JSON.stringify(products));\n  res.json({ success: true, data: products });\n});",
 };
 
 ```javascript
-/* Client-Server Communication Flow:
-   [Mobile App / React App] 
-            │ (HTTP Request / HTTPS)
-            ▼
-   [Reverse Proxy (Nginx)]
-            │
-            ▼
-   [Node.js Server (Express)]
-            │
-      ┌─────┴─────┐
-      ▼           ▼
-   [MongoDB]   [Redis Cache]
-*/
+// CLIENT (Browser / React App)
+const response = await fetch("https://api.myapp.com/products", {
+  method: "GET",
+  headers: { Authorization: `Bearer ${token}` },
+});
+const data = await response.json();
+
+// ─── HTTP travels over TCP/IP → Nginx → Node.js ───
+
+// SERVER (Node.js + Express)
+app.get("/products", verifyToken, async (req, res) => {
+  const cached = await redis.get("products");
+  if (cached) return res.json(JSON.parse(cached));
+
+  const products = await Product.find({ active: true }); // MongoDB
+  await redis.setEx("products", 60, JSON.stringify(products));
+  res.json({ success: true, data: products });
+});
 ```

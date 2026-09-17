@@ -27,6 +27,7 @@ import { FieldNotes } from "./field-notes";
 import { DeploymentAnim } from "./deployment-anim";
 import { MiddlewarePipeline } from "@/components/visualizers/middleware-pipeline";
 import { EventLoopVisualizer } from "@/components/visualizers/event-loop-visualizer";
+import { ClientServerDiagram } from "@/components/visualizers/client-server-diagram";
 import {
   getStoredProgress,
   saveProgress,
@@ -344,6 +345,8 @@ export const SlideView: React.FC<SlideViewProps> = ({
               <MiddlewarePipeline />
             ) : activeModule.id === "M04" && safeSlideIndex === 3 ? (
               <EventLoopVisualizer />
+            ) : activeModule.id === "M01" && safeSlideIndex === 2 ? (
+              <ClientServerDiagram />
             ) : (
               <div className="space-y-4">
                 <CodeBlock

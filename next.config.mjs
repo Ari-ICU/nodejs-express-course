@@ -1,9 +1,9 @@
-import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 
 const isGithubActions = process.env.GITHUB_ACTIONS === "true";
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   output: "export",
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || (isGithubActions ? "/nodejs-express-course" : ""),
   images: {

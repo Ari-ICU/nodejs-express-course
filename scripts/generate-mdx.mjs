@@ -48,6 +48,7 @@ function generateMdx(module, topic) {
   khmerTitle: "${topic.khmerTitle.replace(/"/g, '\\"')}",
   type: "${topic.type}",
   codeLanguage: "${lang}",
+  summary: ${JSON.stringify(summary)},
   tip: ${JSON.stringify(tip)},
   objective: ${JSON.stringify(objective)},
   expectedOutcome: ${JSON.stringify(expectedOutcome)},
@@ -60,6 +61,7 @@ ${safeCode}
 \`\`\`
 `;
 }
+
 
 // ── Main ───────────────────────────────────────────────────────────────────
 let totalFiles = 0;

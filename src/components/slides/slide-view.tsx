@@ -313,9 +313,9 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 {activeTopic.khmerTitle}
               </p>
 
-              {/* Main Narrative Explanation (rendered as rich Markdown) */}
+              {/* Main Narrative Explanation — sourced from MDX meta.summary */}
               <div className="mt-4">
-                <MdxContent content={activeTopic.summary} />
+                <MdxContent content={mdxMeta?.summary ?? activeTopic.summary} />
               </div>
             </div>
           </div>

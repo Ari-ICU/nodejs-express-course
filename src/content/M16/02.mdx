@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "JWT Tokens និង HttpOnly Cookies សម្រាប់ Refresh Tokens",
   type: "lab",
   codeLanguage: "javascript",
+  summary: "Issue a 15-minute Access Token for API requests, and an HttpOnly SameSite Refresh Token in cookies to combat XSS.",
   tip: "Storing refresh tokens in `HttpOnly` cookies prevents stolen credentials even if an attacker executes XSS on the frontend.",
   objective: "Implement resilient JWT auth with automatic token refreshing.",
   expectedOutcome: "Industry-grade authentication resilient against XSS.",

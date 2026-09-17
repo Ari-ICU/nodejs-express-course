@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "ការទប់ស្កាត់ Rate Limit និង NoSQL Injection",
   type: "lab",
   codeLanguage: "javascript",
+  summary: "Prevent brute-force attacks on login routes with `express-rate-limit` and sanitize MongoDB query objects with `express-mongo-sanitize`.",
   tip: "Attackers can send `{\"password\": {\"$ne\": null}}` to bypass MongoDB password checks if input is unsanitized.",
   objective: "Harden APIs against brute-force attacks and query injection.",
   expectedOutcome: "Bulletproof defense against common automated bot attacks.",

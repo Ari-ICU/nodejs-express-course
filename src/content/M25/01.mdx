@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Redis Caching ដើម្បីកាត់បន្ថយបន្ទុក Database",
   type: "lab",
   codeLanguage: "javascript",
+  summary: "Cache expensive database query responses in in-memory Redis keys with automated TTL expiration.",
   tip: "Remember to invalidate cache keys when mutating data (e.g. clear `cache:/api/v1/products*` when a new product is added).",
   objective: "Accelerate read endpoints by up to 100x using Redis caching.",
   expectedOutcome: "Sub-5ms response times under heavy concurrent loads.",

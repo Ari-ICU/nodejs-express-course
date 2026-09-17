@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ BullMQ សម្រាប់ Email Queue & Heavy Processing",
   type: "lab",
   codeLanguage: "javascript",
+  summary: "Offload slow tasks (image resizing, video encoding, email broadcasts) to a separate background worker queue.",
   tip: "Queue backoffs ensure that temporary SMTP network hiccups automatically retry without dropping user emails.",
   objective: "Separate HTTP API response time from heavy processing tasks.",
   expectedOutcome: "Ultra-responsive API that never blocks on external services.",

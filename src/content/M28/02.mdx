@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Nginx Reverse Proxy និង SSL",
   type: "lab",
   codeLanguage: "bash",
+  summary: "Route incoming public traffic on port 80/443 through Nginx to internal Node.js cluster processes with gzip and rate limiting.",
   tip: "Nginx handles SSL termination and static file serving much faster than Node.js, freeing CPU cycles for business logic.",
   objective: "Configure a production reverse proxy with automated SSL certificate renewal.",
   expectedOutcome: "Secure HTTPS endpoint with load balancing capability.",

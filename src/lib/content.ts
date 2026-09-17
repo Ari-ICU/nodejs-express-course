@@ -24,6 +24,7 @@ export interface TopicMeta {
   khmerTitle: string;
   type: TopicType;
   codeLanguage: string;
+  summary: string;      // prose description (also rendered as MDX body)
   tip?: string;
   objective?: string;
   expectedOutcome?: string;

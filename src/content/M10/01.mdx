@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "ការបែងចែកទំនួលខុសត្រូវ (Separation of Concerns)",
   type: "architecture",
   codeLanguage: "javascript",
+  summary: "Routes handle URLs; Controllers handle HTTP request/response; Services execute business logic; Models interface with database.",
   tip: "Never access `req` or `res` directly inside a Service; keep Services completely decoupled from the HTTP transport layer.",
   objective: "Decouple HTTP mechanics from business logic.",
   expectedOutcome: "Testable services that can be unit-tested without mocking Express.",

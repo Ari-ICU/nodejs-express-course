@@ -5,6 +5,7 @@ export const meta = {
   khmerTitle: "ដំណើរការ Libuv Event Loop និងដំណាក់កាលនីមួយៗ",
   type: "architecture",
   codeLanguage: "javascript",
+  summary: "The 6 phases of libuv event loop: Timers -> Pending I/O -> Idle/Prepare -> Poll -> Check -> Close callbacks.",
   tip: "`process.nextTick()` fires BEFORE the next event loop tick, even ahead of `Promise.then()`.",
   objective: "Trace execution priority through the event loop.",
   expectedOutcome: "Mastery of Node.js concurrency internals.",

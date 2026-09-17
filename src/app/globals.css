@@ -119,45 +119,4 @@ body {
   background: #484f58;
 }
 
-/* ── MDX Slide Body (code block rendered inside the dark shell) ─────────── */
-
-/* The MDX-generated <pre> inside the dark slide shell */
-.mdx-slide-body pre {
-  background: #0d1117 !important;
-  margin: 0;
-  padding: 1rem;
-  overflow-x: auto;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.875rem;
-  line-height: 1.75;
-}
-
-.mdx-slide-body code {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-/* Each line inside the MDX code block */
-.mdx-slide-body .line {
-  display: block;
-  min-height: 1.75em;
-}
-
-.mdx-slide-body .line:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 3px;
-}
-
-/* Dark scrollbar for MDX slide code */
-.mdx-slide-body pre::-webkit-scrollbar {
-  height: 5px;
-}
-.mdx-slide-body pre::-webkit-scrollbar-track {
-  background: #0d1117;
-}
-.mdx-slide-body pre::-webkit-scrollbar-thumb {
-  background: #30363d;
-  border-radius: 9999px;
-}
-
 

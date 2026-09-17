@@ -1,4 +1,6 @@
+import React from "react";
 import type { MDXComponents } from "mdx/types";
+import { CodeBlock } from "@/components/ui/code-block";
 
 // This file is required by @next/mdx when using the App Router.
 // It maps MDX HTML elements to custom styled components globally.
@@ -43,11 +45,45 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     li: ({ children }) => <li className="leading-relaxed">{children}</li>,
 
+    // Pre & Code blocks: use Shiki CodeBlock for highlighted code
+    pre: ({ children }: any) => {
+      if (React.isValidElement(children)) {
+        const codeElement = children as React.ReactElement<any>;
+        const className = codeElement.props?.className || "";
+        const match = /language-(\w+)/.exec(className);
+        const language = match ? match[1] : "javascript";
+        const rawCode = codeElement.props?.children;
+        const code = typeof rawCode === "string" ? rawCode.trimEnd() : String(rawCode || "").trimEnd();
+
+        return (
+          <div className="my-2">
+            <CodeBlock
+              code={code}
+              language={language}
+              showLineNumbers={true}
+            />
+          </div>
+        );
+      }
+      return <pre>{children}</pre>;
+    },
+
     // Inline code
-    code: ({ children, ...props }) => {
-      // Block code (inside <pre>) is handled by rehype-pretty-code – skip styling here
+    code: ({ children, className, ...props }: any) => {
+      // If part of a code block (inside <pre>), pass through directly to `pre`
+      if (className && /language-/.test(className)) {
+        return (
+          <code className={className} {...props}>
+            {children}
+          </code>
+        );
+      }
+      // Inline code
       return (
-        <code className="px-1.5 py-0.5 rounded-md bg-slate-100 text-emerald-700 font-mono text-[0.8em] border border-slate-200">
+        <code
+          className="px-1.5 py-0.5 rounded-md bg-slate-100 text-emerald-700 font-mono text-[0.8em] border border-slate-200"
+          {...props}
+        >
           {children}
         </code>
       );

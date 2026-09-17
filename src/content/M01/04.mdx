@@ -4,18 +4,14 @@ export const meta = {
   title: "What is Node.js?",
   khmerTitle: "អ្វីទៅជា Node.js?",
   type: "concept",
-  codeLanguage: "javascript",
-  summary: "Node.js is an open-source, cross-platform JavaScript runtime environment built on Google Chrome's high-performance V8 JavaScript engine and libuv. It executes JavaScript outside the web browser, allowing developers to build lightning-fast, highly scalable network servers using JavaScript.",
-  tip: "Node.js is NOT a language or framework—it is a C++ runtime that provides system APIs like filesystem, network sockets, and process management to JavaScript.",
+  imageUrl: "/images/lessons/key-features-of-nodejs.png",
+  summary: `**Node.js** is an open-source, cross-platform JavaScript runtime environment that executes code outside the browser:
+- **Asynchronous & Event-Driven**: APIs are non-blocking; the server never waits for an API to return data before handling the next task.
+- **Powered by Google V8 Engine**: Compiles JavaScript directly into machine code, delivering extremely fast execution speeds.
+- **Single-Threaded with Event Loop**: Handles thousands of simultaneous concurrent connections without the overhead of thread context switching.
+- **No Buffering (Data Streaming)**: Applications process and output data in streams chunk-by-chunk with zero buffering delays.
+- **Vibrant NPM Ecosystem**: Node Package Manager offers the largest collection of open-source libraries in software development.`,
+  tip: "Node.js is NOT a programming language or framework — it is a C++ runtime that gives JavaScript native access to the filesystem, network sockets, and OS threads.",
   objective: "Understand what makes Node.js distinct from in-browser JavaScript engines.",
-  expectedOutcome: "Clear grasp of Node.js as a native server execution environment.",
-  codeSnippet: "// Inspect your Node environment\nconsole.log(\"Node version:\", process.version);\nconsole.log(\"Platform:\", process.platform);\nconsole.log(\"Architecture:\", process.arch);\nconsole.log(\"Memory Usage:\", process.memoryUsage().heapUsed / 1024 / 1024, \"MB\");",
+  expectedOutcome: "Clear grasp of Node.js as a high-performance native server execution environment.",
 };
-
-```javascript
-// Inspect your Node environment
-console.log("Node version:", process.version);
-console.log("Platform:", process.platform);
-console.log("Architecture:", process.arch);
-console.log("Memory Usage:", process.memoryUsage().heapUsed / 1024 / 1024, "MB");
-```

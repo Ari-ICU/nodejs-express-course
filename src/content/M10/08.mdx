@@ -5,21 +5,22 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Service Layer",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Services throw domain-specific custom errors (e.g. `NotFoundError`, `UnauthorizedError`) with status codes, which controllers forward to the central error middleware via `next(err)`.",
-  tip: "Create custom error classes inheriting from `Error` with a `statusCode` property for clean status propagation.",
+  summary: "Services throw domain-specific errors containing status codes (e.g. `error.statusCode = 404`), which controllers catch and pass to Express error middleware via `next(err)`.",
+  tip: "Attach a `statusCode` property onto standard Error objects thrown in services for clean status propagation to Express middleware.",
   objective: "Propagate domain errors from services to centralized error middleware.",
-  expectedOutcome: "Clean, consistent error propagation without try/catch boilerplate.",
-  codeSnippet: "export class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n  }\n}\n\n// In service:\nif (!product) throw new AppError(\"Product does not exist\", 404);",
+  expectedOutcome: "Clean, consistent error propagation from service logic to Express response handlers.",
+  codeSnippet: "// In service: Attach statusCode to Error for Express error handling\nexport const getProductOrThrow = async (id) => {\n  const product = products.find((p) => p.id === id);\n  if (!product) {\n    const error = new Error(\"Product does not exist\");\n    error.statusCode = 404;\n    throw error;\n  }\n  return product;\n};",
 };
 
 ```javascript
-export class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
+// In service: Attach statusCode to Error for Express error handling
+export const getProductOrThrow = async (id) => {
+  const product = products.find((p) => p.id === id);
+  if (!product) {
+    const error = new Error("Product does not exist");
+    error.statusCode = 404;
+    throw error;
   }
-}
-
-// In service:
-if (!product) throw new AppError("Product does not exist", 404);
+  return product;
+};
 ```

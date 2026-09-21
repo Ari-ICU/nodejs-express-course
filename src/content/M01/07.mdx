@@ -9,35 +9,29 @@ export const meta = {
   tip: "Because there is only one main JavaScript thread, never write CPU-intensive loops that block the thread.",
   objective: "Contrast the single-threaded event loop model with multi-threaded thread-per-request servers.",
   expectedOutcome: "Deep understanding of how Node achieves massive concurrency with minimal memory.",
-  codeSnippet: "// 1. Multi-Threaded Model (Apache / Traditional Java):\n// Allocates 1 heavy OS thread (~2MB RAM) per request; blocks on I/O\nclass TraditionalWorkerPool {\n  handleRequest(req) {\n    const thread = OS.spawnThread();       // ~2MB RAM stack allocated\n    const result = thread.blockingQuery(); // Thread blocked waiting for disk/DB ⏳\n    return req.send(result);\n  }\n}\n\n// 2. Single-Threaded Event Loop (Node.js + Libuv):\n// 1 main thread for execution; I/O offloaded asynchronously\nconst http = require('node:http');\n\nconst server = http.createServer(async (req, res) => {\n  // Non-blocking I/O delegated to Libuv thread pool & OS kernel\n  const result = await db.queryAsync('SELECT * FROM users'); // Main thread free ⚡\n  res.writeHead(200, { 'Content-Type': 'application/json' });\n  res.end(JSON.stringify({ status: 'ok', result }));\n});\n\n// Concurrency Comparison:\nconst comparison = {\n  apache: { memoryPer10kClients: '20 GB RAM', model: 'Thread-per-request (Blocking)' },\n  nodejs: { memoryPer10kClients: '35 MB RAM', model: 'Single-Thread Event Loop (Non-blocking)' }\n};",
+  codeSnippet: "// 1. Multi-Threaded Model (Traditional Blocking Server):\n// Allocates 1 heavy OS thread per request; blocks waiting on I/O\nfunction traditionalHandling() {\n  console.log(\"Request 1 arrives -> Dedicated thread allocated (blocks on DB query)\");\n  // Thread sleeps/blocks here ⏳\n}\n\n// 2. Single-Threaded Event Loop (Node.js Non-blocking Model):\n// 1 main thread processes requests; delegates long tasks without blocking\nconsole.log(\"1. Request 1 arrives -> Main thread accepts connection\");\n\nsetTimeout(() => {\n  console.log(\"3. Database response ready -> Callback executed in Event Loop ⚡\");\n}, 100);\n\nconsole.log(\"2. Request 2 arrives -> Main thread immediately accepts it!\");\n\n// Concurrency Comparison:\n// Apache/PHP: 10,000 clients ≈ ~20 GB RAM (Thread overhead)\n// Node.js:    10,000 clients ≈ ~35 MB RAM (Event-driven efficiency)",
 };
 
 ```javascript
-// 1. Multi-Threaded Model (Apache / Traditional Java):
-// Allocates 1 heavy OS thread (~2MB RAM) per request; blocks on I/O
-class TraditionalWorkerPool {
-  handleRequest(req) {
-    const thread = OS.spawnThread();       // ~2MB RAM stack allocated
-    const result = thread.blockingQuery(); // Thread blocked waiting for disk/DB ⏳
-    return req.send(result);
-  }
+// 1. Multi-Threaded Model (Traditional Blocking Server):
+// Allocates 1 heavy OS thread per request; blocks waiting on I/O
+function traditionalHandling() {
+  console.log("Request 1 arrives -> Dedicated thread allocated (blocks on DB query)");
+  // Thread sleeps/blocks here ⏳
 }
 
-// 2. Single-Threaded Event Loop (Node.js + Libuv):
-// 1 main thread for execution; I/O offloaded asynchronously
-const http = require('node:http');
+// 2. Single-Threaded Event Loop (Node.js Non-blocking Model):
+// 1 main thread processes requests; delegates long tasks without blocking
+console.log("1. Request 1 arrives -> Main thread accepts connection");
 
-const server = http.createServer(async (req, res) => {
-  // Non-blocking I/O delegated to Libuv thread pool & OS kernel
-  const result = await db.queryAsync('SELECT * FROM users'); // Main thread free ⚡
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ status: 'ok', result }));
-});
+setTimeout(() => {
+  console.log("3. Database response ready -> Callback executed in Event Loop ⚡");
+}, 100);
+
+console.log("2. Request 2 arrives -> Main thread immediately accepts it!");
 
 // Concurrency Comparison:
-const comparison = {
-  apache: { memoryPer10kClients: '20 GB RAM', model: 'Thread-per-request (Blocking)' },
-  nodejs: { memoryPer10kClients: '35 MB RAM', model: 'Single-Thread Event Loop (Non-blocking)' }
-};
+// Apache/PHP: 10,000 clients ≈ ~20 GB RAM (Thread overhead)
+// Node.js:    10,000 clients ≈ ~35 MB RAM (Event-driven efficiency)
 ```
 

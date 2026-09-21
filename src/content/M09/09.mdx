@@ -5,21 +5,23 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត PATCH Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Building PATCH endpoints that update only the provided fields using MongoDB's `$set` operator while preserving all other existing attributes.",
-  tip: "Always enable `{ new: true, runValidators: true }` in Mongoose when running update queries.",
+  summary: "Building PATCH endpoints that update only the provided fields in the request payload while preserving all other existing resource attributes.",
+  tip: "PATCH updates only specified fields, whereas PUT completely replaces the resource representation.",
   objective: "Implement partial resource updates.",
   expectedOutcome: "Flexible partial updates without unintentional data erasure.",
-  codeSnippet: "app.patch(\"/api/v1/products/:id\", async (req, res) => {\n  const updated = await Product.findByIdAndUpdate(\n    req.params.id,\n    { $set: req.body },\n    { new: true, runValidators: true }\n  );\n  if (!updated) return res.status(404).json({ success: false, error: \"Product not found\" });\n  res.json({ success: true, data: updated });\n});",
+  codeSnippet: "app.patch(\"/api/v1/products/:id\", (req, res) => {\n  const product = products.find((p) => p.id === req.params.id);\n  if (!product) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n\n  // Partial update: merge incoming fields over existing attributes\n  Object.assign(product, req.body);\n\n  res.json({ success: true, data: product });\n});",
 };
 
 ```javascript
-app.patch("/api/v1/products/:id", async (req, res) => {
-  const updated = await Product.findByIdAndUpdate(
-    req.params.id,
-    { $set: req.body },
-    { new: true, runValidators: true }
-  );
-  if (!updated) return res.status(404).json({ success: false, error: "Product not found" });
-  res.json({ success: true, data: updated });
+app.patch("/api/v1/products/:id", (req, res) => {
+  const product = products.find((p) => p.id === req.params.id);
+  if (!product) {
+    return res.status(404).json({ success: false, error: "Product not found" });
+  }
+
+  // Partial update: merge incoming fields over existing attributes
+  Object.assign(product, req.body);
+
+  res.json({ success: true, data: product });
 });
 ```

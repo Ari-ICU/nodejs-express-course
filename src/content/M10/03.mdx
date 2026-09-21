@@ -5,24 +5,32 @@ export const meta = {
   khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Services",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Services encapsulate pure business logic, database queries, calculations, external API calls, and domain rules. Services never touch `req` or `res` objects.",
-  tip: "Never pass `req` or `res` into a service method; pass only the specific data arguments (e.g. `userId, payload`) to maintain testability.",
+  summary: "Services encapsulate pure business logic, data persistence, calculations, external API calls, and domain rules. Services never touch `req` or `res` objects.",
+  tip: "Never pass `req` or `res` into a service method; pass only specific data arguments (e.g. `id, productData`) to maintain testability.",
   objective: "Implement transport-independent business logic services.",
   expectedOutcome: "Services that can be unit-tested without mocking Express HTTP objects.",
-  codeSnippet: "// services/product.service.js\nimport { Product } from \"../models/product.model.js\";\n\nexport const getById = async (id) => {\n  return await Product.findById(id).lean();\n};\n\nexport const createProduct = async (productData) => {\n  // Pure business logic: sanitize, compute discount, persist\n  const priceWithTax = productData.price * 1.1;\n  return await Product.create({ ...productData, priceWithTax });\n};",
+  codeSnippet: "// services/product.service.js\nconst products = [\n  { id: \"1\", name: \"Laptop\", price: 999 },\n];\n\nexport const getById = async (id) => {\n  return products.find((p) => p.id === id) || null;\n};\n\nexport const createProduct = async (productData) => {\n  // Pure business logic: compute tax, apply domain rules, persist\n  const priceWithTax = Number((productData.price * 1.1).toFixed(2));\n  const newProduct = {\n    id: String(Date.now()),\n    ...productData,\n    priceWithTax,\n  };\n  products.push(newProduct);\n  return newProduct;\n};",
 };
 
 ```javascript
 // services/product.service.js
-import { Product } from "../models/product.model.js";
+const products = [
+  { id: "1", name: "Laptop", price: 999 },
+];
 
 export const getById = async (id) => {
-  return await Product.findById(id).lean();
+  return products.find((p) => p.id === id) || null;
 };
 
 export const createProduct = async (productData) => {
-  // Pure business logic: sanitize, compute discount, persist
-  const priceWithTax = productData.price * 1.1;
-  return await Product.create({ ...productData, priceWithTax });
+  // Pure business logic: compute tax, apply domain rules, persist
+  const priceWithTax = Number((productData.price * 1.1).toFixed(2));
+  const newProduct = {
+    id: String(Date.now()),
+    ...productData,
+    priceWithTax,
+  };
+  products.push(newProduct);
+  return newProduct;
 };
 ```

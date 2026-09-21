@@ -5,25 +5,19 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធ Folder គម្រោង Node.js",
   type: "architecture",
   codeLanguage: "bash",
-  summary: "A professional Node.js backend organizes source code into modular layers: controllers, services, routes, models, middleware, validators, configuration, and utilities, strictly separating transport protocols from business domain rules.",
-  tip: "Keep entry points (`server.js` or `index.js`) slim by only connecting database instances and binding the HTTP port.",
-  objective: "Bootstrap a clean, maintainable directory structure for a production-grade Node.js project.",
-  expectedOutcome: "Production-ready repository layout adhering to separation of concerns.",
-  codeSnippet: "my-backend-app/\n├── src/\n│   ├── config/       # Environment variables & DB connectors\n│   ├── controllers/  # HTTP request/response handlers\n│   ├── middleware/   # Auth, logging, rate limiting\n│   ├── models/       # Database schemas (Mongoose)\n│   ├── routes/       # Express route definitions\n│   ├── services/     # Pure business logic & database queries\n│   └── app.js        # Express app initialization\n├── tests/            # Automated Vitest / Supertest files\n├── .env.example      # Sample environment configuration\n├── package.json      # Dependencies and scripts\n└── server.js         # HTTP server entrypoint",
+  summary: "A clean Node.js project starts with a predictable layout: keeping source files inside `src/`, isolating the entrypoint (`index.js`), tracking dependencies in `package.json`, and documenting setup steps in `README.md`.",
+  tip: "Always organize application source code inside a dedicated `src/` directory rather than placing multiple loose scripts in the root folder.",
+  objective: "Bootstrap a clean, maintainable directory structure for a foundational Node.js project.",
+  expectedOutcome: "Clear mental model of standard project files and folders in a Node.js repository.",
+  codeSnippet: "my-node-app/\n├── src/\n│   ├── index.js      # Main application script & entrypoint\n│   └── utils.js      # Helper functions & reusable utilities\n├── .gitignore        # Excludes node_modules and sensitive files\n├── README.md         # Project documentation and instructions\n└── package.json      # Project metadata, scripts, and dependencies",
 };
 
 ```bash
-my-backend-app/
+my-node-app/
 ├── src/
-│   ├── config/       # Environment variables & DB connectors
-│   ├── controllers/  # HTTP request/response handlers
-│   ├── middleware/   # Auth, logging, rate limiting
-│   ├── models/       # Database schemas (Mongoose)
-│   ├── routes/       # Express route definitions
-│   ├── services/     # Pure business logic & database queries
-│   └── app.js        # Express app initialization
-├── tests/            # Automated Vitest / Supertest files
-├── .env.example      # Sample environment configuration
-├── package.json      # Dependencies and scripts
-└── server.js         # HTTP server entrypoint
+│   ├── index.js      # Main application script & entrypoint
+│   └── utils.js      # Helper functions & reusable utilities
+├── .gitignore        # Excludes node_modules and sensitive files
+├── README.md         # Project documentation and instructions
+└── package.json      # Project metadata, scripts, and dependencies
 ```

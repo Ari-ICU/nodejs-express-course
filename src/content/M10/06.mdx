@@ -9,25 +9,39 @@ export const meta = {
   tip: "Controllers handle 'what to send back to the user', while Services handle 'how the business operates'.",
   objective: "Build a complete feature using the Controller-Service pattern.",
   expectedOutcome: "Production-grade separation of transport and business logic.",
-  codeSnippet: "// controller:\nexport const register = async (req, res, next) => {\n  try {\n    const user = await authService.registerUser(req.body);\n    res.status(201).json({ success: true, data: user });\n  } catch (err) {\n    next(err);\n  }\n};\n\n// service:\nexport const registerUser = async (data) => {\n  const existing = await User.findOne({ email: data.email });\n  if (existing) throw new ConflictError(\"Email already in use\");\n  const hashed = await bcrypt.hash(data.password, 12);\n  return await User.create({ ...data, password: hashed });\n};",
+  codeSnippet: "// controller (handles HTTP transport & status):\nexport const register = async (req, res, next) => {\n  try {\n    const user = await userService.registerUser(req.body);\n    res.status(201).json({ success: true, data: user });\n  } catch (err) {\n    next(err);\n  }\n};\n\n// service (handles pure business logic & data operations):\nconst users = [];\n\nexport const registerUser = async (userData) => {\n  const existing = users.find((u) => u.email === userData.email);\n  if (existing) {\n    const error = new Error(\"Email already registered\");\n    error.statusCode = 409;\n    throw error;\n  }\n\n  const newUser = {\n    id: String(Date.now()),\n    email: userData.email,\n    name: userData.name,\n    createdAt: new Date().toISOString(),\n  };\n\n  users.push(newUser);\n  return newUser;\n};",
 };
 
 ```javascript
-// controller:
+// controller (handles HTTP transport & status):
 export const register = async (req, res, next) => {
   try {
-    const user = await authService.registerUser(req.body);
+    const user = await userService.registerUser(req.body);
     res.status(201).json({ success: true, data: user });
   } catch (err) {
     next(err);
   }
 };
 
-// service:
-export const registerUser = async (data) => {
-  const existing = await User.findOne({ email: data.email });
-  if (existing) throw new ConflictError("Email already in use");
-  const hashed = await bcrypt.hash(data.password, 12);
-  return await User.create({ ...data, password: hashed });
+// service (handles pure business logic & data operations):
+const users = [];
+
+export const registerUser = async (userData) => {
+  const existing = users.find((u) => u.email === userData.email);
+  if (existing) {
+    const error = new Error("Email already registered");
+    error.statusCode = 409;
+    throw error;
+  }
+
+  const newUser = {
+    id: String(Date.now()),
+    email: userData.email,
+    name: userData.name,
+    createdAt: new Date().toISOString(),
+  };
+
+  users.push(newUser);
+  return newUser;
 };
 ```

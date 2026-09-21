@@ -5,28 +5,26 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Pagination (Limit & Skip)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Pagination breaks massive database collections into manageable pages using `page` and `limit` query parameters, preventing server memory crashes and slow page loads.",
+  summary: "Pagination breaks large resource collections into manageable pages using `page` and `limit` query parameters, returning pagination metadata alongside data.",
   tip: "Always calculate total pages with `Math.ceil(totalCount / limit)` and include pagination metadata in the response.",
   objective: "Implement pagination using skip and limit parameters.",
-  expectedOutcome: "High-throughput collection queries capable of handling millions of records.",
-  codeSnippet: "app.get(\"/api/v1/items\", async (req, res) => {\n  const page = Math.max(1, Number(req.query.page) || 1);\n  const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));\n  const skip = (page - 1) * limit;\n\n  const [items, total] = await Promise.all([\n    Item.find().skip(skip).limit(limit),\n    Item.countDocuments()\n  ]);\n\n  res.json({\n    success: true,\n    meta: { total, page, limit, totalPages: Math.ceil(total / limit) },\n    data: items\n  });\n});",
+  expectedOutcome: "High-throughput collection queries capable of handling large dataset requests.",
+  codeSnippet: "app.get(\"/api/v1/items\", (req, res) => {\n  const page = Math.max(1, Number(req.query.page) || 1);\n  const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));\n  const skip = (page - 1) * limit;\n\n  const total = items.length;\n  const paginatedItems = items.slice(skip, skip + limit);\n\n  res.json({\n    success: true,\n    meta: { total, page, limit, totalPages: Math.ceil(total / limit) },\n    data: paginatedItems,\n  });\n});",
 };
 
 ```javascript
-app.get("/api/v1/items", async (req, res) => {
+app.get("/api/v1/items", (req, res) => {
   const page = Math.max(1, Number(req.query.page) || 1);
   const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));
   const skip = (page - 1) * limit;
 
-  const [items, total] = await Promise.all([
-    Item.find().skip(skip).limit(limit),
-    Item.countDocuments()
-  ]);
+  const total = items.length;
+  const paginatedItems = items.slice(skip, skip + limit);
 
   res.json({
     success: true,
     meta: { total, page, limit, totalPages: Math.ceil(total / limit) },
-    data: items
+    data: paginatedItems,
   });
 });
 ```

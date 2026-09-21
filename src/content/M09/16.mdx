@@ -2,25 +2,27 @@ export const meta = {
   id: "M09-16",
   number: "16",
   title: "Searching",
-  khmerTitle: "ការស្វែងរកទិន្នន័យ (Regex & Text Index Search)",
+  khmerTitle: "ការបង្កើត Search Query Endpoint សម្រាប់ស្វែងរកទិន្នន័យ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Text searching across multiple resource fields (name, description) using case-insensitive regex or dedicated MongoDB full-text indexes.",
-  tip: "Use MongoDB `$text` index search instead of regex for large datasets for logarithmic search speed.",
-  objective: "Implement keyword search across database records.",
-  expectedOutcome: "Fast text search across product catalogs and user directories.",
-  codeSnippet: "app.get(\"/api/v1/search\", async (req, res) => {\n  const { q } = req.query;\n  if (!q) return res.json({ success: true, data: [] });\n\n  // Case-insensitive regex search\n  const results = await Product.find({\n    name: { $regex: q, $options: \"i\" }\n  }).limit(20);\n\n  res.json({ success: true, count: results.length, data: results });\n});",
+  summary: "Text searching allows clients to query resources using keyword search parameters (e.g. `?q=mouse`), performing case-insensitive matching across resource fields.",
+  tip: "Always trim and lowercase incoming search terms to ensure consistent, case-insensitive query matching.",
+  objective: "Implement keyword search across collection resources.",
+  expectedOutcome: "Fast text search across product catalogs and resource lists.",
+  codeSnippet: "app.get(\"/api/v1/search\", (req, res) => {\n  const query = (req.query.q || \"\").toLowerCase().trim();\n  if (!query) {\n    return res.json({ success: true, count: 0, data: [] });\n  }\n\n  // Case-insensitive substring search across collection\n  const results = products.filter(\n    (p) => p.name.toLowerCase().includes(query)\n  );\n\n  res.json({ success: true, count: results.length, data: results });\n});",
 };
 
 ```javascript
-app.get("/api/v1/search", async (req, res) => {
-  const { q } = req.query;
-  if (!q) return res.json({ success: true, data: [] });
+app.get("/api/v1/search", (req, res) => {
+  const query = (req.query.q || "").toLowerCase().trim();
+  if (!query) {
+    return res.json({ success: true, count: 0, data: [] });
+  }
 
-  // Case-insensitive regex search
-  const results = await Product.find({
-    name: { $regex: q, $options: "i" }
-  }).limit(20);
+  // Case-insensitive substring search across collection
+  const results = products.filter(
+    (p) => p.name.toLowerCase().includes(query)
+  );
 
   res.json({ success: true, count: results.length, data: results });
 });

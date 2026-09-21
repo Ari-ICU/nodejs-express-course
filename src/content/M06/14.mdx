@@ -2,24 +2,24 @@ export const meta = {
   id: "M06-14",
   number: "14",
   title: "Express Project Structure",
-  khmerTitle: "រចនាសម្ព័ន្ធគម្រោង Express.js កម្រិត Enterprise",
+  khmerTitle: "រចនាសម្ព័ន្ធគម្រោង Express.js កម្រិតមូលដ្ឋាន",
   type: "architecture",
   codeLanguage: "bash",
-  summary: "Scalable enterprise layout for Express: decoupling routing logic from database execution and HTTP response writing across controllers, services, models, and middleware.",
-  tip: "Never write database queries directly inside route callback functions; delegate to services.",
-  objective: "Organize an Express project into modular, maintainable architectural directories.",
-  expectedOutcome: "Clean, scalable project structure adhering to industry best practices.",
-  codeSnippet: "src/\n├── controllers/    # Request/Response orchestration\n├── services/       # Business logic & Database transactions\n├── routes/         # Express router definitions\n├── middleware/     # Auth, error, logging middleware\n├── models/         # Database models (Mongoose)\n├── utils/          # Helper functions & custom errors\n├── app.js          # Express app configuration\n└── server.js       # Entry point & port binding",
+  summary: "An idiomatic Express project separates the Express application configuration (`app.js`) from the server network listener (`server.js`). This makes the codebase modular, clean, and ready for future routing modules.",
+  tip: "Exporting `app` from `app.js` without immediately calling `.listen()` in the same file keeps the application modular and easily testable.",
+  objective: "Organize an Express project into clean, decoupled application and server files.",
+  expectedOutcome: "Clean project layout separating app setup from the network port listener.",
+  codeSnippet: "my-express-app/\n├── public/           # Static assets (images, stylesheets, html)\n├── src/\n│   ├── app.js        # Express app configuration & middleware setup\n│   └── server.js     # Entrypoint: listens on PORT & boots the server\n├── .env              # Environment variables (e.g. PORT=5000)\n├── .gitignore        # Excludes node_modules & sensitive files\n├── package.json      # Express dependency & npm start/dev scripts\n└── README.md         # Project instructions",
 };
 
 ```bash
-src/
-├── controllers/    # Request/Response orchestration
-├── services/       # Business logic & Database transactions
-├── routes/         # Express router definitions
-├── middleware/     # Auth, error, logging middleware
-├── models/         # Database models (Mongoose)
-├── utils/          # Helper functions & custom errors
-├── app.js          # Express app configuration
-└── server.js       # Entry point & port binding
+my-express-app/
+├── public/           # Static assets (images, stylesheets, html)
+├── src/
+│   ├── app.js        # Express app configuration & middleware setup
+│   └── server.js     # Entrypoint: listens on PORT & boots the server
+├── .env              # Environment variables (e.g. PORT=5000)
+├── .gitignore        # Excludes node_modules & sensitive files
+├── package.json      # Express dependency & npm start/dev scripts
+└── README.md         # Project instructions
 ```

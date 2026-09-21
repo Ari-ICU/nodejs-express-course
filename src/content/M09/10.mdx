@@ -5,17 +5,24 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត DELETE Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Building DELETE endpoints that remove resources from the database and return `204 No Content` upon successful deletion.",
+  summary: "Building DELETE endpoints that remove resources from collections and return `204 No Content` upon successful deletion.",
   tip: "DELETE should be idempotent: deleting an already-deleted resource can return 204 or 404 depending on API contract conventions.",
   objective: "Implement resource deletion endpoints.",
   expectedOutcome: "Clean entity removal with proper HTTP 204 signaling.",
-  codeSnippet: "app.delete(\"/api/v1/products/:id\", async (req, res) => {\n  const deleted = await Product.findByIdAndDelete(req.params.id);\n  if (!deleted) return res.status(404).json({ success: false, error: \"Product not found\" });\n  res.status(204).send();\n});",
+  codeSnippet: "app.delete(\"/api/v1/products/:id\", (req, res) => {\n  const index = products.findIndex((p) => p.id === req.params.id);\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n\n  // Remove item from collection\n  products.splice(index, 1);\n\n  // 204 No Content indicates successful deletion with empty body\n  res.status(204).send();\n});",
 };
 
 ```javascript
-app.delete("/api/v1/products/:id", async (req, res) => {
-  const deleted = await Product.findByIdAndDelete(req.params.id);
-  if (!deleted) return res.status(404).json({ success: false, error: "Product not found" });
+app.delete("/api/v1/products/:id", (req, res) => {
+  const index = products.findIndex((p) => p.id === req.params.id);
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Product not found" });
+  }
+
+  // Remove item from collection
+  products.splice(index, 1);
+
+  // 204 No Content indicates successful deletion with empty body
   res.status(204).send();
 });
 ```

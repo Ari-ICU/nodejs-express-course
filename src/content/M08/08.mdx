@@ -2,18 +2,19 @@ export const meta = {
   id: "M08-08",
   number: "08",
   title: "Authentication Middleware",
-  khmerTitle: "ការបង្កើត Authentication Middleware សម្រាប់ផ្ទៀងផ្ទាត់ JWT",
+  khmerTitle: "ការបង្កើត Authentication Middleware សម្រាប់ការពារ Routes",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Authentication middleware extracts the Bearer token from the `Authorization` header, verifies its cryptographic signature, decodes the user payload, and attaches `req.user`.",
-  tip: "If the token is missing or invalid, return `401 Unauthorized` immediately and do NOT call `next()`.",
-  objective: "Guard endpoints by verifying JWT access tokens.",
-  expectedOutcome: "Secure endpoints with authenticated user context.",
-  codeSnippet: "import jwt from \"jsonwebtoken\";\n\nexport const authenticate = (req, res, next) => {\n  const authHeader = req.headers.authorization;\n  if (!authHeader?.startsWith(\"Bearer \")) {\n    return res.status(401).json({ success: false, error: \"Authentication token required\" });\n  }\n\n  const token = authHeader.split(\" \")[1];\n  try {\n    const decoded = jwt.verify(token, process.env.JWT_SECRET);\n    req.user = decoded; // Attach user context!\n    next();\n  } catch (err) {\n    return res.status(401).json({ success: false, error: \"Invalid or expired token\" });\n  }\n};",
+  summary: "Authentication middleware inspects incoming request headers (such as `Authorization: Bearer <token>` or API keys), validates client identity, attaches user context to `req.user`, or rejects unauthorized traffic with a 401 status.",
+  tip: "If authentication fails, immediately send a 401 Unauthorized response and never call next().",
+  objective: "Guard routes by inspecting request headers and attaching user state in middleware.",
+  expectedOutcome: "Protected endpoints that safely reject unauthorized requests before reaching route handlers.",
+  codeSnippet: "// Authentication Guard Middleware\n// Inspects request headers, validates credentials, and attaches user context\n\nexport const authenticate = (req, res, next) => {\n  const authHeader = req.headers.authorization;\n  if (!authHeader?.startsWith(\"Bearer \")) {\n    return res.status(401).json({ success: false, error: \"Authentication token required\" });\n  }\n\n  const token = authHeader.split(\" \")[1];\n\n  // Verify token credentials\n  if (token !== process.env.API_SECRET_KEY) {\n    return res.status(401).json({ success: false, error: \"Invalid or expired token\" });\n  }\n\n  // Attach authenticated identity to request for downstream route handlers\n  req.user = { id: \"usr_101\", role: \"admin\", name: \"Sophea\" };\n  next();\n};",
 };
 
 ```javascript
-import jwt from "jsonwebtoken";
+// Authentication Guard Middleware
+// Inspects request headers, validates credentials, and attaches user context
 
 export const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -22,12 +23,14 @@ export const authenticate = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user context!
-    next();
-  } catch (err) {
+
+  // Verify token credentials
+  if (token !== process.env.API_SECRET_KEY) {
     return res.status(401).json({ success: false, error: "Invalid or expired token" });
   }
+
+  // Attach authenticated identity to request for downstream route handlers
+  req.user = { id: "usr_101", role: "admin", name: "Sophea" };
+  next();
 };
 ```

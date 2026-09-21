@@ -6,20 +6,25 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Filtering allows clients to query resources matching specific criteria (e.g. `?category=electronics&price[gte]=100&inStock=true`).",
-  tip: "Never pass raw `req.query` directly into MongoDB queries; sanitize keys to prevent NoSQL injection.",
+  tip: "Always convert and validate query string types (such as parsing numeric values with `Number()`) before comparing values.",
   objective: "Build flexible query filters supporting ranges and categories.",
-  expectedOutcome: "Powerful, safe database query filtering.",
-  codeSnippet: "app.get(\"/api/v1/products\", async (req, res) => {\n  const filter = {};\n  if (req.query.category) filter.category = req.query.category;\n  if (req.query.inStock) filter.inStock = req.query.inStock === \"true\";\n  if (req.query.minPrice) filter.price = { $gte: Number(req.query.minPrice) };\n\n  const products = await Product.find(filter);\n  res.json({ success: true, count: products.length, data: products });\n});",
+  expectedOutcome: "Flexible collection filtering supporting multiple criteria.",
+  codeSnippet: "app.get(\"/api/v1/products\", (req, res) => {\n  let results = [...products];\n\n  if (req.query.category) {\n    results = results.filter((p) => p.category === req.query.category);\n  }\n\n  if (req.query.minPrice) {\n    const min = Number(req.query.minPrice);\n    results = results.filter((p) => p.price >= min);\n  }\n\n  res.json({ success: true, count: results.length, data: results });\n});",
 };
 
 ```javascript
-app.get("/api/v1/products", async (req, res) => {
-  const filter = {};
-  if (req.query.category) filter.category = req.query.category;
-  if (req.query.inStock) filter.inStock = req.query.inStock === "true";
-  if (req.query.minPrice) filter.price = { $gte: Number(req.query.minPrice) };
+app.get("/api/v1/products", (req, res) => {
+  let results = [...products];
 
-  const products = await Product.find(filter);
-  res.json({ success: true, count: products.length, data: products });
+  if (req.query.category) {
+    results = results.filter((p) => p.category === req.query.category);
+  }
+
+  if (req.query.minPrice) {
+    const min = Number(req.query.minPrice);
+    results = results.filter((p) => p.price >= min);
+  }
+
+  res.json({ success: true, count: results.length, data: results });
 });
 ```

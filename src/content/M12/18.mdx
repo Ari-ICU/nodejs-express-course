@@ -5,23 +5,22 @@ export const meta = {
   khmerTitle: "ការបង្កើត Instance Methods & Static Methods",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Instance methods operate on an individual document instance (`user.comparePassword()`), while Static methods operate on the Model collection (`User.findByEmail()`).",
-  tip: "Encapsulate authentication checks like password verification as an instance method on the User model.",
+  summary: "Instance methods operate on an individual document instance (e.g. `product.applyDiscount()`), while Static methods operate across the Model collection (e.g. `Product.findByCategory()`).",
+  tip: "Never use arrow functions (`() => {}`) for Mongoose methods because arrow functions do not bind `this` to the document instance.",
   objective: "Add custom domain logic directly onto Mongoose Models.",
-  expectedOutcome: "Rich Domain Model encapsulation.",
-  codeSnippet: "import bcrypt from \"bcrypt\";\n\n// Instance method (operates on document instance):\nuserSchema.methods.comparePassword = async function(candidatePassword) {\n  return await bcrypt.compare(candidatePassword, this.password);\n};\n\n// Static method (operates on model):\nuserSchema.statics.findByRole = function(role) {\n  return this.find({ role });\n};",
+  expectedOutcome: "Rich Domain Model encapsulation with instance and static methods.",
+  codeSnippet: "// Instance method (operates on individual document instance):\nproductSchema.methods.applyDiscount = function(percent) {\n  this.price = Math.round(this.price * (1 - percent / 100));\n  return this.save();\n};\n\n// Static method (operates on model collection):\nproductSchema.statics.findByCategory = function(category) {\n  return this.find({ category });\n};",
 };
 
 ```javascript
-import bcrypt from "bcrypt";
-
-// Instance method (operates on document instance):
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+// Instance method (operates on individual document instance):
+productSchema.methods.applyDiscount = function(percent) {
+  this.price = Math.round(this.price * (1 - percent / 100));
+  return this.save();
 };
 
-// Static method (operates on model):
-userSchema.statics.findByRole = function(role) {
-  return this.find({ role });
+// Static method (operates on model collection):
+productSchema.statics.findByCategory = function(category) {
+  return this.find({ category });
 };
 ```

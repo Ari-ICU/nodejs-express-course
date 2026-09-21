@@ -5,17 +5,30 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត POST Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Building POST endpoints that validate input data, create database records, generate unique IDs, and return HTTP `201 Created` with the newly created resource.",
+  summary: "Building POST endpoints that validate input data, create new resource items, generate unique IDs, and return HTTP `201 Created` with the newly created resource.",
   tip: "Set the `Location` response header to the URL of the newly created resource (`res.setHeader('Location', '/api/v1/products/' + item.id)`).",
   objective: "Build creation endpoints returning 201 Created status codes.",
   expectedOutcome: "Reliable resource creation with validation and location headers.",
-  codeSnippet: "app.post(\"/api/v1/products\", async (req, res) => {\n  const newProduct = await Product.create(req.body);\n  res.setHeader(\"Location\", `/api/v1/products/${newProduct._id}`);\n  res.status(201).json({ success: true, data: newProduct });\n});",
+  codeSnippet: "let products = [];\n\napp.post(\"/api/v1/products\", (req, res) => {\n  const { name, price } = req.body;\n  if (!name || price === undefined) {\n    return res.status(400).json({ success: false, error: \"Name and price required\" });\n  }\n\n  const newProduct = {\n    id: String(Date.now()),\n    name,\n    price: Number(price),\n  };\n\n  products.push(newProduct);\n  res.setHeader(\"Location\", `/api/v1/products/${newProduct.id}`);\n  res.status(201).json({ success: true, data: newProduct });\n});",
 };
 
 ```javascript
-app.post("/api/v1/products", async (req, res) => {
-  const newProduct = await Product.create(req.body);
-  res.setHeader("Location", `/api/v1/products/${newProduct._id}`);
+let products = [];
+
+app.post("/api/v1/products", (req, res) => {
+  const { name, price } = req.body;
+  if (!name || price === undefined) {
+    return res.status(400).json({ success: false, error: "Name and price required" });
+  }
+
+  const newProduct = {
+    id: String(Date.now()),
+    name,
+    price: Number(price),
+  };
+
+  products.push(newProduct);
+  res.setHeader("Location", `/api/v1/products/${newProduct.id}`);
   res.status(201).json({ success: true, data: newProduct });
 });
 ```

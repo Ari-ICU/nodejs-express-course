@@ -6,19 +6,24 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Mongoose middleware (pre and post hooks) intercept execution during document lifecycle events like `save`, `validate`, `remove`, and `findOneAndUpdate`.",
-  tip: "Use a `pre('save')` hook to automatically hash passwords before persisting to the database.",
+  tip: "Use `pre('save')` hooks for data sanitization like lowercasing emails or formatting strings before persisting to the database.",
   objective: "Implement automated lifecycle hooks on database models.",
-  expectedOutcome: "Automated password hashing and data sanitization.",
-  codeSnippet: "import bcrypt from \"bcrypt\";\n\nuserSchema.pre(\"save\", async function(next) {\n  // Only hash password if it was actually modified\n  if (!this.isModified(\"password\")) return next();\n  this.password = await bcrypt.hash(this.password, 12);\n  next();\n});",
+  expectedOutcome: "Automated document data normalization and lifecycle management.",
+  codeSnippet: "// Pre-save hook: automatically normalize email before saving\nuserSchema.pre(\"save\", function(next) {\n  if (this.isModified(\"email\")) {\n    this.email = this.email.toLowerCase().trim();\n  }\n  next();\n});\n\n// Post-save hook: execute logic after document is persisted\nuserSchema.post(\"save\", function(doc, next) {\n  console.log(`Document persisted with ID: ${doc._id}`);\n  next();\n});",
 };
 
 ```javascript
-import bcrypt from "bcrypt";
+// Pre-save hook: automatically normalize email before saving
+userSchema.pre("save", function(next) {
+  if (this.isModified("email")) {
+    this.email = this.email.toLowerCase().trim();
+  }
+  next();
+});
 
-userSchema.pre("save", async function(next) {
-  // Only hash password if it was actually modified
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 12);
+// Post-save hook: execute logic after document is persisted
+userSchema.post("save", function(doc, next) {
+  console.log(`Document persisted with ID: ${doc._id}`);
   next();
 });
 ```

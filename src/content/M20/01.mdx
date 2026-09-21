@@ -5,19 +5,19 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធផ្ញើ Email ក្នុង Web Application",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Sending transactional emails (password resets, welcome messages, purchase receipts) requires reliable transport architecture. Calling external SMTP servers synchronously blocks HTTP request threads, slowing response times by several seconds. Production architectures decouple email generation from delivery using asynchronous background message queues.",
-  tip: "Never `await` email delivery directly inside customer-facing HTTP requests. Offload email tasks to background workers (BullMQ/Redis) so API responses remain sub-100ms.",
+  summary: "Sending transactional emails (password resets, welcome messages, purchase receipts) requires reliable transport architecture. Calling external SMTP servers synchronously blocks HTTP responses, adding seconds of latency. Production architectures decouple email generation from delivery using asynchronous execution.",
+  tip: "Never await slow SMTP handshakes directly inside customer-facing HTTP requests. Dispatch email sending asynchronously so client responses stay under 100ms.",
   objective: "Understand synchronous vs asynchronous email delivery architectures in Node.js.",
   expectedOutcome: "High-performance architecture where slow SMTP handshakes never block HTTP responses.",
-  codeSnippet: "// Asynchronous Email Architecture:\n//\n// 1. Client POST /register\n// 2. Express Controller validates & saves user to MongoDB\n// 3. Controller dispatches email job to Redis Queue: emailQueue.add(\"welcome\", { email, name })\n// 4. Controller immediately returns 201 Created (<50ms!)\n// 5. Background BullMQ Worker consumes job and dispatches email via SMTP in parallel",
+  codeSnippet: "// Asynchronous Email Delivery Architecture:\n//\n// 1. Client sends POST /api/v1/auth/register\n// 2. Controller validates input & saves user to database (<20ms)\n// 3. Controller dispatches background email delivery asynchronously (non-blocking)\n// 4. Controller immediately responds 201 Created to the user (<50ms!)\n// 5. Email service completes SMTP handshake and transmission in the background",
 };
 
 ```javascript
-// Asynchronous Email Architecture:
+// Asynchronous Email Delivery Architecture:
 //
-// 1. Client POST /register
-// 2. Express Controller validates & saves user to MongoDB
-// 3. Controller dispatches email job to Redis Queue: emailQueue.add("welcome", { email, name })
-// 4. Controller immediately returns 201 Created (<50ms!)
-// 5. Background BullMQ Worker consumes job and dispatches email via SMTP in parallel
+// 1. Client sends POST /api/v1/auth/register
+// 2. Controller validates input & saves user to database (<20ms)
+// 3. Controller dispatches background email delivery asynchronously (non-blocking)
+// 4. Controller immediately responds 201 Created to the user (<50ms!)
+// 5. Email service completes SMTP handshake and transmission in the background
 ```

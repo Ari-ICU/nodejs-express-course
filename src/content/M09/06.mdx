@@ -9,12 +9,18 @@ export const meta = {
   tip: "If a resource with the requested ID does not exist, return `404 Not Found` rather than an empty object or null with 200.",
   objective: "Implement robust single and collection retrieval routes.",
   expectedOutcome: "Accurate query handling and clean 404 responses for missing entities.",
-  codeSnippet: "app.get(\"/api/v1/products/:id\", async (req, res) => {\n  const product = await Product.findById(req.params.id);\n  if (!product) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n  res.json({ success: true, data: product });\n});",
+  codeSnippet: "// Sample in-memory collection\nconst products = [\n  { id: \"1\", name: \"Wireless Mouse\", price: 29.99 },\n  { id: \"2\", name: \"Mechanical Keyboard\", price: 89.99 },\n];\n\napp.get(\"/api/v1/products/:id\", (req, res) => {\n  const product = products.find((p) => p.id === req.params.id);\n  if (!product) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n  res.json({ success: true, data: product });\n});",
 };
 
 ```javascript
-app.get("/api/v1/products/:id", async (req, res) => {
-  const product = await Product.findById(req.params.id);
+// Sample in-memory collection
+const products = [
+  { id: "1", name: "Wireless Mouse", price: 29.99 },
+  { id: "2", name: "Mechanical Keyboard", price: 89.99 },
+];
+
+app.get("/api/v1/products/:id", (req, res) => {
+  const product = products.find((p) => p.id === req.params.id);
   if (!product) {
     return res.status(404).json({ success: false, error: "Product not found" });
   }

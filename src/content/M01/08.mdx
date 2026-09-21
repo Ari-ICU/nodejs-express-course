@@ -9,31 +9,36 @@ export const meta = {
   tip: "Decoupling components using event emitters prevents tight coupling between data producers and consumers.",
   objective: "Master the mechanics of event-driven programming and publisher-subscriber patterns.",
   expectedOutcome: "Ability to structure backend logic reactively around events.",
-  codeSnippet: "import { EventEmitter } from \"node:events\";\n\n// Central Domain Event Bus\nconst orderEmitter = new EventEmitter();\n\n// Subscriber 1: Notification Service\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`📧 [Email] Confirmation sent to customer for order #${order.id}`);\n});\n\n// Subscriber 2: Inventory & Warehouse\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`📦 [Warehouse] SKU reserved for item \"${order.item}\"`);\n});\n\n// Subscriber 3: Analytics & Revenue Telemetry\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`📊 [Analytics] Conversion recorded: $${order.price}`);\n});\n\n// Producer: Dispatches event without waiting or coupling to consumers\norderEmitter.emit(\"order:placed\", { id: 9812, item: \"MacBook Pro\", price: 2499 });",
+  codeSnippet: "// Event-Driven Pattern (Publish-Subscribe Concept):\n// Components listen for named events and react when triggered\n\nconst eventListeners = {};\n\nfunction on(event, handler) {\n  if (!eventListeners[event]) eventListeners[event] = [];\n  eventListeners[event].push(handler);\n}\n\nfunction emit(event, data) {\n  const handlers = eventListeners[event] || [];\n  handlers.forEach((fn) => fn(data));\n}\n\n// 1. Register subscribers (listeners)\non(\"order:placed\", (order) => {\n  console.log(`📧 [Email] Sending confirmation for order #${order.id}`);\n});\n\non(\"order:placed\", (order) => {\n  console.log(`📦 [Warehouse] Reserving item \"${order.item}\"`);\n});\n\n// 2. Trigger the event (publisher)\nconsole.log(\"Customer completes checkout...\");\nemit(\"order:placed\", { id: 101, item: \"Laptop\", price: 1200 });",
 };
 
 ```javascript
-import { EventEmitter } from "node:events";
+// Event-Driven Pattern (Publish-Subscribe Concept):
+// Components listen for named events and react when triggered
 
-// Central Domain Event Bus
-const orderEmitter = new EventEmitter();
+const eventListeners = {};
 
-// Subscriber 1: Notification Service
-orderEmitter.on("order:placed", (order) => {
-  console.log(`📧 [Email] Confirmation sent to customer for order #${order.id}`);
+function on(event, handler) {
+  if (!eventListeners[event]) eventListeners[event] = [];
+  eventListeners[event].push(handler);
+}
+
+function emit(event, data) {
+  const handlers = eventListeners[event] || [];
+  handlers.forEach((fn) => fn(data));
+}
+
+// 1. Register subscribers (listeners)
+on("order:placed", (order) => {
+  console.log(`📧 [Email] Sending confirmation for order #${order.id}`);
 });
 
-// Subscriber 2: Inventory & Warehouse
-orderEmitter.on("order:placed", (order) => {
-  console.log(`📦 [Warehouse] SKU reserved for item "${order.item}"`);
+on("order:placed", (order) => {
+  console.log(`📦 [Warehouse] Reserving item "${order.item}"`);
 });
 
-// Subscriber 3: Analytics & Revenue Telemetry
-orderEmitter.on("order:placed", (order) => {
-  console.log(`📊 [Analytics] Conversion recorded: $${order.price}`);
-});
-
-// Producer: Dispatches event without waiting or coupling to consumers
-orderEmitter.emit("order:placed", { id: 9812, item: "MacBook Pro", price: 2499 });
+// 2. Trigger the event (publisher)
+console.log("Customer completes checkout...");
+emit("order:placed", { id: 101, item: "Laptop", price: 1200 });
 ```
 

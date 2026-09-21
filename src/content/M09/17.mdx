@@ -5,22 +5,26 @@ export const meta = {
   khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting (Ascending & Descending)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Sorting allows clients to control the presentation order of retrieved resources (`?sort=-createdAt,price`).",
+  summary: "Sorting allows clients to control the presentation order of retrieved resources using query parameters (e.g. `?sort=price` or `?sort=-price` for descending order).",
   tip: "Use `-` prefix conventions (e.g. `sort=-price`) for descending order and plain field names for ascending.",
-  objective: "Parse client sort strings into database sort directives.",
+  objective: "Parse client sort query parameters and sort resource collections.",
   expectedOutcome: "Flexible sorting across multiple entity fields.",
-  codeSnippet: "// Handling sort strings: ?sort=-price,createdAt\napp.get(\"/api/v1/products\", async (req, res) => {\n  let sortQuery = \"-createdAt\"; // Default newest first\n  if (req.query.sort) {\n    sortQuery = req.query.sort.split(\",\").join(\" \");\n  }\n\n  const products = await Product.find().sort(sortQuery);\n  res.json({ success: true, data: products });\n});",
+  codeSnippet: "// Handling sort query: ?sort=price or ?sort=-price\napp.get(\"/api/v1/products\", (req, res) => {\n  const sortParam = req.query.sort || \"name\";\n  const isDescending = sortParam.startsWith(\"-\");\n  const field = isDescending ? sortParam.slice(1) : sortParam;\n\n  const sorted = [...products].sort((a, b) => {\n    if (a[field] < b[field]) return isDescending ? 1 : -1;\n    if (a[field] > b[field]) return isDescending ? -1 : 1;\n    return 0;\n  });\n\n  res.json({ success: true, data: sorted });\n});",
 };
 
 ```javascript
-// Handling sort strings: ?sort=-price,createdAt
-app.get("/api/v1/products", async (req, res) => {
-  let sortQuery = "-createdAt"; // Default newest first
-  if (req.query.sort) {
-    sortQuery = req.query.sort.split(",").join(" ");
-  }
+// Handling sort query: ?sort=price or ?sort=-price
+app.get("/api/v1/products", (req, res) => {
+  const sortParam = req.query.sort || "name";
+  const isDescending = sortParam.startsWith("-");
+  const field = isDescending ? sortParam.slice(1) : sortParam;
 
-  const products = await Product.find().sort(sortQuery);
-  res.json({ success: true, data: products });
+  const sorted = [...products].sort((a, b) => {
+    if (a[field] < b[field]) return isDescending ? 1 : -1;
+    if (a[field] > b[field]) return isDescending ? -1 : 1;
+    return 0;
+  });
+
+  res.json({ success: true, data: sorted });
 });
 ```

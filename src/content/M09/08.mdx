@@ -9,13 +9,20 @@ export const meta = {
   tip: "PUT operations must be idempotent: sending the exact same PUT payload multiple times must leave the resource in the exact same state.",
   objective: "Implement idempotent full resource replacement.",
   expectedOutcome: "Idempotent resource replacement adhering to HTTP RFC standards.",
-  codeSnippet: "app.put(\"/api/v1/products/:id\", async (req, res) => {\n  const updated = await Product.findOneAndReplace({ _id: req.params.id }, req.body, { new: true, runValidators: true });\n  if (!updated) return res.status(404).json({ success: false, error: \"Product not found\" });\n  res.json({ success: true, data: updated });\n});",
+  codeSnippet: "app.put(\"/api/v1/products/:id\", (req, res) => {\n  const index = products.findIndex((p) => p.id === req.params.id);\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n\n  // Idempotent: completely replaces the resource with the new body\n  const replacedProduct = { id: req.params.id, ...req.body };\n  products[index] = replacedProduct;\n\n  res.json({ success: true, data: replacedProduct });\n});",
 };
 
 ```javascript
-app.put("/api/v1/products/:id", async (req, res) => {
-  const updated = await Product.findOneAndReplace({ _id: req.params.id }, req.body, { new: true, runValidators: true });
-  if (!updated) return res.status(404).json({ success: false, error: "Product not found" });
-  res.json({ success: true, data: updated });
+app.put("/api/v1/products/:id", (req, res) => {
+  const index = products.findIndex((p) => p.id === req.params.id);
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Product not found" });
+  }
+
+  // Idempotent: completely replaces the resource with the new body
+  const replacedProduct = { id: req.params.id, ...req.body };
+  products[index] = replacedProduct;
+
+  res.json({ success: true, data: replacedProduct });
 });
 ```

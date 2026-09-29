@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបំបែក Routes ដោយប្រើ express.Router()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "The `express.Router` class creates modular, mountable route handlers. A Router instance is a complete middleware and routing system, commonly referred to as a 'mini-app'.",
-  tip: "Create a separate router file for each domain entity (e.g. `user.routes.js`, `auth.routes.js`).",
-  objective: "Modularize routes into isolated router instances.",
-  expectedOutcome: "Self-contained, testable routing modules for each resource.",
+  summary: "ថ្នាក់ `express.Router` បង្កើតឧបករណ៍ដោះស្រាយផ្លូវដែលអាចម៉ោនបានម៉ូឌុល។ Router instance គឺជាកម្មវិធីកណ្តាលពេញលេញ និងប្រព័ន្ធកំណត់ផ្លូវ ដែលជាទូទៅគេហៅថា 'mini-app'។",
+  tip: "បង្កើតឯកសាររ៉ោតទ័រដាច់ដោយឡែកសម្រាប់អង្គភាពដែននីមួយៗ (ឧ. `user.routes.js`, `auth.routes.js`)។",
+  objective: "កែប្រែផ្លូវចូលទៅក្នុងឧទាហរណ៍រ៉ោតទ័រដាច់ឆ្ងាយ។",
+  expectedOutcome: "ម៉ូឌុលកំណត់ផ្លូវដែលអាចសាកល្បងបានដែលមានផ្ទុកដោយខ្លួនឯងសម្រាប់ធនធាននីមួយៗ។",
   codeSnippet: "// routes/product.routes.js\nimport { Router } from \"express\";\n\nconst router = Router();\n\nrouter.route(\"/\")\n  .get(getProducts)\n  .post(createProduct);\n\nrouter.route(\"/:id\")\n  .get(getProductById)\n  .patch(updateProduct)\n  .delete(deleteProduct);\n\nexport default router;",
 };
 

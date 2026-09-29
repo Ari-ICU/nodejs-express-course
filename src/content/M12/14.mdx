@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបញ្ចូលឯកសារថ្មី (Model.create & new Model)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Creating documents using `Model.create(payload)` (which instantiates and saves in one step) versus `new Model(payload)` followed by `.save()`.",
-  tip: "`Model.create()` accepts an array of objects to perform bulk insertions with validation.",
-  objective: "Persist new documents to MongoDB.",
-  expectedOutcome: "Clean entity creation with schema validation.",
+  summary: "ការបង្កើតឯកសារដោយប្រើ `Model.create(payload)` (ដែលភ្លាមៗ និងរក្សាទុកក្នុងជំហានមួយ) ធៀបនឹង `new Model(payload)` តាមពីក្រោយដោយ `.save()` ។",
+  tip: "`Model.create()` ទទួល​យក​អារេ​នៃ​វត្ថុ​ដើម្បី​អនុវត្ត​ការ​បញ្ចូល​ជា​ដុំ​ដោយ​មាន​ការ​បញ្ជាក់។",
+  objective: "បន្តឯកសារថ្មីទៅ MongoDB ។",
+  expectedOutcome: "សម្អាត​ការ​បង្កើត​អង្គភាព​ដោយ​មាន​សុពលភាព​គ្រោងការណ៍។",
   codeSnippet: "// Method 1: Direct create\nconst user = await User.create({ name: \"Sokha\", email: \"sokha@test.com\" });\n\n// Method 2: Instantiate, mutate, save\nconst product = new Product({ name: \"Phone\" });\nproduct.price = 599;\nawait product.save();",
 };
 

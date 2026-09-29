@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង និងស្វែងរកថត Folders",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Creating directories recursively, listing contents with file types, and cleaning up temporary folders.",
-  tip: "Always use `{ recursive: true }` when creating directories with `fs.mkdir()` so nested paths are created automatically without error.",
-  objective: "Create, scan, and manage directory trees programmatically.",
-  expectedOutcome: "Proficiency with recursive directory creation and cleanup.",
+  summary: "បង្កើត​ថត​ដដែលៗ រាយ​មាតិកា​ជាមួយ​ប្រភេទ​ឯកសារ និង​សម្អាត​ថត​បណ្ដោះអាសន្ន។",
+  tip: "ប្រើ `{ recursive: true }` ជានិច្ចនៅពេលបង្កើតថតជាមួយ `fs.mkdir()` ដូច្នេះផ្លូវដែលជាប់ត្រូវបានបង្កើតដោយស្វ័យប្រវត្តិដោយគ្មានកំហុស។",
+  objective: "បង្កើត ស្កេន និងគ្រប់គ្រងមែកធាងថតតាមកម្មវិធី។",
+  expectedOutcome: "ជំនាញជាមួយការបង្កើត និងសម្អាតថតឡើងវិញ",
   codeSnippet: "import fs from \"node:fs/promises\";\n\n// Create nested directory safely\nawait fs.mkdir(\"public/uploads/avatars\", { recursive: true });\n\n// Read directory entries with types\nconst entries = await fs.readdir(\"src\", { withFileTypes: true });\nfor (const entry of entries) {\n  console.log(entry.isDirectory() ? \"📁 [DIR]\" : \"📄 [FILE]\", entry.name);\n}",
 };
 

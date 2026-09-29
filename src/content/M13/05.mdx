@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Controllers សម្រាប់ Database Endpoints",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Authoring slim controller handlers that parse request inputs and orchestrate database responses.",
-  tip: "Wrap controller functions in an async handler utility to eliminate redundant `try/catch` boilerplate.",
-  objective: "Build controllers that handle HTTP parameters and return database results.",
-  expectedOutcome: "Clean, consistent controller handlers.",
+  summary: "បង្កើតកម្មវិធីគ្រប់គ្រងឧបករណ៍បញ្ជាស្ដើងដែលញែកសំណើបញ្ចូល និងរៀបចំការឆ្លើយតបមូលដ្ឋានទិន្នន័យ។",
+  tip: "មុខងាររបស់ឧបករណ៍បញ្ជារុំនៅក្នុងឧបករណ៍ដោះស្រាយ async ដើម្បីលុបបំបាត់ `try/catch` boilerplate ដែលមិនត្រូវការ។",
+  objective: "បង្កើតឧបករណ៍បញ្ជាដែលគ្រប់គ្រងប៉ារ៉ាម៉ែត្រ HTTP និងត្រឡប់លទ្ធផលមូលដ្ឋានទិន្នន័យ។",
+  expectedOutcome: "សម្អាតឧបករណ៍បញ្ជាដែលជាប់លាប់។",
   codeSnippet: "export const getProducts = async (req, res, next) => {\n  try {\n    const products = await productService.listProducts(req.query);\n    res.json({ success: true, data: products });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

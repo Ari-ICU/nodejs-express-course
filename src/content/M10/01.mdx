@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ហេតុអ្វីត្រូវបំបែក Business Logic ចេញពី Controller?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Writing database queries, payment transactions, and email logic directly inside Express route callbacks creates tightly-coupled, untestable code. Separating business logic into dedicated services ensures code is testable, reusable across CLI scripts or background workers, and simple to maintain.",
-  tip: "If you need to send a welcome email in a web route, CLI script, and background worker, a standalone `UserService` handles all three without duplicating code.",
-  objective: "Understand the architectural benefits of decoupling HTTP transport from domain logic.",
-  expectedOutcome: "Clear rationale for modular Layered Architecture.",
+  summary: "ការសរសេរសំណួរមូលដ្ឋានទិន្នន័យ ប្រតិបត្តិការទូទាត់ និងតក្កវិជ្ជាអ៊ីមែលដោយផ្ទាល់នៅខាងក្នុងការហៅត្រឡប់មកវិញនៃផ្លូវ Express បង្កើតលេខកូដដែលមិនអាចសាកល្បងបាន។ ការបំបែកតក្កវិជ្ជាអាជីវកម្មទៅជាសេវាកម្មដែលយកចិត្តទុកដាក់ធានាថាកូដអាចសាកល្បងបាន ប្រើឡើងវិញបាននៅទូទាំងស្គ្រីប CLI ឬបុគ្គលិកផ្ទៃខាងក្រោយ និងសាមញ្ញក្នុងការថែរក្សា។",
+  tip: "ប្រសិនបើអ្នកត្រូវការផ្ញើអ៊ីមែលស្វាគមន៍នៅក្នុងផ្លូវបណ្តាញ ស្គ្រីប CLI និងបុគ្គលិកផ្ទៃខាងក្រោយ `UserService` ឯករាជ្យគ្រប់គ្រងទាំងបីដោយមិនចម្លងកូដ។",
+  objective: "ស្វែងយល់ពីអត្ថប្រយោជន៍ស្ថាបត្យកម្មនៃការបំបែកការដឹកជញ្ជូន HTTP ពីតក្កវិជ្ជាដែន។",
+  expectedOutcome: "ជម្រះហេតុផលសម្រាប់ស្ថាបត្យកម្មស្រទាប់ម៉ូឌុល។",
   codeSnippet: "// BAD: Controller does EVERYTHING (Tightly coupled to Express)\napp.post(\"/users\", async (req, res) => {\n  // DB queries, password hashing, email sending all mixed into HTTP handler!\n});\n\n// GOOD: Controller delegates to reusable Service\napp.post(\"/users\", async (req, res, next) => {\n  const user = await userService.registerUser(req.body);\n  res.status(201).json({ success: true, data: user });\n});",
 };
 

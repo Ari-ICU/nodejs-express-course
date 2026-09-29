@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី Simple Mail Transfer Protocol (SMTP)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Simple Mail Transfer Protocol (SMTP) is the internet standard communication protocol for electronic mail transmission. An SMTP client establishes an encrypted TLS connection with an SMTP relay server (e.g. Brevo, SendGrid, Amazon SES, Mailgun) on port 587 or 465, performs SASL authentication, and transmits RFC 5322 MIME messages.",
-  tip: "Do not use your personal Gmail account for production application emails! Google imposes daily sending quotas and blocks rapid programmatic requests. Use dedicated transactional providers like Brevo, Resend, or SES.",
-  objective: "Understand SMTP protocols, connection ports (587, 465), and authentication mechanisms.",
-  expectedOutcome: "Solid grasp of mail relays and production SMTP configuration.",
+  summary: "Simple Mail Transfer Protocol (SMTP) គឺជាពិធីការទំនាក់ទំនងស្តង់ដារអ៊ីនធឺណិតសម្រាប់ការបញ្ជូនសំបុត្រអេឡិចត្រូនិច។ ម៉ាស៊ីនភ្ញៀវ SMTP បង្កើតការតភ្ជាប់ TLS ដែលបានអ៊ិនគ្រីបជាមួយServerបញ្ជូនត SMTP (ឧ. Brevo, SendGrid, Amazon SES, Mailgun) នៅលើច្រក 587 ឬ 465 អនុវត្តការផ្ទៀងផ្ទាត់ SASL និងបញ្ជូនសារ RFC 5322 MIME ។",
+  tip: "កុំប្រើគណនី Gmail ផ្ទាល់ខ្លួនរបស់អ្នកសម្រាប់អ៊ីមែលកម្មវិធីផលិតកម្ម! Google កំណត់កូតាការផ្ញើប្រចាំថ្ងៃ និងទប់ស្កាត់សំណើកម្មវិធីរហ័ស។ ប្រើអ្នកផ្តល់សេវាប្រតិបត្តិការជាក់លាក់ដូចជា Brevo, Resend, ឬ SES ។",
+  objective: "ស្វែងយល់អំពីពិធីការ SMTP ច្រកតភ្ជាប់ (587, 465) និងយន្តការផ្ទៀងផ្ទាត់។",
+  expectedOutcome: "ការចាប់យកយ៉ាងរឹងមាំនៃការបញ្ជូនតសំបុត្រ និងការកំណត់រចនាសម្ព័ន្ធ SMTP ផលិតកម្ម។",
   codeSnippet: "// Standard SMTP Configuration Parameters:\n// Host:     smtp-relay.brevo.com (or smtp.mailgun.org, email-smtp.us-east-1.amazonaws.com)\n// Port:     587 (STARTTLS - recommended) or 465 (SSL/TLS direct)\n// Secure:   false for 587 (upgrades via STARTTLS), true for 465\n// Auth:     User (API Key / Username) & Password (Secret Key)\n// From:     \"MyEnterprise Support <no-reply@myenterprise.com>\"",
 };
 

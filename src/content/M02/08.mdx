@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការពឹងផ្អែកសម្រាប់តែការអភិវឌ្ឍ (Dev Dependencies)",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Development dependencies listed under `\"devDependencies\"` are tooling packages used only during local development and testing (linters, test frameworks, type definitions, hot reloaders) and are excluded from production artifacts.",
-  tip: "Install development tooling with `npm i -D <package>` or `npm install --save-dev <package>`.",
-  objective: "Configure development dependencies correctly without polluting production builds.",
-  expectedOutcome: "Minimal production image size and faster deployment build times.",
+  summary: "ភាពអាស្រ័យនៃការអភិវឌ្ឍដែលបានរាយបញ្ជីនៅក្រោម `\"devDependencies\"` are tooling packages used only during local development and testing (linters, test frameworks, type definitions, hot reloaders) and are excluded from production artifacts.",
+  tip: "ដំឡើងឧបករណ៍អភិវឌ្ឍន៍ជាមួយ `npm i -D <package>` ឬ `npm install --save-dev <package>` ។",
+  objective: "កំណត់រចនាសម្ព័ន្ធភាពអាស្រ័យនៃការអភិវឌ្ឍឱ្យបានត្រឹមត្រូវ ដោយមិនធ្វើឱ្យខូចទ្រង់ទ្រាយផលិតកម្ម។",
+  expectedOutcome: "ទំហំរូបភាពផលិតកម្មតិចតួច និងពេលវេលាបង្កើតការដាក់ពង្រាយលឿនជាងមុន។",
   codeSnippet: "# Install development-only tools\nnpm install -D vitest supertest eslint prettier\n\n# package.json result:\n# \"devDependencies\": {\n#   \"eslint\": \"^9.3.0\",\n#   \"supertest\": \"^7.0.0\",\n#   \"vitest\": \"^1.6.0\"\n# }",
 };
 

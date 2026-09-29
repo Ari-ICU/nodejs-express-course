@@ -5,11 +5,11 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំណែ API Versioning (URI vs Header)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `As applications evolve, introducing breaking changes (removing fields, altering response shapes, renaming endpoints) without version control breaks existing mobile apps and third-party integrations. **API Versioning** allows legacy and modern clients to coexist seamlessly.
+  summary: `នៅពេលដែលកម្មវិធីមានការវិវឌ្ឍន៍ ការណែនាំអំពីការផ្លាស់ប្តូរបំបែក (ការដកវាលចេញ ផ្លាស់ប្តូររូបរាងការឆ្លើយតប ការប្តូរឈ្មោះEndpoint) ដោយគ្មានការគ្រប់គ្រងកំណែបំបែកកម្មវិធីទូរស័ព្ទដែលមានស្រាប់ និងការរួមបញ្ចូលភាគីទីបី។ **API Versioning** អនុញ្ញាតឱ្យអតិថិជនចាស់ និងទំនើបអាចរួមរស់ជាមួយគ្នាយ៉ាងរលូន។
 
-### 1. The Three Versioning Strategies
-* **URI Path Versioning (Industry Standard)**:
-  * Pattern: \`/api/v1/users\` vs \`/api/v2/users\`
+### 1. យុទ្ធសាស្ត្រកំណែទម្រង់ទាំងបី
+* ** កំណែផ្លូវ URI (ស្តង់ដារឧស្សាហកម្ម)**៖
+  * លំនាំ៖ \\`/api/v1/users\` vs \`/api/v2/users\`
   * Pros: Explicit, easy to test in browsers, simple CDN and reverse-proxy routing rules.
 * **Custom Request Header Versioning**:
   * Pattern: \`X-API-Version: 2\` or \`Accept-Version: 2.0.0\`
@@ -23,9 +23,9 @@ When phasing out older API versions, inform client developers programmatically u
 * \`Deprecation: true\` (or date string)
 * \`Sunset: Wed, 11 Nov 2026 00:00:00 GMT\` (Exact date of shutdown)
 * \`Link: <https://docs.api.com/migration>; rel="deprecation"\``,
-  tip: "URI versioning (`/api/v1/...`) is by far the most pragmatic and widely adopted standard in modern web development (used by Stripe, Twilio, Google, and GitHub). Only bump major versions when introducing breaking schema changes.",
-  objective: "Compare API versioning methodologies and implement backward-compatible routing in Express with deprecation headers.",
-  expectedOutcome: "The architectural capability to support multiple API generations simultaneously without breaking legacy consumers.",
+  tip: "កំណែ URI (`/api/v1/...`) គឺជាស្តង់ដារជាក់ស្តែងបំផុត និងត្រូវបានអនុម័តយ៉ាងទូលំទូលាយនៅក្នុងការអភិវឌ្ឍគេហទំព័រទំនើប (ប្រើដោយ Stripe, Twilio, Google និង GitHub)។ មានតែកំណែសំខាន់ៗប៉ុណ្ណោះ នៅពេលណែនាំការផ្លាស់ប្តូរគ្រោងការណ៍បំបែក។",
+  objective: "ប្រៀបធៀបវិធីសាស្រ្តកំណែ API និងអនុវត្តការកំណត់ផ្លូវដែលត្រូវគ្នានឹងថយក្រោយនៅក្នុង Express ជាមួយនឹងបឋមកថាបដិសេធ។",
+  expectedOutcome: "សមត្ថភាពស្ថាបត្យកម្មដើម្បីគាំទ្រជំនាន់ API ជាច្រើនក្នុងពេលដំណាលគ្នាដោយមិនធ្វើឱ្យខូចអ្នកប្រើប្រាស់កេរ្តិ៍ដំណែល។",
   codeSnippet: `/**
  * Multi-Version Express Architecture with Deprecation Headers
  */

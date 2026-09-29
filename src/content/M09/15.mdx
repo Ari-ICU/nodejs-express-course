@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Query Filtering សម្រាប់ Search & Categories",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `In RESTful APIs, **Query Filtering** allows clients to narrow down collection datasets by specific attributes without creating dedicated URL endpoints for every combination.
+  summary: `នៅក្នុង RESTful APIs, **Query Filtering** អនុញ្ញាតឱ្យអតិថិជនបង្រួមសំណុំទិន្នន័យប្រមូលដោយគុណលក្ខណៈជាក់លាក់ដោយមិនបង្កើតEndpoint URL ជាក់លាក់សម្រាប់រាល់ការបញ្ចូលគ្នា។
 
-### 1. Common REST Filtering Syntax Patterns
-* **Exact Matching**: \`/products?category=electronics&brand=apple\`
+### 1. លំនាំវាក្យសម្ព័ន្ធតម្រង REST ទូទៅ
+** ការផ្គូផ្គងពិតប្រាកដ **៖ \\`/products?category=electronics&brand=apple\`
 * **Comparison Operators (Range)**:
   * Prefix style: \`/products?minPrice=50&maxPrice=200\`
   * Bracket style: \`/products?price[gte]=50&price[lte]=200\`
@@ -17,9 +17,9 @@ export const meta = {
 
 ### 2. Building Dynamic Database Queries Safely
 Extract \`req.query\`, sanitize values, and dynamically construct query clauses. In production ORMs (Prisma, Mongoose, Knex), always use parameterized queries to avoid injection vulnerabilities.`,
-  tip: "Always convert and validate data types when reading `req.query`. By default in Express, all `req.query` values arrive as strings! For instance, `'true' !== true` and `typeof req.query.price === 'string'`.",
-  objective: "Build a dynamic multi-parameter query filtering engine in Express supporting category matching, price ranges, and boolean availability.",
-  expectedOutcome: "The ability to handle flexible query filters dynamically while validating types and guarding against malformed parameters.",
+  tip: "តែងតែបំប្លែង និងធ្វើឱ្យប្រភេទទិន្នន័យមានសុពលភាពនៅពេលអាន `req.query`។ តាមលំនាំដើមក្នុង Express តម្លៃ `req.query` ទាំងអស់មកដល់ជាខ្សែអក្សរ! ឧទាហរណ៍ `'true' !== true` និង `typeof req.query.price === 'string'`។",
+  objective: "បង្កើតម៉ាស៊ីនត្រងសំណួរពហុប៉ារ៉ាម៉ែត្រថាមវន្តនៅក្នុងការផ្គូផ្គងប្រភេទគាំទ្រ Express ជួរតម្លៃ និងភាពអាចរកបានប៊ូលីន។",
+  expectedOutcome: "សមត្ថភាពក្នុងការដោះស្រាយតម្រងសំណួរដែលអាចបត់បែនបានតាមលក្ខណៈថាមវន្ត ខណៈពេលដែលការបញ្ជាក់ប្រភេទ និងការការពារពីប៉ារ៉ាម៉ែត្រខុសទម្រង់។",
   codeSnippet: `const express = require("express");
 const app = express();
 

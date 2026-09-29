@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំរចនាសម្ព័ន្ធ Routes ក្នុងគម្រោងធំ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "In enterprise applications, an `index.js` routes aggregator combines all domain routers into a unified router module that is mounted onto the main Express app.",
-  tip: "Keeping route files focused solely on path definitions and middleware bindings makes code reviews fast and transparent.",
-  objective: "Aggregate multiple domain routers into a centralized router registry.",
-  expectedOutcome: "Single clean mounting point for all application routes.",
+  summary: "នៅក្នុងកម្មវិធីសហគ្រាស អ្នកប្រមូលផ្តុំផ្លូវ `index.js` រួមបញ្ចូលគ្នានូវរ៉ោតទ័រដែនទាំងអស់ចូលទៅក្នុងម៉ូឌុលរ៉ោតទ័របង្រួបបង្រួមដែលត្រូវបានម៉ោននៅលើកម្មវិធី Express ចម្បង។",
+  tip: "ការរក្សាឯកសារផ្លូវដែលផ្តោតតែលើការកំណត់ផ្លូវ និងការភ្ជាប់ឧបករណ៍កណ្តាលធ្វើឱ្យការពិនិត្យមើលកូដលឿន និងតម្លាភាព។",
+  objective: "ប្រមូលផ្តុំរ៉ោតទ័រដែនជាច្រើនចូលទៅក្នុងបញ្ជីឈ្មោះរ៉ោតទ័រកណ្តាល។",
+  expectedOutcome: "ចំណុចភ្ជាប់ស្អាតតែមួយសម្រាប់ផ្លូវកម្មវិធីទាំងអស់។",
   codeSnippet: "// routes/index.js\nimport { Router } from \"express\";\nimport authRoutes from \"./auth.routes.js\";\nimport userRoutes from \"./user.routes.js\";\nimport orderRoutes from \"./order.routes.js\";\n\nconst apiRouter = Router();\n\napiRouter.use(\"/auth\", authRoutes);\napiRouter.use(\"/users\", userRoutes);\napiRouter.use(\"/orders\", orderRoutes);\n\nexport default apiRouter;",
 };
 

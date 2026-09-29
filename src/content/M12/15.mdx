@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការទាញយកឯកសារ (Single & Multiple)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Retrieving records using specific criteria, projecting selected fields (`.select('+password')` or `.select('-__v')`), and checking existence.",
-  tip: "Use `.select('-password')` by default on user models so confidential hashes are never sent to clients.",
-  objective: "Read and project specific fields from documents.",
-  expectedOutcome: "Secure data retrieval excluding sensitive fields.",
+  summary: "ការទាញយកកំណត់ត្រាដោយប្រើលក្ខណៈវិនិច្ឆ័យជាក់លាក់ ការព្យាករណ៍វាលដែលបានជ្រើសរើស (`.select('+password')` ឬ `.select('-__v')`) និងពិនិត្យមើលអត្ថិភាព។",
+  tip: "ប្រើ `.select('-password')` តាមលំនាំដើមលើម៉ូដែលអ្នកប្រើប្រាស់ ដូច្នេះសញ្ញាសម្ងាត់មិនត្រូវបានផ្ញើទៅអតិថិជនទេ។",
+  objective: "អាន​និង​គម្រោង​វាល​ជាក់លាក់​ពី​ឯកសារ។",
+  expectedOutcome: "ការទាញយកទិន្នន័យដោយសុវត្ថិភាព ដោយមិនរាប់បញ្ចូលវាលរសើប។",
   codeSnippet: "// Find user by ID excluding internal fields\nconst user = await User.findById(userId).select(\"-password -__v\");",
 };
 

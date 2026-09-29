@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ថតផ្ទុកកូដ node_modules",
   type: "concept",
   codeLanguage: "bash",
-  summary: "The `node_modules` directory holds the installed physical code of all direct and transitive dependencies. Because it is reproducible via `npm install`, it should never be committed to Git.",
-  tip: "Always include `node_modules/` in your `.gitignore` file to prevent committing hundreds of megabytes of third-party code.",
-  objective: "Understand dependency resolution, nested trees, and why node_modules must be gitignored.",
-  expectedOutcome: "Clean Git repository history free of external vendor directories.",
+  summary: "ថតឯកសារ `node_modules` ផ្ទុកកូដរូបវន្តដែលបានដំឡើងនៃភាពអាស្រ័យដោយផ្ទាល់ និងអន្តរកាលទាំងអស់។ ដោយសារតែវាអាចផលិតឡើងវិញបានតាមរយៈ `npm install` វាមិនគួរត្រូវបានប្តេជ្ញាចិត្តចំពោះ Git ទេ។",
+  tip: "តែងតែរួមបញ្ចូល `node_modules/` នៅក្នុងឯកសារ `.gitignore` របស់អ្នក ដើម្បីការពារការប្រព្រឹត្តិកូដភាគីទីបីរាប់រយមេកាបៃ។",
+  objective: "ស្វែងយល់ពីដំណោះស្រាយភាពអាស្រ័យ ដើមឈើដែលជាប់គាំង និងមូលហេតុដែល node_modules ត្រូវតែមិនអើពើ។",
+  expectedOutcome: "សម្អាតប្រវត្តិឃ្លាំង Git ដោយគ្មានបញ្ជីអ្នកលក់ខាងក្រៅ។",
   codeSnippet: "# Ensure .gitignore has node_modules\necho \"node_modules/\" >> .gitignore\necho \".env\" >> .gitignore\n\n# Completely refresh dependencies if corrupted\nrm -rf node_modules package-lock.json\nnpm install",
 };
 

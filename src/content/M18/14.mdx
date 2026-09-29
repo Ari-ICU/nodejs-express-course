@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការយល់ដឹង និងការពារ Cross-Site Request Forgery (CSRF)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Cross-Site Request Forgery (CSRF) tricks a user's browser into executing unwanted actions on an authenticated web app where the user is logged in via ambient cookies. Modern Single Page Applications (SPAs) communicating via `Authorization: Bearer <token>` headers are inherently immune to CSRF because browsers never attach authorization headers automatically across cross-origin requests.",
-  tip: "If using cookies for authentication, set `SameSite: 'strict'` or `'lax'` — this modern browser standard eliminates the need for complex CSRF tokens in 99% of web apps.",
-  objective: "Understand the mechanics of CSRF and modern defenses like SameSite cookies and custom headers.",
-  expectedOutcome: "Solid understanding of when CSRF protection is required vs when Bearer tokens render it moot.",
+  summary: "Cross-Site Request Forgery (CSRF) បញ្ឆោតBrowserតាមអ៊ីនធឺណិតរបស់អ្នកប្រើឱ្យអនុវត្តសកម្មភាពដែលមិនចង់បាននៅលើកម្មវិធីគេហទំព័រដែលមានការផ្ទៀងផ្ទាត់ដែលអ្នកប្រើប្រាស់បានចូលតាមរយៈខូឃីជុំវិញ។ កម្មវិធីទំព័រតែមួយសម័យទំនើប (SPAs) ទំនាក់ទំនងតាមរយៈ `Authorization: Bearer <token>` បឋមកថាមានភាពស៊ាំទៅនឹង CSRF ពីព្រោះBrowserមិនដែលភ្ជាប់បឋមកថាអនុញ្ញាតដោយស្វ័យប្រវត្តិតាមសំណើឆ្លងប្រភព។",
+  tip: "ប្រសិនបើប្រើCookiesសម្រាប់ការផ្ទៀងផ្ទាត់ កំណត់ `SameSite: 'strict'` ឬ `'lax'` — ស្តង់ដារBrowserតាមអ៊ីនធឺណិតទំនើបនេះលុបបំបាត់តម្រូវការសម្រាប់និមិត្តសញ្ញា CSRF ស្មុគស្មាញក្នុង 99% នៃកម្មវិធីគេហទំព័រ។",
+  objective: "ស្វែងយល់អំពីយន្តការនៃ CSRF និងការការពារទំនើបដូចជាCookies SameSite និងបឋមកថាផ្ទាល់ខ្លួន។",
+  expectedOutcome: "ការយល់ដឹងរឹងមាំអំពីពេលដែលការការពារ CSRF ត្រូវបានទាមទារធៀបនឹងពេលដែលសញ្ញាសម្ងាត់ Bearer បង្ហាញវាឡើង។",
   codeSnippet: "// Why Bearer Tokens in headers are immune to CSRF:\n// 1. In CSRF, a malicious website triggers: <form action=\"https://bank.com/transfer\" method=\"POST\">\n// 2. The browser automatically attaches COOKIES.\n// 3. The browser NEVER automatically attaches custom HEADERS like:\n//    \"Authorization: Bearer <token>\"\n//\n// Therefore:\n// - Bearer Auth (in Header): Immune to CSRF by design.\n// - Cookie Auth: Requires SameSite=\"strict\" or Anti-CSRF Synchronizer Tokens.",
 };
 

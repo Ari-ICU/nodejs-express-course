@@ -5,18 +5,18 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះទាំង ៦ នៃ REST",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Fielding defined **six fundamental architectural constraints** that govern a true REST system. Meeting these constraints ensures that an API scales elastically, survives network latency, and operates reliably across distributed environments.
+  summary: `Fielding បានកំណត់ **ឧបសគ្គស្ថាបត្យកម្មជាមូលដ្ឋានចំនួនប្រាំមួយ** ដែលគ្រប់គ្រងប្រព័ន្ធ REST ពិត។ ការបំពេញតាមឧបសគ្គទាំងនេះធានាថា API ធ្វើមាត្រដ្ឋានយឺតៗ រស់រានមានជីវិតពីភាពយឺតយ៉ាវនៃបណ្តាញ និងដំណើរការដោយភាពជឿជាក់លើបរិស្ថានដែលបានចែកចាយ។
 
-### The 6 Foundational Constraints:
-1. **Client-Server Architecture**: Separates user interface and client concerns from data storage and server logic. Both can evolve independently without breaking contracts.
-2. **Statelessness (Stateless)**: Every single request from client to server must contain all the information necessary to understand and process the request (e.g., Bearer JWT tokens in headers). The server retains zero client session state between requests.
-3. **Cacheability**: Responses must explicitly label themselves as cacheable or non-cacheable to prevent clients from reusing stale or inappropriate data.
-4. **Uniform Interface**: The cornerstone of REST. Standard resource identification (URIs), manipulation of resources through representations, self-descriptive messages, and hypermedia (HATEOAS).
-5. **Layered System**: An intermediary (proxy, reverse proxy, load balancer, API gateway) can be inserted without the client knowing whether it is speaking to the end server or an intermediate cache.
-6. **Code on Demand (Optional)**: Servers can temporarily extend or customize client functionality by transferring executable code (e.g., JavaScript).`,
-  tip: "Statelessness is what allows modern cloud microservices to scale horizontally without friction. Because servers don't store session state, any instance behind an AWS ALB or Nginx reverse proxy can fulfill any incoming request.",
-  objective: "Analyze and implement the six formal architectural constraints that define REST systems.",
-  expectedOutcome: "A deep architectural understanding of stateless authentication, caching headers, and multi-tier server decoupling.",
+### ឧបសគ្គមូលដ្ឋានទាំង ៦៖
+1. **ស្ថាបត្យកម្មម៉ាស៊ីនភ្ញៀវ-Server**៖ បំបែកចំណុចប្រទាក់អ្នកប្រើប្រាស់ និងកង្វល់របស់អតិថិជនចេញពីការផ្ទុកទិន្នន័យ និងតក្កវិជ្ជាServer។ ទាំងពីរអាចវិវឌ្ឍន៍ដោយឯករាជ្យដោយមិនបំពានកិច្ចសន្យា។
+2. **ភាពគ្មានរដ្ឋ (Stateless)**៖ រាល់សំណើពីអតិថិជនទៅServerត្រូវតែមានព័ត៌មានទាំងអស់ដែលចាំបាច់ដើម្បីយល់ និងដំណើរការសំណើ (ឧ. Bearer JWT tokens in headers)។ Serverរក្សាស្ថានភាពនៃវគ្គអតិថិជនសូន្យរវាងសំណើ។
+3. **សមត្ថភាពផ្ទុកទិន្នន័យ**៖ ការឆ្លើយតបត្រូវតែដាក់ស្លាកខ្លួនឯងយ៉ាងច្បាស់ថាអាចលាក់ទុកបាន ឬមិនអាចលាក់ទុកបាន ដើម្បីការពារអតិថិជនពីការប្រើប្រាស់ទិន្នន័យដែលជាប់គាំង ឬមិនសមរម្យឡើងវិញ។
+4. **ចំណុចប្រទាក់ឯកសណ្ឋាន**៖ មូលដ្ឋានគ្រឹះនៃ REST។ ការកំណត់អត្តសញ្ញាណធនធានស្តង់ដារ (URIs) ការរៀបចំធនធានតាមរយៈការតំណាង សារពិពណ៌នាដោយខ្លួនឯង និងប្រព័ន្ធផ្សព្វផ្សាយខ្ពស់ (HATEOAS) ។
+5. **Layered System**៖ អន្តរការី (ប្រូកស៊ី ប្រូកស៊ីបញ្ច្រាស ផ្ទុកតុល្យភាព ច្រក API) អាចត្រូវបានបញ្ចូលដោយម៉ាស៊ីនភ្ញៀវមិនដឹងថាវាកំពុងនិយាយទៅកាន់Serverចុង ឬឃ្លាំងសម្ងាត់កម្រិតមធ្យមនោះទេ។
+6. **Code on Demand (ស្រេចចិត្ត)**: Servers អាចពង្រីក ឬកំណត់មុខងារអតិថិជនតាមបំណងជាបណ្តោះអាសន្ន ដោយផ្ទេរកូដដែលអាចប្រតិបត្តិបាន (ឧ. JavaScript)។`,
+  tip: "ភាពគ្មានរដ្ឋគឺជាអ្វីដែលអនុញ្ញាតឱ្យសេវាមីក្រូពពកទំនើបធ្វើមាត្រដ្ឋានផ្ដេកដោយមិនមានការកកិត។ ដោយសារតែServerមិនរក្សាទុកស្ថានភាពសម័យនោះ វត្ថុណាមួយដែលនៅពីក្រោយ AWS ALB ឬ Nginx ប្រូកស៊ីបញ្ច្រាសអាចបំពេញសំណើចូលបាន។",
+  objective: "វិភាគ និងអនុវត្តឧបសគ្គស្ថាបត្យកម្មផ្លូវការចំនួនប្រាំមួយ ដែលកំណត់ប្រព័ន្ធ REST ។",
+  expectedOutcome: "ការយល់ដឹងអំពីស្ថាបត្យកម្មយ៉ាងស៊ីជម្រៅអំពីការផ្ទៀងផ្ទាត់ភាពគ្មានរដ្ឋ បឋមកថាឃ្លាំងសម្ងាត់ និងការបំបែកServerពហុជាន់។",
   codeSnippet: `/**
  * Demonstrating REST Principle #2: Stateless Request Handling
  * Every request carries its own authorization and identity credentials.

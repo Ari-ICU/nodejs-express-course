@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបញ្ជូនទិន្នន័យត្រឡប់ទៅកាន់ Client",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Finalizing and sending responses to clients involves writing status codes, headers, and serializing the body before closing the stream with `res.end()`.",
-  tip: "Calling `res.end()` is mandatory in native Node.js HTTP; forgetting to call it leaves the client socket open until it eventually times out.",
-  objective: "Safely finalize responses under all conditions including errors.",
-  expectedOutcome: "Guaranteed closure of client TCP connections without socket leaks.",
+  summary: "ការបញ្ចប់ និងការផ្ញើការឆ្លើយតបទៅកាន់អតិថិជនពាក់ព័ន្ធនឹងការសរសេរកូដស្ថានភាព បឋមកថា និងការដាក់សៀរៀលតួមុនពេលបិទការផ្សាយជាមួយ `res.end()`។",
+  tip: "ការហៅទៅកាន់ `res.end()` គឺចាំបាច់នៅក្នុង Node.js HTTP ដើម។ ការភ្លេចហៅវាទុករន្ធអតិថិជនបើករហូតទាល់តែវាអស់ពេល។",
+  objective: "បញ្ចប់ការឆ្លើយតបដោយសុវត្ថិភាពក្រោមលក្ខខណ្ឌទាំងអស់ រួមទាំងកំហុសផងដែរ។",
+  expectedOutcome: "ធានាការបិទការតភ្ជាប់ TCP របស់អតិថិជនដោយគ្មានការលេចធ្លាយរន្ធ។",
   codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  try {\n    const payload = { data: [1, 2, 3], timestamp: new Date() };\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify(payload));\n  } catch (err) {\n    res.writeHead(500, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify({ error: \"Internal Server Error\" }));\n  }\n});",
 };
 

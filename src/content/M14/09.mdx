@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Reusable Validation Middleware",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Creating a generic validation middleware factory that accepts a Zod schema and validates incoming requests before passing control to controllers.",
-  tip: "A single reusable `validate()` middleware handles all schemas across your entire application.",
-  objective: "Build a generic validation middleware factory.",
-  expectedOutcome: "Clean, declarative route definitions with attached validation guards.",
+  summary: "ការបង្កើតរោងចក្រផលិតឧបករណ៍កណ្តាលដែលមានសុពលភាពទូទៅដែលទទួលយកគ្រោងការណ៍ Zod និងធ្វើឱ្យមានសុពលភាពសំណើចូលមុនពេលបញ្ជូនការគ្រប់គ្រងទៅឧបករណ៍បញ្ជា។",
+  tip: "ឧបករណ៍កណ្តាល `validate()` ដែលអាចប្រើឡើងវិញបានតែមួយគ្រប់គ្រងគ្រោងការណ៍ទាំងអស់នៅលើកម្មវិធីទាំងមូលរបស់អ្នក។",
+  objective: "បង្កើតរោងចក្រផលិតឧបករណ៍កណ្តាលដែលមានសុពលភាពទូទៅ។",
+  expectedOutcome: "សម្អាត និយមន័យផ្លូវដែលប្រកាសដោយភ្ជាប់ជាមួយឆ្មាំសុពលភាព។",
   codeSnippet: "export const validate = (schema) => async (req, res, next) => {\n  try {\n    req.body = await schema.parseAsync(req.body);\n    next();\n  } catch (error) {\n    res.status(400).json({\n      success: false,\n      error: \"Validation failed\",\n      issues: error.errors.map(e => ({ field: e.path.join(\".\"), message: e.message }))\n    });\n  }\n};\n\n// Route usage:\n// router.post(\"/products\", validate(productSchema), createProduct);",
 };
 

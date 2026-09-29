@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពីទម្រង់ Multipart Form Data",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "A `multipart/form-data` payload breaks an HTTP message body into multiple distinct sections delimited by unique boundary strings. Each section contains its own mini-headers (e.g. `Content-Disposition`, `Content-Type`) followed by that field's text or raw binary contents. This allows text form fields and multiple files to be submitted concurrently in a single HTTP request.",
-  tip: "Ensure frontend clients do NOT manually set `Content-Type: multipart/form-data` with `fetch` or `axios` — let the browser set it automatically with the correct dynamic boundary string.",
-  objective: "Learn how the HTTP boundary delimiter splits form fields and binary payloads.",
-  expectedOutcome: "Accurate debugging of multipart headers and frontend payload preparation.",
+  summary: "បន្ទុក `multipart/form-data` បំបែកតួសារ HTTP ទៅជាផ្នែកផ្សេងគ្នាជាច្រើនដែលកំណត់ដោយខ្សែព្រំដែនតែមួយគត់។ ផ្នែកនីមួយៗមានបឋមកថាតូចផ្ទាល់ខ្លួនរបស់វា (ឧ. `Content-Disposition`, `Content-Type`) អមដោយអត្ថបទរបស់វាលនោះ ឬមាតិកាគោលពីរឆៅ។ នេះអនុញ្ញាតឱ្យវាលទម្រង់អត្ថបទ និងឯកសារជាច្រើនត្រូវបានដាក់ជូនក្នុងពេលដំណាលគ្នាក្នុងសំណើ HTTP តែមួយ។",
+  tip: "ត្រូវប្រាកដថាអតិថិជនFrontendមិនកំណត់ `Content-Type: multipart/form-data` ដោយដៃជាមួយ `fetch` ឬ `axios` — អនុញ្ញាតឱ្យBrowserកំណត់វាដោយស្វ័យប្រវត្តិជាមួយនឹងខ្សែបន្ទាត់ព្រំដែនថាមវន្តត្រឹមត្រូវ។",
+  objective: "ស្វែងយល់ពីរបៀបដែលឧបករណ៍កំណត់ព្រំដែន HTTP បំបែកវាលទម្រង់ និងបន្ទុកប្រព័ន្ធគោលពីរ។",
+  expectedOutcome: "ការកែកំហុសត្រឹមត្រូវនៃបឋមកថាពហុផ្នែក និងការរៀបចំបន្ទុកFrontend។",
   codeSnippet: "// Frontend form data preparation:\nconst formData = new FormData();\nformData.append(\"title\", \"My Summer Vacation\"); // Regular text field\nformData.append(\"coverImage\", fileInput.files[0]); // Binary file field\n\n// Using fetch: DO NOT explicitly set Content-Type! Browser appends boundary automatically!\nconst res = await fetch(\"/api/v1/posts\", {\n  method: \"POST\",\n  body: formData, // Browser sets: 'multipart/form-data; boundary=----WebKitFormBoundary...'\n});",
 };
 

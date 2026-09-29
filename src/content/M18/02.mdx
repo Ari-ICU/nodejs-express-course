@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ Cross-Origin Resource Sharing (CORS)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Cross-Origin Resource Sharing (CORS) is a browser security mechanism that restricts web pages from making AJAX requests to a different domain, port, or protocol than the one serving the web page. The `cors` package in Express manages headers like `Access-Control-Allow-Origin` and handles HTTP `OPTIONS` preflight requests.",
-  tip: "Never use `cors({ origin: '*' })` with `credentials: true` in production! Explicitly whitelist trusted frontend domains via an array or function.",
-  objective: "Configure the cors middleware to securely permit trusted frontend origins while rejecting unauthorized domains.",
-  expectedOutcome: "Secure cross-origin request handling with strict origin whitelisting.",
+  summary: "Cross-Origin Resource Sharing (CORS) គឺជាយន្តការសុវត្ថិភាពរបស់Browserតាមអ៊ីនធឺណិតដែលដាក់កម្រិតទំព័របណ្ដាញពីការស្នើសុំ AJAX ទៅកាន់ដែន ច្រក ឬពិធីការផ្សេងពីគេហទំព័រដែលបម្រើគេហទំព័រ។ កញ្ចប់ `cors` ក្នុង Express គ្រប់គ្រងបឋមកថាដូចជា `Access-Control-Allow-Origin` និងគ្រប់គ្រងសំណើ HTTP `OPTIONS` ជាមុន។",
+  tip: "កុំប្រើ `cors({ origin: '*' })` ជាមួយ `credentials: true` ក្នុងការផលិត! ធ្វើបញ្ជីសយ៉ាងច្បាស់នូវដែនខាងមុខដែលជឿទុកចិត្តតាមរយៈអារេ ឬមុខងារ។",
+  objective: "កំណត់រចនាសម្ព័ន្ធ cors middleware ដើម្បីអនុញ្ញាតឱ្យមានប្រភពដើម frontend ដែលអាចទុកចិត្តបាន ខណៈពេលដែលបដិសេធដែនដែលគ្មានការអនុញ្ញាត។",
+  expectedOutcome: "ការដោះស្រាយសំណើឆ្លងប្រភពដោយសុវត្ថិភាពជាមួយនឹងការចុះបញ្ជីសប្រភពដើមយ៉ាងតឹងរឹង។",
   codeSnippet: "import cors from \"cors\";\n\nconst allowedOrigins = [\n  \"https://mywebapplication.com\",\n  \"https://admin.mywebapplication.com\"\n];\n\nconst corsOptions = {\n  origin: (origin, callback) => {\n    // Allow server-to-server or tools with no origin (like Postman or curl)\n    if (!origin || allowedOrigins.includes(origin)) {\n      callback(null, true);\n    } else {\n      callback(new Error(\"Blocked by CORS policy\"));\n    }\n  },\n  credentials: true, // Allow cookies and authorization headers\n  methods: [\"GET\", \"POST\", \"PUT\", \"PATCH\", \"DELETE\", \"OPTIONS\"],\n  allowedHeaders: [\"Content-Type\", \"Authorization\"],\n  maxAge: 86400, // Preflight cache for 24 hours\n};\n\napp.use(cors(corsOptions));",
 };
 

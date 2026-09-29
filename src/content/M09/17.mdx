@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting (Ascending & Descending)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `**Sorting** allows clients to request collection resources ordered by one or multiple fields in ascending or descending sequence.
+  summary: `**ការតម្រៀប** អនុញ្ញាតឱ្យអតិថិជនស្នើសុំធនធានប្រមូលតាមលំដាប់លំដោយមួយ ឬច្រើនក្នុងលំដាប់ឡើង ឬចុះ។
 
-### 1. Industry Standard Sorting Syntax
-* **Minus Prefix Convention** (Stripe & Mongoose standard):
+### 1. វាក្យសម្ព័ន្ធតម្រៀបស្តង់ដារឧស្សាហកម្ម
+* **អនុសញ្ញាដកបុព្វបទ** (ស្តង់ដារឆ្នូត និងម៉ុងហ្គោស)៖
   * \`/products?sort=price\` (Ascending: low to high)
   * \`/products?sort=-price\` (Descending: high to low)
 * **Multi-Field Sorting**:
@@ -17,9 +17,9 @@ export const meta = {
 
 ### 2. Guarding Database Performance with Field Whitelisting
 Never let clients sort by un-indexed or arbitrary database columns! Sorting by un-indexed fields causes database disk swaps and query timeouts. Always validate requested sort fields against an allowed whitelist.`,
-  tip: "Always enforce a default sort order on your collection endpoints (e.g. `-createdAt` or `id`). Without an explicit sort order, relational databases return rows in arbitrary order, causing paginated items to shift unpredictably between page requests.",
-  objective: "Build a multi-field sorting mechanism in Express that parses ascending/descending prefixes and validates fields against a strict security whitelist.",
-  expectedOutcome: "Predictable, deterministic sorting functionality that guarantees consistent pagination and safeguards database indexes.",
+  tip: "អនុវត្ត​លំដាប់​តម្រៀប​លំនាំដើម​លើ​ចំណុច​បញ្ចប់​បណ្តុំ​របស់​អ្នក​ជានិច្ច (ឧ. `-createdAt` ឬ `id`)។ បើគ្មានលំដាប់តម្រៀបច្បាស់លាស់ទេ មូលដ្ឋានទិន្នន័យដែលទាក់ទងគ្នានឹងត្រឡប់ជួរដេកតាមលំដាប់លំដោយ ដែលបណ្តាលឱ្យធាតុ paginated ផ្លាស់ប្តូរដែលមិនអាចទាយទុកជាមុនបានរវាងសំណើទំព័រ។",
+  objective: "បង្កើតយន្តការតម្រៀបពហុវាលនៅក្នុង Express ដែលញែកបុព្វបទឡើង/ចុះក្រោម និងធ្វើឱ្យវាលមានសុពលភាពប្រឆាំងនឹងបញ្ជីសសុវត្ថិភាពដ៏តឹងរឹង។",
+  expectedOutcome: "មុខងារតម្រៀបដែលអាចទស្សន៍ទាយបាន កំណត់ដែលធានានូវលេខទំព័រជាប់គ្នា និងការពារសន្ទស្សន៍មូលដ្ឋានទិន្នន័យ។",
   codeSnippet: `const express = require("express");
 const app = express();
 

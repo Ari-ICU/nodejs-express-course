@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ Fields និងប្រភេទ BSON Data Types",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Fields in documents are key-value pairs. Values can include all standard JSON types plus rich BSON types like Date, Decimal128, Binary data, and 12-byte ObjectIds.",
-  tip: "Always store currency prices as integer cents (e.g. `$29.99` as `2999`) or BSON `Decimal128` to avoid floating-point math rounding errors.",
-  objective: "Select appropriate BSON field types for domain data.",
-  expectedOutcome: "Accurate type mapping avoiding floating point math bugs.",
+  summary: "វាល​ក្នុង​ឯកសារ​គឺ​ជា​គូ​តម្លៃ​គន្លឹះ។ តម្លៃអាចរួមបញ្ចូលប្រភេទ JSON ស្តង់ដារទាំងអស់ បូកនឹងប្រភេទ BSON ដ៏សម្បូរបែបដូចជា Date, Decimal128, Binary data, និង 12-byte ObjectIds។",
+  tip: "រក្សាទុកតម្លៃរូបិយប័ណ្ណជាចំនួនគត់សេន (ឧ. `$29.99` ដូច `2999`) ឬ BSON `Decimal128` ដើម្បីជៀសវាងកំហុសក្នុងការបង្គត់គណិតវិទ្យាអណ្តែត។",
+  objective: "ជ្រើសរើសប្រភេទវាល BSON ដែលសមរម្យសម្រាប់ទិន្នន័យដែន។",
+  expectedOutcome: "ការធ្វើផែនទីប្រភេទត្រឹមត្រូវជៀសវាងកំហុសគណិតវិទ្យាចំណុចអណ្តែត។",
   codeSnippet: "// BSON Data Types Example:\n{\n  \"name\": \"Product Name\",        // String\n  \"quantity\": 50,                // Int32\n  \"priceInCents\": 4999,          // Integer (safe currency)\n  \"createdAt\": ISODate(),        // Date object\n  \"isActive\": true               // Boolean\n}",
 };
 

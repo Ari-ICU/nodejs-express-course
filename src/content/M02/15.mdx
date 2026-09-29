@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "វត្ថុប្រព័ន្ធ process ក្នុង Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The global `process` object provides programmatic access to the executing Node.js process. It gives access to runtime information, standard input/output streams, memory usage, CPU architecture, and process lifecycle events like graceful shutdown.",
-  tip: "Listen to `process.on('SIGTERM')` to gracefully close open database connections and finish in-flight requests when deploying new container revisions.",
-  objective: "Leverage the process object for lifecycle monitoring and graceful shutdown handling.",
-  expectedOutcome: "Robust server resilience during deployment shutdowns and terminations.",
+  summary: "វត្ថុ `process` សកលផ្តល់នូវការចូលដំណើរការកម្មវិធីទៅកាន់ដំណើរការ Node.js ដែលកំពុងដំណើរការ។ វាផ្តល់សិទ្ធិចូលប្រើព័ត៌មានពេលដំណើរការ ស្ទ្រីមបញ្ចូល/ទិន្នផលស្តង់ដារ ការប្រើប្រាស់អង្គចងចាំ ស្ថាបត្យកម្មស៊ីភីយូ និងដំណើរការព្រឹត្តិការណ៍វដ្តជីវិតដូចជាការបិទយ៉ាងប្រណិត។",
+  tip: "ស្តាប់ `process.on('SIGTERM')` ដើម្បីបិទការភ្ជាប់មូលដ្ឋានទិន្នន័យដែលបើកចំហដោយទន់ភ្លន់ និងបញ្ចប់សំណើក្នុងជើងហោះហើរ នៅពេលដាក់ពង្រាយការកែប្រែកុងតឺន័រថ្មី។",
+  objective: "អានុភាពវត្ថុដំណើរការសម្រាប់ការត្រួតពិនិត្យវដ្តជីវិត និងការគ្រប់គ្រងការបិទប្រកបដោយភាពទន់ភ្លន់។",
+  expectedOutcome: "ភាពធន់នឹងServerដ៏រឹងមាំកំឡុងពេលបិទការដាក់ពង្រាយ និងការបញ្ចប់។",
   codeSnippet: "// Graceful shutdown handling\nprocess.on(\"SIGTERM\", async () => {\n  console.log(\"SIGTERM received. Closing database connections gracefully...\");\n  await db.disconnect();\n  server.close(() => {\n    console.log(\"HTTP server closed. Exiting process.\");\n    process.exit(0);\n  });\n});",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងរកទិន្នន័យ (Regex & Text Index Search)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `While filtering focuses on structured fields (status, category), **Search** enables users to query free-form natural language text across multiple resource attributes simultaneously (such as \`title\`, \`description\`, and \`tags\`).
+  summary: `ខណៈ​ពេល​ដែល​ការ​ត្រង​ផ្តោត​លើ​វាល​ដែល​មាន​រចនាសម្ព័ន្ធ (ស្ថានភាព ប្រភេទ) **Search** អាច​ឱ្យ​អ្នក​ប្រើ​សួរ​អត្ថបទ​ភាសា​ធម្មជាតិ​ដែល​មាន​ទម្រង់​ឥត​គិត​ថ្លៃ​តាម​លក្ខណៈ​ធនធាន​ច្រើន​ក្នុង​ពេល​ដំណាល​គ្នា (ដូចជា \`title\`, \`description\`, and \`tags\`).
 
 ### 1. REST Query Parameter Conventions
 * Standard parameter: \`GET /api/v1/articles?q=nodejs+framework\` or \`?search=express\`
@@ -14,17 +14,17 @@ export const meta = {
 ### 2. Search Implementations & Performance
 * **In-Memory / Regex Search**: Good for small datasets. Always escape special regex characters to prevent **ReDoS (Regular Expression Denial of Service)** attacks!
 * **Full-Text Indexes (Database Level)**: For production databases (MongoDB \`$text\` or PostgreSQL \`to_tsvector\`), create full-text search indexes with stemming, stop-word elimination, and relevance scoring.`,
-  tip: "Never pass unsanitized user search queries directly into `new RegExp(req.query.q)`. If a user enters `?q=(a+)+$`, it triggers Catastrophic Backtracking and freezes your Node.js event loop. Always escape regex characters first: `query.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')`.",
-  objective: "Implement a secure, multi-field search endpoint in Express with proper regex escaping and ReDoS attack prevention.",
-  expectedOutcome: "A resilient search handler capable of matching across titles and descriptions safely without compromising server performance.",
+  tip: "កុំឆ្លងកាត់សំណួរស្វែងរកអ្នកប្រើប្រាស់ដែលមិនមានអនាម័យដោយផ្ទាល់ទៅក្នុង `new RegExp(req.query.q)`។ ប្រសិនបើអ្នកប្រើបញ្ចូល `?q=(a+)+កុំឆ្លងកាត់សំណួរស្វែងរកអ្នកប្រើប្រាស់ដែលមិនមានអនាម័យដោយផ្ទាល់ទៅក្នុង `new RegExp(req.query.q)`។ ប្រសិនបើអ្នកប្រើបញ្ចូល  វានឹងបង្កឱ្យមានការតាមដានមហន្តរាយ និងបង្កករង្វិលជុំព្រឹត្តិការណ៍ Node.js របស់អ្នក។ តែងតែគេចចេញពីតួអក្សរ regex ជាមុនសិន៖ `query.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\__CODE_2__')`។",
+  objective: "អនុវត្តEndpointស្វែងរកពហុវាលដែលមានសុវត្ថិភាពនៅក្នុង Express ជាមួយនឹងការរត់គេចពី regex ត្រឹមត្រូវ និងការការពារការវាយប្រហារ ReDoS ។",
+  expectedOutcome: "កម្មវិធីដោះស្រាយការស្វែងរកដែលមានភាពធន់អាចផ្គូផ្គងចំណងជើង និងការពិពណ៌នាដោយសុវត្ថិភាពដោយមិនប៉ះពាល់ដល់ដំណើរការServer។",
   codeSnippet: `const express = require("express");
 const app = express();
 
 const articles = [
-  { id: 1, title: "Building Scalable Node.js APIs", summary: "Learn architectural patterns for Express." },
-  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "NoSQL schema design and index optimization." },
-  { id: 3, title: "Full-Stack React & Express", summary: "Creating reactive web applications with Node." },
-  { id: 4, title: "Dockerizing Node Services", summary: "Containerize microservices for production clusters." },
+  { id: 1, title: "Building Scalable Node.js APIs", summary: "ស្វែងយល់ពីគំរូស្ថាបត្យកម្មសម្រាប់ Express ។" },
+  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "ការរចនាគ្រោងការណ៍ NoSQL និងបង្កើនប្រសិទ្ធភាពលិបិក្រម។" },
+  { id: 3, title: "Full-Stack React & Express", summary: "ការបង្កើតកម្មវិធីបណ្តាញដែលមានប្រតិកម្មជាមួយ Node ។" },
+  { id: 4, title: "Dockerizing Node Services", summary: "រក្សាទុកសេវាកម្មមីក្រូសម្រាប់ចង្កោមផលិតកម្ម។" },
 ];
 
 // Helper: Escape regex special characters to prevent ReDoS attacks
@@ -67,10 +67,10 @@ const express = require("express");
 const app = express();
 
 const articles = [
-  { id: 1, title: "Building Scalable Node.js APIs", summary: "Learn architectural patterns for Express." },
-  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "NoSQL schema design and index optimization." },
-  { id: 3, title: "Full-Stack React & Express", summary: "Creating reactive web applications with Node." },
-  { id: 4, title: "Dockerizing Node Services", summary: "Containerize microservices for production clusters." },
+  { id: 1, title: "Building Scalable Node.js APIs", summary: "ស្វែងយល់ពីគំរូស្ថាបត្យកម្មសម្រាប់ Express ។" },
+  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "ការរចនាគ្រោងការណ៍ NoSQL និងបង្កើនប្រសិទ្ធភាពលិបិក្រម។" },
+  { id: 3, title: "Full-Stack React & Express", summary: "ការបង្កើតកម្មវិធីបណ្តាញដែលមានប្រតិកម្មជាមួយ Node ។" },
+  { id: 4, title: "Dockerizing Node Services", summary: "រក្សាទុកសេវាកម្មមីក្រូសម្រាប់ចង្កោមផលិតកម្ម។" },
 ];
 
 // Helper: Escape regex special characters to prevent ReDoS attacks

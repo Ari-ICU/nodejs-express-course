@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃស្ថាបត្យកម្ម API ប្រកបដោយសុវត្ថិភាព",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Building production-grade secure APIs requires Defense in Depth — stacking multiple layers of protection so that if one layer fails, others stop the breach. This encompasses input validation, rate limiting, helmet security headers, sanitized database queries, least privilege roles, audit logging, and automated dependency vulnerability scanning via `npm audit`.",
-  tip: "Integrate `npm audit --audit-level=high` into your CI/CD pipeline to catch known vulnerable dependencies before deploying to production.",
-  objective: "Synthesize all security layers into an enterprise-grade Express middleware pipeline.",
-  expectedOutcome: "Hardened Express server setup incorporating comprehensive security defenses.",
+  summary: "ការកសាង APIs សុវត្ថិភាពកម្រិតផលិតកម្មទាមទារការការពារក្នុងជម្រៅ - ការដាក់ស្រទាប់ការពារជាច្រើន ដូច្នេះប្រសិនបើស្រទាប់មួយបរាជ័យ នោះអ្នកផ្សេងទៀតបញ្ឈប់ការបំពាន។ នេះរួមបញ្ចូលការបញ្ចូលសុពលភាព ការកំណត់អត្រា បឋមកថាសុវត្ថិភាពមួកសុវត្ថិភាព សំណួរមូលដ្ឋានទិន្នន័យដែលមានអនាម័យ តួនាទីដែលមានសិទ្ធិតិចតួច ការកត់ត្រាសវនកម្ម និងការស្កេនភាពងាយរងគ្រោះដោយស្វ័យប្រវត្តិតាមរយៈ `npm audit`។",
+  tip: "រួមបញ្ចូល `npm audit --audit-level=high` ទៅក្នុងបំពង់ CI/CD របស់អ្នក ដើម្បីចាប់យកភាពអាស្រ័យដែលងាយរងគ្រោះដែលគេស្គាល់ មុនពេលដាក់ពង្រាយទៅផលិតកម្ម។",
+  objective: "សំយោគស្រទាប់សុវត្ថិភាពទាំងអស់ទៅក្នុងបំពង់បញ្ជូនផ្នែកកណ្តាល Express ថ្នាក់សហគ្រាស។",
+  expectedOutcome: "ការដំឡើងServer Hardened Express រួមបញ្ចូលការការពារសុវត្ថិភាពដ៏ទូលំទូលាយ។",
   codeSnippet: "// app.js - Enterprise Security Middleware Pipeline:\nimport express from \"express\";\nimport helmet from \"helmet\";\nimport cors from \"cors\";\nimport mongoSanitize from \"express-mongo-sanitize\";\nimport { globalLimiter } from \"./middleware/rateLimit.js\";\nimport { errorHandler } from \"./middleware/errorHandler.js\";\n\nconst app = express();\n\n// 1. HTTP Security Headers\napp.use(helmet());\n\n// 2. CORS Policy\napp.use(cors({ origin: process.env.ALLOWED_ORIGINS.split(\",\"), credentials: true }));\n\n// 3. Rate Limiting\napp.use(\"/api\", globalLimiter);\n\n// 4. Body Parser with Size Limits (Prevents payload DoS)\napp.use(express.json({ limit: \"10kb\" }));\n\n// 5. Data Sanitization against NoSQL Injection\napp.use(mongoSanitize());\n\n// 6. Central Error Handling (Never leaks stack traces in production)\napp.use(errorHandler);\n\nexport default app;",
 };
 

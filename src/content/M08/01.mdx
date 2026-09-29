@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "អ្វីជា Middleware និងតួនាទីរបស់អនុគមន៍ next()",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Middleware functions are the building blocks of an Express application. They sit between the incoming request and the final route handler, inspecting requests, modifying headers, verifying auth tokens, parsing bodies, and managing errors.",
-  tip: "Always call `next()` or send a response with `res.json()`. Otherwise the HTTP connection hangs indefinitely.",
-  objective: "Understand middleware chaining and execution order.",
-  expectedOutcome: "Mastery of request interceptor pipelines.",
+  summary: "មុខងារ Middleware គឺជាបណ្តុំនៃកម្មវិធី Express ។ ពួកគេអង្គុយនៅចន្លោះសំណើចូល និងអ្នកដោះស្រាយផ្លូវចុងក្រោយ ពិនិត្យសំណើ កែប្រែបឋមកថា ផ្ទៀងផ្ទាត់សញ្ញាសម្ងាត់ ការញែកធាតុ និងការគ្រប់គ្រងកំហុស។",
+  tip: "ទូរស័ព្ទទៅ `next()` ជានិច្ច ឬផ្ញើការឆ្លើយតបជាមួយ `res.json()` ។ បើមិនដូច្នេះទេ ការភ្ជាប់ HTTP ព្យួរដោយគ្មានកំណត់។",
+  objective: "ស្វែងយល់ពីការដាក់ខ្សែសង្វាក់ និងលំដាប់ប្រតិបត្តិរបស់ឈ្មួញកណ្តាល។",
+  expectedOutcome: "ជំនាញនៃបំពង់ស្ទាក់ចាប់សំណើ។",
   codeSnippet: "// Request Logger Middleware\nconst requestLogger = (req, res, next) => {\n  const start = Date.now();\n  res.on(\"finish\", () => {\n    const duration = Date.now() - start;\n    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);\n  });\n  next(); // Pass control to the next middleware!\n};\n\napp.use(requestLogger);",
 };
 

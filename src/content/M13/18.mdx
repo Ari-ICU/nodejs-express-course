@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំហុស Database (CastError, DuplicateKey, ValidationError)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Translating MongoDB-specific driver errors (CastError, code 11000 duplicate key, ValidationError) into user-friendly HTTP 400/409/422 responses.",
-  tip: "Catch MongoDB error code `11000` to inform users that an email or username already exists with a 409 status.",
-  objective: "Translate low-level MongoDB driver errors into clean HTTP error payloads.",
-  expectedOutcome: "Zero raw database stack traces leaked to clients.",
+  summary: "ការបកប្រែកំហុសកម្មវិធីបញ្ជាជាក់លាក់ MongoDB (CastError, លេខកូដ 11000 ស្ទួនសោរ, ValidationError) ទៅជាការឆ្លើយតប HTTP 400/409/422 ដែលងាយស្រួលប្រើ។",
+  tip: "ចាប់លេខកូដកំហុស MongoDB `11000` ដើម្បីជូនដំណឹងដល់អ្នកប្រើប្រាស់ថាមានអ៊ីមែល ឬឈ្មោះអ្នកប្រើប្រាស់ដែលមានស្ថានភាព 409 រួចហើយ។",
+  objective: "បកប្រែកំហុសកម្មវិធីបញ្ជា MongoDB កម្រិតទាបទៅជាការផ្ទុកកំហុស HTTP ស្អាត។",
+  expectedOutcome: "ដានជង់ទិន្នន័យឆៅសូន្យបានលេចធ្លាយដល់អតិថិជន។",
   codeSnippet: "export const handleDbError = (err) => {\n  if (err.name === \"CastError\") {\n    return { statusCode: 400, message: `Invalid ${err.path}: ${err.value}` };\n  }\n  if (err.code === 11000) {\n    const field = Object.keys(err.keyValue)[0];\n    return { statusCode: 409, message: `Duplicate value for ${field}. Please use another value.` };\n  }\n  return { statusCode: 500, message: \"Database Error\" };\n};",
 };
 

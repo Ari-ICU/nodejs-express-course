@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `Designing professional, intuitive REST APIs requires strict consistency across URI anatomy, naming schemes, and resource nesting. A well-designed API is self-explanatory, predictable, and delightful for client developers to consume.
+  summary: `ការរចនា REST APIs ប្រកបដោយវិជ្ជាជីវៈ និងវិចារណញាណតម្រូវឱ្យមានភាពស៊ីសង្វាក់គ្នាយ៉ាងតឹងរឹងនៅទូទាំង URI កាយវិភាគសាស្ត្រ គ្រោងការណ៍ដាក់ឈ្មោះ និងការដាក់ធនធាន។ API ដែលត្រូវបានរចនាយ៉ាងល្អ គឺជាការពន្យល់ដោយខ្លួនឯង ដែលអាចទស្សន៍ទាយបាន និងរីករាយសម្រាប់អ្នកអភិវឌ្ឍន៍អតិថិជនប្រើប្រាស់។
 
-### 1. Resource Naming Rules
-* **Use Plural Nouns**: Always name resource collections with lowercase plural nouns (e.g. \`/users\`, \`/articles\`, \`/orders\`). Never use verbs in paths like \`/getUsers\` or \`/createOrder\`.
+### 1. ច្បាប់ដាក់ឈ្មោះធនធាន
+* ** ប្រើនាមពហុវចនៈ **៖ តែងតែដាក់ឈ្មោះការប្រមូលធនធានជាមួយនាមពហុវចនៈអក្សរតូច (ឧ. \\`/users\`, \`/articles\`, \`/orders\`). Never use verbs in paths like \`/getUsers\` or \`/createOrder\`.
 * **Kebab-case in URIs**: Use lowercase with hyphens for multi-word paths (\`/payment-methods\`, \`/shipping-addresses\`), never camelCase or snake_case.
 * **Hierarchical Nesting for Relations**: Express parent-child relationships through natural URL paths: \`/users/15/orders/302\`. Limit nesting to a maximum of **2 levels deep** to prevent unwieldy URLs; flatten subsequent lookups to root endpoints.
 
@@ -21,9 +21,9 @@ export const meta = {
 | Replace Resource | \`PUT\` | \`/api/v1/courses/:id\` | 200 OK / 204 |
 | Patch Resource | \`PATCH\` | \`/api/v1/courses/:id\` | 200 OK |
 | Delete Resource | \`DELETE\` | \`/api/v1/courses/:id\` | 204 No Content |`,
-  tip: "Avoid deeply nested paths like `/departments/5/teams/2/members/12/tasks/9`. Instead, once an entity has a unique identifier, expose it directly: `/api/v1/tasks/9` or `/api/v1/members/12/tasks`.",
-  objective: "Master industry-standard URI naming conventions, relationship nesting limits, and resource route mapping.",
-  expectedOutcome: "The ability to architect clean, predictable, and developer-friendly RESTful endpoints that adhere strictly to international RFC standards.",
+  tip: "ជៀសវាងផ្លូវដែលបង្កប់យ៉ាងជ្រៅដូចជា `/departments/5/teams/2/members/12/tasks/9`។ ជំនួសមកវិញ នៅពេលដែលអង្គភាពមួយមានឧបករណ៍កំណត់អត្តសញ្ញាណតែមួយគត់ សូមបង្ហាញវាដោយផ្ទាល់៖ `/api/v1/tasks/9` ឬ `/api/v1/members/12/tasks` ។",
+  objective: "អនុសញ្ញាការដាក់ឈ្មោះ URI ស្តង់ដារឧស្សាហកម្ម ដែនកំណត់ទំនាក់ទំនង និងផែនទីផ្លូវធនធាន។",
+  expectedOutcome: "សមត្ថភាពក្នុងការស្ថាបត្យករស្អាត ដែលអាចទាយទុកជាមុនបាន និងEndpoint RESTful ដែលងាយស្រួលសម្រាប់អ្នកអភិវឌ្ឍន៍ ដែលប្រកាន់ខ្ជាប់យ៉ាងតឹងរឹងទៅនឹងស្តង់ដារ RFC អន្តរជាតិ។",
   codeSnippet: `/**
  * Professional REST Route Design in Express
  * Clean separation between collections and parent-child resources

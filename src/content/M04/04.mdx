@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "A Promise represents the eventual completion or failure of an asynchronous operation and its resulting value. Promises have three mutually exclusive states: pending, fulfilled, or rejected.",
-  tip: "Use `Promise.all()` to run independent async operations in parallel, cutting total response time significantly.",
-  objective: "Create, resolve, reject, and chain Promises effectively.",
-  expectedOutcome: "Ability to handle asynchronous tasks with clean `.then()` and `.catch()` pipelines.",
+  tip: "ប្រើ `Promise.all()` ដើម្បីដំណើរការប្រតិបត្តិការ async ឯករាជ្យស្របគ្នា ដោយកាត់បន្ថយពេលវេលាឆ្លើយតបសរុបយ៉ាងសំខាន់។",
+  objective: "បង្កើត ដោះស្រាយ បដិសេធ និងខ្សែសង្វាក់ការសន្យាប្រកបដោយប្រសិទ្ធភាព។",
+  expectedOutcome: "សមត្ថភាពក្នុងការដោះស្រាយកិច្ចការអសមកាលជាមួយនឹងបំពង់ `.then()` និង `.catch()` ស្អាត។",
   codeSnippet: "const verifyStock = (productId, quantity) => {\n  return new Promise((resolve, reject) => {\n    if (quantity <= 5) {\n      resolve({ available: true, productId });\n    } else {\n      reject(new Error(\"Insufficient warehouse stock\"));\n    }\n  });\n};\n\nverifyStock(\"P_99\", 2)\n  .then(res => console.log(\"Stock confirmed:\", res))\n  .catch(err => console.error(\"Order failed:\", err.message));",
 };
 

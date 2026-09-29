@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "The WHATWG compliant `URL` and `URLSearchParams` classes provide safe parsing, serialization, and query string manipulation for incoming HTTP request URLs and external API calls.",
-  tip: "Use `URLSearchParams` to safely encode query parameters without manual URI escaping bugs.",
-  objective: "Parse and construct complex URLs with query parameters.",
-  expectedOutcome: "Robust handling of query strings and URL components.",
+  tip: "ប្រើ `URLSearchParams` ដើម្បីអ៊ិនកូដប៉ារ៉ាម៉ែត្រសំណួរដោយសុវត្ថិភាពដោយគ្មាន URI ដោយដៃគេចពីកំហុស។",
+  objective: "ញែក និងបង្កើត URL ស្មុគស្មាញជាមួយប៉ារ៉ាម៉ែត្រសំណួរ។",
+  expectedOutcome: "ការគ្រប់គ្រងដ៏រឹងមាំនៃខ្សែអក្សរសំណួរ និងសមាសធាតុ URL ។",
   codeSnippet: "const myUrl = new URL(\"https://api.example.com/v1/users?role=admin&active=true\");\n\nconsole.log(\"Host:\", myUrl.hostname);\nconsole.log(\"Path:\", myUrl.pathname);\nconsole.log(\"Role param:\", myUrl.searchParams.get(\"role\"));\n\n// Appending query parameters safely\nmyUrl.searchParams.append(\"page\", \"2\");\nconsole.log(\"Updated URL:\", myUrl.toString());",
 };
 

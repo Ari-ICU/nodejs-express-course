@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់ Query Parameters",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Validating and coercing query string parameters (parsing numbers, enforcing allowable sort fields and limits).",
-  tip: "Use Zod's `z.coerce.number()` to automatically parse string query parameters into numbers.",
-  objective: "Validate query parameters and coerce types safely.",
-  expectedOutcome: "Type-safe query parameters with safe pagination caps.",
+  summary: "ធ្វើ​ឱ្យ​មាន​សុពលភាព និង​បង្ខិត​បង្ខំ​ប៉ារ៉ាម៉ែត្រ​ខ្សែអក្សរ​សំណួរ (ការ​ញែក​លេខ ពង្រឹង​វាល​តម្រៀប​ដែល​អាច​អនុញ្ញាត​បាន និង​ដែនកំណត់) ។",
+  tip: "ប្រើ `z.coerce.number()` របស់ Zod ដើម្បីញែកប៉ារ៉ាម៉ែត្រសំណួរខ្សែអក្សរដោយស្វ័យប្រវត្តិទៅជាលេខ។",
+  objective: "ធ្វើសុពលភាពប៉ារ៉ាម៉ែត្រសំណួរ និងប្រភេទបង្ខិតបង្ខំដោយសុវត្ថិភាព។",
+  expectedOutcome: "វាយបញ្ចូលប៉ារ៉ាម៉ែត្រសំណួរសុវត្ថិភាព ជាមួយនឹងមួកសុវត្ថិភាព។",
   codeSnippet: "export const querySchema = z.object({\n  page: z.coerce.number().int().positive().default(1),\n  limit: z.coerce.number().int().min(1).max(100).default(10),\n  sort: z.enum([\"createdAt\", \"-createdAt\", \"price\", \"-price\"]).optional()\n});",
 };
 

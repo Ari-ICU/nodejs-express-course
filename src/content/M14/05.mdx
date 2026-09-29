@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់ Route Parameters (:id)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Ensuring route parameters match expected patterns (e.g. UUID or MongoDB ObjectId) before executing queries.",
-  tip: "Rejecting invalid IDs at the middleware level avoids slow, wasted database queries.",
-  objective: "Validate route parameter formats using regex or schema rules.",
-  expectedOutcome: "Immediate 400 Bad Request responses for malformed IDs.",
+  summary: "ការ​ធានា​ថា​ប៉ារ៉ាម៉ែត្រ​ផ្លូវ​ត្រូវ​គ្នា​នឹង​លំនាំ​ដែល​បាន​រំពឹង​ទុក (ឧ. UUID ឬ MongoDB ObjectId) មុន​ពេល​ប្រតិបត្តិ​សំណួរ។",
+  tip: "ការបដិសេធលេខសម្គាល់មិនត្រឹមត្រូវនៅកម្រិតឧបករណ៍កណ្តាលជៀសវាងសំណួរមូលដ្ឋានទិន្នន័យយឺត និងខ្ជះខ្ជាយ។",
+  objective: "ធ្វើឱ្យមានសុពលភាពទម្រង់ប៉ារ៉ាម៉ែត្រផ្លូវដោយប្រើ regex ឬច្បាប់គ្រោងការណ៍។",
+  expectedOutcome: "ការឆ្លើយតបសំណើមិនល្អចំនួន 400 ភ្លាមៗសម្រាប់លេខសម្គាល់មិនត្រឹមត្រូវ។",
   codeSnippet: "export const mongoIdSchema = z.object({\n  id: z.string().regex(/^[0-9a-fA-F]{24}$/, \"Invalid MongoDB ObjectId\")\n});",
 };
 

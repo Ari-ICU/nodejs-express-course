@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "លំហូរនៃការចូលប្រើប្រាស់ (Login Flow)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The login flow verifies submitted credentials against the stored record. It queries the user by normalized email (explicitly selecting the hidden password field), verifies the submitted password with `bcrypt.compare()`, and returns tokens upon match. Timing-attack prevention and generic error messages ('Invalid email or password') ensure attackers cannot enumerate valid user accounts.",
-  tip: "Never tell the client whether it was the email or password that was wrong. Always return a generic 401 'Invalid credentials' to prevent user enumeration.",
-  objective: "Implement a secure login endpoint that protects against enumeration and timing attacks.",
-  expectedOutcome: "Hardened authentication controller issuing credentials upon valid login.",
+  summary: "លំហូរចូលផ្ទៀងផ្ទាត់អត្តសញ្ញាណដែលបានបញ្ជូនប្រឆាំងនឹងកំណត់ត្រាដែលបានរក្សាទុក។ វាសួរអ្នកប្រើប្រាស់តាមអ៊ីមែលធម្មតា (ជ្រើសរើសយ៉ាងជាក់លាក់នូវវាលពាក្យសម្ងាត់ដែលលាក់) ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់ដែលបានដាក់ស្នើជាមួយ `bcrypt.compare()` ហើយត្រឡប់សញ្ញាសម្ងាត់តាមការផ្គូផ្គង។ ការការពារការវាយប្រហារតាមពេលវេលា និងសារកំហុសទូទៅ ('អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ') ធានាថាអ្នកវាយប្រហារមិនអាចរាប់បញ្ចូលគណនីអ្នកប្រើប្រាស់ត្រឹមត្រូវបានទេ។",
+  tip: "កុំប្រាប់អតិថិជនថាតើវាជាអ៊ីមែល ឬពាក្យសម្ងាត់ដែលខុស។ តែងតែត្រឡប់ 'ព័ត៌មានសម្ងាត់មិនត្រឹមត្រូវ' ទូទៅ 401 ដើម្បីការពារការរាប់បញ្ចូលអ្នកប្រើប្រាស់។",
+  objective: "អនុវត្តEndpointនៃការចូលដែលមានសុវត្ថិភាព ដែលការពារប្រឆាំងនឹងការរាប់ចំនួន និងការវាយប្រហារតាមពេលវេលា។",
+  expectedOutcome: "ឧបករណ៍បញ្ជាការផ្ទៀងផ្ទាត់ភាពរឹងដែលចេញលិខិតសម្គាល់នៅពេលចូលត្រឹមត្រូវ។",
   codeSnippet: "// controllers/auth.controller.js\nexport const login = async (req, res, next) => {\n  try {\n    const { email, password } = req.body;\n    if (!email || !password) {\n      throw new AppError(\"Please provide email and password\", 400);\n    }\n\n    // 1. Query user with hidden password field (+password)\n    const user = await User.findOne({ email: email.toLowerCase() }).select(\"+password\");\n    \n    // 2. Compare password with bcrypt (use generic error message)\n    if (!user || !(await bcrypt.compare(password, user.password))) {\n      throw new AppError(\"Invalid email or password\", 401);\n    }\n\n    // 3. Issue authentication token\n    const token = signToken(user._id);\n\n    res.status(200).json({\n      status: \"success\",\n      token,\n      data: { user: { id: user._id, name: user.name, email: user.email } }\n    });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

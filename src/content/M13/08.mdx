@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Create Resource Endpoint",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Implementing POST endpoints with payload validation, model persistence, and HTTP 201 responses.",
-  tip: "Ensure unique constraints (like duplicate emails or slugs) are handled gracefully with 409 Conflict status codes.",
-  objective: "Build resource creation APIs with duplicate error handling.",
-  expectedOutcome: "Secure resource creation endpoints.",
+  summary: "ការអនុវត្តEndpointនៃ POST ជាមួយនឹងសុពលភាពនៃបន្ទុក ភាពស្ថិតស្ថេរនៃគំរូ និងការឆ្លើយតប HTTP 201 ។",
+  tip: "ត្រូវប្រាកដថាឧបសគ្គតែមួយគត់ (ដូចជាអ៊ីមែលស្ទួន ឬ slugs) ត្រូវបានដោះស្រាយយ៉ាងរលូនជាមួយនឹងលេខកូដស្ថានភាពជម្លោះចំនួន 409 ។",
+  objective: "បង្កើត APIs បង្កើតធនធានជាមួយនឹងការដោះស្រាយកំហុសស្ទួន។",
+  expectedOutcome: "ធានាសុវត្ថិភាពនៃការបង្កើតធនធាន។",
   codeSnippet: "export const createProduct = async (req, res) => {\n  const product = await Product.create(req.body);\n  res.status(201).json({ success: true, data: product });\n};",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Instance Methods & Static Methods",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Instance methods operate on an individual document instance (e.g. `product.applyDiscount()`), while Static methods operate across the Model collection (e.g. `Product.findByCategory()`).",
-  tip: "Never use arrow functions (`() => {}`) for Mongoose methods because arrow functions do not bind `this` to the document instance.",
-  objective: "Add custom domain logic directly onto Mongoose Models.",
-  expectedOutcome: "Rich Domain Model encapsulation with instance and static methods.",
+  summary: "Instance method ដំណើរការលើ instance ឯកសារបុគ្គល (ឧ. `product.applyDiscount()`) ខណៈពេលដែល Static method ដំណើរការលើការប្រមូល Model (ឧ. `Product.findByCategory()`)។",
+  tip: "កុំប្រើមុខងារព្រួញ (`() => {}`) សម្រាប់វិធី Mongoose ពីព្រោះមុខងារព្រួញមិនចង `this` ទៅនឹងឧទាហរណ៍ឯកសារ។",
+  objective: "បន្ថែមតក្កវិជ្ជាដែនផ្ទាល់ខ្លួនដោយផ្ទាល់ទៅលើ Mongoose Models។",
+  expectedOutcome: "ការ​បញ្ចូល​គំរូ​ដែន​សម្បូរ​ដោយ​វិធីសាស្ត្រ​ឧទាហរណ៍ និង​ឋិតិវន្ត។",
   codeSnippet: "// Instance method (operates on individual document instance):\nproductSchema.methods.applyDiscount = function(percent) {\n  this.price = Math.round(this.price * (1 - percent / 100));\n  return this.save();\n};\n\n// Static method (operates on model collection):\nproductSchema.statics.findByCategory = function(category) {\n  return this.find({ category });\n};",
 };
 

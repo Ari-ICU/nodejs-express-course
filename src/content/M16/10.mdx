@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការការពារ Credential ជាមួយ HttpOnly Cookies",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "An HttpOnly cookie is a browser cookie flag that prevents client-side scripts (JavaScript) from accessing `document.cookie`. This mitigates Cross-Site Scripting (XSS) credential theft because even if malicious JavaScript runs on the client, it cannot read the refresh token. Together with `secure: true` (HTTPS only) and `sameSite: 'strict'` (CSRF mitigation), HttpOnly cookies provide the safest storage for persistent tokens.",
-  tip: "Always combine `httpOnly: true`, `secure: true`, and `sameSite: 'strict'` or `'lax'` when issuing cookies from Express in production.",
-  objective: "Configure secure cookie dispatch in Express with httpOnly, secure, and sameSite attributes.",
-  expectedOutcome: "XSS-resistant credential transmission for web clients.",
+  summary: "Cookies HttpOnly គឺជាទង់Browser Cookiesដែលការពារស្គ្រីបខាងអតិថិជន (JavaScript) ពីការចូលប្រើ `document.cookie` ។ នេះកាត់បន្ថយការលួចព័ត៌មានសម្ងាត់ Cross-Site Scripting (XSS) ពីព្រោះទោះបីជា JavaScript ព្យាបាទដំណើរការលើម៉ាស៊ីនភ្ញៀវក៏ដោយ ក៏វាមិនអាចអានថូខឹនធ្វើឱ្យស្រស់បានទេ។ រួមគ្នាជាមួយ `secure: true` (HTTPS តែប៉ុណ្ណោះ) និង `sameSite: 'strict'` (ការកាត់បន្ថយ CSRF) Cookies HttpOnly ផ្តល់កន្លែងផ្ទុកសុវត្ថិភាពបំផុតសម្រាប់សញ្ញាសម្ងាត់ជាប់លាប់។",
+  tip: "តែងតែរួមបញ្ចូលគ្នា `httpOnly: true`, `secure: true` និង `sameSite: 'strict'` ឬ `'lax'` នៅពេលចេញCookiesពី Express ក្នុងផលិតកម្ម។",
+  objective: "កំណត់រចនាសម្ព័ន្ធការបញ្ជូនCookiesដែលមានសុវត្ថិភាពនៅក្នុង Express ជាមួយនឹងគុណលក្ខណៈ httpOnly, secure, និង sameSite ។",
+  expectedOutcome: "ការបញ្ជូនព័ត៌មានដែលធន់ទ្រាំនឹង XSS សម្រាប់អតិថិជនគេហទំព័រ។",
   codeSnippet: "export const sendRefreshTokenCookie = (res, token) => {\n  const isProduction = process.env.NODE_ENV === \"production\";\n\n  res.cookie(\"refreshToken\", token, {\n    httpOnly: true, // Inaccessible to JavaScript document.cookie (Defeats XSS)\n    secure: isProduction, // Transmitted only over HTTPS\n    sameSite: isProduction ? \"strict\" : \"lax\", // Prevents CSRF cross-origin leakage\n    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds\n    path: \"/api/v1/auth\", // Restricted only to auth refresh endpoints\n  });\n};",
 };
 

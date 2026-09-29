@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Search Pipeline ជាមួយ Text Indexes",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Implementing text search across MongoDB documents using `$regex` or `$text` indexes.",
-  tip: "Compound text indexes across multiple fields (`title: 'text', description: 'text'`) allow searching across all product attributes.",
-  objective: "Build multi-field search queries.",
-  expectedOutcome: "Fast search endpoints for catalogs and directories.",
+  summary: "ការអនុវត្តការស្វែងរកអត្ថបទនៅលើឯកសារ MongoDB ដោយប្រើសន្ទស្សន៍ `$regex` ឬ `$text` ។",
+  tip: "សន្ទស្សន៍​អត្ថបទ​រួម​នៅ​ទូទាំង​វាល​ច្រើន (`title: 'text', description: 'text'`) អនុញ្ញាត​ឱ្យ​ស្វែង​រក​នៅ​ទូទាំង​គុណលក្ខណៈ​ផលិតផល​ទាំង​អស់។",
+  objective: "បង្កើតសំណួរស្វែងរកពហុវាល។",
+  expectedOutcome: "Endpointស្វែងរករហ័សសម្រាប់កាតាឡុក និងថត។",
   codeSnippet: "export const searchProducts = async (req, res) => {\n  const { q } = req.query;\n  const products = await Product.find({\n    $text: { $search: q }\n  }).lean();\n  res.json({ success: true, data: products });\n};",
 };
 

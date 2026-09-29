@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការដំឡើង Node.js ជាមួយ NVM",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Installing Node.js using Node Version Manager (NVM) allows developers to seamlessly switch between multiple Node versions (LTS vs Current) across different client and server projects without permission issues or system conflicts.",
-  tip: "Always standardize on active LTS (Long Term Support) versions for production deployments to ensure security patches and stability.",
-  objective: "Install Node.js LTS and verify proper system PATH configuration using NVM.",
+  summary: "ការដំឡើង Node.js ដោយប្រើកម្មវិធីគ្រប់គ្រងកំណែ Node (NVM) អនុញ្ញាតឱ្យអ្នកអភិវឌ្ឍន៍ផ្លាស់ប្តូរយ៉ាងរលូនរវាងកំណែ Node ច្រើន (LTS ទល់នឹងបច្ចុប្បន្ន) ឆ្លងកាត់គម្រោងម៉ាស៊ីនភ្ញៀវ និងServerផ្សេងៗគ្នា ដោយគ្មានបញ្ហាការអនុញ្ញាត ឬជម្លោះប្រព័ន្ធ។",
+  tip: "ធ្វើស្តង់ដារជានិច្ចនៅលើកំណែ LTS (ការគាំទ្ររយៈពេលវែង) សកម្មសម្រាប់ការដាក់ពង្រាយផលិតកម្ម ដើម្បីធានាបាននូវបំណះសុវត្ថិភាព និងស្ថេរភាព។",
+  objective: "ដំឡើង Node.js LTS និងផ្ទៀងផ្ទាត់ការកំណត់រចនាសម្ព័ន្ធ PATH ប្រព័ន្ធត្រឹមត្រូវដោយប្រើ NVM ។",
   expectedOutcome: "Clean, multi-version development environment with npm and node CLI tools installed.",
   codeSnippet: "# Install Node Version Manager (nvm)\ncurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash\n\n# Install the latest Long-Term Support (LTS) version\nnvm install --lts\nnvm use --lts\n\n# Verify installation\nnode -v\nnpm -v",
 };

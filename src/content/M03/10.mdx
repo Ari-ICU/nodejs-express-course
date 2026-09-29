@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Custom EventEmitter Class",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Subclassing `EventEmitter` allows you to create enterprise service classes (e.g. PaymentService, NotificationService) that notify other parts of your application when state changes occur.",
-  tip: "Always handle the special `'error'` event on EventEmitters, otherwise Node treats unhandled errors as uncaught exceptions and crashes.",
-  objective: "Build custom domain classes that inherit from EventEmitter.",
-  expectedOutcome: "Decoupled domain services communicating via event publishing.",
+  summary: "ការចាត់ថ្នាក់រង `EventEmitter` អនុញ្ញាតឱ្យអ្នកបង្កើតថ្នាក់សេវាកម្មសហគ្រាស (ឧ. សេវាបង់ប្រាក់ សេវាការជូនដំណឹង) ដែលជូនដំណឹងដល់ផ្នែកផ្សេងទៀតនៃកម្មវិធីរបស់អ្នក នៅពេលដែលការផ្លាស់ប្តូរស្ថានភាពកើតឡើង។",
+  tip: "តែងតែដោះស្រាយព្រឹត្តិការណ៍ `'error'` ពិសេសនៅលើ EventEmitters បើមិនដូច្នេះទេ Node ចាត់ទុកកំហុសដែលមិនបានដោះស្រាយជាករណីលើកលែង និងគាំងដែលមិនបានចាប់។",
+  objective: "បង្កើតថ្នាក់ដែនផ្ទាល់ខ្លួនដែលទទួលមរតកពី EventEmitter ។",
+  expectedOutcome: "សេវា​ដែន​ដែល​ផ្ដាច់​ទំនាក់ទំនង​តាម​រយៈ​ការ​បោះពុម្ព​ព្រឹត្តិការណ៍។",
   codeSnippet: "import { EventEmitter } from \"node:events\";\n\nclass PaymentGateway extends EventEmitter {\n  processPayment(amount, user) {\n    // Simulate transaction\n    setTimeout(() => {\n      this.emit(\"payment:success\", { transactionId: \"TX_1092\", amount, user });\n    }, 200);\n  }\n}\n\nconst gateway = new PaymentGateway();\ngateway.on(\"payment:success\", (tx) => console.log(\"Transaction verified:\", tx));\ngateway.processPayment(99.99, \"Sokha\");",
 };
 

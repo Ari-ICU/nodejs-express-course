@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មរចនា API ប្រកបដោយសុវត្ថិភាពតាមតួនាទី",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Well-designed role-based APIs clearly separate public, authenticated, and privileged endpoints. Consistent route naming, standardized error responses, clear permission matrices, and automated permission tests prevent accidental exposure of privileged capabilities across the application lifecycle.",
-  tip: "Document required permissions in your Swagger/OpenAPI annotations for every route to ensure frontend developers know authentication requirements upfront.",
-  objective: "Design scalable, secure API route architectures applying defense-in-depth authorization.",
-  expectedOutcome: "Clean, documented, and resilient API architecture enforcing role safety.",
+  summary: "APIs ផ្អែកលើតួនាទីដែលបានរចនាឡើងយ៉ាងច្បាស់លាស់ដាច់ដោយឡែកពីគ្នាជាសាធារណៈ ផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ និងEndpointដែលមានសិទ្ធិ។ ការ​ដាក់​ឈ្មោះ​ផ្លូវ​ដែល​ស្រប​គ្នា ការ​ឆ្លើយ​តប​កំហុស​ស្តង់ដារ ការ​អនុញ្ញាត​ច្បាស់លាស់ និង​ការ​ធ្វើ​តេស្ត​ការ​អនុញ្ញាត​ដោយ​ស្វ័យ​ប្រវត្តិ​ការពារ​ការ​ប៉ះពាល់​ដោយ​ចៃដន្យ​នៃ​សមត្ថភាព​មាន​សិទ្ធិ​នៅ​ទូទាំង​វដ្ត​ជីវិត​កម្មវិធី។",
+  tip: "ឯកសារតម្រូវឱ្យមានការអនុញ្ញាតនៅក្នុងចំណារពន្យល់ Swagger/OpenAPI របស់អ្នកសម្រាប់គ្រប់ផ្លូវ ដើម្បីធានាថាអ្នកអភិវឌ្ឍន៍Frontendដឹងពីតម្រូវការផ្ទៀងផ្ទាត់ជាមុន។",
+  objective: "រចនាស្ថាបត្យកម្មផ្លូវ API ដែលអាចធ្វើមាត្រដ្ឋានបាន និងមានសុវត្ថិភាពដោយអនុវត្តការអនុញ្ញាតការពារក្នុងជម្រៅ។",
+  expectedOutcome: "ស្ថាបត្យកម្ម API ស្អាត ចងក្រងជាឯកសារ និងធន់នឹងការពង្រឹងសុវត្ថិភាពតួនាទី។",
   codeSnippet: "// Architectural Overview:\n//\n// 1. Public Tier (No Auth):\n//    GET  /api/v1/products\n//    POST /api/v1/auth/login\n//\n// 2. Authenticated Tier (protect):\n//    GET  /api/v1/users/me\n//    POST /api/v1/orders\n//\n// 3. Ownership Tier (protect + checkOwner):\n//    PATCH  /api/v1/posts/:id (author only)\n//    DELETE /api/v1/orders/:id (buyer only)\n//\n// 4. Privileged Admin Tier (protect + restrictTo('admin')):\n//    POST   /api/v1/admin/products\n//    PATCH  /api/v1/admin/users/:id/role",
 };
 

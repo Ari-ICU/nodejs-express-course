@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "The `node:events` module forms the backbone of Node.js event-driven architecture. Almost all streaming and networking objects in Node (HTTP requests, server sockets, streams) inherit from EventEmitter.",
-  tip: "Always remove event listeners (`emitter.off()`) when tearing down components to prevent memory leaks.",
-  objective: "Understand how the events module powers Node's internal communication.",
-  expectedOutcome: "Ability to publish and subscribe to custom lifecycle events.",
+  tip: "ដកកម្មវិធីស្តាប់ព្រឹត្តិការណ៍ (`emitter.off()`) ចេញជានិច្ច នៅពេលហែកសមាសធាតុ ដើម្បីការពារការលេចធ្លាយអង្គចងចាំ។",
+  objective: "ស្វែងយល់ពីរបៀបដែលម៉ូឌុលព្រឹត្តិការណ៍ផ្តល់ថាមពលដល់ទំនាក់ទំនងខាងក្នុងរបស់ Node ។",
+  expectedOutcome: "សមត្ថភាពក្នុងការបោះពុម្ពផ្សាយ និងជាវព្រឹត្តិការណ៍វដ្តជីវិតផ្ទាល់ខ្លួន។",
   codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst serverEmitter = new EventEmitter();\n\nserverEmitter.on(\"user:signup\", (user) => {\n  console.log(\"Send welcome notification to:\", user.email);\n});\n\nserverEmitter.emit(\"user:signup\", { email: \"sokha@gmail.com\" });",
 };
 

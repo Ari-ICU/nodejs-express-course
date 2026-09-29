@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Morgan និង Custom Logging Middleware",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "HTTP logging captures incoming request methods, URLs, status codes, response durations, and client IPs for monitoring and auditing.",
-  tip: "Use the `morgan` library in development, and transition to structured JSON loggers like `winston` or `pino` in production.",
-  objective: "Configure HTTP request logging for performance and security monitoring.",
-  expectedOutcome: "Real-time visibility into incoming traffic and server response times.",
+  summary: "ការកត់ត្រា HTTP ចាប់យកវិធីសាស្ត្រស្នើសុំចូល URLs លេខកូដស្ថានភាព រយៈពេលឆ្លើយតប និង IP របស់អតិថិជនសម្រាប់ការត្រួតពិនិត្យ និងសវនកម្ម។",
+  tip: "ប្រើបណ្ណាល័យ `morgan` ក្នុងការអភិវឌ្ឍ ហើយប្តូរទៅអ្នកកាប់ឈើ JSON ដែលមានរចនាសម្ព័ន្ធដូចជា `winston` ឬ `pino` នៅក្នុងផលិតកម្ម។",
+  objective: "កំណត់រចនាសម្ព័ន្ធការកត់ត្រាសំណើ HTTP សម្រាប់ការអនុវត្ត និងការត្រួតពិនិត្យសុវត្ថិភាព។",
+  expectedOutcome: "ភាពមើលឃើញតាមពេលវេលាជាក់ស្តែងទៅក្នុងចរាចរណ៍ចូល និងពេលវេលាឆ្លើយតបរបស់Server។",
   codeSnippet: "import morgan from \"morgan\";\n\n// In development: colorized concise output\nif (process.env.NODE_ENV !== \"production\") {\n  app.use(morgan(\"dev\"));\n} else {\n  // In production: standard combined Apache log format\n  app.use(morgan(\"combined\"));\n}",
 };
 

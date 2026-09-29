@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធនៃ HTTP Request (req)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "An HTTP request consists of an HTTP verb (GET, POST, etc.), a target URL path, headers providing metadata (content types, client user-agents, auth tokens), query string parameters, and an optional payload body.",
-  tip: "In native Node.js HTTP servers, `req` is an incoming Readable Stream, meaning large payloads arrive in chunks rather than all at once.",
-  objective: "Inspect and parse all components of incoming HTTP requests.",
-  expectedOutcome: "Ability to extract headers, client IP, path, and method from any request.",
+  summary: "សំណើ HTTP រួមមានកិរិយាសព្ទ HTTP (GET, POST ។",
+  tip: "នៅក្នុងServer Node.js HTTP ដើម `req` គឺជាស្ទ្រីមដែលអាចអានបានដែលចូលមក មានន័យថាបន្ទុកធំមកដល់ជាបំណែកជាជាងទាំងអស់ក្នុងពេលតែមួយ។",
+  objective: "ពិនិត្យ និងញែកសមាសធាតុទាំងអស់នៃសំណើ HTTP ចូល។",
+  expectedOutcome: "សមត្ថភាពក្នុងការទាញយកបឋមកថា IP របស់អតិថិជន ផ្លូវ និងវិធីសាស្ត្រពីសំណើណាមួយ។",
   codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  console.log(\"Method:\", req.method);\n  console.log(\"URL Path:\", req.url);\n  console.log(\"User-Agent:\", req.headers[\"user-agent\"]);\n  res.end(\"Request logged\");\n});",
 };
 

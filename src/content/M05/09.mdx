@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Route Parameters សម្រាប់កំណត់អត្តសញ្ញាណ",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Route parameters (e.g. `/users/:id` or `/orders/:orderId`) capture dynamic segments directly from the URL path, identifying specific unique resources.",
-  tip: "Use Route parameters for unique resource identification (`/users/42`), and Query parameters for optional filters (`/users?role=admin`).",
-  objective: "Differentiate Route parameters from Query parameters.",
-  expectedOutcome: "Clean, intuitive REST resource addressing schemes.",
+  summary: "ប៉ារ៉ាម៉ែត្រផ្លូវ (ឧ. `/users/:id` ឬ `/orders/:orderId`) ចាប់យកផ្នែកថាមវន្តដោយផ្ទាល់ពីផ្លូវ URL ដោយកំណត់អត្តសញ្ញាណធនធានពិសេសជាក់លាក់។",
+  tip: "ប្រើប៉ារ៉ាម៉ែត្រផ្លូវសម្រាប់ការកំណត់អត្តសញ្ញាណធនធានតែមួយគត់ (`/users/42`) និងប៉ារ៉ាម៉ែត្រសំណួរសម្រាប់តម្រងជម្រើស (`/users?role=admin`)។",
+  objective: "ភាពខុសគ្នានៃប៉ារ៉ាម៉ែត្រផ្លូវពីប៉ារ៉ាម៉ែត្រសំណួរ។",
+  expectedOutcome: "គម្រោងការដោះស្រាយធនធាន REST ដ៏វិចារណញាណ និងស្អាត។",
   codeSnippet: "/* Resource URL Strategy:\n   Route Parameter (Specific Resource ID):\n   GET /api/v1/orders/ORD-9821\n   \n   Query Parameter (Filter / Search Criteria):\n   GET /api/v1/orders?status=shipped&limit=20\n*/",
 };
 

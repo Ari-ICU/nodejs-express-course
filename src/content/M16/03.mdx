@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់បណ្ណាល័យ bcrypt",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "bcrypt is an adaptive cryptographic hashing algorithm designed by Niels Provos and David Mazières based on the Blowfish cipher. Its critical feature is the configurable 'work factor' (cost), which exponentially increases calculation time as computing hardware becomes faster. In Node.js, `bcryptjs` provides a pure JavaScript implementation or `bcrypt` for native C++ bindings.",
-  tip: "Use a cost factor (salt rounds) of 12 for modern production servers. It takes roughly 250-350ms per hash, protecting against offline brute-forcing while remaining responsive.",
-  objective: "Install and use bcrypt in Node.js to hash submitted passwords and compare login credentials.",
-  expectedOutcome: "Working credential hashing pipeline with optimal salt rounds configuration.",
+  summary: "bcrypt គឺ​ជា​ក្បួន​ដោះស្រាយ​ការ​បំប្លែង​កូដ​សម្ងាត់​ដែល​ត្រូវ​បាន​រចនា​ឡើង​ដោយ Niels Provos និង David Mazières ដែល​មាន​មូលដ្ឋាន​លើ Blowfish cipher។ លក្ខណៈសំខាន់របស់វាគឺ 'កត្តាការងារ' (ថ្លៃដើម) ដែលអាចកំណត់រចនាសម្ព័ន្ធបាន ដែលបង្កើនពេលវេលាគណនាជានិទស្សន្ត ដោយសារផ្នែករឹងកុំព្យូទ័រកាន់តែលឿន។ នៅក្នុង Node.js `bcryptjs` ផ្តល់នូវការអនុវត្ត JavaScript សុទ្ធ ឬ `bcrypt` សម្រាប់ការចង C++ ដើម។",
+  tip: "ប្រើកត្តាចំណាយ (ជុំអំបិល) ចំនួន 12 សម្រាប់Serverផលិតកម្មទំនើប។ វាត្រូវចំណាយពេលប្រហែល 250-350ms ក្នុងមួយ hash ការពារប្រឆាំងនឹងការបង្ខំ brute-offline ខណៈពេលដែលនៅសល់ឆ្លើយតប។",
+  objective: "ដំឡើង និងប្រើ bcrypt នៅក្នុង Node.js ដើម្បីបំបែកពាក្យសម្ងាត់ដែលបានដាក់ស្នើ និងប្រៀបធៀបព័ត៌មានសម្ងាត់នៃការចូល។",
+  expectedOutcome: "ដំណើរការបំពង់បង្ហូរព័ត៌មានសម្ងាត់ជាមួយនឹងការកំណត់រចនាសម្ព័ន្ធរង្វង់អំបិលល្អបំផុត។",
   codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// 1. Generate salt and hash during registration\nconst SALT_ROUNDS = 12;\nconst plainPassword = \"SecurePassword2026!\";\n\nconst salt = await bcrypt.genSalt(SALT_ROUNDS);\nconst passwordHash = await bcrypt.hash(plainPassword, salt);\nconsole.log(\"Hashed Password:\", passwordHash);\n\n// 2. Verify during user login\nconst candidatePassword = \"SecurePassword2026!\";\nconst isMatch = await bcrypt.compare(candidatePassword, passwordHash);\n\nif (!isMatch) {\n  throw new Error(\"Invalid email or password\");\n}\nconsole.log(\"Authentication successful!\");",
 };
 

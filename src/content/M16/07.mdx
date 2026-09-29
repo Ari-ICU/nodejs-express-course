@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធ និងទ្រឹស្តីនៃ JWT",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "A JSON Web Token (RFC 7519) is a compact, URL-safe standard for cryptographically transmitting claims between parties. A JWT consists of three base64url-encoded parts separated by dots: Header (algorithm & token type), Payload (user claims & expiration timestamp), and Signature (HMAC-SHA256 or RSA hash of header + payload signed with a server secret).",
-  tip: "Never put confidential data like passwords, credit card numbers, or API keys in a JWT payload! The payload is only base64 encoded, not encrypted, and can be read by anyone.",
-  objective: "Understand the three segments of a JWT (Header, Payload, Signature) and how stateless verification works.",
-  expectedOutcome: "Ability to inspect, construct, and cryptographically verify JWTs.",
+  summary: "JSON Web Token (RFC 7519) គឺជាស្ដង់ដារដែលមានសុវត្ថិភាព URL បង្រួមតូចសម្រាប់ការបញ្ជូនការទាមទារដោយសម្ងាត់រវាងភាគី។ JWT មានផ្នែកដែលបានអ៊ិនកូដ base64url ចំនួនបីដែលបំបែកដោយចំនុច៖ បឋមកថា (ក្បួនដោះស្រាយ & ប្រភេទសញ្ញាសម្ងាត់), Payload (ការទាមទាររបស់អ្នកប្រើប្រាស់ & ត្រាពេលវេលាផុតកំណត់) និងហត្ថលេខា (HMAC-SHA256 ឬ RSA hash នៃបឋមកថា + payload បានចុះហត្ថលេខាជាមួយ server secret)។",
+  tip: "កុំដាក់ទិន្នន័យសម្ងាត់ដូចជាលេខសម្ងាត់ លេខកាតឥណទាន ឬ API keys នៅក្នុង JWT payload! បន្ទុកត្រូវបានអ៊ិនកូដ base64 ប៉ុណ្ណោះ មិនត្រូវបានអ៊ិនគ្រីប និងអាចអានបានដោយនរណាម្នាក់។",
+  objective: "ស្វែងយល់ពីផ្នែកទាំងបីនៃ JWT (Header, Payload, Signature) និងរបៀបដែលការផ្ទៀងផ្ទាត់គ្មានរដ្ឋដំណើរការ។",
+  expectedOutcome: "សមត្ថភាពក្នុងការត្រួតពិនិត្យ សាងសង់ និងផ្ទៀងផ្ទាត់ JWTs កូដសម្ងាត់។",
   codeSnippet: "// Structure of a JWT:\n// header.payload.signature\n//\n// 1. Header (base64url):   {\"alg\": \"HS256\", \"typ\": \"JWT\"}\n// 2. Payload (base64url):  {\"userId\": \"64f1a2b3...\", \"role\": \"user\", \"exp\": 1773729600}\n// 3. Signature:            HMACSHA256(base64Url(header) + \".\" + base64Url(payload), secretKey)\n\n// Example decoding in Node.js:\nimport jwt from \"jsonwebtoken\";\n\nconst token = jwt.sign({ sub: \"user_123\", role: \"editor\" }, process.env.JWT_SECRET, {\n  expiresIn: \"1h\",\n});\nconsole.log(\"Encoded JWT:\", token);",
 };
 

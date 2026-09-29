@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបាន",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "By isolating logic in service functions, features like sending receipts, generating invoices, or charging credit cards can be triggered by API requests, cron jobs, or CLI scripts.",
-  tip: "Services should be pure asynchronous functions that take raw JavaScript objects and return clean results.",
-  objective: "Author service methods reusable across multiple application contexts.",
-  expectedOutcome: "Single source of truth for business operations.",
+  summary: "តាមរយៈការបំបែកតក្កវិជ្ជានៅក្នុងមុខងារសេវាកម្ម លក្ខណៈពិសេសដូចជាការផ្ញើបង្កាន់ដៃ បង្កើតវិក្កយបត្រ ឬការគិតប្រាក់កាតឥណទានអាចត្រូវបានបង្កឡើងដោយសំណើ API ការងារ cron ឬស្គ្រីប CLI ។",
+  tip: "សេវាកម្មគួរតែជាមុខងារអសមកាលសុទ្ធដែលយកវត្ថុ JavaScript ឆៅ និងត្រឡប់លទ្ធផលស្អាត។",
+  objective: "វិធីសាស្រ្តសេវាកម្មរបស់អ្នកនិពន្ធអាចប្រើឡើងវិញបាននៅទូទាំងបរិបទកម្មវិធីជាច្រើន។",
+  expectedOutcome: "ប្រភពតែមួយនៃការពិតសម្រាប់ប្រតិបត្តិការអាជីវកម្ម។",
   codeSnippet: "// Can be called by:\n// 1. POST /api/orders controller\n// 2. Scheduled Cron Job (auto-renewal)\n// 3. Admin CLI tool\nexport const processOrderInvoice = async (orderId) => {\n  const order = await Order.findById(orderId);\n  const pdfBuffer = await generateInvoicePdf(order);\n  await emailService.sendInvoice(order.customerEmail, pdfBuffer);\n  return { processed: true, orderId };\n};",
 };
 

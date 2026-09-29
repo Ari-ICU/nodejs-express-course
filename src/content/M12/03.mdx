@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ Express ទៅកាន់ MongoDB ជាមួយ mongoose.connect()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Establishing a resilient connection pool to MongoDB using `mongoose.connect()`, handling connection events and retry logic.",
-  tip: "Always export a dedicated database connector module and call it before starting `app.listen()`.",
-  objective: "Create a persistent database connection pool.",
-  expectedOutcome: "Automated connection initialization with reconnect event listeners.",
+  summary: "ការបង្កើតបណ្តុំការតភ្ជាប់ដែលធន់នឹង MongoDB ដោយប្រើ `mongoose.connect()` ដោះស្រាយព្រឹត្តិការណ៍តភ្ជាប់ និងព្យាយាមតក្កវិជ្ជាម្តងទៀត។",
+  tip: "តែងតែនាំចេញម៉ូឌុលឧបករណ៍ភ្ជាប់មូលដ្ឋានទិន្នន័យជាក់លាក់ ហើយហៅវាមុនពេលចាប់ផ្តើម `app.listen()`។",
+  objective: "បង្កើតបណ្តុំការតភ្ជាប់មូលដ្ឋានទិន្នន័យជាប់លាប់។",
+  expectedOutcome: "ការចាប់ផ្តើមការតភ្ជាប់ដោយស្វ័យប្រវត្តិជាមួយឧបករណ៍ស្តាប់ព្រឹត្តិការណ៍ភ្ជាប់ឡើងវិញ។",
   codeSnippet: "import mongoose from \"mongoose\";\n\nexport const connectDB = async () => {\n  try {\n    const conn = await mongoose.connect(process.env.DATABASE_URL);\n    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);\n  } catch (error) {\n    console.error(\"❌ MongoDB connection error:\", error.message);\n    process.exit(1); // Exit with failure\n  }\n};",
 };
 

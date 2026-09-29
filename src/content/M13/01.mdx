@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ Express App ទៅកាន់ MongoDB Database",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Bootstrapping an Express application with persistent MongoDB connection pooling, verifying database availability before listening on the port.",
-  tip: "Always connect to the database before calling `app.listen()` to guarantee no incoming requests hit an uninitialized database.",
-  objective: "Wire Express server startup to MongoDB connection readiness.",
-  expectedOutcome: "Resilient server startup with verified database connectivity.",
+  summary: "ការចាប់ផ្ដើមកម្មវិធី Express ជាមួយនឹងការភ្ជាប់ MongoDB ជាប់លាប់ ផ្ទៀងផ្ទាត់ភាពអាចរកបាននៃមូលដ្ឋានទិន្នន័យ មុនពេលស្តាប់នៅលើច្រក។",
+  tip: "ភ្ជាប់ទៅមូលដ្ឋានទិន្នន័យជានិច្ច មុនពេលហៅទូរសព្ទទៅ `app.listen()` ដើម្បីធានាថាគ្មានសំណើចូលមកក្នុងមូលដ្ឋានទិន្នន័យដែលមិនដំណើរការ។",
+  objective: "ការចាប់ផ្តើមServer Wire Express ទៅនឹងការត្រៀមខ្លួននៃការតភ្ជាប់ MongoDB ។",
+  expectedOutcome: "ការចាប់ផ្តើមServerដែលមានភាពធន់ជាមួយនឹងការតភ្ជាប់មូលដ្ឋានទិន្នន័យដែលបានផ្ទៀងផ្ទាត់។",
   codeSnippet: "import app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\nawait connectDB(); // Await DB connection first!\napp.listen(PORT, () => console.log(`Server on port ${PORT}`));",
 };
 

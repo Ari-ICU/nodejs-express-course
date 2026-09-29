@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងរៀបចំ Mongoose Schema",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "A Mongoose Schema maps to a MongoDB collection and defines the shape of the documents, default values, validators, getters, and setters.",
-  tip: "Use the `timestamps: true` schema option to automatically maintain `createdAt` and `updatedAt` Date fields.",
-  objective: "Define structured schemas for application entities.",
-  expectedOutcome: "Comprehensive schema definitions enforcing field structures.",
+  summary: "Mongoose Schema គូសផែនទីទៅបណ្តុំ MongoDB ហើយកំណត់រូបរាងឯកសារ តម្លៃលំនាំដើម សុពលភាព អ្នកទទួល និងអ្នកកំណត់។",
+  tip: "ប្រើជម្រើសគ្រោងការណ៍ `timestamps: true` ដើម្បីរក្សាវាលកាលបរិច្ឆេទ `createdAt` និង `updatedAt` ដោយស្វ័យប្រវត្តិ។",
+  objective: "កំណត់គ្រោងការណ៍រចនាសម្ព័ន្ធសម្រាប់អង្គភាពកម្មវិធី។",
+  expectedOutcome: "និយមន័យគ្រោងការណ៍ដ៏ទូលំទូលាយពង្រឹងរចនាសម្ព័ន្ធវាល។",
   codeSnippet: "import { Schema } from \"mongoose\";\n\nconst userSchema = new Schema({\n  name: { type: String, required: true, trim: true },\n  email: { type: String, required: true, unique: true, lowercase: true }\n}, {\n  timestamps: true // Auto-manages createdAt and updatedAt!\n});",
 };
 

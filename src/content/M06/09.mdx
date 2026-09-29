@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "មូលដ្ឋានគ្រឹះនៃការរៀបចំ Routing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Routing refers to determining how an application responds to a client request to a particular endpoint, which is a URI (or path) and a specific HTTP request method (GET, POST, and so on).",
-  tip: "Define more specific routes before general wildcard or parameterized routes (e.g. `/users/profile` before `/users/:id`).",
-  objective: "Structure URI routing endpoints in an Express application.",
-  expectedOutcome: "Clean, unambiguous route resolution for all incoming endpoints.",
+  summary: "ការកំណត់ផ្លូវសំដៅលើការកំណត់ពីរបៀបដែលកម្មវិធីមួយឆ្លើយតបទៅនឹងសំណើរបស់អតិថិជនទៅកាន់Endpointជាក់លាក់មួយ ដែលជា URI (ឬផ្លូវ) និងវិធីសាស្ត្រសំណើ HTTP ជាក់លាក់ (GET, POST និងដូច្នេះនៅលើ)។",
+  tip: "កំណត់ផ្លូវជាក់លាក់បន្ថែមទៀត មុនពេលប្រើតួអក្សរជំនួសទូទៅ ឬផ្លូវកំណត់ប៉ារ៉ាម៉ែត្រ (ឧ. `/users/profile` មុន `/users/:id`)។",
+  objective: "រចនាសម្ព័ន URI កំណត់ទិសដៅចុងបញ្ចប់នៅក្នុងកម្មវិធី Express ។",
+  expectedOutcome: "ដំណោះស្រាយផ្លូវស្អាត និងគ្មានភាពច្បាស់លាស់សម្រាប់Endpointចូលទាំងអស់។",
   codeSnippet: "app.get(\"/api/v1/products\", (req, res) => {\n  res.json({ products: [] });\n});\n\napp.post(\"/api/v1/products\", (req, res) => {\n  res.status(201).json({ message: \"Product created\" });\n});",
 };
 

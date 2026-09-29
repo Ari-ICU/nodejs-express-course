@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត GET Routes សម្រាប់ទាញយកទិន្នន័យ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "GET routes retrieve resources without mutating database state. They support filtering and pagination via query parameters.",
-  tip: "GET requests must never modify server state or mutate database records.",
-  objective: "Implement read endpoints supporting collection and single-resource retrieval.",
-  expectedOutcome: "Idempotent, cache-friendly data retrieval endpoints.",
+  summary: "ទទួលបានផ្លូវទៅយកធនធានដោយមិនផ្លាស់ប្តូរស្ថានភាពមូលដ្ឋានទិន្នន័យ។ ពួកគេគាំទ្រការត្រង និងការដាក់ទំព័រតាមរយៈប៉ារ៉ាម៉ែត្រសំណួរ។",
+  tip: "សំណើ GET មិនត្រូវកែប្រែស្ថានភាពServer ឬផ្លាស់ប្តូរកំណត់ត្រាមូលដ្ឋានទិន្នន័យឡើយ។",
+  objective: "អនុវត្តការអានEndpointដែលគាំទ្រការប្រមូល និងការទាញយកធនធានតែមួយ។",
+  expectedOutcome: "Ideempotent, cache-friendly data retrieving endpoints.",
   codeSnippet: "app.get(\"/api/v1/articles\", async (req, res) => {\n  const articles = await articleService.getAllArticles(req.query);\n  res.json({ success: true, count: articles.length, data: articles });\n});",
 };
 

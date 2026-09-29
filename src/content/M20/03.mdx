@@ -7,8 +7,8 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "Nodemailer is the defacto standard Node.js library for email dispatch. It abstracts raw SMTP socket connections behind a simple `createTransport()` interface. A reusable transporter singleton handles connection pooling, authentication, and TLS handshakes across your application.",
   tip: "During local development, use Mailtrap or Ethereal Email as your SMTP host to capture and preview test emails in a fake web inbox without spamming real recipients.",
-  objective: "Create and configure a robust Nodemailer transporter singleton supporting pooled connections.",
-  expectedOutcome: "Reusable mail transporter configured via environment variables.",
+  objective: "បង្កើត និងកំណត់រចនាសម្ព័ន្ធឧបករណ៍ដឹកជញ្ជូន Nodemailer singleton ដ៏រឹងមាំដែលគាំទ្រការតភ្ជាប់រួមបញ្ចូលគ្នា។",
+  expectedOutcome: "កម្មវិធីដឹកជញ្ជូនសំបុត្រដែលអាចប្រើឡើងវិញបានកំណត់រចនាសម្ព័ន្ធតាមរយៈអថេរបរិស្ថាន។",
   codeSnippet: "import nodemailer from \"nodemailer\";\n\nexport const transporter = nodemailer.createTransport({\n  host: process.env.SMTP_HOST,\n  port: Number(process.env.SMTP_PORT) || 587,\n  secure: process.env.SMTP_SECURE === \"true\", // true for 465, false for 587\n  auth: {\n    user: process.env.SMTP_USER,\n    pass: process.env.SMTP_PASS,\n  },\n  pool: true, // Reuse open socket connections\n  maxConnections: 5,\n  maxMessages: 100,\n});\n\n// Verify connection configuration on startup:\ntransporter.verify((error, success) => {\n  if (error) console.error(\"SMTP Connection Error:\", error);\n  else console.log(\"SMTP Transporter ready to deliver emails\");\n});",
 };
 

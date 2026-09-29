@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Role-based Access Control (RBAC)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Role-based Access Control (RBAC) regulates user operations based on roles assigned to individuals within an organization. Instead of assigning granular permissions directly to every user, permissions are grouped into roles, and users are assigned those roles. RBAC simplifies authorization audits, scales seamlessly, and aligns with enterprise compliance requirements.",
-  tip: "Keep role hierarchies flat and clear initially. Introduce permission matrices only when role definitions begin to blur across departments.",
-  objective: "Understand how RBAC decouples user identities from system permissions.",
-  expectedOutcome: "Comprehensive understanding of RBAC models and permission inheritance.",
+  summary: "ការគ្រប់គ្រងការចូលប្រើប្រាស់ដោយផ្អែកលើតួនាទី (RBAC) គ្រប់គ្រងប្រតិបត្តិការរបស់អ្នកប្រើប្រាស់ដោយផ្អែកលើតួនាទីដែលត្រូវបានប្រគល់ឱ្យបុគ្គលនៅក្នុងស្ថាប័នមួយ។ ជំនួសឱ្យការផ្តល់សិទ្ធិជាក្រឡាដោយផ្ទាល់ទៅអ្នកប្រើប្រាស់គ្រប់រូប ការអនុញ្ញាតត្រូវបានដាក់ជាក្រុមទៅជាតួនាទី ហើយអ្នកប្រើប្រាស់ត្រូវបានផ្តល់តួនាទីទាំងនោះ។ RBAC សម្រួលការធ្វើសវនកម្មការអនុញ្ញាត ធ្វើមាត្រដ្ឋានយ៉ាងរលូន និងស្របតាមតម្រូវការអនុលោមតាមសហគ្រាស។",
+  tip: "រក្សាឋានានុក្រមតួនាទីឱ្យរាបស្មើ និងច្បាស់លាស់ពីដំបូង។ ណែនាំម៉ាទ្រីសការអនុញ្ញាតតែនៅពេលដែលនិយមន័យតួនាទីចាប់ផ្តើមធ្វើឱ្យព្រិលនៅទូទាំងនាយកដ្ឋាន។",
+  objective: "ស្វែងយល់ពីរបៀបដែល RBAC បំបែកអត្តសញ្ញាណអ្នកប្រើប្រាស់ពីការអនុញ្ញាតប្រព័ន្ធ។",
+  expectedOutcome: "ការយល់ដឹងទូលំទូលាយនៃគំរូ RBAC និងការអនុញ្ញាតឱ្យមរតក។",
   codeSnippet: "// RBAC Conceptual Model:\n// User -> Has Role -> Has Permissions -> Can Access Resource\n//\n// Alice (User)   -> [Role: \"user\"]      -> Read own profile, place order\n// Bob (Support)  -> [Role: \"moderator\"] -> View all orders, issue refunds\n// Carol (SysOps) -> [Role: \"admin\"]     -> Delete products, view metrics, ban users\n//\n// In middleware:\n// if (!roles.includes(req.user.role)) return 403 Forbidden",
 };
 

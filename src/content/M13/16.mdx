@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Pagination និង Total Count Queries",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Running concurrent pagination and document count queries with `Promise.all()` to halve endpoint response latency.",
-  tip: "Running `find()` and `countDocuments()` concurrently with `Promise.all()` cuts query latency in half.",
-  objective: "Write enterprise-grade query pipelines with search and pagination.",
-  expectedOutcome: "Scalable list endpoints capable of filtering thousands of records.",
+  summary: "ដំណើរការ​ការ​កំណត់​ទំព័រ​ដំណាលគ្នា និង​សំណួរ​រាប់​ឯកសារ​ជាមួយ `Promise.all()` ដើម្បី​បន្ថយ​ភាពយឺតយ៉ាវ​នៃ​ការ​ឆ្លើយតប​ចំណុច​បញ្ចប់។",
+  tip: "កំពុងដំណើរការ `find()` និង `countDocuments()` ក្នុងពេលដំណាលគ្នាជាមួយ `Promise.all()` កាត់បន្ថយភាពយឺតនៃសំណួរជាពាក់កណ្តាល។",
+  objective: "សរសេរបំពង់សំណួរថ្នាក់សហគ្រាសជាមួយនឹងការស្វែងរក និងទំព័រទំព័រ។",
+  expectedOutcome: "Endpointបញ្ជីដែលអាចធ្វើមាត្រដ្ឋានបាន ដែលមានសមត្ថភាពត្រងកំណត់ត្រារាប់ពាន់។",
   codeSnippet: "export const getProducts = async (req, res) => {\n  const { search, category, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = {};\n  \n  if (search) filter.name = { $regex: search, $options: \"i\" };\n  if (category) filter.category = category;\n\n  const skip = (Number(page) - 1) * Number(limit);\n\n  const [products, total] = await Promise.all([\n    Product.find(filter).sort(sort).skip(skip).limit(Number(limit)),\n    Product.countDocuments(filter)\n  ]);\n\n  res.json({ success: true, meta: { total, page: Number(page), pages: Math.ceil(total / limit) }, data: products });\n};",
 };
 

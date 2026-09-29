@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី Response Object (res)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The `res` object represents the HTTP response that an Express app sends when it gets an HTTP request. It provides chainable methods like `res.status()`, `res.json()`, `res.send()`, `res.cookie()`, and `res.redirect()`.",
-  tip: "Always remember that `res.json()` or `res.send()` completes the response; trying to call them twice in one handler causes `ERR_HTTP_HEADERS_SENT`.",
-  objective: "Utilize Express response helper methods to return varied data formats.",
-  expectedOutcome: "Error-free response dispatching with proper HTTP headers.",
+  summary: "វត្ថុ `res` តំណាងឱ្យការឆ្លើយតប HTTP ដែលកម្មវិធី Express ផ្ញើនៅពេលដែលវាទទួលបានសំណើ HTTP ។ វាផ្តល់នូវវិធីសាស្រ្តដែលអាចច្រវ៉ាក់បានដូចជា `res.status()`, `res.json()`, `res.send()`, `res.cookie()`, និង `res.redirect()` ។",
+  tip: "ចងចាំជានិច្ចថា `res.json()` ឬ `res.send()` បំពេញការឆ្លើយតប។ ការព្យាយាមហៅពួកគេពីរដងក្នុងឧបករណ៍ដោះស្រាយតែមួយបណ្តាលឱ្យ `ERR_HTTP_HEADERS_SENT` ។",
+  objective: "ប្រើវិធីសាស្ត្រជំនួយការឆ្លើយតបរហ័ស ដើម្បីត្រឡប់ទម្រង់ទិន្នន័យផ្សេងៗគ្នា។",
+  expectedOutcome: "ការបញ្ជូនការឆ្លើយតបដោយគ្មានកំហុសជាមួយនឹងបឋមកថា HTTP ត្រឹមត្រូវ។",
   codeSnippet: "app.get(\"/api/download\", (req, res) => {\n  // Setting headers and cookies\n  res.cookie(\"sessionId\", \"xyz123\", { httpOnly: true });\n  res.setHeader(\"X-Custom-Header\", \"NodePulse\");\n  res.status(200).json({ success: true });\n});",
 };
 

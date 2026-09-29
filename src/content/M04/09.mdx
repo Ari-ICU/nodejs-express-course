@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ជួរការងារ Microtasks (process.nextTick & Promises)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Microtask queues (`process.nextTick` and resolved Promise callbacks) have higher priority than the Event Loop macro-tasks (timers, I/O). Microtasks are drained completely before the Event Loop transitions between phases.",
-  tip: "`process.nextTick` executes before Promise microtasks, and microtasks execute before any `setTimeout` or I/O callback.",
-  objective: "Understand microtask execution priority relative to timers and I/O.",
-  expectedOutcome: "Precise prediction and mastery of async execution timing.",
+  summary: "ជួរ Microtask (`process.nextTick` និងបានដោះស្រាយការហៅត្រលប់មកវិញដោយសន្យា) មានអាទិភាពខ្ពស់ជាងកិច្ចការម៉ាក្រូនៃ Event Loop (កម្មវិធីកំណត់ម៉ោង I/O)។ Microtasks ត្រូវបានបង្ហូរទាំងស្រុងមុនពេល Event Loop ផ្លាស់ប្តូររវាងដំណាក់កាល។",
+  tip: "`process.nextTick` ប្រតិបត្តិមុនពេល Promise microtasks ហើយ microtasks ប្រតិបត្តិមុនពេល `setTimeout` ឬ I/O callback។",
+  objective: "ស្វែងយល់អំពីអាទិភាពនៃការប្រតិបត្តិ microtask ទាក់ទងនឹងកម្មវិធីកំណត់ម៉ោង និង I/O ។",
+  expectedOutcome: "ការព្យាករណ៍ច្បាស់លាស់ និងជំនាញនៃពេលវេលាប្រតិបត្តិ async ។",
   codeSnippet: "console.log(\"1. Synchronous\");\n\nsetTimeout(() => console.log(\"4. Macrotask (setTimeout)\"), 0);\n\nPromise.resolve().then(() => console.log(\"3. Microtask (Promise)\"));\n\nprocess.nextTick(() => console.log(\"2. NextTick Microtask\"));\n\n// Execution order: 1 -> 2 -> 3 -> 4",
 };
 

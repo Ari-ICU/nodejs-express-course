@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Update Resource Endpoint (PATCH)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Updating resource fields using `findByIdAndUpdate()` with schema validation.",
-  tip: "Always return the newly updated document using `{ new: true }`.",
-  objective: "Build partial resource update endpoints.",
-  expectedOutcome: "Safe, validated resource updates.",
+  summary: "ការធ្វើបច្ចុប្បន្នភាពវាលធនធានដោយប្រើ `findByIdAndUpdate()` ជាមួយនឹងសុពលភាពគ្រោងការណ៍។",
+  tip: "តែងតែត្រឡប់ឯកសារដែលបានធ្វើបច្ចុប្បន្នភាពថ្មីដោយប្រើ `{ new: true }` ។",
+  objective: "បង្កើតEndpointនៃការអាប់ដេតធនធានដោយផ្នែក។",
+  expectedOutcome: "ការអាប់ដេតធនធានដែលមានសុពលភាព និងសុវត្ថិភាព។",
   codeSnippet: "export const updateProduct = async (req, res) => {\n  const product = await Product.findByIdAndUpdate(\n    req.params.id,\n    { $set: req.body },\n    { new: true, runValidators: true }\n  );\n  if (!product) return res.status(404).json({ success: false, error: \"Not Found\" });\n  res.json({ success: true, data: product });\n};",
 };
 

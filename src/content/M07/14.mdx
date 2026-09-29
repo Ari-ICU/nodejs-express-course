@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍ស្តង់ដារ RESTful Routes",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "RESTful routing strictly uses nouns (not verbs) in URL paths, pluralizes resource names, and leverages HTTP verbs to communicate the action to perform.",
-  tip: "Never use actions in URLs like `/api/getUsers` or `/api/deleteUser/1`; use `GET /api/users` and `DELETE /api/users/1`.",
-  objective: "Design industry-standard, predictable REST endpoint paths.",
-  expectedOutcome: "Standardized RESTful API contracts following global conventions.",
+  summary: "RESTful routing ប្រើយ៉ាងតឹងរ៉ឹងនូវនាម (មិនមែនកិរិយាសព្ទ) នៅក្នុងផ្លូវ URL, pluralizes ឈ្មោះធនធាន និងប្រើប្រាស់កិរិយាសព្ទ HTTP ដើម្បីទាក់ទងសកម្មភាពដែលត្រូវអនុវត្ត។",
+  tip: "កុំប្រើសកម្មភាពនៅក្នុង URLs ដូចជា `/api/getUsers` ឬ `/api/deleteUser/1`; ប្រើ `GET /api/users` និង `DELETE /api/users/1` ។",
+  objective: "រចនាតាមស្តង់ដារឧស្សាហកម្ម ផ្លូវចុង REST ដែលអាចព្យាករណ៍បាន។",
+  expectedOutcome: "កិច្ចសន្យា RESTful API ស្តង់ដារបន្ទាប់ពីអនុសញ្ញាសកល។",
   codeSnippet: "/* Standard REST Resource URLs:\n   ✅ GET    /api/v1/products         (Get all products)\n   ✅ POST   /api/v1/products         (Create product)\n   ✅ GET    /api/v1/products/:id     (Get product details)\n   ✅ PATCH  /api/v1/products/:id     (Update product)\n   ✅ DELETE /api/v1/products/:id     (Delete product)\n   ❌ GET    /api/v1/getAllProducts   (Anti-pattern: Verb in URL)\n*/",
 };
 

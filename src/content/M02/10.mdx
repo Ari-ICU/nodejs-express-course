@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "សារៈសំខាន់នៃ package-lock.json",
   type: "concept",
   codeLanguage: "bash",
-  summary: "`package-lock.json` locks the exact versions, integrity hashes (SHA-512), and nested dependency trees installed on your system. It guarantees that every developer, CI server, and production Docker container installs the exact same dependency tree.",
-  tip: "Never delete `package-lock.json` on purpose; commit it to Git and use `npm ci` in CI/CD pipelines instead of `npm install`.",
-  objective: "Appreciate the role of lockfiles in deterministic, reproducible builds.",
-  expectedOutcome: "Elimination of 'it works on my machine' version mismatch issues.",
+  summary: "`package-lock.json` ចាក់សោកំណែពិតប្រាកដ លេខសម្គាល់សុចរិតភាព (SHA-512) និងដើមឈើពឹងផ្អែកដែលបានដាក់នៅលើប្រព័ន្ធរបស់អ្នក។ វាធានាថារាល់អ្នកអភិវឌ្ឍន៍ Server CI និងផលិតកម្ម Docker container ដំឡើងមែកធាងអាស្រ័យដូចគ្នា។",
+  tip: "កុំលុប `package-lock.json` តាមគោលបំណង។ ផ្ទេរវាទៅ Git ហើយប្រើ `npm ci` ក្នុង CI/CD pipelines ជំនួសឱ្យ `npm install`។",
+  objective: "សូមកោតសរសើរចំពោះតួនាទីរបស់ឯកសារចាក់សោរក្នុងការបង្កើតឡើងវិញដែលអាចកំណត់បាន និងអាចបង្កើតឡើងវិញបាន។",
+  expectedOutcome: "ការលុបបំបាត់ 'វាដំណើរការលើម៉ាស៊ីនរបស់ខ្ញុំ' បញ្ហាមិនស៊ីគ្នានៃកំណែ។",
   codeSnippet: "# In CI/CD and Dockerfiles, ALWAYS use npm ci:\n# - Faster than npm install\n# - Throws error if package.json and package-lock.json are out of sync\n# - Never modifies the lockfile\nnpm ci --omit=dev",
 };
 

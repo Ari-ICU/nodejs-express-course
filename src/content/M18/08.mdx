@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការការពារសុវត្ថិភាព JWT (Algorithm Confusion & Secret Entropy)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Common JWT security vulnerabilities include using weak signing secrets (crackable in seconds via hashcat), allowing the insecure 'none' algorithm, failing to validate the token's expiration timestamp, and storing sensitive PII in unencrypted payloads. JWT secrets must be at least 256 bits (32 random bytes) of cryptographically secure entropy.",
-  tip: "Generate cryptographic secrets using Node.js crypto: `node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"`.",
-  objective: "Harden JWT creation and verification against algorithm confusion and secret brute-forcing.",
-  expectedOutcome: "Cryptographically sound JWT configuration immune to common attack vectors.",
+  summary: "ភាពងាយរងគ្រោះផ្នែកសុវត្ថិភាពទូទៅរបស់ JWT រួមមានការប្រើប្រាស់អាថ៌កំបាំងនៃការចុះហត្ថលេខាខ្សោយ (អាចបំបែកបានក្នុងរយៈពេលប៉ុន្មានវិនាទីតាមរយៈ hashcat) ដែលអនុញ្ញាតឱ្យមានក្បួនដោះស្រាយ 'none' ដែលមិនមានសុវត្ថិភាព ការខកខានក្នុងការធ្វើឱ្យមានសុពលភាពនៃត្រាពេលវេលាផុតកំណត់របស់សញ្ញាសម្ងាត់ និងការរក្សាទុក PII ដ៏រសើបនៅក្នុងបន្ទុកដែលមិនបានអ៊ិនគ្រីប។ អាថ៌កំបាំង JWT ត្រូវតែមានយ៉ាងហោចណាស់ 256 ប៊ីត (32 បៃចៃដន្យ) នៃ entropy សុវត្ថិភាពជាគ្រីប។",
+  tip: "បង្កើតការសម្ងាត់គ្រីបដោយប្រើ Node.js crypto: `node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"`.",
+  objective: "ការបង្កើត និងការផ្ទៀងផ្ទាត់ JWT រឹងរូសប្រឆាំងនឹងការភាន់ច្រលំនៃក្បួនដោះស្រាយ និងការបង្ខំដោយសម្ងាត់។",
+  expectedOutcome: "សំឡេងសម្ងាត់នៃការកំណត់រចនាសម្ព័ន្ធ JWT មានភាពស៊ាំទៅនឹងវ៉ិចទ័រវាយប្រហារទូទៅ។",
   codeSnippet: "// 1. Generate strong secret (run in terminal):\n// node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"\n\n// 2. Explicitly specify allowed algorithms during verification:\nimport jwt from \"jsonwebtoken\";\n\nexport const verifyTokenSecurely = (token) => {\n  return jwt.verify(token, process.env.JWT_ACCESS_SECRET, {\n    algorithms: [\"HS256\"], // Strictly enforce algorithm (defeats 'none' and RS/HS confusion)\n    issuer: \"api.myenterprise.com\",\n    audience: \"myenterprise-client\",\n  });\n};",
 };
 

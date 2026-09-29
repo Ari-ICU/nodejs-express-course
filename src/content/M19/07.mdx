@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ទំហំអតិបរមានៃឯកសារ (File Size Limits & Multer Errors)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Unrestricted file size limits allow malicious actors to flood server storage and cause memory exhaustion. Multer accepts a `limits` object where `fileSize` specifies the maximum byte threshold. When a file exceeds the limit, Multer aborts and raises a `LIMIT_FILE_SIZE` error code, which must be converted into a friendly 400 response.",
-  tip: "Catch `multer.MulterError` in your global Express error middleware to deliver clean, custom error messages instead of raw crash traces.",
-  objective: "Enforce strict byte limits on uploads and handle MulterError exceptions gracefully.",
-  expectedOutcome: "Predictable, user-friendly 400 Bad Request responses upon file size violations.",
+  summary: "ដែនកំណត់ទំហំឯកសារដែលមិនមានការរឹតបន្តឹងអនុញ្ញាតឲ្យតួអង្គព្យាបាទ ជន់លិចកន្លែងផ្ទុករបស់Server និងបណ្តាលឱ្យអស់អង្គចងចាំ។ Multer ទទួលយកវត្ថុ `limits` ដែល `fileSize` បញ្ជាក់កម្រិតបៃអតិបរមា។ នៅពេលដែលឯកសារលើសពីដែនកំណត់នោះ Multer បោះបង់ និងបង្កើនកូដកំហុស `LIMIT_FILE_SIZE` ដែលត្រូវតែបំប្លែងទៅជាការឆ្លើយតប 400 មិត្តភាព។",
+  tip: "ចាប់ `multer.MulterError` នៅក្នុងឧបករណ៍កណ្តាលកំហុស Express ជាសកលរបស់អ្នក ដើម្បីបញ្ជូនសារកំហុសផ្ទាល់ខ្លួនដែលស្អាត ជំនួសឱ្យដានគាំងឆៅ។",
+  objective: "អនុវត្តដែនកំណត់បៃយ៉ាងតឹងរ៉ឹងលើការបង្ហោះ និងដោះស្រាយការលើកលែង MulterError យ៉ាងទន់ភ្លន់។",
+  expectedOutcome: "អាចទស្សន៍ទាយបាន ការឆ្លើយតប 400 Bad Request ដែលងាយស្រួលប្រើសម្រាប់អ្នកប្រើប្រាស់ លើការបំពានទំហំឯកសារ។",
   codeSnippet: "// 1. Configure limit\nconst upload = multer({\n  limits: {\n    fileSize: 2 * 1024 * 1024, // 2MB in bytes\n    files: 5, // Maximum 5 files per request\n  },\n});\n\n// 2. Catch MulterError in global error middleware:\nexport const handleMulterError = (err, req, res, next) => {\n  if (err instanceof multer.MulterError) {\n    if (err.code === \"LIMIT_FILE_SIZE\") {\n      return res.status(400).json({\n        status: \"fail\",\n        message: \"File too large. Maximum allowed size is 2MB.\",\n      });\n    }\n    return res.status(400).json({ status: \"fail\", message: err.message });\n  }\n  next(err);\n};",
 };
 

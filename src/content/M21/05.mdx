@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ Schemas និង DTOs ក្នុង Swagger Components",
   type: "lab",
   codeLanguage: "yaml",
-  summary: "OpenAPI schemas define the shape, types, and constraints of data models used across endpoints. Centralizing data models inside `components.schemas` promotes reuse and avoids duplicating object definitions across multiple route annotations.",
-  tip: "Reference reusable schemas using the `$ref` pointer (e.g. `'$ref': '#/components/schemas/User'`) to keep route docs DRY and maintainable.",
-  objective: "Define reusable data schemas with typed properties and validation rules in OpenAPI.",
-  expectedOutcome: "Consistent, reusable component schemas reflecting database and DTO models.",
+  summary: "គ្រោងការណ៍ OpenAPI កំណត់រូបរាង ប្រភេទ និងកម្រិតនៃគំរូទិន្នន័យដែលប្រើឆ្លងកាត់Endpoint។ ការធ្វើគំរូទិន្នន័យកណ្តាលនៅខាងក្នុង `components.schemas` លើកកម្ពស់ការប្រើប្រាស់ឡើងវិញ និងជៀសវាងការចម្លងនិយមន័យវត្ថុឆ្លងកាត់ចំណារពន្យល់ផ្លូវច្រើន។",
+  tip: "យោងគ្រោងការណ៍ដែលអាចប្រើឡើងវិញបានដោយប្រើទ្រនិច `$ref` (ឧ. `'$ref': '#/components/schemas/User'`) ដើម្បីរក្សាឯកសារផ្លូវស្ងួត និងអាចរក្សាបាន។",
+  objective: "កំណត់គ្រោងការណ៍ទិន្នន័យដែលអាចប្រើឡើងវិញបានជាមួយនឹងលក្ខណៈសម្បត្តិដែលបានវាយបញ្ចូល និងច្បាប់សុពលភាពនៅក្នុង OpenAPI ។",
+  expectedOutcome: "គ្រោងការណ៍សមាសភាគដែលអាចប្រើឡើងវិញបានដែលឆ្លុះបញ្ចាំងពីមូលដ្ឋានទិន្នន័យ និងគំរូ DTO ។",
   codeSnippet: "/**\n * @openapi\n * components:\n *   schemas:\n *     Product:\n *       type: object\n *       required:\n *         - title\n *         - price\n *       properties:\n *         id:\n *           type: string\n *           example: \"64f1a2b3c4d5e6f7a8b9c0d1\"\n *         title:\n *           type: string\n *           example: \"Wireless Mechanical Keyboard\"\n *         price:\n *           type: number\n *           example: 89.99\n *         category:\n *           type: string\n *           enum: [Electronics, Furniture, Clothing]\n *           example: \"Electronics\"\n */",
 };
 

@@ -8,7 +8,7 @@ export const meta = {
   summary: "Routes serve purely as routing tables that map HTTP paths and verbs to middleware guards and controller handlers.",
   tip: "Route files should contain zero business logic—only URL path definitions and middleware bindings.",
   objective: "Maintain lean, declarative route definition files.",
-  expectedOutcome: "Clean routing declarations reading like an API table of contents.",
+  expectedOutcome: "សម្អាត​ការ​ប្រកាស​ផ្លូវ​ដែល​អាន​ដូច​តារាង​មាតិកា API។",
   codeSnippet: "import { Router } from \"express\";\nimport * as productController from \"../controllers/product.controller.js\";\nimport { authenticate } from \"../middleware/auth.js\";\n\nconst router = Router();\n\nrouter.get(\"/\", productController.getAllProducts);\nrouter.post(\"/\", authenticate, productController.createProduct);\n\nexport default router;",
 };
 

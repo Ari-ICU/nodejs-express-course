@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Password Hashing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Password hashing transforms a plaintext password into an irreversible, fixed-length alphanumeric string using a one-way cryptographic mathematical function. Unlike encryption which is two-way and reversible with a secret key, secure hashing is permanently irreversible. Storing passwords in plaintext or using fast algorithms like MD5/SHA-1 exposes users to instant credential theft during database leaks.",
-  tip: "Never use encryption (AES/DES) or fast hash algorithms (MD5/SHA256) for passwords. Fast hashes allow attackers to calculate billions of guesses per second via GPU brute-forcing.",
-  objective: "Understand why one-way slow cryptographic hash functions are mandatory for credential storage.",
-  expectedOutcome: "Solid grasp of cryptographic hashing vs encryption and resistance to brute-force attacks.",
+  summary: "ការបំប្លែងលេខសម្ងាត់បំប្លែងពាក្យសម្ងាត់អត្ថបទធម្មតាទៅជាខ្សែអក្សរអក្សរក្រមប្រវែងថេរដែលមិនអាចត្រឡប់វិញបាន ដោយប្រើមុខងារគណិតវិទ្យាគ្រីបមួយផ្លូវ។ មិនដូចការអ៊ិនគ្រីបដែលមានពីរផ្លូវ និងអាចត្រឡប់វិញបានដោយប្រើសោសម្ងាត់ ការលួចលាក់ដោយសុវត្ថិភាពគឺមិនអាចត្រឡប់វិញបានជារៀងរហូត។ ការរក្សាទុកពាក្យសម្ងាត់ជាអត្ថបទធម្មតា ឬប្រើក្បួនដោះស្រាយរហ័សដូចជា MD5/SHA-1 បង្ហាញឱ្យអ្នកប្រើប្រាស់មានការលួចព័ត៌មានសម្ងាត់ភ្លាមៗអំឡុងពេលលេចធ្លាយទិន្នន័យ។",
+  tip: "កុំប្រើការអ៊ិនគ្រីប (AES/DES) ឬក្បួនដោះស្រាយសញ្ញារហ័ស (MD5/SHA256) សម្រាប់ពាក្យសម្ងាត់។ សញ្ញារហ័សអនុញ្ញាតឱ្យអ្នកវាយប្រហារគណនាការស្មានរាប់ពាន់លានក្នុងមួយវិនាទីតាមរយៈ GPU brute-forcing ។",
+  objective: "យល់​ថា​ហេតុ​អ្វី​បាន​ជា​មុខងារ​កូដ​សម្ងាត់​យឺត​មួយ​ផ្លូវ​គឺ​ចាំបាច់​សម្រាប់​ការ​ផ្ទុក​ព័ត៌មាន​សម្ងាត់។",
+  expectedOutcome: "ការចាប់យកយ៉ាងរឹងមាំនៃកូដសម្ងាត់ធៀបនឹងការអ៊ិនគ្រីប និងការទប់ទល់នឹងការវាយប្រហារដោយបង្ខំ។",
   codeSnippet: "// Plaintext vs Irreversible One-Way Hash:\n// Plaintext: \"SecretP@ss123\" -> stored directly (FATAL SECURITY FLAW)\n// MD5/SHA256: \"SecretP@ss123\" -> fast hash (VULNERABLE to GPU rainbow tables)\n// bcrypt:    \"SecretP@ss123\" -> $2a$12$e8YkZ... (SLOW, SALTED, INDUSTRY STANDARD)\n\n// One-way verification principle:\n// We NEVER decrypt: Decrypt(hash) -> Impossible!\n// Instead we re-hash: bcrypt.compare(incomingCandidate, storedHash);",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង .env ជាមួយបណ្ណាល័យ dotenv",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "The `.env` file stores local key-value environment variables. Libraries like `dotenv` or native Node.js `--env-file` parse this file at startup and populate `process.env`.",
-  tip: "Always create a `.env.example` file committing template keys without sensitive secrets so team members know which variables are required.",
-  objective: "Configure local environment files and load them into Node applications.",
-  expectedOutcome: "Secure secret management with automated local configuration loading.",
+  summary: "ឯកសារ `.env` រក្សាទុកអថេរបរិស្ថានតម្លៃសោមូលដ្ឋាន។ បណ្ណាល័យដូចជា `dotenv` ឬ Node.js ដើម `--env-file` ញែកឯកសារនេះនៅពេលចាប់ផ្តើម ហើយបញ្ចូល `process.env` ។",
+  tip: "តែងតែបង្កើតឯកសារ `.env.example` ប្រព្រឹត្តនូវសោគំរូដោយគ្មានអាថ៌កំបាំងដ៏រសើប ដូច្នេះសមាជិកក្រុមដឹងថាអថេរណាមួយត្រូវបានទាមទារ។",
+  objective: "កំណត់រចនាសម្ព័ន្ធឯកសារបរិស្ថានមូលដ្ឋាន ហើយផ្ទុកពួកវាទៅក្នុងកម្មវិធី Node ។",
+  expectedOutcome: "ការគ្រប់គ្រងសម្ងាត់ដោយសុវត្ថិភាពជាមួយនឹងការផ្ទុកការកំណត់រចនាសម្ព័ន្ធមូលដ្ឋានដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "# .env file:\n# PORT=5000\n# DATABASE_URL=mongodb://localhost:27017/shop\n# JWT_SECRET=super_secret_key_123\n\n// Loading via dotenv in code:\nimport \"dotenv/config\";\n\n// OR using native Node 20+ CLI argument (zero dependencies!):\n// node --env-file=.env server.js",
 };
 

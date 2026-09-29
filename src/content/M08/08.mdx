@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Authentication Middleware សម្រាប់ការពារ Routes",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Authentication middleware inspects incoming request headers (such as `Authorization: Bearer <token>` or API keys), validates client identity, attaches user context to `req.user`, or rejects unauthorized traffic with a 401 status.",
-  tip: "If authentication fails, immediately send a 401 Unauthorized response and never call next().",
-  objective: "Guard routes by inspecting request headers and attaching user state in middleware.",
-  expectedOutcome: "Protected endpoints that safely reject unauthorized requests before reaching route handlers.",
+  summary: "ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវផ្នែកកណ្តាលពិនិត្យបឋមកថានៃសំណើចូល (ដូចជា `Authorization: Bearer <token>` ឬសោ API) ផ្តល់សុពលភាពអត្តសញ្ញាណអតិថិជន ភ្ជាប់បរិបទអ្នកប្រើប្រាស់ទៅ `req.user` ឬបដិសេធចរាចរណ៍ដែលគ្មានការអនុញ្ញាតជាមួយនឹងស្ថានភាព 401។",
+  tip: "ប្រសិនបើការផ្ទៀងផ្ទាត់បរាជ័យ សូមផ្ញើការឆ្លើយតបដែលគ្មានការអនុញ្ញាត 401 ភ្លាមៗ ហើយកុំហៅទៅបន្ទាប់()។",
+  objective: "យាមផ្លូវដោយពិនិត្យបឋមកថាសំណើ និងភ្ជាប់ស្ថានភាពអ្នកប្រើប្រាស់នៅក្នុងឧបករណ៍កណ្តាល។",
+  expectedOutcome: "Endpointដែលត្រូវបានការពារ ដែលបដិសេធដោយសុវត្ថិភាពនូវសំណើដែលមិនមានការអនុញ្ញាត មុនពេលទៅដល់អ្នកដោះស្រាយផ្លូវ។",
   codeSnippet: "// Authentication Guard Middleware\n// Inspects request headers, validates credentials, and attaches user context\n\nexport const authenticate = (req, res, next) => {\n  const authHeader = req.headers.authorization;\n  if (!authHeader?.startsWith(\"Bearer \")) {\n    return res.status(401).json({ success: false, error: \"Authentication token required\" });\n  }\n\n  const token = authHeader.split(\" \")[1];\n\n  // Verify token credentials\n  if (token !== process.env.API_SECRET_KEY) {\n    return res.status(401).json({ success: false, error: \"Invalid or expired token\" });\n  }\n\n  // Attach authenticated identity to request for downstream route handlers\n  req.user = { id: \"usr_101\", role: \"admin\", name: \"Sophea\" };\n  next();\n};",
 };
 

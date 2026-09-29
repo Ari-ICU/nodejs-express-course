@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Custom AppError Class",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Creating a custom `AppError` class that inherits from `Error`, encapsulating an HTTP status code, operational status flag, and capturing the stack trace.",
-  tip: "Flagging custom errors with `this.isOperational = true` allows error middleware to distinguish known errors from unexpected crashes.",
-  objective: "Build a reusable custom AppError class.",
-  expectedOutcome: "Clean error instantiation with attached status codes.",
+  summary: "ការបង្កើតថ្នាក់ `AppError` ផ្ទាល់ខ្លួនដែលទទួលមរតកពី `Error` បញ្ចូលកូដស្ថានភាព HTTP ទង់ស្ថានភាពប្រតិបត្តិការ និងការចាប់យកដានជង់។",
+  tip: "ការដាក់ទង់កំហុសផ្ទាល់ខ្លួនជាមួយ `this.isOperational = true` អនុញ្ញាតឱ្យឧបករណ៍កណ្តាលមានកំហុសដើម្បីបែងចែកកំហុសដែលគេស្គាល់ពីការគាំងដែលមិនរំពឹងទុក។",
+  objective: "បង្កើតថ្នាក់ AppError ផ្ទាល់ខ្លួនដែលអាចប្រើឡើងវិញបាន។",
+  expectedOutcome: "សម្អាតកំហុសឆ្គងភ្លាមៗជាមួយនឹងលេខកូដស្ថានភាពដែលបានភ្ជាប់។",
   codeSnippet: "export class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true; // Marks this as a known, trusted error!\n\n    Error.captureStackTrace(this, this.constructor);\n  }\n}",
 };
 

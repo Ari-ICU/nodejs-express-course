@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "អថេរកំណត់បរិស្ថាន (Environment Variables)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Environment variables externalize dynamic configuration (database URLs, port numbers, API secret keys, log levels) from source code, adhering to the 12-Factor App methodology for secure multi-environment deployments.",
-  tip: "Never hardcode database passwords or secret keys in your source code files.",
-  objective: "Separate application code from environment-specific configuration.",
-  expectedOutcome: "Configurable application behavior across local, staging, and production environments.",
+  summary: "អថេរបរិស្ថានខាងក្រៅកំណត់រចនាសម្ព័ន្ធថាមវន្ត (URL មូលដ្ឋានទិន្នន័យ លេខច្រក សោសម្ងាត់ API កម្រិតកំណត់ហេតុ) ពីកូដប្រភព ដោយប្រកាន់ខ្ជាប់នូវវិធីសាស្រ្តកម្មវិធី 12-Factor សម្រាប់ការដាក់ពង្រាយពហុបរិស្ថានប្រកបដោយសុវត្ថិភាព។",
+  tip: "កុំប្រើពាក្យសម្ងាត់មូលដ្ឋានទិន្នន័យរឹង ឬសោសម្ងាត់នៅក្នុងឯកសារកូដប្រភពរបស់អ្នក។",
+  objective: "បំបែកកូដកម្មវិធីពីការកំណត់រចនាសម្ព័ន្ធជាក់លាក់នៃបរិស្ថាន។",
+  expectedOutcome: "ឥរិយាបថកម្មវិធីដែលអាចកំណត់រចនាសម្ព័ន្ធបាននៅទូទាំងមូលដ្ឋាន ដំណាក់កាល និងបរិយាកាសផលិតកម្ម។",
   codeSnippet: "// Accessing environment variables via process.env\nconst PORT = process.env.PORT || 5000;\nconst DB_URI = process.env.DATABASE_URL;\nconst IS_PROD = process.env.NODE_ENV === \"production\";\n\nconsole.log(`Server starting on port ${PORT} in ${IS_PROD ? \"PROD\" : \"DEV\"} mode`);",
 };
 

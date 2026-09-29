@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការ Upload ឯកសារ PDF និង Office Documents",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Document uploads (e.g. PDF resumes, spreadsheets, Word documents) require distinct validation compared to images. Checking the MIME type and file extension ensures executable binaries (like `.exe` or `.sh`) disguised as documents are promptly rejected before reaching storage.",
-  tip: "Do not trust file extensions alone! Always check the MIME type (`file.mimetype`) and inspect the file magic bytes buffer for bulletproof security.",
-  objective: "Build document upload routes strictly accepting verified PDF and Office formats.",
-  expectedOutcome: "Secure document ingestion rejecting unauthorized executable files.",
+  summary: "ការបង្ហោះឯកសារ (ឧ. ប្រវត្តិរូបសង្ខេប PDF, សៀវភៅបញ្ជី, ឯកសារ Word) ទាមទារឱ្យមានសុពលភាពខុសគ្នាបើប្រៀបធៀបទៅនឹងរូបភាព។ ការពិនិត្យមើលប្រភេទ MIME និងផ្នែកបន្ថែមឯកសារធានាថាប្រព័ន្ធគោលពីរដែលអាចប្រតិបត្តិបាន (ដូចជា `.exe` ឬ `.sh`) ដែលក្លែងបន្លំជាឯកសារត្រូវបានច្រានចោលភ្លាមៗមុនពេលឈានដល់ទំហំផ្ទុក។",
+  tip: "កុំទុកចិត្តផ្នែកបន្ថែមឯកសារតែម្នាក់ឯង! ពិនិត្យប្រភេទ MIME (`file.mimetype`) ជានិច្ច ហើយពិនិត្យឯកសារ buffer magic bytes សម្រាប់សុវត្ថិភាពការពារគ្រាប់។",
+  objective: "បង្កើតផ្លូវផ្ទុកឯកសារដោយទទួលយកទម្រង់ PDF និង Office ដែលបានផ្ទៀងផ្ទាត់យ៉ាងតឹងរ៉ឹង។",
+  expectedOutcome: "ការបញ្ចូលឯកសារសុវត្ថិភាព បដិសេធឯកសារដែលអាចប្រតិបត្តិបានដោយគ្មានការអនុញ្ញាត។",
   codeSnippet: "const documentFilter = (req, file, cb) => {\n  const allowedMimeTypes = [\n    \"application/pdf\",\n    \"application/msword\",\n    \"application/vnd.openxmlformats-officedocument.wordprocessingml.document\",\n  ];\n\n  if (allowedMimeTypes.includes(file.mimetype)) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Invalid file format. Only PDF and Word documents are permitted!\", 400), false);\n  }\n};\n\nexport const uploadDocument = multer({\n  storage: multer.memoryStorage(),\n  fileFilter: documentFilter,\n  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit for documents\n});",
 };
 

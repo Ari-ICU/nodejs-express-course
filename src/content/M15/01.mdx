@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការយល់ដឹងអំពីប្រភេទនៃកំហុសក្នុង Server",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Server errors fall into two distinct categories: Operational Errors (predictable runtime failures like invalid user input, expired tokens, missing resources) and Programmer Errors (bugs, syntax errors, reading properties of undefined).",
-  tip: "Operational errors should be caught and returned as friendly JSON messages; programmer errors indicate bugs requiring developer fixes.",
-  objective: "Distinguish operational errors from programming bugs.",
-  expectedOutcome: "Clear error classification strategy for all server failures.",
+  summary: "កំហុសរបស់Serverធ្លាក់ជាពីរប្រភេទផ្សេងគ្នា៖ កំហុសប្រតិបត្តិការ (ការបរាជ័យពេលដំណើរការដែលអាចព្យាករណ៍បានដូចជាការបញ្ចូលរបស់អ្នកប្រើមិនត្រឹមត្រូវ ថូខឹនផុតកំណត់ ធនធានដែលបាត់) និងកំហុសអ្នកសរសេរកម្មវិធី (កំហុស កំហុសវាក្យសម្ព័ន្ធ ការអានលក្ខណសម្បត្តិនៃការមិនបានកំណត់)។",
+  tip: "កំហុសក្នុងប្រតិបត្តិការគួរតែត្រូវបានចាប់ និងបញ្ជូនមកវិញជាសារ JSON ដែលងាយស្រួលប្រើ។ កំហុសអ្នកសរសេរកម្មវិធីបង្ហាញពីកំហុសដែលទាមទារឱ្យអ្នកអភិវឌ្ឍន៍ជួសជុល។",
+  objective: "បែងចែកកំហុសប្រតិបត្តិការពីកំហុសក្នុងការសរសេរកម្មវិធី។",
+  expectedOutcome: "សម្អាតយុទ្ធសាស្រ្តចាត់ថ្នាក់កំហុសសម្រាប់ការបរាជ័យServerទាំងអស់។",
   codeSnippet: "/* Error Classification:\n   Operational Errors (Expected):\n   - 400 Invalid email format\n   - 404 User not found in DB\n   - 401 Expired JWT token\n\n   Programmer Errors (Bugs):\n   - TypeError: Cannot read property of undefined\n   - SyntaxError: Invalid JSON string\n*/",
 };
 

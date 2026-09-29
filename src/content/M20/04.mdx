@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការផ្ញើ Email (Text & HTML Format)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Nodemailer's `sendMail()` method accepts an options object containing `from`, `to`, `subject`, `text` (fallback plaintext), and `html` (rich rendered styling). Providing both `html` and `text` alternatives ensures email accessibility on screen readers and low-bandwidth mobile clients.",
-  tip: "Always provide a `text` fallback along with `html` — emails containing only HTML without a plaintext alternative trigger spam filters on Gmail and Outlook.",
-  objective: "Send multi-part MIME emails with HTML formatting and plaintext fallbacks.",
-  expectedOutcome: "Reliable email transmission function delivering to recipient inboxes.",
+  summary: "វិធីសាស្ត្រ `sendMail()` របស់ Nodemailer ទទួលយកវត្ថុជម្រើសដែលមាន `from`, `to`, `subject`, `text` (អត្ថបទធម្មតាជំនួស) និង `html` (រចនាប័ទ្មបង្ហាញសម្បូរបែប)។ ការផ្តល់ជម្រើសជំនួស `html` និង `text` ធានានូវភាពងាយស្រួលនៃអ៊ីមែលនៅលើកម្មវិធីអានអេក្រង់ និងម៉ាស៊ីនភ្ញៀវចល័តកម្រិតបញ្ជូនទាប។",
+  tip: "តែងតែផ្តល់នូវ `text` ត្រលប់មកវិញ រួមជាមួយនឹង `html` — អ៊ីមែលដែលមានតែ HTML ដោយគ្មានជម្រើសអត្ថបទធម្មតា បង្កឱ្យមានតម្រងសារឥតបានការនៅលើ Gmail និង Outlook ។",
+  objective: "ផ្ញើអ៊ីមែល MIME ច្រើនផ្នែកជាមួយនឹងការធ្វើទ្រង់ទ្រាយ HTML និងកំហុសអត្ថបទធម្មតា។",
+  expectedOutcome: "មុខងារបញ្ជូនអ៊ីមែលដែលអាចទុកចិត្តបាន បញ្ជូនទៅកាន់ប្រអប់ទទួលអ្នកទទួល។",
   codeSnippet: "export const sendEmail = async ({ to, subject, html, text }) => {\n  const mailOptions = {\n    from: `\"${process.env.APP_NAME}\" <${process.env.EMAIL_FROM}>`,\n    to,\n    subject,\n    text, // Plaintext version for spam filters & accessibility\n    html, // Rich HTML version\n  };\n\n  const info = await transporter.sendMail(mailOptions);\n  console.log(\"Email dispatched successfully. MessageID:\", info.messageId);\n  return info;\n};",
 };
 

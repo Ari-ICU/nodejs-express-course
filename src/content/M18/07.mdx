@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍សុវត្ថិភាពពាក្យសម្ងាត់ (NIST Guidelines)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Modern password security aligns with NIST Special Publication 800-63B standards. Key recommendations include requiring a minimum of 8 to 12 characters, permitting long passphrases (up to 64+ characters), allowing all printable ASCII and Unicode characters, checking against lists of breached/compromised passwords, and eliminating arbitrary periodic expiration rules.",
-  tip: "Do not enforce frustrating rules like 'must contain 1 special character and 1 uppercase letter' without allowing long passphrases. Length provides far more entropy than character complexity.",
-  objective: "Understand and implement contemporary password strength guidelines based on NIST standards.",
-  expectedOutcome: "User-friendly yet mathematically robust password validation schemas.",
+  summary: "សុវត្ថិភាពពាក្យសម្ងាត់ទំនើបស្របតាមស្តង់ដារ NIST Special Publication 800-63B ។ អនុសាសន៍សំខាន់ៗរួមមានការទាមទារយ៉ាងហោចណាស់ពី 8 ទៅ 12 តួអក្សរ អនុញ្ញាតឱ្យមានឃ្លាសម្ងាត់វែង (រហូតដល់ 64+ តួអក្សរ) អនុញ្ញាតឱ្យអក្សរ ASCII និងយូនីកូដដែលអាចបោះពុម្ពបានទាំងអស់ ពិនិត្យមើលបញ្ជីពាក្យសម្ងាត់ដែលបំពាន/បំពាន និងលុបបំបាត់ច្បាប់ផុតកំណត់តាមកាលកំណត់។",
+  tip: "កុំអនុវត្តច្បាប់ដែលគួរឱ្យធុញទ្រាន់ដូចជា 'ត្រូវតែមានតួអក្សរពិសេស 1 និងអក្សរធំ 1' ដោយមិនអនុញ្ញាតឱ្យមានឃ្លាសម្ងាត់វែង។ ប្រវែងផ្តល់នូវ entropy ច្រើនជាងភាពស្មុគស្មាញតួអក្សរ។",
+  objective: "ស្វែងយល់ និងអនុវត្តគោលការណ៍ណែនាំភាពរឹងមាំនៃពាក្យសម្ងាត់សហសម័យដោយផ្អែកលើស្តង់ដារ NIST ។",
+  expectedOutcome: "គ្រោងការណ៍សុពលភាពលេខសម្ងាត់ដែលងាយស្រួលប្រើ ប៉ុន្តែមានប្រសិទ្ធភាពគណិតវិទ្យា។",
   codeSnippet: "import { z } from \"zod\";\n\n// NIST-aligned password schema:\nexport const passwordSchema = z\n  .string()\n  .min(10, \"Password must be at least 10 characters long\")\n  .max(128, \"Password cannot exceed 128 characters\")\n  .refine((val) => !/^(password|12345678|qwerty|admin)/i.test(val), {\n    message: \"Password is too common and easily guessable\",\n  });",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី Request Object (req)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The `req` object represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, cookies, and IP address. Express decorates Node's native `http.IncomingMessage` with intuitive helpers.",
-  tip: "Use `req.get('Header-Name')` to retrieve headers in a case-insensitive manner.",
-  objective: "Access all incoming client metadata through the request object.",
-  expectedOutcome: "Mastery of `req.body`, `req.params`, `req.query`, and `req.headers`.",
+  summary: "វត្ថុ `req` តំណាងឱ្យសំណើ HTTP និងមានលក្ខណៈសម្បត្តិសម្រាប់ខ្សែអក្សរសំណួរសំណើ ប៉ារ៉ាម៉ែត្រ តួអត្ថបទ បឋមកថា HTTP Cookies និងអាសយដ្ឋាន IP ។ Express តុបតែង `http.IncomingMessage` ដើមរបស់ Node ជាមួយនឹងជំនួយការវិចារណញាណ។",
+  tip: "ប្រើ `req.get('Header-Name')` ដើម្បីទាញយកបឋមកថាក្នុងលក្ខណៈមិនប្រកាន់អក្សរតូចធំ។",
+  objective: "ចូលប្រើទិន្នន័យមេតារបស់អតិថិជនចូលទាំងអស់តាមរយៈវត្ថុសំណើ។",
+  expectedOutcome: "ជំនាញនៃ `req.body`, `req.params`, `req.query`, និង `req.headers`។",
   codeSnippet: "app.post(\"/api/items/:id\", (req, res) => {\n  console.log(\"Route param ID:\", req.params.id);\n  console.log(\"Query search:\", req.query.search);\n  console.log(\"Request payload:\", req.body);\n  console.log(\"Client IP:\", req.ip);\n  console.log(\"Auth header:\", req.get(\"Authorization\"));\n  res.sendStatus(200);\n});",
 };
 

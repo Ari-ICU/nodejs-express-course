@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការសរសេរ និងកែប្រែឯកសារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Writing structured data (logs, exports, CSV files) safely to disk with atomic write patterns to avoid file corruption.",
-  tip: "To prevent partial writes during unexpected server restarts, write to a temporary file first, then use `fs.rename()` to overwrite atomically.",
-  objective: "Persist logs and structured reports to the file system.",
-  expectedOutcome: "Reliable write workflows preventing corrupted or partially-written files.",
+  summary: "ការសរសេរទិន្នន័យដែលមានរចនាសម្ព័ន្ធ (កំណត់ហេតុ ការនាំចេញ ឯកសារ CSV) ដោយសុវត្ថិភាពទៅក្នុងថាសដែលមានលំនាំសរសេរអាតូម ដើម្បីជៀសវាងការខូចឯកសារ។",
+  tip: "ដើម្បីទប់ស្កាត់ការសរសេរដោយផ្នែកក្នុងអំឡុងពេលចាប់ផ្តើមServerឡើងវិញដោយមិនបានរំពឹងទុក សូមសរសេរទៅឯកសារបណ្តោះអាសន្នជាមុនសិន បន្ទាប់មកប្រើ `fs.rename()` ដើម្បីសរសេរជាន់ពីលើអាតូម។",
+  objective: "រក្សាទុកកំណត់ហេតុ និងរបាយការណ៍ដែលមានរចនាសម្ព័ន្ធទៅប្រព័ន្ធឯកសារ។",
+  expectedOutcome: "លំហូរការងារដែលអាចទុកចិត្តបាន ការពារឯកសារដែលខូច ឬសរសេរដោយផ្នែក។",
   codeSnippet: "import fs from \"node:fs/promises\";\n\nconst userLog = { userId: \"U_102\", action: \"LOGIN\", timestamp: new Date() };\n\n// Write formatted JSON\nawait fs.writeFile(\n  \"user-session.json\",\n  JSON.stringify(userLog, null, 2),\n  \"utf-8\"\n);\nconsole.log(\"Session saved successfully!\");",
 };
 

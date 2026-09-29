@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Routes ច្រើនក្នុងកម្មវិធី",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Managing multiple routes cleanly requires logical grouping so that URL paths remain intuitive, predictable, and maintainable as the application scales.",
-  tip: "Define a consistent API version prefix (e.g. `/api/v1`) across all routes.",
-  objective: "Organize extensive route collections without naming collisions.",
-  expectedOutcome: "Clean, consistent API path namespaces across the entire project.",
+  summary: "ការ​គ្រប់​គ្រង​ផ្លូវ​ច្រើន​យ៉ាង​ស្អាត​តម្រូវ​ឱ្យ​មាន​ការ​ដាក់​ជា​ក្រុម​ឡូជីខល ដូច្នេះ​ផ្លូវ URL នៅ​តែ​មាន​លក្ខណៈ​វិចារណញាណ អាច​ទស្សន៍ទាយ​បាន និង​អាច​រក្សា​បាន​តាម​មាត្រដ្ឋាន​កម្មវិធី។",
+  tip: "កំណត់បុព្វបទកំណែ API ស្រប (ឧ. `/api/v1`) ឆ្លងកាត់ផ្លូវទាំងអស់។",
+  objective: "រៀបចំការប្រមូលផ្លូវយ៉ាងទូលំទូលាយដោយមិនដាក់ឈ្មោះការប៉ះទង្គិច។",
+  expectedOutcome: "សម្អាត​ចន្លោះ​ឈ្មោះ​ផ្លូវ API ដែល​ស្រប​គ្នា​នៅ​ទូទាំង​គម្រោង​ទាំងមូល។",
   codeSnippet: "// Mounting domain routers under versioned namespaces\napp.use(\"/api/v1/users\", userRouter);\napp.use(\"/api/v1/products\", productRouter);\napp.use(\"/api/v1/orders\", orderRouter);",
 };
 

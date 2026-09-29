@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Get Collection Endpoint ជាមួយ Filters",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Implementing GET list endpoints with query filtering, sorting, and pagination.",
-  tip: "Always use `.lean()` on collection queries to conserve memory and boost performance.",
-  objective: "Build scalable collection endpoints.",
-  expectedOutcome: "Fast collection queries supporting client filters.",
+  summary: "ការអនុវត្តEndpointនៃបញ្ជី GET ជាមួយនឹងការត្រងសំណួរ ការតម្រៀប និងការដាក់ទំព័រ។",
+  tip: "តែងតែប្រើ `.lean()` លើសំណួរប្រមូលដើម្បីរក្សាទុកអង្គចងចាំ និងបង្កើនប្រសិទ្ធភាព។",
+  objective: "បង្កើតEndpointនៃការប្រមូលដែលអាចធ្វើមាត្រដ្ឋានបាន។",
+  expectedOutcome: "សំណួរប្រមូលរហ័សដែលគាំទ្រតម្រងអតិថិជន។",
   codeSnippet: "export const getProducts = async (req, res) => {\n  const products = await Product.find(req.query).lean();\n  res.json({ success: true, count: products.length, data: products });\n};",
 };
 

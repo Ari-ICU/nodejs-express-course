@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Application-level Middleware (app.use)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Application-level middleware is bound to an instance of the `app` object using `app.use()` and `app.METHOD()`. It executes for every incoming request matching the path specification.",
-  tip: "Mount global application middleware at the very top of `app.js` before any route definitions.",
-  objective: "Configure application-wide request interceptors.",
-  expectedOutcome: "Global security, parsing, and logging applied to all routes.",
+  summary: "កម្មវិធីកណ្តាលកម្រិតកម្មវិធីត្រូវបានចងភ្ជាប់ទៅនឹងវត្ថុ `app` ដោយប្រើ `app.use()` និង `app.METHOD()` ។ វាប្រតិបត្តិសម្រាប់រាល់សំណើចូលដែលផ្គូផ្គងនឹងការបញ្ជាក់ផ្លូវ។",
+  tip: "ដំឡើងកម្មវិធីកណ្តាលកម្មវិធីសកលនៅផ្នែកខាងលើនៃ `app.js` មុនពេលការកំណត់ផ្លូវណាមួយ។",
+  objective: "កំណត់រចនាសម្ព័ន្ធឧបករណ៍ស្ទាក់ចាប់សំណើពេញកម្មវិធី។",
+  expectedOutcome: "សុវត្ថិភាពសកល ការញែក និងការកត់ត្រាត្រូវបានអនុវត្តចំពោះផ្លូវទាំងអស់។",
   codeSnippet: "// Global application middleware\napp.use(express.json());\napp.use(express.urlencoded({ extended: true }));\n\n// Path-scoped application middleware\napp.use(\"/api\", (req, res, next) => {\n  console.log(\"API Access detected\");\n  next();\n});",
 };
 

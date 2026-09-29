@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធនៃ HTTP Response (res)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "An HTTP response communicates the status of the requested operation to the client via a 3-digit status code, status message, response headers (defining content encoding, caching policies, security rules), and response data.",
-  tip: "Always set the `Content-Type` header before sending the body so clients parse JSON or HTML accurately.",
-  objective: "Construct standardized HTTP responses with accurate status codes and headers.",
-  expectedOutcome: "Properly formatted server responses adhering to HTTP standards.",
+  summary: "ការឆ្លើយតប HTTP ទំនាក់ទំនងស្ថានភាពនៃប្រតិបត្តិការដែលបានស្នើទៅកាន់អតិថិជនតាមរយៈលេខកូដស្ថានភាព 3 ខ្ទង់ សារស្ថានភាព បឋមកថាឆ្លើយតប (កំណត់ការអ៊ិនកូដមាតិកា គោលការណ៍ឃ្លាំងសម្ងាត់ ច្បាប់សុវត្ថិភាព) និងទិន្នន័យឆ្លើយតប។",
+  tip: "តែងតែកំណត់បឋមកថា `Content-Type` មុនពេលផ្ញើតួ ដូច្នេះអតិថិជនញែក JSON ឬ HTML ឱ្យបានត្រឹមត្រូវ។",
+  objective: "បង្កើតការឆ្លើយតប HTTP ស្តង់ដារជាមួយនឹងលេខកូដស្ថានភាព និងបឋមកថាត្រឹមត្រូវ។",
+  expectedOutcome: "ការធ្វើទ្រង់ទ្រាយត្រឹមត្រូវនៃការឆ្លើយតបរបស់Server ដោយប្រកាន់ខ្ជាប់នូវស្តង់ដារ HTTP ។",
   codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  // Set status code and headers\n  res.writeHead(200, {\n    \"Content-Type\": \"application/json\",\n    \"X-Powered-By\": \"Node.js Native\"\n  });\n  // Send body and finalize response\n  res.end(JSON.stringify({ status: \"online\", timestamp: Date.now() }));\n});",
 };
 

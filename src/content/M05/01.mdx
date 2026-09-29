@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "មូលដ្ឋានគ្រឹះពិធីការ HTTP និងដំណើរការ Request-Response",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Hypertext Transfer Protocol (HTTP) is the stateless, application-layer protocol powering the World Wide Web. Clients send request packets containing a method, path, headers, and optional body; servers evaluate the request and return an HTTP status code, response headers, and payload.",
-  tip: "HTTP is stateless: every request must contain its own authorization and context, allowing servers to scale horizontally across multiple instances.",
-  objective: "Understand the request-response lifecycle and anatomy of HTTP network packets.",
-  expectedOutcome: "Solid mental model of client-server HTTP transactions.",
+  summary: "Hypertext Transfer Protocol (HTTP) គឺជាពិធីការស្រទាប់កម្មវិធីគ្មានរដ្ឋ ដែលផ្តល់ថាមពលដល់វើលវ៉ាយវ៉េប។ អតិថិជនផ្ញើកញ្ចប់សំណើដែលមានវិធីសាស្រ្ត ផ្លូវ បឋមកថា និងតួស្រេចចិត្ត។ Serverវាយតំលៃសំណើ និងត្រឡប់លេខកូដស្ថានភាព HTTP ក្បាលឆ្លើយតប និងបន្ទុក។",
+  tip: "HTTP គឺគ្មានរដ្ឋ៖ រាល់សំណើត្រូវតែមានការអនុញ្ញាត និងបរិបទរបស់វា ដែលអនុញ្ញាតឱ្យServerធ្វើមាត្រដ្ឋានផ្តេកលើករណីជាច្រើន។",
+  objective: "ស្វែងយល់អំពីវដ្តជីវិតនៃការឆ្លើយតបសំណើ និងកាយវិភាគសាស្ត្រនៃកញ្ចប់ព័ត៌មានបណ្តាញ HTTP ។",
+  expectedOutcome: "គំរូផ្លូវចិត្តរឹងមាំនៃប្រតិបត្តិការ HTTP ម៉ាស៊ីនភ្ញៀវ-Server។",
   codeSnippet: "/* Anatomy of an HTTP Request / Response:\n   CLIENT REQUEST:\n   POST /api/v1/orders HTTP/1.1\n   Host: api.store.com\n   Content-Type: application/json\n   Authorization: Bearer eyJhbGci...\n   {\"item\": \"Keyboard\", \"qty\": 1}\n\n   SERVER RESPONSE:\n   HTTP/1.1 201 Created\n   Content-Type: application/json\n   {\"success\": true, \"orderId\": \"ORD-55\"}\n*/",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Get Single Resource by ID",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Retrieving single resources by ObjectId with validation and 404 handling.",
-  tip: "Verify `mongoose.isValidObjectId(req.params.id)` before querying to avoid 500 casting errors.",
-  objective: "Implement single-entity retrieval endpoints with ID validation.",
-  expectedOutcome: "Clean 404 responses for non-existent entities.",
+  summary: "ការទាញយកធនធានតែមួយដោយ ObjectId ជាមួយនឹងសុពលភាព និងការដោះស្រាយ 404 ។",
+  tip: "ផ្ទៀងផ្ទាត់ `mongoose.isValidObjectId(req.params.id)` មុននឹងសួរ ដើម្បីជៀសវាងកំហុសឆ្គង 500 ។",
+  objective: "អនុវត្ត​ចំណុច​បញ្ចប់​ការ​ទាញ​យក​អង្គភាព​តែ​មួយ​ដោយ​មាន​សុពលភាព​លេខ​សម្គាល់។",
+  expectedOutcome: "សម្អាតការឆ្លើយតប 404 សម្រាប់អង្គភាពដែលមិនមាន។",
   codeSnippet: "export const getProductById = async (req, res) => {\n  const product = await Product.findById(req.params.id).lean();\n  if (!product) return res.status(404).json({ success: false, error: \"Not Found\" });\n  res.json({ success: true, data: product });\n};",
 };
 

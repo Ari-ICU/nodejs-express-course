@@ -5,19 +5,96 @@ export const meta = {
   khmerTitle: "ការកំណត់ និងគ្រប់គ្រង Resources",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "In REST, a resource is any piece of information that can be named (a document, image, user account, product inventory, or transaction). Each resource is identified by a stable URI.",
-  tip: "A resource representation is usually a JSON document, but the same resource could also be represented as XML or PDF via content negotiation.",
-  objective: "Model application domain entities as discrete REST resources.",
-  expectedOutcome: "Clear mapping between database schemas and public API resources.",
-  codeSnippet: "// Resource representation\nconst userResource = {\n  id: \"USR_101\",\n  fullName: \"Sokha Mean\",\n  email: \"sokha@example.com\",\n  createdAt: \"2026-09-17T05:00:00.000Z\"\n};",
+  summary: `In REST, a **Resource** is any fundamental concept, entity, or object that can be named, addressed, and manipulated over the network. A resource is not the database table itself, but an abstract representation exposed across the HTTP boundary.
+
+### 1. Types of Resources
+* **Document Resource**: A single object or database record instance (e.g., \`/users/usr_101\`).
+* **Collection Resource**: A server-managed directory of resources (e.g., \`/users\`, \`/articles\`).
+* **Store Resource**: A client-managed resource repository where the client determines the URI on creation (e.g., \`PUT /files/document.pdf\`).
+* **Controller Resource**: An executable procedure or workflow that doesn't map directly to CRUD (e.g., \`POST /auth/login\`, \`POST /cart/checkout\`).
+
+### 2. Resources vs Representations
+Clients never directly touch the physical database row; instead, they receive a **Representation** of that resource (usually serialised JSON). The server may omit internal fields like \`password_hash\`, format dates into ISO-8601 strings, and compute dynamic fields like \`fullName\` or \`discountedPrice\`.`,
+  tip: "When modeling controller resources (actions that do not neatly fit standard CRUD, like 'resending an email verification' or 'cancelling an order'), model the action as a sub-resource or state transition: `POST /orders/12/cancellation` or `POST /auth/resend-verification`.",
+  objective: "Understand how to identify, categorize, and represent domain entities as distinct REST resources.",
+  expectedOutcome: "Proficiency in decomposing complex business domains into clear Document, Collection, and Controller resource models.",
+  codeSnippet: `/**
+ * Resource Representation Transformation
+ * Internal DB Model -> Client-Facing Resource Representation
+ */
+
+const express = require("express");
+const app = express();
+
+// Internal DB Entity (contains sensitive & internal metadata)
+const dbUser = {
+  id: "usr_883",
+  first_name: "Sophea",
+  last_name: "Keo",
+  email: "sophea.keo@example.com",
+  password_hash: "$2b$10$e8Z9yX7jP1b3...",
+  internal_notes: "High risk user",
+  created_at: 1695972000000,
 };
 
-```javascript
-// Resource representation
-const userResource = {
-  id: "USR_101",
-  fullName: "Sokha Mean",
-  email: "sokha@example.com",
-  createdAt: "2026-09-17T05:00:00.000Z"
+// Transformer / Serializer: produces safe, client-facing Representation
+function toUserResource(user) {
+  return {
+    id: user.id,
+    fullName: \`\${user.first_name} \${user.last_name}\`,
+    email: user.email,
+    createdAt: new Date(user.created_at).toISOString(),
+    links: {
+      self: \`/api/v1/users/\${user.id}\`,
+      orders: \`/api/v1/users/\${user.id}/orders\`,
+    },
+  };
+}
+
+app.get("/api/v1/users/:id", (req, res) => {
+  // Never leak password_hash or internal_notes to the HTTP consumer
+  const resource = toUserResource(dbUser);
+  res.json({ success: true, data: resource });
+});`,
 };
-```
+
+\`\`\`javascript
+/**
+ * Resource Representation Transformation
+ * Internal DB Model -> Client-Facing Resource Representation
+ */
+
+const express = require("express");
+const app = express();
+
+// Internal DB Entity (contains sensitive & internal metadata)
+const dbUser = {
+  id: "usr_883",
+  first_name: "Sophea",
+  last_name: "Keo",
+  email: "sophea.keo@example.com",
+  password_hash: "$2b$10$e8Z9yX7jP1b3...",
+  internal_notes: "High risk user",
+  created_at: 1695972000000,
+};
+
+// Transformer / Serializer: produces safe, client-facing Representation
+function toUserResource(user) {
+  return {
+    id: user.id,
+    fullName: `${user.first_name} ${user.last_name}`,
+    email: user.email,
+    createdAt: new Date(user.created_at).toISOString(),
+    links: {
+      self: `/api/v1/users/${user.id}`,
+      orders: `/api/v1/users/${user.id}/orders`,
+    },
+  };
+}
+
+app.get("/api/v1/users/:id", (req, res) => {
+  // Never leak password_hash or internal_notes to the HTTP consumer
+  const resource = toUserResource(dbUser);
+  res.json({ success: true, data: resource });
+});
+\`\`\`

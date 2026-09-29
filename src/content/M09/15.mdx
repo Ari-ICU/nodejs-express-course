@@ -5,26 +5,114 @@ export const meta = {
   khmerTitle: "ការបង្កើត Query Filtering សម្រាប់ Search & Categories",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Filtering allows clients to query resources matching specific criteria (e.g. `?category=electronics&price[gte]=100&inStock=true`).",
-  tip: "Always convert and validate query string types (such as parsing numeric values with `Number()`) before comparing values.",
-  objective: "Build flexible query filters supporting ranges and categories.",
-  expectedOutcome: "Flexible collection filtering supporting multiple criteria.",
-  codeSnippet: "app.get(\"/api/v1/products\", (req, res) => {\n  let results = [...products];\n\n  if (req.query.category) {\n    results = results.filter((p) => p.category === req.query.category);\n  }\n\n  if (req.query.minPrice) {\n    const min = Number(req.query.minPrice);\n    results = results.filter((p) => p.price >= min);\n  }\n\n  res.json({ success: true, count: results.length, data: results });\n});",
+  summary: `In RESTful APIs, **Query Filtering** allows clients to narrow down collection datasets by specific attributes without creating dedicated URL endpoints for every combination.
+
+### 1. Common REST Filtering Syntax Patterns
+* **Exact Matching**: \`/products?category=electronics&brand=apple\`
+* **Comparison Operators (Range)**:
+  * Prefix style: \`/products?minPrice=50&maxPrice=200\`
+  * Bracket style: \`/products?price[gte]=50&price[lte]=200\`
+* **Multi-Value (Set Membership)**: \`/products?status=in_stock,backordered\`
+* **Boolean Flags**: \`/products?isFeatured=true\`
+
+### 2. Building Dynamic Database Queries Safely
+Extract \`req.query\`, sanitize values, and dynamically construct query clauses. In production ORMs (Prisma, Mongoose, Knex), always use parameterized queries to avoid injection vulnerabilities.`,
+  tip: "Always convert and validate data types when reading `req.query`. By default in Express, all `req.query` values arrive as strings! For instance, `'true' !== true` and `typeof req.query.price === 'string'`.",
+  objective: "Build a dynamic multi-parameter query filtering engine in Express supporting category matching, price ranges, and boolean availability.",
+  expectedOutcome: "The ability to handle flexible query filters dynamically while validating types and guarding against malformed parameters.",
+  codeSnippet: `const express = require("express");
+const app = express();
+
+const inventory = [
+  { id: 1, name: "Noise-Cancelling Headphones", category: "audio", price: 199, inStock: true },
+  { id: 2, name: "Bluetooth Speaker", category: "audio", price: 49, inStock: true },
+  { id: 3, name: "Gaming Monitor 27-inch", category: "computers", price: 299, inStock: false },
+  { id: 4, name: "Wireless Ergonomic Mouse", category: "computers", price: 35, inStock: true },
+  { id: 5, name: "USB Condenser Microphone", category: "audio", price: 85, inStock: true },
+];
+
+/**
+ * GET /api/v1/items?category=audio&minPrice=50&maxPrice=250&inStock=true
+ */
+app.get("/api/v1/items", (req, res) => {
+  const { category, minPrice, maxPrice, inStock } = req.query;
+  let results = [...inventory];
+
+  // 1. Filter by category (Case-insensitive)
+  if (category) {
+    results = results.filter((item) => item.category.toLowerCase() === category.toLowerCase());
+  }
+
+  // 2. Filter by numeric price range
+  if (minPrice !== undefined) {
+    const min = parseFloat(minPrice);
+    if (!isNaN(min)) results = results.filter((item) => item.price >= min);
+  }
+  if (maxPrice !== undefined) {
+    const max = parseFloat(maxPrice);
+    if (!isNaN(max)) results = results.filter((item) => item.price <= max);
+  }
+
+  // 3. Filter by boolean flag (Explicit string comparison)
+  if (inStock !== undefined) {
+    const stockBool = inStock === "true";
+    results = results.filter((item) => item.inStock === stockBool);
+  }
+
+  res.json({
+    success: true,
+    appliedFilters: { category, minPrice, maxPrice, inStock },
+    count: results.length,
+    data: results,
+  });
+});`,
 };
 
-```javascript
-app.get("/api/v1/products", (req, res) => {
-  let results = [...products];
+\`\`\`javascript
+const express = require("express");
+const app = express();
 
-  if (req.query.category) {
-    results = results.filter((p) => p.category === req.query.category);
+const inventory = [
+  { id: 1, name: "Noise-Cancelling Headphones", category: "audio", price: 199, inStock: true },
+  { id: 2, name: "Bluetooth Speaker", category: "audio", price: 49, inStock: true },
+  { id: 3, name: "Gaming Monitor 27-inch", category: "computers", price: 299, inStock: false },
+  { id: 4, name: "Wireless Ergonomic Mouse", category: "computers", price: 35, inStock: true },
+  { id: 5, name: "USB Condenser Microphone", category: "audio", price: 85, inStock: true },
+];
+
+/**
+ * GET /api/v1/items?category=audio&minPrice=50&maxPrice=250&inStock=true
+ */
+app.get("/api/v1/items", (req, res) => {
+  const { category, minPrice, maxPrice, inStock } = req.query;
+  let results = [...inventory];
+
+  // 1. Filter by category (Case-insensitive)
+  if (category) {
+    results = results.filter((item) => item.category.toLowerCase() === category.toLowerCase());
   }
 
-  if (req.query.minPrice) {
-    const min = Number(req.query.minPrice);
-    results = results.filter((p) => p.price >= min);
+  // 2. Filter by numeric price range
+  if (minPrice !== undefined) {
+    const min = parseFloat(minPrice);
+    if (!isNaN(min)) results = results.filter((item) => item.price >= min);
+  }
+  if (maxPrice !== undefined) {
+    const max = parseFloat(maxPrice);
+    if (!isNaN(max)) results = results.filter((item) => item.price <= max);
   }
 
-  res.json({ success: true, count: results.length, data: results });
+  // 3. Filter by boolean flag (Explicit string comparison)
+  if (inStock !== undefined) {
+    const stockBool = inStock === "true";
+    results = results.filter((item) => item.inStock === stockBool);
+  }
+
+  res.json({
+    success: true,
+    appliedFilters: { category, minPrice, maxPrice, inStock },
+    count: results.length,
+    data: results,
+  });
 });
-```
+\`\`\`

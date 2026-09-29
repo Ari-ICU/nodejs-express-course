@@ -5,18 +5,102 @@ export const meta = {
   khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Effective REST API design uses lowercase plural nouns for resources (`/users`, `/orders`), handles relationships intuitively (`/users/5/orders`), and provides clean pagination, sorting, and filtering options.",
-  tip: "Always use hyphens (kebab-case) in URLs rather than underscores or camelCase (e.g. `/order-items` instead of `/order_items`).",
-  objective: "Design intuitive, developer-friendly REST API specifications.",
-  expectedOutcome: "Professional REST endpoints following industry best practices.",
-  codeSnippet: "/* RESTful URL Design Guide:\n   Good: /api/v1/user-profiles\n   Good: /api/v1/customers/12/invoices\n   Bad:  /api/v1/getUserProfiles\n   Bad:  /api/v1/invoices?customerId=12 (use nested URI if strictly owned)\n*/",
+  summary: `Designing professional, intuitive REST APIs requires strict consistency across URI anatomy, naming schemes, and resource nesting. A well-designed API is self-explanatory, predictable, and delightful for client developers to consume.
+
+### 1. Resource Naming Rules
+* **Use Plural Nouns**: Always name resource collections with lowercase plural nouns (e.g. \`/users\`, \`/articles\`, \`/orders\`). Never use verbs in paths like \`/getUsers\` or \`/createOrder\`.
+* **Kebab-case in URIs**: Use lowercase with hyphens for multi-word paths (\`/payment-methods\`, \`/shipping-addresses\`), never camelCase or snake_case.
+* **Hierarchical Nesting for Relations**: Express parent-child relationships through natural URL paths: \`/users/15/orders/302\`. Limit nesting to a maximum of **2 levels deep** to prevent unwieldy URLs; flatten subsequent lookups to root endpoints.
+
+### 2. Standard URI Matrix
+| Operation | HTTP Verb | URI Pattern | Status Code |
+| :--- | :--- | :--- | :--- |
+| List Collection | \`GET\` | \`/api/v1/courses\` | 200 OK |
+| Create Resource | \`POST\` | \`/api/v1/courses\` | 201 Created |
+| Single Resource | \`GET\` | \`/api/v1/courses/:id\` | 200 OK / 404 |
+| Replace Resource | \`PUT\` | \`/api/v1/courses/:id\` | 200 OK / 204 |
+| Patch Resource | \`PATCH\` | \`/api/v1/courses/:id\` | 200 OK |
+| Delete Resource | \`DELETE\` | \`/api/v1/courses/:id\` | 204 No Content |`,
+  tip: "Avoid deeply nested paths like `/departments/5/teams/2/members/12/tasks/9`. Instead, once an entity has a unique identifier, expose it directly: `/api/v1/tasks/9` or `/api/v1/members/12/tasks`.",
+  objective: "Master industry-standard URI naming conventions, relationship nesting limits, and resource route mapping.",
+  expectedOutcome: "The ability to architect clean, predictable, and developer-friendly RESTful endpoints that adhere strictly to international RFC standards.",
+  codeSnippet: `/**
+ * Professional REST Route Design in Express
+ * Clean separation between collections and parent-child resources
+ */
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+// 1. Root Collection: Plural noun, kebab-case
+// GET /api/v1/order-items
+app.get("/api/v1/order-items", (req, res) => {
+  res.json({ success: true, data: [] });
+});
+
+// 2. Nested Parent-Child Resource (Max 2 levels deep)
+// GET /api/v1/customers/:customerId/orders
+app.get("/api/v1/customers/:customerId/orders", (req, res) => {
+  const { customerId } = req.params;
+  res.json({
+    success: true,
+    customerId,
+    data: [
+      { orderId: "ord_101", amount: 150.00, status: "completed" },
+      { orderId: "ord_102", amount: 89.50, status: "shipped" },
+    ],
+  });
+});
+
+// 3. Direct Sub-resource Access (Flattened for deep entities)
+// GET /api/v1/orders/:orderId
+app.get("/api/v1/orders/:orderId", (req, res) => {
+  const { orderId } = req.params;
+  res.json({
+    success: true,
+    data: { orderId, customerId: "cust_42", amount: 150.00 },
+  });
+});`,
 };
 
-```javascript
-/* RESTful URL Design Guide:
-   Good: /api/v1/user-profiles
-   Good: /api/v1/customers/12/invoices
-   Bad:  /api/v1/getUserProfiles
-   Bad:  /api/v1/invoices?customerId=12 (use nested URI if strictly owned)
-*/
-```
+\`\`\`javascript
+/**
+ * Professional REST Route Design in Express
+ * Clean separation between collections and parent-child resources
+ */
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+// 1. Root Collection: Plural noun, kebab-case
+// GET /api/v1/order-items
+app.get("/api/v1/order-items", (req, res) => {
+  res.json({ success: true, data: [] });
+});
+
+// 2. Nested Parent-Child Resource (Max 2 levels deep)
+// GET /api/v1/customers/:customerId/orders
+app.get("/api/v1/customers/:customerId/orders", (req, res) => {
+  const { customerId } = req.params;
+  res.json({
+    success: true,
+    customerId,
+    data: [
+      { orderId: "ord_101", amount: 150.00, status: "completed" },
+      { orderId: "ord_102", amount: 89.50, status: "shipped" },
+    ],
+  });
+});
+
+// 3. Direct Sub-resource Access (Flattened for deep entities)
+// GET /api/v1/orders/:orderId
+app.get("/api/v1/orders/:orderId", (req, res) => {
+  const { orderId } = req.params;
+  res.json({
+    success: true,
+    data: { orderId, customerId: "cust_42", amount: 150.00 },
+  });
+});
+\`\`\`

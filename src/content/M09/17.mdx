@@ -5,26 +5,130 @@ export const meta = {
   khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting (Ascending & Descending)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Sorting allows clients to control the presentation order of retrieved resources using query parameters (e.g. `?sort=price` or `?sort=-price` for descending order).",
-  tip: "Use `-` prefix conventions (e.g. `sort=-price`) for descending order and plain field names for ascending.",
-  objective: "Parse client sort query parameters and sort resource collections.",
-  expectedOutcome: "Flexible sorting across multiple entity fields.",
-  codeSnippet: "// Handling sort query: ?sort=price or ?sort=-price\napp.get(\"/api/v1/products\", (req, res) => {\n  const sortParam = req.query.sort || \"name\";\n  const isDescending = sortParam.startsWith(\"-\");\n  const field = isDescending ? sortParam.slice(1) : sortParam;\n\n  const sorted = [...products].sort((a, b) => {\n    if (a[field] < b[field]) return isDescending ? 1 : -1;\n    if (a[field] > b[field]) return isDescending ? -1 : 1;\n    return 0;\n  });\n\n  res.json({ success: true, data: sorted });\n});",
-};
+  summary: `**Sorting** allows clients to request collection resources ordered by one or multiple fields in ascending or descending sequence.
 
-```javascript
-// Handling sort query: ?sort=price or ?sort=-price
+### 1. Industry Standard Sorting Syntax
+* **Minus Prefix Convention** (Stripe & Mongoose standard):
+  * \`/products?sort=price\` (Ascending: low to high)
+  * \`/products?sort=-price\` (Descending: high to low)
+* **Multi-Field Sorting**:
+  * \`/products?sort=-createdAt,price\` (Newest first, then cheapest)
+* **Alternative Style**: \`/products?sortBy=price&order=desc\`
+
+### 2. Guarding Database Performance with Field Whitelisting
+Never let clients sort by un-indexed or arbitrary database columns! Sorting by un-indexed fields causes database disk swaps and query timeouts. Always validate requested sort fields against an allowed whitelist.`,
+  tip: "Always enforce a default sort order on your collection endpoints (e.g. `-createdAt` or `id`). Without an explicit sort order, relational databases return rows in arbitrary order, causing paginated items to shift unpredictably between page requests.",
+  objective: "Build a multi-field sorting mechanism in Express that parses ascending/descending prefixes and validates fields against a strict security whitelist.",
+  expectedOutcome: "Predictable, deterministic sorting functionality that guarantees consistent pagination and safeguards database indexes.",
+  codeSnippet: `const express = require("express");
+const app = express();
+
+const products = [
+  { id: 1, name: "Desk Mat", price: 19.99, rating: 4.8, createdAt: "2024-01-10" },
+  { id: 2, name: "Mechanical Keyboard", price: 89.99, rating: 4.9, createdAt: "2024-03-01" },
+  { id: 3, name: "USB-C Cable", price: 9.99, rating: 4.2, createdAt: "2024-02-15" },
+  { id: 4, name: "Ergonomic Mouse", price: 49.99, rating: 4.7, createdAt: "2024-01-20" },
+];
+
+/**
+ * GET /api/v1/products?sort=-price
+ * Supports comma-separated multi-field sorting: ?sort=-rating,price
+ */
 app.get("/api/v1/products", (req, res) => {
-  const sortParam = req.query.sort || "name";
-  const isDescending = sortParam.startsWith("-");
-  const field = isDescending ? sortParam.slice(1) : sortParam;
+  // Permitted sortable attributes
+  const allowedSortFields = ["price", "rating", "createdAt", "name"];
+  const sortQuery = req.query.sort || "-createdAt"; // Default sort
+  
+  let results = [...products];
 
-  const sorted = [...products].sort((a, b) => {
-    if (a[field] < b[field]) return isDescending ? 1 : -1;
-    if (a[field] > b[field]) return isDescending ? -1 : 1;
+  // Parse comma-separated sort criteria
+  const sortCriteria = sortQuery.split(",").map((token) => {
+    token = token.trim();
+    const isDescending = token.startsWith("-");
+    const field = isDescending ? token.substring(1) : token;
+    return { field, order: isDescending ? -1 : 1 };
+  });
+
+  // Check that all requested fields are whitelisted
+  const invalidField = sortCriteria.find((c) => !allowedSortFields.includes(c.field));
+  if (invalidField) {
+    return res.status(400).json({
+      success: false,
+      error: \`Invalid sort field '\${invalidField.field}'. Allowed: [\${allowedSortFields.join(", ")}]\`,
+    });
+  }
+
+  // Apply sorting algorithm
+  results.sort((a, b) => {
+    for (const { field, order } of sortCriteria) {
+      if (a[field] < b[field]) return -1 * order;
+      if (a[field] > b[field]) return 1 * order;
+    }
     return 0;
   });
 
-  res.json({ success: true, data: sorted });
+  res.json({
+    success: true,
+    appliedSort: sortQuery,
+    count: results.length,
+    data: results,
+  });
+});`,
+};
+
+\`\`\`javascript
+const express = require("express");
+const app = express();
+
+const products = [
+  { id: 1, name: "Desk Mat", price: 19.99, rating: 4.8, createdAt: "2024-01-10" },
+  { id: 2, name: "Mechanical Keyboard", price: 89.99, rating: 4.9, createdAt: "2024-03-01" },
+  { id: 3, name: "USB-C Cable", price: 9.99, rating: 4.2, createdAt: "2024-02-15" },
+  { id: 4, name: "Ergonomic Mouse", price: 49.99, rating: 4.7, createdAt: "2024-01-20" },
+];
+
+/**
+ * GET /api/v1/products?sort=-price
+ * Supports comma-separated multi-field sorting: ?sort=-rating,price
+ */
+app.get("/api/v1/products", (req, res) => {
+  // Permitted sortable attributes
+  const allowedSortFields = ["price", "rating", "createdAt", "name"];
+  const sortQuery = req.query.sort || "-createdAt"; // Default sort
+  
+  let results = [...products];
+
+  // Parse comma-separated sort criteria
+  const sortCriteria = sortQuery.split(",").map((token) => {
+    token = token.trim();
+    const isDescending = token.startsWith("-");
+    const field = isDescending ? token.substring(1) : token;
+    return { field, order: isDescending ? -1 : 1 };
+  });
+
+  // Check that all requested fields are whitelisted
+  const invalidField = sortCriteria.find((c) => !allowedSortFields.includes(c.field));
+  if (invalidField) {
+    return res.status(400).json({
+      success: false,
+      error: `Invalid sort field '${invalidField.field}'. Allowed: [${allowedSortFields.join(", ")}]`,
+    });
+  }
+
+  // Apply sorting algorithm
+  results.sort((a, b) => {
+    for (const { field, order } of sortCriteria) {
+      if (a[field] < b[field]) return -1 * order;
+      if (a[field] > b[field]) return 1 * order;
+    }
+    return 0;
+  });
+
+  res.json({
+    success: true,
+    appliedSort: sortQuery,
+    count: results.length,
+    data: results,
+  });
 });
-```
+\`\`\`

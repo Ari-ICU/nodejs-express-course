@@ -5,19 +5,79 @@ export const meta = {
   khmerTitle: "អ្វីជាស្ថាបត្យកម្ម REST?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Representational State Transfer (REST) is an architectural style for distributed hypermedia systems introduced by Roy Fielding. It relies on a stateless, client-server, cacheable communications protocol (HTTP).",
-  tip: "REST is an architectural pattern, not a strict protocol; consistency across resource naming and status codes is what makes an API truly RESTful.",
-  objective: "Understand the core concepts of Representational State Transfer.",
-  expectedOutcome: "Solid grasp of REST architectural conventions.",
-  codeSnippet: "/* REST Architecture Core Tenets:\n   - Client-Server Separation\n   - Statelessness (No client state stored on server)\n   - Cacheability\n   - Uniform Interface (Standard HTTP verbs & resource URIs)\n   - Layered System (Proxies, gateways, caches)\n*/",
+  summary: `**Representational State Transfer (REST)** is an architectural style for designing networked applications and distributed hypermedia systems, formulated in 2000 by Roy Fielding in his doctoral dissertation.
+
+### 1. Fundamental Philosophy
+Unlike RPC (Remote Procedure Call) or SOAP which focus on remote method execution, REST models the domain as a universe of **Resources** identified by uniform URIs. Clients manipulate these resources by transferring representations (typically JSON or XML) via standard HTTP operations.
+
+### 2. Core Operational Pillars
+* **Resource-Centric**: Every key business entity (user, order, product) has a unique addressable URI (e.g., \`/api/v1/orders/102\`).
+* **HTTP as the Application Protocol**: Uses native HTTP methods (\`GET\`, \`POST\`, \`PUT\`, \`PATCH\`, \`DELETE\`) rather than custom verbs in URLs.
+* **Decoupled Architecture**: Clients do not need internal knowledge of the server's database schema, server language, or internal storage engine.`,
+  tip: "REST is an architectural architectural pattern, not a strict protocol or library. Consistency across URI conventions, HTTP status codes, and JSON representation is what determines whether an API is truly RESTful.",
+  objective: "Master the foundational architectural philosophy of REST and distinguish resource-oriented design from RPC and SOAP.",
+  expectedOutcome: "Understand how REST leverages standard HTTP verbs and URIs to decouple client applications from server storage and business engines.",
+  codeSnippet: `/**
+ * REST vs RPC / Traditional Web Comparison
+ *
+ * REST (Resource-Oriented, HTTP Semantics):
+ * - GET    /api/v1/users        -> Fetch user list (Safe & Idempotent)
+ * - POST   /api/v1/users        -> Create user
+ * - GET    /api/v1/users/:id    -> Fetch single user
+ * - PUT    /api/v1/users/:id    -> Replace entire user entity
+ * - PATCH  /api/v1/users/:id    -> Partially update user
+ * - DELETE /api/v1/users/:id    -> Remove user
+ *
+ * RPC / Procedural (Action in URL - Anti-pattern in REST):
+ * - POST   /api/getUserList
+ * - POST   /api/createNewUser
+ * - POST   /api/updateUserEmail
+ * - POST   /api/deleteUserById
+ */
+
+const express = require("express");
+const app = express();
+
+// Express demonstrates clean REST routing:
+app.route("/api/v1/users")
+  .get((req, res) => res.json({ success: true, message: "Fetch all users" }))
+  .post((req, res) => res.status(201).json({ success: true, message: "User created" }));
+
+app.route("/api/v1/users/:id")
+  .get((req, res) => res.json({ success: true, message: \`Fetch user \${req.params.id}\` }))
+  .put((req, res) => res.json({ success: true, message: \`Replace user \${req.params.id}\` }))
+  .delete((req, res) => res.status(204).send());`,
 };
 
-```javascript
-/* REST Architecture Core Tenets:
-   - Client-Server Separation
-   - Statelessness (No client state stored on server)
-   - Cacheability
-   - Uniform Interface (Standard HTTP verbs & resource URIs)
-   - Layered System (Proxies, gateways, caches)
-*/
-```
+\`\`\`javascript
+/**
+ * REST vs RPC / Traditional Web Comparison
+ *
+ * REST (Resource-Oriented, HTTP Semantics):
+ * - GET    /api/v1/users        -> Fetch user list (Safe & Idempotent)
+ * - POST   /api/v1/users        -> Create user
+ * - GET    /api/v1/users/:id    -> Fetch single user
+ * - PUT    /api/v1/users/:id    -> Replace entire user entity
+ * - PATCH  /api/v1/users/:id    -> Partially update user
+ * - DELETE /api/v1/users/:id    -> Remove user
+ *
+ * RPC / Procedural (Action in URL - Anti-pattern in REST):
+ * - POST   /api/getUserList
+ * - POST   /api/createNewUser
+ * - POST   /api/updateUserEmail
+ * - POST   /api/deleteUserById
+ */
+
+const express = require("express");
+const app = express();
+
+// Express demonstrates clean REST routing:
+app.route("/api/v1/users")
+  .get((req, res) => res.json({ success: true, message: "Fetch all users" }))
+  .post((req, res) => res.status(201).json({ success: true, message: "User created" }));
+
+app.route("/api/v1/users/:id")
+  .get((req, res) => res.json({ success: true, message: `Fetch user ${req.params.id}` }))
+  .put((req, res) => res.json({ success: true, message: `Replace user ${req.params.id}` }))
+  .delete((req, res) => res.status(204).send());
+\`\`\`

@@ -2,28 +2,108 @@ export const meta = {
   id: "M09-16",
   number: "16",
   title: "Searching",
-  khmerTitle: "ការបង្កើត Search Query Endpoint សម្រាប់ស្វែងរកទិន្នន័យ",
+  khmerTitle: "ការស្វែងរកទិន្នន័យ (Regex & Text Index Search)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Text searching allows clients to query resources using keyword search parameters (e.g. `?q=mouse`), performing case-insensitive matching across resource fields.",
-  tip: "Always trim and lowercase incoming search terms to ensure consistent, case-insensitive query matching.",
-  objective: "Implement keyword search across collection resources.",
-  expectedOutcome: "Fast text search across product catalogs and resource lists.",
-  codeSnippet: "app.get(\"/api/v1/search\", (req, res) => {\n  const query = (req.query.q || \"\").toLowerCase().trim();\n  if (!query) {\n    return res.json({ success: true, count: 0, data: [] });\n  }\n\n  // Case-insensitive substring search across collection\n  const results = products.filter(\n    (p) => p.name.toLowerCase().includes(query)\n  );\n\n  res.json({ success: true, count: results.length, data: results });\n});",
-};
+  summary: `While filtering focuses on structured fields (status, category), **Search** enables users to query free-form natural language text across multiple resource attributes simultaneously (such as \`title\`, \`description\`, and \`tags\`).
 
-```javascript
+### 1. REST Query Parameter Conventions
+* Standard parameter: \`GET /api/v1/articles?q=nodejs+framework\` or \`?search=express\`
+* Multi-field scanning: Searches typically match against both headline and body fields.
+
+### 2. Search Implementations & Performance
+* **In-Memory / Regex Search**: Good for small datasets. Always escape special regex characters to prevent **ReDoS (Regular Expression Denial of Service)** attacks!
+* **Full-Text Indexes (Database Level)**: For production databases (MongoDB \`$text\` or PostgreSQL \`to_tsvector\`), create full-text search indexes with stemming, stop-word elimination, and relevance scoring.`,
+  tip: "Never pass unsanitized user search queries directly into `new RegExp(req.query.q)`. If a user enters `?q=(a+)+$`, it triggers Catastrophic Backtracking and freezes your Node.js event loop. Always escape regex characters first: `query.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')`.",
+  objective: "Implement a secure, multi-field search endpoint in Express with proper regex escaping and ReDoS attack prevention.",
+  expectedOutcome: "A resilient search handler capable of matching across titles and descriptions safely without compromising server performance.",
+  codeSnippet: `const express = require("express");
+const app = express();
+
+const articles = [
+  { id: 1, title: "Building Scalable Node.js APIs", summary: "Learn architectural patterns for Express." },
+  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "NoSQL schema design and index optimization." },
+  { id: 3, title: "Full-Stack React & Express", summary: "Creating reactive web applications with Node." },
+  { id: 4, title: "Dockerizing Node Services", summary: "Containerize microservices for production clusters." },
+];
+
+// Helper: Escape regex special characters to prevent ReDoS attacks
+function escapeRegex(text) {
+  return text.replace(/[.*+?^$\{\}()|[\\]\\\\]/g, "\\\\$&");
+}
+
+/**
+ * GET /api/v1/search?q=node
+ */
 app.get("/api/v1/search", (req, res) => {
-  const query = (req.query.q || "").toLowerCase().trim();
-  if (!query) {
-    return res.json({ success: true, count: 0, data: [] });
+  const query = req.query.q || req.query.search;
+
+  if (!query || typeof query !== "string" || query.trim().length === 0) {
+    return res.status(400).json({
+      success: false,
+      error: "Search parameter 'q' or 'search' must be provided",
+    });
   }
 
-  // Case-insensitive substring search across collection
-  const results = products.filter(
-    (p) => p.name.toLowerCase().includes(query)
-  );
+  const sanitizedQuery = escapeRegex(query.trim());
+  const searchRegex = new RegExp(sanitizedQuery, "i"); // Case-insensitive
 
-  res.json({ success: true, count: results.length, data: results });
+  // Multi-field search match
+  const matches = articles.filter((article) => {
+    return searchRegex.test(article.title) || searchRegex.test(article.summary);
+  });
+
+  res.json({
+    success: true,
+    query: query.trim(),
+    matchCount: matches.length,
+    data: matches,
+  });
+});`,
+};
+
+\`\`\`javascript
+const express = require("express");
+const app = express();
+
+const articles = [
+  { id: 1, title: "Building Scalable Node.js APIs", summary: "Learn architectural patterns for Express." },
+  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "NoSQL schema design and index optimization." },
+  { id: 3, title: "Full-Stack React & Express", summary: "Creating reactive web applications with Node." },
+  { id: 4, title: "Dockerizing Node Services", summary: "Containerize microservices for production clusters." },
+];
+
+// Helper: Escape regex special characters to prevent ReDoS attacks
+function escapeRegex(text) {
+  return text.replace(/[.*+?^$\{\}()|[\\]\\\\]/g, "\\$&");
+}
+
+/**
+ * GET /api/v1/search?q=node
+ */
+app.get("/api/v1/search", (req, res) => {
+  const query = req.query.q || req.query.search;
+
+  if (!query || typeof query !== "string" || query.trim().length === 0) {
+    return res.status(400).json({
+      success: false,
+      error: "Search parameter 'q' or 'search' must be provided",
+    });
+  }
+
+  const sanitizedQuery = escapeRegex(query.trim());
+  const searchRegex = new RegExp(sanitizedQuery, "i"); // Case-insensitive
+
+  // Multi-field search match
+  const matches = articles.filter((article) => {
+    return searchRegex.test(article.title) || searchRegex.test(article.summary);
+  });
+
+  res.json({
+    success: true,
+    query: query.trim(),
+    matchCount: matches.length,
+    data: matches,
+  });
 });
-```
+\`\`\`

@@ -5,22 +5,115 @@ export const meta = {
   khmerTitle: "ទម្រង់ឆ្លើយតបកំហុសស្តង់ដារ Error Envelope",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Standardizing error responses (`{ success: false, error: 'Message', details: [] }`) provides detailed feedback for form validation without exposing internal stack traces.",
-  tip: "Include a field-by-field breakdown in `details` when validation fails so frontends can highlight specific inputs.",
-  objective: "Construct standardized error payloads with field-level validation breakdowns.",
-  expectedOutcome: "Actionable error messages for API consumers.",
-  codeSnippet: "// Standard Error Envelope\nconst errorResponse = {\n  success: false,\n  error: \"Validation Error\",\n  statusCode: 422,\n  details: [\n    { field: \"email\", message: \"Invalid email format\" },\n    { field: \"password\", message: \"Password must be at least 8 characters\" }\n  ]\n};",
+  summary: `Just as successful responses need a uniform shape, failure responses must follow a strict **Error Envelope**. Following specifications like **RFC 7807 (Problem Details for HTTP APIs)** ensures client applications can programmatic identify errors and present clear feedback to end users.
+
+### 1. Key Properties of an Enterprise Error Envelope
+* **\`success: false\`**: Clearly indicates operation failure.
+* **\`error.code\` (string)**: An uppercase, machine-readable constant (e.g. \`EMAIL_ALREADY_EXISTS\`, \`TOKEN_EXPIRED\`, \`PAYMENT_DECLINED\`). This enables frontends to trigger localized UI error messages without parsing natural language strings.
+* **\`error.message\` (string)**: A clear, human-readable summary of the error.
+* **\`error.details\` (array, optional)**: Field-specific validation breakdown identifying exact inputs that failed.
+* **\`error.timestamp\` (ISO-8601)**: Useful for correlating client error reports with server logs.
+
+### 2. Environment Security: Stripping Stack Traces
+Never leak database error messages, SQL queries, or internal file paths (\`error.stack\`) in production. Malicious actors use stack traces to reverse-engineer server vulnerabilities.`,
+  tip: "Never leak raw JavaScript error objects or stack traces to clients in production (`NODE_ENV === 'production'`). Always log the full stack trace internally to Datadog/CloudWatch, and return a sanitized error envelope to the user.",
+  objective: "Construct standardized, machine-readable error envelopes that comply with RFC standards and safeguard server internals.",
+  expectedOutcome: "A centralized error formatting strategy that supplies detailed validation cues in development while protecting security in production.",
+  codeSnippet: `/**
+ * Centralized REST Error Envelope Handler in Express
+ */
+
+const express = require("express");
+const app = express();
+
+// Custom Application Error Class
+class AppError extends Error {
+  constructor(message, statusCode, errorCode, details = null) {
+    super(message);
+    this.statusCode = statusCode;
+    this.errorCode = errorCode;
+    this.details = details;
+    this.isOperational = true; // Distinguishes operational errors from code bugs
+  }
+}
+
+// Route triggering validation error
+app.get("/api/v1/orders/:id", (req, res, next) => {
+  if (req.params.id === "bad") {
+    return next(new AppError(
+      "Invalid order identifier format",
+      400,
+      "INVALID_ID_FORMAT",
+      [{ field: "id", issue: "ID must be a positive integer" }]
+    ));
+  }
+  res.json({ success: true, orderId: req.params.id });
+});
+
+// Centralized Error-Handling Middleware
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const isDev = process.env.NODE_ENV !== "production";
+
+  res.status(statusCode).json({
+    success: false,
+    error: {
+      code: err.errorCode || "INTERNAL_SERVER_ERROR",
+      message: err.message || "An unexpected error occurred.",
+      details: err.details || null,
+      timestamp: new Date().toISOString(),
+      ...(isDev && { stack: err.stack }), // Only include stack trace during development
+    },
+  });
+});`,
 };
 
-```javascript
-// Standard Error Envelope
-const errorResponse = {
-  success: false,
-  error: "Validation Error",
-  statusCode: 422,
-  details: [
-    { field: "email", message: "Invalid email format" },
-    { field: "password", message: "Password must be at least 8 characters" }
-  ]
-};
-```
+\`\`\`javascript
+/**
+ * Centralized REST Error Envelope Handler in Express
+ */
+
+const express = require("express");
+const app = express();
+
+// Custom Application Error Class
+class AppError extends Error {
+  constructor(message, statusCode, errorCode, details = null) {
+    super(message);
+    this.statusCode = statusCode;
+    this.errorCode = errorCode;
+    this.details = details;
+    this.isOperational = true; // Distinguishes operational errors from code bugs
+  }
+}
+
+// Route triggering validation error
+app.get("/api/v1/orders/:id", (req, res, next) => {
+  if (req.params.id === "bad") {
+    return next(new AppError(
+      "Invalid order identifier format",
+      400,
+      "INVALID_ID_FORMAT",
+      [{ field: "id", issue: "ID must be a positive integer" }]
+    ));
+  }
+  res.json({ success: true, orderId: req.params.id });
+});
+
+// Centralized Error-Handling Middleware
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const isDev = process.env.NODE_ENV !== "production";
+
+  res.status(statusCode).json({
+    success: false,
+    error: {
+      code: err.errorCode || "INTERNAL_SERVER_ERROR",
+      message: err.message || "An unexpected error occurred.",
+      details: err.details || null,
+      timestamp: new Date().toISOString(),
+      ...(isDev && { stack: err.stack }), // Only include stack trace during development
+    },
+  });
+});
+\`\`\`

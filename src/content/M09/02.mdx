@@ -5,20 +5,103 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះទាំង ៦ នៃ REST",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The six guiding constraints of REST: Client-Server, Stateless, Cacheable, Uniform Interface, Layered System, and Code on Demand. Adhering to these principles ensures scalability, portability, and reliability.",
-  tip: "Statelessness enables simple horizontal scaling: any server instance in a cluster can handle any incoming request.",
-  objective: "Apply the six foundational REST principles to API design.",
-  expectedOutcome: "Scalable API architecture designed for distributed cloud deployment.",
-  codeSnippet: "// Stateless Request Example:\n// Every request carries its own credentials, eliminating sticky sessions\nfetch(\"/api/v1/orders\", {\n  headers: {\n    \"Authorization\": \"Bearer eyJhbGciOi...\",\n    \"Content-Type\": \"application/json\"\n  }\n});",
+  summary: `Fielding defined **six fundamental architectural constraints** that govern a true REST system. Meeting these constraints ensures that an API scales elastically, survives network latency, and operates reliably across distributed environments.
+
+### The 6 Foundational Constraints:
+1. **Client-Server Architecture**: Separates user interface and client concerns from data storage and server logic. Both can evolve independently without breaking contracts.
+2. **Statelessness (Stateless)**: Every single request from client to server must contain all the information necessary to understand and process the request (e.g., Bearer JWT tokens in headers). The server retains zero client session state between requests.
+3. **Cacheability**: Responses must explicitly label themselves as cacheable or non-cacheable to prevent clients from reusing stale or inappropriate data.
+4. **Uniform Interface**: The cornerstone of REST. Standard resource identification (URIs), manipulation of resources through representations, self-descriptive messages, and hypermedia (HATEOAS).
+5. **Layered System**: An intermediary (proxy, reverse proxy, load balancer, API gateway) can be inserted without the client knowing whether it is speaking to the end server or an intermediate cache.
+6. **Code on Demand (Optional)**: Servers can temporarily extend or customize client functionality by transferring executable code (e.g., JavaScript).`,
+  tip: "Statelessness is what allows modern cloud microservices to scale horizontally without friction. Because servers don't store session state, any instance behind an AWS ALB or Nginx reverse proxy can fulfill any incoming request.",
+  objective: "Analyze and implement the six formal architectural constraints that define REST systems.",
+  expectedOutcome: "A deep architectural understanding of stateless authentication, caching headers, and multi-tier server decoupling.",
+  codeSnippet: `/**
+ * Demonstrating REST Principle #2: Stateless Request Handling
+ * Every request carries its own authorization and identity credentials.
+ * The server does NOT keep an in-memory session store.
+ */
+
+const express = require("express");
+const app = express();
+
+// Middleware: Authenticate strictly from the incoming header (Stateless)
+const authenticateStateless = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({
+      success: false,
+      error: "Missing or malformed Authorization header. Expected Bearer token.",
+    });
+  }
+
+  const token = authHeader.split(" ")[1];
+  // Verify token (e.g., verify JWT without consulting a session DB)
+  if (token === "valid-jwt-token-xyz") {
+    req.user = { id: "usr_99", role: "admin" };
+    return next();
+  }
+
+  return res.status(403).json({ success: false, error: "Invalid or expired token" });
 };
 
-```javascript
-// Stateless Request Example:
-// Every request carries its own credentials, eliminating sticky sessions
-fetch("/api/v1/orders", {
-  headers: {
-    "Authorization": "Bearer eyJhbGciOi...",
-    "Content-Type": "application/json"
+// Protected endpoint honoring Stateless constraint
+app.get("/api/v1/account", authenticateStateless, (req, res) => {
+  // Response explicitly provides Cache-Control headers (Principle #3)
+  res.setHeader("Cache-Control", "no-store, private");
+  res.json({
+    success: true,
+    data: {
+      userId: req.user.id,
+      role: req.user.role,
+      balance: 1540.50,
+    },
+  });
+});`,
+};
+
+\`\`\`javascript
+/**
+ * Demonstrating REST Principle #2: Stateless Request Handling
+ * Every request carries its own authorization and identity credentials.
+ * The server does NOT keep an in-memory session store.
+ */
+
+const express = require("express");
+const app = express();
+
+// Middleware: Authenticate strictly from the incoming header (Stateless)
+const authenticateStateless = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({
+      success: false,
+      error: "Missing or malformed Authorization header. Expected Bearer token.",
+    });
   }
+
+  const token = authHeader.split(" ")[1];
+  // Verify token (e.g., verify JWT without consulting a session DB)
+  if (token === "valid-jwt-token-xyz") {
+    req.user = { id: "usr_99", role: "admin" };
+    return next();
+  }
+
+  return res.status(403).json({ success: false, error: "Invalid or expired token" });
+};
+
+// Protected endpoint honoring Stateless constraint
+app.get("/api/v1/account", authenticateStateless, (req, res) => {
+  // Response explicitly provides Cache-Control headers (Principle #3)
+  res.setHeader("Cache-Control", "no-store, private");
+  res.json({
+    success: true,
+    data: {
+      userId: req.user.id,
+      role: req.user.role,
+      balance: 1540.50,
+    },
+  });
 });
-```
+\`\`\`

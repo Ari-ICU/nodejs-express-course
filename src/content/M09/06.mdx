@@ -5,25 +5,166 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត GET Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Building GET endpoints for retrieving collections with filtering, as well as single resources by unique ID with proper 404 handling.",
-  tip: "If a resource with the requested ID does not exist, return `404 Not Found` rather than an empty object or null with 200.",
-  objective: "Implement robust single and collection retrieval routes.",
-  expectedOutcome: "Accurate query handling and clean 404 responses for missing entities.",
-  codeSnippet: "// Sample in-memory collection\nconst products = [\n  { id: \"1\", name: \"Wireless Mouse\", price: 29.99 },\n  { id: \"2\", name: \"Mechanical Keyboard\", price: 89.99 },\n];\n\napp.get(\"/api/v1/products/:id\", (req, res) => {\n  const product = products.find((p) => p.id === req.params.id);\n  if (!product) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n  res.json({ success: true, data: product });\n});",
-};
+  summary: `The HTTP **GET** method is the primary vehicle for reading and retrieving data in RESTful APIs. It is designed by HTTP specification to be **Safe** (read-only, producing zero server-side mutations) and **Idempotent** (repeated identical requests yield identical results without side effects).
 
-```javascript
-// Sample in-memory collection
+### 1. Two Standard Retrieval Patterns
+* **Collection Route (\`GET /api/v1/products\`)**: Fetches a list of resources. Supports dynamic filtering via URL query parameters (\`req.query\`), such as category matching, price filters, and pagination.
+* **Single Item Route (\`GET /api/v1/products/:id\`)**: Uses route path parameters (\`req.params\`) to fetch a unique entity by its identifier.
+
+### 2. Status Code & Response Rules
+* **200 OK**: Returned for successful data lookups, wrapped in a uniform JSON envelope containing metadata and the \`data\` payload.
+* **404 Not Found**: Returned immediately when a specific resource ID does not exist in the database or collection.
+* **Cache Headers**: GET responses can be safely cached by CDNs and browsers using \`Cache-Control\` and \`ETag\` headers to maximize throughput.`,
+  tip: "When fetching a single item by ID (\`/products/:id\`), always return **404 Not Found** if absent—never return 200 with \`null\`. For collection queries with no matches (\`/products?category=unknown\`), return **200 OK** with an empty array \`data: []\` and \`count: 0\`.",
+  objective: "Build production-ready Express GET endpoints implementing both single-resource retrieval by ID with 404 handling and collection retrieval with query filtering.",
+  expectedOutcome: "Robust GET routes that accurately process route and query parameters, return uniform response envelopes, and handle missing entities gracefully.",
+  codeSnippet: `const express = require("express");
+const app = express();
+
+// Sample in-memory product catalog
 const products = [
-  { id: "1", name: "Wireless Mouse", price: 29.99 },
-  { id: "2", name: "Mechanical Keyboard", price: 89.99 },
+  { id: "p1", name: "Wireless Mouse", category: "electronics", price: 29.99, inStock: true },
+  { id: "p2", name: "Mechanical Keyboard", category: "electronics", price: 89.99, inStock: true },
+  { id: "p3", name: "Ergonomic Desk Chair", category: "furniture", price: 199.99, inStock: false },
+  { id: "p4", name: "USB-C Hub Multiport", category: "electronics", price: 45.00, inStock: true },
 ];
 
-app.get("/api/v1/products/:id", (req, res) => {
-  const product = products.find((p) => p.id === req.params.id);
-  if (!product) {
-    return res.status(404).json({ success: false, error: "Product not found" });
+/**
+ * 1. Collection Route with Query Filtering
+ * GET /api/v1/products?category=electronics&minPrice=30
+ */
+app.get("/api/v1/products", (req, res) => {
+  const { category, minPrice, inStock } = req.query;
+  let results = [...products];
+
+  // Filter by category if provided
+  if (category) {
+    results = results.filter((p) => p.category.toLowerCase() === category.toLowerCase());
   }
-  res.json({ success: true, data: product });
+
+  // Filter by minimum price threshold
+  if (minPrice) {
+    const min = parseFloat(minPrice);
+    if (!isNaN(min)) {
+      results = results.filter((p) => p.price >= min);
+    }
+  }
+
+  // Filter by stock availability
+  if (inStock !== undefined) {
+    const isAvailable = inStock === "true";
+    results = results.filter((p) => p.inStock === isAvailable);
+  }
+
+  // Uniform JSON response envelope
+  res.status(200).json({
+    success: true,
+    count: results.length,
+    data: results,
+  });
 });
-```
+
+/**
+ * 2. Single Resource Route by Unique ID
+ * GET /api/v1/products/:id
+ */
+app.get("/api/v1/products/:id", (req, res) => {
+  const { id } = req.params;
+  const product = products.find((p) => p.id === id);
+
+  // Return clean 404 if item does not exist
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      error: {
+        code: "RESOURCE_NOT_FOUND",
+        message: \`Product with ID '\${id}' was not found\`,
+      },
+    });
+  }
+
+  // Return 200 OK with found resource
+  res.status(200).json({
+    success: true,
+    data: product,
+  });
+});
+
+app.listen(3000, () => console.log("API Server listening on port 3000"));`,
+};
+
+\`\`\`javascript
+const express = require("express");
+const app = express();
+
+// Sample in-memory product catalog
+const products = [
+  { id: "p1", name: "Wireless Mouse", category: "electronics", price: 29.99, inStock: true },
+  { id: "p2", name: "Mechanical Keyboard", category: "electronics", price: 89.99, inStock: true },
+  { id: "p3", name: "Ergonomic Desk Chair", category: "furniture", price: 199.99, inStock: false },
+  { id: "p4", name: "USB-C Hub Multiport", category: "electronics", price: 45.00, inStock: true },
+];
+
+/**
+ * 1. Collection Route with Query Filtering
+ * GET /api/v1/products?category=electronics&minPrice=30
+ */
+app.get("/api/v1/products", (req, res) => {
+  const { category, minPrice, inStock } = req.query;
+  let results = [...products];
+
+  // Filter by category if provided
+  if (category) {
+    results = results.filter((p) => p.category.toLowerCase() === category.toLowerCase());
+  }
+
+  // Filter by minimum price threshold
+  if (minPrice) {
+    const min = parseFloat(minPrice);
+    if (!isNaN(min)) {
+      results = results.filter((p) => p.price >= min);
+    }
+  }
+
+  // Filter by stock availability
+  if (inStock !== undefined) {
+    const isAvailable = inStock === "true";
+    results = results.filter((p) => p.inStock === isAvailable);
+  }
+
+  // Uniform JSON response envelope
+  res.status(200).json({
+    success: true,
+    count: results.length,
+    data: results,
+  });
+});
+
+/**
+ * 2. Single Resource Route by Unique ID
+ * GET /api/v1/products/:id
+ */
+app.get("/api/v1/products/:id", (req, res) => {
+  const { id } = req.params;
+  const product = products.find((p) => p.id === id);
+
+  // Return clean 404 if item does not exist
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      error: {
+        code: "RESOURCE_NOT_FOUND",
+        message: `Product with ID '${id}' was not found`,
+      },
+    });
+  }
+
+  // Return 200 OK with found resource
+  res.status(200).json({
+    success: true,
+    data: product,
+  });
+});
+
+app.listen(3000, () => console.log("API Server listening on port 3000"));
+\`\`\`

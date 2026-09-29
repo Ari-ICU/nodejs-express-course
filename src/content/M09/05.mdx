@@ -5,18 +5,117 @@ export const meta = {
   khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "CRUD (Create, Read, Update, Delete) maps directly to the foundational HTTP methods: Create ➔ POST, Read ➔ GET, Update ➔ PUT/PATCH, Delete ➔ DELETE.",
-  tip: "Keep CRUD endpoints consistent across all resources in your API to minimize the learning curve for frontend developers.",
-  objective: "Implement complete CRUD operations for any business entity.",
-  expectedOutcome: "Standardized CRUD capabilities across all API models.",
-  codeSnippet: "/* CRUD to HTTP Verb Mapping:\n   Create ➔ POST   /api/v1/products\n   Read   ➔ GET    /api/v1/products / /api/v1/products/:id\n   Update ➔ PATCH  /api/v1/products/:id\n   Delete ➔ DELETE /api/v1/products/:id\n*/",
+  summary: `**CRUD** represents the four basic data operations: **Create**, **Read**, **Update**, and **Delete**. In RESTful design, these database-level operations map directly to standard HTTP methods, creating an elegant and uniform contract.
+
+### 1. CRUD to HTTP Semantic Mapping
+* **Create -> \`POST\`**: Submits an entity to the collection. The server assigns an ID, creates the resource, and returns \`201 Created\` along with a \`Location\` header.
+* **Read -> \`GET\`**: Retrieves representation of a collection or single entity. Strictly **Safe** and **Idempotent**. Returns \`200 OK\` or \`404 Not Found\`.
+* **Update -> \`PUT\` / \`PATCH\`**:
+  * \`PUT\`: Complete replacement of the entire resource entity (Idempotent).
+  * \`PATCH\`: Partial update modifying only specified fields (Non-idempotent by specification, though usually implemented idempotently).
+* **Delete -> \`DELETE\`**: Removes the specified resource. Returns \`204 No Content\` or \`200 OK\`. Repeated calls are Idempotent.
+
+### 2. Method Properties: Safety vs Idempotence
+* **Safe**: Invoking the method does not change server state (\`GET\`, \`HEAD\`, \`OPTIONS\`).
+* **Idempotent**: Making multiple identical requests produces the exact same end state on the server as making a single request (\`GET\`, \`PUT\`, \`DELETE\`).`,
+  tip: "Remember the Golden Rule of Idempotence: If an automated network retry sends the exact same request 5 times due to a dropped WiFi connection, an Idempotent endpoint (`GET`, `PUT`, `DELETE`) guarantees the server state is modified only once, preventing duplicate charges or corruption.",
+  objective: "Master mapping CRUD database operations to standard HTTP methods and understanding Safety vs Idempotency.",
+  expectedOutcome: "Confident selection of HTTP verbs, status codes, and idempotency guarantees for all database interactions.",
+  codeSnippet: `/**
+ * Complete CRUD Mapping Matrix in Express.js
+ */
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+// In-memory database store
+let articles = [
+  { id: "1", title: "Mastering Node.js", author: "Dara", views: 120 },
+];
+
+// 1. READ: Collection (Safe & Idempotent)
+app.get("/api/v1/articles", (req, res) => {
+  res.json({ success: true, count: articles.length, data: articles });
+});
+
+// 2. CREATE: Item (Unsafe & Non-Idempotent)
+app.post("/api/v1/articles", (req, res) => {
+  const { title, author } = req.body;
+  const newArticle = { id: String(Date.now()), title, author, views: 0 };
+  articles.push(newArticle);
+  res.status(201).json({ success: true, data: newArticle });
+});
+
+// 3. READ: Single Item (Safe & Idempotent)
+app.get("/api/v1/articles/:id", (req, res) => {
+  const item = articles.find((a) => a.id === req.params.id);
+  if (!item) return res.status(404).json({ success: false, error: "Not Found" });
+  res.json({ success: true, data: item });
+});
+
+// 4. UPDATE: Partial Update (Idempotent implementation)
+app.patch("/api/v1/articles/:id", (req, res) => {
+  const item = articles.find((a) => a.id === req.params.id);
+  if (!item) return res.status(404).json({ success: false, error: "Not Found" });
+  Object.assign(item, req.body);
+  res.json({ success: true, data: item });
+});
+
+// 5. DELETE: Remove Item (Idempotent)
+app.delete("/api/v1/articles/:id", (req, res) => {
+  const idx = articles.findIndex((a) => a.id === req.params.id);
+  if (idx !== -1) articles.splice(idx, 1);
+  res.status(204).send(); // 204 No Content
+});`,
 };
 
-```javascript
-/* CRUD to HTTP Verb Mapping:
-   Create ➔ POST   /api/v1/products
-   Read   ➔ GET    /api/v1/products / /api/v1/products/:id
-   Update ➔ PATCH  /api/v1/products/:id
-   Delete ➔ DELETE /api/v1/products/:id
-*/
-```
+\`\`\`javascript
+/**
+ * Complete CRUD Mapping Matrix in Express.js
+ */
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+// In-memory database store
+let articles = [
+  { id: "1", title: "Mastering Node.js", author: "Dara", views: 120 },
+];
+
+// 1. READ: Collection (Safe & Idempotent)
+app.get("/api/v1/articles", (req, res) => {
+  res.json({ success: true, count: articles.length, data: articles });
+});
+
+// 2. CREATE: Item (Unsafe & Non-Idempotent)
+app.post("/api/v1/articles", (req, res) => {
+  const { title, author } = req.body;
+  const newArticle = { id: String(Date.now()), title, author, views: 0 };
+  articles.push(newArticle);
+  res.status(201).json({ success: true, data: newArticle });
+});
+
+// 3. READ: Single Item (Safe & Idempotent)
+app.get("/api/v1/articles/:id", (req, res) => {
+  const item = articles.find((a) => a.id === req.params.id);
+  if (!item) return res.status(404).json({ success: false, error: "Not Found" });
+  res.json({ success: true, data: item });
+});
+
+// 4. UPDATE: Partial Update (Idempotent implementation)
+app.patch("/api/v1/articles/:id", (req, res) => {
+  const item = articles.find((a) => a.id === req.params.id);
+  if (!item) return res.status(404).json({ success: false, error: "Not Found" });
+  Object.assign(item, req.body);
+  res.json({ success: true, data: item });
+});
+
+// 5. DELETE: Remove Item (Idempotent)
+app.delete("/api/v1/articles/:id", (req, res) => {
+  const idx = articles.findIndex((a) => a.id === req.params.id);
+  if (idx !== -1) articles.splice(idx, 1);
+  res.status(204).send(); // 204 No Content
+});
+\`\`\`

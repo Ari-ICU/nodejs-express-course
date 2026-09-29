@@ -1,28 +1,118 @@
 export const meta = {
-  id: "M09-12",
+  id: "M09-012",
   number: "12",
   title: "API Response Structure",
   khmerTitle: "ទម្រង់ឆ្លើយតបស្តង់ដារ JSON Envelope",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Encapsulating all API responses inside a consistent JSON envelope structure (`{ success: true, data: ..., meta: ... }`) makes client consumption predictable across web and mobile apps.",
-  tip: "Always include a boolean `success` flag at the root of the JSON response for fast frontend evaluation.",
-  objective: "Standardize JSON response payloads across all controllers.",
-  expectedOutcome: "Uniform response contract across the entire API.",
-  codeSnippet: "// Standard Success Envelope\nconst response = {\n  success: true,\n  data: {\n    id: \"P_102\",\n    name: \"Wireless Mouse\",\n    price: 29.99\n  },\n  meta: {\n    timestamp: new Date().toISOString()\n  }\n};",
+  summary: `A standardized **JSON Response Envelope** wraps all API responses in a predictable, consistent contract. This guarantees that frontend applications, mobile clients, and SDKs can parse every server response using a uniform deserialization algorithm.
+
+### 1. Anatomy of a Production Response Envelope
+* **\`success\` (boolean)**: Instant flag telling the client whether the operation succeeded (\`true\`) without needing to inspect status codes.
+* **\`data\` (object | array)**: The payload representing the resource or collection.
+* **\`meta\` (object, optional)**: Contextual metadata, such as total count, pagination offsets, processing duration, or API version.
+* **\`links\` (object, optional)**: Hypermedia links (HATEOAS) pointing to related endpoints (\`self\`, \`next\`, \`prev\`).
+
+### 2. The Danger of Naked JSON Arrays
+Never return top-level naked arrays like \`res.json([user1, user2])\`. Doing so prevents you from adding pagination metadata (\`page\`, \`totalPages\`) later without breaking client integrations. Always wrap arrays in an envelope object: \`{ success: true, count: 2, data: [...] }\`.`,
+  tip: "Never return top-level naked JSON arrays (e.g. `res.json([...])`). Always wrap data in an envelope object `{ success: true, data: [...] }`. This gives you the flexibility to add pagination `meta`, timestamps, or deprecation warnings later without breaking API contracts.",
+  objective: "Design and implement uniform JSON response wrappers across all API endpoints.",
+  expectedOutcome: "A bulletproof API response standardization pattern that simplifies client consumption and error handling.",
+  codeSnippet: `/**
+ * Reusable Standard API Response Helper in Express
+ */
+
+const express = require("express");
+const app = express();
+
+// Global Response Helper Utility
+class ApiResponse {
+  static success(res, data, status = 200, meta = null) {
+    const payload = {
+      success: true,
+      data,
+    };
+    if (meta) payload.meta = meta;
+    return res.status(status).json(payload);
+  }
+
+  static paginated(res, data, page, limit, total) {
+    return res.status(200).json({
+      success: true,
+      data,
+      meta: {
+        page: Number(page),
+        limit: Number(limit),
+        totalItems: total,
+        totalPages: Math.ceil(total / limit),
+        timestamp: new Date().toISOString(),
+      },
+    });
+  }
+}
+
+// Example: Single resource response
+app.get("/api/v1/profile", (req, res) => {
+  const profile = { id: "usr_10", name: "Sokha", tier: "pro" };
+  return ApiResponse.success(res, profile);
+});
+
+// Example: Paginated list response
+app.get("/api/v1/posts", (req, res) => {
+  const samplePosts = [
+    { id: "1", title: "Intro to Express" },
+    { id: "2", title: "REST Best Practices" },
+  ];
+  return ApiResponse.paginated(res, samplePosts, 1, 10, 45);
+});`,
 };
 
-```javascript
-// Standard Success Envelope
-const response = {
-  success: true,
-  data: {
-    id: "P_102",
-    name: "Wireless Mouse",
-    price: 29.99
-  },
-  meta: {
-    timestamp: new Date().toISOString()
+\`\`\`javascript
+/**
+ * Reusable Standard API Response Helper in Express
+ */
+
+const express = require("express");
+const app = express();
+
+// Global Response Helper Utility
+class ApiResponse {
+  static success(res, data, status = 200, meta = null) {
+    const payload = {
+      success: true,
+      data,
+    };
+    if (meta) payload.meta = meta;
+    return res.status(status).json(payload);
   }
-};
-```
+
+  static paginated(res, data, page, limit, total) {
+    return res.status(200).json({
+      success: true,
+      data,
+      meta: {
+        page: Number(page),
+        limit: Number(limit),
+        totalItems: total,
+        totalPages: Math.ceil(total / limit),
+        timestamp: new Date().toISOString(),
+      },
+    });
+  }
+}
+
+// Example: Single resource response
+app.get("/api/v1/profile", (req, res) => {
+  const profile = { id: "usr_10", name: "Sokha", tier: "pro" };
+  return ApiResponse.success(res, profile);
+});
+
+// Example: Paginated list response
+app.get("/api/v1/posts", (req, res) => {
+  const samplePosts = [
+    { id: "1", title: "Intro to Express" },
+    { id: "2", title: "REST Best Practices" },
+  ];
+  return ApiResponse.paginated(res, samplePosts, 1, 10, 45);
+});
+\`\`\`

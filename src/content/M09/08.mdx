@@ -5,24 +5,128 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត PUT Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Building PUT endpoints that completely overwrite a resource with the new representation, returning 404 if the resource does not exist.",
-  tip: "PUT operations must be idempotent: sending the exact same PUT payload multiple times must leave the resource in the exact same state.",
-  objective: "Implement idempotent full resource replacement.",
-  expectedOutcome: "Idempotent resource replacement adhering to HTTP RFC standards.",
-  codeSnippet: "app.put(\"/api/v1/products/:id\", (req, res) => {\n  const index = products.findIndex((p) => p.id === req.params.id);\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n\n  // Idempotent: completely replaces the resource with the new body\n  const replacedProduct = { id: req.params.id, ...req.body };\n  products[index] = replacedProduct;\n\n  res.json({ success: true, data: replacedProduct });\n});",
-};
+  summary: `The HTTP **PUT** method represents a **complete replacement** of the target resource. When a client issues a PUT request, the incoming payload is expected to contain the entire state of the entity.
 
-```javascript
+### 1. Key Semantic Rules of PUT
+* **Complete Replacement**: Any fields omitted in the incoming request body are either reset to default values or overwritten as \`null\` / undefined. It is NOT a partial merge.
+* **Idempotence**: Sending the exact same PUT request multiple times leaves the server in the exact same state as sending it once.
+* **Validation Requirements**: Because PUT replaces the full document, all mandatory fields must be validated exactly like in a POST request.
+* **Status Code Selection**:
+  * **200 OK**: When returning the updated resource representation in the response body.
+  * **204 No Content**: When the update succeeds and the server chooses not to return an updated body.
+  * **404 Not Found**: When the resource target identified by \`:id\` does not exist.`,
+  tip: "A common beginner mistake is using PUT for partial updates (e.g. updating only a user's password). If you only want to modify a subset of fields without touching the rest, use HTTP `PATCH` instead of PUT.",
+  objective: "Implement a standards-compliant Express PUT endpoint that performs full resource replacement and maintains strict idempotency.",
+  expectedOutcome: "A bulletproof PUT route that validates complete resource representations and replaces existing entities accurately.",
+  codeSnippet: `const express = require("express");
+const app = express();
+app.use(express.json());
+
+let products = [
+  { id: "p1", name: "Mechanical Keyboard", category: "electronics", price: 89.99, inStock: true },
+];
+
+/**
+ * PUT /api/v1/products/:id
+ * Full replacement of the target resource
+ */
 app.put("/api/v1/products/:id", (req, res) => {
-  const index = products.findIndex((p) => p.id === req.params.id);
-  if (index === -1) {
-    return res.status(404).json({ success: false, error: "Product not found" });
+  const { id } = req.params;
+  const { name, category, price, inStock } = req.body;
+
+  // 1. Locate existing resource
+  const productIndex = products.findIndex((p) => p.id === id);
+  if (productIndex === -1) {
+    return res.status(404).json({
+      success: false,
+      error: { code: "NOT_FOUND", message: \`Product '\${id}' does not exist.\` },
+    });
   }
 
-  // Idempotent: completely replaces the resource with the new body
-  const replacedProduct = { id: req.params.id, ...req.body };
-  products[index] = replacedProduct;
+  // 2. Validate COMPLETE representation (all mandatory fields required)
+  if (!name || !category || price === undefined) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        code: "INCOMPLETE_REPRESENTATION",
+        message: "PUT requires all mandatory fields: name, category, price.",
+      },
+    });
+  }
 
-  res.json({ success: true, data: replacedProduct });
+  // 3. Complete Replacement (preserving original ID and updating timestamps)
+  const replacedProduct = {
+    id, // Immutable ID
+    name: String(name).trim(),
+    category: String(category).trim().toLowerCase(),
+    price: Number(price),
+    inStock: Boolean(inStock),
+    updatedAt: new Date().toISOString(),
+  };
+
+  products[productIndex] = replacedProduct;
+
+  // 4. Return 200 OK with the new representation
+  res.status(200).json({
+    success: true,
+    data: replacedProduct,
+  });
+});`,
+};
+
+\`\`\`javascript
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+let products = [
+  { id: "p1", name: "Mechanical Keyboard", category: "electronics", price: 89.99, inStock: true },
+];
+
+/**
+ * PUT /api/v1/products/:id
+ * Full replacement of the target resource
+ */
+app.put("/api/v1/products/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, category, price, inStock } = req.body;
+
+  // 1. Locate existing resource
+  const productIndex = products.findIndex((p) => p.id === id);
+  if (productIndex === -1) {
+    return res.status(404).json({
+      success: false,
+      error: { code: "NOT_FOUND", message: `Product '${id}' does not exist.` },
+    });
+  }
+
+  // 2. Validate COMPLETE representation (all mandatory fields required)
+  if (!name || !category || price === undefined) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        code: "INCOMPLETE_REPRESENTATION",
+        message: "PUT requires all mandatory fields: name, category, price.",
+      },
+    });
+  }
+
+  // 3. Complete Replacement (preserving original ID and updating timestamps)
+  const replacedProduct = {
+    id, // Immutable ID
+    name: String(name).trim(),
+    category: String(category).trim().toLowerCase(),
+    price: Number(price),
+    inStock: Boolean(inStock),
+    updatedAt: new Date().toISOString(),
+  };
+
+  products[productIndex] = replacedProduct;
+
+  // 4. Return 200 OK with the new representation
+  res.status(200).json({
+    success: true,
+    data: replacedProduct,
+  });
 });
-```
+\`\`\`

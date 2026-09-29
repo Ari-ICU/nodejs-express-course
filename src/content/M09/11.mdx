@@ -5,16 +5,123 @@ export const meta = {
   khmerTitle: "ការជ្រើសរើស Status Codes ត្រឹមត្រូវក្នុង REST APIs",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Accurate status codes are essential: 200 (OK), 201 (Created), 204 (No Content), 400 (Bad Request / Validation), 401 (Unauthenticated), 403 (Forbidden), 404 (Not Found), 409 (Conflict), 422 (Unprocessable Entity), 500 (Internal Error).",
-  tip: "Return `409 Conflict` when a user attempts to register with an email address that is already registered.",
-  objective: "Map business failure and success states to accurate status codes.",
-  expectedOutcome: "Predictable, transparent API signaling.",
-  codeSnippet: "// Email collision:\nif (emailExists) {\n  return res.status(409).json({ success: false, error: \"Email already registered\" });\n}",
+  summary: `HTTP status codes provide an internationally standardized, machine-readable signal that tells the client whether a request was successful, failed due to client error, or encountered a server crash.
+
+### 1. Essential REST Status Code Catalog
+* **200 OK**: General success for GET, PUT, PATCH operations.
+* **201 Created**: Resource successfully created via POST.
+* **204 No Content**: Action succeeded, deliberately returning an empty response body (DELETE).
+* **304 Not Modified**: Used with caching headers (\`If-None-Match\`, \`ETag\`) to indicate client cache is still fresh.
+* **400 Bad Request**: Malformed JSON syntax or schema failure.
+* **401 Unauthorized**: Missing or invalid authentication credentials (user is NOT logged in).
+* **403 Forbidden**: Authenticated user lacks permission for this action (user is logged in, but not an admin).
+* **404 Not Found**: Resource target or endpoint route does not exist.
+* **409 Conflict**: State conflict, such as attempting to register an email that already exists.
+* **422 Unprocessable Entity**: Valid JSON syntax, but semantic business validation rules failed.
+* **429 Too Many Requests**: Client exceeded API rate limits.
+* **500 Internal Server Error**: Unhandled exception or server code bug.`,
+  tip: "Remember the difference between 401 and 403: 401 means 'Who are you? (Please log in)', while 403 means 'I know who you are, but you do not have permission to access this resource.'",
+  objective: "Master proper HTTP status code selection across all REST request lifecycles and error scenarios.",
+  expectedOutcome: "The ability to accurately select and dispatch standard HTTP status codes, preventing misleading 200 OK errors.",
+  codeSnippet: `/**
+ * Status Code Decision Helper in Express
+ */
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+// Simulation DB
+const users = [{ id: "usr_1", email: "alice@example.com", role: "member" }];
+
+app.post("/api/v1/users", (req, res) => {
+  const { email, password } = req.body;
+
+  // 400 Bad Request: Missing required fields
+  if (!email || !password) {
+    return res.status(400).json({ success: false, error: "Email and password required" });
+  }
+
+  // 409 Conflict: Resource already exists
+  const existing = users.find((u) => u.email === email);
+  if (existing) {
+    return res.status(409).json({ success: false, error: "Email is already registered" });
+  }
+
+  const newUser = { id: \`usr_\${users.length + 1}\`, email, role: "member" };
+  users.push(newUser);
+
+  // 201 Created: New resource persisted
+  res.status(201).json({ success: true, data: newUser });
+});
+
+// Guard: 401 vs 403 demonstration
+app.delete("/api/v1/system/purge", (req, res) => {
+  const token = req.headers.authorization;
+  // 401: Unauthenticated
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Authentication token required" });
+  }
+
+  // 403: Authenticated, but unauthorized role
+  const userRole = "member";
+  if (userRole !== "admin") {
+    return res.status(403).json({ success: false, error: "Admin privileges required" });
+  }
+
+  // 204 No Content
+  res.status(204).send();
+});`,
 };
 
-```javascript
-// Email collision:
-if (emailExists) {
-  return res.status(409).json({ success: false, error: "Email already registered" });
-}
-```
+\`\`\`javascript
+/**
+ * Status Code Decision Helper in Express
+ */
+
+const express = require("express");
+const app = express();
+app.use(express.json());
+
+// Simulation DB
+const users = [{ id: "usr_1", email: "alice@example.com", role: "member" }];
+
+app.post("/api/v1/users", (req, res) => {
+  const { email, password } = req.body;
+
+  // 400 Bad Request: Missing required fields
+  if (!email || !password) {
+    return res.status(400).json({ success: false, error: "Email and password required" });
+  }
+
+  // 409 Conflict: Resource already exists
+  const existing = users.find((u) => u.email === email);
+  if (existing) {
+    return res.status(409).json({ success: false, error: "Email is already registered" });
+  }
+
+  const newUser = { id: `usr_${users.length + 1}`, email, role: "member" };
+  users.push(newUser);
+
+  // 201 Created: New resource persisted
+  res.status(201).json({ success: true, data: newUser });
+});
+
+// Guard: 401 vs 403 demonstration
+app.delete("/api/v1/system/purge", (req, res) => {
+  const token = req.headers.authorization;
+  // 401: Unauthenticated
+  if (!token) {
+    return res.status(401).json({ success: false, error: "Authentication token required" });
+  }
+
+  // 403: Authenticated, but unauthorized role
+  const userRole = "member";
+  if (userRole !== "admin") {
+    return res.status(403).json({ success: false, error: "Admin privileges required" });
+  }
+
+  // 204 No Content
+  res.status(204).send();
+});
+\`\`\`

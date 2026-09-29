@@ -5,24 +5,131 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត DELETE Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Building DELETE endpoints that remove resources from collections and return `204 No Content` upon successful deletion.",
-  tip: "DELETE should be idempotent: deleting an already-deleted resource can return 204 or 404 depending on API contract conventions.",
-  objective: "Implement resource deletion endpoints.",
-  expectedOutcome: "Clean entity removal with proper HTTP 204 signaling.",
-  codeSnippet: "app.delete(\"/api/v1/products/:id\", (req, res) => {\n  const index = products.findIndex((p) => p.id === req.params.id);\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Product not found\" });\n  }\n\n  // Remove item from collection\n  products.splice(index, 1);\n\n  // 204 No Content indicates successful deletion with empty body\n  res.status(204).send();\n});",
-};
+  summary: `The HTTP **DELETE** method instructs the server to remove or de-register the target resource identified by the URI. Once deleted, subsequent GET requests to the same URI typically yield a **404 Not Found** (or 410 Gone).
 
-```javascript
-app.delete("/api/v1/products/:id", (req, res) => {
-  const index = products.findIndex((p) => p.id === req.params.id);
+### 1. Status Code Conventions for DELETE
+* **204 No Content**: The industry standard when deletion succeeds and no response body needs to be transmitted back to the client (\`res.status(204).send()\`).
+* **200 OK**: Used when the server chooses to return the deleted object representation or a confirmation envelope: \`{ success: true, message: "Resource deleted" }\`.
+* **202 Accepted**: Used when deletion is asynchronous or enqueued in a background worker (e.g., purging multi-gigabyte files from an S3 bucket).
+* **404 Not Found**: Returned when attempting to delete an entity ID that does not exist in the database.
+
+### 2. Hard Delete vs Soft Delete
+* **Hard Delete**: Permanently purges the row/document from the database (\`DELETE FROM products WHERE id = ?\`).
+* **Soft Delete**: Preserves data history for audit trails and compliance by setting a timestamp flag (\`deletedAt = new Date()\`) and filtering soft-deleted records from standard GET queries.`,
+  tip: "When returning `204 No Content`, ensure your route handler terminates with `res.status(204).send()` or `res.status(204).end()`. Do NOT use `res.status(204).json({...})` because HTTP specifications forbid a response body for status 204.",
+  objective: "Implement resilient Express DELETE endpoints handling both hard and soft deletion strategies with appropriate 204 and 404 status codes.",
+  expectedOutcome: "Production-ready DELETE routes with authorization checks, cascade handling, and proper HTTP response signaling.",
+  codeSnippet: `const express = require("express");
+const app = express();
+
+let products = [
+  { id: "p1", name: "Wireless Mouse", isDeleted: false, deletedAt: null },
+  { id: "p2", name: "Mechanical Keyboard", isDeleted: false, deletedAt: null },
+];
+
+/**
+ * 1. Hard Delete Route (204 No Content)
+ * DELETE /api/v1/products/:id/permanent
+ */
+app.delete("/api/v1/products/:id/permanent", (req, res) => {
+  const { id } = req.params;
+  const index = products.findIndex((p) => p.id === id);
+
   if (index === -1) {
-    return res.status(404).json({ success: false, error: "Product not found" });
+    return res.status(404).json({
+      success: false,
+      error: { code: "NOT_FOUND", message: \`Product '\${id}' not found\` },
+    });
   }
 
-  // Remove item from collection
+  // Remove completely from collection
   products.splice(index, 1);
 
-  // 204 No Content indicates successful deletion with empty body
+  // Return standard 204 No Content (No response body)
   res.status(204).send();
 });
-```
+
+/**
+ * 2. Soft Delete Route (Preserves record for audit/recovery)
+ * DELETE /api/v1/products/:id
+ */
+app.delete("/api/v1/products/:id", (req, res) => {
+  const { id } = req.params;
+  const product = products.find((p) => p.id === id && !p.isDeleted);
+
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      error: { code: "NOT_FOUND", message: \`Active product '\${id}' not found\` },
+    });
+  }
+
+  // Soft delete state transition
+  product.isDeleted = true;
+  product.deletedAt = new Date().toISOString();
+
+  res.status(200).json({
+    success: true,
+    message: "Product soft-deleted successfully",
+    data: { id: product.id, deletedAt: product.deletedAt },
+  });
+});`,
+};
+
+\`\`\`javascript
+const express = require("express");
+const app = express();
+
+let products = [
+  { id: "p1", name: "Wireless Mouse", isDeleted: false, deletedAt: null },
+  { id: "p2", name: "Mechanical Keyboard", isDeleted: false, deletedAt: null },
+];
+
+/**
+ * 1. Hard Delete Route (204 No Content)
+ * DELETE /api/v1/products/:id/permanent
+ */
+app.delete("/api/v1/products/:id/permanent", (req, res) => {
+  const { id } = req.params;
+  const index = products.findIndex((p) => p.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({
+      success: false,
+      error: { code: "NOT_FOUND", message: `Product '${id}' not found` },
+    });
+  }
+
+  // Remove completely from collection
+  products.splice(index, 1);
+
+  // Return standard 204 No Content (No response body)
+  res.status(204).send();
+});
+
+/**
+ * 2. Soft Delete Route (Preserves record for audit/recovery)
+ * DELETE /api/v1/products/:id
+ */
+app.delete("/api/v1/products/:id", (req, res) => {
+  const { id } = req.params;
+  const product = products.find((p) => p.id === id && !p.isDeleted);
+
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      error: { code: "NOT_FOUND", message: `Active product '${id}' not found` },
+    });
+  }
+
+  // Soft delete state transition
+  product.isDeleted = true;
+  product.deletedAt = new Date().toISOString();
+
+  res.status(200).json({
+    success: true,
+    message: "Product soft-deleted successfully",
+    data: { id: product.id, deletedAt: product.deletedAt },
+  });
+});
+\`\`\`

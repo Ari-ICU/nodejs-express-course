@@ -25,11 +25,6 @@ import { useMdxContent } from "@/hooks/useMdxContent";
 import { SlideNavOverlay } from "./slide-nav-overlay";
 import { FieldNotes } from "./field-notes";
 import { DeploymentAnim } from "./deployment-anim";
-import { MiddlewarePipeline } from "@/components/visualizers/middleware-pipeline";
-import { EventLoopVisualizer } from "@/components/visualizers/event-loop-visualizer";
-import { ClientServerDiagram } from "@/components/visualizers/client-server-diagram";
-import { ThreadArchitectureDiagram } from "@/components/visualizers/thread-architecture-diagram";
-import { EventDrivenVisualizer } from "@/components/visualizers/event-driven-visualizer";
 import { getAssetUrl } from "@/lib/utils";
 import {
   getStoredProgress,
@@ -403,19 +398,8 @@ export const SlideView: React.FC<SlideViewProps> = ({
                   alt={activeTopic.title}
                   className="rounded-xl max-h-[440px] w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 group-hover:scale-[1.01]"
                 />
-              </div>
             ) : activeModule.id === "M28" && safeSlideIndex === 0 ? (
               <DeploymentAnim accent="#10b981" />
-            ) : activeModule.id === "M08" && safeSlideIndex === 0 ? (
-              <MiddlewarePipeline />
-            ) : activeModule.id === "M04" && safeSlideIndex === 3 ? (
-              <EventLoopVisualizer />
-            ) : activeModule.id === "M01" && safeSlideIndex === 2 ? (
-              <ClientServerDiagram />
-            ) : activeTopic.id === "M01-07" || (activeModule.id === "M01" && safeSlideIndex === 6) ? (
-              <ThreadArchitectureDiagram />
-            ) : activeTopic.id === "M01-08" || (activeModule.id === "M01" && safeSlideIndex === 7) ? (
-              <EventDrivenVisualizer />
             ) : (
               <div className="space-y-4">
                 <CodeBlock

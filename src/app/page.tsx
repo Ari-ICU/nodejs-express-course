@@ -20,8 +20,6 @@ import { Footer } from "@/components/layout/footer";
 import { COURSE_MODULES } from "@/data/curriculum";
 import { REAL_WORLD_PROJECTS } from "@/data/projects";
 import { FULL_STACK_ROADMAP_STEPS } from "@/data/course-outcomes";
-import { MiddlewarePipeline } from "@/components/visualizers/middleware-pipeline";
-import { ApiTesterPanel } from "@/components/visualizers/api-tester-panel";
 
 export default function HomePage() {
   return (
@@ -86,11 +84,11 @@ export default function HomePage() {
                 </Link>
 
                 <Link
-                  href="/api-tester"
+                  href="/projects"
                   className="flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100/80 text-emerald-800 border border-emerald-200 text-sm font-semibold font-mono transition-all cursor-pointer shadow-2xs"
                 >
-                  <Terminal className="w-4 h-4" />
-                  <span>Live REST Client</span>
+                  <Boxes className="w-4 h-4" />
+                  <span>Real-World Projects (6)</span>
                 </Link>
               </div>
             </div>
@@ -117,27 +115,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* INTERACTIVE SIMULATOR SHOWCASE */}
-        <section className="py-16 border-b border-slate-200 bg-slate-50/50">
-          <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <div className="text-center max-w-2xl mx-auto">
-              <span className="text-xs font-mono uppercase font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded border border-emerald-200">
-                Interactive Learning Tools
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 mt-3">
-                Experience the Backend Pipeline Live
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-600 mt-2">
-                Simulate how Express intercepts requests, parses JSON payloads, authenticates tokens, and writes responses.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
-              <MiddlewarePipeline />
-              <ApiTesterPanel />
-            </div>
-          </div>
-        </section>
 
         {/* 6 REAL-WORLD PROJECTS SHOWCASE */}
         <section className="py-16 border-b border-slate-200 bg-white">

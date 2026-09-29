@@ -398,6 +398,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
                   alt={activeTopic.title}
                   className="rounded-xl max-h-[440px] w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 group-hover:scale-[1.01]"
                 />
+              </div>
             ) : activeModule.id === "M28" && safeSlideIndex === 0 ? (
               <DeploymentAnim accent="#10b981" />
             ) : (

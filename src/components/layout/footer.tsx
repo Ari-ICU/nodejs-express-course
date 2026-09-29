@@ -40,8 +40,6 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2 text-xs text-slate-600">
               <li><Link href="/slides" className="hover:text-emerald-600 transition-colors">Interactive Slide Studio</Link></li>
-              <li><Link href="/api-tester" className="hover:text-emerald-600 transition-colors">REST API Playground</Link></li>
-              <li><Link href="/architecture" className="hover:text-emerald-600 transition-colors">System Architecture Map</Link></li>
               <li><Link href="/projects" className="hover:text-emerald-600 transition-colors">6 Real-World Projects</Link></li>
               <li><Link href="/outcomes" className="hover:text-emerald-600 transition-colors">20 Outcomes & Certificate</Link></li>
             </ul>

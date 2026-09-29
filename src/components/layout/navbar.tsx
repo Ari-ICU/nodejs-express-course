@@ -29,8 +29,6 @@ export const Navbar = () => {
     { href: "/modules", label: "Curriculum (29)", icon: BookOpen },
     { href: "/slides", label: "Slide Studio", icon: Play, badge: "Teaching" },
     { href: "/projects", label: "Projects (6)", icon: Boxes },
-    { href: "/api-tester", label: "REST Playground", icon: Terminal },
-    { href: "/architecture", label: "Architecture", icon: Layers },
     { href: "/outcomes", label: "Outcomes", icon: Award },
   ];
 

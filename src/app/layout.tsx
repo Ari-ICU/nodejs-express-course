@@ -21,7 +21,7 @@ const notoKhmer = Noto_Sans_Khmer({
 export const metadata: Metadata = {
   title: "Node.js + Express.js Masterclass | Enterprise Backend Academy",
   description:
-    "Comprehensive intermediate to advanced Node.js and Express.js course platform with interactive slide studio, 29 curriculum modules, 6 real-world projects, REST playground, and architecture visualizers.",
+    "Comprehensive intermediate to advanced Node.js and Express.js course platform with interactive slide studio, 29 curriculum modules, 6 real-world projects, and production architecture blueprints.",
 };
 
 export default function RootLayout({

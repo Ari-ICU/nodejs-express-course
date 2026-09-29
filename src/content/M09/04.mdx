@@ -58,7 +58,7 @@ app.get("/api/v1/users/:id", (req, res) => {
 });`,
 };
 
-\`\`\`javascript
+```javascript
 /**
  * Resource Representation Transformation
  * Internal DB Model -> Client-Facing Resource Representation
@@ -97,4 +97,4 @@ app.get("/api/v1/users/:id", (req, res) => {
   const resource = toUserResource(dbUser);
   res.json({ success: true, data: resource });
 });
-\`\`\`
+```

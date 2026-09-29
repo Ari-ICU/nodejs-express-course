@@ -49,7 +49,7 @@ app.route("/api/v1/users/:id")
   .delete((req, res) => res.status(204).send());`,
 };
 
-\`\`\`javascript
+```javascript
 /**
  * REST vs RPC / Traditional Web Comparison
  *
@@ -80,4 +80,4 @@ app.route("/api/v1/users/:id")
   .get((req, res) => res.json({ success: true, message: `Fetch user ${req.params.id}` }))
   .put((req, res) => res.json({ success: true, message: `Replace user ${req.params.id}` }))
   .delete((req, res) => res.status(204).send());
-\`\`\`
+```

@@ -5,17 +5,17 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត POST Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `The HTTP **POST** method is used to submit data to the server to create a subordinate resource within a collection. Unlike \`PUT\`, the client does not specify the final resource URI; the server assigns a unique ID and registers the resource.
+  summary: `វិធីសាស្ត្រ HTTP **POST** ត្រូវបានប្រើប្រាស់ដើម្បីបញ្ជូនទិន្នន័យពី Client ទៅកាន់ Server ដើម្បីបង្កើតធនធានទិន្នន័យថ្មី (Subordinate Resource) នៅក្នុង Collection។ ខុសប្លែកពី \`PUT\`, Client មិនមែនជាអ្នកកំណត់ URI ដោយផ្ទាល់នោះទេ ផ្ទុយទៅវិញ Server គឺជាអ្នកបង្កើតលេខសម្គាល់ (Unique ID) និងរក្សាទុកទិន្នន័យនោះ។
 
-### 1. Key Responsibilities of a POST Handler
-* **Body Parsing**: Ensure \`express.json()\` middleware is enabled to parse incoming JSON payloads into \`req.body\`.
-* **Payload Validation**: Check that all required fields exist and conform to expected types. If validation fails, immediately return **400 Bad Request** with specific field error details.
-* **ID Assignment**: Generate a collision-resistant identifier (UUID, MongoDB ObjectId, or database autoincrement ID).
-* **Return 201 Created**: Standard response status code indicating successful resource creation.
-* **Location Response Header**: RFC 7231 specifies that the response should include a \`Location\` header containing the canonical URI of the newly created entity (e.g. \`res.setHeader('Location', '/api/v1/products/' + item.id)\`).`,
-  tip: "Because POST is NOT idempotent, repeated client submissions (e.g. user double-clicking 'Pay Now') create duplicate records. In production payment and order APIs, implement an `Idempotency-Key` header to safely deduplicate incoming requests.",
-  objective: "Implement a production-grade Express POST route with robust input validation, unique ID generation, Location headers, and 201 Created status codes.",
-  expectedOutcome: "A secure resource creation endpoint that validates payloads, rejects malformed inputs with 400 Bad Request, and issues standards-compliant 201 responses.",
+### ១. តួនាទីសំខាន់ៗរបស់ POST Route Handler
+* **Body Parsing**៖ ត្រូវប្រាកដថាបានបើកដំណើរការ Middleware \`express.json()\` ដើម្បីបម្លែង JSON Payload ទៅជា \`req.body\`។
+* **Payload Validation**៖ ត្រួតពិនិត្យភាពត្រឹមត្រូវនៃទិន្នន័យចាំបាច់ទាំងអស់។ ប្រសិនបើខ្វះ ឬមិនត្រឹមត្រូវ ត្រូវឆ្លើយតប **400 Bad Request** ភ្លាមៗ ជាមួយបញ្ជីកំហុសច្បាស់លាស់។
+* **ID Assignment**៖ បង្កើត ID ដ៏រឹងមាំ និងមានសុវត្ថិភាព (UUID, MongoDB ObjectId, ឬ Auto-increment ID)។
+* **ឆ្លើយតប 201 Created**៖ ជា HTTP Status Code ស្តង់ដារបញ្ជាក់ថាការបង្កើតទិន្នន័យទទួលបានជោគជ័យ។
+* **Location Response Header**៖ យោងតាមស្តង់ដារ RFC 7231, Server គួរតែបញ្ជូន Header \`Location\` ដែលចង្អុលបង្ហាញទៅកាន់ URL នៃទិន្នន័យដែលទើបបង្កើតថ្មី (ឧទាហរណ៍៖ \`res.setHeader('Location', '/api/v1/products/' + item.id)\`)។`,
+  tip: "ដោយសារតែ POST មិនមែនជាប្រភេទ Idempotent នោះទេ ការចុច Submit ញឹកញាប់ (ដូចជា User ចុច 'Pay Now' ពីរដង) នឹងបង្កើត Record ស្ទួន។ នៅក្នុងប្រព័ន្ធទូទាត់ប្រាក់កម្រិត Production ត្រូវប្រើប្រាស់ `Idempotency-Key` Header ដើម្បីទប់ស្កាត់ការកាត់ប្រាក់ស្ទួន។",
+  objective: "សរសេរ Express POST Route កម្រិតអាជីព ដែលមានប្រព័ន្ធ Payload Validation, ការបង្កើត Unique ID, ការកំណត់ Location Header, និងការឆ្លើយតប 201 Created។",
+  expectedOutcome: "ទទួលបាន Endpoint បង្កើតទិន្នន័យដែលមានសុវត្ថិភាពខ្ពស់ ច្រានចោលទិន្នន័យមិនត្រឹមត្រូវជាមួយ 400 Bad Request និងអនុវត្តតាមបទដ្ឋានអន្តរជាតិ។",
   codeSnippet: `const express = require("express");
 const crypto = require("crypto");
 const app = express();

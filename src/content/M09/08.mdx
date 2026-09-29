@@ -5,19 +5,19 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត PUT Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `The HTTP **PUT** method represents a **complete replacement** of the target resource. When a client issues a PUT request, the incoming payload is expected to contain the entire state of the entity.
+  summary: `វិធីសាស្ត្រ HTTP **PUT** តំណាងឱ្យការ **ជំនួសទិន្នន័យចាស់ទាំងស្រុង (Complete Replacement)** នៃ Resource ដែលមានស្រាប់។ នៅពេលដែល Client បញ្ជូន Request ប្រភេទ PUT មកកាន់ Server, Payload ថ្មីត្រូវតែផ្ទុកនូវគ្រប់ Field ទាំងអស់នៃ Resource នោះ។
 
-### 1. Key Semantic Rules of PUT
-* **Complete Replacement**: Any fields omitted in the incoming request body are either reset to default values or overwritten as \`null\` / undefined. It is NOT a partial merge.
-* **Idempotence**: Sending the exact same PUT request multiple times leaves the server in the exact same state as sending it once.
-* **Validation Requirements**: Because PUT replaces the full document, all mandatory fields must be validated exactly like in a POST request.
-* **Status Code Selection**:
-  * **200 OK**: When returning the updated resource representation in the response body.
-  * **204 No Content**: When the update succeeds and the server chooses not to return an updated body.
-  * **404 Not Found**: When the resource target identified by \`:id\` does not exist.`,
-  tip: "A common beginner mistake is using PUT for partial updates (e.g. updating only a user's password). If you only want to modify a subset of fields without touching the rest, use HTTP `PATCH` instead of PUT.",
-  objective: "Implement a standards-compliant Express PUT endpoint that performs full resource replacement and maintains strict idempotency.",
-  expectedOutcome: "A bulletproof PUT route that validates complete resource representations and replaces existing entities accurately.",
+### ១. គោលការណ៍បច្ចេកទេសនៃ PUT
+* **Complete Replacement**៖ រាល់ Field ណាដែលត្រូវបានលុបចោល ឬមិនបានបញ្ជូនមកក្នុង PUT Request នឹងត្រូវកំណត់ទៅជាតម្លៃដើម (Default) ឬ \`null\` ដោយមិនរក្សាទុកតម្លៃចាស់ឡើយ។ វាមិនមែនជាការកែសម្រួលផ្នែកខ្លះ (Partial Update) នោះទេ។
+* **Idempotence**៖ ការផ្ញើ PUT Request ដដែលៗច្រើនដង នឹងរក្សាស្ថានភាព Server ឱ្យនៅដដែល ដូចការផ្ញើតែម្តងគត់។
+* **Validation តឹងរ៉ឹង**៖ ដោយសារ PUT ជំនួសទិន្នន័យទាំងស្រុង ដូច្នេះរាល់ Field ចាំបាច់ទាំងអស់ត្រូវតែឆ្លងកាត់ការពិនិត្យ Validation ដូចទៅនឹង POST ដែរ។
+* **Status Codes ត្រឹមត្រូវ**៖
+  * **200 OK**៖ នៅពេល Server ធ្វើបច្ចុប្បន្នភាពជោគជ័យ និងបញ្ជូន Representation ថ្មីត្រឡប់ទៅ Client។
+  * **204 No Content**៖ នៅពេល Update ជោគជ័យ ប៉ុន្តែ Server មិនចង់បញ្ជូន Body ត្រឡប់ទៅវិញ។
+  * **404 Not Found**៖ នៅពេលរកមិនឃើញ Resource តាមរយៈ \`:id\`។`,
+  tip: "កំហុសទូទៅរបស់អ្នកចាប់ផ្តើមដំបូងគឺការប្រើប្រាស់ PUT សម្រាប់ការកែសម្រួលទិន្នន័យផ្នែកខ្លះ (ដូចជាការប្តូរតែលេខសម្ងាត់)។ ប្រសិនបើអ្នកចង់កែប្រែតែ Field មួយចំនួនដោយមិនប៉ះពាល់ Field ផ្សេងទៀតទេ ត្រូវប្រើប្រាស់ HTTP `PATCH` ជំនួសវិញ។",
+  objective: "អនុវត្តការបង្កើត Express PUT Endpoint ស្របតាមបទដ្ឋានអន្តរជាតិ ដែលអនុវត្តការជំនួសទិន្នន័យពេញលេញ និងរក្សាគោលការណ៍ Idempotency។",
+  expectedOutcome: "យល់ដឹងច្បាស់ពីភាពខុសគ្នារវាង PUT និង PATCH ព្រមទាំងចេះសរសេរ Route ជំនួសទិន្នន័យប្រកបដោយសុវត្ថិភាព។",
   codeSnippet: `const express = require("express");
 const app = express();
 app.use(express.json());

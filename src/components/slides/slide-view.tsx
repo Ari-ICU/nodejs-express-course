@@ -207,7 +207,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
             className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 text-xs font-mono transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline font-medium">Back to Curriculum</span>
+            <span className="hidden sm:inline font-medium font-sans">ត្រឡប់ទៅមាតិកាវគ្គសិក្សា (Curriculum)</span>
           </Link>
 
           {/* Chapter Selector Button with 'មេរៀនបច្ចុប្បន្ន' status */}
@@ -264,8 +264,8 @@ export const SlideView: React.FC<SlideViewProps> = ({
             }`}
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">
-              {isCompleted ? "Completed" : "Mark Done"}
+            <span className="hidden sm:inline font-sans">
+              {isCompleted ? "បានបញ្ចប់ (Completed)" : "សម្គាល់ថាបានរៀន (Mark Done)"}
             </span>
           </button>
 
@@ -286,7 +286,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 text-xs font-mono cursor-pointer transition-colors shadow-2xs"
           >
             <FileText className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="hidden sm:inline font-medium">Field Notes</span>
+            <span className="hidden sm:inline font-medium font-sans">កំណត់ចំណាំ (Field Notes)</span>
           </button>
 
           <button
@@ -315,8 +315,12 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 <span className="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-bold tracking-tight shadow-2xs">
                   {activeModule.id} · TOPIC {activeTopic.number}
                 </span>
-                <span className="text-xs font-mono uppercase text-slate-500 px-2 py-0.5 rounded bg-slate-100 border border-slate-200">
-                  {activeTopic.type}
+                <span className="text-xs font-sans font-medium text-slate-600 px-2.5 py-0.5 rounded bg-slate-100 border border-slate-200">
+                  {activeTopic.type === "lab"
+                    ? "ការអនុវត្ត (Lab)"
+                    : activeTopic.type === "architecture"
+                    ? "ស្ថាបត្យកម្ម (Architecture)"
+                    : "គោលគំនិត (Concept)"}
                 </span>
               </div>
 
@@ -391,7 +395,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
                   <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-                  <span className="font-mono text-xs text-slate-400 ml-2">Visual Concept</span>
+                  <span className="font-sans text-xs text-slate-400 ml-2">គំនិតរូបភាព (Visual Concept)</span>
                 </div>
                 <img
                   src={getAssetUrl(mdxMeta?.imageUrl || activeTopic.imageUrl)}
@@ -420,25 +424,25 @@ export const SlideView: React.FC<SlideViewProps> = ({
           <button
             onClick={handlePrevSlide}
             className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 flex items-center justify-center cursor-pointer transition-all active:scale-95 shadow-xs"
-            title="Previous slide (Left Arrow)"
+            title="ស្លាយមុន (Previous slide)"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
 
           {/* Slide Indicator & Quick Help */}
           <div className="flex flex-col items-center">
-            <span className="text-xs sm:text-sm font-mono font-bold text-slate-900">
-              Slide {safeSlideIndex + 1} of {totalSlides}
+            <span className="text-xs sm:text-sm font-sans font-bold text-slate-900">
+              ស្លាយទី {safeSlideIndex + 1} នៃ {totalSlides}
             </span>
-            <span className="text-[11px] font-mono text-slate-500 hidden sm:block">
-              Use ← / → keys or Space to advance
+            <span className="text-[11px] font-sans text-slate-500 hidden sm:block">
+              ចុច ← / → ឬ Space ដើម្បីប្តូរស្លាយ
             </span>
           </div>
 
           <button
             onClick={handleNextSlide}
             className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center cursor-pointer transition-all active:scale-95 shadow-sm hover:shadow"
-            title="Next slide (Right Arrow / Space)"
+            title="ស្លាយបន្ទាប់ (Next slide)"
           >
             <ChevronRight className="w-6 h-6 stroke-[2.5]" />
           </button>

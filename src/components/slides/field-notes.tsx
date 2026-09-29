@@ -59,9 +59,9 @@ export const FieldNotes: React.FC<FieldNotesProps> = ({
               <FileText className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-slate-950">Field Notes</h3>
-              <p className="text-[11px] text-slate-500">
-                {currentModuleId} · Slide {currentSlideNumber}
+              <h3 className="text-sm font-bold text-slate-950 font-sans">កំណត់ចំណាំ (Field Notes)</h3>
+              <p className="text-[11px] text-slate-500 font-sans">
+                {currentModuleId} · ស្លាយទី {currentSlideNumber}
               </p>
             </div>
           </div>
@@ -75,10 +75,10 @@ export const FieldNotes: React.FC<FieldNotesProps> = ({
 
         {/* Current Topic Indicator */}
         <div className="my-4 p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700">
-          <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-700 font-bold block mb-1">
-            Active Slide Topic
+          <span className="text-[10px] uppercase font-sans tracking-wider text-emerald-700 font-bold block mb-1">
+            ប្រធានបទមេរៀនបច្ចុប្បន្ន (Active Slide Topic)
           </span>
-          <p className="font-semibold text-slate-900 line-clamp-1">{topicTitle}</p>
+          <p className="font-semibold text-slate-900 line-clamp-1 font-sans">{topicTitle}</p>
         </div>
 
         {/* Text Area */}
@@ -86,8 +86,8 @@ export const FieldNotes: React.FC<FieldNotesProps> = ({
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your study notes, personal reminders, or questions here. Automatically saved to localStorage..."
-            className="w-full flex-1 bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs font-mono text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white resize-none leading-relaxed shadow-2xs"
+            placeholder="កត់ត្រាចំណាំផ្ទាល់ខ្លួន សំណួរ ឬគន្លឹះសំខាន់ៗនៅទីនេះ... (Write study notes, questions, or key takeaways here. Auto-saved to localStorage)..."
+            className="w-full flex-1 bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs font-sans text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 focus:bg-white resize-none leading-relaxed shadow-2xs"
           />
         </div>
 
@@ -96,25 +96,25 @@ export const FieldNotes: React.FC<FieldNotesProps> = ({
           <button
             onClick={handleClear}
             disabled={!content.trim()}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs text-slate-500 hover:text-rose-600 hover:bg-rose-50 cursor-pointer disabled:opacity-30 disabled:pointer-events-none transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-sans text-slate-500 hover:text-rose-600 hover:bg-rose-50 cursor-pointer disabled:opacity-30 disabled:pointer-events-none transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
-            <span>Clear</span>
+            <span>សម្អាត (Clear)</span>
           </button>
 
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs cursor-pointer shadow-sm hover:shadow transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs cursor-pointer shadow-sm hover:shadow transition-all font-sans"
           >
             {savedSuccess ? (
               <>
                 <CheckCircle2 className="w-4 h-4" />
-                <span>Saved!</span>
+                <span>បានរក្សាទុក! (Saved!)</span>
               </>
             ) : (
               <>
                 <Save className="w-4 h-4" />
-                <span>Save Notes</span>
+                <span>រក្សាទុកកំណត់ចំណាំ (Save Notes)</span>
               </>
             )}
           </button>

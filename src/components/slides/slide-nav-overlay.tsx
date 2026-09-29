@@ -25,15 +25,15 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
   if (!isOpen) return null;
 
   const categories = [
-    "All",
-    "Fundamentals",
-    "Core & Async",
-    "Express & REST",
-    "Databases",
-    "Security & Auth",
-    "Architecture & DevOps",
-    "Advanced & Real-time",
-    "Projects",
+    { key: "All", label: "ទាំងអស់ (All)" },
+    { key: "Fundamentals", label: "មូលដ្ឋានគ្រឹះ (Fundamentals)" },
+    { key: "Core & Async", label: "ម៉ូឌុលស្នូល & Async" },
+    { key: "Express & REST", label: "Express & REST" },
+    { key: "Databases", label: "ទិន្នន័យ (Databases)" },
+    { key: "Security & Auth", label: "សុវត្ថិភាព & Auth" },
+    { key: "Architecture & DevOps", label: "ស្ថាបត្យកម្ម & DevOps" },
+    { key: "Advanced & Real-time", label: "កម្រិតខ្ពស់ & Real-time" },
+    { key: "Projects", label: "គម្រោងអនុវត្ត (Projects)" },
   ];
 
   const filteredModules = COURSE_MODULES.filter((mod) => {
@@ -64,15 +64,15 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
           <div className="flex items-center justify-between mb-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase font-bold tracking-widest text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
-                  Course Navigation
+                <span className="text-[10px] font-sans uppercase font-bold tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+                  មាតិកាវគ្គសិក្សា · Course Curriculum
                 </span>
-                <span className="text-xs text-slate-500 font-mono">
-                  29 Modules Total
+                <span className="text-xs text-slate-500 font-sans">
+                  សរុប ២៩ ជំពូក (29 Modules Total)
                 </span>
               </div>
-              <h2 className="text-lg sm:text-xl font-bold text-slate-950 mt-1">
-                ជ្រើសរើសមេរៀន (Select Module & Chapter)
+              <h2 className="text-lg sm:text-xl font-bold text-slate-950 mt-1 font-sans">
+                ជ្រើសរើសជំពូក និងមេរៀន (Select Module & Chapter)
               </h2>
             </div>
 
@@ -91,8 +91,8 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by topic, keyword, or module name..."
-              className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 shadow-2xs"
+              placeholder="ស្វែងរកតាមចំណងជើង ពាក្យគន្លឹះ ឬលេខកូដមេរៀន (Search topics, keywords, modules)..."
+              className="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 shadow-2xs font-sans"
             />
           </div>
 
@@ -100,15 +100,15 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
           <div className="flex items-center gap-1.5 overflow-x-auto pt-3 no-scrollbar">
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono whitespace-nowrap transition-all cursor-pointer ${
-                  selectedCategory === cat
+                key={cat.key}
+                onClick={() => setSelectedCategory(cat.key)}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-sans whitespace-nowrap transition-all cursor-pointer ${
+                  selectedCategory === cat.key
                     ? "bg-emerald-600 text-white font-bold shadow-2xs"
                     : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -117,8 +117,8 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
         {/* Modules List Grid */}
         <div className="p-6 overflow-y-auto flex-1 space-y-2.5 bg-slate-50/40">
           {filteredModules.length === 0 ? (
-            <div className="text-center py-12 text-slate-500 text-xs font-mono">
-              No modules found matching &quot;{search}&quot;
+            <div className="text-center py-12 text-slate-500 text-xs font-sans">
+              រកមិនឃើញមេរៀនដែលត្រូវនឹង &quot;{search}&quot; នោះទេ (No matching modules found)
             </div>
           ) : (
             filteredModules.map((module) => {
@@ -159,14 +159,14 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
                           {module.category}
                         </span>
                         {isCurrent && (
-                          <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded border border-emerald-300">
+                          <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.2 rounded border border-emerald-300 font-sans">
                             មេរៀនបច្ចុប្បន្ន (Active)
                           </span>
                         )}
                         {isAllDone && (
-                          <span className="text-[10px] font-bold text-emerald-700 flex items-center gap-1">
+                          <span className="text-[10px] font-bold text-emerald-700 flex items-center gap-1 font-sans">
                             <CheckCircle2 className="w-3 h-3" />
-                            Completed
+                            បានបញ្ចប់ (Completed)
                           </span>
                         )}
                       </div>
@@ -181,8 +181,8 @@ export const SlideNavOverlay: React.FC<SlideNavOverlayProps> = ({
 
                   <div className="flex items-center gap-3">
                     <div className="text-right hidden sm:block">
-                      <span className="text-xs font-mono font-semibold text-slate-800">
-                        {module.topics.length} Slides
+                      <span className="text-xs font-sans font-semibold text-slate-800">
+                        {module.topics.length} ស្លាយ ({module.topics.length} Slides)
                       </span>
                       <p className="text-[10px] font-mono text-slate-500">
                         {module.duration}

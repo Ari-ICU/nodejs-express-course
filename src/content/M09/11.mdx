@@ -5,24 +5,24 @@ export const meta = {
   khmerTitle: "ការជ្រើសរើស Status Codes ត្រឹមត្រូវក្នុង REST APIs",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `HTTP status codes provide an internationally standardized, machine-readable signal that tells the client whether a request was successful, failed due to client error, or encountered a server crash.
+  summary: `HTTP Status Codes ផ្តល់នូវសញ្ញាបញ្ជាក់ស្តង់ដារអន្តរជាតិ (Machine-readable Signals) ដែលប្រាប់ទៅកាន់ Client ថាតើ Request ទទួលបានជោគជ័យ, បរាជ័យដោយសារកំហុសរបស់ Client (4xx), ឬជួបឧបសគ្គលើ Server (5xx)។
 
-### 1. Essential REST Status Code Catalog
-* **200 OK**: General success for GET, PUT, PATCH operations.
-* **201 Created**: Resource successfully created via POST.
-* **204 No Content**: Action succeeded, deliberately returning an empty response body (DELETE).
-* **304 Not Modified**: Used with caching headers (\`If-None-Match\`, \`ETag\`) to indicate client cache is still fresh.
-* **400 Bad Request**: Malformed JSON syntax or schema failure.
-* **401 Unauthorized**: Missing or invalid authentication credentials (user is NOT logged in).
-* **403 Forbidden**: Authenticated user lacks permission for this action (user is logged in, but not an admin).
-* **404 Not Found**: Resource target or endpoint route does not exist.
-* **409 Conflict**: State conflict, such as attempting to register an email that already exists.
-* **422 Unprocessable Entity**: Valid JSON syntax, but semantic business validation rules failed.
-* **429 Too Many Requests**: Client exceeded API rate limits.
-* **500 Internal Server Error**: Unhandled exception or server code bug.`,
-  tip: "Remember the difference between 401 and 403: 401 means 'Who are you? (Please log in)', while 403 means 'I know who you are, but you do not have permission to access this resource.'",
-  objective: "Master proper HTTP status code selection across all REST request lifecycles and error scenarios.",
-  expectedOutcome: "The ability to accurately select and dispatch standard HTTP status codes, preventing misleading 200 OK errors.",
+### ១. តារាង Status Codes ចាំបាច់ក្នុង RESTful API
+* **200 OK**៖ ប្រតិបត្តិការជោគជ័យទូទៅសម្រាប់ \`GET\`, \`PUT\`, និង \`PATCH\`។
+* **201 Created**៖ បង្កើត Resource ថ្មីជោគជ័យតាមរយៈ \`POST\`។
+* **204 No Content**៖ ប្រតិបត្តិការជោគជ័យ ប៉ុន្តែគ្មាន Response Body ត្រឡប់ទៅវិញឡើយ (\`DELETE\`)។
+* **304 Not Modified**៖ ប្រើប្រាស់ជាមួយ Caching Headers (\`ETag\`, \`If-None-Match\`) ដើម្បីបញ្ជាក់ថាទិន្នន័យលើ Browser នៅថ្មីដដែល។
+* **400 Bad Request**៖ Syntax នៃ JSON មិនត្រឹមត្រូវ ឬខ្វះ Data តាម Schema។
+* **401 Unauthorized**៖ មិនទាន់មានការផ្ទៀងផ្ទាត់អត្តសញ្ញាណ (User មិនទាន់បាន Login)។
+* **403 Forbidden**៖ បាន Login រួចហើយ ប៉ុន្តែគ្មានសិទ្ធិអនុញ្ញាត (User មិនមែនជា Admin)។
+* **404 Not Found**៖ រកមិនឃើញ Resource ឬ Endpoint URL។
+* **409 Conflict**៖ ទំនាស់ទិន្នន័យ (ដូចជា Email មានក្នុងប្រព័ន្ធរួចហើយ)។
+* **422 Unprocessable Entity**៖ ទម្រង់ JSON ត្រឹមត្រូវ ប៉ុន្តែខុសវិធានអាជីវកម្ម (Business Validation Rules)។
+* **429 Too Many Requests**៖ Client ស្នើសុំច្រើនហួសកម្រិតកំណត់ (Rate Limit Exceeded)។
+* **500 Internal Server Error**៖ កំហុសបច្ចេកទេស ឬ Exception ដែលមិនបានរំពឹងទុកនៅលើ Server។`,
+  tip: "ចូរចងចាំភាពខុសគ្នារវាង 401 និង 403 ឱ្យបានច្បាស់៖ 401 មានន័យថា 'តើអ្នកជានរណា? (សូម Login សិន)', ខណៈដែល 403 មានន័យថា 'ខ្ញុំដឹងថាអ្នកជានរណាហើយ ប៉ុន្តែអ្នកគ្មានសិទ្ធិអនុញ្ញាតចូលប្រើប្រាស់មុខងារនេះឡើយ'។",
+  objective: "យល់ដឹង និងចេះជ្រើសរើស HTTP Status Codes ត្រឹមត្រូវ សម្រាប់គ្រប់ដំណាក់កាលនៃ Request Lifecycle និងគ្រប់ស្ថានភាពកំហុស។",
+  expectedOutcome: "សមត្ថភាពក្នុងការជ្រើសរើស និងបញ្ជូន Status Codes ស្របតាមនិយាមអន្តរជាតិ ដោយជៀសវាងបញ្ហា Misleading 200 OK។",
   codeSnippet: `/**
  * Status Code Decision Helper in Express
  */

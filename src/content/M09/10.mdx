@@ -5,20 +5,20 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត DELETE Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `The HTTP **DELETE** method instructs the server to remove or de-register the target resource identified by the URI. Once deleted, subsequent GET requests to the same URI typically yield a **404 Not Found** (or 410 Gone).
+  summary: `វិធីសាស្ត្រ HTTP **DELETE** ណែនាំ Server ឱ្យលុប ឬដកចេញនូវ Resource ជាក់លាក់ដែលចង្អុលបង្ហាញដោយ URI។ នៅពេលដែលទិន្នន័យត្រូវបានលុបរួចរាល់ រាល់ GET Requests បន្ទាប់ទៅកាន់ URI នោះ នឹងទទួលបាន **404 Not Found** (ឬ 410 Gone)។
 
-### 1. Status Code Conventions for DELETE
-* **204 No Content**: The industry standard when deletion succeeds and no response body needs to be transmitted back to the client (\`res.status(204).send()\`).
-* **200 OK**: Used when the server chooses to return the deleted object representation or a confirmation envelope: \`{ success: true, message: "Resource deleted" }\`.
-* **202 Accepted**: Used when deletion is asynchronous or enqueued in a background worker (e.g., purging multi-gigabyte files from an S3 bucket).
-* **404 Not Found**: Returned when attempting to delete an entity ID that does not exist in the database.
+### ១. និយាមនៃ Status Codes សម្រាប់ DELETE
+* **204 No Content**៖ ជាស្តង់ដារឧស្សាហកម្មទូទៅបំផុត នៅពេលការលុបទិន្នន័យទទួលបានជោគជ័យ ហើយ Server មិនចាំបាច់បញ្ជូន Response Body ត្រឡប់មកវិញឡើយ (\`res.status(204).send()\`)។
+* **200 OK**៖ ប្រើប្រាស់នៅពេល Server ចង់បញ្ជូន Message បញ្ជាក់ ឬទិន្នន័យដែលទើបលុបត្រឡប់ទៅ Client វិញ៖ \`{ success: true, message: "Resource deleted" }\`។
+* **202 Accepted**៖ ប្រើប្រាស់នៅពេលប្រតិបត្តិការលុបជាប្រភេទ Asynchronous ឬត្រូវរង់ចាំដំណើរការក្នុង Queue (ដូចជាការលុប File ធំៗពី AWS S3)។
+* **404 Not Found**៖ ឆ្លើយតបនៅពេលដែល ID របស់ទិន្នន័យដែលចង់លុប មិនមានវត្តមានក្នុង Database។
 
-### 2. Hard Delete vs Soft Delete
-* **Hard Delete**: Permanently purges the row/document from the database (\`DELETE FROM products WHERE id = ?\`).
-* **Soft Delete**: Preserves data history for audit trails and compliance by setting a timestamp flag (\`deletedAt = new Date()\`) and filtering soft-deleted records from standard GET queries.`,
-  tip: "When returning `204 No Content`, ensure your route handler terminates with `res.status(204).send()` or `res.status(204).end()`. Do NOT use `res.status(204).json({...})` because HTTP specifications forbid a response body for status 204.",
-  objective: "Implement resilient Express DELETE endpoints handling both hard and soft deletion strategies with appropriate 204 and 404 status codes.",
-  expectedOutcome: "Production-ready DELETE routes with authorization checks, cascade handling, and proper HTTP response signaling.",
+### ២. ភាពខុសគ្នារវាង Hard Delete និង Soft Delete
+* **Hard Delete**៖ លុបទិន្នន័យចេញពី Database ជាអចិន្ត្រៃយ៍ (\`DELETE FROM products WHERE id = ?\`)។
+* **Soft Delete**៖ រក្សាទុកប្រវត្តិទិន្នន័យសម្រាប់ Audit Trail ដោយគ្រាន់តែកំណត់ទង់សម្គាល់កាលបរិច្ឆេទ (\`deletedAt = new Date()\`) និងច្រោះចេញពីការ Query ធម្មតា។`,
+  tip: "នៅពេលឆ្លើយតប `204 No Content`, ត្រូវបញ្ចប់ Route Handler ដោយ `res.status(204).send()` ឬ `res.status(204).end()`។ ដាច់ខាតកុំប្រើ `res.status(204).json({...})` ពីព្រោះស្តង់ដារពិធីការ HTTP ហាមឃាត់មិនឱ្យមាន Response Body សម្រាប់ Status 204 ឡើយ។",
+  objective: "សរសេរ Express DELETE Endpoints ដែលអនុវត្តទាំងយុទ្ធសាស្ត្រ Hard Delete និង Soft Delete ជាមួយ Status Code 204 និង 404 ត្រឹមត្រូវ។",
+  expectedOutcome: "ទទួលបាន DELETE Route កម្រិត Production ដែលមានការត្រួតពិនិត្យសិទ្ធិ (Authorization), ការគ្រប់គ្រងទិន្នន័យចងសម្ព័ន្ធ (Cascade), និងការឆ្លើយតបស្របតាមស្តង់ដារ HTTP។",
   codeSnippet: `const express = require("express");
 const app = express();
 

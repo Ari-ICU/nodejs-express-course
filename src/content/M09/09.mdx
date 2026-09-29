@@ -5,16 +5,16 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត PATCH Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `The HTTP **PATCH** method applies a **partial modification** to a resource. Unlike PUT, the client only transmits the specific fields that need to change; all unspecified fields remain completely untouched.
+  summary: `វិធីសាស្ត្រ HTTP **PATCH** អនុវត្តការ **កែសម្រួលទិន្នន័យផ្នែកខ្លះ (Partial Modification)** ទៅលើ Resource។ ខុសប្លែកពី PUT, Client គ្រាន់តែបញ្ជូន Field ជាក់លាក់ណាដែលចង់ផ្លាស់ប្តូរប៉ុណ្ណោះ ចំណែកឯ Field ផ្សេងៗដែលមិនបានបញ្ជាក់ នឹងនៅរក្សាតម្លៃដដែលទាំងស្រុង។
 
-### 1. Key Engineering Rules for PATCH
-* **Differential Updates**: The server merges incoming changes onto the existing resource representation.
-* **Mass Assignment Protection**: Never blindly assign \`req.body\` (e.g., \`Object.assign(item, req.body)\`). Malicious clients could overwrite sensitive protected fields like \`role: "admin"\`, \`id\`, or \`balance\`. Always whitelist permitted fields.
-* **Payload Validation**: Validate only the fields that are actually provided in the request body. If a field is omitted, skip its validation.
-* **Status Codes**: Return **200 OK** with the updated resource representation, or **404 Not Found** if the resource identifier doesn't exist.`,
-  tip: "Always guard against Prototype Pollution and Mass Assignment when writing PATCH handlers. Use an explicit array of allowed updatable fields: `const allowed = ['name', 'price', 'inStock'];`.",
-  objective: "Build an Express PATCH endpoint that safely applies partial updates using field whitelisting and dynamic validation.",
-  expectedOutcome: "A secure partial-update endpoint that modifies only authorized attributes while safeguarding immutable system properties.",
+### ១. គោលការណ៍វិស្វកម្មសំខាន់ៗនៃ PATCH
+* **Differential Updates**៖ Server ធ្វើការបញ្ចូល (Merge) ទិន្នន័យថ្មីទៅលើ Representation ដែលមានស្រាប់។
+* **Mass Assignment Protection**៖ ដាច់ខាតកុំចម្លង \`req.body\` ទាំងងងឹតងងុល (ដូចជា \`Object.assign(item, req.body)\`) ពីព្រោះ Hacker អាចឆ្លៀតឱកាសកែប្រែ Field សំខាន់ៗដូចជា \`role: "admin"\`, \`id\`, ឬ \`balance\`។ ត្រូវប្រើប្រាស់ Whitelist ដើម្បីអនុញ្ញាតតែ Field សុវត្ថិភាព។
+* **Dynamic Validation**៖ ត្រួតពិនិត្យភាពត្រឹមត្រូវតែលើ Field ណាដែលមានវត្តមានក្នុង Request Body ប៉ុណ្ណោះ។
+* **Status Codes**៖ ឆ្លើយតប **200 OK** ជាមួយទិន្នន័យដែលបានកែប្រែរួច ឬ **404 Not Found** ប្រសិនបើមិនមានទិន្នន័យត្រូវនឹង ID។`,
+  tip: "ជានិច្ចកាលត្រូវការពារប្រព័ន្ធពីបញ្ហា Prototype Pollution និង Mass Assignment នៅពេលសរសេរ PATCH Route។ ត្រូវកំណត់អារេនៃ Field ដែលអនុញ្ញាតឱ្យកែប្រែយ៉ាងច្បាស់លាស់៖ `const allowed = ['name', 'price', 'inStock'];`។",
+  objective: "សរសេរ Express PATCH Endpoint ដែលអនុវត្តការកែសម្រួលទិន្នន័យផ្នែកខ្លះប្រកបដោយសុវត្ថិភាពខ្ពស់ ដោយប្រើប្រាស់ Field Whitelisting និង Dynamic Validation។",
+  expectedOutcome: "ទទួលបាន Route កែប្រែទិន្នន័យដែលផ្លាស់ប្តូរតែ Attributes ត្រឹមត្រូវ និងការពាររាល់ System Properties មិនឱ្យរងការវាយប្រហារ។",
   codeSnippet: `const express = require("express");
 const app = express();
 app.use(express.json());

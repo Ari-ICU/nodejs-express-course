@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការកំណត់ Authentication ស្វ័យប្រវត្តិតាមរយៈ Collection Variables",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការកំណត់រចនាសម្ព័ន្ធAuthenticationនៅកម្រិតដើមនៃបណ្តុំអនុញ្ញាតឱ្យសំណើដែលបានដាក់បញ្ចូលទាំងអស់ដើម្បីទទួលAuthenticationអត្តសញ្ញាណដោយស្វ័យប្រវត្តិ (\`Inherit auth from parent\`)។ នៅពេលចូលដោយជោគជ័យ ស្គ្រីប Postman ចាប់យកសញ្ញាសម្ងាត់ JWT ត្រឡប់មកវិញដោយស្វ័យប្រវត្តិ ហើយសរសេរវាទៅ \`{{auth_token}}\` ។`,
-  tip: "កំណត់ប្រភេទ Authorization ទៅ `Bearer Token` ជាមួយតម្លៃ `{{auth_token}}` នៅកម្រិតថតប្រមូល ដូច្នេះអ្នកមិនចាំបាច់កំណត់រចនាសម្ព័ន្ធនិមិត្តសញ្ញានៅលើផ្លូវនីមួយៗទេ។",
-  objective: "បញ្ចូលសញ្ញាសម្ងាត់ដោយស្វ័យប្រវត្តិលើសំណើប្រមូលទាំងអស់ដោយប្រើស្គ្រីប Postman ។",
+  summary: `ការកំណត់រចនាសម្ព័ន្ធ Authentication នៅកម្រិតដើមនៃបណ្តុំអនុញ្ញាតឱ្យ Request ដែលបានដាក់បញ្ចូលទាំងអស់ដើម្បីទទួល Authentication អត្តសញ្ញាណដោយស្វ័យប្រវត្តិ (\`Inherit auth from parent\`)។ នៅពេលចូលដោយជោគជ័យ ស្គ្រីប Postman ចាប់យកសញ្ញាសម្ងាត់ JWT ត្រឡប់មកវិញដោយស្វ័យប្រវត្តិ ហើយសរសេរវាទៅ \`{{auth_token}}\` ។`,
+  tip: "កំណត់ប្រភេទ Authorization ទៅ `Bearer Token` ជាមួយតម្លៃ `{{auth_token}}` នៅកម្រិតថតប្រមូល ដូច្នេះអ្នកមិនចាំបាច់កំណត់រចនាសម្ព័ន្ធ Token នៅលើផ្លូវនីមួយៗទេ។",
+  objective: "បញ្ចូល Token ដោយស្វ័យប្រវត្តិលើ Request ប្រមូលទាំងអស់ដោយប្រើស្គ្រីប Postman ។",
   expectedOutcome: "ការ​ធ្វើ​តេ​ស្ត​ដែល​មាន​ភាព​ត្រឹម​ត្រូវ​ដោយ​គ្មាន​ថ្នេរ​នៅ​ទូទាំង​ចំណុច​បញ្ចប់​ដែល​បាន​ការពារ​ទាំង​អស់​ដោយ​គ្មាន​ការ​ចម្លង​បិទភ្ជាប់​ដោយ​ដៃ។",
   codeSnippet: "// Postman Tests Script on POST /login:\n// Save JWT token automatically to environment variables!\nconst response = pm.response.json();\n\nif (response.token) {\n  pm.environment.set(\"auth_token\", response.token);\n  console.log(\"Updated auth_token variable successfully!\");\n}\n\n// In Collection Root -> Authorization Tab:\n// Type: Bearer Token\n// Token: {{auth_token}}",
 };

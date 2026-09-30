@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Delete Resource Endpoint (DELETE)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការលុបឯកសារពីCollections MongoDB ជាមួយនឹងការឆ្លើយតប HTTP 204 ។`,
+  summary: `ការលុបឯកសារពី Collections MongoDB ជាមួយនឹង HTTP Response 204 ។`,
   tip: "តែងតែត្រឡប់ `204 No Content` សម្រាប់ការលុបដោយជោគជ័យ។",
-  objective: "បង្កើតEndpointនៃការលុបធនធាន។",
+  objective: "បង្កើត Endpoint នៃការលុបធនធាន។",
   expectedOutcome: "ការដកធនធានស្អាត។",
   codeSnippet: "export const deleteProduct = async (req, res) => {\n  const product = await Product.findByIdAndDelete(req.params.id);\n  if (!product) return res.status(404).json({ success: false, error: \"Not Found\" });\n  res.status(204).send();\n};",
 };

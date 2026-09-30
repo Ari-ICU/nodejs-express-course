@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Multi-stage Dockerfile សម្រាប់ Node.js",
   type: "lab",
   codeLanguage: "dockerfile",
-  summary: `ផលិតកម្ម Dockerfile ប្រើការបង្កើតពហុដំណាក់កាល ដើម្បីបំបែកដំណាក់កាលបង្កើត (ការចងក្រង TypeScript ដំឡើង devDependencies) ពីពេលដំណើរការផលិតកម្មចុងក្រោយ។ ការបង្កើតពហុដំណាក់កាលបង្កើតរូបភាពធុងតូច និងសុវត្ថិភាព (<150MB) ដែលមានតែភាពអាស្រ័យផលិតកម្ម និងចងក្រង JavaScript។`,
-  tip: "ចម្លង `package*.json` ជានិច្ច ហើយដំណើរការ `npm ci` មុននឹងចម្លងSource Code — នេះបង្កើនការផ្ទុកស្រទាប់ Docker ដូច្នេះការបង្កើតជាបន្តបន្ទាប់ចំណាយពេល 2 វិនាទីជំនួសឱ្យការដំឡើងភាពអាស្រ័យឡើងវិញ។",
-  objective: "សរសេរ Dockerfile ពហុដំណាក់កាល Dockerfile ដែលបានធ្វើឱ្យប្រសើរ និងមានសុវត្ថិភាពសម្រាប់Backend Node.js ។",
-  expectedOutcome: "រូបភាព Docker ផលិតកម្មប្រកបដោយសុវត្ថិភាព និងតិចតួចបំផុតជាមួយនឹងCacheស្រទាប់។",
+  summary: `ផលិតកម្ម Dockerfile ប្រើការបង្កើតពហុដំណាក់កាល ដើម្បីបំបែកដំណាក់កាលបង្កើត (ការចងក្រង TypeScript ដំឡើង devDependencies) ពីពេលដំណើរការផលិតកម្មចុងក្រោយ។ ការបង្កើតពហុដំណាក់កាលបង្កើតរូបភាពធុងតូច និងសុវត្ថិភាព (<150MB) ដែលមានតែភាពអាស្រ័យផលិតកម្ម និងចងក្រង JavaScript ។`,
+  tip: "ចម្លង `package*.json` ជានិច្ច ហើយដំណើរការ `npm ci` មុននឹងចម្លង Source Code — នេះបង្កើនការផ្ទុកស្រទាប់ Docker ដូច្នេះការបង្កើតជាបន្តបន្ទាប់ចំណាយពេល 2 វិនាទីជំនួសឱ្យការដំឡើងភាពអាស្រ័យឡើងវិញ។",
+  objective: "សរសេរ Dockerfile ពហុដំណាក់កាល Dockerfile ដែលបានធ្វើឱ្យប្រសើរ និងមានសុវត្ថិភាពសម្រាប់ Backend Node.js ។",
+  expectedOutcome: "រូបភាព Docker ផលិតកម្មប្រកបដោយសុវត្ថិភាព និងតិចតួចបំផុតជាមួយនឹង Cache ស្រទាប់។",
   codeSnippet: "# Stage 1: Build & Dependencies\nFROM node:20-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\n\n# Stage 2: Production Runtime\nFROM node:20-alpine AS runner\nWORKDIR /app\nENV NODE_ENV=production\n# Run as non-root user for security\nUSER node\nCOPY --chown=node:node package*.json ./\nRUN npm ci --only=production\nCOPY --chown=node:node --from=builder /app/src ./src\n\nEXPOSE 5000\nCMD [\"node\", \"src/server.js\"]",
 };
 

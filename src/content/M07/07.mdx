@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការទាញយក Route Parameters ពី URL (:id)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Paramsផ្លូវត្រូវបានដាក់ឈ្មោះផ្នែក URL ដែលត្រូវបានប្រើដើម្បីចាប់យកតម្លៃដែលបានបញ្ជាក់នៅទីតាំងរបស់ពួកគេនៅក្នុង URL ។ តម្លៃដែលចាប់យកត្រូវបានបញ្ចូលក្នុងវត្ថុ \`req.params\` ។`,
-  tip: "តែងតែធ្វើឱ្យParamsផ្លូវត្រូវគ្នានឹងទម្រង់ដែលរំពឹងទុក (ឧ. MongoDB ObjectId ឬលេខសម្គាល់ចំនួនគត់) ដើម្បីការពារកំហុសក្នុងការបញ្ជូនទិន្នន័យ។",
-  objective: "ស្រង់ចេញParamsផ្លូវថាមវន្តពី URL សំណើចូល។",
-  expectedOutcome: "ការទាញយកParamsច្បាស់លាស់សម្រាប់ប្រតិបត្តិការធនធានតែមួយ។",
+  summary: `Params ផ្លូវត្រូវបានដាក់ឈ្មោះផ្នែក URL ដែលត្រូវបានប្រើដើម្បីចាប់យកតម្លៃដែលបានបញ្ជាក់នៅទីតាំងរបស់ពួកគេនៅក្នុង URL ។ តម្លៃដែលចាប់យកត្រូវបានបញ្ចូលក្នុងវត្ថុ \`req.params\` ។`,
+  tip: "តែងតែធ្វើឱ្យ Params ផ្លូវត្រូវគ្នានឹងទម្រង់ដែលរំពឹងទុក (ឧ. MongoDB ObjectId ឬលេខសម្គាល់ចំនួនគត់) ដើម្បីការពារកំហុសក្នុងការបញ្ជូនទិន្នន័យ។",
+  objective: "ស្រង់ចេញ Params ផ្លូវថាមវន្តពី URL Incoming Request ។",
+  expectedOutcome: "ការទាញយក Params ច្បាស់លាស់សម្រាប់ប្រតិបត្តិការធនធានតែមួយ។",
   codeSnippet: "app.get(\"/api/v1/courses/:courseId/modules/:moduleId\", (req, res) => {\n  const { courseId, moduleId } = req.params;\n  res.json({ courseId, moduleId });\n});",
 };
 

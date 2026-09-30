@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការសរសេរឯកសារ HTTP Responses (200, 201, 400, 404, 500)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Endpointត្រូវតែចងក្រងរាល់ការឆ្លើយតបស្ថានភាព HTTP ដែលអាចធ្វើទៅបាន រួមទាំងលទ្ធផលជោគជ័យទាំងពីរ (200 OK, 201 Created) និងសេណារីយ៉ូបរាជ័យ។ អង្គភាពឆ្លើយតបគួរតែភ្ជាប់ទៅSchemaសមាសភាគ ឬកំណត់រចនាសម្ព័ន្ធការឆ្លើយតប JSON ច្បាស់លាស់។`,
-  tip: "ចងក្រងលេខកូដកំហុសទូទៅ (400, 401, 403, 404) សម្រាប់គ្រប់Endpoint ដូច្នេះវិស្វករFrontendអាចដោះស្រាយគ្រប់លក្ខខណ្ឌសាខាទាំងអស់។",
-  objective: "ចងក្រងឯកសារស្តង់ដារ ជោគជ័យ និងបរាជ័យ ការឆ្លើយតប HTTP ជាមួយនឹងSchema payload ។",
-  expectedOutcome: "កិច្ចសន្យា API ដែលអាចទស្សន៍ទាយបានកំណត់ទាំងផ្លូវរីករាយ និងសេណារីយ៉ូបរាជ័យ។",
+  summary: `Endpoint ត្រូវតែចងក្រងរាល់ Response ស្ថានភាព HTTP ដែលអាចធ្វើទៅបាន រួមទាំងលទ្ធផលជោគជ័យទាំងពីរ (200 OK, 201 Created) និងសេណារីយ៉ូបរាជ័យ។ Entity ឆ្លើយតបគួរតែភ្ជាប់ទៅ Schema សមាសភាគ ឬកំណត់រចនាសម្ព័ន្ធ JSON Response ច្បាស់លាស់។`,
+  tip: "ចងក្រងលេខកូដកំហុសទូទៅ (400, 401, 403, 404) សម្រាប់គ្រប់ Endpoint ដូច្នេះវិស្វករ Frontend អាចដោះស្រាយគ្រប់លក្ខខណ្ឌសាខាទាំងអស់។",
+  objective: "ចងក្រងឯកសារស្តង់ដារ ជោគជ័យ និងបរាជ័យ HTTP Response ជាមួយនឹង Schema payload ។",
+  expectedOutcome: "API Contract API ដែលអាចទស្សន៍ទាយបានកំណត់ទាំងផ្លូវរីករាយ និងសេណារីយ៉ូបរាជ័យ។",
   codeSnippet: "/**\n * @openapi\n * /api/v1/products:\n *   post:\n *     summary: Create a new product\n *     tags: [Products]\n *     responses:\n *       201:\n *         description: Product created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Product'\n *       400:\n *         description: Bad Request (Validation failure)\n */",
 };
 

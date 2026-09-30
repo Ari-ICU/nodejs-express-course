@@ -4,26 +4,48 @@ export const meta = {
   title: "HTTP Fundamentals",
   khmerTitle: "មូលដ្ឋានគ្រឹះពិធីការ HTTP និងដំណើរការ Request-Response",
   type: "concept",
-  codeLanguage: "javascript",
-  summary: `Hypertext Transfer Protocol (HTTP) គឺជាពិធីការស្រទាប់កម្មវិធីគ្មានរដ្ឋ ដែលផ្តល់ថាមពលដល់វើលវ៉ាយវ៉េប។ អតិថិជនផ្ញើកញ្ចប់សំណើដែលមានវិធីសាស្រ្ត ផ្លូវ Headers និងតួស្រេចចិត្ត។ Serverវាយតំលៃសំណើ និងត្រឡប់លេខកូដស្ថានភាព HTTP ក្បាលឆ្លើយតប និងបន្ទុក។`,
-  tip: "HTTP គឺគ្មានរដ្ឋ៖ រាល់សំណើត្រូវតែមានAuthorization និងបរិបទរបស់វា ដែលអនុញ្ញាតឱ្យServerធ្វើមាត្រដ្ឋានផ្តេកលើករណីជាច្រើន។",
-  objective: "ស្វែងយល់អំពីវដ្តជីវិតនៃការឆ្លើយតបសំណើ និងកាយវិភាគសាស្ត្រនៃកញ្ចប់ព័ត៌មានបណ្តាញ HTTP ។",
-  expectedOutcome: "គំរូផ្លូវចិត្តរឹងមាំនៃប្រតិបត្តិការ HTTP Client-Server។",
-  codeSnippet: "/* Anatomy of an HTTP Request / Response:\n   CLIENT REQUEST:\n   POST /api/v1/orders HTTP/1.1\n   Host: api.store.com\n   Content-Type: application/json\n   Authorization: Bearer eyJhbGci...\n   {\"item\": \"Keyboard\", \"qty\": 1}\n\n   SERVER RESPONSE:\n   HTTP/1.1 201 Created\n   Content-Type: application/json\n   {\"success\": true, \"orderId\": \"ORD-55\"}\n*/",
+  codeLanguage: "http",
+  summary: `Hypertext Transfer Protocol (HTTP) គឺជា Application Layer Protocol បែប Stateless ដែលផ្តល់ថាមពលដល់ World Wide Web ។ Client ធ្វើការផ្ញើ Request ដែលមាន HTTP Methods, Path (Routes), Headers និង Optional Body ។ បន្ទាប់មក Server ធ្វើការវាយតម្លៃ Request និងឆ្លើយតបមកវិញនូវ HTTP Status Codes, Response Headers និង JSON Payload ។`,
+  tip: "HTTP គឺជា Stateless Protocol ៖ រាល់ Request នីមួយៗត្រូវតែភ្ជាប់មកជាមួយ Authentication និង Context របស់វា ដែលអនុញ្ញាតឱ្យ Server ធ្វើ Horizontal Scaling បានយ៉ាងងាយស្រួល។",
+  objective: "ស្វែងយល់អំពី Request-Response Lifecycle និងកាយវិភាគសាស្ត្រនៃ Network Packets ក្នុងពិធីការ HTTP ។",
+  expectedOutcome: "ក្តាប់បានច្បាស់នូវគំរូប្រតិបត្តិការរវាង HTTP Client និង Server ។",
+  codeSnippet: `POST /api/v1/orders HTTP/1.1
+Host: api.store.com
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOi...
+
+{
+  "item": "Keyboard",
+  "qty": 1
+}
+
+# --- SERVER RESPONSE ---
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "success": true,
+  "orderId": "ORD-55"
+}`,
 };
 
-```javascript
-/* Anatomy of an HTTP Request / Response:
-   CLIENT REQUEST:
-   POST /api/v1/orders HTTP/1.1
-   Host: api.store.com
-   Content-Type: application/json
-   Authorization: Bearer eyJhbGci...
-   {"item": "Keyboard", "qty": 1}
+```http
+POST /api/v1/orders HTTP/1.1
+Host: api.store.com
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOi...
 
-   SERVER RESPONSE:
-   HTTP/1.1 201 Created
-   Content-Type: application/json
-   {"success": true, "orderId": "ORD-55"}
-*/
+{
+  "item": "Keyboard",
+  "qty": 1
+}
+
+# --- SERVER RESPONSE ---
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "success": true,
+  "orderId": "ORD-55"
+}
 ```

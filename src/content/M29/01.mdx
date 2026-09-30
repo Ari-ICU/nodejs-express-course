@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គម្រោងទី ១ ៖ Todo REST API",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `បង្កើត Todo REST API ដ៏រឹងមាំជាមួយនឹងមុខងារ CRUD ពេញលេញ Filterស្ថានភាព (?completed=true) ស្វែងរកតាមចំណងជើង តម្រៀបតាមកាលបរិច្ឆេទបង្កើត ទំព័រដែលមានដែនកំណត់ និងរំលង Zod Validationបញ្ចូល Error Handlingកណ្តាល និង MongoDB។ បង្រៀនមូលដ្ឋានគ្រឹះ RESTful គោលការណ៍រចនា និងស្ថាបត្យកម្មServicesControllersស្អាត។`,
-  tip: "ប្រើ Promise.all ដើម្បីដំណើរការសំណួរទិន្នន័យ និងសំណួរ CountDocuments ក្នុងពេលដំណាលគ្នា — វាកាត់បន្ថយពេលវេលាឆ្លើយតបពាក់កណ្តាលនៅលើEndpointsដែលបានបិទភ្ជាប់។",
-  objective: "បង្កើតគុណភាពផលិតកម្ម CRUD REST API ជាមួយនឹងការត្រង ការដាក់ទំព័រ និងValidation។",
-  expectedOutcome: "Todo ស្អាត រឹងមាំ API បំពេញតាមស្តង់ដារ REST និងកិច្ចសន្យាឆ្លើយតប HTTP ត្រឹមត្រូវ។",
+  summary: `បង្កើត Todo REST API ដ៏រឹងមាំជាមួយនឹងមុខងារ CRUD ពេញលេញ Filter ស្ថានភាព (?completed=true) ស្វែងរកតាមចំណងជើង តម្រៀបតាមកាលបរិច្ឆេទបង្កើត ទំព័រដែលមានដែនកំណត់ និងរំលង Zod Validation បញ្ចូល Error Handling កណ្តាល និង MongoDB ។ បង្រៀនមូលដ្ឋានគ្រឹះ RESTful គោលការណ៍រចនា និងស្ថាបត្យកម្ម ServicesControllers ស្អាត។`,
+  tip: "ប្រើ Promise.all ដើម្បីដំណើរការសំណួរទិន្នន័យ និងសំណួរ CountDocuments ក្នុងពេលដំណាលគ្នា — វាកាត់បន្ថយពេលវេលាឆ្លើយតបពាក់កណ្តាលនៅលើ Endpoints ដែលបានបិទភ្ជាប់។",
+  objective: "បង្កើតគុណភាពផលិតកម្ម CRUD REST API ជាមួយនឹងការត្រង ការដាក់ទំព័រ និង Validation ។",
+  expectedOutcome: "Todo ស្អាត រឹងមាំ API បំពេញតាមស្តង់ដារ REST និង API Contract ឆ្លើយតប HTTP ត្រឹមត្រូវ។",
   codeSnippet: "// GET /api/v1/todos?completed=true&sort=-createdAt&page=1&limit=10\n\nexport const getTodos = catchAsync(async (req, res) => {\n  const { completed, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = completed !== undefined ? { completed: completed === \"true\" } : {};\n\n  const [todos, total] = await Promise.all([\n    Todo.find(filter)\n      .sort(sort)\n      .skip((Number(page) - 1) * Number(limit))\n      .limit(Number(limit)),\n    Todo.countDocuments(filter)\n  ]);\n\n  res.json({\n    success: true,\n    count: todos.length,\n    total,\n    page: Number(page),\n    pages: Math.ceil(total / Number(limit)),\n    data: todos\n  });\n});",
 };
 

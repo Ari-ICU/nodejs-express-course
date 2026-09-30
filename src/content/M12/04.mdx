@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងរៀបចំ Mongoose Schema",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Mongoose Schema គូសផែនទីទៅបណ្តុំ MongoDB ហើយកំណត់រូបរាងឯកសារ តម្លៃលំនាំដើម Validation អ្នកទទួល និងអ្នកកំណត់។`,
-  tip: "ប្រើជម្រើសSchema `timestamps: true` ដើម្បីរក្សាវាលកាលបរិច្ឆេទ `createdAt` និង `updatedAt` ដោយស្វ័យប្រវត្តិ។",
-  objective: "កំណត់Schemaរចនាសម្ព័ន្ធសម្រាប់អង្គភាពកម្មវិធី។",
-  expectedOutcome: "និយមន័យSchemaដ៏ទូលំទូលាយពង្រឹងរចនាសម្ព័ន្ធវាល។",
+  summary: `Mongoose Schema គូសផែនទីទៅបណ្តុំ MongoDB ហើយកំណត់រូបរាងឯកសារ តម្លៃលំនាំដើម Validation Receiver និងអ្នកកំណត់។`,
+  tip: "ប្រើជម្រើស Schema `timestamps: true` ដើម្បីរក្សាវាលកាលបរិច្ឆេទ `createdAt` និង `updatedAt` ដោយស្វ័យប្រវត្តិ។",
+  objective: "កំណត់ Schema រចនាសម្ព័ន្ធសម្រាប់ Entity កម្មវិធី។",
+  expectedOutcome: "និយមន័យ Schema ដ៏ទូលំទូលាយពង្រឹងរចនាសម្ព័ន្ធវាល។",
   codeSnippet: "import { Schema } from \"mongoose\";\n\nconst userSchema = new Schema({\n  name: { type: String, required: true, trim: true },\n  email: { type: String, required: true, unique: true, lowercase: true }\n}, {\n  timestamps: true // Auto-manages createdAt and updatedAt!\n});",
 };
 

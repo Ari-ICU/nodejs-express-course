@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `កំឡុងពេលប្រតិបត្តិ ការងារដែលដំណើរការយូរអាចរាយការណ៍ភាគរយនៃវឌ្ឍនភាពក្នុងពេលជាក់ស្តែងដោយប្រើ \`job.updateProgress(percent)\`។ កម្មករប្រគល់វត្ថុលទ្ធផលចុងក្រោយនៅពេលបញ្ចប់ ឬបោះកំហុសឆ្គងជាសញ្ញាបរាជ័យ។ អតិថិជនអាចសាកសួរវឌ្ឍនភាពការងារតាមរយៈការស្ទង់មតិ ឬការផ្សាយតាមពេលវេលាជាក់ស្តែងរបស់ Socket.IO។`,
-  tip: "បញ្ចេញ `job.updateProgress()` កំឡុងពេលការងារច្រើនជំហាន ដូច្នេះរបារវឌ្ឍនភាពFrontendអាចធ្វើបច្ចុប្បន្នភាពដោយថាមវន្តតាមរយៈ WebSockets ។",
+  tip: "បញ្ចេញ `job.updateProgress()` កំឡុងពេលការងារច្រើនជំហាន ដូច្នេះរបារវឌ្ឍនភាព Frontend អាចធ្វើបច្ចុប្បន្នភាពដោយថាមវន្តតាមរយៈ WebSockets ។",
   objective: "តាមដាន និងផ្សព្វផ្សាយវឌ្ឍនភាពនៃការអនុវត្តការងារក្នុងពេលវេលាជាក់ស្តែង។",
-  expectedOutcome: "ការត្រួតពិនិត្យវឌ្ឍនភាពជាលំដាប់សម្រាប់ដំណើរការBackendដែលដំណើរការយូរ។",
+  expectedOutcome: "ការត្រួតពិនិត្យវឌ្ឍនភាពជាលំដាប់សម្រាប់ដំណើរការ Backend ដែលដំណើរការយូរ។",
   codeSnippet: "const reportWorker = new Worker(\"reports\", async (job) => {\n  await job.updateProgress(10); // 10%\n\n  const data = await queryLargeDataset();\n  await job.updateProgress(50); // 50%\n\n  const pdfBuffer = await generatePdf(data);\n  await job.updateProgress(90); // 90%\n\n  const fileUrl = await uploadToCloud(pdfBuffer);\n  await job.updateProgress(100); // 100%\n\n  return { reportUrl: fileUrl };\n}, { connection: redisConnection });",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងប្រើប្រាស់ Access Tokens",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Access Token គឺជាលិខិតសម្គាល់អ្នកកាន់រយៈពេលខ្លីដែលបានផ្ញើដោយអតិថិជននៅលើរាល់សំណើ HTTP នៅខាងក្នុងHeaders \`Authorization: Bearer <token>\` ។ ដោយសារតែសញ្ញាសម្ងាត់ចូលប្រើគឺគ្មានរដ្ឋ នោះBackendធ្វើឱ្យពួកវាមានValidationសុទ្ធសាធតាមរយៈAuthenticationហត្ថលេខាគ្រីបគ្រីបដោយមិនធ្វើការរកមើលDatabaseលើរាល់សំណើនីមួយៗ។ ដើម្បីកំណត់ការខូចខាត ប្រសិនបើស្ទាក់ចាប់បាន អាយុកាលនៃសញ្ញាសម្ងាត់ចូលប្រើប្រាស់គួរតែត្រូវបានរក្សាទុកចន្លោះពី 10 ទៅ 15 នាទី។`,
-  tip: "រក្សា​អាយុកាល​ប្រើប្រាស់​សញ្ញា​សម្ងាត់​ឱ្យ​ខ្លី (10-15m)។ ប្រសិនបើសញ្ញាសម្ងាត់ចូលប្រើត្រូវបានលេចធ្លាយ បង្អួចនៃភាពងាយរងគ្រោះរបស់អ្នកវាយប្រហារនឹងផុតកំណត់ដោយស្វ័យប្រវត្តិក្នុងរយៈពេលពីរបីនាទី។",
-  objective: "បង្កើតថូខឹនចូលប្រើប្រាស់រយៈពេលខ្លីដែលមានការទាមទារតិចតួចបំផុតសម្រាប់Authorizationដោយគ្មានរដ្ឋ។",
-  expectedOutcome: "ឧបករណ៍​ប្រើប្រាស់​ការ​ចុះហត្ថលេខា​សញ្ញាសម្ងាត់​សម្រាប់​ការ​ចូល​ដំណើរការ​រួចរាល់​ជាមួយ​នឹង​ការធានា​ផុតកំណត់។",
+  summary: `Access Token គឺជាលិខិតសម្គាល់អ្នកកាន់រយៈពេលខ្លីដែលបានផ្ញើដោយ Client នៅលើរាល់ Request HTTP នៅខាងក្នុង Headers \`Authorization: Bearer <token>\` ។ ដោយសារតែសញ្ញាសម្ងាត់ចូលប្រើគឺគ្មានរដ្ឋ នោះBackendធ្វើឱ្យពួកវាមានValidationសុទ្ធសាធតាមរយៈAuthenticationហត្ថលេខាគ្រីបគ្រីបដោយមិនធ្វើការរកមើលDatabaseលើរាល់សំណើនីមួយៗ។ ដើម្បីកំណត់ការខូចខាត ប្រសិនបើស្ទាក់ចាប់បាន អាយុកាលនៃសញ្ញាសម្ងាត់ចូលប្រើប្រាស់គួរតែត្រូវបានរក្សាទុកចន្លោះពី 10 ទៅ 15 នាទី។`,
+  tip: "រក្សា​អាយុកាល​ប្រើប្រាស់​សញ្ញា​សម្ងាត់​ឱ្យ​ខ្លី (10-15m) ។ ប្រសិនបើ Access Token ត្រូវបានលេចធ្លាយ បង្អួចនៃភាពងាយរងគ្រោះរបស់អ្នកវាយប្រហារនឹងផុតកំណត់ដោយស្វ័យប្រវត្តិក្នុងរយៈពេលពីរបីនាទី។",
+  objective: "បង្កើតថូខឹនចូលប្រើប្រាស់រយៈពេលខ្លីដែលមានការទាមទារតិចតួចបំផុតសម្រាប់ Authorization ដោយ Stateless ។",
+  expectedOutcome: "ឧបករណ៍​ប្រើប្រាស់​ការ​ចុះហត្ថលេខា​Token​សម្រាប់​ការ​ចូល​ដំណើរការ​រួចរាល់​ជាមួយ​នឹង​ការធានា​ផុតកំណត់។",
   codeSnippet: "import jwt from \"jsonwebtoken\";\n\nexport const generateAccessToken = (userId, role) => {\n  return jwt.sign(\n    { \n      sub: userId, \n      role: role \n    },\n    process.env.JWT_ACCESS_SECRET,\n    { \n      expiresIn: \"15m\", // Short lifespan for security\n      issuer: \"api.myenterprise.com\",\n      audience: \"myenterprise-client\"\n    }\n  );\n};\n\n// Client sends in header:\n// Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
 };
 

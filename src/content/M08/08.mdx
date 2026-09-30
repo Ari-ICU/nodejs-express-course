@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Authentication Middleware សម្រាប់ការពារ Routes",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Authenticationផ្នែកកណ្តាលពិនិត្យHeadersនៃសំណើចូល (ដូចជា \`Authorization: Bearer <token>\` ឬសោ API) ផ្តល់Validationអត្តសញ្ញាណអតិថិជន ភ្ជាប់បរិបទអ្នកប្រើប្រាស់ទៅ \`req.user\` ឬបដិសេធចរាចរណ៍ដែលគ្មានAuthorizationជាមួយនឹងស្ថានភាព 401។`,
-  tip: "ប្រសិនបើAuthenticationបរាជ័យ សូមផ្ញើការឆ្លើយតបដែលគ្មានAuthorization 401 ភ្លាមៗ ហើយកុំហៅទៅបន្ទាប់()។",
-  objective: "យាមផ្លូវដោយពិនិត្យHeadersសំណើ និងភ្ជាប់ស្ថានភាពអ្នកប្រើប្រាស់នៅក្នុងMiddleware។",
-  expectedOutcome: "Endpointដែលត្រូវបានការពារ ដែលបដិសេធដោយសុវត្ថិភាពនូវសំណើដែលមិនមានAuthorization មុនពេលទៅដល់អ្នកដោះស្រាយផ្លូវ។",
+  summary: `Authentication ផ្នែកកណ្តាលពិនិត្យ Headers នៃ Incoming Request (ដូចជា \`Authorization: Bearer <token>\` ឬសោ API) ផ្តល់Validationអត្តសញ្ញាណអតិថិជន ភ្ជាប់បរិបទអ្នកប្រើប្រាស់ទៅ \`req.user\` ឬបដិសេធចរាចរណ៍ដែលគ្មានAuthorizationជាមួយនឹងស្ថានភាព 401។`,
+  tip: "ប្រសិនបើ Authentication បរាជ័យ សូមផ្ញើ Response ដែលគ្មាន Authorization 401 ភ្លាមៗ ហើយកុំហៅទៅបន្ទាប់ () ។",
+  objective: "យាមផ្លូវដោយពិនិត្យ HeadersRequest និងភ្ជាប់ស្ថានភាពអ្នកប្រើប្រាស់នៅក្នុង Middleware ។",
+  expectedOutcome: "Endpoint ដែលត្រូវបានការពារ ដែលបដិសេធដោយសុវត្ថិភាពនូវ Request ដែលមិនមាន Authorization មុនពេលទៅដល់អ្នកដោះស្រាយផ្លូវ។",
   codeSnippet: "// Authentication Guard Middleware\n// Inspects request headers, validates credentials, and attaches user context\n\nexport const authenticate = (req, res, next) => {\n  const authHeader = req.headers.authorization;\n  if (!authHeader?.startsWith(\"Bearer \")) {\n    return res.status(401).json({ success: false, error: \"Authentication token required\" });\n  }\n\n  const token = authHeader.split(\" \")[1];\n\n  // Verify token credentials\n  if (token !== process.env.API_SECRET_KEY) {\n    return res.status(401).json({ success: false, error: \"Invalid or expired token\" });\n  }\n\n  // Attach authenticated identity to request for downstream route handlers\n  req.user = { id: \"usr_101\", role: \"admin\", name: \"Sophea\" };\n  next();\n};",
 };
 

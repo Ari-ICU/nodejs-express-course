@@ -5,12 +5,12 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម Client-Server",
   type: "architecture",
   imageUrl: "/images/lessons/client-server-architecture.png",
-  summary: `**ស្ថាបត្យកម្មអតិថិជន-Server** គឺជាគំរូកុំព្យូទ័រចែកចាយជាមូលដ្ឋានដែលផ្តល់ថាមពលដល់អ៊ីនធឺណិតទំនើប៖
-- **អតិថិជន (ឧបករណ៍ជួរមុខ)**៖ Browserតាមអ៊ីនធឺណិត កម្មវិធីទូរស័ព្ទ និងឧបករណ៍ IoT ផ្តួចផ្តើមសំណើលើពិធីការបណ្តាញ (HTTP/HTTPS, TCP/IP)។
-- ** Servers (Backend Hosts)**៖ Centralized Node.js + Express servers ផ្ទៀងផ្ទាត់សំណើ ពង្រឹងតក្កវិជ្ជាអាជីវកម្ម និងការគណនាការឆ្លើយតប។
-- ** Database & Cache **៖ ស្រទាប់តស៊ូដែលមានប្រសិទ្ធភាពខ្ពស់ (MongoDB, PostgreSQL) និងCacheក្នុងអង្គចងចាំ (Redis) ផ្គត់ផ្គង់ទិន្នន័យតាមពេលវេលាជាក់ស្តែង។
-- **ទំនាក់ទំនងគ្មានរដ្ឋ**៖ នៅក្នុង REST APIs សំណើនីមួយៗមានព័ត៌មានបញ្ជាក់Authenticationពេញលេញ (JWT Bearer tokens) ដើម្បីដំណើរការដោយឯករាជ្យ។`,
-  tip: "ភាពគ្មានរដ្ឋគឺជាគន្លឹះនៅក្នុង REST ទំនើប៖ សំណើ HTTP នីមួយៗត្រូវតែផ្ទុកទិន្នន័យមេតានៃAuthenticationទាំងអស់ដែលចាំបាច់ដើម្បីបំពេញវាដោយឯករាជ្យ។",
-  objective: "តាមដានផ្លូវនៃកញ្ចប់ព័ត៌មាន HTTP ពីអន្តរកម្មរបស់អតិថិជនទៅកាន់សំណួរ និងការឆ្លើយតបនៃDatabase។",
-  expectedOutcome: "ការយល់ដឹងជ្រៅជ្រះនៃប្រូកស៊ីបញ្ច្រាស Serverកម្មវិធី និងស្រទាប់បន្ត។",
+  summary: `**ស្ថាបត្យកម្ម Client-Server** គឺជាគំរូកុំព្យូទ័រចែកចាយជាមូលដ្ឋានដែលផ្តល់ថាមពលដល់អ៊ីនធឺណិតទំនើប៖
+- **Client (ឧបករណ៍ជួរមុខ)**៖ Browser តាមអ៊ីនធឺណិត កម្មវិធីទូរស័ព្ទ និងឧបករណ៍ IoT ផ្តួចផ្តើម Request លើពិធីការបណ្តាញ (HTTP/HTTPS, TCP/IP) ។
+- ** Servers (Backend Hosts)**៖ Centralized Node.js + Express servers ផ្ទៀងផ្ទាត់ Request ពង្រឹង Business Logic និងការគណនា Response ។
+- ** Database & Cache **៖ ស្រទាប់តស៊ូដែលមានប្រសិទ្ធភាពខ្ពស់ (MongoDB, PostgreSQL) និង Cache ក្នុងអង្គចងចាំ (Redis) ផ្គត់ផ្គង់ទិន្នន័យតាមពេលវេលាជាក់ស្តែង។
+- **ទំនាក់ទំនង Stateless**៖ នៅក្នុង REST APIs Request នីមួយៗមានព័ត៌មានបញ្ជាក់ Authentication ពេញលេញ (JWT Bearer tokens) ដើម្បីដំណើរការដោយឯករាជ្យ។`,
+  tip: "ភាព Stateless គឺជាគន្លឹះនៅក្នុង REST ទំនើប៖ Request HTTP នីមួយៗត្រូវតែផ្ទុកទិន្នន័យមេតានៃ Authentication ទាំងអស់ដែលចាំបាច់ដើម្បីបំពេញវាដោយឯករាជ្យ។",
+  objective: "តាមដានផ្លូវនៃកញ្ចប់ព័ត៌មាន HTTP ពីអន្តរកម្មរបស់ Client ទៅកាន់សំណួរ និង Response នៃ Database ។",
+  expectedOutcome: "ការយល់ដឹងជ្រៅជ្រះនៃប្រូកស៊ីបញ្ច្រាស Server កម្មវិធី និងស្រទាប់បន្ត។",
 };

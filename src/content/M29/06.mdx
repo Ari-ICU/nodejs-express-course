@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៦ ៖ Final Production REST API Capstone",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `គម្រោង capstone រួមបញ្ចូលរាល់គំនិតពីវគ្គសិក្សាទាំងមូលទៅក្នុងកម្មវិធីកម្រិតផលិតកម្មតែមួយ៖ Express REST API ជាមួយនឹងAuthentication, RBAC, MongoDB + Mongoose, Redis Cache, __TECH_10_ocket_ មុខងារផ្ទៃខាងក្រោយ, ពេលវេលាជាក់ស្តែង Swagger docs, Vitest ការធ្វើតេស្តរួមបញ្ចូល, Docker containerization with Compose, Nginx reverse proxy, និង GitHub Actions CI/CD ។`,
-  tip: "មុនពេលដាក់ពង្រាយ ដំណើរការតាមរយៈបញ្ជីត្រួតពិនិត្យផលិតកម្ម៖ Validation env ឧបករណ៍ដោះស្រាយការបិទយ៉ាងប្រណិត ការរួមបញ្ចូលការភ្ជាប់ Rate Limiting Helmet Headersសុវត្ថិភាព ការកំណត់រចនាសម្ព័ន្ធ និងចំណុចពិនិត្យសុខភាព។",
-  objective: "ដឹកជញ្ជូនថ្នាក់ផលិតកម្មពេញលេញ Node.js API រួមបញ្ចូលបច្ចេកវិទ្យាវគ្គសិក្សាទាំងអស់ពីចុងដល់ចប់។",
-  expectedOutcome: "Backendដែលមានមុខងារពេញលេញដែលត្រៀមរួចជាស្រេច ត្រូវបានដាក់ឱ្យដំណើរការទៅផលិតកម្មជាមួយ CI/CD ស្វ័យប្រវត្តិកម្ម។",
+  summary: `គម្រោង capstone រួមបញ្ចូលរាល់គំនិតពី Session សិក្សាទាំងមូលទៅក្នុងកម្មវិធីកម្រិតផលិតកម្មតែមួយ៖ Express REST API ជាមួយនឹង Authentication, RBAC, MongoDB + Mongoose, Redis Cache, __TECH_10_ocket_ មុខងារផ្ទៃខាងក្រោយ, ពេលវេលាជាក់ស្តែង Swagger docs, Vitest ការធ្វើតេស្តរួមបញ្ចូល, Docker containerization with Compose, Nginx reverse proxy, និង GitHub Actions CI/CD ។`,
+  tip: "មុនពេលដាក់ពង្រាយ ដំណើរការតាមរយៈបញ្ជីត្រួតពិនិត្យផលិតកម្ម៖ Validation env ឧបករណ៍ដោះស្រាយការបិទយ៉ាងប្រណិត ការរួមបញ្ចូលការភ្ជាប់ Rate Limiting Helmet Headers សុវត្ថិភាព ការកំណត់រចនាសម្ព័ន្ធ និងចំណុចពិនិត្យសុខភាព។",
+  objective: "ដឹកជញ្ជូនថ្នាក់ផលិតកម្មពេញលេញ Node.js API រួមបញ្ចូលបច្ចេកវិទ្យា Session សិក្សាទាំងអស់ពីចុងដល់ចប់។",
+  expectedOutcome: "Backend ដែលមានមុខងារពេញលេញដែលត្រៀមរួចជាស្រេច ត្រូវបានដាក់ឱ្យដំណើរការទៅផលិតកម្មជាមួយ CI/CD ស្វ័យប្រវត្តិកម្ម។",
   codeSnippet: "// Production startup with graceful shutdown\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/database.js\";\nimport { redis } from \"./config/redis.js\";\nimport { startWorkers, stopWorkers } from \"./queues/index.js\";\n\nconst server = app.listen(process.env.PORT || 5000, async () => {\n  await connectDB();\n  await redis.connect();\n  await startWorkers();\n  console.log(`Server running on port ${process.env.PORT || 5000} [${process.env.NODE_ENV}]`);\n});\n\nconst shutdown = async (signal) => {\n  console.log(`${signal}: shutting down gracefully...`);\n  server.close(async () => {\n    await stopWorkers();\n    await redis.quit();\n    process.exit(0);\n  });\n  setTimeout(() => process.exit(1), 10_000);\n};\n\nprocess.on(\"SIGTERM\", () => shutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => shutdown(\"SIGINT\"));",
 };
 

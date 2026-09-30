@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការផ្ញើ Email ដោយមិនរាំងស្ទះ HTTP (Asynchronous Dispatch)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបំបែកការបញ្ជូនអ៊ីមែលចេញពីវដ្តសំណើ HTTP ដោយប្រើការបញ្ជូនផ្ទៃខាងក្រោយអសមកាលធានានូវពេលវេលាឆ្លើយតប API រង 50ms ខណៈពេលដែលការចាប់ដៃ SMTP យឺតបានបញ្ចប់ក្នុងផ្ទៃខាងក្រោយ។",
+  summary: `ការបំបែកការបញ្ជូនអ៊ីមែលចេញពីវដ្ត Request HTTP ដោយប្រើការបញ្ជូនផ្ទៃខាងក្រោយអសមកាលធានានូវពេលវេលាឆ្លើយតប API រង 50ms ខណៈពេលដែលការចាប់ដៃ SMTP យឺតបានបញ្ចប់ក្នុងផ្ទៃខាងក្រោយ។`,
   tip: "តែងតែរុំកិច្ចការអសមកាលផ្ទៃខាងក្រោយនៅក្នុងការសាកល្បង/ចាប់កំហុស ដូច្នេះការបរាជ័យ SMTP ត្រូវបានកត់ត្រាដោយសុវត្ថិភាពដោយមិនធ្វើឱ្យដំណើរការគាំង។",
-  objective: "អនុវត្តការបញ្ជូនអ៊ីមែលដែលមិនរារាំងអសមកាលនៅក្នុងControllers Express ។",
-  expectedOutcome: "ការឆ្លើយតប API រង 50ms លឿនត្រូវបានកាត់ចេញពីភាពយឺតនៃបណ្តាញ SMTP ។",
+  objective: "អនុវត្តការបញ្ជូនអ៊ីមែលដែលមិនរារាំងអសមកាលនៅក្នុង Controllers Express ។",
+  expectedOutcome: "Response API រង 50ms លឿនត្រូវបានកាត់ចេញពីភាពយឺតនៃបណ្តាញ SMTP ។",
   codeSnippet: "// services/emailDispatcher.js\nimport { sendEmail } from \"./email.service.js\";\n\n// Decoupled asynchronous dispatcher: runs without blocking HTTP responses\nexport const dispatchEmailAsync = (options) => {\n  setImmediate(async () => {\n    try {\n      await sendEmail(options);\n      console.log(`✉️ Email sent to ${options.to}`);\n    } catch (err) {\n      console.error(`❌ Background email failed: ${err.message}`);\n    }\n  });\n};\n\n// Inside Express Controller:\nexport const requestPasswordReset = async (req, res) => {\n  const { email } = req.body;\n\n  // Dispatch email in background without awaiting SMTP handshake\n  dispatchEmailAsync({\n    to: email,\n    subject: \"Password Reset\",\n    html: \"<p>Click here to reset your password.</p>\",\n  });\n\n  // Immediate response to user (<50ms!)\n  res.json({ success: true, message: \"Reset link sent to your email!\" });\n};",
 };
 

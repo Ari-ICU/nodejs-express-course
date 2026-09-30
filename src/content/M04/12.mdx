@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ Async Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ច្បាប់សំខាន់ៗសម្រាប់ការសរសេរកូដ async ដែលអាចធ្វើមាត្រដ្ឋានបាន៖ កុំលាយCallbacksមកវិញ និងPromises តែងតែត្រលប់មកវិញ ឬរង់ចាំPromises កំណត់ពេលវេលាអស់ពេលសម្រាប់សំណើ HTTP ខាងក្រៅទាំងអស់ និងជៀសវាងការបង្កើតPromisesដែលមិនបានគ្រប់គ្រងអណ្តែត។`,
-  tip: "តែងតែបន្ថែមការអស់ពេលទៅសំណួរDatabase និងសំណើ HTTP ខាងក្រៅជាមួយ `AbortController` ដូច្នេះរន្ធបណ្តាញជាប់គាំងមិនកកកុញទេ។",
+  summary: `ច្បាប់សំខាន់ៗសម្រាប់ការសរសេរកូដ async ដែលអាចធ្វើមាត្រដ្ឋានបាន៖ កុំលាយ Callbacks មកវិញ និង Promises តែងតែត្រលប់មកវិញ ឬរង់ចាំ Promises កំណត់ពេលវេលាអស់ពេលសម្រាប់ Request HTTP ខាងក្រៅទាំងអស់ និងជៀសវាងការបង្កើត Promises ដែលមិនបានគ្រប់គ្រងអណ្តែត។`,
+  tip: "តែងតែបន្ថែមការអស់ពេលទៅសំណួរ Database និង Request HTTP ខាងក្រៅជាមួយ `AbortController` ដូច្នេះរន្ធបណ្តាញជាប់គាំងមិនកកកុញទេ។",
   objective: "អនុវត្តគំរូរចនាអសមកាលសហគ្រាសនៅទូទាំងមូលដ្ឋានកូដ។",
-  expectedOutcome: "កូដអសមកាលដែលធន់ទ្រាំនឹងPromisesមិនជាប់គាំង និងការលេចធ្លាយអង្គចងចាំ។",
+  expectedOutcome: "កូដអសមកាលដែលធន់ទ្រាំនឹង Promises មិនជាប់គាំង និងការលេចធ្លាយអង្គចងចាំ។",
   codeSnippet: "// Using AbortController for timeout protection on external fetch\nconst controller = new AbortController();\nconst timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout\n\ntry {\n  const response = await fetch(\"https://api.partner.com/data\", {\n    signal: controller.signal\n  });\n  const data = await response.json();\n} catch (err) {\n  if (err.name === \"AbortError\") {\n    console.error(\"Request timed out after 3000ms!\");\n  }\n} finally {\n  clearTimeout(timeoutId);\n}",
 };
 

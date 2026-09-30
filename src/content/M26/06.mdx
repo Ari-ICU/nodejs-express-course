@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Job Producer ដើម្បីបញ្ជូន Tasks ទៅកាន់ Queue",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `អ្នកផលិតគឺជាServicesណាមួយដែលបង្កើត និងរុញភារកិច្ចទៅក្នុងជួរ BullMQ ដោយប្រើ \`queue.add(name, data, opts)\`។ Controllers Express ឬស្រទាប់Servicesមានមុខងារជាអ្នកផលិត ការបញ្ជូនការងារដែលមានជម្រើសដូចជាចំនួនការព្យាយាមឡើងវិញ ការបិទឡើងវិញអិចស្ប៉ូណង់ស្យែល និងការពន្យាពេលប្រតិបត្តិការ។`,
-  tip: "តែងតែបញ្ជូនទិន្នន័យ JSON ដែលអាចផ្លាស់ប្តូរបានតាមលំដាប់លំដោយ (ខ្សែអក្សរ លេខ វត្ថុធម្មតា) ទៅក្នុង `queue.add()` — មិនដែលឆ្លងកាត់ករណីស្មុគស្មាញថ្នាក់ ឬចំណុចទាញការភ្ជាប់Databaseឡើយ។",
-  objective: "សាងសង់ឧបករណ៍ប្រើប្រាស់របស់អ្នកផលិត BullMQ រុញបន្ទុកជាមួយនឹងជម្រើសព្យាយាមម្តងទៀត។",
-  expectedOutcome: "ការបង្កើតការងាររហ័សដែលត្រឡប់ការបញ្ជាក់ HTTP ភ្លាមៗដល់អតិថិជន។",
+  summary: `Producers គឺជា Services ណាមួយដែលបង្កើត និងរុញភារកិច្ចទៅក្នុងជួរ BullMQ ដោយប្រើ \`queue.add(name, data, opts)\`។ Controllers Express ឬស្រទាប់Servicesមានមុខងារជាអ្នកផលិត ការបញ្ជូនការងារដែលមានជម្រើសដូចជាចំនួនការព្យាយាមឡើងវិញ ការបិទឡើងវិញអិចស្ប៉ូណង់ស្យែល និងការពន្យាពេលប្រតិបត្តិការ។`,
+  tip: "តែងតែបញ្ជូនទិន្នន័យ JSON ដែលអាចផ្លាស់ប្តូរបានតាមលំដាប់លំដោយ (String លេខ វត្ថុធម្មតា) ទៅក្នុង `queue.add()` — មិនដែលឆ្លងកាត់ករណីស្មុគស្មាញថ្នាក់ ឬចំណុចទាញការភ្ជាប់ Database ឡើយ។",
+  objective: "សាងសង់ឧបករណ៍ប្រើប្រាស់របស់ Producers BullMQ រុញ Payload ជាមួយនឹងជម្រើសព្យាយាមម្តងទៀត។",
+  expectedOutcome: "ការបង្កើតការងាររហ័សដែលត្រឡប់ការបញ្ជាក់ HTTP ភ្លាមៗដល់ Client ។",
   codeSnippet: "import { Queue } from \"bullmq\";\nimport { redisConnection } from \"../config/redis.js\";\n\n// Initialize Queue instance\nexport const videoQueue = new Queue(\"video-processing\", {\n  connection: redisConnection,\n});\n\n// Producer function called from Express controller:\nexport const enqueueVideoTranscode = async (videoId, filePath, targetResolution) => {\n  const job = await videoQueue.add(\n    \"transcode\",\n    { videoId, filePath, targetResolution },\n    {\n      attempts: 3, // Retry up to 3 times on crash\n      backoff: { type: \"exponential\", delay: 2000 }, // 2s, 4s, 8s\n      removeOnComplete: true, // Auto-cleanup succeeded jobs\n    }\n  );\n\n  console.log(`Job enqueued: ${job.id}`);\n  return job.id;\n};",
 };
 

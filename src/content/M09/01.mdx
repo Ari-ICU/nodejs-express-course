@@ -8,15 +8,15 @@ export const meta = {
   summary: `**Representational State Transfer (REST)** គឺជាទម្រង់ស្ថាបត្យកម្ម (Architectural Style) សម្រាប់រៀបចំ និងរចនាប្រព័ន្ធកម្មវិធីតាមបណ្តាញអ៊ីនធឺណិត (Distributed Hypermedia Systems) ដែលត្រូវបានបង្កើតឡើងក្នុងឆ្នាំ ២០០០ ដោយលោក Roy Fielding ក្នុងសារណាថ្នាក់បណ្ឌិតរបស់គាត់។
 
 ### ១. ទស្សនវិជ្ជាគ្រឹះនៃ REST
-ខុសប្លែកពីប្រព័ន្ធ RPC (Remote Procedure Call) ឬ SOAP ដែលផ្តោតលើការហៅអនុគមន៍ពីចម្ងាយ (Remote Methods), ស្ថាបត្យកម្ម REST ចាត់ទុកប្រព័ន្ធទាំងមូលជាចង្កោមនៃ **Resources** (ធនធានទិន្នន័យ) ដែលត្រូវបានកំណត់អាសយដ្ឋានយ៉ាងជាក់លាក់ដោយ URIs (ឧទាហរណ៍៖ \`/api/v1/orders/102\`)។ Client ធ្វើការទំនាក់ទំនង និងផ្លាស់ប្តូរទិន្នន័យ (Representation) តាមរយៈទម្រង់ JSON ដោយប្រើប្រាស់ប្រតិបត្តិការស្តង់ដារនៃពិធីការ HTTP។
+ខុសប្លែកពីប្រព័ន្ធ RPC (Remote Procedure Call) ឬ SOAP ដែលផ្តោតលើការហៅអនុគមន៍ពីចម្ងាយ (Remote Methods), ស្ថាបត្យកម្ម REST ចាត់ទុកប្រព័ន្ធទាំងមូលជា Cluster នៃ **Resources** (ធនធានទិន្នន័យ) ដែលត្រូវបានកំណត់អាសយដ្ឋានយ៉ាងជាក់លាក់ដោយ URIs (ឧទាហរណ៍៖ \`/api/v1/orders/102\`)។ Client ធ្វើការទំនាក់ទំនង និងផ្លាស់ប្តូរទិន្នន័យ (Representation) តាមរយៈទម្រង់ JSON ដោយប្រើប្រាស់ប្រតិបត្តិការស្តង់ដារនៃពិធីការ HTTP។
 
 ### ២. គោលការណ៍ស្នូលទាំង ៣ នៃ REST
 * **Resource-Centric**៖ រាល់ Entity សំខាន់ៗ (Users, Products, Orders) សុទ្ធតែមាន URI ផ្ទាល់ខ្លួនច្បាស់លាស់។
 * **ប្រើប្រាស់ HTTP ជា Application Protocol**៖ ប្រើប្រាស់ HTTP Verbs ដើម (\`GET\`, \`POST\`, \`PUT\`, \`PATCH\`, \`DELETE\`) ជាជាងការបង្កើត Action Verbs ក្នុង URL។
 * **Decoupled Architecture**៖ Client មិនចាំបាច់ដឹងពីរចនាសម្ព័ន្ធ Database ឬភាសាកូដដែល Server កំពុងប្រើប្រាស់នោះឡើយ។`,
   tip: "REST គឺជាទម្រង់ស្ថាបត្យកម្ម (Design Pattern) មិនមែនជា Library ឬ Framework នោះទេ។ ភាពស៊ីសង្វាក់គ្នានៃការដាក់ឈ្មោះ URI, ការជ្រើសរើស HTTP Status Codes, និងទម្រង់ឆ្លើយតប JSON គឺជាអ្វីដែលកំណត់ថាតើ API មួយជា RESTful ពិតប្រាកដ ឬអត់។",
-  objective: "ស្វែងយល់ និងក្តាប់ឱ្យបានច្បាស់ពីទស្សនវិជ្ជាស្ថាបត្យកម្ម REST និងចេះបែងចែកភាពខុសគ្នារវាង Resource-Oriented Design ជាមួយ RPC និង SOAP។",
-  expectedOutcome: "យល់ដឹងពីរបៀបដែល REST ប្រើប្រាស់ HTTP Verbs និង URIs ដើម្បីបំបែកឯករាជ្យភាពរវាង Client និង Server Storage។",
+  objective: "ស្វែងយល់ និងក្តាប់ឱ្យបានច្បាស់ពីទស្សនវិជ្ជាស្ថាបត្យកម្ម REST និងចេះបែងចែកភាពខុសគ្នារវាង Resource-Oriented Design ជាមួយ RPC និង SOAP ។",
+  expectedOutcome: "យល់ដឹងពីរបៀបដែល REST ប្រើប្រាស់ HTTP Verbs និង URIs ដើម្បីបំបែកឯករាជ្យភាពរវាង Client និង Server Storage ។",
   codeSnippet: `/**
  * REST vs RPC / Traditional Web Comparison
  *

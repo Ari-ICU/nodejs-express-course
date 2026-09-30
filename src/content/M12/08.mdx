@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "ការកំណត់រចនាសម្ព័ន្ធតម្លៃលំនាំដើមដែល Mongoose អនុវត្តដោយស្វ័យប្រវត្តិនៅពេលបង្កើតឯកសារថ្មី ប្រសិនបើវាលមិនត្រូវបានផ្តល់ឱ្យ។",
   tip: "អ្នកអាចបញ្ជូនមុខងារមួយទៅ `default` (ឧ. `default: () => Date.now() + 7*24*60*60*1000`) ដើម្បីគណនាតម្លៃលំនាំដើមថាមវន្ត។",
-  objective: "កំណត់តម្លៃលំនាំដើមឋិតិវន្ត និងថាមវន្តនៅលើវាលSchema។",
+  objective: "កំណត់តម្លៃលំនាំដើមឋិតិវន្ត និងថាមវន្តនៅលើវាល Schema ។",
   expectedOutcome: "ការចាប់ផ្តើមដែលអាចព្យាករណ៍បាននៃស្ថានភាពឯកសារ។",
   codeSnippet: "const postSchema = new Schema({\n  views: { type: Number, default: 0 },\n  status: { type: String, default: \"draft\" },\n  publishedAt: { type: Date, default: Date.now }\n});",
 };

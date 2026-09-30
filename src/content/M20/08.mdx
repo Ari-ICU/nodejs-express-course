@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់អាសយដ្ឋាន Email (Email Verification)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Authenticationអ៊ីមែលធានាថាអ្នកប្រើប្រាស់ពិតជាជាម្ចាស់អាសយដ្ឋានអ៊ីមែលដែលពួកគេបានចុះឈ្មោះជាមួយ។ រហូតទាល់តែមានAuthentication សមត្ថភាពកម្មវិធីដែលរសើប (ដូចជាការបង្ហោះខ្លឹមសារសាធារណៈ ឬការទូទាត់) ត្រូវបានដាក់កម្រិត។ នៅពេលចុចលើតំណផ្ទៀងផ្ទាត់ Backendធ្វើបច្ចុប្បន្នភាព \`isEmailVerified: true\` ហើយធ្វើឱ្យនិមិត្តសញ្ញាផ្ទៀងផ្ទាត់ប្រើតែមួយដងមិនត្រឹមត្រូវ។`,
-  tip: "កំណត់ `isVerified: false` តាមលំនាំដើមក្នុងSchemaអ្នកប្រើប្រាស់របស់អ្នក។ រួមបញ្ចូលការត្រួតពិនិត្យស្ថានភាពផ្ទៀងផ្ទាត់នៅក្នុងMiddlewareផ្លូវដែលត្រូវបានការពារ ដែលអ៊ីមែលដែលបានផ្ទៀងផ្ទាត់គឺជាកាតព្វកិច្ច។",
-  objective: "បង្កើត​ប្រព័ន្ធ​ផ្ទៀងផ្ទាត់​អ៊ីមែល​ដោយ​ប្រើ​និមិត្តសញ្ញា​បញ្ជាក់​ប្រើ​តែមួយ។",
+  summary: `Authentication អ៊ីមែលធានាថាអ្នកប្រើប្រាស់ពិតជាជាម្ចាស់អាសយដ្ឋានអ៊ីមែលដែលពួកគេបានចុះឈ្មោះជាមួយ។ រហូតទាល់តែមាន Authentication សមត្ថភាពកម្មវិធីដែលរសើប (ដូចជាការបង្ហោះខ្លឹមសារសាធារណៈ ឬការទូទាត់) ត្រូវបានដាក់កម្រិត។ នៅពេលចុចលើតំណផ្ទៀងផ្ទាត់ Backend ធ្វើបច្ចុប្បន្នភាព \`isEmailVerified: true\` ហើយធ្វើឱ្យនិមិត្តសញ្ញាផ្ទៀងផ្ទាត់ប្រើតែមួយដងមិនត្រឹមត្រូវ។`,
+  tip: "កំណត់ `isVerified: false` តាមលំនាំដើមក្នុង Schema អ្នកប្រើប្រាស់របស់អ្នក។ រួមបញ្ចូលការត្រួតពិនិត្យស្ថានភាពផ្ទៀងផ្ទាត់នៅក្នុង Middleware ផ្លូវដែលត្រូវបានការពារ ដែលអ៊ីមែលដែលបានផ្ទៀងផ្ទាត់គឺជាកាតព្វកិច្ច។",
+  objective: "បង្កើត​ប្រព័ន្ធ​ផ្ទៀងផ្ទាត់​អ៊ីមែល​ដោយ​ប្រើ​Token​បញ្ជាក់​ប្រើ​តែមួយ។",
   expectedOutcome: "បំពង់ផ្ទៀងផ្ទាត់គណនីការពារការចុះឈ្មោះជាមួយអ៊ីមែលក្លែងក្លាយ ឬវាយអក្សរ។",
   codeSnippet: "// GET /api/v1/auth/verify-email?token=<token>\nexport const verifyEmail = async (req, res, next) => {\n  try {\n    const hashedToken = crypto\n      .createHash(\"sha256\")\n      .update(req.query.token)\n      .digest(\"hex\");\n\n    const user = await User.findOne({\n      emailVerificationToken: hashedToken,\n      emailVerificationExpires: { $gt: Date.now() },\n    });\n\n    if (!user) throw new AppError(\"Token is invalid or has expired\", 400);\n\n    user.isEmailVerified = true;\n    user.emailVerificationToken = undefined;\n    user.emailVerificationExpires = undefined;\n    await user.save();\n\n    res.json({ status: \"success\", message: \"Email verified successfully!\" });\n  } catch (err) {\n    next(err);\n  }\n};",
 };

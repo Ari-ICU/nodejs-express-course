@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការសរសេរឯកសារ Params, Query, និង Request Body",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការចងក្រងឯកសារសំណើ API ទាមទារព័ត៌មានលម្អិតអំពីParamsផ្លូវ URL (ឧ. \`:id\`) Paramsសំណួរ (ឧ. \`?page=1&limit=10\`) និងឯកសារសំណើ JSON ជាមួយនឹងគុណលក្ខណៈដែលត្រូវការ ប្រភេទទិន្នន័យ និងឧទាហរណ៍ជាក់ស្តែង។`,
-  tip: "តែងតែផ្តល់នូវតម្លៃ `example` ប្រាកដនិយមនៅក្នុងចំណារពន្យល់របស់អ្នក — Swagger UI ប្រើវាដើម្បីបញ្ចូលអត្ថបទសំណើ 'សាកល្បងវាជាមុន' ដោយស្វ័យប្រវត្តិ។",
-  objective: "កំណត់ចំណាំParamsផ្លូវ Filterសំណួរ និង JSON ស្នើសុំតួដោយប្រើ JSDoc ។",
-  expectedOutcome: "ឯកសារគ្រីស្តាល់ច្បាស់លាស់ណែនាំអ្នកប្រើប្រាស់អំពីរបៀបបង្កើតសំណើ។",
+  summary: `ការចងក្រងឯកសារ Request API ទាមទារព័ត៌មានលម្អិតអំពី Params ផ្លូវ URL (ឧ. \`:id\`) Paramsសំណួរ (ឧ. \`?page=1&limit=10\`) និងឯកសារសំណើ JSON ជាមួយនឹងគុណលក្ខណៈដែលត្រូវការ ប្រភេទទិន្នន័យ និងឧទាហរណ៍ជាក់ស្តែង។`,
+  tip: "តែងតែផ្តល់នូវតម្លៃ `example` ប្រាកដនិយមនៅក្នុងចំណារពន្យល់របស់អ្នក — Swagger UI ប្រើវាដើម្បីបញ្ចូលអត្ថបទ Request 'សាកល្បងវាជាមុន' ដោយស្វ័យប្រវត្តិ។",
+  objective: "កំណត់ចំណាំ Params ផ្លូវ Filter សំណួរ និង JSON ស្នើសុំតួដោយប្រើ JSDoc ។",
+  expectedOutcome: "ឯកសារគ្រីស្តាល់ច្បាស់លាស់ណែនាំអ្នកប្រើប្រាស់អំពីរបៀបបង្កើត Request ។",
   codeSnippet: "/**\n * @openapi\n * /api/v1/products/{id}:\n *   put:\n *     summary: Update an existing product\n *     tags: [Products]\n *     parameters:\n *       - in: path\n *         name: id\n *         required: true\n *         schema:\n *           type: string\n *         description: MongoDB ObjectId of the product\n *     requestBody:\n *       required: true\n *       content:\n *         application/json:\n *           schema:\n *             $ref: '#/components/schemas/UpdateProductDTO'\n */",
 };
 

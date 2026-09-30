@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការទប់ស្កាត់ការស្ទះ Event Loop (Blocking the Event Loop)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ដោយសារតែ JavaScript ដំណើរការលើខ្សែមេតែមួយ ការគណនាស៊ីភីយូដែលពឹងផ្អែកខ្លាំងលើការធ្វើSynchronousណាមួយ (regex ស្មុគស្មាញ ការអានឯកសារSynchronous \`fs.readFileSync\` ធ្ងន់ JSON ខ្សែអក្សរ ការគ្រីបគ្រីប) បង្កកEvent Loopទាំងមូល។ ខណៈពេលដែលត្រូវបានរារាំង Serverមិនអាចទទួលយកសំណើថ្មី ឬដំណើរការកម្មវិធីកំណត់ម៉ោងបានទេ ដែលបណ្តាលឱ្យអ្នកប្រើប្រាស់ក្នុងពេលដំណាលគ្នាទាំងអស់ជួបប្រទះការអស់ពេលនៃការតភ្ជាប់។`,
-  tip: "កុំប្រើវិធីធ្វើSynchronous (`readFileSync`, `crypto.pbkdf2Sync`, `bcrypt.hashSync`) នៅខាងក្នុង Express ស្នើសុំអ្នកដោះស្រាយក្នុងផលិតកម្ម។",
-  objective: "ធ្វើរោគវិនិច្ឆ័យ និងការពារ Event Loop ភាពអត់ឃ្លានដែលបណ្តាលមកពីប្រតិបត្តិការSynchronous។",
-  expectedOutcome: "មូលដ្ឋានកូដដែលមិនទប់ស្កាត់ការរក្សាThreadsមេដោយឥតគិតថ្លៃដើម្បីដោះស្រាយសំណើស្របគ្នា។",
+  summary: `ដោយសារតែ JavaScript ដំណើរការលើខ្សែមេតែមួយ ការគណនាស៊ីភីយូដែលពឹងផ្អែកខ្លាំងលើការធ្វើ Synchronous ណាមួយ (regex ស្មុគស្មាញ ការអានឯកសារ Synchronous \`fs.readFileSync\` ធ្ងន់ JSON ខ្សែអក្សរ ការគ្រីបគ្រីប) បង្កកEvent Loopទាំងមូល។ ខណៈពេលដែលត្រូវបានរារាំង Serverមិនអាចទទួលយកសំណើថ្មី ឬដំណើរការកម្មវិធីកំណត់ម៉ោងបានទេ ដែលបណ្តាលឱ្យអ្នកប្រើប្រាស់ក្នុងពេលដំណាលគ្នាទាំងអស់ជួបប្រទះការអស់ពេលនៃការតភ្ជាប់។`,
+  tip: "កុំប្រើវិធីធ្វើ Synchronous (`readFileSync`, `crypto.pbkdf2Sync`, `bcrypt.hashSync`) នៅខាងក្នុង Express ស្នើសុំអ្នកដោះស្រាយក្នុងផលិតកម្ម។",
+  objective: "ធ្វើរោគវិនិច្ឆ័យ និងការពារ Event Loop ភាពអត់ឃ្លានដែលបណ្តាលមកពីប្រតិបត្តិការ Synchronous ។",
+  expectedOutcome: "មូលដ្ឋានកូដដែលមិនទប់ស្កាត់ការរក្សា Threads មេដោយឥតគិតថ្លៃដើម្បីដោះស្រាយ Request ស្របគ្នា។",
   codeSnippet: "// DANGEROUS: Blocks the entire server for all concurrent users!\napp.get(\"/bad\", (req, res) => {\n  const data = fs.readFileSync(\"/huge-file.csv\"); // Event loop BLOCKED!\n  res.send(data);\n});\n\n// PROPER: Non-blocking asynchronous I/O allows thousands of concurrent requests\napp.get(\"/good\", async (req, res) => {\n  const data = await fs.promises.readFile(\"/huge-file.csv\"); // Event loop stays FREE!\n  res.send(data);\n});",
 };
 

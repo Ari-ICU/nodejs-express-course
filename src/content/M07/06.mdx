@@ -7,8 +7,8 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "លុបផ្លូវ លុបធនធានចេញពីកន្លែងផ្ទុក។ ជាធម្មតាពួកវាត្រឡប់ `204 No Content` ឬ `200 OK` ជាមួយនឹងទិន្នន័យមេតានៃការបញ្ជាក់។",
   tip: "ពិចារណាអនុវត្តការលុបទន់ (`deletedAt: Date`) នៅក្នុងការផលិត ដើម្បីការពារផ្លូវសវនកម្ម និងការពារការបាត់បង់ទិន្នន័យមហន្តរាយ។",
-  objective: "អនុវត្តEndpointនៃការលុបធនធានជាមួយនឹងលេខកូដស្ថានភាពត្រឹមត្រូវ។",
-  expectedOutcome: "ការដកធនធានដែលអាចទុកចិត្តបានជាមួយនឹងការឆ្លើយតប HTTP 204 ឬ 200 ។",
+  objective: "អនុវត្ត Endpoint នៃការលុបធនធានជាមួយនឹង HTTP Status Codes ត្រឹមត្រូវ។",
+  expectedOutcome: "ការដកធនធានដែលអាចទុកចិត្តបានជាមួយនឹង HTTP Response 204 ឬ 200 ។",
   codeSnippet: "app.delete(\"/api/v1/articles/:id\", async (req, res) => {\n  await articleService.deleteArticle(req.params.id);\n  res.status(204).send(); // 204 No Content\n});",
 };
 

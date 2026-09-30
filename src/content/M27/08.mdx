@@ -6,7 +6,7 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: `បញ្ជីឈ្មោះ Utils មានមុខងារជំនួយការទូទៅ ដែលអាចប្រើឡើងវិញបាន និងថ្នាក់ដែលឯករាជ្យដោយដែន។ ឧបករណ៍ប្រើប្រាស់ធម្មតារួមមានថ្នាក់ \`AppError\`, async handler wrappers (\`catchAsync\`), date formatters, cryptographic helpers និង string transformers។`,
-  tip: "ដាក់តែមុខងារនៅក្នុង `utils/` ប្រសិនបើពួកវាសុទ្ធសាធ និងមិនមានការពឹងផ្អែកដោយផ្ទាល់លើគំរូDatabase ឬច្បាប់អាជីវកម្ម។",
+  tip: "ដាក់តែមុខងារនៅក្នុង `utils/` ប្រសិនបើពួកវាសុទ្ធសាធ និងមិនមានការពឹងផ្អែកដោយផ្ទាល់លើគំរូ Database ឬច្បាប់អាជីវកម្ម។",
   objective: "បង្កើតប្រអប់ឧបករណ៍ប្រើប្រាស់រួមគ្នាសម្រាប់ការដោះស្រាយកំហុស ការធ្វើទ្រង់ទ្រាយ និងលំហូរអសមកាល។",
   expectedOutcome: "សម្អាត និងសាកល្បងមុខងារឧបករណ៍ប្រើប្រាស់ដែលលុបបំបាត់កូដស្ទួនទូទាំងគម្រោង។",
   codeSnippet: "// utils/catchAsync.js\n// Wraps async route handlers to catch rejected promises and forward to next(err)\nexport const catchAsync = (fn) => (req, res, next) => {\n  Promise.resolve(fn(req, res, next)).catch(next);\n};\n\n// utils/AppError.js\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true;\n    Error.captureStackTrace(this, this.constructor);\n  }\n}",

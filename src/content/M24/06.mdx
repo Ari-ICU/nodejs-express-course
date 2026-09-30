@@ -7,8 +7,8 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `ការទំនាក់ទំនង Socket.IO វិលជុំវិញព្រឹត្តិការណ៍ផ្ទាល់ខ្លួនដែលមានឈ្មោះ។ \`socket.emit('event', payload)\` ផ្ញើទិន្នន័យ \`socket.on('event', callback)\` ទទួលទិន្នន័យ ហើយការទទួលស្គាល់អនុញ្ញាតឱ្យអ្នកទទួលធ្វើCallbacksមកវិញដើម្បីបញ្ជាក់ដំណើរការសារ។`,
   tip: "ប្រើការទទួលស្គាល់ (ការហៅត្រលប់មកវិញបានបញ្ជូនទៅ `emit`) សម្រាប់ការធានាការបញ្ជាក់ការចែកចាយដោយមិនចាំបាច់បង្កើតព្រឹត្តិការណ៍ 'ទទួលបាន' ដាច់ដោយឡែក។",
-  objective: "បញ្ចេញ និងស្តាប់ព្រឹត្តិការណ៍ផ្ទាល់ខ្លួនជាមួយនឹងការបញ្ជាក់អំពីការដឹកជញ្ជូនបន្ទុក។",
-  expectedOutcome: "ការបញ្ជូនសារដ៏រឹងមាំជាមួយនឹងការទទួលស្គាល់ការឆ្លើយតបសំណើទ្វេទិស។",
+  objective: "បញ្ចេញ និងស្តាប់ព្រឹត្តិការណ៍ផ្ទាល់ខ្លួនជាមួយនឹងការបញ្ជាក់អំពីការដឹកជញ្ជូន Payload ។",
+  expectedOutcome: "ការបញ្ជូនសារដ៏រឹងមាំជាមួយនឹងការទទួលស្គាល់ ResponseRequest ទ្វេទិស។",
   codeSnippet: "// Server:\nio.on(\"connection\", (socket) => {\n  // Listen for message with acknowledgment callback\n  socket.on(\"send_message\", (data, callback) => {\n    console.log(\"Received:\", data);\n\n    // Broadcast to all other connected clients\n    socket.broadcast.emit(\"new_message\", data);\n\n    // Acknowledge receipt to the sender\n    if (typeof callback === \"function\") {\n      callback({ status: \"delivered\", timestamp: Date.now() });\n    }\n  });\n});",
 };
 

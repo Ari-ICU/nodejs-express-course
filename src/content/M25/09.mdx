@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `\`ioredis\` គឺជាClient Redis ដ៏រឹងមាំ និងមានលក្ខណៈពេញលេញសម្រាប់ Node.js ។ វាមានលក្ខណៈពិសេសដែលភ្ជាប់មកជាមួយនូវការគាំទ្រសម្រាប់ Promises ការកំណត់រចនាសម្ព័ន្ធចង្កោម ការខកខានរបស់ sentinel និងការភ្ជាប់ឡើងវិញដោយស្វ័យប្រវត្តិ។ ការបង្កើត Redis client singleton ដែលបានចែករំលែកតែមួយ ផ្តល់នូវCacheកម្រិតខ្ពស់នៅទូទាំងServices Express របស់អ្នក។`,
-  tip: "ប្រើ `ioredis` ជំនួសឱ្យកញ្ចប់ `redis` កេរ្តិ៍ដំណែលសម្រាប់ការគ្រប់គ្រងចង្កោមល្អជាង និងការគាំទ្រ TypeScript កាន់តែប្រសើរ។",
+  tip: "ប្រើ `ioredis` ជំនួសឱ្យកញ្ចប់ `redis` Legacy សម្រាប់ការគ្រប់គ្រង Cluster ល្អជាង និងការគាំទ្រ TypeScript កាន់តែប្រសើរ។",
   objective: "ភ្ជាប់ទៅវត្ថុ Redis ពី Node.js ដោយប្រើ ioredis ជាមួយនឹងការដោះស្រាយកំហុស។",
-  expectedOutcome: "ប្រតិបត្តិការ Redis ការភ្ជាប់Clientគ្រប់គ្រងប្រតិបត្តិការអាន/សរសេរ។",
+  expectedOutcome: "ប្រតិបត្តិការ Redis ការភ្ជាប់ Client គ្រប់គ្រងប្រតិបត្តិការអាន/សរសេរ។",
   codeSnippet: "import Redis from \"ioredis\";\n\nexport const redis = new Redis({\n  host: process.env.REDIS_HOST || \"localhost\",\n  port: Number(process.env.REDIS_PORT) || 6379,\n  password: process.env.REDIS_PASSWORD || undefined,\n  retryStrategy: (times) => Math.min(times * 50, 2000), // Exponential backoff\n});\n\nredis.on(\"connect\", () => console.log(\"Connected to Redis successfully!\"));\nredis.on(\"error\", (err) => console.error(\"Redis connection error:\", err));",
 };
 

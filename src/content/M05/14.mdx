@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងផ្លូវ Requests (Basic Routing)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបញ្ជូនសំណើដែលចូលមកក្នុង HTTP ឆៅតម្រូវឱ្យវាយតម្លៃលក្ខខណ្ឌ `req.url` និង `req.method` ដើម្បីបញ្ជូនចរាចរទៅកាន់ប្លុកតក្កវិជ្ជាសមស្រប ដោយគូសបញ្ជាក់ពីមូលហេតុដែលក្របខ័ណ្ឌដូចជា Express ត្រូវបានបង្កើតឡើង។",
-  tip: "ចងចាំដើម្បីដោះស្រាយផ្លូវដែលមិនផ្គូផ្គងជាមួយនឹងការឆ្លើយតប 404 ដើម្បីជៀសវាងការព្យួរសំណើរបស់អតិថិជន។",
-  objective: "អនុវត្ត URL មូលដ្ឋាន និងវិធីសាស្រ្តកំណត់ផ្លូវនៅក្នុង Node.js ដើម។",
+  summary: `ការបញ្ជូន Request ដែលចូលមកក្នុង HTTP ឆៅតម្រូវឱ្យវាយតម្លៃលក្ខខណ្ឌ \`req.url\` និង \`req.method\` ដើម្បីបញ្ជូនចរាចរទៅកាន់ប្លុកBusiness Logicសមស្រប ដោយគូសបញ្ជាក់ពីមូលហេតុដែលក្របខ័ណ្ឌដូចជា Express ត្រូវបានបង្កើតឡើង។`,
+  tip: "ចងចាំដើម្បីដោះស្រាយផ្លូវដែលមិនផ្គូផ្គងជាមួយនឹង Response 404 ដើម្បីជៀសវាងការព្យួរ Request របស់ Client ។",
+  objective: "អនុវត្ត URL មូលដ្ឋាន និង Methods កំណត់ផ្លូវនៅក្នុង Node.js ដើម។",
   expectedOutcome: "ការស្វែងយល់ពីមូលហេតុដែលក្របខ័ណ្ឌកំណត់ផ្លូវកម្រិតខ្ពស់ដូចជា Express គឺចាំបាច់។",
   codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  const { pathname } = new URL(req.url, `http://${req.headers.host}`);\n\n  if (req.method === \"GET\" && pathname === \"/\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    return res.end(JSON.stringify({ status: \"API Home\" }));\n  }\n\n  if (req.method === \"GET\" && pathname === \"/api/health\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    return res.end(JSON.stringify({ healthy: true, uptime: process.uptime() }));\n  }\n\n  // 404 Fallback\n  res.writeHead(404, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Route Not Found\" }));\n});",
 };

@@ -6,8 +6,8 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `ម៉ូឌុល \`node:http\` ដែលភ្ជាប់មកជាមួយរបស់ Node ផ្តល់ \`createServer()\` ដែលអនុញ្ញាតឱ្យអ្នកធ្វើភ្លាមៗនូវServer TCP ដែលកំពុងស្តាប់ ដែលបញ្ជូនការភ្ជាប់ចូលដើម្បីស្នើសុំCallbacksពីអ្នកដោះស្រាយ។`,
-  tip: "ឆ្លងកាត់ `0.0.0.0` ជាម៉ាស៊ីននៅពេលដំណើរការនៅខាងក្នុង Docker containers ដូច្នេះបណ្តាញកុងតឺន័រខាងក្រៅអាចចូលប្រើServerរបស់អ្នក។",
-  objective: "បង្កើតServerគេហទំព័រ HTTP ឆៅពីដំបូងដោយគ្មានក្របខ័ណ្ឌភាគីទីបី។",
+  tip: "ឆ្លងកាត់ `0.0.0.0` ជាម៉ាស៊ីននៅពេលដំណើរការនៅខាងក្នុង Docker containers ដូច្នេះបណ្តាញកុងតឺន័រខាងក្រៅអាចចូលប្រើ Server របស់អ្នក។",
+  objective: "បង្កើត Server គេហទំព័រ HTTP ឆៅពីដំបូងដោយគ្មានក្របខ័ណ្ឌភាគីទីបី។",
   expectedOutcome: "ការដឹងគុណជាមូលដ្ឋានយ៉ាងជ្រាលជ្រៅនៃរបៀបដែល Express ធ្វើការនៅក្រោមក្រណាត់។",
   codeSnippet: "import http from \"node:http\";\n\nconst PORT = process.env.PORT || 4000;\n\nconst server = http.createServer((req, res) => {\n  res.writeHead(200, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ message: \"Hello from native Node.js HTTP server!\" }));\n});\n\nserver.listen(PORT, () => {\n  console.log(`Server running at http://localhost:${PORT}`);\n});",
 };

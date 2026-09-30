@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការការពារសុវត្ថិភាព Cookies (HttpOnly, Secure, SameSite)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Cookiesដែលមានលេខសម្គាល់សម័យ ឬថូខឹនធ្វើឱ្យស្រស់ត្រូវតែរឹងប្រឆាំងនឹងការលួច និងការប្រើប្រាស់ខុស។ គុណលក្ខណៈ `HttpOnly` រារាំងការទាញយកស្គ្រីបរបស់អតិថិជន គុណលក្ខណៈ `Secure` ធានាថាCookiesត្រូវបានបញ្ជូនតែតាមរយៈការតភ្ជាប់ដែលបានអ៊ិនគ្រីប TLS/HTTPS ហើយ `SameSite=Strict` ឬ `Lax` គ្រប់គ្រងថាតើCookiesត្រូវបានផ្ញើឆ្លងកាត់ព្រំដែនប្រភពដើម ការពារ CSRF ។",
+  summary: `Cookies ដែលមានលេខសម្គាល់សម័យ ឬថូខឹនធ្វើឱ្យស្រស់ត្រូវតែរឹងប្រឆាំងនឹងការលួច និងការប្រើប្រាស់ខុស។ គុណលក្ខណៈ \`HttpOnly\` រារាំងការទាញយកស្គ្រីបរបស់Client គុណលក្ខណៈ \`Secure\` ធានាថាCookiesត្រូវបានបញ្ជូនតែតាមរយៈការតភ្ជាប់ដែលបានអ៊ិនគ្រីប TLS/HTTPS ហើយ \`SameSite=Strict\` ឬ \`Lax\` គ្រប់គ្រងថាតើCookiesត្រូវបានផ្ញើឆ្លងកាត់ព្រំដែនប្រភពដើម ការពារ CSRF ។`,
   tip: "ប្រើ `SameSite=Lax` សម្រាប់កម្មវិធីបណ្ដាញស្ដង់ដារ ដែលអ្នកប្រើប្រាស់អាចធ្វើតាមតំណខាងក្រៅទៅកាន់គេហទំព័ររបស់អ្នក ឬ `SameSite=Strict` សម្រាប់ APIs ទំព័រតែមួយដែលប្រកាន់អក្សរតូចធំ។",
-  objective: "ធ្វើជាម្ចាស់នៃជ័យជំនះនៃទង់សុវត្ថិភាពCookies៖ HttpOnly, Secure និង SameSite ។",
-  expectedOutcome: "Cookiesដែលមិនអាចត្រូវបានលួចដោយ XSS ឬក្លែងក្លាយដោយការវាយប្រហារ CSRF ឆ្លងប្រភពដើម។",
+  objective: "ធ្វើជាម្ចាស់នៃជ័យជំនះនៃទង់សុវត្ថិភាព Cookies ៖ HttpOnly, Secure និង SameSite ។",
+  expectedOutcome: "Cookies ដែលមិនអាចត្រូវបានលួចដោយ XSS ឬក្លែងក្លាយដោយការវាយប្រហារ CSRF ឆ្លងប្រភពដើម។",
   codeSnippet: "// Express Cookie Security Best Practice:\nres.cookie(\"token\", value, {\n  httpOnly: true,                         // Defeats XSS (No JS access)\n  secure: process.env.NODE_ENV === \"production\", // Defeats Sniffing (HTTPS only)\n  sameSite: \"strict\",                    // Defeats CSRF (Never sent cross-site)\n  domain: \".myenterprise.com\",           // Restrict to trusted subdomains\n  path: \"/\",\n  maxAge: 3600000,                       // 1 hour\n});",
 };
 

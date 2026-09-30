@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ប្រព័ន្ធ Validation ភ្ជាប់ស្រាប់ (min, max, enum, match)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Mongoose ផ្តល់Validationដែលភ្ជាប់មកជាមួយសម្រាប់ខ្សែអក្សរ (\`enum\`, \`minlength\`, \`maxlength\`, \`match\`), លេខ (\`min\`, \`max\`) និងកាលបរិច្ឆេទ។`,
-  tip: "ប្រើ `enum` validator ដើម្បីដាក់កម្រិតតម្លៃវាលទៅបញ្ជីដែលបានកំណត់ទុកជាមុននៃខ្សែអក្សរដែលបានអនុញ្ញាត (ឧ. `['user', 'admin', 'instructor']`)។",
-  objective: "ប្រើControllersក់ដែលភ្ជាប់មកជាមួយដើម្បីរឹតបន្តឹងតម្លៃឯកសារ។",
+  summary: `Mongoose ផ្តល់ Validation ដែលភ្ជាប់មកជាមួយសម្រាប់ String (\`enum\`, \`minlength\`, \`maxlength\`, \`match\`), លេខ (\`min\`, \`max\`) និងកាលបរិច្ឆេទ។`,
+  tip: "ប្រើ `enum` validator ដើម្បីដាក់កម្រិតតម្លៃវាលទៅបញ្ជីដែលបានកំណត់ទុកជាមុននៃ String ដែលបានអនុញ្ញាត (ឧ. `['user', 'admin', 'instructor']`) ។",
+  objective: "ប្រើ Controllers ក់ដែលភ្ជាប់មកជាមួយដើម្បីរឹតបន្តឹងតម្លៃឯកសារ។",
   expectedOutcome: "ការអនុវត្តឧបសគ្គអាជីវកម្មនៅស្រទាប់គំរូ។",
   codeSnippet: "const productSchema = new Schema({\n  price: { type: Number, min: [0, \"Price cannot be negative\"] },\n  role: {\n    type: String,\n    enum: { values: [\"user\", \"admin\", \"guide\"], message: \"{VALUE} is not a valid role\" },\n    default: \"user\"\n  }\n});",
 };

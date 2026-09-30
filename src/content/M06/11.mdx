@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ HTTP Methods ក្នុង Express",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `អ៊ិចប្រេសផ្ដល់នូវវិធីសាស្ត្រកំណត់ផ្លូវដែលត្រូវគ្នានឹងHTTP Verbs ស្តង់ដារទាំងអស់៖ \`app.get()\`, \`app.post()\`, \`app.put()\`, \`app.patch()\`, \`app.delete()\` ក៏ដូចជា \`app.all()\` ដើម្បីចាប់HTTP Verbs ទាំងអស់នៅលើផ្លូវមួយ។`,
-  tip: "ប្រើ `app.all('*', (req, res) => res.status(404).json(...))` ជាផ្លូវចុងក្រោយដើម្បីចាប់យកEndpointដែលមិនបានគ្រប់គ្រង។",
-  objective: "ផែនទីប្រតិបត្តិការ REST ទៅកាន់អ្នកជំនួយវិធីសាស្ត្រ Express HTTP រៀងៗខ្លួន។",
-  expectedOutcome: "HTTP Verbs ត្រឹមត្រូវនៅគ្រប់Endpointទាំងអស់។",
+  summary: `អ៊ិចប្រេសផ្ដល់នូវ Methods កំណត់ផ្លូវដែលត្រូវគ្នានឹង HTTP Verbs ស្តង់ដារទាំងអស់៖ \`app.get()\`, \`app.post()\`, \`app.put()\`, \`app.patch()\`, \`app.delete()\` ក៏ដូចជា \`app.all()\` ដើម្បីចាប់HTTP Verbs ទាំងអស់នៅលើផ្លូវមួយ។`,
+  tip: "ប្រើ `app.all('*', (req, res) => res.status(404).json(...))` ជាផ្លូវចុងក្រោយដើម្បីចាប់យក Endpoint ដែលមិនបានគ្រប់គ្រង។",
+  objective: "ផែនទីប្រតិបត្តិការ REST ទៅកាន់អ្នកជំនួយ Methods Express HTTP រៀងៗខ្លួន។",
+  expectedOutcome: "HTTP Verbs ត្រឹមត្រូវនៅគ្រប់ Endpoint ទាំងអស់។",
   codeSnippet: "app.get(\"/users\", listUsers);\napp.post(\"/users\", createUser);\napp.put(\"/users/:id\", replaceUser);\napp.patch(\"/users/:id\", updateUserFields);\napp.delete(\"/users/:id\", deleteUser);",
 };
 

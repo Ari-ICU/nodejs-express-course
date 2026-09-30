@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `ម៉ូឌុល \`node:crypto\` ផ្តល់នូវមុខងារគ្រីបគ្រីបកម្រិតផលិតកម្ម៖ បង្កើតបៃបៃចៃដន្យដែលមានសុវត្ថិភាពជាគ្រីប, UUIDs, សញ្ញា SHA-256, ហត្ថលេខា HMAC និងគូសោមិនស៊ីមេទ្រី។`,
-  tip: "កុំប្រើ `Math.random()` សម្រាប់សញ្ញាសម្ងាត់សុវត្ថិភាព ឬកំណត់ពាក្យសម្ងាត់ឡើងវិញ។ តែងតែប្រើ `crypto.randomBytes()` ឬ `crypto.randomUUID()` ។",
+  tip: "កុំប្រើ `Math.random()` សម្រាប់ Token សុវត្ថិភាព ឬកំណត់ Password ឡើងវិញ។ តែងតែប្រើ `crypto.randomBytes()` ឬ `crypto.randomUUID()` ។",
   objective: "អនុវត្តការបង្កើត hashing និង token ប្រកបដោយសុវត្ថិភាពដោយប្រើ cryptography ដើម។",
-  expectedOutcome: "បង្កើតសុវត្ថិភាពនៃសញ្ញាសម្ងាត់ផ្ទៀងផ្ទាត់ និងសញ្ញាកូដសម្ងាត់។",
+  expectedOutcome: "បង្កើតសុវត្ថិភាពនៃ Token ផ្ទៀងផ្ទាត់ និងសញ្ញាកូដសម្ងាត់។",
   codeSnippet: "import crypto from \"node:crypto\";\n\n// Generate secure random reset token (hex)\nconst resetToken = crypto.randomBytes(32).toString(\"hex\");\n\n// Generate SHA-256 hash\nconst hash = crypto.createHash(\"sha256\").update(resetToken).digest(\"hex\");\n\nconsole.log(\"Token:\", resetToken);\nconsole.log(\"SHA-256 Hash:\", hash);",
 };
 

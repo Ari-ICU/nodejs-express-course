@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ MongoDB",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `MongoDB សម្រេចបាននូវភាពអាចរកបានខ្ពស់តាមរយៈឈុតចម្លង (ការបរាជ័យដោយស្វ័យប្រវត្តិរវាងថ្នាំងចម្បង និងបន្ទាប់បន្សំ) និងការធ្វើមាត្រដ្ឋានផ្ដេកតាមរយៈការចែករំលែក (ការបែងចែកCollectionsទិន្នន័យឆ្លងកាត់ថ្នាំងចង្កោមឯករាជ្យ)។`,
+  summary: `MongoDB សម្រេចបាននូវភាពអាចរកបានខ្ពស់តាមរយៈឈុតចម្លង (ការបរាជ័យដោយស្វ័យប្រវត្តិរវាងថ្នាំងចម្បង និងបន្ទាប់បន្សំ) និងការធ្វើមាត្រដ្ឋានផ្ដេកតាមរយៈការចែករំលែក (ការបែងចែក Collections ទិន្នន័យឆ្លងកាត់ថ្នាំង Cluster ឯករាជ្យ) ។`,
   tip: "នៅក្នុងការផលិត តែងតែដាក់ពង្រាយឈុតចម្លងដែលមានយ៉ាងហោចណាស់ 3 ថ្នាំង ដើម្បីធានាបាននូវការបរាជ័យដោយស្វ័យប្រវត្តិ និងសូន្យពេលវេលារងចាំ។",
-  objective: "ស្វែងយល់អំពី MongoDB សំណុំចម្លង ការបំបែក និងស្ថាបត្យកម្មចង្កោម។",
+  objective: "ស្វែងយល់អំពី MongoDB សំណុំចម្លង ការបំបែក និងស្ថាបត្យកម្ម Cluster ។",
   expectedOutcome: "ចំណេះដឹងអំពីសហគ្រាស MongoDB គំរូដែលអាចរកបានខ្ពស់។",
   codeSnippet: "/* MongoDB Replica Set Architecture:\n   [Client Request (Node.js)]\n              │\n              ▼\n   ┌───────────────────────┐\n   │    PRIMARY NODE       │ (Handles all Writes & primary Reads)\n   └──────────┬────────────┘\n              │ (Asynchronous Replication via Oplog)\n        ┌─────┴─────┐\n        ▼           ▼\n   [SECONDARY] [SECONDARY] (High Availability & Read Scalability)\n*/",
 };

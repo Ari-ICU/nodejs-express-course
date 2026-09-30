@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត 404 Route Not Found Handler",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការចាប់យកផ្លូវ URL ដែលមិនបានគ្រប់គ្រងទាំងអស់ដោយប្រើMiddlewareជំនួសជំនួស (\`app.all('*')\`) ដែលបោះ 404 \`AppError\` ។`,
-  tip: "ចុះឈ្មោះផ្លូវ 404 catch-all ភ្លាមៗបន្ទាប់ពីការកំណត់ផ្លូវទាំងអស់ ហើយនៅចំពោះមុខError Handlerសកល។",
-  objective: "ចាប់យកផ្លូវ API ដែលមិនបានគ្រប់គ្រងទាំងអស់ជាមួយនឹងការឆ្លើយតប 404 ស្តង់ដារ។",
-  expectedOutcome: "ការឆ្លើយតប 404 ស្របគ្នាសម្រាប់Endpointមិនត្រឹមត្រូវ។",
+  summary: `ការចាប់យកផ្លូវ URL ដែលមិនបានគ្រប់គ្រងទាំងអស់ដោយប្រើ Middleware ជំនួសជំនួស (\`app.all('*')\`) ដែលបោះ 404 \`AppError\` ។`,
+  tip: "ចុះឈ្មោះផ្លូវ 404 catch-all ភ្លាមៗបន្ទាប់ពីការកំណត់ផ្លូវទាំងអស់ ហើយនៅចំពោះមុខ Error Handler សកល។",
+  objective: "ចាប់យកផ្លូវ API ដែលមិនបានគ្រប់គ្រងទាំងអស់ជាមួយនឹង Response 404 ស្តង់ដារ។",
+  expectedOutcome: "Response 404 ស្របគ្នាសម្រាប់ Endpoint មិនត្រឹមត្រូវ។",
   codeSnippet: "// 404 Catch-All Route (Must be placed after all active routes)\napp.all(\"*\", (req, res, next) => {\n  next(new AppError(`Cannot find ${req.method} ${req.originalUrl} on this server!`, 404));\n});",
 };
 

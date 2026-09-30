@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់បណ្ណាល័យ Zod ទំនើប",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Zod គឺ​ជា​ការ​ប្រកាស​Schema​ដំបូង TypeScript និង​បណ្ណាល័យ​Validation។ វាគាំទ្រការសន្និដ្ឋានប្រភេទឋិតិវន្ត ការបង្ខិតបង្ខំ ផែនទីកំហុសលម្អិត និងភាពអាស្រ័យសូន្យ។`,
-  tip: "ប្រើ `z.infer<typeof schema>` ដើម្បីបង្កើតប្រភេទ TypeScript ដោយស្វ័យប្រវត្តិពីSchemaValidationរបស់អ្នក។",
-  objective: "កំណត់SchemaValidationដ៏រឹងមាំដោយប្រើ Zod ។",
-  expectedOutcome: "SchemaValidationប្រភេទសុវត្ថិភាពសម្រាប់សំណើBackend។",
+  summary: `Zod គឺ​ជា​ការ​ប្រកាស​Schema​ដំបូង TypeScript និង​បណ្ណាល័យ​Validation ។ វាគាំទ្រការសន្និដ្ឋានប្រភេទឋិតិវន្ត ការបង្ខិតបង្ខំ ផែនទីកំហុសលម្អិត និងភាពអាស្រ័យសូន្យ។`,
+  tip: "ប្រើ `z.infer<typeof schema>` ដើម្បីបង្កើតប្រភេទ TypeScript ដោយស្វ័យប្រវត្តិពី SchemaValidation របស់អ្នក។",
+  objective: "កំណត់ SchemaValidation ដ៏រឹងមាំដោយប្រើ Zod ។",
+  expectedOutcome: "SchemaValidation ប្រភេទសុវត្ថិភាពសម្រាប់ RequestBackend ។",
   codeSnippet: "import { z } from \"zod\";\n\nexport const productSchema = z.object({\n  name: z.string().trim().min(3, \"Name must be at least 3 characters\"),\n  price: z.number().positive(\"Price must be greater than zero\"),\n  category: z.string().min(1, \"Category is required\")\n});",
 };
 

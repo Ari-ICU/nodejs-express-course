@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `បើគ្មានលិបិក្រម MongoDB ត្រូវតែធ្វើការស្កេនបណ្តុំ (\`COLLSCAN\`) ដោយពិនិត្យមើលរាល់ឯកសារនីមួយៗក្នុងបណ្តុំ ដើម្បីបំពេញសំណួរ។ សន្ទស្សន៍បង្កើតរចនាសម្ព័ន្ធទិន្នន័យ B-tree ដែលកំណត់ទីតាំងឯកសារដែលត្រូវគ្នាគិតជាមិល្លីវិនាទី (\`IXSCAN\`)។ វាលតែមួយ សមាសធាតុ និងសន្ទស្សន៍អត្ថបទគឺចាំបាច់សម្រាប់Databaseដែលអាចធ្វើមាត្រដ្ឋានបាន។`,
-  tip: "ប្រើ `explain('executionStats')` លើសំណួររបស់អ្នក ដើម្បីផ្ទៀងផ្ទាត់ថាពួកគេប្រើ `IXSCAN` (ស្កេនលិបិក្រម) ជំនួសឱ្យ `COLLSCAN` (ស្កេនតារាង)។",
+  tip: "ប្រើ `explain('executionStats')` លើសំណួររបស់អ្នក ដើម្បីផ្ទៀងផ្ទាត់ថាពួកគេប្រើ `IXSCAN` (ស្កេនលិបិក្រម) ជំនួសឱ្យ `COLLSCAN` (ស្កេនតារាង) ។",
   objective: "រចនា​លិបិក្រម​វាល​តែមួយ និង​បរិវេណ​ដែល​មាន​ប្រសិទ្ធភាព​គាំទ្រ​គំរូ​សំណួរ​ទូទៅ។",
   expectedOutcome: "បំប្លែង​ការ​ស្កែន​ប្រមូល​យឺត​ទៅ​ជា​ការ​រក​មើល​សន្ទស្សន៍​ល្បឿន​លឿន។",
   codeSnippet: "const productSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  category: { type: String, index: true }, // Single-field index\n  price: Number,\n  createdAt: Date,\n});\n\n// Compound index for queries that filter by category and sort by price:\n// db.products.find({ category: \"Electronics\" }).sort({ price: -1 })\nproductSchema.index({ category: 1, price: -1 });\n\n// Verify query execution in MongoDB:\n// await Product.find({ category: \"Electronics\" }).explain(\"executionStats\");",

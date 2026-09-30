@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Advanced Filtering ($gte, $lte, $in)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `គាំទ្រFilterសំណួរកម្រិតខ្ពស់ដោយប្រើប្រតិបត្តិករ MongoDB (\`$gte\`, \`$lte\`, \`$in\`, \`$ne\`)។`,
-  tip: "បំប្លែងParamsសំណួរចូល (`price[gte]=50`) ទៅជាប្រតិបត្តិករ MongoDB (`{ price: { $gte: 50 } }`) ។",
-  objective: "បកប្រែFilterសំណួរ URL ទៅជាប្រតិបត្តិករប្រៀបធៀប MongoDB ។",
+  summary: `គាំទ្រ Filter សំណួរកម្រិតខ្ពស់ដោយប្រើប្រតិបត្តិករ MongoDB (\`$gte\`, \`$lte\`, \`$in\`, \`$ne\`)។`,
+  tip: "បំប្លែង Params សំណួរចូល (`price[gte]=50`) ទៅជាប្រតិបត្តិករ MongoDB (`{ price: { $gte: 50 } }`) ។",
+  objective: "បកប្រែ Filter សំណួរ URL ទៅជាប្រតិបត្តិករប្រៀបធៀប MongoDB ។",
   expectedOutcome: "សមត្ថភាពចម្រោះដ៏សម្បូរបែបដែលត្រូវនឹងស្តង់ដារពាណិជ្ជកម្មអេឡិចត្រូនិកទំនើប។",
   codeSnippet: "// Converts ?price[gte]=100 into { price: { $gte: 100 } }\nexport const filterQuery = (queryObj) => {\n  let queryStr = JSON.stringify(queryObj);\n  queryStr = queryStr.replace(/\\b(gte|gt|lte|lt|in)\\b/g, match => `$${match}`);\n  return JSON.parse(queryStr);\n};",
 };

@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Express.js គឺជាក្របខ័ណ្ឌកម្មវិធីបណ្តាញស្តង់ដារជាក់ស្តែងសម្រាប់ Node.js ។ រចនាឡើងជាស្រទាប់អរូបី ដែលអាចបត់បែនបាន និងគ្មានការយល់ឃើញនៅលើដើម `node:http` វាផ្តល់នូវម៉ាស៊ីននាំផ្លូវដ៏មានអានុភាព ស្ថាបត្យកម្មបំពង់កណ្តាល និងឧបករណ៍ជំនួយការស្នើសុំ/ឆ្លើយតប HTTP ដ៏ទូលំទូលាយ។",
-  tip: "Express មិនអនុវត្តរចនាសម្ព័ន្ធថតតឹងរឹង ឬអនុសញ្ញាDatabaseទេ។ ការទទួលយកព្រំដែនស្ថាបត្យកម្មស្អាត (ControllersនិងServices) គឺចាំបាច់ដើម្បីជៀសវាងកូដ spaghetti ។",
+  tip: "Express មិនអនុវត្តរចនាសម្ព័ន្ធថតតឹងរឹង ឬអនុសញ្ញា Database ទេ។ ការទទួលយកព្រំដែនស្ថាបត្យកម្មស្អាត (Controllers និង Services) គឺចាំបាច់ដើម្បីជៀសវាងកូដ spaghetti ។",
   objective: "ស្វែងយល់ពីរបៀបដែល Express abstracts មេកានិច HTTP ដើមចូលទៅក្នុង API វិចារណញាណ។",
   expectedOutcome: "គំរូផ្លូវចិត្តដ៏ទូលំទូលាយនៃ Express ជាបំពង់បង្ហូរប្រេងកណ្តាល។",
   codeSnippet: "import express from \"express\";\n\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\napp.get(\"/\", (req, res) => {\n  res.json({ message: \"Welcome to Express.js API!\" });\n});\n\napp.listen(PORT, () => {\n  console.log(`Server running on http://localhost:${PORT}`);\n});",

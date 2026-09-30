@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Services",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Services បង្កប់នូវតក្កវិជ្ជាអាជីវកម្មសុទ្ធ ការតស៊ូទិន្នន័យ ការគណនា ការហៅទូរសព្ទខាងក្រៅ API និងច្បាប់ដែន។ Services កុំប៉ះវត្ថុ \`req\` ឬ \`res\` ។`,
-  tip: "កុំឆ្លង `req` ឬ `res` ទៅក្នុងវិធីសាស្ត្រServices។ ឆ្លងកាត់តែអាគុយម៉ង់ទិន្នន័យជាក់លាក់ (ឧ. `id, productData`) ដើម្បីរក្សាការសាកល្បង។",
-  objective: "អនុវត្តServicesតក្កវិជ្ជាអាជីវកម្មឯករាជ្យដឹកជញ្ជូន។",
-  expectedOutcome: "Servicesដែលអាចត្រូវបានសាកល្បងដោយឯកតាដោយមិនចំអកវត្ថុ Express HTTP ។",
+  summary: `Services បង្កប់នូវ Business Logic សុទ្ធ ការតស៊ូទិន្នន័យ ការគណនា ការហៅទូរសព្ទខាងក្រៅ API និងច្បាប់ដែន។ Services កុំប៉ះវត្ថុ \`req\` ឬ \`res\` ។`,
+  tip: "កុំឆ្លង `req` ឬ `res` ទៅក្នុង MethodsServices ។ ឆ្លងកាត់តែអាគុយម៉ង់ទិន្នន័យជាក់លាក់ (ឧ. `id, productData`) ដើម្បីរក្សាការសាកល្បង។",
+  objective: "អនុវត្ត ServicesBusiness Logic ឯករាជ្យដឹកជញ្ជូន។",
+  expectedOutcome: "Services ដែលអាចត្រូវបានសាកល្បងដោយឯកតាដោយមិនចំអកវត្ថុ Express HTTP ។",
   codeSnippet: "// services/product.service.js\nconst products = [\n  { id: \"1\", name: \"Laptop\", price: 999 },\n];\n\nexport const getById = async (id) => {\n  return products.find((p) => p.id === id) || null;\n};\n\nexport const createProduct = async (productData) => {\n  // Pure business logic: compute tax, apply domain rules, persist\n  const priceWithTax = Number((productData.price * 1.1).toFixed(2));\n  const newProduct = {\n    id: String(Date.now()),\n    ...productData,\n    priceWithTax,\n  };\n  products.push(newProduct);\n  return newProduct;\n};",
 };
 

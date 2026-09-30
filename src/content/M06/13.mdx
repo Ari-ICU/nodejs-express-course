@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការកំណត់លេខកូដឆ្លើយតបជាមួយ res.status()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "`res.status(code)` កំណត់ស្ថានភាព HTTP សម្រាប់ការឆ្លើយតប។ វាគឺជាវិធីសាស្រ្តដែលអាចច្រវ៉ាក់បានដែលគួរត្រូវបានភ្ជាប់ជាមួយ `res.json()` ឬ `res.send()` ។",
+  summary: `\`res.status(code)\` កំណត់ស្ថានភាព HTTP សម្រាប់Response។ វាគឺជាMethodsដែលអាចច្រវ៉ាក់បានដែលគួរត្រូវបានភ្ជាប់ជាមួយ \`res.json()\` ឬ \`res.send()\` ។`,
   tip: "តែងតែត្រឡប់ `201 Created` សម្រាប់ការបង្កើតធនធានជោគជ័យ និង `204 No Content` សម្រាប់ការលុបដោយជោគជ័យ។",
-  objective: "រួមបញ្ចូលគ្នានូវលេខកូដស្ថានភាព និង JSON payloads យ៉ាងស្ទាត់ជំនាញ។",
+  objective: "រួមបញ្ចូលគ្នានូវ HTTP Status Codes និង JSON payloads យ៉ាងស្ទាត់ជំនាញ។",
   expectedOutcome: "សញ្ញាកូដស្ថានភាព HTTP ត្រឹមត្រូវសម្រាប់សេណារីយ៉ូទាំងអស់។",
   codeSnippet: "// 201 Created\nres.status(201).json({ success: true, item: newItem });\n\n// 400 Bad Request\nres.status(400).json({ success: false, error: \"Validation failed\" });\n\n// 204 No Content\nres.status(204).send();",
 };

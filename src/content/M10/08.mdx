@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Service Layer",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Servicesបោះចោលនូវកំហុសជាក់លាក់នៃដែនដែលមានលេខកូដស្ថានភាព (ឧ. \`error.statusCode = 404\`) ដែលControllersចាប់ និងបញ្ជូនទៅកាន់ផ្នែកកណ្តាលនៃកំហុស Express តាមរយៈ \`next(err)\` ។`,
-  tip: "ភ្ជាប់ទ្រព្យសម្បត្តិ `statusCode` ទៅលើវត្ថុកំហុសស្តង់ដារដែលបានបោះចោលក្នុងServicesសម្រាប់ការផ្សព្វផ្សាយស្ថានភាពស្អាតទៅ Express Middleware ។",
-  objective: "ផ្សព្វផ្សាយកំហុសដែនពីServicesទៅមជ្ឈដ្ឋានកំហុសកណ្តាល។",
-  expectedOutcome: "សម្អាត ការផ្សព្វផ្សាយកំហុសដែលជាប់លាប់ពីតក្កវិជ្ជាServices ទៅកាន់អ្នកដោះស្រាយការឆ្លើយតបរហ័ស។",
+  summary: `Services បោះចោលនូវកំហុសជាក់លាក់នៃដែនដែលមាន HTTP Status Codes (ឧ. \`error.statusCode = 404\`) ដែលControllersចាប់ និងបញ្ជូនទៅកាន់ផ្នែកកណ្តាលនៃកំហុស Express តាមរយៈ \`next(err)\` ។`,
+  tip: "ភ្ជាប់ទ្រព្យសម្បត្តិ `statusCode` ទៅលើវត្ថុកំហុសស្តង់ដារដែលបានបោះចោលក្នុង Services សម្រាប់ការផ្សព្វផ្សាយស្ថានភាពស្អាតទៅ Express Middleware ។",
+  objective: "ផ្សព្វផ្សាយកំហុសដែនពី Services ទៅមជ្ឈដ្ឋានកំហុសកណ្តាល។",
+  expectedOutcome: "សម្អាត ការផ្សព្វផ្សាយកំហុសដែលជាប់លាប់ពី Business LogicServices ទៅកាន់អ្នកដោះស្រាយ Response រហ័ស។",
   codeSnippet: "// In service: Attach statusCode to Error for Express error handling\nexport const getProductOrThrow = async (id) => {\n  const product = products.find((p) => p.id === id);\n  if (!product) {\n    const error = new Error(\"Product does not exist\");\n    error.statusCode = 404;\n    throw error;\n  }\n  return product;\n};",
 };
 

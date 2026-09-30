@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Node.js",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `Node.js ប្រើស្ថាបត្យកម្ម Single-Threaded Event Loop ។ ជាជាងការឧទ្ទិសThreadsប្រព័ន្ធប្រតិបត្តិការក្នុងមួយសំណើ (ដូចជា Apache ឬគំរូ Java/PHP ប្រពៃណី) Node ដំណើរការការតភ្ជាប់ចូលរាប់ពាន់នៅលើThreadsមេតែមួយដោយផ្ទេរភារកិច្ចអសមកាលទៅកម្មករ libuv ។`,
+  summary: `Node.js ប្រើស្ថាបត្យកម្ម Single-Threaded Event Loop ។ ជាជាងការឧទ្ទិស Threads ប្រព័ន្ធប្រតិបត្តិការក្នុងមួយ Request (ដូចជា Apache ឬគំរូ Java/PHP ប្រពៃណី) Node ដំណើរការការតភ្ជាប់ចូលរាប់ពាន់នៅលើ Threads មេតែមួយដោយផ្ទេរភារកិច្ចអសមកាលទៅកម្មករ libuv ។`,
   tip: "ដោយសារ​តែ​មាន​ខ្សែ​ស្រឡាយ JavaScript សំខាន់​មួយ​ប៉ុណ្ណោះ កុំ​សរសេរ​រង្វិលជុំ​ដែល​ប្រើ​ស៊ីភីយូ​ដែល​រារាំង​ខ្សែ​ស្រឡាយ។",
-  objective: "ប្រៀបធៀបគំរូEvent Loopដែលមានខ្សែតែមួយជាមួយServerដែលមានខ្សែច្រើនខ្សែក្នុងមួយសំណើ។",
+  objective: "ប្រៀបធៀបគំរូ Event Loop ដែលមានខ្សែតែមួយជាមួយ Server ដែលមានខ្សែច្រើនខ្សែក្នុងមួយ Request ។",
   expectedOutcome: "ការយល់ដឹងស៊ីជម្រៅអំពីរបៀបដែល Node សម្រេចបាននូវភាពស្របគ្នាដ៏ធំជាមួយនឹងអង្គចងចាំតិចតួចបំផុត។",
   codeSnippet: "// 1. Multi-Threaded Model (Traditional Blocking Server):\n// Allocates 1 heavy OS thread per request; blocks waiting on I/O\nfunction traditionalHandling() {\n  console.log(\"Request 1 arrives -> Dedicated thread allocated (blocks on DB query)\");\n  // Thread sleeps/blocks here ⏳\n}\n\n// 2. Single-Threaded Event Loop (Node.js Non-blocking Model):\n// 1 main thread processes requests; delegates long tasks without blocking\nconsole.log(\"1. Request 1 arrives -> Main thread accepts connection\");\n\nsetTimeout(() => {\n  console.log(\"3. Database response ready -> Callback executed in Event Loop ⚡\");\n}, 100);\n\nconsole.log(\"2. Request 2 arrives -> Main thread immediately accepts it!\");\n\n// Concurrency Comparison:\n// Apache/PHP: 10,000 clients ≈ ~20 GB RAM (Thread overhead)\n// Node.js:    10,000 clients ≈ ~35 MB RAM (Event-driven efficiency)",
 };

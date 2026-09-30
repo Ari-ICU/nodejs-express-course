@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Global Error Handling Middleware",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការកសាងប្រព័ន្ធគ្រប់គ្រងកំហុសកណ្តាលដែលចាប់យកករណីលើកលែងដែលមិនបានគ្រប់គ្រងទាំងអស់ ធ្វើទ្រង់ទ្រាយការឆ្លើយតប និងលាក់ដានជង់ខាងក្នុងនៅក្នុងផលិតកម្ម។",
-  tip: "ពិនិត្យ `process.env.NODE_ENV === 'production'` ដើម្បីដកដានជង់ មុនពេលផ្ញើការឆ្លើយតបទៅអតិថិជន។",
+  summary: `ការកសាងប្រព័ន្ធគ្រប់គ្រងកំហុសកណ្តាលដែលចាប់យកករណីលើកលែងដែលមិនបានគ្រប់គ្រងទាំងអស់ ធ្វើទ្រង់ទ្រាយ Response និងលាក់ដានជង់ខាងក្នុងនៅក្នុងផលិតកម្ម។`,
+  tip: "ពិនិត្យ `process.env.NODE_ENV === 'production'` ដើម្បីដកដានជង់ មុនពេលផ្ញើ Response ទៅ Client ។",
   objective: "អនុវត្ត​ការ​ដោះស្រាយ​បញ្ហា​កណ្តាល​ក្នុង​ការ​ដោះស្រាយ​ឧបករណ៍​កណ្តាល។",
-  expectedOutcome: "ការឆ្លើយតបកំហុស JSON ស្តង់ដារនៅគ្រប់ករណីបរាជ័យទាំងអស់។",
+  expectedOutcome: "Response កំហុស JSON ស្តង់ដារនៅគ្រប់ករណីបរាជ័យទាំងអស់។",
   codeSnippet: "export const globalErrorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const message = err.isOperational ? err.message : \"Internal Server Error\";\n\n  res.status(statusCode).json({\n    success: false,\n    error: message,\n    ...(process.env.NODE_ENV === \"development\" && { stack: err.stack })\n  });\n};",
 };
 

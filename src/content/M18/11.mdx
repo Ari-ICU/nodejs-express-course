@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការការពារទិន្នន័យសម្ងាត់ (Data Masking & Sanitization)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ព័ត៌មានរសើបដូចជាពាក្យសម្ងាត់ លេខកាតឥណទាន លេខសម្គាល់ជាតិ និងផ្លូវServer-sideក្នុង មិនត្រូវបង្ហាញនៅក្នុងការឆ្លើយតប HTTP កំណត់ហេតុបញ្ហា ឬQuery Stringទេ។ នៅក្នុង Mongoose និយមន័យSchemaគួរតែសម្គាល់វាលរសើបជាមួយ \`select: false\` ដូច្នេះសំណួរមិនដែលទាញយកពួកវាតាមលំនាំដើមទេ។`,
-  tip: "ប្រើ `select: false` នៅលើវាលពាក្យសម្ងាត់ Mongoose ។ នៅពេលកត់ត្រាកំហុសក្នុងការផលិត ក្បាលក្បាលដីដែលមានសញ្ញា `Authorization` ឬ `Cookie` ។",
-  objective: "ការពារការលេចធ្លាយព័ត៌មានសម្ងាត់ និងទិន្នន័យប្រព័ន្ធនៅទូទាំងការឆ្លើយតប និងកំណត់ហេតុរបស់ API ។",
-  expectedOutcome: "សម្អាតបន្ទុកឆ្លើយតបជាមួយនឹងការដកចេញដោយស្វ័យប្រវត្តិនូវសញ្ញា និងអាថ៌កំបាំងខាងក្នុង។",
+  summary: `ព័ត៌មានរសើបដូចជា Password លេខកាតឥណទាន លេខសម្គាល់ជាតិ និងផ្លូវ Server-side ក្នុង មិនត្រូវបង្ហាញនៅក្នុង HTTP Response កំណត់ហេតុបញ្ហា ឬ Query String ទេ។ នៅក្នុង Mongoose និយមន័យ Schema គួរតែសម្គាល់វាលរសើបជាមួយ \`select: false\` ដូច្នេះសំណួរមិនដែលទាញយកពួកវាតាមលំនាំដើមទេ។`,
+  tip: "ប្រើ `select: false` នៅលើវាល Password Mongoose ។ នៅពេលកត់ត្រាកំហុសក្នុងការផលិត ក្បាលក្បាលដីដែលមានសញ្ញា `Authorization` ឬ `Cookie` ។",
+  objective: "ការពារការលេចធ្លាយព័ត៌មានសម្ងាត់ និងទិន្នន័យប្រព័ន្ធនៅទូទាំង Response និងកំណត់ហេតុរបស់ API ។",
+  expectedOutcome: "សម្អាត Payload ឆ្លើយតបជាមួយនឹងការដកចេញដោយស្វ័យប្រវត្តិនូវសញ្ញា និងអាថ៌កំបាំងខាងក្នុង។",
   codeSnippet: "// 1. In Mongoose Schema:\nconst userSchema = new mongoose.Schema({\n  email: { type: String, required: true },\n  password: { type: String, required: true, select: false }, // Never selected by default\n  passwordResetToken: { type: String, select: false },\n});\n\n// 2. In Model JSON transformation:\nuserSchema.set(\"toJSON\", {\n  transform: (doc, ret) => {\n    delete ret.password;\n    delete ret.__v;\n    return ret;\n  }\n});",
 };
 

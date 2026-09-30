@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "Middleware ដែលភ្ជាប់មកស្រាប់ជាមួយ Express",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Modern Express រួមបញ្ចូលមុខងារផ្នែកកណ្តាលសំខាន់ៗដែលមានស្រាប់៖ `express.json()` (ញែកតួ JSON), `express.urlencoded()` (ញែកទិន្នន័យទម្រង់) និង `express.static()` (បម្រើឯកសារឋិតិវន្តដូចជារូបភាព និង CSS)។",
+  summary: `Modern Express រួមបញ្ចូលមុខងារផ្នែកកណ្តាលសំខាន់ៗដែលមានស្រាប់៖ \`express.json()\` (ញែកJSON Body), \`express.urlencoded()\` (ញែកទិន្នន័យទម្រង់) និង \`express.static()\` (បម្រើឯកសារឋិតិវន្តដូចជារូបភាព និង CSS)។`,
   tip: "ប្រើ `express.static('public')` ដើម្បីបម្រើឯកសារដែលបានផ្ទុកឡើងដោយឋិតិវន្តដោយមិនចាំបាច់សរសេរផ្លូវបម្រើឯកសារដោយដៃ។",
-  objective: "ប្រើប្រាស់Middleware Express ដែលមានស្រាប់សម្រាប់ការញែក និងការចែកចាយទ្រព្យសកម្មឋិតិវន្ត។",
-  expectedOutcome: "ការគ្រប់គ្រងប្រកបដោយប្រសិទ្ធភាពនៃបន្ទុកចូល និងទ្រព្យសម្បត្តិឋិតិវន្ត ដោយគ្មានបណ្ណាល័យខាងក្រៅ។",
+  objective: "ប្រើប្រាស់ Middleware Express ដែលមានស្រាប់សម្រាប់ការញែក និងការចែកចាយទ្រព្យសកម្មឋិតិវន្ត។",
+  expectedOutcome: "ការគ្រប់គ្រងប្រកបដោយប្រសិទ្ធភាពនៃ Payload ចូល និងទ្រព្យសម្បត្តិឋិតិវន្ត ដោយគ្មានបណ្ណាល័យខាងក្រៅ។",
   codeSnippet: "// Serve static files from \"public\" directory\napp.use(express.static(\"public\"));\n\n// Parse incoming payloads\napp.use(express.json({ limit: \"10mb\" }));\napp.use(express.urlencoded({ extended: true, limit: \"10mb\" }));",
 };
 

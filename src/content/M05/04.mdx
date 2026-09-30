@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ស្វែងយល់ពី HTTP Methods (GET, POST, PUT, PATCH, DELETE)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `វិធីសាស្រ្ត HTTP ទំនាក់ទំនងតាមចេតនា៖ GET អានធនធានដោយគ្មានផលប៉ះពាល់ POST បង្កើតធនធានថ្មី PUT ជំនួសធនធានទាំងមូល PATCH អនុវត្តការអាប់ដេតដោយផ្នែក ហើយ DELETE លុបធនធាន។`,
-  tip: "GET, PUT, និង DELETE ត្រូវតែគ្មានសមត្ថភាព៖ ការប្រតិបត្តិសំណើដូចគ្នាច្រើនដងគួរតែផ្តល់លទ្ធផលនៃស្ថានភាពServerដូចគ្នា។",
-  objective: "ធ្វើផែនទីប្រតិបត្តិការអាជីវកម្មទៅនឹងHTTP Verbs semantic ត្រឹមត្រូវ។",
+  summary: `HTTP Methods ទំនាក់ទំនងតាមចេតនា៖ GET អានធនធានដោយគ្មានផលប៉ះពាល់ POST បង្កើតធនធានថ្មី PUT ជំនួសធនធានទាំងមូល PATCH អនុវត្តការអាប់ដេតដោយផ្នែក ហើយ DELETE លុបធនធាន។`,
+  tip: "GET, PUT, និង DELETE ត្រូវតែ Idempotent ៖ ការប្រតិបត្តិ Request ដូចគ្នាច្រើនដងគួរតែផ្តល់លទ្ធផលនៃស្ថានភាព Server ដូចគ្នា។",
+  objective: "ធ្វើផែនទីប្រតិបត្តិការអាជីវកម្មទៅនឹង HTTP Verbs semantic ត្រឹមត្រូវ។",
   expectedOutcome: "ការប្រកាន់ខ្ជាប់យ៉ាងតឹងរឹង RESTful ទៅ HTTP method semantics ។",
   codeSnippet: "/* HTTP Methods Semantic Mapping:\n   GET    /api/users      -> Retrieve users (Safe, Idempotent)\n   POST   /api/users      -> Create user (Non-idempotent)\n   PUT    /api/users/1    -> Replace user completely (Idempotent)\n   PATCH  /api/users/1    -> Update specific fields (e.g. name only)\n   DELETE /api/users/1    -> Remove user (Idempotent)\n*/",
 };

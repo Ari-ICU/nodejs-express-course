@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៤ ៖ E-Commerce Product Catalog API ជាមួយ Caching",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `បង្កើតកាតាឡុកផលិតផល e-commerce ដែលមានលក្ខណៈពិសេសពេញលេញ API ជាមួយនឹងការផ្ទុករូបភាពច្រើនទៅ Cloudflare R2 ការគ្រប់គ្រងប្រភេទ ស្វែងរកអត្ថបទជាមួយ MongoDB $ សន្ទស្សន៍អត្ថបទ សន្ទស្សន៍ផ្សំសម្រាប់ដំណើរការសំណួររហ័ស ការត្រងជួរតម្លៃ Redis ការឆ្លើយតបCacheលើប្រតិបត្តិការសរសេរ R របស់អ្នកគ្រប់គ្រងសាធារណៈ។ និង`,
-  tip: "អនុវត្តគំរូCache Redis នៅលើ GET / ផលិតផលជាមួយ TTL រយៈពេល 60 វិនាទី ហើយធ្វើឱ្យCacheមានValidationលើរាល់ប្រតិបត្តិការបង្កើត/អាប់ដេត/លុប។",
-  objective: "បង្កើតកាតាឡុកផលិតផលពេញលេញ API ជាមួយនឹងSearch Filter ការបង្ហោះរូបភាព និង Redis Cache។",
-  expectedOutcome: "ផលិតផលដែលមានប្រសិទ្ធភាពខ្ពស់ API ជាមួយនឹងការឆ្លើយតបក្នុងCacheរង 10ms និងអ្នកគ្រប់គ្រង RBAC ។",
+  summary: `បង្កើតកាតាឡុកផលិតផល e-commerce ដែលមានលក្ខណៈពិសេសពេញលេញ API ជាមួយនឹងការផ្ទុករូបភាពច្រើនទៅ Cloudflare R2 ការគ្រប់គ្រងប្រភេទ ស្វែងរកអត្ថបទជាមួយ MongoDB $ សន្ទស្សន៍អត្ថបទ សន្ទស្សន៍ផ្សំសម្រាប់ដំណើរការសំណួររហ័ស ការត្រងជួរតម្លៃ Redis ResponseCache លើប្រតិបត្តិការសរសេរ R របស់អ្នកគ្រប់គ្រងសាធារណៈ។ និង`,
+  tip: "អនុវត្តគំរូ Cache Redis នៅលើ GET / ផលិតផលជាមួយ TTL រយៈពេល 60 វិនាទី ហើយធ្វើឱ្យ Cache មាន Validation លើរាល់ប្រតិបត្តិការបង្កើត/អាប់ដេត/លុប។",
+  objective: "បង្កើតកាតាឡុកផលិតផលពេញលេញ API ជាមួយនឹង Search Filter ការបង្ហោះរូបភាព និង Redis Cache ។",
+  expectedOutcome: "ផលិតផលដែលមានប្រសិទ្ធភាពខ្ពស់ API ជាមួយនឹង Response ក្នុង Cache រង 10ms និងអ្នកគ្រប់គ្រង RBAC ។",
   codeSnippet: "export const getProducts = catchAsync(async (req, res) => {\n  const cacheKey = `products:${JSON.stringify(req.query)}`;\n  const cached = await redis.get(cacheKey);\n  if (cached) return res.json(JSON.parse(cached));\n\n  const products = await Product.find(filter)\n    .sort(sort || \"-createdAt\")\n    .skip((page - 1) * limit).limit(Number(limit))\n    .populate(\"category\", \"name slug\");\n\n  const body = { success: true, count: products.length, data: products };\n  await redis.set(cacheKey, JSON.stringify(body), \"EX\", 60);\n  res.json(body);\n});",
 };
 

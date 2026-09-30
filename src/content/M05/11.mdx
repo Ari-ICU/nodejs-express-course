@@ -6,9 +6,9 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "JavaScript Object Notation (JSON) គឺជាទម្រង់ផ្លាស់ប្តូរទិន្នន័យជាសកល ដែលប្រើដោយ RESTful APIs ទំនើប។ Node.js ញែក និងចងខ្សែ JSON ដោយ `JSON.parse()` និង `JSON.stringify()` ។",
-  tip: "រុំ `JSON.parse()` ជានិច្ចនៅក្នុងប្លុក `try/catch` ពីព្រោះការផ្ទុក JSON មិនត្រឹមត្រូវ ឬមិនត្រឹមត្រូវនឹងធ្វើឱ្យមានកំហុសវាក្យសម្ព័ន្ធ និងគាំងServer។",
-  objective: "តម្រៀប និងញែកបន្ទុក JSON ដោយសុវត្ថិភាពនៅក្នុងដំណើរការការងារ HTTP ។",
-  expectedOutcome: "ការគ្រប់គ្រងប្រកបដោយសុវត្ថិភាពនៃការទំនាក់ទំនង JSON រវាងអតិថិជន និងBackend។",
+  tip: "រុំ `JSON.parse()` ជានិច្ចនៅក្នុងប្លុក `try/catch` ពីព្រោះការផ្ទុក JSON មិនត្រឹមត្រូវ ឬមិនត្រឹមត្រូវនឹងធ្វើឱ្យមានកំហុសវាក្យសម្ព័ន្ធ និងគាំង Server ។",
+  objective: "តម្រៀប និងញែក JSON Payload ដោយសុវត្ថិភាពនៅក្នុងដំណើរការការងារ HTTP ។",
+  expectedOutcome: "ការគ្រប់គ្រងប្រកបដោយសុវត្ថិភាពនៃការទំនាក់ទំនង JSON រវាង Client និង Backend ។",
   codeSnippet: "function parseJsonSafely(rawJson) {\n  try {\n    return { data: JSON.parse(rawJson), error: null };\n  } catch (err) {\n    return { data: null, error: \"Invalid JSON format\" };\n  }\n}",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាង Authentication និង Authorization",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Authentication (AuthN) ឆ្លើយថា 'តើអ្នកជានរណា?' ដោយAuthenticationអត្តសញ្ញាណតាមរយៈលិខិតសម្គាល់ដូចជា អ៊ីមែល/ពាក្យសម្ងាត់ ឬសញ្ញាសម្ងាត់។ Authorization (AuthZ) ឆ្លើយថា 'តើអ្នកត្រូវបានអនុញ្ញាតឱ្យធ្វើអ្វី?' ដោយការវាយតម្លៃសិទ្ធិ តួនាទី និងAuthorizationប្រឆាំងនឹងធនធាន។ នៅក្នុងលំហូរBackendស្តង់ដារ Authenticationត្រូវតែជោគជ័យជានិច្ច មុនពេលការវាយតម្លៃAuthorizationចាប់ផ្តើម។`,
-  tip: "ចងចាំ៖ 401 គ្មានAuthorizationយ៉ាងតឹងរ៉ឹងមានន័យថាគ្មានAuthentication (បាត់ឬនិមិត្តសញ្ញាមិនត្រឹមត្រូវ)។ 403 Forbidden មានន័យថាត្រូវបានផ្ទៀងផ្ទាត់ ប៉ុន្តែខ្វះAuthorizationគ្រប់គ្រាន់សម្រាប់ធនធាននោះ។",
-  objective: "បែងចែករវាងAuthenticationអត្តសញ្ញាណ (AuthN) និងសិទ្ធិចូលប្រើ (AuthZ) នៅក្នុងការរចនាប្រព័ន្ធខាងក្រោយ។",
-  expectedOutcome: "ការបំបែកស្ថាបត្យកម្មត្រឹមត្រូវ និងការប្រើប្រាស់កូដស្ថានភាព HTTP ត្រឹមត្រូវ (401 ទល់នឹង 403)។",
+  summary: `Authentication (AuthN) ឆ្លើយថា 'តើអ្នកជានរណា?' ដោយ Authentication អត្តសញ្ញាណតាមរយៈលិខិតសម្គាល់ដូចជា អ៊ីមែល/Password ឬ Token ។ Authorization (AuthZ) ឆ្លើយថា 'តើអ្នកត្រូវបានអនុញ្ញាតឱ្យធ្វើអ្វី?' ដោយការវាយតម្លៃសិទ្ធិ តួនាទី និង Authorization ប្រឆាំងនឹងធនធាន។ នៅក្នុងលំហូរ Backend ស្តង់ដារ Authentication ត្រូវតែជោគជ័យជានិច្ច មុនពេលការវាយតម្លៃ Authorization ចាប់ផ្តើម។`,
+  tip: "ចងចាំ៖ 401 គ្មាន Authorization យ៉ាងតឹងរ៉ឹងមានន័យថាគ្មាន Authentication (បាត់ឬ Token មិនត្រឹមត្រូវ) ។ 403 Forbidden មានន័យថាត្រូវបានផ្ទៀងផ្ទាត់ ប៉ុន្តែខ្វះ Authorization គ្រប់គ្រាន់សម្រាប់ធនធាននោះ។",
+  objective: "បែងចែករវាង Authentication អត្តសញ្ញាណ (AuthN) និងសិទ្ធិចូលប្រើ (AuthZ) នៅក្នុងការរចនាប្រព័ន្ធខាងក្រោយ។",
+  expectedOutcome: "ការបំបែកស្ថាបត្យកម្មត្រឹមត្រូវ និងការប្រើប្រាស់កូដស្ថានភាព HTTP ត្រឹមត្រូវ (401 ទល់នឹង 403) ។",
   codeSnippet: "// Concept breakdown in Express middleware flow:\n// 1. Authentication (Who are you?) -> returns 401 if unauthenticated\napp.use(\"/api/admin/*\", verifyAuthToken);\n\n// 2. Authorization (What can you do?) -> returns 403 if unauthorized\napp.delete(\"/api/admin/users/:id\", (req, res) => {\n  if (req.user.role !== \"superadmin\") {\n    return res.status(403).json({\n      status: \"fail\",\n      message: \"Forbidden: Only superadmins can delete user accounts\"\n    });\n  }\n  // Proceed with deletion...\n});",
 };
 

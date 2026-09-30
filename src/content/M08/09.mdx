@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Authorization Middleware តាម Role",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `MiddlewareAuthorizationត្រួតពិនិត្យតួនាទីរបស់អ្នកប្រើដែលបានផ្ទៀងផ្ទាត់ (ឧ. \`admin\`, \`moderator\`) និងផ្ទៀងផ្ទាត់ថាតើពួកគេមានAuthorizationដើម្បីចូលប្រើធនធានដែលបានស្នើសុំដែរឬទេ។`,
-  tip: "ត្រឡប់ `403 Forbidden` នៅពេលដែលអ្នកប្រើប្រាស់ត្រូវបានផ្ទៀងផ្ទាត់ ប៉ុន្តែខ្វះAuthorizationដែលត្រូវការ។",
+  summary: `MiddlewareAuthorization ត្រួតពិនិត្យតួនាទីរបស់អ្នកប្រើដែលបានផ្ទៀងផ្ទាត់ (ឧ. \`admin\`, \`moderator\`) និងផ្ទៀងផ្ទាត់ថាតើពួកគេមានAuthorizationដើម្បីចូលប្រើធនធានដែលបានស្នើសុំដែរឬទេ។`,
+  tip: "ត្រឡប់ `403 Forbidden` នៅពេលដែលអ្នកប្រើប្រាស់ត្រូវបានផ្ទៀងផ្ទាត់ ប៉ុន្តែខ្វះ Authorization ដែលត្រូវការ។",
   objective: "អនុវត្តការត្រួតពិនិត្យការចូលដំណើរការដោយផ្អែកលើតួនាទី (RBAC) នៅលើផ្លូវ។",
-  expectedOutcome: "Authorizationដែលមានលក្ខណៈល្អិតល្អន់ឆ្លងកាត់Endpointផ្នែករដ្ឋបាល។",
+  expectedOutcome: "Authorization ដែលមានលក្ខណៈល្អិតល្អន់ឆ្លងកាត់ Endpoint ផ្នែករដ្ឋបាល។",
   codeSnippet: "export const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return res.status(403).json({\n        success: false,\n        error: \"Forbidden: Insufficient privileges\"\n      });\n    }\n    next();\n  };\n};\n\n// Usage on route:\n// router.delete(\"/users/:id\", authenticate, restrictTo(\"admin\"), deleteUser);",
 };
 

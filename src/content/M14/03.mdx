@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់ Request Body",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការពង្រឹងវាលដែលត្រូវការ ប្រវែងខ្សែអក្សរ ទម្រង់អ៊ីមែល និងជួរលេខនៅលើផ្នែកសំណើចូល។",
-  tip: "ដកវាលដែលមិនមានAuthorizationពី `req.body` ដើម្បីការពារភាពងាយរងគ្រោះនៃកិច្ចការធំ។",
-  objective: "ធ្វើ​ឱ្យ​មាន​Validation និង​Sanitization​លើ​ការ​ស្នើរ​សុំ​បន្ទុក​រាងកាយ។",
-  expectedOutcome: "ការអនុលោមតាមSchemaដ៏តឹងរឹងសម្រាប់បន្ទុកចូលទាំងអស់។",
+  summary: `ការពង្រឹងវាលដែលត្រូវការ ប្រវែង String ទម្រង់អ៊ីមែល និងជួរលេខនៅលើផ្នែក Incoming Request ។`,
+  tip: "ដកវាលដែលមិនមាន Authorization ពី `req.body` ដើម្បីការពារភាពងាយរងគ្រោះនៃកិច្ចការធំ។",
+  objective: "ធ្វើ​ឱ្យ​មាន​Validation និង​Sanitization​លើ​ការ​ស្នើរ​សុំ​Payload​រាងកាយ។",
+  expectedOutcome: "ការអនុលោមតាម Schema ដ៏តឹងរឹងសម្រាប់ Payload ចូលទាំងអស់។",
   codeSnippet: "// Validating body schema with Zod:\nimport { z } from \"zod\";\n\nexport const createUserSchema = z.object({\n  name: z.string().min(2).max(50),\n  email: z.string().email(),\n  password: z.string().min(8)\n});",
 };
 

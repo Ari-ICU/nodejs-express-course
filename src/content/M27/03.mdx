@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Controllers Layer",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `Controllers ដោះស្រាយពិធីការដឹកជញ្ជូន HTTP ។ Controllersដកធាតុចូលពី \`req.body\`, \`req.query\`, និង \`req.params\` ហៅវិធីសាស្ត្រស្រទាប់Servicesសមស្របដើម្បីអនុវត្តការងារ និងធ្វើទ្រង់ទ្រាយលទ្ធផលទៅជាResponse Envelope JSON ស្តង់ដារជាមួយនឹងលេខកូដស្ថានភាព HTTP ត្រឹមត្រូវ (200, 201, 201)។`,
-  tip: "កុំសរសេរសំណួរDatabaseឆៅ (`Product.find()`) ដោយផ្ទាល់នៅខាងក្នុងControllers — ផ្ទេរសំណួរទៅស្រទាប់Services ដើម្បីរក្សាControllersផ្តោតតែលើ HTTP ប៉ុណ្ណោះ។",
-  objective: "អនុវត្តControllersស្អាតដែលបកប្រែសំណើ HTTP ទៅកាន់ការហៅទូរស័ព្ទ។",
-  expectedOutcome: "Controllersគ្មានខ្លាញ់បានបំបែកចេញពីកម្មវិធីបញ្ជាDatabase និងតក្កវិជ្ជាអាជីវកម្មឆៅ។",
+  summary: `Controllers ដោះស្រាយពិធីការដឹកជញ្ជូន HTTP ។ Controllers ដកធាតុចូលពី \`req.body\`, \`req.query\`, និង \`req.params\` ហៅវិធីសាស្ត្រស្រទាប់Servicesសមស្របដើម្បីអនុវត្តការងារ និងធ្វើទ្រង់ទ្រាយលទ្ធផលទៅជាResponse Envelope JSON ស្តង់ដារជាមួយនឹងលេខកូដស្ថានភាព HTTP ត្រឹមត្រូវ (200, 201, 201)។`,
+  tip: "កុំសរសេរសំណួរ Database ឆៅ (`Product.find()`) ដោយផ្ទាល់នៅខាងក្នុង Controllers — ផ្ទេរសំណួរទៅស្រទាប់ Services ដើម្បីរក្សា Controllers ផ្តោតតែលើ HTTP ប៉ុណ្ណោះ។",
+  objective: "អនុវត្ត Controllers ស្អាតដែលបកប្រែ Request HTTP ទៅកាន់ការហៅទូរស័ព្ទ។",
+  expectedOutcome: "Controllers គ្មានខ្លាញ់បានបំបែកចេញពីកម្មវិធីបញ្ជា Database និង Business Logic ឆៅ។",
   codeSnippet: "// controllers/product.controller.js\nimport * as productService from \"../services/product.service.js\";\n\nexport const createProduct = async (req, res, next) => {\n  try {\n    const product = await productService.createProduct(req.body, req.user._id);\n\n    res.status(201).json({\n      status: \"success\",\n      data: { product },\n    });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

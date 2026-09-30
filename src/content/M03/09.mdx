@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ទិន្នន័យប៊ីណារី Buffer",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "`Buffer` តំណាង​ឱ្យ​កំណាត់​ទំហំ​ថេរ​នៃ​អង្គ​ចងចាំ​គោល​ពីរ​ដែល​បាន​បែងចែក​នៅ​ខាងក្រៅ​ឃ្លាំង JavaScript របស់ V8 ។ Buffers ត្រូវ​បាន​ប្រើ​ពេល​ដោះស្រាយ​ទិន្នន័យ​គោល​ពីរ​ឆៅ​ដូច​ជា​ឯកសារ​ដែល​បាន​ផ្ទុក​ឡើង​ buffers រូបភាព​ និង​ network TCP packets។",
-  tip: "ប្រើ `Buffer.from(str, 'utf-8')` ដើម្បីបំប្លែងខ្សែអក្សរទៅជាគោលពីរ និង `.toString('base64')` សម្រាប់ការអ៊ិនកូដ Base64 ។",
+  summary: `\`Buffer\` តំណាង​ឱ្យ​កំណាត់​ទំហំ​ថេរ​នៃ​អង្គ​ចងចាំ​គោល​ពីរ​ដែល​បាន​បែងចែក​នៅ​ខាងក្រៅ​ឃ្លាំង JavaScript របស់ V8 ។ Buffers ត្រូវ​បាន​ប្រើ​ពេល​ដោះស្រាយ​ទិន្នន័យ​គោល​ពីរ​ឆៅ​ដូច​ជា​ឯកសារ​ដែល​បាន​ផ្ទុក​ឡើង​ buffers រូបភាព​ និង​ network TCP packets ។`,
+  tip: "ប្រើ `Buffer.from(str, 'utf-8')` ដើម្បីបំប្លែង String ទៅជាគោលពីរ និង `.toString('base64')` សម្រាប់ការអ៊ិនកូដ Base64 ។",
   objective: "រៀបចំទិន្នន័យគោលពីរឆៅ និងបំប្លែងរវាងការអ៊ិនកូដតួអក្សរ។",
-  expectedOutcome: "មូលដ្ឋានគ្រឹះដ៏រឹងមាំសម្រាប់ដោះស្រាយការបង្ហោះប្រព័ន្ធគោលពីរ និងការអ៊ិនកូដបន្ទុក។",
+  expectedOutcome: "មូលដ្ឋានគ្រឹះដ៏រឹងមាំសម្រាប់ដោះស្រាយការបង្ហោះប្រព័ន្ធគោលពីរ និងការអ៊ិនកូដ Payload ។",
   codeSnippet: "// Create buffer from string\nconst buf = Buffer.from(\"Node.js Backend\", \"utf-8\");\n\nconsole.log(\"Raw hex bytes:\", buf);\nconsole.log(\"Base64 representation:\", buf.toString(\"base64\"));\nconsole.log(\"Decoded back to string:\", buf.toString(\"utf-8\"));",
 };
 

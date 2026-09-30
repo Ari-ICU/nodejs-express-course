@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Redis Container សម្រាប់ Caching និង Queues",
   type: "lab",
   codeLanguage: "bash",
-  summary: `ការដាក់ពង្រាយ Redis តាមរយៈ Docker ផ្តល់នូវCacheក្នុងអង្គចងចាំភ្លាមៗ និងម៉ាស៊ីនជួរ។ ការកំណត់រចនាសម្ព័ន្ធពាក្យសម្ងាត់ (\`requirepass\`) ការបើកដំណើរការ AOF ជាប់លាប់ (\`--appendonly yes\`) និងការភ្ជាប់បរិមាណទិន្នន័យធានាថា Redis ស្ថានភាពរស់រានមានជីវិតចាប់ផ្តើមឡើងវិញ។`,
+  summary: `ការដាក់ពង្រាយ Redis តាមរយៈ Docker ផ្តល់នូវ Cache ក្នុងអង្គចងចាំភ្លាមៗ និងម៉ាស៊ីនជួរ។ ការកំណត់រចនាសម្ព័ន្ធ Password (\`requirepass\`) ការបើកដំណើរការ AOF ជាប់លាប់ (\`--appendonly yes\`) និងការភ្ជាប់បរិមាណទិន្នន័យធានាថា Redis ស្ថានភាពរស់រានមានជីវិតចាប់ផ្តើមឡើងវិញ។`,
   tip: "បន្ថែម `--appendonly yes` ទៅក្នុងពាក្យបញ្ជាកុងតឺន័រ Redis របស់អ្នកជានិច្ច ដើម្បីធានាថាជួរការងារនៅតែមាននៅលើការចាប់ផ្ដើមម៉ាស៊ីនឡើងវិញ។",
   objective: "ដាក់ពង្រាយកុងតឺន័រ Redis ដែលត្រូវបានផ្ទៀងផ្ទាត់ជាមួយនឹងការផ្ទុកបន្ថែមតែផ្នែកជាប់រហូត។",
-  expectedOutcome: "ធុងCache Redis មានសុវត្ថិភាព និងប្រើប្រាស់បានយូររួចរាល់សម្រាប់ BullMQ និងCacheសម័យ។",
+  expectedOutcome: "ធុង Cache Redis មានសុវត្ថិភាព និងប្រើប្រាស់បានយូររួចរាល់សម្រាប់ BullMQ និង Cache សម័យ។",
   codeSnippet: "# Run authenticated Redis container with AOF persistence:\ndocker run -d   --name production-redis   -p 6379:6379   -v redis_data:/data   --restart always   redis:alpine   redis-server --appendonly yes --requirepass \"RedisSecurePassword2026!\"",
 };
 

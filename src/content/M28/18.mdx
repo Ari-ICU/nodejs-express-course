@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "គោលការណ៍ Continuous Integration & Continuous Deployment",
   type: "concept",
   codeLanguage: "yaml",
-  summary: `Continuous Integration (CI) បង្កើត និងសាកល្បងកូដដោយស្វ័យប្រវត្តិនៅលើរាល់សំណើរ Git commit ឬទាញ។ ការដាក់ពង្រាយជាបន្ត (CD) បញ្ជូនកូដដោយស្វ័យប្រវត្តិទៅកាន់Server ឬServerផលិតកម្មដោយស្វ័យប្រវត្តិ ដោយគ្មានការអន្តរាគមន៍ដោយដៃ។ CI/CD ចាប់យកការតំរែតំរង់ដំបូង និងកាត់បន្ថយវដ្តនៃការចែកចាយពីសប្តាហ៍ទៅនាទី។`,
+  summary: `Continuous Integration (CI) បង្កើត និងសាកល្បងកូដដោយស្វ័យប្រវត្តិនៅលើរាល់ Request រ Git commit ឬទាញ។ ការដាក់ពង្រាយជាបន្ត (CD) បញ្ជូនកូដដោយស្វ័យប្រវត្តិទៅកាន់ Server ឬ Server ផលិតកម្មដោយស្វ័យប្រវត្តិ ដោយគ្មានការអន្តរាគមន៍ដោយដៃ។ CI/CD ចាប់យកការតំរែតំរង់ដំបូង និងកាត់បន្ថយវដ្តនៃការចែកចាយពីសប្តាហ៍ទៅនាទី។`,
   tip: "ទាមទារការត្រួតពិនិត្យ CI ទាំងអស់ (linting, TypeScript check, unit tests) ដើម្បីហុចមុនពេលអនុញ្ញាតការទាញការស្នើសុំបញ្ចូលគ្នាទៅសាខា `main`។",
-  objective: "ស្វែងយល់ពីវដ្តជីវិតរបស់បំពង់ CI/CD ពីការប្តេជ្ញាចិត្តរហូតដល់ការដាក់ពង្រាយផលិតកម្ម។",
+  objective: "ស្វែងយល់ពី Lifecycle របស់បំពង់ CI/CD ពីការប្តេជ្ញាចិត្តរហូតដល់ការដាក់ពង្រាយផលិតកម្ម។",
   expectedOutcome: "ស្គាល់ជាមួយនឹងការធ្វើតេស្តស្វ័យប្រវត្តិ ការកសាង និងដំណើរការដំណើរការការងារ។",
   codeSnippet: "// Modern CI/CD Pipeline Lifecycle:\n//\n// 1. Developer pushes commit to 'main'\n// 2. GitHub Actions CI triggers automatically:\n//    ├── Runs ESLint check\n//    ├── Runs TypeScript check (tsc --noEmit)\n//    ├── Runs Vitest automated test suite\n//    └── Builds Docker image\n// 3. CD step deploys passing container to VPS / Cloud via SSH / Webhook\n// 4. Zero-downtime rolling update completes in under 2 minutes!",
 };

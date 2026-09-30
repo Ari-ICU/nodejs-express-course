@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត restrictTo Middleware Factory",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `រោងចក្រMiddleware \`restrictTo(...roles)\` ទទួលយកបញ្ជីនៃតួនាទីដែលបានអនុញ្ញាត ហើយត្រឡប់មុខងារផ្នែកកណ្តាលរហ័ស។ វាពិនិត្យមើលថាតើ \`req.user.role\` ដែលបានផ្ទៀងផ្ទាត់រួចហើយត្រូវបានរួមបញ្ចូលនៅក្នុងបញ្ជីដែលបានអនុញ្ញាត។ បើមិនដូច្នោះទេវានឹងបោះចោល 403 Forbidden error ភ្លាមៗ ដោយបញ្ឈប់ការប្រតិបត្តិ មុនពេលControllersទៅដល់។`,
+  summary: `រោងចក្រ Middleware \`restrictTo(...roles)\` ទទួលយកបញ្ជីនៃតួនាទីដែលបានអនុញ្ញាត ហើយត្រឡប់មុខងារផ្នែកកណ្តាលរហ័ស។ វាពិនិត្យមើលថាតើ \`req.user.role\` ដែលបានផ្ទៀងផ្ទាត់រួចហើយត្រូវបានរួមបញ្ចូលនៅក្នុងបញ្ជីដែលបានអនុញ្ញាត។ បើមិនដូច្នោះទេវានឹងបោះចោល 403 Forbidden error ភ្លាមៗ ដោយបញ្ឈប់ការប្រតិបត្តិ មុនពេលControllersទៅដល់។`,
   tip: "តែងតែដំណើរការ `protect` មុន `restrictTo` ។ ប្រសិនបើ `req.user` មិនត្រូវបានកំណត់ `restrictTo` មិនអាចវាយតម្លៃតួនាទីបានទេ។",
-  objective: "បង្កើតការរឹតបន្តឹងដែលអាចប្រើឡើងវិញបានចំពោះរោងចក្រMiddlewareដែលគាំទ្រតួនាទីដែលអនុញ្ញាតច្រើន។",
-  expectedOutcome: "Middlewareផ្តល់សិទ្ធិតួនាទីដែលអាចបត់បែនបានសម្រាប់ផ្លូវ Express ។",
+  objective: "បង្កើតការរឹតបន្តឹងដែលអាចប្រើឡើងវិញបានចំពោះរោងចក្រ Middleware ដែលគាំទ្រតួនាទីដែលអនុញ្ញាតច្រើន។",
+  expectedOutcome: "Middleware ផ្តល់សិទ្ធិតួនាទីដែលអាចបត់បែនបានសម្រាប់ផ្លូវ Express ។",
   codeSnippet: "// middleware/role.middleware.js\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    // req.user was populated by protect middleware\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return next(\n        new AppError(\n          `Forbidden: Role '${req.user?.role || \"anonymous\"}' does not have permission`,\n          403\n        )\n      );\n    }\n    next();\n  };\n};\n\n// Usage in routes:\n// router.delete(\"/products/:id\", protect, restrictTo(\"admin\"), deleteProduct);",
 };
 

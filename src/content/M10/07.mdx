@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបាន",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `តាមរយៈការបំបែកតក្កវិជ្ជានៅក្នុងមុខងារServices លក្ខណៈពិសេសដូចជាការផ្ញើបង្កាន់ដៃ បង្កើតវិក្កយបត្រ ឬការគិតប្រាក់កាតឥណទានអាចត្រូវបានបង្កឡើងដោយសំណើ API ការងារ cron ឬស្គ្រីប CLI ។`,
-  tip: "Servicesគួរតែជាមុខងារអសមកាលសុទ្ធដែលយកវត្ថុ JavaScript ឆៅ និងត្រឡប់លទ្ធផលស្អាត។",
-  objective: "វិធីសាស្រ្តServicesរបស់អ្នកនិពន្ធអាចប្រើឡើងវិញបាននៅទូទាំងបរិបទកម្មវិធីជាច្រើន។",
+  summary: `តាមរយៈការបំបែក Business Logic នៅក្នុងមុខងារ Services លក្ខណៈពិសេសដូចជាការផ្ញើបង្កាន់ដៃ បង្កើតវិក្កយបត្រ ឬការគិតប្រាក់កាតឥណទានអាចត្រូវបានបង្កឡើងដោយ Request API ការងារ cron ឬស្គ្រីប CLI ។`,
+  tip: "Services គួរតែជាមុខងារអសមកាលសុទ្ធដែលយកវត្ថុ JavaScript ឆៅ និងត្រឡប់លទ្ធផលស្អាត។",
+  objective: "MethodsServices របស់អ្នកនិពន្ធអាចប្រើឡើងវិញបាននៅទូទាំងបរិបទកម្មវិធីជាច្រើន។",
   expectedOutcome: "ប្រភពតែមួយនៃការពិតសម្រាប់ប្រតិបត្តិការអាជីវកម្ម។",
   codeSnippet: "// Can be called by:\n// 1. POST /api/orders controller\n// 2. Scheduled Cron Job (auto-renewal)\n// 3. Admin CLI tool\nexport const processOrderInvoice = async (orderId) => {\n  const order = await Order.findById(orderId);\n  const pdfBuffer = await generateInvoicePdf(order);\n  await emailService.sendInvoice(order.customerEmail, pdfBuffer);\n  return { processed: true, orderId };\n};",
 };

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត PUT Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `វិធីសាស្ត្រ HTTP **PUT** តំណាងឱ្យការ **ជំនួសទិន្នន័យចាស់ទាំងស្រុង (Complete Replacement)** នៃ Resource ដែលមានស្រាប់។ នៅពេលដែល Client បញ្ជូន Request ប្រភេទ PUT មកកាន់ Server, Payload ថ្មីត្រូវតែផ្ទុកនូវគ្រប់ Field ទាំងអស់នៃ Resource នោះ។
+  summary: `HTTP Methods **PUT** តំណាងឱ្យការ **ជំនួសទិន្នន័យចាស់ទាំងស្រុង (Complete Replacement)** នៃ Resource ដែលមានស្រាប់។ នៅពេលដែល Client បញ្ជូន Request ប្រភេទ PUT មកកាន់ Server, Payload ថ្មីត្រូវតែផ្ទុកនូវគ្រប់ Field ទាំងអស់នៃ Resource នោះ។
 
 ### ១. គោលការណ៍បច្ចេកទេសនៃ PUT
 * **Complete Replacement**៖ រាល់ Field ណាដែលត្រូវបានលុបចោល ឬមិនបានបញ្ជូនមកក្នុង PUT Request នឹងត្រូវកំណត់ទៅជាតម្លៃដើម (Default) ឬ \`null\` ដោយមិនរក្សាទុកតម្លៃចាស់ឡើយ។ វាមិនមែនជាការកែសម្រួលផ្នែកខ្លះ (Partial Update) នោះទេ។
@@ -15,8 +15,8 @@ export const meta = {
   * **200 OK**៖ នៅពេល Server ធ្វើបច្ចុប្បន្នភាពជោគជ័យ និងបញ្ជូន Representation ថ្មីត្រឡប់ទៅ Client។
   * **204 No Content**៖ នៅពេល Update ជោគជ័យ ប៉ុន្តែ Server មិនចង់បញ្ជូន Body ត្រឡប់ទៅវិញ។
   * **404 Not Found**៖ នៅពេលរកមិនឃើញ Resource តាមរយៈ \`:id\`។`,
-  tip: "កំហុសទូទៅរបស់អ្នកចាប់ផ្តើមដំបូងគឺការប្រើប្រាស់ PUT សម្រាប់ការកែសម្រួលទិន្នន័យផ្នែកខ្លះ (ដូចជាការប្តូរតែលេខសម្ងាត់)។ ប្រសិនបើអ្នកចង់កែប្រែតែ Field មួយចំនួនដោយមិនប៉ះពាល់ Field ផ្សេងទៀតទេ ត្រូវប្រើប្រាស់ HTTP `PATCH` ជំនួសវិញ។",
-  objective: "អនុវត្តការបង្កើត Express PUT Endpoint ស្របតាមបទដ្ឋានអន្តរជាតិ ដែលអនុវត្តការជំនួសទិន្នន័យពេញលេញ និងរក្សាគោលការណ៍ Idempotency។",
+  tip: "កំហុសទូទៅរបស់អ្នកចាប់ផ្តើមដំបូងគឺការប្រើប្រាស់ PUT សម្រាប់ការកែសម្រួលទិន្នន័យផ្នែកខ្លះ (ដូចជាការប្តូរតែលេខសម្ងាត់) ។ ប្រសិនបើអ្នកចង់កែប្រែតែ Field មួយចំនួនដោយមិនប៉ះពាល់ Field ផ្សេងទៀតទេ ត្រូវប្រើប្រាស់ HTTP `PATCH` ជំនួសវិញ។",
+  objective: "អនុវត្តការបង្កើត Express PUT Endpoint ស្របតាមបទដ្ឋានអន្តរជាតិ ដែលអនុវត្តការជំនួសទិន្នន័យពេញលេញ និងរក្សាគោលការណ៍ Idempotency ។",
   expectedOutcome: "យល់ដឹងច្បាស់ពីភាពខុសគ្នារវាង PUT និង PATCH ព្រមទាំងចេះសរសេរ Route ជំនួសទិន្នន័យប្រកបដោយសុវត្ថិភាព។",
   codeSnippet: `const express = require("express");
 const app = express();

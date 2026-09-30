@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `ថ្នាក់ \`URL\` និង \`URLSearchParams\` អនុលោមតាម WHATWG ផ្តល់នូវការវិភាគសុវត្ថិភាព សៀរៀល និងការរៀបចំQuery Stringសម្រាប់ HTTP ស្នើសុំ URLs ចូល និងការហៅ API ខាងក្រៅ។`,
-  tip: "ប្រើ `URLSearchParams` ដើម្បីអ៊ិនកូដParamsសំណួរដោយសុវត្ថិភាពដោយគ្មាន URI ដោយដៃគេចពីកំហុស។",
-  objective: "ញែក និងបង្កើត URL ស្មុគស្មាញជាមួយParamsសំណួរ។",
-  expectedOutcome: "ការគ្រប់គ្រងដ៏រឹងមាំនៃQuery String និងសមាសធាតុ URL ។",
+  tip: "ប្រើ `URLSearchParams` ដើម្បីអ៊ិនកូដ Params សំណួរដោយសុវត្ថិភាពដោយគ្មាន URI ដោយដៃគេចពីកំហុស។",
+  objective: "ញែក និងបង្កើត URL ស្មុគស្មាញជាមួយ Params សំណួរ។",
+  expectedOutcome: "ការគ្រប់គ្រងដ៏រឹងមាំនៃ Query String និងសមាសធាតុ URL ។",
   codeSnippet: "const myUrl = new URL(\"https://api.example.com/v1/users?role=admin&active=true\");\n\nconsole.log(\"Host:\", myUrl.hostname);\nconsole.log(\"Path:\", myUrl.pathname);\nconsole.log(\"Role param:\", myUrl.searchParams.get(\"role\"));\n\n// Appending query parameters safely\nmyUrl.searchParams.append(\"page\", \"2\");\nconsole.log(\"Updated URL:\", myUrl.toString());",
 };
 

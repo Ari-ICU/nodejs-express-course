@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ស្វែងយល់ពី OpenAPI Specification (OAS 3.0)",
   type: "concept",
   codeLanguage: "yaml",
-  summary: `ការបញ្ជាក់របស់ OpenAPI (អតីត Swagger) គឺជាស្តង់ដារអ្នកលក់-អព្យាក្រឹតដែលត្រូវបានអនុម័តយ៉ាងទូលំទូលាយសម្រាប់ការពិពណ៌នាអំពី RESTful APIs ។ សរសេរជា YAML ឬ JSON ឯកសារ OpenAPI ពិពណ៌នាអំពីEndpoint វិធីសាស្ត្រ HTTP Paramsបញ្ចូល សំណើបន្ទុក តួការឆ្លើយតប លេខកូដស្ថានភាព និងយន្តAuthenticationក្នុងទម្រង់ម៉ាស៊ីនដែលអាចអានបាន។`,
-  tip: "ប្រើ OpenAPI 3.0+ ជាជាងកេរ្តិ៍ដំណែល Swagger 2.0 ។ OAS 3.0 ផ្តល់លទ្ធភាពប្រើប្រាស់ឡើងវិញនូវសមាសធាតុបានល្អប្រសើរ URL របស់Serverច្រើន និងការកំណត់ផ្នែកសំណើដែលអាចបត់បែនបាន។",
-  objective: "ស្វែងយល់ពីកាយវិភាគសាស្ត្រស្នូល និងរចនាសម្ព័ន្ធSchemaនៃលក្ខណៈបច្ចេកទេស OpenAPI 3.0 ។",
-  expectedOutcome: "សមត្ថភាពក្នុងការអាន និងរៀបចំរចនាសម្ព័ន្ធកិច្ចសន្យា OpenAPI ដែលម៉ាស៊ីនអាចអានបាន។",
+  summary: `ការបញ្ជាក់របស់ OpenAPI (អតីត Swagger) គឺជាស្តង់ដារអ្នកលក់-អព្យាក្រឹតដែលត្រូវបានអនុម័តយ៉ាងទូលំទូលាយសម្រាប់ការពិពណ៌នាអំពី RESTful APIs ។ សរសេរជា YAML ឬ JSON ឯកសារ OpenAPI ពិពណ៌នាអំពី Endpoint HTTP Methods Params បញ្ចូល RequestPayload តួ Response HTTP Status Codes និងយន្ត Authentication ក្នុងទម្រង់ម៉ាស៊ីនដែលអាចអានបាន។`,
+  tip: "ប្រើ OpenAPI 3.0+ ជាជាង Legacy Swagger 2.0 ។ OAS 3.0 ផ្តល់លទ្ធភាពប្រើប្រាស់ឡើងវិញនូវសមាសធាតុបានល្អប្រសើរ URL របស់ Server ច្រើន និងការកំណត់ផ្នែក Request ដែលអាចបត់បែនបាន។",
+  objective: "ស្វែងយល់ពីកាយវិភាគសាស្ត្រស្នូល និងរចនាសម្ព័ន្ធ Schema នៃលក្ខណៈបច្ចេកទេស OpenAPI 3.0 ។",
+  expectedOutcome: "សមត្ថភាពក្នុងការអាន និងរៀបចំរចនាសម្ព័ន្ធ API Contract OpenAPI ដែលម៉ាស៊ីនអាចអានបាន។",
   codeSnippet: "openapi: 3.0.3\ninfo:\n  title: E-Commerce REST API\n  version: 1.0.0\n  description: Enterprise backend API for products and orders\nservers:\n  - url: http://localhost:5000/api/v1\n    description: Development server\n  - url: https://api.myenterprise.com/v1\n    description: Production server\npaths:\n  /products:\n    get:\n      summary: Retrieve all products\n      responses:\n        '200':\n          description: A list of products",
 };
 

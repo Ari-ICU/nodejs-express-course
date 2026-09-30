@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ហេតុអ្វីត្រូវផ្ទៀងផ្ទាត់ទិន្នន័យ (Data Validation)?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការធ្វើឱ្យមានValidationទិន្នន័យចូលការពារប្រព័ន្ធ backend ពីប្រភេទមិនត្រឹមត្រូវ ការចាក់ SQL/NoSQL កំហុសដែលមិនបានកំណត់ដែលមិនបានរំពឹងទុក និងស្ថានភាពDatabaseដែលខូច។ កុំទុកចិត្តការបញ្ចូលរបស់អតិថិជន។`,
-  tip: "ធ្វើឱ្យទិន្នន័យមានValidationនៅគែមបណ្តាញនៅក្នុងMiddleware មុនពេលដែលវាទៅដល់Controllers ឬគំរូDatabaseរបស់អ្នក។",
-  objective: "ស្វែងយល់ពីភាពចាំបាច់នៃសុវត្ថិភាព និងស្ថេរភាពនៃការបញ្ចូលValidation។",
-  expectedOutcome: "វិធីសាស្រ្តសុវត្ថិភាព Zero trust ចំពោះរាល់ការបញ្ជូនអតិថិជនចូល។",
+  summary: `ការធ្វើឱ្យមាន Validation ទិន្នន័យចូលការពារប្រព័ន្ធ backend ពីប្រភេទមិនត្រឹមត្រូវ SQL Injection/NoSQL កំហុសដែលមិនបានកំណត់ដែលមិនបានរំពឹងទុក និងស្ថានភាព Database ដែលខូច។ កុំទុកចិត្តការបញ្ចូលរបស់ Client ។`,
+  tip: "ធ្វើឱ្យទិន្នន័យមាន Validation នៅគែមបណ្តាញនៅក្នុង Middleware មុនពេលដែលវាទៅដល់ Controllers ឬគំរូ Database របស់អ្នក។",
+  objective: "ស្វែងយល់ពីភាពចាំបាច់នៃសុវត្ថិភាព និងស្ថេរភាពនៃការបញ្ចូល Validation ។",
+  expectedOutcome: "Methods សុវត្ថិភាព Zero trust ចំពោះរាល់ការបញ្ជូន Client ចូល។",
   codeSnippet: "// BAD: Blindly trusting client input\napp.post(\"/users\", async (req, res) => {\n  // If req.body is missing required fields, DB throws unhandled errors!\n  await User.create(req.body);\n});",
 };
 

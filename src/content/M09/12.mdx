@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ទម្រង់ឆ្លើយតបស្តង់ដារ JSON Envelope",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ទម្រង់ **JSON Response Envelope** គឺជាការរុំព័ទ្ធរាល់ការឆ្លើយតបរបស់ API ទាំងអស់ទៅក្នុងទម្រង់កិច្ចសន្យា (Contract) ដ៏មានរបៀបរៀបរយ និងអាចប៉ាន់ស្មានបាន។ យន្តការនេះធានាថា Frontend Applications, កម្មវិធីទូរស័ព្ទ Mobile Apps, និង SDKs អាចធ្វើការ Parse ទិន្នន័យបានយ៉ាងងាយស្រួល តាមរយៈទម្រង់ Deserialization តែមួយគត់។
+  summary: `ទម្រង់ **JSON Response Envelope** គឺជាការរុំព័ទ្ធរាល់ Response របស់ API ទាំងអស់ទៅក្នុងទម្រង់ API Contract (Contract) ដ៏មានរបៀបរៀបរយ និងអាចប៉ាន់ស្មានបាន។ យន្តការនេះធានាថា Frontend Applications, កម្មវិធីទូរស័ព្ទ Mobile Apps, និង SDKs អាចធ្វើការ Parse ទិន្នន័យបានយ៉ាងងាយស្រួល តាមរយៈទម្រង់ Deserialization តែមួយគត់។
 
 ### ១. រចនាសម្ព័ន្ធស្តង់ដារនៃ Production Response Envelope
 * **\`success\` (boolean)**៖ ទង់សម្គាល់រហ័សប្រាប់ទៅ Client ថាប្រតិបត្តិការជោគជ័យ (\`true\`) ឬបរាជ័យ (\`false\`) ដោយមិនចាំបាច់ឆែក Status Code ឡើយ។
@@ -15,8 +15,8 @@ export const meta = {
 
 ### ២. គ្រោះថ្នាក់នៃការ Return Naked JSON Arrays
 ដាច់ខាតកុំ Return អារេផ្ទាល់នៅ Root Level ដូចជា \`res.json([user1, user2])\`។ ការធ្វើបែបនេះ នឹងធ្វើឱ្យអ្នកបាត់បង់លទ្ធភាពបន្ថែម Metadata ដូចជា \`page\`, \`totalPages\` នៅពេលក្រោយ ដោយមិនបំបែក (Break) កូដចាស់របស់ Client។ ត្រូវរុំក្នុង Envelope ជានិច្ច៖ \`{ success: true, count: 2, data: [...] }\`។`,
-  tip: "ដាច់ខាតកុំ Return Naked JSON Arrays (ដូចជា `res.json([...])`) នៅ Root។ ត្រូវរុំទិន្នន័យក្នុង Envelope Object `{ success: true, data: [...] }` ជានិច្ច ដើម្បីផ្តល់ភាពបត់បែនក្នុងការបន្ថែម Pagination Metadata, Timestamps, ឬ Deprecation Warnings ដោយមិនធ្វើឱ្យខូច API Contract ចាស់។",
-  objective: "រចនា និងបង្កើត Reusable JSON Response Wrappers សម្រាប់ប្រើប្រាស់រួមគ្នាលើគ្រប់ API Endpoints។",
+  tip: "ដាច់ខាតកុំ Return Naked JSON Arrays (ដូចជា `res.json([...])`) នៅ Root ។ ត្រូវរុំទិន្នន័យក្នុង Envelope Object `{ success: true, data: [...] }` ជានិច្ច ដើម្បីផ្តល់ភាពបត់បែនក្នុងការបន្ថែម Pagination Metadata, Timestamps, ឬ Deprecation Warnings ដោយមិនធ្វើឱ្យខូច API Contract ចាស់។",
+  objective: "រចនា និងបង្កើត Reusable JSON Response Wrappers សម្រាប់ប្រើប្រាស់រួមគ្នាលើគ្រប់ API Endpoints ។",
   expectedOutcome: "ទទួលបានប្រព័ន្ធស្តង់ដារឆ្លើយតបទិន្នន័យ ដែលសម្រួលដល់ការសរសេរកូដ Frontend និងកាត់បន្ថយបញ្ហាកំហុសពេល Parse ទិន្នន័យ។",
   codeSnippet: `/**
  * Reusable Standard API Response Helper in Express

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Database Configuration",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ការកំណត់រចនាសម្ព័ន្ធជម្រើសនៃការតភ្ជាប់ MongoDB៖ ទំហំអាងតភ្ជាប់ ការអស់ពេលនៃរន្ធ KeepAlive និងព្យាយាមតក្កវិជ្ជាម្តងទៀត។",
-  tip: "កំណត់រចនាសម្ព័ន្ធ `maxPoolSize: 50` នៅក្នុងផលិតកម្ម ដើម្បីគ្រប់គ្រងចរាចរក្នុងពេលដំណាលគ្នាដោយមិនអស់ការភ្ជាប់Database។",
+  summary: `ការកំណត់រចនាសម្ព័ន្ធជម្រើសនៃការតភ្ជាប់ MongoDB ៖ ទំហំអាងតភ្ជាប់ ការអស់ពេលនៃរន្ធ KeepAlive និងព្យាយាម Business Logic ម្តងទៀត។`,
+  tip: "កំណត់រចនាសម្ព័ន្ធ `maxPoolSize: 50` នៅក្នុងផលិតកម្ម ដើម្បីគ្រប់គ្រងចរាចរក្នុងពេលដំណាលគ្នាដោយមិនអស់ការភ្ជាប់ Database ។",
   objective: "កំណត់​រចនាសម្ព័ន្ធ​ជម្រើស​នៃ​ការ​តភ្ជាប់​សម្រាប់​ការ​ផលិត​ដែល​ស្របគ្នា​ខ្ពស់។",
-  expectedOutcome: "ការកំណត់រចនាសម្ព័ន្ធកម្មវិធីបញ្ជាDatabaseបានធ្វើឱ្យប្រសើរ។",
+  expectedOutcome: "ការកំណត់រចនាសម្ព័ន្ធកម្មវិធីបញ្ជា Database បានធ្វើឱ្យប្រសើរ។",
   codeSnippet: "const mongooseOptions = {\n  maxPoolSize: 50,          // Maintain up to 50 socket connections\n  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5s\n  socketTimeoutMS: 45000,   // Close sockets after 45s of inactivity\n};\nawait mongoose.connect(process.env.DATABASE_URL, mongooseOptions);",
 };
 

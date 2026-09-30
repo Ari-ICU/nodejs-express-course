@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Reusable Validation Middleware",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការបង្កើតរោងចក្រផលិតMiddlewareដែលមានValidationទូទៅដែលទទួលយកSchema Zod និងធ្វើឱ្យមានValidationសំណើចូលមុនពេលបញ្ជូនការគ្រប់គ្រងទៅControllers។`,
-  tip: "Middleware `validate()` ដែលអាចប្រើឡើងវិញបានតែមួយគ្រប់គ្រងSchemaទាំងអស់នៅលើកម្មវិធីទាំងមូលរបស់អ្នក។",
-  objective: "បង្កើតរោងចក្រផលិតMiddlewareដែលមានValidationទូទៅ។",
-  expectedOutcome: "សម្អាត និយមន័យផ្លូវដែលប្រកាសដោយភ្ជាប់ជាមួយឆ្មាំValidation។",
+  summary: `ការបង្កើតរោងចក្រផលិត Middleware ដែលមាន Validation ទូទៅដែលទទួលយក Schema Zod និងធ្វើឱ្យមាន ValidationIncoming Request មុនពេលបញ្ជូនការគ្រប់គ្រងទៅ Controllers ។`,
+  tip: "Middleware `validate()` ដែលអាចប្រើឡើងវិញបានតែមួយគ្រប់គ្រង Schema ទាំងអស់នៅលើកម្មវិធីទាំងមូលរបស់អ្នក។",
+  objective: "បង្កើតរោងចក្រផលិត Middleware ដែលមាន Validation ទូទៅ។",
+  expectedOutcome: "សម្អាត និយមន័យផ្លូវដែលប្រកាសដោយភ្ជាប់ជាមួយ GuardsValidation ។",
   codeSnippet: "export const validate = (schema) => async (req, res, next) => {\n  try {\n    req.body = await schema.parseAsync(req.body);\n    next();\n  } catch (error) {\n    res.status(400).json({\n      success: false,\n      error: \"Validation failed\",\n      issues: error.errors.map(e => ({ field: e.path.join(\".\"), message: e.message }))\n    });\n  }\n};\n\n// Route usage:\n// router.post(\"/products\", validate(productSchema), createProduct);",
 };
 

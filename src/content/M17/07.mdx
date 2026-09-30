@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់កម្មសិទ្ធិនៃទិន្នន័យ (Resource Ownership Verification)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "កម្មសិទ្ធិ​ធនធាន​ធានា​ថា​អ្នក​ប្រើ​ស្តង់ដារ​អាច​កែសម្រួល​ឬ​លុប​តែ​ធាតុ​ដែល​ពួកគេ​បាន​បង្កើត​ប៉ុណ្ណោះ​ (ឧ. ធ្វើ​បច្ចុប្បន្នភាព​ការ​បង្ហោះ​ប្លុក បោះបង់​ការ​បញ្ជាទិញ)។ អ្នក​ប្រើ​អាច​មាន​សិទ្ធិ​ធ្វើ​បច្ចុប្បន្នភាព​អត្ថបទ ប៉ុន្តែ​មាន​តែ​អត្ថបទ​ដែល `article.author.toString() === req.user._id.toString()` ប៉ុណ្ណោះ។ អ្នកគ្រប់គ្រងជាធម្មតាឆ្លងកាត់ការត្រួតពិនិត្យកម្មសិទ្ធិ តាមរយៈតក្កវិជ្ជាឆ្លងកាត់តួនាទី។",
-  tip: "តែងតែបំប្លែង MongoDB ObjectIds ទៅជាខ្សែអក្សរជាមួយ `.toString()` នៅពេលប្រៀបធៀប `doc.owner.toString() === req.user._id.toString()` ពីព្រោះវត្ថុ ObjectId ខុសគ្នាពីរមិនដែលត្រូវគ្នាជាមួយ `===` ទេ។",
-  objective: "អនុវត្តការត្រួតពិនិត្យកម្មសិទ្ធិធនធាន ដើម្បីធានាថាអ្នកប្រើប្រាស់អាចផ្លាស់ប្តូរកំណត់ត្រាផ្ទាល់ខ្លួនរបស់ពួកគេតែប៉ុណ្ណោះ។",
+  summary: `Ownership​ធនធាន​ធានា​ថា​អ្នក​ប្រើ​ស្តង់ដារ​អាច​កែសម្រួល​ឬ​លុប​តែ​ធាតុ​ដែល​ពួកគេ​បាន​បង្កើត​ប៉ុណ្ណោះ​ (ឧ. ធ្វើ​បច្ចុប្បន្នភាព​ការ​បង្ហោះ​ប្លុក បោះបង់​ការ​បញ្ជាទិញ) ។ អ្នក​ប្រើ​អាច​មាន​សិទ្ធិ​ធ្វើ​បច្ចុប្បន្នភាព​អត្ថបទ ប៉ុន្តែ​មាន​តែ​អត្ថបទ​ដែល \`article.author.toString() === req.user._id.toString()\` ប៉ុណ្ណោះ។ អ្នកគ្រប់គ្រងជាធម្មតាឆ្លងកាត់ការត្រួតពិនិត្យOwnership តាមរយៈBusiness Logicឆ្លងកាត់តួនាទី។`,
+  tip: "តែងតែបំប្លែង MongoDB ObjectIds ទៅជា String ជាមួយ `.toString()` នៅពេលប្រៀបធៀប `doc.owner.toString() === req.user._id.toString()` ពីព្រោះវត្ថុ ObjectId ខុសគ្នាពីរមិនដែលត្រូវគ្នាជាមួយ `===` ទេ។",
+  objective: "អនុវត្តការត្រួតពិនិត្យ Ownership ដើម្បីធានាថាអ្នកប្រើប្រាស់អាចផ្លាស់ប្តូរកំណត់ត្រាផ្ទាល់ខ្លួនរបស់ពួកគេតែប៉ុណ្ណោះ។",
   expectedOutcome: "ការការពារទិន្នន័យការពារគ្រាប់កាំភ្លើងការពារការបង្កើនសិទ្ធិផ្តេក (IDOR) ។",
   codeSnippet: "// controllers/post.controller.js\nexport const updatePost = async (req, res, next) => {\n  try {\n    const post = await Post.findById(req.params.id);\n    if (!post) throw new AppError(\"Post not found\", 404);\n\n    // Check ownership: Must be author OR an administrator\n    const isOwner = post.author.toString() === req.user._id.toString();\n    const isAdmin = req.user.role === \"admin\";\n\n    if (!isOwner && !isAdmin) {\n      throw new AppError(\"You do not have permission to edit this post\", 403);\n    }\n\n    // Apply updates...\n    post.title = req.body.title || post.title;\n    post.content = req.body.content || post.content;\n    await post.save();\n\n    res.json({ status: \"success\", data: { post } });\n  } catch (err) {\n    next(err);\n  }\n};",
 };

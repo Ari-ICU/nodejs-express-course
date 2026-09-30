@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកត់ត្រា Auth Security Schemes (Bearer JWT & Cookies)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការបញ្ជាក់ពីAuthenticationឯកសារជូនដំណឹងដល់អ្នកប្រើប្រាស់ដែលSchemaសុវត្ថិភាពការពារEndpoint។ OpenAPI គាំទ្រ Bearer JWT tokens, API keys និង HTTP cookies ។ ការដំឡើងSchemaសុវត្ថិភាព \`bearerAuth\` នៅក្នុង Swagger UI បើកប៊ូតុងសោពណ៌បៃតង 'អនុញ្ញាត' អនុញ្ញាតឱ្យអ្នកអភិវឌ្ឍន៍បិទភ្ជាប់និមិត្តសញ្ញា JWT និងសាកល្បងEndpointដែលត្រូវបានការពារដោយផ្ទាល់។`,
+  summary: `ការបញ្ជាក់ពី Authentication ឯកសារជូនដំណឹងដល់អ្នកប្រើប្រាស់ដែល Schema សុវត្ថិភាពការពារ Endpoint ។ OpenAPI គាំទ្រ Bearer JWT tokens, API keys និង HTTP cookies ។ ការដំឡើង Schema សុវត្ថិភាព \`bearerAuth\` នៅក្នុង Swagger UI បើកប៊ូតុងសោពណ៌បៃតង 'អនុញ្ញាត' អនុញ្ញាតឱ្យអ្នកអភិវឌ្ឍន៍បិទភ្ជាប់និមិត្តសញ្ញា JWT និងសាកល្បងEndpointដែលត្រូវបានការពារដោយផ្ទាល់។`,
   tip: "កំណត់ `bearerAuth` ក្នុង `components.securitySchemes` ហើយបន្ថែម `security: - bearerAuth: []` ទៅផ្លូវដែលបានការពារទាំងអស់នៅក្នុងចំណារពន្យល់ Swagger ។",
-  objective: "កំណត់រចនាសម្ព័ន្ធSchemaសុវត្ថិភាព Bearer JWT នៅក្នុង OpenAPI និងបើកAuthorizationអន្តរកម្ម។",
-  expectedOutcome: "ប៊ូតុង 'អនុញ្ញាត' មានមុខងារពេញលេញនៅក្នុង Swagger UI ដែលអនុញ្ញាតឱ្យមានAuthentication API សាកល្បង។",
+  objective: "កំណត់រចនាសម្ព័ន្ធ Schema សុវត្ថិភាព Bearer JWT នៅក្នុង OpenAPI និងបើក Authorization អន្តរកម្ម។",
+  expectedOutcome: "ប៊ូតុង 'អនុញ្ញាត' មានមុខងារពេញលេញនៅក្នុង Swagger UI ដែលអនុញ្ញាតឱ្យមាន Authentication API សាកល្បង។",
   codeSnippet: "/**\n * @openapi\n * components:\n *   securitySchemes:\n *     bearerAuth:\n *       type: http\n *       scheme: bearer\n *       bearerFormat: JWT\n *       description: Enter your JWT Bearer token to authorize requests\n *\n * /api/v1/users/me:\n *   get:\n *     summary: Get current authenticated user profile\n *     tags: [Users]\n *     security:\n *       - bearerAuth: []\n *     responses:\n *       200:\n *         description: User profile retrieved successfully\n *       401:\n *         description: Unauthorized - Token missing or expired\n */",
 };
 

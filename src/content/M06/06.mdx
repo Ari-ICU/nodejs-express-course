@@ -6,8 +6,8 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: `វត្ថុ \`req\` តំណាងឱ្យសំណើ HTTP និងមានលក្ខណៈសម្បត្តិសម្រាប់Query Stringសំណើ Params តួអត្ថបទ Headers HTTP Cookies និងអាសយដ្ឋាន IP ។ Express តុបតែង \`http.IncomingMessage\` ដើមរបស់ Node ជាមួយនឹងជំនួយការវិចារណញាណ។`,
-  tip: "ប្រើ `req.get('Header-Name')` ដើម្បីទាញយកHeadersក្នុងលក្ខណៈមិនប្រកាន់អក្សរតូចធំ។",
-  objective: "ចូលប្រើទិន្នន័យមេតារបស់អតិថិជនចូលទាំងអស់តាមរយៈវត្ថុសំណើ។",
+  tip: "ប្រើ `req.get('Header-Name')` ដើម្បីទាញយក Headers ក្នុងលក្ខណៈមិនប្រកាន់អក្សរតូចធំ។",
+  objective: "ចូលប្រើទិន្នន័យមេតារបស់ Client ចូលទាំងអស់តាមរយៈ Request Object (req) ។",
   expectedOutcome: "ជំនាញនៃ `req.body`, `req.params`, `req.query`, និង `req.headers`។",
   codeSnippet: "app.post(\"/api/items/:id\", (req, res) => {\n  console.log(\"Route param ID:\", req.params.id);\n  console.log(\"Query search:\", req.query.search);\n  console.log(\"Request payload:\", req.body);\n  console.log(\"Client IP:\", req.ip);\n  console.log(\"Auth header:\", req.get(\"Authorization\"));\n  res.sendStatus(200);\n});",
 };

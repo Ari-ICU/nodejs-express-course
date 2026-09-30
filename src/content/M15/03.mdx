@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការផ្សារភ្ជាប់ Errors ជាមួយ HTTP Status Codes",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការលើកលែងកម្មវិធីផែនទីចំពោះលេខកូដស្ថានភាព HTTP ត្រឹមត្រូវ៖ សំណើមិនល្អ 400, 401 គ្មានAuthorization, 403 ហាមឃាត់, 404 រកមិនឃើញ, 409 ជម្លោះ, 429 សំណើច្រើនពេក, 500 កំហុសServer-sideក្នុង។`,
-  tip: "កុំត្រឡប់ HTTP 500 សម្រាប់កំហុសClient (ឧ. ពាក្យសម្ងាត់មិនត្រឹមត្រូវ); 500 បង្ហាញពីកំហុសServer-side ឬការគាំងServices។",
-  objective: "កំណត់លេខកូដស្ថានភាព HTTP ត្រឹមត្រូវទៅករណីលើកលែងប្រតិបត្តិការទាំងអស់។",
+  summary: `ការលើកលែងកម្មវិធីផែនទីចំពោះ HTTP Status Codes ត្រឹមត្រូវ៖ Request មិនល្អ 400, 401 គ្មាន Authorization, 403 ហាមឃាត់, 404 រកមិនឃើញ, 409 ជម្លោះ, 429 Request ច្រើនពេក, 500 កំហុស Server-side ក្នុង។`,
+  tip: "កុំត្រឡប់ HTTP 500 សម្រាប់កំហុស Client (ឧ. Password មិនត្រឹមត្រូវ); 500 បង្ហាញពីកំហុស Server-side ឬការគាំង Services ។",
+  objective: "កំណត់ HTTP Status Codes ត្រឹមត្រូវទៅករណីលើកលែងប្រតិបត្តិការទាំងអស់។",
   expectedOutcome: "ការចាត់ថ្នាក់កូដកំហុសស្តង់ដារតាម API ។",
   codeSnippet: "// Mapping exceptions to status codes\nconst errorStatusMap = {\n  ValidationError: 400,\n  AuthenticationError: 401,\n  ForbiddenError: 403,\n  NotFoundError: 404,\n  ConflictError: 409\n};",
 };

@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Routes Layer",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ស្រទាប់ Routes កំណត់ផ្ទៃ URL សាធារណៈរបស់ API និងផែនទីHTTP Verbs ចូល និងផ្លូវទៅកាន់ឧបករណ៍ដោះស្រាយControllersដែលត្រូវគ្នា។ ឯកសារផ្លូវគួរតែនៅតែគ្មានខ្លាញ់៖ ពួកគេប្រកាសផ្លូវ ដំឡើងValidation និងផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ ហើយប្រគល់សិទ្ធិឱ្យControllersភ្លាមៗដោយមិនអនុវត្តតក្កវិជ្ជាអាជីវកម្ម។`,
-  tip: "Endpointsដែលទាក់ទងជាក្រុមដោយប្រើ `router.route('/path').get(...).post(...)` សម្រាប់ការប្រកាសEndpointsដែលស្អាត និងអាចអានបាន។",
-  objective: "រ៉ោតទ័រ Express ប្រកាសរចនាសម្ព័ន្ធ ដោយគ្មានតក្កវិជ្ជាអាជីវកម្មដែលបានបង្កប់។",
+  summary: `ស្រទាប់ Routes កំណត់ផ្ទៃ URL សាធារណៈរបស់ API និងផែនទី HTTP Verbs ចូល និងផ្លូវទៅកាន់ឧបករណ៍ដោះស្រាយ Controllers ដែលត្រូវគ្នា។ ឯកសារផ្លូវគួរតែនៅតែគ្មានខ្លាញ់៖ ពួកគេប្រកាសផ្លូវ ដំឡើង Validation និងផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ ហើយប្រគល់សិទ្ធិឱ្យ Controllers ភ្លាមៗដោយមិនអនុវត្ត Business Logic ។`,
+  tip: "Endpoints ដែលទាក់ទងជាក្រុមដោយប្រើ `router.route('/path').get(...).post(...)` សម្រាប់ការប្រកាស Endpoints ដែលស្អាត និងអាចអានបាន។",
+  objective: "រ៉ោតទ័រ Express ប្រកាសរចនាសម្ព័ន្ធ ដោយគ្មាន Business Logic ដែលបានបង្កប់។",
   expectedOutcome: "ស្អាត និងអាចអាននិយមន័យផ្លូវដើរតួនាទីសុទ្ធសាធជា HTTP ផែនទីកំណត់ផ្លូវ។",
   codeSnippet: "// routes/product.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createProductSchema } from \"../validators/product.validator.js\";\nimport * as productController from \"../controllers/product.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(productController.getAllProducts)\n  .post(protect, restrictTo(\"admin\"), validate(createProductSchema), productController.createProduct);\n\nrouter.route(\"/:id\")\n  .get(productController.getProductById)\n  .patch(protect, restrictTo(\"admin\"), productController.updateProduct)\n  .delete(protect, restrictTo(\"admin\"), productController.deleteProduct);\n\nexport default router;",
 };

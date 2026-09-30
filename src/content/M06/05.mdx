@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការចាប់ផ្តើម Server ជាមួយ app.listen()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការចងកម្មវិធី Express ទៅច្រក TCP ដោយប្រើ `app.listen()` អនុញ្ញាតឱ្យServerទទួលយកការភ្ជាប់បណ្តាញចូល។",
+  summary: `ការចងកម្មវិធី Express ទៅច្រក TCP ដោយប្រើ \`app.listen()\` អនុញ្ញាតឱ្យ Server ទទួលយកការភ្ជាប់បណ្តាញចូល។`,
   tip: "ភ្ជាប់ច្រកពី `process.env.PORT` ជានិច្ចជាមួយនឹងជម្រើសត្រឡប់ ដើម្បីអនុញ្ញាតឱ្យមានការដាក់ពង្រាយគ្មានថ្នេរទៅនឹងវេទិកាកុងតឺន័រដូចជា Docker, AWS ឬ Render ។",
   objective: "ចាប់ផ្តើមកម្មវិធីស្តាប់ HTTP និងផ្ទៀងផ្ទាត់ភាពអាចរកបាននៃការតភ្ជាប់។",
-  expectedOutcome: "កំពុងដំណើរការServerគេហទំព័រដែលអាចចូលប្រើបានតាមរយៈច្រកបណ្តាញមូលដ្ឋាន។",
+  expectedOutcome: "កំពុងដំណើរការ Server គេហទំព័រដែលអាចចូលប្រើបានតាមរយៈច្រកបណ្តាញមូលដ្ឋាន។",
   codeSnippet: "// src/server.js\nimport app from \"./app.js\";\n\nconst PORT = process.env.PORT || 5000;\n\nconst server = app.listen(PORT, () => {\n  console.log(`🚀 Server running in ${process.env.NODE_ENV || \"dev\"} on port ${PORT}`);\n});",
 };
 

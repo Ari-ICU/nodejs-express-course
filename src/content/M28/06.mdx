@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Server Process ជាមួយ PM2 Cluster Mode",
   type: "lab",
   codeLanguage: "bash",
-  summary: `PM2 គឺជាអ្នកគ្រប់គ្រងដំណើរការផលិតសម្រាប់ Node.js។ វាមានមុខងារផ្ទុកឡើងវិញពេលគ្មានម៉ោងធ្វើការ មុខងារចង្កោមដែលភ្ជាប់មកជាមួយ (\`-i max\` ដើម្បីបង្កើតបុគ្គលិកក្នុងមួយស្នូលស៊ីភីយូ) ការចាប់ផ្តើមដោយស្វ័យប្រវត្តិនៅលើប្រព័ន្ធ VPS ឡើងវិញ និងការត្រួតពិនិត្យស៊ីភីយូ/អង្គចងចាំតាមពេលវេលាជាក់ស្តែង។`,
+  summary: `PM2 គឺជាអ្នកគ្រប់គ្រងដំណើរការផលិតសម្រាប់ Node.js ។ វាមានមុខងារផ្ទុកឡើងវិញពេលគ្មានម៉ោងធ្វើការ មុខងារ Cluster ដែលភ្ជាប់មកជាមួយ (\`-i max\` ដើម្បីបង្កើតបុគ្គលិកក្នុងមួយស្នូលស៊ីភីយូ) ការចាប់ផ្តើមដោយស្វ័យប្រវត្តិនៅលើប្រព័ន្ធ VPS ឡើងវិញ និងការត្រួតពិនិត្យស៊ីភីយូ/អង្គចងចាំតាមពេលវេលាជាក់ស្តែង។`,
   tip: "បង្កើតឯកសារ `ecosystem.config.cjs` ដើម្បីកំណត់ PM2 ការកំណត់ អថេរបរិស្ថាន និងផ្លូវឯកសារកំណត់ហេតុក្នុងការគ្រប់គ្រងកំណែ។",
-  objective: "ដាក់ពង្រាយ គ្រប់គ្រង និងត្រួតពិនិត្យកម្មវិធី Node.js ដោយប្រើ PM2 នៅក្នុងរបៀបចង្កោម។",
-  expectedOutcome: "ការព្យាបាលដោយខ្លួនឯង Node.js កម្មវិធីដំណើរការក្នុងរបៀបផលិតកម្មជាចង្កោម។",
+  objective: "ដាក់ពង្រាយ គ្រប់គ្រង និងត្រួតពិនិត្យកម្មវិធី Node.js ដោយប្រើ PM2 នៅក្នុងរបៀប Cluster ។",
+  expectedOutcome: "ការព្យាបាលដោយខ្លួនឯង Node.js កម្មវិធីដំណើរការក្នុងរបៀបផលិតកម្មជា Cluster ។",
   codeSnippet: "# Start application in Cluster mode across all CPU cores:\npm2 start src/server.js -i max --name \"enterprise-api\"\n\n# Useful PM2 commands:\npm2 status          # View status, memory, CPU of all instances\npm2 logs            # Stream real-time logs\npm2 monit           # Visual interactive terminal dashboard\npm2 reload all      # Zero-downtime rolling reload!\npm2 startup         # Configure auto-start on VPS server reboot",
 };
 

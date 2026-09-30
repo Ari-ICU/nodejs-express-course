@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ទម្រង់ឆ្លើយតបកំហុសស្តង់ដារ Error Envelope",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ដូចគ្នានឹងការឆ្លើយតបទិន្នន័យជោគជ័យដែរ រាល់សារឆ្លើយតបនៅពេលមានកំហុស (Failure Responses) ត្រូវតែរៀបចំតាមរចនាសម្ព័ន្ធ **Error Envelope** ដ៏ច្បាស់លាស់។ ការអនុវត្តតាមលក្ខណៈបច្ចេកទេស **RFC 7807 (Problem Details for HTTP APIs)** ធានាថាកម្មវិធី Client អាចស្វែងយល់ពីមូលហេតុនៃកំហុសតាមរយៈ Programmatic Codes និងបង្ហាញសារណែនាំត្រឹមត្រូវដល់ User។
+  summary: `ដូចគ្នានឹង Response ទិន្នន័យជោគជ័យដែរ រាល់សារឆ្លើយតបនៅពេលមានកំហុស (Failure Responses) ត្រូវតែរៀបចំតាមរចនាសម្ព័ន្ធ **Error Envelope** ដ៏ច្បាស់លាស់។ ការអនុវត្តតាមលក្ខណៈបច្ចេកទេស **RFC 7807 (Problem Details for HTTP APIs)** ធានាថាកម្មវិធី Client អាចស្វែងយល់ពីមូលហេតុនៃកំហុសតាមរយៈ Programmatic Codes និងបង្ហាញសារណែនាំត្រឹមត្រូវដល់ User ។
 
 ### ១. សមាសធាតុចម្បងនៃ Enterprise Error Envelope
 * **\`success: false\`**៖ បញ្ជាក់យ៉ាងច្បាស់ថាប្រតិបត្តិការមិនជោគជ័យ។
@@ -16,8 +16,8 @@ export const meta = {
 
 ### ២. សុវត្ថិភាពបរិស្ថាន៖ ការលាក់ Stack Traces
 ដាច់ខាតកុំបញ្ចេញ Database Error Messages, SQL Queries, ឬ File System Paths (\`error.stack\`) ទៅកាន់ User នៅលើ Production ឱ្យសោះ ពីព្រោះ Hacker អាចឆ្លៀតយកព័ត៌មានទាំងនេះមកវាយប្រហារ Server បាន។`,
-  tip: "ដាច់ខាតកុំបញ្ចេញ Error Object ដើម ឬ Stack Trace ទៅកាន់ Client ក្នុងបរិស្ថាន Production (`NODE_ENV === 'production'`)។ ត្រូវកត់ត្រា Stack Trace ចូលក្នុងប្រព័ន្ធ Internal Logs (ដូចជា Winston ឬ Datadog) ហើយបញ្ជូន Error Envelope ដែលមានសុវត្ថិភាពទៅកាន់ User ជំនួសវិញ។",
-  objective: "រៀបចំបង្កើត Error Envelopes ស្តង់ដារស្របតាម RFC 7807 ដែលការពារព័ត៌មានសម្ងាត់របស់ Server និងផ្តល់ព័ត៌មានច្បាស់លាស់ដល់ Client។",
+  tip: "ដាច់ខាតកុំបញ្ចេញ Error Object ដើម ឬ Stack Trace ទៅកាន់ Client ក្នុងបរិស្ថាន Production (`NODE_ENV === 'production'`) ។ ត្រូវកត់ត្រា Stack Trace ចូលក្នុងប្រព័ន្ធ Internal Logs (ដូចជា Winston ឬ Datadog) ហើយបញ្ជូន Error Envelope ដែលមានសុវត្ថិភាពទៅកាន់ User ជំនួសវិញ។",
+  objective: "រៀបចំបង្កើត Error Envelopes ស្តង់ដារស្របតាម RFC 7807 ដែលការពារព័ត៌មានសម្ងាត់របស់ Server និងផ្តល់ព័ត៌មានច្បាស់លាស់ដល់ Client ។",
   expectedOutcome: "ទទួលបានប្រព័ន្ធគ្រប់គ្រងកំហុសកណ្តាល (Centralized Error Handler) ដែលជួយដល់ Developer ពេលអភិវឌ្ឍន៍ និងការពារសុវត្ថិភាពពេលដាក់ឱ្យដំណើរការ។",
   codeSnippet: `/**
  * Centralized REST Error Envelope Handler in Express

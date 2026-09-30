@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `នៅពេលដែលការងារអស់ការព្យាយាមម្តងទៀតដែលបានកំណត់រចនាសម្ព័ន្ធទាំងអស់ វាផ្លាស់ទីទៅស្ថានភាព 'បរាជ័យ' ជាមួយនឹងដានជង់កំហុសដែលបានភ្ជាប់។ ការភ្ជាប់ផ្ទាំងគ្រប់គ្រងបណ្តាញ \`Bull Board\` ផ្តល់នូវInterfaceអ្នកគ្រប់គ្រងដែលមើលឃើញដើម្បីពិនិត្យមើលបន្ទុកការងារដែលបរាជ័យ មើលដានជង់កំហុស និងព្យាយាមការងារម្តងទៀតដោយដៃដោយចុចតែម្តង។`,
-  tip: "ការពារផ្លូវផ្ទាំងគ្រប់គ្រង Bull Board របស់អ្នក (`/admin/queues`) នៅពីក្រោយAuthenticationអ្នកគ្រប់គ្រង និងការដាក់បញ្ជីស IP នៅក្នុងផលិតកម្ម។",
+  tip: "ការពារផ្លូវផ្ទាំងគ្រប់គ្រង Bull Board របស់អ្នក (`/admin/queues`) នៅពីក្រោយ Authentication អ្នកគ្រប់គ្រង និងការដាក់បញ្ជីស IP នៅក្នុងផលិតកម្ម។",
   objective: "ត្រួតពិនិត្យការងារដែលបរាជ័យ និងដំឡើង UI របស់ Bull Board នៅខាងក្នុងកម្មវិធី Express ។",
   expectedOutcome: "ផ្ទាំងគ្រប់គ្រងគេហទំព័រដែលមើលឃើញសម្រាប់ការត្រួតពិនិត្យជួរ រង្វាស់ និងការសាកល្បងការងារដោយដៃ។",
   codeSnippet: "import { createBullBoard } from \"@bull-board/api\";\nimport { BullMQAdapter } from \"@bull-board/api/bullMQAdapter.js\";\nimport { ExpressAdapter } from \"@bull-board/express\";\n\nconst serverAdapter = new ExpressAdapter();\nserverAdapter.setBasePath(\"/admin/queues\");\n\ncreateBullBoard({\n  queues: [new BullMQAdapter(emailQueue), new BullMQAdapter(videoQueue)],\n  serverAdapter,\n});\n\n// Protect with admin auth guard and mount:\napp.use(\"/admin/queues\", protect, restrictTo(\"admin\"), serverAdapter.getRouter());",

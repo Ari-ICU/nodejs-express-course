@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការផ្ញើ និងត្រួតពិនិត្យ HTTP Requests ក្នុង Postman",
   type: "lab",
   codeLanguage: "json",
-  summary: `ការត្រួតពិនិត្យការឆ្លើយតប API ទាមទារការពិនិត្យមើលលេខកូដស្ថានភាព ពេលវេលាឆ្លើយតប (ms) ទំហំបន្ទុក (KB) និង HTTP ក្បាលការឆ្លើយតប។ Postman កម្មវិធីមើល JSON បោះពុម្ពស្អាតរបស់ Postman រំលេចវាក្យសម្ព័ន្ធ ទម្រង់ឆ្លើយតប និងបង្ហាញCookiesដែលផ្ញើដោយServer។`,
-  tip: "ប្រើ Postman កុងសូល (`Ctrl+Alt+C` ឬ `Cmd+Option+C`) ដើម្បីមើលចរាចរណ៍បណ្តាញឆៅ Headersដែលបានផ្ញើ និងលទ្ធផល `console.log()` ។",
-  objective: "វិភាគ HTTP ម៉ែត្រឆ្លើយតប Headers និងរចនាសម្ព័ន្ធបន្ទុកក្នុង Postman ។",
+  summary: `ការត្រួតពិនិត្យ Response API ទាមទារការពិនិត្យមើល HTTP Status Codes ពេលវេលាឆ្លើយតប (ms) ទំហំ Payload (KB) និង HTTP ក្បាល Response ។ Postman កម្មវិធីមើល JSON បោះពុម្ពស្អាតរបស់ Postman រំលេចវាក្យសម្ព័ន្ធ ទម្រង់ឆ្លើយតប និងបង្ហាញ Cookies ដែលផ្ញើដោយ Server ។`,
+  tip: "ប្រើ Postman កុងសូល (`Ctrl+Alt+C` ឬ `Cmd+Option+C`) ដើម្បីមើលចរាចរណ៍បណ្តាញឆៅ Headers ដែលបានផ្ញើ និងលទ្ធផល `console.log()` ។",
+  objective: "វិភាគ HTTP ម៉ែត្រឆ្លើយតប Headers និងរចនាសម្ព័ន្ធ Payload ក្នុង Postman ។",
   expectedOutcome: "សមត្ថភាពវិភាគលម្អិត នៅពេលកែកំហុសចំណុចខាងក្រោយផ្ទាល់។",
   codeSnippet: "// Response Inspection Checklist:\n// Status:       200 OK\n// Time:         48 ms (< 200 ms is optimal)\n// Size:         1.24 KB\n// Headers:      Content-Type: application/json; charset=utf-8\n//               X-RateLimit-Remaining: 99\n// Body:         { \"status\": \"success\", \"results\": 10, \"data\": [...] }",
 };

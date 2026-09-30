@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងឯកសារជាមួយ .populate()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Populationគឺជាការជំនួសរបស់ Mongoose សម្រាប់ SQL JOINs ។ វាជំនួសឯកសារយោងផ្លូវឯកសារដែលបានបញ្ជាក់ដោយស្វ័យប្រវត្តិជាមួយនឹងឯកសារយោងជាក់ស្តែងពីCollectionsផ្សេងទៀត។`,
-  tip: "ប្រើការជ្រើសរើសវាលនៅខាងក្នុងបំពេញ (`.populate('author', 'name email')`) ដើម្បីជៀសវាងការទាញយកវាលដែលមិនចង់បានដូចជាពាក្យសម្ងាត់។",
-  objective: "ដោះស្រាយឯកសារយោងដោយប្រើPopulation។",
+  summary: `Population គឺជាការជំនួសរបស់ Mongoose សម្រាប់ SQL JOINs ។ វាជំនួសឯកសារយោងផ្លូវឯកសារដែលបានបញ្ជាក់ដោយស្វ័យប្រវត្តិជាមួយនឹងឯកសារយោងជាក់ស្តែងពី Collections ផ្សេងទៀត។`,
+  tip: "ប្រើការជ្រើសរើសវាលនៅខាងក្នុងបំពេញ (`.populate('author', 'name email')`) ដើម្បីជៀសវាងការទាញយកវាលដែលមិនចង់បានដូចជា Password ។",
+  objective: "ដោះស្រាយឯកសារយោងដោយប្រើ Population ។",
   expectedOutcome: "ជាតិទឹកគ្មានថ្នេរនៃឯកសារយោងគន្លឹះបរទេសដែលទាក់ទង។",
   codeSnippet: "// Replaces author ObjectId with the actual User document!\nconst post = await Post.findById(postId)\n  .populate(\"author\", \"name email avatar\")\n  .populate(\"comments.user\", \"name\");",
 };

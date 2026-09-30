@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Jobs Directory សម្រាប់ Background Queues និង Workers",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ក្រុមបញ្ជីការងារFilter់ជួរកំណត់និយមន័យ អ្នកផលិតការងារ និងអ្នកដំណើរការកម្មករ។ ការរក្សានិយមន័យការងារដែលរៀបចំដោយដែន (ឧ. \`jobs/email.job.js\`, \`jobs/report.job.js\`) ផ្តល់នូវការបំបែកយ៉ាងច្បាស់រវាងកិច្ចការ cron ដែលបានកំណត់ពេល និងដំណើរការជួរប្រតិបត្តិការ។`,
-  tip: "បំបែកស្គ្រីបចាប់ផ្តើមការងាររបស់អ្នក (`npm run worker`) ពីការចាប់ផ្ដើមServerគេហទំព័ររបស់អ្នក (`npm start`) ដូច្នេះពួកគេអាចដំណើរការក្នុងធុង Docker ដាច់ដោយឡែក។",
-  objective: "រៀបចំអ្នកផលិតជួរផ្ទៃខាងក្រោយ និងអ្នកដំណើរការកម្មករចូលទៅក្នុងម៉ូឌុលការងារដែលខិតខំប្រឹងប្រែង។",
+  summary: `ក្រុមបញ្ជីការងារ Filter ់ជួរកំណត់និយមន័យ Producers ការងារ និងអ្នកដំណើរការកម្មករ។ ការរក្សានិយមន័យការងារដែលរៀបចំដោយដែន (ឧ. \`jobs/email.job.js\`, \`jobs/report.job.js\`) ផ្តល់នូវការបំបែកយ៉ាងច្បាស់រវាងកិច្ចការ cron ដែលបានកំណត់ពេល និងដំណើរការជួរប្រតិបត្តិការ។`,
+  tip: "បំបែកស្គ្រីបចាប់ផ្តើមការងាររបស់អ្នក (`npm run worker`) ពីការចាប់ផ្ដើម Server គេហទំព័ររបស់អ្នក (`npm start`) ដូច្នេះពួកគេអាចដំណើរការក្នុងធុង Docker ដាច់ដោយឡែក។",
+  objective: "រៀបចំ Producers ជួរផ្ទៃខាងក្រោយ និងអ្នកដំណើរការកម្មករចូលទៅក្នុងម៉ូឌុលការងារដែលខិតខំប្រឹងប្រែង។",
   expectedOutcome: "ស្ថាបត្យកម្មកិច្ចការផ្ទៃខាងក្រោយដែលមានរចនាសម្ព័ន្ធគាំទ្រដល់ការធ្វើមាត្រដ្ឋានកម្មករឯករាជ្យ។",
   codeSnippet: "src/jobs/\n├── index.js          # Initializes all queues and workers\n├── email/\n│   ├── email.queue.js   # Queue initialization & producer helpers\n│   └── email.worker.js  # Worker logic processing email delivery\n└── reports/\n    ├── report.queue.js\n    └── report.worker.js",
 };

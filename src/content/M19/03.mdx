@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ Multer Middleware",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Multer គឺជាMiddleware Node.js ស្តង់ដារសម្រាប់ការគ្រប់គ្រង \`multipart/form-data\` ។ វារួមបញ្ចូលជាមួយ Express ដោយញែកស្ទ្រីមចូល និងភ្ជាប់ \`req.file\` (សម្រាប់ឯកសារតែមួយ) ឬ \`req.files\` (សម្រាប់ឯកសារច្រើន) ដែលមានទិន្នន័យមេតា ដូចជាឈ្មោះឯកសារដើម ប្រភេទ MIME ទំហំ និងផ្លូវទិសដៅ ឬសតិបណ្ដោះអាសន្ន។`,
+  summary: `Multer គឺជា Middleware Node.js ស្តង់ដារសម្រាប់ការគ្រប់គ្រង \`multipart/form-data\` ។ វារួមបញ្ចូលជាមួយ Express ដោយញែកស្ទ្រីមចូល និងភ្ជាប់ \`req.file\` (សម្រាប់ឯកសារតែមួយ) ឬ \`req.files\` (សម្រាប់ឯកសារច្រើន) ដែលមានទិន្នន័យមេតា ដូចជាឈ្មោះឯកសារដើម ប្រភេទ MIME ទំហំ និងផ្លូវទិសដៅ ឬសតិបណ្ដោះអាសន្ន។`,
   tip: "Multer មិនអើពើទម្រង់ណាមួយដែលមិនមែនជា `multipart/form-data`។ ត្រូវប្រាកដថាទម្រង់ផ្ទុកឡើងទាំងអស់បញ្ជាក់ប្រភេទ enc ត្រឹមត្រូវ។",
   objective: "កំណត់រចនាសម្ព័ន្ធ Multer middleware សម្រាប់ផ្លូវផ្ទុកឯកសារតែមួយ និងច្រើន។",
-  expectedOutcome: "ការរួមបញ្ចូលដោយជោគជ័យនៃ Multer ដំណើរការបន្ទុកតែមួយ និងច្រើនផ្នែក។",
+  expectedOutcome: "ការរួមបញ្ចូលដោយជោគជ័យនៃ Multer ដំណើរការ Payload តែមួយ និងច្រើនផ្នែក។",
   codeSnippet: "import multer from \"multer\";\n\n// Basic in-memory storage configuration\nconst upload = multer({\n  storage: multer.memoryStorage(),\n  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB max\n});\n\n// Single file upload route\napp.post(\"/api/upload-avatar\", upload.single(\"avatar\"), (req, res) => {\n  console.log(\"Uploaded file metadata:\", req.file);\n  console.log(\"Text fields:\", req.body);\n\n  res.json({\n    status: \"success\",\n    filename: req.file.originalname,\n    size: req.file.size,\n    mimetype: req.file.mimetype,\n  });\n});",
 };
 

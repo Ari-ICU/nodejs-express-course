@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Token Expiration និង Error Handling",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `នៅពេលដែល JWT ឆ្លងកាត់Timestamps \`exp\` របស់ខ្លួន \`jwt.verify()\` បោះ \`TokenExpiredError\` ។ Backendដ៏រឹងមាំចាប់យកកំហុសជាក់លាក់នេះ ហើយបកប្រែវាទៅជាលេខកូដឆ្លើយតប 401 ដាច់ដោយឡែក (ឧ. \`TOKEN_EXPIRED\`) ដែលផ្តល់សញ្ញាទៅកាន់ឧបករណ៍ស្ទាក់ចាប់ API Frontend (ដូចជា Axios) ដើម្បីបង្កឱ្យដំណើរការឡើងវិញនូវសញ្ញាសម្ងាត់ស្ងាត់ដោយមិនរំខានអ្នកប្រើប្រាស់សកម្ម។`,
-  tip: "ផ្តល់ការឆ្លើយតបនូវសញ្ញាសម្ងាត់ដែលផុតកំណត់នូវខ្សែអក្សរកូដកំហុសតែមួយគត់ដូចជា `code: 'TOKEN_EXPIRED'` ដូច្នេះអ្នកស្ទាក់ចាប់ Axios Frontendដឹងច្បាស់ថាពេលណាត្រូវចាប់ផ្តើមដំណើរការឡើងវិញដោយស្ងៀមស្ងាត់។",
+  summary: `នៅពេលដែល JWT ឆ្លងកាត់ Timestamps \`exp\` របស់ខ្លួន \`jwt.verify()\` បោះ \`TokenExpiredError\` ។ Backendដ៏រឹងមាំចាប់យកកំហុសជាក់លាក់នេះ ហើយបកប្រែវាទៅជាលេខកូដឆ្លើយតប 401 ដាច់ដោយឡែក (ឧ. \`TOKEN_EXPIRED\`) ដែលផ្តល់សញ្ញាទៅកាន់ឧបករណ៍ស្ទាក់ចាប់ API Frontend (ដូចជា Axios) ដើម្បីបង្កឱ្យដំណើរការឡើងវិញនូវសញ្ញាសម្ងាត់ស្ងាត់ដោយមិនរំខានអ្នកប្រើប្រាស់សកម្ម។`,
+  tip: "ផ្តល់ Response នូវ Token ដែលផុតកំណត់នូវ String កូដកំហុសតែមួយគត់ដូចជា `code: 'TOKEN_EXPIRED'` ដូច្នេះអ្នកស្ទាក់ចាប់ Axios Frontend ដឹងច្បាស់ថាពេលណាត្រូវចាប់ផ្តើមដំណើរការឡើងវិញដោយស្ងៀមស្ងាត់។",
   objective: "ចាប់ និងដោះស្រាយការលើកលែង TokenExpiredError និង JsonWebTokenError យ៉ាងទន់ភ្លន់នៅក្នុង Express ។",
-  expectedOutcome: "ការ​កំណត់​ការ​ឆ្លើយ​តប​បញ្ហា​ដែល​អនុញ្ញាត​ឱ្យ​មាន​ការ​ធ្វើ​ឱ្យ​ថ្មី​សញ្ញា​សម្ងាត់​ភាគី​អតិថិជន​ដោយ​គ្មាន​ថ្នេរ។",
+  expectedOutcome: "ការ​កំណត់​ការ​ឆ្លើយ​តប​បញ្ហា​ដែល​អនុញ្ញាត​ឱ្យ​មាន​ការ​ធ្វើ​ឱ្យ​ថ្មី​សញ្ញា​សម្ងាត់​ភាគី​Client​ដោយ​គ្មាន​ថ្នេរ។",
   codeSnippet: "// middleware/errorHandler.js\nexport const handleJwtError = (err, req, res, next) => {\n  if (err.name === \"TokenExpiredError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_EXPIRED\",\n      message: \"Access token has expired. Please refresh your token.\",\n    });\n  }\n\n  if (err.name === \"JsonWebTokenError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_INVALID\",\n      message: \"Invalid token. Please log in again.\",\n    });\n  }\n\n  next(err);\n};",
 };
 

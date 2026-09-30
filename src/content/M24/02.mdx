@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: `ពិធីការ WebSocket (RFC 6455) ផ្តល់ការទំនាក់ទំនងពេញលេញលើការភ្ជាប់ TCP ដែលមានអាយុកាលយូរតែមួយ។ វាចាប់ផ្តើមជាមួយនឹងការចាប់ដៃ HTTP ធ្វើឱ្យប្រសើរឡើង (\`Upgrade: websocket\`) ។ នៅពេលដែលបានបង្កើតឡើង ស៊ុមប្រព័ន្ធគោលពីរតូចពី 2 ទៅ 10 បៃជំនួសHeaders 1KB+ HTTP ដែលធ្វើឱ្យការផ្ញើសារតាមពេលវេលាជាក់ស្តែងរហ័សជាមួយនឹងភាពយឺតយ៉ាវតិចតួចបំផុត។`,
-  tip: "ការតភ្ជាប់ WebSocket ប្រើSchema URL `ws://` (មិនបានអ៊ិនគ្រីប) ឬ `wss://` (TLS ដែលបានអ៊ិនគ្រីប) ។ តែងតែប្រើ `wss://` នៅក្នុងការផលិត។",
+  tip: "ការតភ្ជាប់ WebSocket ប្រើ Schema URL `ws://` (មិនបានអ៊ិនគ្រីប) ឬ `wss://` (TLS ដែលបានអ៊ិនគ្រីប) ។ តែងតែប្រើ `wss://` នៅក្នុងការផលិត។",
   objective: "ស្វែងយល់ពី WebSocket ធ្វើឱ្យប្រសើរឡើងនូវការចាប់ដៃ និងស្ថាបត្យកម្មស៊ុម។",
   expectedOutcome: "ការយល់ដឹងផ្នែកបច្ចេកទេសនៃពិធីការរន្ធពេញលេញពីរជាន់លើក្បាលទាប។",
   codeSnippet: "// WebSocket Upgrade Handshake:\n// Client -> GET /chat HTTP/1.1\n//           Host: server.example.com\n//           Upgrade: websocket\n//           Connection: Upgrade\n//           Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n//           Sec-WebSocket-Version: 13\n//\n// Server -> HTTP/1.1 101 Switching Protocols\n//           Upgrade: websocket\n//           Connection: Upgrade\n//           Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\n//\n// Connection upgraded! Direct TCP full-duplex streaming begins.",

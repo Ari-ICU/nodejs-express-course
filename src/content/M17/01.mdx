@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ User Roles ក្នុង Schema",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "តួនាទីអ្នកប្រើប្រាស់កំណត់អត្តសញ្ញាណប្រភេទនៅក្នុងកម្មវិធី (ឧ. `user`, `moderator`, `admin`, `superadmin`)។ នៅ​ក្នុង Mongoose តួនាទី​ត្រូវ​បាន​ប្រកាស​ថា​ជា​ខ្សែ​អក្សរ​ដែល​បាន​រាប់​បញ្ចូល​ជាមួយ​នឹង​ការ​បញ្ជាក់​យ៉ាង​តឹងរ៉ឹង​និង​លំនាំដើម​សុវត្ថិភាព (ឧ. `user`)។ ការរឹតបន្តឹងការកើនឡើងតួនាទីក្នុងអំឡុងពេលចុះឈ្មោះដោយខ្លួនឯងធានាថាការចុះឈ្មោះតាមស្ដង់ដារមិនអាចកំណត់ឱ្យខ្លួនឯងនូវសិទ្ធិគ្រប់គ្រងបានទេ។",
+  summary: `តួនាទីអ្នកប្រើប្រាស់កំណត់អត្តសញ្ញាណប្រភេទនៅក្នុងកម្មវិធី (ឧ. \`user\`, \`moderator\`, \`admin\`, \`superadmin\`) ។ នៅ​ក្នុង Mongoose តួនាទី​ត្រូវ​បាន​ប្រកាស​ថា​ជា​ខ្សែ​អក្សរ​ដែល​បាន​រាប់​បញ្ចូល​ជាមួយ​នឹង​ការ​បញ្ជាក់​យ៉ាង​តឹងរ៉ឹង​និង​លំនាំដើម​សុវត្ថិភាព (ឧ. \`user\`) ។ ការរឹតបន្តឹងការកើនឡើងតួនាទីក្នុងអំឡុងពេលចុះឈ្មោះដោយខ្លួនឯងធានាថាការចុះឈ្មោះតាមស្ដង់ដារមិនអាចកំណត់ឱ្យខ្លួនឯងនូវសិទ្ធិគ្រប់គ្រងបានទេ។`,
   tip: "កុំអនុញ្ញាតឱ្យ `req.body.role` ត្រូវបានរក្សាទុកដោយផ្ទាល់នៅលើផ្លូវចុះឈ្មោះសាធារណៈ! តែងតែ hardcode `role: 'user'` កំឡុងពេលចុះឈ្មោះដោយខ្លួនឯង។",
-  objective: "កំណត់Schemaតួនាទីជាមួយ Mongoose enums និងអនុវត្តលំនាំដើមសិទ្ធិយ៉ាងតឹងរឹង។",
-  expectedOutcome: "Schemaតួនាទីសុវត្ថិភាពប្រភេទការពារការកើនឡើងនៃសិទ្ធិដោយគ្មានAuthorization។",
+  objective: "កំណត់ Schema តួនាទីជាមួយ Mongoose enums និងអនុវត្តលំនាំដើមសិទ្ធិយ៉ាងតឹងរឹង។",
+  expectedOutcome: "Schema តួនាទីសុវត្ថិភាពប្រភេទការពារការកើនឡើងនៃសិទ្ធិដោយគ្មាន Authorization ។",
   codeSnippet: "// models/user.model.js\nimport mongoose from \"mongoose\";\n\nconst userSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  email: { type: String, required: true, unique: true },\n  password: { type: String, required: true, select: false },\n  role: {\n    type: String,\n    enum: {\n      values: [\"user\", \"moderator\", \"admin\", \"superadmin\"],\n      message: \"{VALUE} is not a valid user role\"\n    },\n    default: \"user\", // Strict safe default\n  },\n  isActive: { type: Boolean, default: true }\n}, { timestamps: true });\n\nexport const User = mongoose.model(\"User\", userSchema);",
 };
 

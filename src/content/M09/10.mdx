@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត DELETE Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `វិធីសាស្ត្រ HTTP **DELETE** ណែនាំ Server ឱ្យលុប ឬដកចេញនូវ Resource ជាក់លាក់ដែលចង្អុលបង្ហាញដោយ URI។ នៅពេលដែលទិន្នន័យត្រូវបានលុបរួចរាល់ រាល់ GET Requests បន្ទាប់ទៅកាន់ URI នោះ នឹងទទួលបាន **404 Not Found** (ឬ 410 Gone)។
+  summary: `HTTP Methods **DELETE** ណែនាំ Server ឱ្យលុប ឬដកចេញនូវ Resource ជាក់លាក់ដែលចង្អុលបង្ហាញដោយ URI ។ នៅពេលដែលទិន្នន័យត្រូវបានលុបរួចរាល់ រាល់ GET Requests បន្ទាប់ទៅកាន់ URI នោះ នឹងទទួលបាន **404 Not Found** (ឬ 410 Gone) ។
 
 ### ១. និយាមនៃ Status Codes សម្រាប់ DELETE
 * **204 No Content**៖ ជាស្តង់ដារឧស្សាហកម្មទូទៅបំផុត នៅពេលការលុបទិន្នន័យទទួលបានជោគជ័យ ហើយ Server មិនចាំបាច់បញ្ជូន Response Body ត្រឡប់មកវិញឡើយ (\`res.status(204).send()\`)។
@@ -18,7 +18,7 @@ export const meta = {
 * **Soft Delete**៖ រក្សាទុកប្រវត្តិទិន្នន័យសម្រាប់ Audit Trail ដោយគ្រាន់តែកំណត់ទង់សម្គាល់កាលបរិច្ឆេទ (\`deletedAt = new Date()\`) និងច្រោះចេញពីការ Query ធម្មតា។`,
   tip: "នៅពេលឆ្លើយតប `204 No Content`, ត្រូវបញ្ចប់ Route Handler ដោយ `res.status(204).send()` ឬ `res.status(204).end()`។ ដាច់ខាតកុំប្រើ `res.status(204).json({...})` ពីព្រោះស្តង់ដារពិធីការ HTTP ហាមឃាត់មិនឱ្យមាន Response Body សម្រាប់ Status 204 ឡើយ។",
   objective: "សរសេរ Express DELETE Endpoints ដែលអនុវត្តទាំងយុទ្ធសាស្ត្រ Hard Delete និង Soft Delete ជាមួយ Status Code 204 និង 404 ត្រឹមត្រូវ។",
-  expectedOutcome: "ទទួលបាន DELETE Route កម្រិត Production ដែលមានការត្រួតពិនិត្យសិទ្ធិ (Authorization), ការគ្រប់គ្រងទិន្នន័យចងសម្ព័ន្ធ (Cascade), និងការឆ្លើយតបស្របតាមស្តង់ដារ HTTP។",
+  expectedOutcome: "ទទួលបាន DELETE Route កម្រិត Production ដែលមានការត្រួតពិនិត្យសិទ្ធិ (Authorization), ការគ្រប់គ្រងទិន្នន័យចងសម្ព័ន្ធ (Cascade), និង Response ស្របតាមស្តង់ដារ HTTP ។",
   codeSnippet: `const express = require("express");
 const app = express();
 

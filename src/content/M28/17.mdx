@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Ubuntu Server (Security Hardening & Swap Memory)",
   type: "lab",
   codeLanguage: "bash",
-  summary: `ការធានាServerអ៊ូប៊ុនទូ តម្រូវឱ្យបង្កើតអ្នកប្រើប្រាស់ដែលមិនមែនជា root ជាមួយនឹងសិទ្ធិ \`sudo\` កំណត់រចនាសម្ព័ន្ធបច្ចុប្បន្នភាពសុវត្ថិភាពដោយស្វ័យប្រវត្តិតាមរយៈ \`unattended-upgrades\` និងបង្កើតឯកសារអង្គចងចាំ Swap ដើម្បីការពារខឺណែល Out-Of-Memory (OOM) សម្លាប់នៅលើServerពពក RAM ទំហំ 1GB/2GB កម្រិតធាតុចូល។`,
+  summary: `ការធានា Server អ៊ូប៊ុនទូ តម្រូវឱ្យបង្កើតអ្នកប្រើប្រាស់ដែលមិនមែនជា root ជាមួយនឹងសិទ្ធិ \`sudo\` កំណត់រចនាសម្ព័ន្ធបច្ចុប្បន្នភាពសុវត្ថិភាពដោយស្វ័យប្រវត្តិតាមរយៈ \`unattended-upgrades\` និងបង្កើតឯកសារអង្គចងចាំ Swap ដើម្បីការពារខឺណែល Out-Of-Memory (OOM) សម្លាប់នៅលើServerពពក RAM ទំហំ 1GB/2GB កម្រិតធាតុចូល។`,
   tip: "បន្ថែមឯកសារ Swap 2GB លើឧទាហរណ៍ 1GB/2GB VPS — វាការពារខឺណែលលីនុចពីការសម្លាប់ Node.js នៅពេលដែលអង្គចងចាំកើនឡើងកំឡុងពេលបង្កើត។",
-  objective: "ពង្រឹងServer Ubuntu និងកំណត់រចនាសម្ព័ន្ធអង្គចងចាំ Swap សម្រាប់ភាពធន់នឹងធនធាន។",
-  expectedOutcome: "Serverអ៊ូប៊ុនទូរឹងធន់នឹងការបញ្ចប់ខឺណែល OOM ។",
+  objective: "ពង្រឹង Server Ubuntu និងកំណត់រចនាសម្ព័ន្ធអង្គចងចាំ Swap សម្រាប់ភាពធន់នឹងធនធាន។",
+  expectedOutcome: "Server អ៊ូប៊ុនទូរឹងធន់នឹងការបញ្ចប់ខឺណែល OOM ។",
   codeSnippet: "# Create a 2GB Swap File on Ubuntu:\nsudo fallocate -l 2G /swapfile\nsudo chmod 600 /swapfile\nsudo mkswap /swapfile\nsudo swapon /swapfile\n\n# Make swap permanent across reboots:\necho '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab\n\n# Verify swap active:\nfree -h",
 };
 

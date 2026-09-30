@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការផ្ញើ Welcome Email បន្ទាប់ពីចុះឈ្មោះជោគជ័យ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `អ៊ីមែលស្វាគមន៍ស្វាគមន៍អ្នកប្រើប្រាស់ថ្មីភ្លាមៗបន្ទាប់ពីការបង្កើតគណនី។ វាផ្តល់នូវតំណភ្ជាប់ចាប់ផ្តើមដំបូង ឯកសារយោងឯកសារ និងបង្កើតកេរ្តិ៍ឈ្មោះដែនដែលអាចទុកចិត្តបាន។ ការកេះអ៊ីមែលស្វាគមន៍ពីControllersការចុះឈ្មោះពង្រឹងការចូលរួមរបស់អ្នកប្រើប្រាស់។`,
-  tip: "Fire ស្វាគមន៍អ៊ីមែលដោយមិនរង់ចាំពួកគេនៅក្នុងការឆ្លើយតបការចុះឈ្មោះ ដើម្បីរក្សាភាពយឺតយ៉ាវក្នុងការចុះឈ្មោះតិចតួចបំផុត។",
-  objective: "អ្នកប្រើប្រាស់ថាមវន្ត Wire ស្វាគមន៍អ៊ីមែលចូលទៅក្នុងវដ្តជីវិតចុះឈ្មោះគណនី។",
+  summary: `អ៊ីមែលស្វាគមន៍ស្វាគមន៍អ្នកប្រើប្រាស់ថ្មីភ្លាមៗបន្ទាប់ពីការបង្កើតគណនី។ វាផ្តល់នូវតំណភ្ជាប់ចាប់ផ្តើមដំបូង ឯកសារយោងឯកសារ និងបង្កើតកេរ្តិ៍ឈ្មោះដែនដែលអាចទុកចិត្តបាន។ ការ Trigger អ៊ីមែលស្វាគមន៍ពី Controllers ការចុះឈ្មោះពង្រឹងការចូលរួមរបស់អ្នកប្រើប្រាស់។`,
+  tip: "Fire ស្វាគមន៍អ៊ីមែលដោយមិនរង់ចាំពួកគេនៅក្នុង Response ការចុះឈ្មោះ ដើម្បីរក្សាភាពយឺតយ៉ាវក្នុងការចុះឈ្មោះតិចតួចបំផុត។",
+  objective: "អ្នកប្រើប្រាស់ថាមវន្ត Wire ស្វាគមន៍អ៊ីមែលចូលទៅក្នុង Lifecycle ចុះឈ្មោះគណនី។",
   expectedOutcome: "ការផ្តល់ដោយស្វ័យប្រវត្តិនូវអ៊ីមែលដែលមានម៉ាកល្បីនៅពេលចុះឈ្មោះ។",
   codeSnippet: "// services/mail.service.js\nexport const sendWelcomeEmail = async (user) => {\n  const html = generateEmailTemplate({\n    title: `Welcome to ${process.env.APP_NAME}, ${user.name}!`,\n    bodyHtml: \"<p>We're thrilled to have you on board. Explore your new dashboard and start building your projects today.</p>\",\n    buttonText: \"Go to Dashboard\",\n    buttonUrl: `${process.env.CLIENT_URL}/dashboard`,\n  });\n\n  await sendEmail({\n    to: user.email,\n    subject: `Welcome to ${process.env.APP_NAME}!`,\n    text: `Hi ${user.name}, Welcome to our platform! Log in at: ${process.env.CLIENT_URL}/login`,\n    html,\n  });\n};",
 };

@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ទស្សនទាន Middleware ក្នុង Express",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "អនុគមន៍ Middleware គឺជាមុខងារដែលមានសិទ្ធិចូលប្រើវត្ថុសំណើ (`req`) វត្ថុឆ្លើយតប (`res`) និងអនុគមន៍ `next` Middleware នៅក្នុងវដ្តនៃការឆ្លើយតបសំណើរបស់កម្មវិធី។ ពួកគេអាចប្រតិបត្តិកូដ ធ្វើការផ្លាស់ប្តូរសំណើ/ឆ្លើយតប បញ្ចប់វដ្ត ឬហៅទៅ `next()` ។",
-  tip: "ប្រសិនបើMiddlewareមិនបញ្ចប់វដ្តនៃការឆ្លើយតបសំណើជាមួយ `res.send()` ឬ `res.json()` វាត្រូវតែហៅទៅ `next()` បើមិនដូច្នេះទេសំណើនឹងព្យួរជារៀងរហូត។",
-  objective: "ស្វែងយល់ពីរបៀបដែលបំពង់មេឌៀលំដាប់បន្តដំណើរការសំណើចូល។",
+  summary: `អនុគមន៍ Middleware គឺជាមុខងារដែលមានសិទ្ធិចូលប្រើ Request Object (req) (\`req\`) Response Object (res) (\`res\`) និងអនុគមន៍ \`next\` Middleware នៅក្នុងវដ្តនៃResponseRequestរបស់កម្មវិធី។ ពួកគេអាចប្រតិបត្តិកូដ ធ្វើការផ្លាស់ប្តូរRequest/ឆ្លើយតប បញ្ចប់វដ្ត ឬហៅទៅ \`next()\` ។`,
+  tip: "ប្រសិនបើ Middleware មិនបញ្ចប់វដ្តនៃ ResponseRequest ជាមួយ `res.send()` ឬ `res.json()` វាត្រូវតែហៅទៅ `next()` បើមិនដូច្នេះទេ Request នឹងព្យួរជារៀងរហូត។",
+  objective: "ស្វែងយល់ពីរបៀបដែលបំពង់មេឌៀលំដាប់បន្តដំណើរការ Incoming Request ។",
   expectedOutcome: "ការចាប់យករចនាសម្ព័ន្ធយ៉ាងជ្រៅនៃស្ថាបត្យកម្ម Onion/Pipeline នៅក្នុង Express ។",
   codeSnippet: "// Middleware structure\nconst myMiddleware = (req, res, next) => {\n  console.log(\"Request received at:\", new Date().toISOString());\n  req.requestTime = Date.now(); // Mutate request\n  next(); // Pass control to next handler in chain!\n};",
 };

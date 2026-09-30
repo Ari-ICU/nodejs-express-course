@@ -8,7 +8,7 @@ export const meta = {
   summary: `ម៉ូឌុល \`node:events\` បង្កើតជាឆ្អឹងខ្នងនៃ Node.js ស្ថាបត្យកម្មដែលជំរុញដោយព្រឹត្តិការណ៍។ ស្ទើរតែរាល់ការស្ទ្រីម និងបណ្តាញភ្ជាប់វត្ថុនៅក្នុង Node (HTTP សំណើ រន្ធServer ស្ទ្រីម) ទទួលមរតកពី EventEmitter ។`,
   tip: "ដកកម្មវិធីស្តាប់ព្រឹត្តិការណ៍ (`emitter.off()`) ចេញជានិច្ច នៅពេលហែកសមាសធាតុ ដើម្បីការពារការលេចធ្លាយអង្គចងចាំ។",
   objective: "ស្វែងយល់ពីរបៀបដែលម៉ូឌុលព្រឹត្តិការណ៍ផ្តល់ថាមពលដល់ទំនាក់ទំនងខាងក្នុងរបស់ Node ។",
-  expectedOutcome: "សមត្ថភាពក្នុងការបោះពុម្ពផ្សាយ និងជាវព្រឹត្តិការណ៍វដ្តជីវិតផ្ទាល់ខ្លួន។",
+  expectedOutcome: "សមត្ថភាពក្នុងការបោះពុម្ពផ្សាយ និងជាវព្រឹត្តិការណ៍ Lifecycle ផ្ទាល់ខ្លួន។",
   codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst serverEmitter = new EventEmitter();\n\nserverEmitter.on(\"user:signup\", (user) => {\n  console.log(\"Send welcome notification to:\", user.email);\n});\n\nserverEmitter.emit(\"user:signup\", { email: \"sokha@gmail.com\" });",
 };
 

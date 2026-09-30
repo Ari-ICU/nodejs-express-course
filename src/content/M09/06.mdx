@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត GET Endpoint ស្តង់ដារ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `វិធីសាស្ត្រ HTTP **GET** គឺជាមធ្យោបាយស្នូលក្នុងការទាញយក និងអានទិន្នន័យ (Data Retrieval) នៅក្នុងស្ថាបត្យកម្ម RESTful API។ យោងតាមនិយាមបច្ចេកវិទ្យា HTTP Specification វិធីសាស្ត្រ GET ត្រូវបានរចនាឡើងជាប្រភេទ **Safe** (ជាប្រតិបត្តិការ Read-only ដែលមិនកែប្រែស្ថានភាពទិន្នន័យនៅលើ Server) និង **Idempotent** (ការហៅដដែលៗប៉ុន្មានដងក៏ដោយ ក៏ផ្តល់លទ្ធផលដូចគ្នាជានិច្ច ដោយគ្មានផលប៉ះពាល់បន្ថែម)។
+  summary: `HTTP Methods **GET** គឺជាមធ្យោបាយស្នូលក្នុងការទាញយក និងអានទិន្នន័យ (Data Retrieval) នៅក្នុងស្ថាបត្យកម្ម RESTful API ។ យោងតាមនិយាមបច្ចេកវិទ្យា HTTP Specification Methods GET ត្រូវបានរចនាឡើងជាប្រភេទ **Safe** (ជាប្រតិបត្តិការ Read-only ដែលមិនកែប្រែស្ថានភាពទិន្នន័យនៅលើ Server) និង **Idempotent** (ការហៅដដែលៗប៉ុន្មានដងក៏ដោយ ក៏ផ្តល់លទ្ធផលដូចគ្នាជានិច្ច ដោយគ្មានផលប៉ះពាល់បន្ថែម) ។
 
 ### ១. ទម្រង់ស្តង់ដារទាំង ២ នៃការទាញយកទិន្នន័យ (Retrieval Patterns)
 * **Collection Route (\`GET /api/v1/products\`)**៖ ប្រើសម្រាប់ទាញយកបញ្ជីទិន្នន័យជាបណ្តុំ។ គាំទ្រការច្រោះទិន្នន័យតាមរយៈ URL Query Parameters (\`req.query\`) ដូចជាការស្វែងរកតាមប្រភេទ (\`category\`), កម្រិតតម្លៃអប្បបរមា (\`minPrice\`), និងការបែងចែកទំព័រ (\`pagination\`)។
@@ -16,7 +16,7 @@ export const meta = {
 * **404 Not Found**៖ ត្រូវតែឆ្លើយតបភ្លាមៗ នៅពេលដែលមិនមានទិន្នន័យត្រូវនឹង ID ដែលបានស្នើសុំ។
 * **HTTP Caching**៖ Response របស់ GET អាចធ្វើការ Cache នៅលើ Browser និង CDN បានតាមរយៈ Headers ដូចជា \`Cache-Control\` និង \`ETag\` ដើម្បីបង្កើនល្បឿន និងប្រសិទ្ធភាពផ្ទេរទិន្នន័យ។`,
   tip: "នៅពេលទាញយកទិន្នន័យទោលតាម ID (`/products/:id`) ប្រសិនបើមិនមានទិន្នន័យទេ ត្រូវតែឆ្លើយតប **404 Not Found** ជានិច្ច — ដាច់ខាតកុំឆ្លើយតប 200 ជាមួយ `null` ឬ `{}`។ ប៉ុន្តែសម្រាប់ការទាញយកបណ្តុំ (`/products?category=unknown`) ប្រសិនបើមិនមានទិន្នន័យត្រូវគ្នានោះទេ ត្រូវឆ្លើយតប **200 OK** ជាមួយអារេទំនេរ `data: []` និង `count: 0` ពីព្រោះបណ្តុំ resource នៅមានវត្តមានធម្មតា។",
-  objective: "បង្កើត Express GET Endpoints កម្រិតអាជីព ដែលគាំទ្រទាំងការទាញយកទិន្នន័យទោលតាមរយៈ ID ជាមួយError Handling 404 និងការទាញយកបញ្ជីបណ្តុំជាមួយ Query Filtering។",
+  objective: "បង្កើត Express GET Endpoints កម្រិតអាជីព ដែលគាំទ្រទាំងការទាញយកទិន្នន័យទោលតាមរយៈ ID ជាមួយ Error Handling 404 និងការទាញយកបញ្ជីបណ្តុំជាមួយ Query Filtering ។",
   expectedOutcome: "ទទួលបាន GET Endpoints ដ៏រឹងមាំ ដែលគ្រប់គ្រង Route Params និង Query Params បានយ៉ាងត្រឹមត្រូវ ឆ្លើយតបជាទម្រង់ JSON Envelope ស្តង់ដារ និងមានប្រព័ន្ធ Error Handling ច្បាស់លាស់។",
   codeSnippet: `const express = require("express");
 const app = express();

@@ -6,9 +6,9 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: `Socket.IO គឺជាបណ្ណាល័យដែលសំបូរទៅដោយលក្ខណៈពិសេសដែលបង្កើតនៅលើកំពូលនៃ WebSocket និង HTTP ការបោះឆ្នោតថយក្រោយរយៈពេលវែង។ មិនដូច WebSockets ឆៅទេ Socket.IO ផ្តល់នូវការភ្ជាប់ឡើងវិញដោយស្វ័យប្រវត្តិ ការភ្ជាប់សតិបណ្ដោះអាសន្ន ចង្វាក់បេះដូងនៃកញ្ចប់ព័ត៌មានបេះដូង ការពហុគុណផ្អែកលើព្រឹត្តិការណ៍ បន្ទប់ និងចន្លោះឈ្មោះចេញពីប្រអប់។`,
-  tip: "Socket.IO មិនមែនជាការអនុវត្ត WebSocket ឆៅ — Client WebSocket ឆៅមិនអាចភ្ជាប់ទៅServer Socket.IO បានទេ។ ទាំងClient និងServerត្រូវតែប្រើបណ្ណាល័យ Socket.IO ។",
+  tip: "Socket.IO មិនមែនជាការអនុវត្ត WebSocket ឆៅ — Client WebSocket ឆៅមិនអាចភ្ជាប់ទៅ Server Socket.IO បានទេ។ ទាំង Client និង Server ត្រូវតែប្រើបណ្ណាល័យ Socket.IO ។",
   objective: "ស្វែងយល់ពីអត្ថប្រយោជន៍ Socket.IO លើឆៅ WebSockets នៅក្នុងកម្មវិធីផលិតកម្ម។",
-  expectedOutcome: "ចំនេះដឹងអំពីបុព្វហេតុ Socket.IO៖ ការត្រលប់មកវិញ ព្រឹត្តិការណ៍ បន្ទប់ និងការភ្ជាប់ឡើងវិញដោយស្វ័យប្រវត្តិ។",
+  expectedOutcome: "ចំនេះដឹងអំពីបុព្វហេតុ Socket.IO ៖ ការត្រលប់មកវិញ ព្រឹត្តិការណ៍ បន្ទប់ និងការភ្ជាប់ឡើងវិញដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "// Why Socket.IO over raw ws:\n// 1. Reliability: Falls back to HTTP long-polling if corporate firewalls block WebSockets\n// 2. Auto-reconnect: Automatically reconnects and flushes buffered messages\n// 3. Named Events: emit(\"order:paid\", payload) instead of JSON.stringify({ type: ... })\n// 4. Broadcasting: Easily emit to all clients EXCEPT sender: socket.broadcast.emit(...)\n// 5. Rooms: Group sockets into virtual channels: socket.join(\"room-123\")",
 };
 

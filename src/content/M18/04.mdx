@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ចំនួន Request (Rate Limiting) ជាមួយ express-rate-limit",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Rate Limitingកំណត់ចំនួន HTTP ស្នើសុំអាសយដ្ឋាន IP របស់អតិថិជនអាចបង្កើតបានក្នុងចន្លោះពេលជាក់លាក់មួយ។ វាការពារ APIs ពីការវាយប្រហារ Denial of Service (DoS) ការបញ្ចូលព័ត៌មានសម្ងាត់ដោយបង្ខំ និងការរំលោភបំពានលើគេហទំព័រ។ កញ្ចប់ \`express-rate-limit\` កំណត់Headers \`RateLimit-*\` ស្តង់ដារ ហើយបញ្ជូន HTTP \`429 Too Many Requests\` មកវិញនៅពេលបំពាន។`,
-  tip: "កំណត់រចនាសម្ព័ន្ធ `legacyHeaders: false` និង `standardHeaders: true` ជានិច្ច ដើម្បីអនុលោមតាមការកំណត់Headersកម្រិតអត្រាអត្រា IETF ទំនើប។",
+  summary: `Rate Limiting កំណត់ចំនួន HTTP ស្នើសុំអាសយដ្ឋាន IP របស់ Client អាចបង្កើតបានក្នុងចន្លោះពេលជាក់លាក់មួយ។ វាការពារ APIs ពីការវាយប្រហារ Denial of Service (DoS) ការបញ្ចូលព័ត៌មានសម្ងាត់ដោយបង្ខំ និងការរំលោភបំពានលើគេហទំព័រ។ កញ្ចប់ \`express-rate-limit\` កំណត់Headers \`RateLimit-*\` ស្តង់ដារ ហើយបញ្ជូន HTTP \`429 Too Many Requests\` មកវិញនៅពេលបំពាន។`,
+  tip: "កំណត់រចនាសម្ព័ន្ធ `legacyHeaders: false` និង `standardHeaders: true` ជានិច្ច ដើម្បីអនុលោមតាមការកំណត់ Headers កម្រិតអត្រាអត្រា IETF ទំនើប។",
   objective: "អនុវត្តដែនកំណត់អត្រាជាក់លាក់ជាសកល និងផ្លូវ ដើម្បីការពារប្រឆាំងនឹង DoS និងការរំលោភបំពាន។",
-  expectedOutcome: "Resilient API ដែលកាត់បន្ថយសំណើហួសហេតុជាមួយនឹង HTTP 429។",
+  expectedOutcome: "Resilient API ដែលកាត់បន្ថយ Request ហួសហេតុជាមួយនឹង HTTP 429 ។",
   codeSnippet: "import rateLimit from \"express-rate-limit\";\n\n// Global limiter: 100 requests per 15 minutes per IP\nexport const globalLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 minutes\n  max: 100, // Max 100 requests per IP per window\n  standardHeaders: true, // Return standard RateLimit-* headers\n  legacyHeaders: false, // Disable X-RateLimit-* headers\n  message: {\n    status: 429,\n    message: \"Too many requests from this IP, please try again after 15 minutes\"\n  }\n});\n\napp.use(\"/api\", globalLimiter);",
 };
 

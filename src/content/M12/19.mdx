@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "Mongoose Hooks (Pre & Post Middleware)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Mongoose middleware (មុន និងក្រោយទំពក់) ស្ទាក់ចាប់ដំណើរការក្នុងអំឡុងពេលព្រឹត្តិការណ៍វដ្តជីវិតឯកសារដូចជា `save`, `validate`, `remove` និង `findOneAndUpdate` ។",
-  tip: "ប្រើទំពក់ `pre('save')` សម្រាប់Sanitizationទិន្នន័យ ដូចជាការសរសេរអ៊ីមែលអក្សរតូច ឬទម្រង់ខ្សែអក្សរ មុនពេលបន្តទៅDatabase។",
-  objective: "អនុវត្តទំពក់វដ្តជីវិតដោយស្វ័យប្រវត្តិនៅលើគំរូDatabase។",
-  expectedOutcome: "ការធ្វើឱ្យមានលក្ខណៈធម្មតានៃទិន្នន័យឯកសារដោយស្វ័យប្រវត្តិ និងការគ្រប់គ្រងវដ្តជីវិត។",
+  summary: `Mongoose middleware (មុន និងក្រោយ Hooks) ស្ទាក់ចាប់ដំណើរការក្នុងអំឡុងពេលព្រឹត្តិការណ៍ Lifecycle ឯកសារដូចជា \`save\`, \`validate\`, \`remove\` និង \`findOneAndUpdate\` ។`,
+  tip: "ប្រើ Hooks `pre('save')` សម្រាប់ Sanitization ទិន្នន័យ ដូចជាការសរសេរអ៊ីមែលអក្សរតូច ឬទម្រង់ String មុនពេលបន្តទៅ Database ។",
+  objective: "អនុវត្ត HooksLifecycle ដោយស្វ័យប្រវត្តិនៅលើគំរូ Database ។",
+  expectedOutcome: "ការធ្វើឱ្យមានលក្ខណៈធម្មតានៃទិន្នន័យឯកសារដោយស្វ័យប្រវត្តិ និងការគ្រប់គ្រង Lifecycle ។",
   codeSnippet: "// Pre-save hook: automatically normalize email before saving\nuserSchema.pre(\"save\", function(next) {\n  if (this.isModified(\"email\")) {\n    this.email = this.email.toLowerCase().trim();\n  }\n  next();\n});\n\n// Post-save hook: execute logic after document is persisted\nuserSchema.post(\"save\", function(doc, next) {\n  console.log(`Document persisted with ID: ${doc._id}`);\n  next();\n});",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Relational Population ក្នុង API Responses",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបញ្ចូលឯកសារយោងគន្លឹះបរទេស មុនពេលបញ្ជូនការឆ្លើយតប JSON ទៅកាន់អតិថិជន។",
-  tip: "បញ្ចូល​តែ​វាល​ចាំបាច់​ប៉ុណ្ណោះ​ដើម្បី​ជៀសវាង​ការ​ទាញ​យក​លើស​និង​ការ​ផ្ទេរ​បន្ទុក​មូលដ្ឋាន​ទិន្នន័យ​ដែល​មិន​ចាំបាច់។",
-  objective: "ផ្តល់សំណើមដល់ទិន្នន័យអង្គភាពពាក់ព័ន្ធនៅក្នុងការឆ្លើយតប API ។",
-  expectedOutcome: "ការឆ្លើយតប JSON ទំនាក់ទំនងសម្បូរបែបដោយគ្មាន SQL JOINs ។",
+  summary: `ការបញ្ចូលឯកសារយោងគន្លឹះបរទេស មុនពេលបញ្ជូន JSON Response ទៅកាន់ Client ។`,
+  tip: "បញ្ចូល​តែ​វាល​ចាំបាច់​ប៉ុណ្ណោះ​ដើម្បី​ជៀសវាង​ការ​ទាញ​យក​លើស​និង​ការ​ផ្ទេរ​Payload​មូលដ្ឋាន​ទិន្នន័យ​ដែល​មិន​ចាំបាច់។",
+  objective: "ផ្តល់ Request មដល់ទិន្នន័យ Entity ពាក់ព័ន្ធនៅក្នុង Response API ។",
+  expectedOutcome: "JSON Response ទំនាក់ទំនងសម្បូរបែបដោយគ្មាន SQL JOINs ។",
   codeSnippet: "const order = await Order.findById(orderId)\n  .populate(\"user\", \"name email\")\n  .populate(\"items.product\", \"name price sku\");",
 };
 

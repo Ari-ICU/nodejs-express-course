@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពីប្រសិទ្ធភាព និង Performance Metrics ក្នុង Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Node.js មានល្បឿនលឿនពិសេសសម្រាប់ប្រតិបត្តិការ I/O-heavy ដោយសារតែស្ថាបត្យកម្មមិនទប់ស្កាត់ដែលជំរុញដោយព្រឹត្តិការណ៍ ប៉ុន្តែធម្មជាតិនៃខ្សែតែមួយរបស់វាទាមទារការគ្រប់គ្រងប្រតិបត្តិការយ៉ាងប្រុងប្រយ័ត្ន។ រង្វាស់សំខាន់ៗដែលត្រូវត្រួតពិនិត្យរួមមានការប្រើប្រាស់ស៊ីភីយូ Event Loop ភាពយឺតយ៉ាវ ការប្រើប្រាស់អង្គចងចាំទំហំអ្នករស់នៅ (RSS) ការផ្អាកCollectionsសំរាម និងភាគរយនៃការឆ្លើយតបរយៈពេលយឺត (p95, p99) ។`,
+  summary: `Node.js មានល្បឿនលឿនពិសេសសម្រាប់ប្រតិបត្តិការ I/O-heavy ដោយសារតែស្ថាបត្យកម្មមិនទប់ស្កាត់ដែលជំរុញដោយព្រឹត្តិការណ៍ ប៉ុន្តែធម្មជាតិនៃខ្សែតែមួយរបស់វាទាមទារការគ្រប់គ្រងប្រតិបត្តិការយ៉ាងប្រុងប្រយ័ត្ន។ រង្វាស់សំខាន់ៗដែលត្រូវត្រួតពិនិត្យរួមមានការប្រើប្រាស់ស៊ីភីយូ Event Loop ភាពយឺតយ៉ាវ ការប្រើប្រាស់អង្គចងចាំទំហំអ្នករស់នៅ (RSS) ការផ្អាក Collections សំរាម និងភាគរយនៃ Response រយៈពេលយឺត (p95, p99) ។`,
   tip: "តាមដានពេលវេលាឆ្លើយតប p95 និង p99 ជាជាងមធ្យម។ ជាមធ្យម 50ms អាចលាក់យ៉ាងងាយស្រួលនូវការពិតដែលថា 5% នៃអ្នកប្រើប្រាស់របស់អ្នកកំពុងជួបប្រទះការពន្យារពេល 3 វិនាទី។",
-  objective: "កំណត់​ម៉ែត្រ​ការ​អនុវត្ត​គន្លឹះ និង​ការ​ជាប់​គាំង​នៅ​ក្នុង​Services​ផ្នែក​ខាងក្រោយ Node.js។",
+  objective: "កំណត់​ម៉ែត្រ​ការ​អនុវត្ត​គន្លឹះ និង​ការ​ជាប់​គាំង​នៅ​ក្នុង​Services​ផ្នែក​ខាងក្រោយ Node.js ។",
   expectedOutcome: "ការយល់ដឹងទូលំទូលាយនៃសូចនាករទម្រង់ការអនុវត្ត។",
   codeSnippet: "// Key Performance Metrics in Node.js:\n// 1. Event Loop Lag: Delay before scheduled callbacks execute (<20ms is healthy)\n// 2. Memory (RSS): Total memory allocated for the process (watch for memory leaks!)\n// 3. Heap Used: Actual memory utilized by V8 objects\n// 4. Latency Percentiles: p50 (median), p95 (95% of users), p99 (tail latency)",
 };

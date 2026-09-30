@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ថ្នាក់ `express.Router` បង្កើតឧបករណ៍ដោះស្រាយផ្លូវដែលអាចម៉ោនបានម៉ូឌុល។ Router instance គឺជាកម្មវិធីកណ្តាលពេញលេញ និងប្រព័ន្ធកំណត់ផ្លូវ ដែលជាទូទៅគេហៅថា 'mini-app'។",
-  tip: "បង្កើតឯកសាររ៉ោតទ័រដាច់ដោយឡែកសម្រាប់អង្គភាពដែននីមួយៗ (ឧ. `user.routes.js`, `auth.routes.js`)។",
+  tip: "បង្កើតឯកសាររ៉ោតទ័រដាច់ដោយឡែកសម្រាប់ Entity ដែននីមួយៗ (ឧ. `user.routes.js`, `auth.routes.js`) ។",
   objective: "កែប្រែផ្លូវចូលទៅក្នុងឧទាហរណ៍រ៉ោតទ័រដាច់ឆ្ងាយ។",
   expectedOutcome: "ម៉ូឌុលកំណត់ផ្លូវដែលអាចសាកល្បងបានដែលមានផ្ទុកដោយខ្លួនឯងសម្រាប់ធនធាននីមួយៗ។",
   codeSnippet: "// routes/product.routes.js\nimport { Router } from \"express\";\n\nconst router = Router();\n\nrouter.route(\"/\")\n  .get(getProducts)\n  .post(createProduct);\n\nrouter.route(\"/:id\")\n  .get(getProductById)\n  .patch(updateProduct)\n  .delete(deleteProduct);\n\nexport default router;",

@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម Cloud Object Storage (S3-Compatible)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ឃ្លាំងផ្ទុកវត្ថុពពករក្សាទុកឯកសារជាវត្ថុនៅក្នុងធុងដែលកំណត់ដោយសោ។ អ្នកផ្តល់សេវាពពកទំនើប (AWS S3, Cloudflare R2, MinIO, Google Cloud Storage) គាំទ្រស្តង់ដារ API ដែលត្រូវគ្នានឹង S3 ។ កម្មវិធី Node.js ប្រើបណ្ណាល័យ `@aws-sdk/client-s3` ដើម្បីបង្ហោះ ទាញយក និងលុបឯកសារតាមកម្មវិធីតាមរយៈសំណើ HTTPS សុវត្ថិភាព។",
+  summary: `ឃ្លាំងផ្ទុកវត្ថុពពករក្សាទុកឯកសារជាវត្ថុនៅក្នុងធុងដែលកំណត់ដោយសោ។ អ្នកផ្តល់សេវាពពកទំនើប (AWS S3, Cloudflare R2, MinIO, Google Cloud Storage) គាំទ្រស្តង់ដារ API ដែលត្រូវគ្នានឹង S3 ។ កម្មវិធី Node.js ប្រើបណ្ណាល័យ \`@aws-sdk/client-s3\` ដើម្បីបង្ហោះ ទាញយក និងលុបឯកសារតាមកម្មវិធីតាមរយៈRequest HTTPS សុវត្ថិភាព។`,
   tip: "ប្រើ MinIO ក្នុងស្រុកតាមរយៈ Docker ដើម្បីសាកល្បងការបង្ហោះពពកដែលត្រូវគ្នានឹង S3 នៅលើម៉ាស៊ីនអភិវឌ្ឍន៍របស់អ្នកដោយមិនចាំបាច់មានវិក្កយបត្រលើពពក។",
-  objective: "ស្វែងយល់ពីគំនិតនៃការផ្ទុកវត្ថុដែលត្រូវគ្នាជាមួយ S3៖ ធុង សោ និងគោលការណ៍ចូលប្រើប្រាស់។",
+  objective: "ស្វែងយល់ពីគំនិតនៃការផ្ទុកវត្ថុដែលត្រូវគ្នាជាមួយ S3 ៖ ធុង សោ និងគោលការណ៍ចូលប្រើប្រាស់។",
   expectedOutcome: "ការត្រៀមខ្លួនក្នុងការរួមបញ្ចូលអ្នកផ្តល់សេវាផ្ទុកពពកដែលត្រូវគ្នានឹង S3 ទៅក្នុង Node.js ។",
   codeSnippet: "// S3 Object Storage Concept:\n//\n// Endpoint: https://<account_id>.r2.cloudflarestorage.com\n// Bucket:   \"my-enterprise-bucket\"\n// Key:      \"avatars/64f1a2b3-avatar.webp\"\n//\n// Client Upload Request -> Node.js API -> S3 PutObjectCommand -> Cloudflare R2 / AWS S3\n// Web Browser <- Cloudflare CDN Edge (https://cdn.myapp.com/avatars/64f1a2b3-avatar.webp)",
 };

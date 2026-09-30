@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការទទួលទិន្នន័យ Request Body តាមរយៈ Streams",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "HTTP POST, PUT, និង PATCH ស្នើសុំបញ្ជូនបន្ទុកនៅក្នុងផ្នែកសំណើ។ នៅក្នុង Node.js ដើម វត្ថុសំណើគឺជាការស្ទ្រីមដែលជំរុញដោយព្រឹត្តិការណ៍ដែលបញ្ចេញ `'data'` បណ្តុំបណ្តុំបណ្តោះអាសន្នរហូតដល់ព្រឹត្តិការណ៍ `'end'` ឆេះ។",
-  tip: "តែងតែអនុវត្តដែនកំណត់ទំហំផ្ទុកអតិបរមានៅពេលប្រមូលផ្តុំផ្នែកដែលស្នើសុំដើម្បីការពារការបដិសេធនៃServices (DoS) ការវាយប្រហារដោយអស់អង្គចងចាំ។",
-  objective: "ប្រមូល និង​ប្រមូល​កំណាត់​ផ្នែក​សំណើ​ចូល​ដោយ​អសមកាល។",
-  expectedOutcome: "សមត្ថភាពក្នុងការញែកបន្ទុកសំណើ HTTP ឆៅពីស្ទ្រីមដើម។",
+  summary: `HTTP POST, PUT, និង PATCH ស្នើសុំបញ្ជូន Payload នៅក្នុងផ្នែក Request ។ នៅក្នុង Node.js ដើម Request Object (req) គឺជាការស្ទ្រីមដែលជំរុញដោយព្រឹត្តិការណ៍ដែលបញ្ចេញ \`'data'\` បណ្តុំបណ្តុំបណ្តោះអាសន្នរហូតដល់ព្រឹត្តិការណ៍ \`'end'\` ឆេះ។`,
+  tip: "តែងតែអនុវត្តដែនកំណត់ទំហំផ្ទុកអតិបរមានៅពេលប្រមូលផ្តុំផ្នែកដែលស្នើសុំដើម្បីការពារការបដិសេធនៃ Services (DoS) ការវាយប្រហារដោយអស់អង្គចងចាំ។",
+  objective: "ប្រមូល និង​ប្រមូល​កំណាត់​ផ្នែក​Request​ចូល​ដោយ​អសមកាល។",
+  expectedOutcome: "សមត្ថភាពក្នុងការញែក PayloadRequest HTTP ឆៅពីស្ទ្រីមដើម។",
   codeSnippet: "import http from \"node:http\";\n\nhttp.createServer((req, res) => {\n  if (req.method === \"POST\") {\n    let body = \"\";\n    req.on(\"data\", chunk => {\n      body += chunk.toString(); // Collect stream chunks\n    });\n    req.on(\"end\", () => {\n      console.log(\"Complete Body received:\", body);\n      res.end(\"Body parsed successfully\");\n    });\n  }\n});",
 };
 

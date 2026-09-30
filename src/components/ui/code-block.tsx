@@ -33,6 +33,7 @@ function getHighlighter(): Promise<Highlighter> {
           "html",
           "css",
           "sql",
+          "http",
           "text",
         ],
       })
@@ -135,7 +136,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       ) : (
         /* Loading skeleton / plain fallback */
         <div className="p-4 overflow-x-auto text-sm font-mono leading-relaxed bg-[#0d1117] select-text">
-          <pre className="text-slate-300 font-mono whitespace-pre">
+          <pre className="text-white font-mono whitespace-pre">
             {code.trim()}
           </pre>
         </div>
@@ -154,6 +155,7 @@ function normalizeLang(lang: string): string {
     sh: "bash",
     shell: "bash",
     zsh: "bash",
+    http: "http",
   };
   return map[lang.toLowerCase()] ?? lang.toLowerCase();
 }

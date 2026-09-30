@@ -52,8 +52,9 @@ body {
 /* Strip Shiki's default background — we provide our own dark shell */
 .shiki-wrapper pre.shiki {
   background: #0d1117 !important;
+  color: #ffffff !important;
   margin: 0;
-  padding: 1rem;
+  padding: 1.25rem;
   overflow-x: auto;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.875rem;
@@ -63,28 +64,59 @@ body {
 .shiki-wrapper code {
   counter-reset: line;
   font-family: inherit;
+  color: #ffffff !important;
 }
 
-/* Each line */
+/* Each line defaults to pure white */
 .shiki-wrapper .line {
   display: block;
   min-height: 1.75em;
+  color: #ffffff;
 }
 
 /* Hover highlight */
 .shiki-wrapper .line:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
 }
 
-/* Line numbers injected by our transformer */
+/* Force Shiki comments and muted text to be bright, readable white / high-contrast silver */
+.shiki-wrapper span[style*="color:#6A737D"],
+.shiki-wrapper span[style*="color:#6a737d"],
+.shiki-wrapper span[style*="color:#8B949E"],
+.shiki-wrapper span[style*="color:#8b949e"],
+.shiki-wrapper span[style*="color:#484F58"],
+.shiki-wrapper span[style*="color:#484f58"],
+.shiki-wrapper span[style*="color:#6e7681"],
+.shiki-wrapper span[style*="color:#6E7681"],
+.shiki-wrapper span[style*="color: #6a737d"],
+.shiki-wrapper span[style*="color: #8b949e"],
+.shiki-wrapper span[style*="color: #6e7681"] {
+  color: #f8fafc !important; /* High contrast crisp white */
+  font-weight: 400;
+}
+
+/* High contrast white for standard tokens */
+.shiki-wrapper span[style*="color:#E1E4E8"],
+.shiki-wrapper span[style*="color:#e1e4e8"],
+.shiki-wrapper span[style*="color:#C9D1D9"],
+.shiki-wrapper span[style*="color:#c9d1d9"],
+.shiki-wrapper span[style*="color:#D1D5DB"],
+.shiki-wrapper span[style*="color:#d1d5db"],
+.shiki-wrapper span[style*="color: #e1e4e8"],
+.shiki-wrapper span[style*="color: #c9d1d9"] {
+  color: #ffffff !important;
+}
+
+/* Line numbers: bright and readable */
 .shiki-wrapper .line-number {
   display: inline-block;
-  width: 2rem;
+  width: 2.25rem;
   text-align: right;
-  margin-right: 1rem;
-  color: #4d5566;
+  margin-right: 1.25rem;
+  color: #94a3b8 !important;
   font-size: 0.75rem;
+  font-weight: 500;
   user-select: none;
   flex-shrink: 0;
 }

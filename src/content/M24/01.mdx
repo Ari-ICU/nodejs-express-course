@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: `ប្រពៃណី HTTP គឺជាពិធី ResponseRequest ឯកទិសៈ Client ត្រូវតែចាប់ផ្តើមរាល់អន្តរកម្ម ហើយ Server មិនអាចរុញទិន្នន័យដោយសកម្មបានទេ។ ខណៈពេលដែលការបោះឆ្នោតរយៈពេលខ្លី ឬការបោះឆ្នោតរយៈពេលវែងពិនិត្យជាទៀងទាត់សម្រាប់បច្ចុប្បន្នភាព ពួកគេបង្កើត HTTP ដ៏ធំសម្បើម។ កម្មវិធីតាមពេលវេលាពិតប្រាកដ (ការជជែក ការតាមដានផ្ទាល់ សំបុត្រហិរញ្ញវត្ថុ ការកែសម្រួលរួមគ្នា) ទាមទារបណ្តាញទំនាក់ទំនងទ្វេទិស។`,
-  tip: "កុំប្រើ HTTP ការបោះឆ្នោតខ្លីៗសម្រាប់លក្ខណៈពិសេសក្នុងពេលជាក់ស្តែង! ការ​បោះឆ្នោត​រៀងរាល់ 2 វិនាទី​ម្តង​ប្រើប្រាស់​Bandwidth​ដ៏ច្រើន និង​ខ្ជះខ្ជាយ​ស៊ីភីយូ​Server ។",
+  tip: "កុំប្រើ HTTP ការបោះឆ្នោតខ្លីៗសម្រាប់លក្ខណៈពិសេសក្នុងពេលជាក់ស្តែង! ការ​បោះឆ្នោត​រៀងរាល់ 2 វិនាទី​ម្តង​ប្រើប្រាស់​Bandwidth​ដ៏ច្រើន និង​ខ្ជះខ្ជាយ​CPU​Server ។",
   objective: "ស្វែងយល់ពីភាពខុសគ្នារវាង HTTP ការបោះឆ្នោត Server-ព្រឹត្តិការណ៍ដែលបានផ្ញើ (SSE) និង WebSockets ។",
   expectedOutcome: "លក្ខណៈវិនិច្ឆ័យច្បាស់លាស់សម្រាប់ការជ្រើសរើសរវាង HTTP, SSE, និង full-duplex WebSockets ។",
   codeSnippet: "// Comparison:\n// 1. Short Polling:   Client asks every 2s: \"New data? New data? New data?\" (High overhead)\n// 2. Long Polling:    Client asks; server holds connection open until data arrives (Moderate)\n// 3. SSE:             Unidirectional server-to-client streaming over HTTP (Great for tickers)\n// 4. WebSocket:       Bi-directional, persistent TCP connection with sub-millisecond frames (Ideal for chat/gaming)",

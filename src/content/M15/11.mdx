@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការបែងចែកទម្រង់ Error រវាង Development និង Production",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការផ្ញើព័ត៌មានអំពីបញ្ហាលម្អិត (ដានជង់ ឈ្មោះកំហុស ព័ត៌មានលម្អិតដើម) ក្នុងការអភិវឌ្ឍ ខណៈពេលដែលត្រឡប់សារកំហុសទូទៅ និងសុវត្ថិភាពនៅក្នុងផលិតកម្ម។",
-  tip: "ការលេចធ្លាយដានជង់នៅក្នុងផលិតកម្មបង្ហាញផ្លូវឯកសារ SchemaDatabase និងបណ្ណាល័យដែលងាយរងគ្រោះដល់អ្នកវាយប្រហារ។",
-  objective: "អនុវត្ត Response កំហុសដែលដឹងពីបរិស្ថាន។",
+  summary: "ការផ្ញើព័ត៌មានអំពីបញ្ហាលម្អិត (Stack trace ឈ្មោះកំហុស ព័ត៌មានលម្អិតដើម) ក្នុងការអភិវឌ្ឍ ខណៈពេលដែលត្រឡប់សារកំហុសទូទៅ និងសុវត្ថិភាពនៅក្នុងផលិតកម្ម។",
+  tip: "ការលេចធ្លាយStack traceនៅក្នុងផលិតកម្មបង្ហាញផ្លូវឯកសារ SchemaDatabase និងបណ្ណាល័យដែលងាយរងគ្រោះដល់អ្នកវាយប្រហារ។",
+  objective: "អនុវត្ត Response កំហុសដែលដឹងពីEnvironment។",
   expectedOutcome: "ទិន្នន័យបំបាត់កំហុសដ៏សំបូរបែបនៅក្នុងមូលដ្ឋានជាមួយនឹងសុវត្ថិភាពការពារគ្រាប់កាំភ្លើងនៅក្នុងផលិតកម្ម។",
   codeSnippet: "const sendDevError = (err, res) => {\n  res.status(err.statusCode || 500).json({\n    success: false,\n    error: err.message,\n    stack: err.stack,\n    err\n  });\n};\n\nconst sendProdError = (err, res) => {\n  if (err.isOperational) {\n    res.status(err.statusCode).json({ success: false, error: err.message });\n  } else {\n    // Unknown bug: don't leak details!\n    res.status(500).json({ success: false, error: \"Something went wrong!\" });\n  }\n};",
 };

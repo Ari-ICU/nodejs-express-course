@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "bash",
   summary: `Newman គឺជាអ្នករត់ Collections បន្ទាត់ពាក្យបញ្ជាសម្រាប់ Postman ។ វាអនុញ្ញាតឱ្យដំណើរការ Postman ឈុតសាកល្បងដោយផ្ទាល់ពីស្គ្រីបស្ថានីយ និងដំណើរការ GitHub ដោយស្វ័យប្រវត្តិ CI/CD បំពង់ បញ្ចេញរបាយការណ៍សាកល្បងដែលមានរចនាសម្ព័ន្ធ និង Request រទាញដែលបរាជ័យ ប្រសិនបើការអះអាងណាមួយត្រូវបានបំបែក។`,
   tip: "ដំណើរការ `npx newman run collection.json -e env.json` នៅក្នុង GitHub Actions pipeline របស់អ្នក ដើម្បីដំណើរការការធ្វើតេស្ត API របស់អ្នកលើរាល់ Request ទាញ។",
-  objective: "រួមបញ្ចូល Newman CLI ទៅក្នុងដំណើរការធ្វើសមាហរណកម្មបន្តដោយស្វ័យប្រវត្តិ។",
+  objective: "រួមបញ្ចូល Newman CLI ទៅក្នុងដំណើរការធ្វើIntegrationបន្តដោយស្វ័យប្រវត្តិ។",
   expectedOutcome: "ការធ្វើតេស្តតំរែតំរង់ដោយស្វ័យប្រវត្តិ API រួមបញ្ចូលទៅក្នុងបំពង់ CI/CD ។",
   codeSnippet: "# Run Postman Collection headless via Newman CLI\nnpx newman run ./docs/postman/collection.json   --environment ./docs/postman/local-env.json   --reporters cli,htmlextra   --reporter-htmlextra-export ./reports/api-test-report.html\n\n# In GitHub Actions:\n# - name: Run Postman Tests via Newman\n#   run: npx newman run ./docs/postman/collection.json -e ./docs/postman/ci-env.json",
 };

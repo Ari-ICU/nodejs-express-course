@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `កិច្ចការ​អសមកាល​ដាក់​ការ​ហៅ​ត្រឡប់​របស់​ពួកគេ​ទៅ​លើ​ជួរ​កិច្ចការ​នៅ​ពេល I/O បញ្ចប់។ Event Loop ទាញ Callbacks មកវិញពីជួរទាំងនេះ ហើយប្រតិបត្តិពួកវានៅពេលណាដែលជង់ការហៅគឺទទេ។`,
   tip: "ប្រសិនបើជង់ការហៅ JavaScript ជាប់រវល់ក្នុងការប្រតិបត្តិរង្វិលជុំដែលធ្វើ Synchronous ដ៏វែង នោះ Event Queue បម្រុងទុក ដែលធ្វើអោយភាពយឺតយ៉ាវរបស់ Server ថយចុះ។",
-  objective: "ស្វែងយល់ពីរបៀបដែលកិច្ចការរង់ចាំក្នុងជួរ ហើយផ្លាស់ទីទៅជង់ការហៅទូរសព្ទ។",
+  objective: "ស្វែងយល់ពីរបៀបដែលកិច្ចការរង់ចាំក្នុងជួរ ហើយផ្លាស់ទីទៅCall Stack។",
   expectedOutcome: "ភាពច្បាស់លាស់លើការកំណត់ពេលអសមកាល និងការកំណត់អាទិភាពជួរ។",
   codeSnippet: "console.log(\"A: Stack execution\");\n\nsetTimeout(() => {\n  console.log(\"C: Task queue callback executed\");\n}, 0);\n\nconsole.log(\"B: Stack execution continues\");\n// Output order: A -> B -> C",
 };

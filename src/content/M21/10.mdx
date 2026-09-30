@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `ស្ថាបត្យកម្មឯកសារ API កម្រិតផលិតកម្ម ធ្វើស្វ័យប្រវត្តិកម្មការបង្កើតជាក់លាក់ពីឯកសារផ្លូវ បង្ហាញអន្តរកម្ម Swagger UI សម្រាប់ការអភិវឌ្ឍ និងបង្កើត HTML ឋិតិវន្ត ឬ Markdown សម្រាប់វិបផតថលអ្នកអភិវឌ្ឍន៍សាធារណៈ។ កំណែឯកសាររបស់អ្នក (\`/api/v1/docs\`, \`/api/v2/docs\`) ធានាភាពឆបគ្នាថយក្រោយសម្រាប់អ្នកប្រើប្រាស់សហគ្រាស។`,
   tip: "នាំចេញការបញ្ជាក់ OpenAPI ដែលបានបង្កើតរបស់អ្នកជាឯកសារ JSON ឆៅ (`/api/docs.json`) ដូច្នេះឧបករណ៍ខាងក្រៅដូចជា Postman និងម៉ាស៊ីនភ្លើង SDK អាចនាំចូលវាដោយស្វ័យប្រវត្តិ។",
-  objective: "ស្ថាបត្យករនូវប្រព័ន្ធឯកសារ API កំណែទូលំទូលាយនៅក្នុង Node.js ។",
+  objective: "រៀបចំ Architectureនូវប្រព័ន្ធឯកសារ API កំណែទូលំទូលាយនៅក្នុង Node.js ។",
   expectedOutcome: "ការធ្វើបច្ចុប្បន្នភាពដោយខ្លួនឯង អន្តរកម្ម និងការនាំចេញឯកសារ API សម្រាប់ Backend ផលិតកម្ម។",
   codeSnippet: "// Expose raw spec for Postman / SDK generators\napp.get(\"/api/docs.json\", (req, res) => {\n  res.setHeader(\"Content-Type\", \"application/json\");\n  res.send(swaggerSpec);\n});\n\n// Mount interactive documentation UI\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {\n  explorer: true,\n  customCss: \".swagger-ui .topbar { display: none }\", // Clean look\n  customSiteTitle: \"Enterprise REST API Documentation\",\n}));",
 };

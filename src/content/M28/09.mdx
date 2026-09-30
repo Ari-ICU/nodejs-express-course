@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Multi-Container Stack ជាមួយ Docker Compose",
   type: "lab",
   codeLanguage: "yaml",
-  summary: `Docker រៀបចំសម្របសម្រួលបរិស្ថានពហុកុងតឺន័រ (Node.js API, MongoDB, Redis, Nginx) ដែលបានកំណត់ក្នុងឯកសារ \`docker-compose.yml\` តែមួយ។ ពាក្យបញ្ជាតែមួយ (\`docker compose up -d\`) បង្កើតបណ្តាញខាងក្នុងដាច់ដោយឡែក ម៉ោនទំហំផ្ទុក និងចាប់ផ្ដើមជង់កម្មវិធីទាំងមូល។`,
+  summary: `Docker រៀបចំសម្របសម្រួលMulti-container environment (Node.js API, MongoDB, Redis, Nginx) ដែលបានកំណត់ក្នុងឯកសារ \`docker-compose.yml\` តែមួយ។ ពាក្យបញ្ជាតែមួយ (\`docker compose up -d\`) បង្កើតបណ្តាញខាងក្នុងដាច់ដោយឡែក ម៉ោនទំហំផ្ទុក និងចាប់ផ្ដើមApplication stackទាំងមូល។`,
   tip: "ប្រើកម្រិតសំឡេងដែលមានឈ្មោះសម្រាប់ការផ្ទុក Database (`volumes: - mongodb_data:/data/db`) ដូច្នេះកំណត់ត្រា Database អាចបន្តដំណើរការកុងតឺន័រឡើងវិញ និងធ្វើបច្ចុប្បន្នភាព។",
-  objective: "កំណត់ និងរៀបចំជង់កម្មវិធីពហុកុងតឺន័រដោយប្រើ Docker តែង។",
-  expectedOutcome: "ការ​ចាប់ផ្ដើម​បរិស្ថាន​ក្នុង​មូលដ្ឋាន​ពាក្យ​បញ្ជា​មួយ Node.js, MongoDB, និង Redis ។",
+  objective: "កំណត់ និងរៀបចំApplication stackMulti-containerដោយប្រើ Docker តែង។",
+  expectedOutcome: "ការ​ចាប់ផ្ដើម​Environment​ក្នុង​មូលដ្ឋាន​ពាក្យ​បញ្ជា​មួយ Node.js, MongoDB, និង Redis ។",
   codeSnippet: "version: \"3.8\"\n\nservices:\n  api:\n    build: .\n    ports:\n      - \"5000:5000\"\n    environment:\n      - NODE_ENV=production\n      - MONGODB_URI=mongodb://mongo:27017/app_prod\n      - REDIS_URL=redis://redis:6379\n    depends_on:\n      - mongo\n      - redis\n\n  mongo:\n    image: mongo:7-jammy\n    restart: always\n    volumes:\n      - mongo_data:/data/db\n\n  redis:\n    image: redis:alpine\n    restart: always\n\nvolumes:\n  mongo_data:",
 };
 

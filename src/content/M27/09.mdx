@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Centralized Configuration និង Environment Validation",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ថត Config កណ្តាលការកំណត់កម្មវិធី និងអថេរបរិស្ថាន។ ជំនួសឱ្យការខ្ចាត់ខ្ចាយ \`process.env.VAR\` ឯកសារយោងលើឯកសាររាប់សិប ឯកសារកណ្តាល \`config/env.js\` អាន ធ្វើឱ្យមានValidation (តាមរយៈ Zod) និងនាំចេញវត្ថុកំណត់រចនាសម្ព័ន្ធដែលបានវាយបញ្ចូល បរាជ័យយ៉ាងលឿននៅពេលចាប់ផ្តើម ប្រសិនបើបាត់អាថ៌កំបាំងសំខាន់ៗណាមួយ។`,
-  tip: "ធ្វើឱ្យអថេរបរិស្ថានរបស់អ្នកមាន Validation ជាមួយ Zod នៅពេលចាប់ផ្តើម ដូច្នេះ Server គាំងភ្លាមៗជាមួយនឹងសារកំហុសច្បាស់លាស់ ជាជាងការបរាជ័យយ៉ាងអាថ៌កំបាំងប៉ុន្មានម៉ោងក្រោយមក។",
+  summary: `ថត Config កណ្តាលការកំណត់កម្មវិធី និងEnvironment Variables។ ជំនួសឱ្យការខ្ចាត់ខ្ចាយ \`process.env.VAR\` ឯកសារយោងលើឯកសាររាប់សិប ឯកសារកណ្តាល \`config/env.js\` អាន ធ្វើឱ្យមានValidation (តាមរយៈ Zod) និងនាំចេញវត្ថុកំណត់រចនាសម្ព័ន្ធដែលបានវាយបញ្ចូល បរាជ័យយ៉ាងលឿននៅពេលចាប់ផ្តើម ប្រសិនបើបាត់អាថ៌កំបាំងសំខាន់ៗណាមួយ។`,
+  tip: "ធ្វើឱ្យEnvironment Variablesរបស់អ្នកមាន Validation ជាមួយ Zod នៅពេលចាប់ផ្តើម ដូច្នេះ Server គាំងភ្លាមៗជាមួយនឹងសារកំហុសច្បាស់លាស់ ជាជាងការបរាជ័យយ៉ាងអាថ៌កំបាំងប៉ុន្មានម៉ោងក្រោយមក។",
   objective: "កណ្តាល និងធ្វើឱ្យមាន ValidationParams កំណត់រចនាសម្ព័ន្ធកម្មវិធីទាំងអស់។",
-  expectedOutcome: "ការ​គ្រប់​គ្រង​ការ​កំណត់​រចនាសម្ព័ន្ធ​មិន​បាន​លឿន​ការពារ​ការ​គាំង​ពេល​រត់​ពី​អថេរ​បរិស្ថាន​ដែល​បាត់។",
+  expectedOutcome: "ការ​គ្រប់​គ្រង​ការ​កំណត់​រចនាសម្ព័ន្ធ​មិន​បាន​លឿន​ការពារ​ការ​គាំង​ពេល​រត់​ពី​អថេរ​Environment​ដែល​បាត់។",
   codeSnippet: "// config/env.js\nimport { z } from \"zod\";\n\nconst envSchema = z.object({\n  NODE_ENV: z.enum([\"development\", \"production\", \"test\"]).default(\"development\"),\n  PORT: z.coerce.number().default(5000),\n  MONGODB_URI: z.string().url(),\n  JWT_ACCESS_SECRET: z.string().min(32),\n  REDIS_URL: z.string().default(\"redis://localhost:6379\"),\n});\n\nconst parsed = envSchema.safeParse(process.env);\nif (!parsed.success) {\n  console.error(\"Invalid environment variables:\", parsed.error.format());\n  process.exit(1); // Fail fast!\n}\n\nexport const env = parsed.data;",
 };
 

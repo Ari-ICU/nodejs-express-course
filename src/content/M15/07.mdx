@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `ការលុបបំបាត់ប្លុក \`try/catch\` ច្រំដែលនៅក្នុងControllersដោយប្រើអនុគមន៍រុំ \`catchAsync\` លំដាប់ខ្ពស់ជាង ដែលចាប់យកPromisesដែលបានច្រានចោល ហើយបញ្ជូនពួកគេទៅ \`next(err)\` ។`,
-  tip: "ខ្សែរុំ `catchAsync` 4 ជួររក្សាទុករាប់ពាន់បន្ទាត់នៃ try/catch boilerplate ឆ្លងកាត់មូលដ្ឋានកូដសហគ្រាស។",
+  tip: "Wrapper `catchAsync` 4 ជួររក្សាទុករាប់ពាន់បន្ទាត់នៃ try/catch boilerplate ឆ្លងកាត់មូលដ្ឋានកូដសហគ្រាស។",
   objective: "លុបបំបាត់ការសាកល្បង/ចាប់បន្ទះ boilerplate ដោយប្រើឧបករណ៍រុំអសមកាល។",
   expectedOutcome: "សម្អាតមុខងារ Controllers សង្ខេប។",
   codeSnippet: "// Higher-Order Function to eliminate try/catch\nexport const catchAsync = (fn) => {\n  return (req, res, next) => {\n    fn(req, res, next).catch(next);\n  };\n};\n\n// Clean controller without any try/catch!\nexport const getUser = catchAsync(async (req, res) => {\n  const user = await userService.getUserById(req.params.id);\n  res.json({ success: true, data: user });\n});",

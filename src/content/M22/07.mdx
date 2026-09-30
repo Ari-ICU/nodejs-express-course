@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត HTTP Requests ជាមួយ Supertest",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Supertest ផ្តល់នូវកម្រិតខ្ពស់ HTTP abstractions សម្រាប់ការធ្វើតេស្ត Node.js កម្មវិធី Express ដោយមិនភ្ជាប់ទៅច្រកបណ្តាញជាក់ស្តែង។ វាចាប់ផ្ដើមកម្មវិធី Express ក្នុងអង្គចងចាំ បញ្ជូន Request HTTP ក្លែងធ្វើ និងអះអាងប្រឆាំងនឹង HTTP Status Codes និង Headers នៅក្នុងវាក្យសម្ព័ន្ធដែលអាចច្រវ៉ាក់បានយ៉ាងស្ទាត់ជំនាញ។`,
+  summary: `Supertest ផ្តល់នូវកម្រិតខ្ពស់ HTTP abstractions សម្រាប់ការធ្វើតេស្ត Node.js កម្មវិធី Express ដោយមិនភ្ជាប់ទៅច្រកបណ្តាញជាក់ស្តែង។ វាចាប់ផ្ដើមកម្មវិធី Express ក្នុងMemory បញ្ជូន Request HTTP ក្លែងធ្វើ និងអះអាងប្រឆាំងនឹង HTTP Status Codes និង Headers នៅក្នុងវាក្យសម្ព័ន្ធដែលអាចច្រវ៉ាក់បានយ៉ាងស្ទាត់ជំនាញ។`,
   tip: "បញ្ជូនវត្ថុ `app` របស់អ្នកដោយផ្ទាល់ទៅ `request(app)` ដោយមិនចាំបាច់ហៅទៅ `app.listen()` — វាជៀសវាងកំហុសឆ្គងនៃច្រកចូលនៅពេលដំណើរការការធ្វើតេស្តក្នុងពេលដំណាលគ្នា។",
-  objective: "ប្រើ Supertest ដើម្បីបញ្ជូន HTTP កិរិយាស័ព្ទ (GET, POST, PUT, DELETE) និងអះអាង Response ។",
-  expectedOutcome: "ការធ្វើតេស្តចុងក្នុងអង្គចងចាំលឿន HTTP ដោយមិនចាំបាច់បើករន្ធបណ្តាញ។",
+  objective: "ប្រើ Supertest ដើម្បីបញ្ជូន HTTP HTTP Methods (GET, POST, PUT, DELETE) និងអះអាង Response ។",
+  expectedOutcome: "ការធ្វើតេស្តចុងក្នុងMemoryលឿន HTTP ដោយមិនចាំបាច់បើករន្ធបណ្តាញ។",
   codeSnippet: "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport app from \"../src/app.js\";\n\ndescribe(\"GET /api/v1/health\", () => {\n  it(\"should return 200 OK with system status\", async () => {\n    const res = await request(app)\n      .get(\"/api/v1/health\")\n      .expect(\"Content-Type\", /json/)\n      .expect(200);\n\n    expect(res.body.status).toBe(\"success\");\n    expect(res.body.data).toHaveProperty(\"uptime\");\n  });\n});",
 };
 

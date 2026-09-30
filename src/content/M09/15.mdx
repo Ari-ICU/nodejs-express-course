@@ -17,7 +17,7 @@ export const meta = {
 ### 2. Building Dynamic Database Queries Safely
 Extract \`req.query\`, sanitize values, and dynamically construct query clauses. In production ORMs (Prisma, Mongoose, Knex), always use parameterized queries to avoid injection vulnerabilities.`,
   tip: "តែងតែបំប្លែង និងធ្វើឱ្យប្រភេទទិន្នន័យមាន Validation នៅពេលអាន `req.query`។ តាមលំនាំដើមក្នុង Express តម្លៃ `req.query` ទាំងអស់មកដល់ជា String! ឧទាហរណ៍ `'true' !== true` និង `typeof req.query.price === 'string'`។",
-  objective: "បង្កើតម៉ាស៊ីនត្រងសំណួរពហុ Params ថាមវន្តនៅក្នុងការផ្គូផ្គងប្រភេទគាំទ្រ Express ជួរតម្លៃ និងភាពអាចរកបានប៊ូលីន។",
+  objective: "បង្កើតម៉ាស៊ីនត្រងសំណួរពហុ Params ថាមវន្តនៅក្នុងការផ្គូផ្គងប្រភេទគាំទ្រ Express ជួរតម្លៃ និងភាពអាចរកបានBoolean។",
   expectedOutcome: "សមត្ថភាពក្នុងការដោះស្រាយ Filter សំណួរដែលអាចបត់បែនបានតាមលក្ខណៈថាមវន្ត ខណៈពេលដែលការបញ្ជាក់ប្រភេទ និងការការពារពី Params ខុសទម្រង់។",
   codeSnippet: `const express = require("express");
 const app = express();

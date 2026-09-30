@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: `ការងារផ្ទៃខាងក្រោយដោះស្រាយបញ្ហាប្រឈមផ្នែកផលិតកម្មសំខាន់ៗចំនួនបី៖ Response ភាពជឿជាក់ និងការធ្វើមាត្រដ្ឋាន។ ការ​ឆ្លើយតប​ធានា​ថា​អ្នក​ប្រើ​ប្រាស់​ចុង​ក្រោយ​ទទួល​បាន​បទ​ពិសោធ​យ៉ាង​រហ័ស, រង 100ms API Response ។ ភាពជឿជាក់ធានានូវការបរាជ័យបណ្តោះអាសន្ន (ឧ. ការដាច់ SMTP) ត្រូវបានព្យាយាមឡើងវិញដោយស្វ័យប្រវត្តិដោយមិនបាត់បង់សកម្មភាពរបស់អ្នកប្រើប្រាស់។ ការធ្វើមាត្រដ្ឋានអនុញ្ញាតឱ្យកម្មករធ្វើមាត្រដ្ឋានដោយឯករាជ្យពី API Server គេហទំព័រ។`,
-  tip: "ការបំបែក Server គេហទំព័រ API ពីបុគ្គលិកផ្ទៃខាងក្រោយអនុញ្ញាតឱ្យអ្នកធ្វើមាត្រដ្ឋានស៊ីភីយូកម្មករដោយឯករាជ្យក្នុងអំឡុងពេលមាន Payload ការងារច្រើនដោយមិនប៉ះពាល់ដល់ដំណើរការបណ្តាញ API ។",
+  tip: "ការបំបែក Server គេហទំព័រ API ពីBackground workersអនុញ្ញាតឱ្យអ្នកធ្វើមាត្រដ្ឋានWorker CPUដោយឯករាជ្យក្នុងអំឡុងពេលមាន Payload ការងារច្រើនដោយមិនប៉ះពាល់ដល់ដំណើរការបណ្តាញ API ។",
   objective: "វិភាគ Response ភាពជឿជាក់ និងអត្ថប្រយោជន៍នៃការបែងចែកធនធាននៃស្ថាបត្យកម្មការងារ។",
   expectedOutcome: "ការយល់ដឹងអំពីការកាត់ផ្តាច់ការងារអសមកាលរបស់សហគ្រាស និងការអត់ធ្មត់ចំពោះកំហុស។",
   codeSnippet: "// 3 Pillars of Background Jobs:\n// 1. User Responsiveness: Return 202 Accepted or 201 Created immediately\n// 2. Failure Resilience: Automated retries with exponential backoff on network dropouts\n// 3. Rate-Limiting External APIs: Throttle outgoing requests to avoid 3rd-party rate limits",

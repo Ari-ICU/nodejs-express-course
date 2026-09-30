@@ -7,8 +7,8 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `ការត្រួតពិនិត្យការអនុវត្តជាបន្តបន្ទាប់តាមដានសុខភាពកម្មវិធីផលិតកម្ម។ ឧបករណ៍ត្រួតពិនិត្យការអនុវត្តកម្មវិធី (APM) (Prometheus, Grafana, New Relic, Datadog) វាស់ស្ទង់ការចែកចាយភាពយឺតយ៉ាវនៃ Endpoints អត្រាកំហុស លំហូរចូល (Request ក្នុងមួយវិនាទី) និងពេលវេលាសំណួរនៃ Database ដើម្បីរកមើលការតំរែតំរង់ដំណើរការ មុនពេលអ្នកប្រើប្រាស់ត្អូញត្អែរ។`,
   tip: "បង្ហាញ Endpoints `/metrics` ដោយប្រើ `prom-client` ដើម្បីបំបែកការវាស់វែងពេលដំណើរការទៅក្នុង Prometheus និងមើលឃើញផ្ទាំងគ្រប់គ្រងពេលវេលាជាក់ស្តែងនៅក្នុង Grafana ។",
-  objective: "ឧបករណ៍ដំណើរការស្ថាបត្យករ និង Collections telemetry កម្មវិធី។",
-  expectedOutcome: "ភាពយឺតយ៉ាវ អង្គចងចាំ និងដំណើរការត្រួតពិនិត្យដែលត្រៀមរួចជាស្រេចក្នុងការផលិត។",
+  objective: "ឧបករណ៍ដំណើរការរៀបចំ Architecture និង Collections telemetry កម្មវិធី។",
+  expectedOutcome: "ភាពយឺតយ៉ាវ Memory និងដំណើរការត្រួតពិនិត្យដែលត្រៀមរួចជាស្រេចក្នុងការផលិត។",
   codeSnippet: "// Instrumentation with prom-client:\nimport client from \"prom-client\";\n\n// Collect default Node.js system metrics (event loop, memory, CPU)\nclient.collectDefaultMetrics({ prefix: \"app_\" });\n\n// Custom HTTP request duration histogram\nexport const httpRequestDuration = new client.Histogram({\n  name: \"http_request_duration_seconds\",\n  help: \"Duration of HTTP requests in seconds\",\n  labelNames: [\"method\", \"route\", \"status_code\"],\n  buckets: [0.05, 0.1, 0.3, 0.5, 1, 2, 5],\n});\n\n// Expose /metrics endpoint for Prometheus scraping\napp.get(\"/metrics\", async (req, res) => {\n  res.set(\"Content-Type\", client.register.contentType);\n  res.end(await client.register.metrics());\n});",
 };
 

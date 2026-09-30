@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `ផ្លូវបង្ហោះរូបភាពច្រើនតែទទួលយករូបភាពតែមួយ (ឧ. រូបតំណាងអ្នកប្រើប្រាស់) ឬបណ្តុំរូបភាព (ឧ. វិចិត្រសាលផលិតផល) ។ ការប្រើប្រាស់ \`upload.single('avatar')\` គ្រប់គ្រងឯកសារមួយ ខណៈ \`upload.array('photos', 5)\` ទទួលយករូបភាពរហូតដល់ 5 ក្រោមឈ្មោះវាលដូចគ្នា។ \`upload.fields()\` អនុញ្ញាតឱ្យគ្រប់គ្រងវាលចម្រុះដូចជារូបភាពគម្របមួយ និងរូបថតវិចិត្រសាលជាច្រើន។`,
   tip: "ប្រើ `upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])` សម្រាប់ Endpoint ផលិតផលអេឡិចត្រូនិក។",
-  objective: "ដោះស្រាយការបង្ហោះរូបភាពពហុវាលតែមួយ អារេ និងចម្រុះនៅក្នុង Express ។",
+  objective: "ដោះស្រាយការបង្ហោះរូបភាពពហុវាលតែមួយ Array និងចម្រុះនៅក្នុង Express ។",
   expectedOutcome: "ផ្លូវផ្ទុករូបភាពចម្រុះដែលគាំទ្រទម្រង់ពហុរូបភាពស្មុគស្មាញ។",
   codeSnippet: "// routes/product.routes.js\nimport multer from \"multer\";\nconst upload = multer({ dest: \"uploads/temp\" });\n\n// Handling mixed fields: 1 cover image + up to 5 gallery images\nconst productUploads = upload.fields([\n  { name: \"coverImage\", maxCount: 1 },\n  { name: \"gallery\", maxCount: 5 },\n]);\n\nrouter.post(\"/products\", productUploads, (req, res) => {\n  const cover = req.files[\"coverImage\"]?.[0];\n  const gallery = req.files[\"gallery\"] || [];\n\n  res.json({\n    status: \"success\",\n    coverFilename: cover?.filename,\n    galleryCount: gallery.length,\n  });\n});",
 };

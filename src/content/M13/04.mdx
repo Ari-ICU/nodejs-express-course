@@ -6,9 +6,9 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: `ការកំណត់គំរូ Mongoose ដែលមានរចនាសម្ព័ន្ធសម្រាប់ Entity កម្មវិធី (អ្នកប្រើប្រាស់ ផលិតផល ប្រភេទ ការបញ្ជាទិញ) ជាមួយនឹងសន្ទស្សន៍ Schema ។`,
-  tip: "បង្កើត​លិបិក្រម​ផ្សំ​លើ​វាល​ដែល​បាន​សួរ​ញឹកញាប់ (ឧ. `{ category: 1, price: -1 }`) ។",
+  tip: "បង្កើត​Index​ផ្សំ​លើ​វាល​ដែល​បាន​សួរ​ញឹកញាប់ (ឧ. `{ category: 1, price: -1 }`) ។",
   objective: "បង្កើតគំរូ Entity ផលិតកម្មដែលមានសន្ទស្សន៍សមស្រប។",
-  expectedOutcome: "លិបិក្រម និយមន័យ Schema ដែលមាន Validation រួចរាល់សម្រាប់ CRUD APIs ។",
+  expectedOutcome: "Index និយមន័យ Schema ដែលមាន Validation រួចរាល់សម្រាប់ CRUD APIs ។",
   codeSnippet: "// models/product.model.js\nimport { Schema, model } from \"mongoose\";\n\nconst productSchema = new Schema({\n  name: { type: String, required: true, trim: true, index: true },\n  price: { type: Number, required: true, min: 0 },\n  category: { type: Schema.Types.ObjectId, ref: \"Category\", required: true }\n}, { timestamps: true });\n\nexport const Product = model(\"Product\", productSchema);",
 };
 

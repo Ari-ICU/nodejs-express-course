@@ -6,7 +6,7 @@ export const meta = {
   type: "architecture",
   codeLanguage: "bash",
   summary: `មូលដ្ឋានកូដ Backend ដែលអាចធ្វើមាត្រដ្ឋានបានអនុវត្តការបំបែកយ៉ាងតឹងរឹងនៃការព្រួយបារម្ភ (SoC) ។ ការរៀបចំកូដទៅជាស្រទាប់ដាច់ពីគ្នា (\`config\`, \`routes\`, \`controllers\`, \`services\`, \`models\`, \`middleware\`, \`validators\`, \`utils\`) ការពារកុំឱ្យឯកសារសាកល្បងដែលរញ៉េរញ៉ៃ និងអាចរក្សាបាននូវគម្រោង។`,
-  tip: "រក្សា Business Logic យ៉ាងតឹងរ៉ឹងនៅខាងក្នុង `services/` និង HTTP Business Logic ពិធីការនៅខាងក្នុង `controllers/` ។ វាធ្វើឱ្យការផ្លាស់ប្តូរ Express សម្រាប់ Fastify ឬការសរសេរការធ្វើតេស្តឯកតាមិនសំខាន់។",
+  tip: "រក្សា Business Logic យ៉ាងតឹងរ៉ឹងនៅខាងក្នុង `services/` និង HTTP Business Logic ពិធីការនៅខាងក្នុង `controllers/` ។ វាធ្វើឱ្យការផ្លាស់ប្តូរ Express សម្រាប់ Fastify ឬការសរសេរUnit Testingមិនសំខាន់។",
   objective: "រៀបចំរចនាសម្ព័ន្ធថតម៉ូឌុលដែលត្រៀមរួចជាស្រេចសម្រាប់គម្រោង Node.js Express ។",
   expectedOutcome: "ប្លង់គម្រោងសហគ្រាសស្ដង់ដារដែលបានអនុម័តនៅទូទាំងលក្ខណៈពិសេសទាំងអស់។",
   codeSnippet: "src/\n├── config/         # Environment vars, database connections, logger\n├── controllers/    # Request/response handling, HTTP status codes\n├── services/       # Core business logic, data calculations, 3rd party APIs\n├── models/         # Mongoose schemas and database models\n├── routes/         # Express router endpoint definitions\n├── middleware/     # Auth, error handling, rate limiters, upload guards\n├── validators/     # Zod/Joi request validation schemas\n├── utils/          # AppError class, formatters, helpers\n├── jobs/           # BullMQ queue producers and workers\n└── app.js          # Express app assembly (no listen())",

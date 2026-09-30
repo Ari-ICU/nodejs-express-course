@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: `ការដាក់ Callbacks មកវិញអសមកាលជាបន្តបន្ទាប់ច្រើនដងនាំទៅដល់ 'ពីរ៉ាមីតនៃសេចក្តីវិនាស' (Callback Hell) ធ្វើឱ្យកូដមិនអាចអានបាន ពិបាកក្នុងការតាមដាន និងងាយនឹងមានកំហុសដែលមិនអាចដោះស្រាយបាន។`,
-  tip: "Refactor បានដាក់ខ្សែសង្វាក់ Callbacks មកវិញទៅក្នុងខ្សែសង្វាក់សន្យា ឬធ្វើ Synchronous/រង់ចាំដើម្បីបង្រួមរចនាសម្ព័ន្ធកូដ។",
+  tip: "Refactor បានដាក់Callback chaining មកវិញទៅក្នុងPromise chaining ឬធ្វើ Synchronous/រង់ចាំដើម្បីបង្រួមរចនាសម្ព័ន្ធកូដ។",
   objective: "ធ្វើរោគវិនិច្ឆ័យ និងដោះស្រាយភាពលំបាកស្ថាបត្យកម្មនៃ Callbacks មកវិញដែលបង្កប់យ៉ាងជ្រៅ។",
   expectedOutcome: "ការទទួលស្គាល់យ៉ាងច្បាស់អំពីមូលហេតុដែល Promises និង async/await ក្លាយជាស្តង់ដារទំនើប។",
   codeSnippet: "// The \"Pyramid of Doom\" (Anti-pattern):\ngetUser(userId, (err, user) => {\n  if (err) return handleErr(err);\n  getOrders(user.id, (err, orders) => {\n    if (err) return handleErr(err);\n    getInvoice(orders[0].id, (err, invoice) => {\n      if (err) return handleErr(err);\n      sendEmail(user.email, invoice, (err) => {\n        // Deeply nested, unmaintainable code!\n      });\n    });\n  });\n});",

@@ -2,13 +2,13 @@ export const meta = {
   id: "M28-01",
   number: "01",
   title: "Development vs Production",
-  khmerTitle: "ភាពខុសគ្នារវាងបរិស្ថាន Development និង Production",
+  khmerTitle: "ភាពខុសគ្នារវាងEnvironment Development និង Production",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `បរិស្ថានអភិវឌ្ឍន៍ផ្តល់អាទិភាពដល់ល្បឿនអ្នកអភិវឌ្ឍន៍៖ ការផ្ទុកឡើងវិញក្តៅ (nodemon/tsx) ដានជង់កំហុសលម្អិត ប្រអប់សំបុត្រ SMTP ក្លែងក្លាយ និងកំណត់ហេតុកុងសូលពាក្យសំដី។ បរិយាកាសផលិតកម្មផ្តល់អាទិភាពដល់សុវត្ថិភាព ពេលវេលាដំណើរការ ការអនុវត្ត និងការអត់ឱនកំហុស៖ ការស្ថាបនាដែលបានបង្រួមអប្បបរមាដែលបានធ្វើឱ្យប្រសើរ ការកំណត់រចនាសម្ព័ន្ធ JSON ការអ៊ិនគ្រីប HTTPS តឹងរ៉ឹង និង Response Envelope ដែលមាន Sanitization ។`,
-  tip: "កំណត់ `NODE_ENV=production` នៅលើ Server ផលិតកម្ម — Express និងកញ្ចប់ជាច្រើនបើកដំណើរការ Cache ដោយស្វ័យប្រវត្តិ និងទប់ស្កាត់ការលេចធ្លាយដានជង់ខាងក្នុង នៅពេលដែលទង់នេះត្រូវបានកំណត់។",
-  objective: "ភាពផ្ទុយគ្នានៃតម្រូវការប្រតិបត្តិការរវាងការអភិវឌ្ឍ និងបរិស្ថានផលិតកម្ម។",
-  expectedOutcome: "យុទ្ធសាស្ត្រច្បាស់លាស់សម្រាប់ការអនុវត្តដែលពឹងផ្អែកលើបរិស្ថាន និងអាកប្បកិរិយាសុវត្ថិភាព។",
+  summary: `Development environmentផ្តល់អាទិភាពដល់ល្បឿនអ្នកអភិវឌ្ឍន៍៖ Hot reload (nodemon/tsx) Stack traceលម្អិត ប្រអប់សំបុត្រ SMTP ក្លែងក្លាយ និងកំណត់ហេតុកុងសូលពាក្យសំដី។ Production environmentផ្តល់អាទិភាពដល់សុវត្ថិភាព ពេលវេលាដំណើរការ ការអនុវត្ត និងការអត់ឱនកំហុស៖ ការស្ថាបនាដែលបានបង្រួមអប្បបរមាដែលបានធ្វើឱ្យប្រសើរ ការកំណត់រចនាសម្ព័ន្ធ JSON ការអ៊ិនគ្រីប HTTPS តឹងរ៉ឹង និង Response Envelope ដែលមាន Sanitization ។`,
+  tip: "កំណត់ `NODE_ENV=production` នៅលើ Server ផលិតកម្ម — Express និងកញ្ចប់ជាច្រើនបើកដំណើរការ Cache ដោយស្វ័យប្រវត្តិ និងទប់ស្កាត់ការលេចធ្លាយStack traceខាងក្នុង នៅពេលដែលទង់នេះត្រូវបានកំណត់។",
+  objective: "ភាពផ្ទុយគ្នានៃតម្រូវការប្រតិបត្តិការរវាងការអភិវឌ្ឍ និងProduction environment។",
+  expectedOutcome: "យុទ្ធសាស្ត្រច្បាស់លាស់សម្រាប់ការអនុវត្តដែលពឹងផ្អែកលើEnvironment និងអាកប្បកិរិយាសុវត្ថិភាព។",
   codeSnippet: "// Key Differences:\n// Setting                | Development            | Production\n// -----------------------+------------------------+--------------------------\n// NODE_ENV               | \"development\"          | \"production\"\n// Error Responses        | Full stack trace       | Generic \"Something went wrong\"\n// Server Process         | nodemon / tsx watch    | PM2 cluster / Docker container\n// Logging                | Pretty console output  | Structured JSON (Winston/Pino)\n// HTTPS                  | Disabled (http://)     | Enforced (SSL/TLS certificate)",
 };
 

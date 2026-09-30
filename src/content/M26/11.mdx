@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `ការងារដែលអាចធ្វើម្តងទៀតបានដំណើរការដោយស្វ័យប្រវត្តិនៅលើមូលដ្ឋានកើតឡើងដដែលៗដែលបានកំណត់ពេលដោយប្រើវាក្យសម្ព័ន្ធ cron 5 ផ្នែកស្តង់ដារ (ឧ. \`0 0 * * *\` សម្រាប់រាល់ថ្ងៃនៅពាក់កណ្តាលអធ្រាត្រ)។ មិនដូច OS crontabs ក្នុងស្រុក ឬកម្មវិធីកំណត់ពេល node-cron ដែលកំពុងដំណើរការទេ BullMQ ការងារដែលអាចធ្វើឡើងវិញបានត្រូវបានធ្វើSynchronousនៅទូទាំងវត្ថុចង្កោមតាមរយៈ Redis ដោយការពារការប្រតិបត្តិស្ទួន។`,
-  tip: "BullMQ ការងារដែលអាចធ្វើម្តងទៀតបានស្ទួនដោយស្វ័យប្រវត្តិនៅទូទាំង Server ជាច្រើន — មានតែបុគ្គលិកម្នាក់គត់នៅក្នុង Cluster របស់អ្នកនឹងដំណើរការការងារដែលបានកំណត់ពេលពាក់កណ្តាលអធ្រាត្រ។",
+  tip: "BullMQ ការងារដែលអាចធ្វើម្តងទៀតបានស្ទួនដោយស្វ័យប្រវត្តិនៅទូទាំង Server ជាច្រើន — មានតែWorkersម្នាក់គត់នៅក្នុង Cluster របស់អ្នកនឹងដំណើរការការងារដែលបានកំណត់ពេលពាក់កណ្តាលអធ្រាត្រ។",
   objective: "កំណត់រចនាសម្ព័ន្ធការងារដែលអាចធ្វើម្តងទៀតបានដោយសុវត្ថិភាព Cluster ដោយប្រើកន្សោម cron ។",
   expectedOutcome: "កិច្ចការដែលបានកំណត់ពេលដែលអាចទុកចិត្តបាន (ការសង្ខេបប្រចាំថ្ងៃ ការខ្វះចន្លោះនៃ Database ការនាំចេញរបាយការណ៍) ។",
   codeSnippet: "// Schedule a repeatable job to run every day at midnight (UTC)\nawait reportQueue.add(\n  \"daily-sales-summary\",\n  { department: \"ecommerce\" },\n  {\n    repeat: {\n      pattern: \"0 0 * * *\", // Standard Cron: minute hour day month weekday\n    },\n  }\n);\n\nconsole.log(\"Repeatable daily job scheduled!\");",

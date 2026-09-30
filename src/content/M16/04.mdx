@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត Salt និង Hashing ក្នុង bcrypt",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Salt គ្រីបគ្រីបគឺជា String ចៃដន្យនៃប៊ីតដែលបង្កើតដោយឡែកសម្រាប់អ្នកប្រើប្រាស់គ្រប់រូបមុនពេល hash ។ Salting ធានាថា Password ដូចគ្នាបេះបិទចំនួនពីរ (ឧទាហរណ៍ 'password123') បង្កើតលទ្ធផល hash ខុសគ្នាទាំងស្រុង ដោយធ្វើឱ្យអព្យាក្រឹតទាំងស្រុងនូវការវាយប្រហារ Rainbow Table ដែលបានគណនាជាមុន។ នៅក្នុង bcrypt, Salt, algorithm identifier, cost factor, and hash ទាំងអស់ត្រូវបានបញ្ចូលទៅក្នុងខ្សែតែមួយដែលធ្វើទ្រង់ទ្រាយដូចជា \`$2a$12$salt...hash...\` ។`,
+  summary: `Salt គ្រីបគ្រីបគឺជា String ចៃដន្យនៃប៊ីតដែលបង្កើតដោយឡែកសម្រាប់អ្នកប្រើប្រាស់គ្រប់រូបមុនពេល hash ។ Salting ធានាថា Password ដូចគ្នាបេះបិទចំនួនពីរ (ឧទាហរណ៍ 'password123') បង្កើតលទ្ធផល hash ខុសគ្នាទាំងស្រុង ដោយធ្វើឱ្យអព្យាក្រឹតទាំងស្រុងនូវការវាយប្រហារ Rainbow Table ដែលបានគណនាជាមុន។ នៅក្នុង bcrypt, Salt, algorithm identifier, cost factor, and hash ទាំងអស់ត្រូវបានបញ្ចូលទៅក្នុងSingle threadដែលធ្វើទ្រង់ទ្រាយដូចជា \`$2a$12$salt...hash...\` ។`,
   tip: "អ្នកមិនត្រូវការជួរឈរ Database ដាច់ដោយឡែកសម្រាប់ Salt ជាមួយ bcrypt ទេ! String hash ដែលបង្កើតរួចរួមបញ្ចូល Salt និងកត្តាការងារនៅក្នុងបុព្វបទ Headers របស់វា។",
   objective: "ស្វែងយល់ពីរបៀបដែល Salt គ្រីបគ្រីបចៃដន្យលុបបំបាត់តារាងឥន្ទធនូ និងការវាយប្រហារតាមវចនានុក្រម។",
   expectedOutcome: "ការយល់ដឹងច្បាស់អំពីកាយវិភាគសាស្ត្រនៃ String bcrypt hash ($2b$12$...)",

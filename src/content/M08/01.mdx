@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `មុខងារ Middleware គឺជាបណ្តុំនៃកម្មវិធី Express ។ ពួកគេអង្គុយនៅចន្លោះ Incoming Request និងអ្នកដោះស្រាយផ្លូវចុងក្រោយ ពិនិត្យ Request កែប្រែ Headers ផ្ទៀងផ្ទាត់ Token ការញែកធាតុ និង Error Handling ។`,
   tip: "ទូរស័ព្ទទៅ `next()` ជានិច្ច ឬផ្ញើ Response ជាមួយ `res.json()` ។ បើមិនដូច្នេះទេ ការភ្ជាប់ HTTP ព្យួរដោយគ្មានកំណត់។",
-  objective: "ស្វែងយល់ពីការដាក់ខ្សែសង្វាក់ និងលំដាប់ប្រតិបត្តិរបស់ឈ្មួញកណ្តាល។",
+  objective: "ស្វែងយល់ពីការដាក់Chaining និងលំដាប់ប្រតិបត្តិរបស់Middleware។",
   expectedOutcome: "ជំនាញនៃបំពង់ស្ទាក់ចាប់ Request ។",
   codeSnippet: "// Request Logger Middleware\nconst requestLogger = (req, res, next) => {\n  const start = Date.now();\n  res.on(\"finish\", () => {\n    const duration = Date.now() - start;\n    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);\n  });\n  next(); // Pass control to the next middleware!\n};\n\napp.use(requestLogger);",
 };

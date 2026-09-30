@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `Middleware \`compression\` បង្រួមអង្គធាតុឆ្លើយតប HTTP ដោយប្រើ Gzip ឬ Brotli algorithms មុនពេលបញ្ជូនពួកវាតាមបណ្តាញ។ ការបង្ហាប់ JSON payloads កាត់បន្ថយទំហំផ្ទេរពី 60% ទៅ 80% ដែលបណ្តាលឱ្យមានការផ្ទុកទំព័រលឿនជាងមុនយ៉ាងខ្លាំងនៅលើបណ្តាញទូរស័ព្ទចល័ត និងកាត់បន្ថយការចំណាយលើកម្រិតបញ្ជូនពពក។`,
-  tip: "ដាក់ ​​`app.use(compression())` នៅជិតផ្នែកខាងលើនៃផ្នែកកណ្តាលរបស់អ្នក ដើម្បីបង្រួម Response ទាំងអស់លើសពី 1KB ។",
+  tip: "ដាក់ ​​`app.use(compression())` នៅជិតផ្នែកខាងលើនៃMiddlewareរបស់អ្នក ដើម្បីបង្រួម Response ទាំងអស់លើសពី 1KB ។",
   objective: "បើកការបង្ហាប់ Gzip ក្នុង Express ដើម្បីកាត់បន្ថយទំហំផ្ទុកទិន្នន័យ។",
   expectedOutcome: "ការកាត់បន្ថយរហូតដល់ 80% នៃទំហំ Bytes បណ្តាញដែលបានបញ្ជូនសម្រាប់ JSON Response ។",
   codeSnippet: "import express from \"express\";\nimport compression from \"compression\";\n\nconst app = express();\n\n// Compress all HTTP responses exceeding 1KB\napp.use(\n  compression({\n    level: 6, // Optimal balance between compression ratio and CPU usage\n    threshold: 1024, // Only compress responses larger than 1KB\n    filter: (req, res) => {\n      if (req.headers[\"x-no-compression\"]) return false;\n      return compression.filter(req, res);\n    },\n  })\n);",

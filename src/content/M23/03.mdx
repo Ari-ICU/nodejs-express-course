@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Environment Variables ក្នុង Postman ({{base_url}})",
   type: "lab",
   codeLanguage: "json",
-  summary: `បរិស្ថាន Postman អនុញ្ញាត​ឱ្យ​អ្នក​កំណត់​អថេរ​តម្លៃ​គន្លឹះ​ដែល​សម្រប​តាម​ថាមវន្ត​តាម​ដំណាក់កាល​បង្ហោះ​ផ្សេងៗ។ តាមរយៈការកំណត់ URLs ជា \`{{base_url}}/products\` និងសញ្ញាសម្ងាត់ជា \`{{auth_token}}\` ការប្តូររវាង Local (\`http://localhost:5000\`) Staging និង Production ទាមទារការចុចទម្លាក់ចុះតែម្តង។`,
+  summary: `Environment Postman អនុញ្ញាត​ឱ្យ​អ្នក​កំណត់​អថេរ​តម្លៃ​គន្លឹះ​ដែល​សម្រប​តាម​ថាមវន្ត​តាម​ដំណាក់កាល​បង្ហោះ​ផ្សេងៗ។ តាមរយៈការកំណត់ URLs ជា \`{{base_url}}/products\` និងសញ្ញាសម្ងាត់ជា \`{{auth_token}}\` ការប្តូររវាង Local (\`http://localhost:5000\`) Staging និង Production ទាមទារការចុចទម្លាក់ចុះតែម្តង។`,
   tip: "តែងតែយោង `{{base_url}}` ជំនួសឱ្យការសរសេរកូដរឹង `http://localhost:5000` ក្នុង Request នីមួយៗ។",
-  objective: "កំណត់រចនាសម្ព័ន្ធអថេរបរិស្ថានថាមវន្ត ដើម្បីប្តូររវាងបរិស្ថានអភិវឌ្ឍន៍ និងដំណាក់កាល។",
+  objective: "កំណត់រចនាសម្ព័ន្ធEnvironment Variablesថាមវន្ត ដើម្បីប្តូររវាងDevelopment environment និងដំណាក់កាល។",
   expectedOutcome: "អាចបត់បែនបាន Postman ស្នើសុំ Params កំណត់ដែន ច្រក និង Token ។",
   codeSnippet: "// In Postman URL Bar:\n// {{base_url}}/api/v1/products/{{product_id}}\n//\n// Environment: \"Local Development\"\n// base_url   -> http://localhost:5000\n// auth_token -> eyJhbGciOiJIUzI1Ni...\n//\n// Environment: \"Production\"\n// base_url   -> https://api.myenterprise.com\n// auth_token -> eyJhbGciOiJIUzI1Ni...",
 };

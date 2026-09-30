@@ -5,21 +5,21 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Pagination (Limit & Skip)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការទាញយក CollectionsDatabase ទាំងមូលដោយគ្មានការរឹតបន្តឹងបណ្តាលឱ្យការប្រើប្រាស់ស៊ីភីយូ Database ខ្ពស់ ការផ្ទុកបណ្តាញដ៏ធំ និងដំណើរការ Node.js ដំណើរការក្រៅអង្គចងចាំ (OOM) គាំង។ **Pagination** បែងចែកសំណុំទិន្នន័យធំទៅជាកំណាត់ដែលអាចគ្រប់គ្រងបាន។
+  summary: `ការទាញយក Database Collections ទាំងមូលដោយគ្មាន limit បណ្តាលឱ្យ Database CPU usage ឡើងខ្ពស់, network payload ធំពេក, និងធ្វើឱ្យ Node.js process គាំងដោយសារ Out of Memory (OOM) crash។ **Pagination** ជួយបែងចែក dataset ធំៗឱ្យមកជា chunks តូចៗដែលអាច manage បានយ៉ាងរលូន។
 
 ### 1. Offset-Based Pagination Formula
-Client ឆ្លងកាត់ Params សំណួរ URL ពីរ៖
-* **\`page\`**: The target page number (1-indexed).
-* **\`limit\`**: The number of items to return per page.
-* **Skip Calculation**: \`skip = (page - 1) * limit\`.
-* In MongoDB: \`collection.find().skip(skip).limit(limit)\`.
-* In SQL: \`SELECT * FROM items LIMIT ? OFFSET ?\`.
+Client បញ្ជូន URL Query Parameters ចំនួនពីរ៖
+* **\`page\`**: លេខ page ដែលចង់បាន (1-indexed)។
+* **\`limit\`**: ចំនួន items ដែលត្រូវ return ក្នុងមួយ page។
+* **Skip Calculation**: \`skip = (page - 1) * limit\`។
+* In MongoDB: \`collection.find().skip(skip).limit(limit)\`។
+* In SQL: \`SELECT * FROM items LIMIT ? OFFSET ?\`។
 
 ### 2. Defense Against Denial of Service (DoS)
-Never trust user-supplied limits blindly! A malicious user could request \`?limit=10000000\`, exhausting server memory. Always enforce a hard maximum ceiling: \`const safeLimit = Math.min(parseInt(req.query.limit) || 10, 100)\`.`,
-  tip: "ភ្ជាប់ Params `limit` របស់ API របស់អ្នកជាប់នឹងព្រំដែនខាងលើ (ឧ. `Math.min(limit, 100)`) ។ សម្រាប់មតិព័ត៌មានរមូរគ្មានកំណត់ដែលមានជួររាប់លាន សូមពិចារណាលើទំព័រដែលមានមូលដ្ឋានលើទស្សន៍ទ្រនិច (`?after=cursor_id`) ជំនួសឱ្យការបិទទំព័រដែលមានមូលដ្ឋានលើអុហ្វសិត ដើម្បីជៀសវាងការបំផ្លាញការអនុវត្ត SQL OFFSET ជ្រៅ។",
-  objective: "អនុវត្តការបិទភ្ជាប់ដោយសុវត្ថិភាពដែលមានមូលដ្ឋានលើអុហ្វសិតជាមួយនឹង Sanitization នៃការបញ្ចូល ការគៀបកម្រិតអតិបរមា និង Response Envelope ទិន្នន័យមេតានៃទំព័រពេញលេញ។",
-  expectedOutcome: "ផ្លូវទំព័រទំព័រដែលមានប្រសិទ្ធភាពខ្ពស់ដែលផ្តល់នូវការគណនាទំព័រ ចំនួនសរុប និងទិន្នន័យមេតារុករក។",
+កុំទុកចិត្ត query parameters ដែល user បញ្ជូនមកដោយគ្មានការត្រួតពិនិត្យ! Malicious users អាច request \`?limit=10000000\` ដែលធ្វើឱ្យ server memory ត្រូវខូចខាត។ ត្រូវតែ enforce maximum limit ceiling ជានិច្ច៖ \`const safeLimit = Math.min(parseInt(req.query.limit) || 10, 100)\`។`,
+  tip: "ត្រូវកំណត់ maximum boundary លើ `limit` parameter ជានិច្ច (ឧ. `Math.min(limit, 100)`)។ សម្រាប់ infinite scroll feeds ដែលមាន data រាប់លាន rows គួរពិចារណាប្រើ Cursor-based pagination (`?after=cursor_id`) ជំនួស Offset-based pagination ដើម្បីជៀសវាង performance drop លើ SQL deep OFFSET queries។",
+  objective: "Implement Offset-based pagination ប្រកបដោយសុវត្ថិភាព ដោយមាន Input Sanitization, Max Limit Clamping, និង Complete Pagination Metadata Envelope។",
+  expectedOutcome: "ទទួលបាន Paginated API Route ដែលមាន performance ខ្ពស់ ព្រមទាំងផ្តល់ pagination calculations, total count, និង navigation metadata យ៉ាងពេញលេញ។",
   codeSnippet: `const express = require("express");
 const app = express();
 

@@ -2,13 +2,13 @@ export const meta = {
   id: "M02-13",
   number: "13",
   title: "Environment Variables",
-  khmerTitle: "អថេរកំណត់បរិស្ថាន (Environment Variables)",
+  khmerTitle: "អថេរកំណត់Environment (Environment Variables)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `អថេរបរិស្ថានខាងក្រៅកំណត់រចនាសម្ព័ន្ធថាមវន្ត (URL Database លេខច្រក សោសម្ងាត់ API កម្រិតកំណត់ហេតុ) ពី Source Code ដោយប្រកាន់ខ្ជាប់នូវ Methods កម្មវិធី 12-Factor សម្រាប់ការដាក់ពង្រាយពហុបរិស្ថានប្រកបដោយសុវត្ថិភាព។`,
+  summary: `Environment Variablesខាងក្រៅកំណត់រចនាសម្ព័ន្ធថាមវន្ត (URL Database លេខច្រក សោសម្ងាត់ API កម្រិតកំណត់ហេតុ) ពី Source Code ដោយប្រកាន់ខ្ជាប់នូវ Methods កម្មវិធី 12-Factor សម្រាប់ការដាក់ពង្រាយពហុEnvironmentប្រកបដោយសុវត្ថិភាព។`,
   tip: "កុំប្រើ PasswordDatabase រឹង ឬសោសម្ងាត់នៅក្នុងឯកសារ Source Code របស់អ្នក។",
-  objective: "បំបែកកូដកម្មវិធីពីការកំណត់រចនាសម្ព័ន្ធជាក់លាក់នៃបរិស្ថាន។",
-  expectedOutcome: "ឥរិយាបថកម្មវិធីដែលអាចកំណត់រចនាសម្ព័ន្ធបាននៅទូទាំងមូលដ្ឋាន ដំណាក់កាល និងបរិយាកាសផលិតកម្ម។",
+  objective: "បំបែកកូដកម្មវិធីពីការកំណត់រចនាសម្ព័ន្ធជាក់លាក់នៃEnvironment។",
+  expectedOutcome: "ឥរិយាបថកម្មវិធីដែលអាចកំណត់រចនាសម្ព័ន្ធបាននៅទូទាំងមូលដ្ឋាន ដំណាក់កាល និងProduction environment។",
   codeSnippet: "// Accessing environment variables via process.env\nconst PORT = process.env.PORT || 5000;\nconst DB_URI = process.env.DATABASE_URL;\nconst IS_PROD = process.env.NODE_ENV === \"production\";\n\nconsole.log(`Server starting on port ${PORT} in ${IS_PROD ? \"PROD\" : \"DEV\"} mode`);",
 };
 

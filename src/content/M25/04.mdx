@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើនល្បឿន MongoDB Queries ជាមួយ Lean និង Projections",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `តាមលំនាំដើម Mongoose បញ្ចប់សំណួរជាលទ្ធផលពេញលេញ Mongoose ករណីឯកសារពេញលេញជាមួយនឹងការតាមដានការផ្លាស់ប្តូរ Receiver និង MethodsSchema ។ សម្រាប់ Endpoints ដែលអានខ្លាំង ការបន្ថែម \`.lean()\` រំលងឯកសារភ្លាមៗ ហើយត្រឡប់វត្ថុ JavaScript ធម្មតា ដោយកាត់បន្ថយការបែងចែកអង្គចងចាំ និងធ្វើអោយល្បឿនដំណើរការសំណួរបានរហូតដល់ 400% ។`,
+  summary: `តាមលំនាំដើម Mongoose បញ្ចប់សំណួរជាលទ្ធផលពេញលេញ Mongoose ករណីឯកសារពេញលេញជាមួយនឹងការតាមដានការផ្លាស់ប្តូរ Receiver និង MethodsSchema ។ សម្រាប់ Endpoints ដែលអានខ្លាំង ការបន្ថែម \`.lean()\` រំលងឯកសារភ្លាមៗ ហើយត្រឡប់វត្ថុ JavaScript ធម្មតា ដោយកាត់បន្ថយការបែងចែកMemory និងធ្វើអោយល្បឿនដំណើរការសំណួរបានរហូតដល់ 400% ។`,
   tip: "តែងតែបន្ថែម `.lean()` ទៅនឹងសំណួរ GET ដែលអ្នកមិនចាំបាច់ហៅទៅ `.save()` នៅលើឯកសារដែលបានប្រគល់មកវិញ។",
   objective: "អនុវត្តការបង្កើនប្រសិទ្ធភាពសំណួររួមទាំង .lean(), ការព្យាករណ៍វាល (.select()) និងឃ្លាកំណត់។",
-  expectedOutcome: "កាត់បន្ថយទំហំអង្គចងចាំយ៉ាងច្រើន និងលឿនជាងមុន JSON Serialization ។",
+  expectedOutcome: "កាត់បន្ថយទំហំMemoryយ៉ាងច្រើន និងលឿនជាងមុន JSON Serialization ។",
   codeSnippet: "// High Performance Query:\n// 1. .select() only fetches necessary fields (reduces network transfer)\n// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)\n// 3. .limit() restricts total document count\nconst products = await Product.find({ isPublished: true })\n  .select(\"title price thumbnail rating\") // Field projection\n  .limit(20)\n  .lean(); // 3-4x faster than default find()!",
 };
 

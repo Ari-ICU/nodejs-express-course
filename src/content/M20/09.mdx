@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `ស្ថាបត្យកម្មការជូនដំណឹងដ៏ទូលំទូលាយផ្តល់នូវការអាប់ដេតលើបណ្តាញជាច្រើន៖ កណ្តឹងជូនដំណឹងក្នុងកម្មវិធី និងបណ្តាញខាងក្រៅដូចជា អ៊ីមែល សារ SMS ឬ Push ។ Services ជូនដំណឹងដែលជំរុញដោយព្រឹត្តិការណ៍បញ្ជូនការជូនដំណឹងយោងទៅតាមការកំណត់ចំណូលចិត្តរបស់អ្នកប្រើប្រាស់ (ឧ. 'ផ្ញើអ៊ីមែលមកខ្ញុំនៅពេលនរណាម្នាក់បញ្ចេញមតិលើការបង្ហោះរបស់ខ្ញុំ') ។`,
   tip: "រក្សាទុកការជូនដំណឹងក្នុងកម្មវិធីនៅក្នុង MongoDB ជាមួយ `{ isRead: false }` ដូច្នេះអ្នកប្រើប្រាស់អាចមើលឃើញផ្លាកសញ្ញាជូនដំណឹងបន្តផ្ទាល់ និងសម្គាល់ធាតុថាបានអាន។",
-  objective: "ស្ថាបត្យករ Services ជូនដំណឹងពហុឆានែលដែលគាំទ្រការពេញចិត្តនៃការចែកចាយរបស់អ្នកប្រើប្រាស់។",
+  objective: "រៀបចំ Architecture Services ជូនដំណឹងពហុឆានែលដែលគាំទ្រការពេញចិត្តនៃការចែកចាយរបស់អ្នកប្រើប្រាស់។",
   expectedOutcome: "បំពង់ការជូនដំណឹងបង្រួបបង្រួមរៀបចំការជូនដំណឹងទាំង Database និងការជូនដំណឹងតាមអ៊ីមែល។",
   codeSnippet: "// models/notification.model.js\nconst notificationSchema = new mongoose.Schema({\n  recipient: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  actor: { type: mongoose.Schema.Types.ObjectId, ref: \"User\" },\n  type: { type: String, enum: [\"ORDER_SHIPPED\", \"COMMENT_REPLY\", \"SECURITY_ALERT\"] },\n  title: String,\n  message: String,\n  link: String,\n  isRead: { type: Boolean, default: false },\n}, { timestamps: true });\n\nexport const Notification = mongoose.model(\"Notification\", notificationSchema);",
 };

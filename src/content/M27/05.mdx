@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Models Layer (Mongoose Schemas)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ស្រទាប់ Models កំណត់ SchemaDatabase ច្បាប់ Validation ទិន្នន័យ លិបិក្រម Virtuals និង Hooks ជីវិត (មុន/ក្រោយ Middleware) ។ គំរូតំណាងឱ្យប្រភពតែមួយនៃការពិតសម្រាប់រចនាសម្ព័ន្ធ Database និងភាពត្រឹមត្រូវនៃទិន្នន័យ។`,
+  summary: `ស្រទាប់ Models កំណត់ SchemaDatabase ច្បាប់ Validation ទិន្នន័យ Index Virtuals និង Hooks ជីវិត (មុន/ក្រោយ Middleware) ។ គំរូតំណាងឱ្យប្រភពតែមួយនៃការពិតសម្រាប់រចនាសម្ព័ន្ធ Database និងភាពត្រឹមត្រូវនៃទិន្នន័យ។`,
   tip: "បញ្ចូល​Business Logic​ជំនួយ​ជាក់លាក់​របស់​វត្ថុ (ដូចជា​ការ​បំបិទ​ពាក្យ​សម្ងាត់ ឬ​ការ​ផ្ទៀងផ្ទាត់​Token) ជា​Methods​វត្ថុ Mongoose ដោយផ្ទាល់​លើ​គំរូ។",
-  objective: "រចនា Schema Mongoose ស្អិតរមួតជាមួយនឹង Validation លិបិក្រម និងវាល Virtuals ។",
+  objective: "រចនា Schema Mongoose ស្អិតរមួតជាមួយនឹង Validation Index និងវាល Virtuals ។",
   expectedOutcome: "គំរូទិន្នន័យរឹងមាំដែលពង្រឹងភាពត្រឹមត្រូវនៃ Schema នៅស្រទាប់ Database ។",
   codeSnippet: "// models/order.model.js\nimport mongoose from \"mongoose\";\n\nconst orderSchema = new mongoose.Schema({\n  user: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{\n    product: { type: mongoose.Schema.Types.ObjectId, ref: \"Product\" },\n    quantity: { type: Number, default: 1 },\n    price: Number,\n  }],\n  totalAmount: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"pending\", \"processing\", \"shipped\", \"delivered\", \"cancelled\"],\n    default: \"pending\",\n  },\n}, { timestamps: true });\n\norderSchema.index({ user: 1, createdAt: -1 });\n\nexport const Order = mongoose.model(\"Order\", orderSchema);",
 };

@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `ការចាប់ផ្ដើមកម្មវិធី Express ជាមួយនឹងការភ្ជាប់ MongoDB ជាប់លាប់ ផ្ទៀងផ្ទាត់ភាពអាចរកបាននៃ Database មុនពេលស្តាប់នៅលើច្រក។`,
-  tip: "ភ្ជាប់ទៅ Database ជានិច្ច មុនពេលហៅទូរសព្ទទៅ `app.listen()` ដើម្បីធានាថាគ្មាន Incoming Request មកក្នុង Database ដែលមិនដំណើរការ។",
+  tip: "ភ្ជាប់ទៅ Database ជានិច្ច មុនពេលcall `app.listen()` ដើម្បីធានាថាគ្មាន Incoming Request មកក្នុង Database ដែលមិនដំណើរការ។",
   objective: "ការចាប់ផ្តើម Server Wire Express ទៅនឹងការត្រៀមខ្លួននៃការតភ្ជាប់ MongoDB ។",
   expectedOutcome: "ការចាប់ផ្តើម Server ដែលមានភាពធន់ជាមួយនឹងការតភ្ជាប់ Database ដែលបានផ្ទៀងផ្ទាត់។",
   codeSnippet: "import app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\nawait connectDB(); // Await DB connection first!\napp.listen(PORT, () => console.log(`Server on port ${PORT}`));",

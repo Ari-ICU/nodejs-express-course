@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `ស្ថាបត្យកម្មជជែកតាមពេលវេលាជាក់ស្តែងរបស់សហគ្រាសរួមបញ្ចូលគ្នានូវការផ្ទុក Database ជាប់លាប់ជាមួយនឹងការចែកចាយ WebSocket ។ នៅពេលដែលសារត្រូវបានផ្ញើ នោះ Server ធ្វើឱ្យមាន Validation នៃ Payload បន្តឯកសារជជែកទៅ MongoDB សម្រាប់ប្រវត្តិនៃការសន្ទនា និងផ្សាយព្រឹត្តិការណ៍នេះទៅកាន់បន្ទប់ជជែកតាមរយៈ Socket.IO សម្រាប់ការចែកចាយតាមពេលវេលាជាក់ស្តែងរង 100ms ។`,
   tip: "តែងតែបន្តសារទៅកាន់ MongoDB មុនពេលចាក់ផ្សាយនៅលើ Socket.IO ដូច្នេះប្រវត្តិសារត្រូវបានធានា ទោះបីជា Client ផ្តាច់ការចែកចាយពាក់កណ្តាលក៏ដោយ។",
-  objective: "ស្ថាបត្យករនូវបំពង់ជជែកតាមពេលវេលាជាក់ស្តែងពេញលេញដែលបង្រួបបង្រួមការតស៊ូ MongoDB ជាមួយបន្ទប់ Socket.IO ។",
+  objective: "រៀបចំ Architectureនូវបំពង់ជជែកតាមពេលវេលាជាក់ស្តែងពេញលេញដែលបង្រួបបង្រួមការតស៊ូ MongoDB ជាមួយបន្ទប់ Socket.IO ។",
   expectedOutcome: "ម៉ាស៊ីនជជែកពីចុងដល់ចប់ ជាមួយនឹងការបន្តសារ សូចនាករវាយបញ្ចូល និងបង្កាន់ដៃចែកចាយ។",
   codeSnippet: "// Complete Real-Time Chat Handler:\nsocket.on(\"send_chat_message\", async ({ conversationId, text }, ack) => {\n  try {\n    // 1. Persist message in MongoDB\n    const message = await Message.create({\n      conversation: conversationId,\n      sender: socket.user.id,\n      text,\n      createdAt: new Date(),\n    });\n\n    // 2. Broadcast to all members in this conversation room\n    io.to(`conversation:${conversationId}`).emit(\"new_chat_message\", message);\n\n    // 3. Acknowledge back to sender\n    if (ack) ack({ success: true, messageId: message._id });\n  } catch (err) {\n    if (ack) ack({ success: false, error: err.message });\n  }\n});",
 };

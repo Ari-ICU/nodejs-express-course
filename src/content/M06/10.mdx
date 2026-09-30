@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការសរសេរ Route Handlers ជាមួយ Callbacks ច្រើន",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `អ្នកដោះស្រាយផ្លូវអាចយកទម្រង់នៃអនុគមន៍ អារេនៃអនុគមន៍ ឬបន្សំទាំងពីរ។ នេះអនុញ្ញាតឱ្យ GuardsAuthentication ខ្សែសង្វាក់ និងការត្រួតពិនិត្យ Validation ដោយផ្ទាល់មុនពេលមុខងារ Controllers ចុងក្រោយ។`,
+  summary: `អ្នកដោះស្រាយផ្លូវអាចយកទម្រង់នៃអនុគមន៍ Array of functions ឬបន្សំទាំងពីរ។ នេះអនុញ្ញាតឱ្យ GuardsAuthentication Chaining និងការត្រួតពិនិត្យ Validation ដោយផ្ទាល់មុនពេលមុខងារ Controllers ចុងក្រោយ។`,
   tip: "បញ្ជូនមុខងារ Middleware ជាច្រើនទៅកាន់ការកំណត់ផ្លូវមួយ ដើម្បីពង្រឹង Authentication និង Validation យ៉ាងស្អាត។",
-  objective: "មុខងារខ្សែសង្វាក់កណ្តាល និងឧបករណ៍គ្រប់គ្រង Controllers នៅលើផ្លូវតែមួយ។",
+  objective: "Chaining functionsកណ្តាល និងControllers នៅលើផ្លូវតែមួយ។",
   expectedOutcome: "និយមន័យផ្លូវម៉ូឌុលជាមួយឧបករណ៍ការពារកណ្តាលដែលអាចប្រើឡើងវិញបាន។",
   codeSnippet: "const requireAuth = (req, res, next) => {\n  if (!req.headers.authorization) return res.status(401).json({ error: \"Unauthorized\" });\n  next();\n};\n\nconst validateBody = (req, res, next) => {\n  if (!req.body.title) return res.status(400).json({ error: \"Title required\" });\n  next();\n};\n\n// Chaining middleware directly on route\napp.post(\"/api/posts\", requireAuth, validateBody, (req, res) => {\n  res.status(201).json({ id: 1, title: req.body.title });\n});",
 };

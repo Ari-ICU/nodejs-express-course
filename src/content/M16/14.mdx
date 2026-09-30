@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `នៅក្នុង Express ការការពារផ្លូវអាចត្រូវបានអនុវត្តនៅកម្រិតចំនុចបញ្ចប់នីមួយៗ ឬឆ្លងកាត់ម៉ូឌុលរ៉ោតទ័រទាំងមូលដោយប្រើ Middleware កម្រិតរ៉ោតទ័រ (\`router.use(protect)\`)។ ការរៀបចំផ្លូវសាធារណៈ (ចូល ចុះឈ្មោះ ភ្លេចលេខសម្ងាត់) ដាច់ដោយឡែកពីផ្លូវដែលត្រូវបានការពារ (ទម្រង់ ការបញ្ជាទិញ ការទូទាត់ចេញ) អនុវត្តព្រំដែនសុវត្ថិភាពយ៉ាងតឹងរ៉ឹង និងលុបបំបាត់និយមន័យMiddlewareដដែលៗ។`,
   tip: "ប្រើ `router.use(protect)` នៅផ្នែកខាងលើនៃឯកសារផ្លូវដែលបានការពារ ដើម្បីការពារផ្លូវបន្តបន្ទាប់ទាំងអស់នៅក្នុងរ៉ោតទ័រនោះដោយស្វ័យប្រវត្តិ។",
-  objective: "ស្ថាបត្យករកំណត់ព្រំដែនច្បាស់លាស់រវាងផ្លូវសាធារណៈ និងផ្លូវដែលត្រូវបានការពារនៅក្នុងកម្មវិធី Modular Express ។",
+  objective: "រៀបចំ Architectureកំណត់ព្រំដែនច្បាស់លាស់រវាងផ្លូវសាធារណៈ និងផ្លូវដែលត្រូវបានការពារនៅក្នុងកម្មវិធី Modular Express ។",
   expectedOutcome: "ការ​ប្រកាស​ផ្លូវ​ដែល​អាច​រក្សា​បាន​ស្អាត​ដោយ​គ្មាន​ផ្លូវ​ឯកជន​ដែល​មិន​បាន​ការពារ។",
   codeSnippet: "// routes/user.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport * as userController from \"../controllers/user.controller.js\";\nimport * as authController from \"../controllers/auth.controller.js\";\n\nconst router = express.Router();\n\n// --- PUBLIC ROUTES ---\nrouter.post(\"/register\", authController.register);\nrouter.post(\"/login\", authController.login);\nrouter.post(\"/refresh\", authController.refreshTokenHandler);\n\n// --- PROTECTED ROUTES (all routes below require valid JWT) ---\nrouter.use(protect);\n\nrouter.get(\"/me\", userController.getProfile);\nrouter.patch(\"/update-me\", userController.updateProfile);\nrouter.delete(\"/delete-me\", userController.deleteAccount);\n\nexport default router;",
 };

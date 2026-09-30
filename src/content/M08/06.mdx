@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: `\`express.urlencoded()\` ញែកIncoming RequestជាមួយPayloadដែលបានអ៊ិនកូដ URL (ជាធម្មតាបានបញ្ជូនពីធាតុ HTML ស្តង់ដារ \`<form>\`)។`,
-  tip: "បញ្ជាក់ `{ extended: true }` ជានិច្ច ដើម្បីអនុញ្ញាតឱ្យញែកវត្ថុ និងអារេសម្បូរបែបដោយប្រើបណ្ណាល័យ `qs` ។",
+  tip: "បញ្ជាក់ `{ extended: true }` ជានិច្ច ដើម្បីអនុញ្ញាតឱ្យញែកវត្ថុ និងArrayសម្បូរបែបដោយប្រើបណ្ណាល័យ `qs` ។",
   objective: "ញែកការបញ្ជូនទម្រង់ HTML ដោយសុវត្ថិភាពក្នុង Express ។",
   expectedOutcome: "ការ​ញែក​ទម្រង់​បង់​ដោយ​គ្មាន​ថ្នេរ​ជា `req.body`។",
   codeSnippet: "// Parses application/x-www-form-urlencoded\napp.use(express.urlencoded({ extended: true }));\n\napp.post(\"/submit-form\", (req, res) => {\n  console.log(\"Form data:\", req.body);\n  res.redirect(\"/success\");\n});",

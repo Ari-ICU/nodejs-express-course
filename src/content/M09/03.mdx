@@ -8,7 +8,7 @@ export const meta = {
   summary: `ការរចនា REST APIs ប្រកបដោយវិជ្ជាជីវៈ និងវិចារណញាណតម្រូវឱ្យមានភាពស៊ីសង្វាក់គ្នាយ៉ាងតឹងរឹងនៅទូទាំង URI កាយវិភាគសាស្ត្រ Schema ដាក់ឈ្មោះ និងការដាក់ធនធាន។ API ដែលត្រូវបានរចនាយ៉ាងល្អ គឺជាការពន្យល់ដោយខ្លួនឯង ដែលអាចទស្សន៍ទាយបាន និងរីករាយសម្រាប់អ្នកអភិវឌ្ឍន៍ Client ប្រើប្រាស់។
 
 ### 1. ច្បាប់ដាក់ឈ្មោះធនធាន
-* **ប្រើនាមពហុវចនៈ**៖ តែងតែដាក់ឈ្មោះ Collections ធនធានជាមួយនាមពហុវចនៈអក្សរតូច (ឧ. `/users`, `/articles`, `/orders`)។ កុំប្រើកិរិយាស័ព្ទក្នុង path ដូចជា `/getUsers` ឬ `/createOrder`។
+* **ប្រើនាមពហុវចនៈ**៖ តែងតែដាក់ឈ្មោះ Collections ធនធានជាមួយនាមពហុវចនៈអក្សរតូច (ឧ. `/users`, `/articles`, `/orders`)។ កុំប្រើHTTP Methodsក្នុង path ដូចជា `/getUsers` ឬ `/createOrder`។
 * **Kebab-case in URIs**: Use lowercase with hyphens for multi-word paths (\`/payment-methods\`, \`/shipping-addresses\`), never camelCase or snake_case.
 * **Hierarchical Nesting for Relations**: Express parent-child relationships through natural URL paths: \`/users/15/orders/302\`. Limit nesting to a maximum of **2 levels deep** to prevent unwieldy URLs; flatten subsequent lookups to root endpoints.
 
@@ -23,7 +23,7 @@ export const meta = {
 | Delete Resource | \`DELETE\` | \`/api/v1/courses/:id\` | 204 No Content |`,
   tip: "ជៀសវាងផ្លូវដែលបង្កប់យ៉ាងជ្រៅដូចជា `/departments/5/teams/2/members/12/tasks/9`។ ជំនួសមកវិញ នៅពេលដែល Entity មួយមានឧបករណ៍កំណត់អត្តសញ្ញាណតែមួយគត់ សូមបង្ហាញវាដោយផ្ទាល់៖ `/api/v1/tasks/9` ឬ `/api/v1/members/12/tasks` ។",
   objective: "អនុសញ្ញាការដាក់ឈ្មោះ URI ស្តង់ដារឧស្សាហកម្ម ដែនកំណត់ទំនាក់ទំនង និងផែនទីផ្លូវធនធាន។",
-  expectedOutcome: "សមត្ថភាពក្នុងការស្ថាបត្យករស្អាត ដែលអាចទាយទុកជាមុនបាន និង Endpoint RESTful ដែលងាយស្រួលសម្រាប់អ្នកអភិវឌ្ឍន៍ ដែលប្រកាន់ខ្ជាប់យ៉ាងតឹងរឹងទៅនឹងស្តង់ដារ RFC អន្តរជាតិ។",
+  expectedOutcome: "សមត្ថភាពក្នុងការរៀបចំ Architectureស្អាត ដែលអាចទាយទុកជាមុនបាន និង Endpoint RESTful ដែលងាយស្រួលសម្រាប់អ្នកអភិវឌ្ឍន៍ ដែលប្រកាន់ខ្ជាប់យ៉ាងតឹងរឹងទៅនឹងស្តង់ដារ RFC អន្តរជាតិ។",
   codeSnippet: `/**
  * Professional REST Route Design in Express
  * Clean separation between collections and parent-child resources

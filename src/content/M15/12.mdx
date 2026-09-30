@@ -8,7 +8,7 @@ export const meta = {
   summary: `កំហុសក្នុងការផលិតកំណត់ហេតុចំពោះឯកសារកំណត់ហេតុប្រើប្រាស់បានយូរ ឬ Services ត្រួតពិនិត្យលើពពក (Sentry, Datadog) សម្រាប់ការជូនដំណឹងភ្លាមៗ និងការបំបាត់កំហុសក្រោយការស្លាប់។`,
   tip: "កត់ត្រាកំហុសអ្នកសរសេរកម្មវិធីនៅកម្រិត `'error'` និងកំហុសប្រតិបត្តិការនៅកម្រិត `'warn'` ។",
   objective: "រួមបញ្ចូល Logging កំហុសដែលមានរចនាសម្ព័ន្ធសម្រាប់ការត្រួតពិនិត្យផលិតកម្ម។",
-  expectedOutcome: "ការមើលឃើញភ្លាមៗចំពោះករណីលើកលែងរបស់ Server នៅក្នុងបរិស្ថានផលិតកម្ម។",
+  expectedOutcome: "ការមើលឃើញភ្លាមៗចំពោះករណីលើកលែងរបស់ Server នៅក្នុងProduction environment។",
   codeSnippet: "import winston from \"winston\";\n\nconst logger = winston.createLogger({\n  level: \"error\",\n  format: winston.format.json(),\n  transports: [\n    new winston.transports.File({ filename: \"logs/error.log\" })\n  ]\n});\n\n// Inside error middleware:\nlogger.error({ message: err.message, stack: err.stack, url: req.url });",
 };
 

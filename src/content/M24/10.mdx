@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Real-time Chat ពេញលេញ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ស្ថាបត្យកម្មជជែកតាមពេលវេលាជាក់ស្តែងរបស់សហគ្រាសរួមបញ្ចូលគ្នានូវការផ្ទុក Database ជាប់លាប់ជាមួយនឹងការចែកចាយ WebSocket ។ នៅពេលដែលសារត្រូវបានផ្ញើ នោះ Server ធ្វើឱ្យមាន Validation នៃ Payload បន្តឯកសារជជែកទៅ MongoDB សម្រាប់ប្រវត្តិនៃការសន្ទនា និងផ្សាយព្រឹត្តិការណ៍នេះទៅកាន់បន្ទប់ជជែកតាមរយៈ Socket.IO សម្រាប់ការចែកចាយតាមពេលវេលាជាក់ស្តែងរង 100ms ។`,
-  tip: "តែងតែបន្តសារទៅកាន់ MongoDB មុនពេលចាក់ផ្សាយនៅលើ Socket.IO ដូច្នេះប្រវត្តិសារត្រូវបានធានា ទោះបីជា Client ផ្តាច់ការចែកចាយពាក់កណ្តាលក៏ដោយ។",
-  objective: "រៀបចំ Architectureនូវបំពង់ជជែកតាមពេលវេលាជាក់ស្តែងពេញលេញដែលបង្រួបបង្រួមការតស៊ូ MongoDB ជាមួយបន្ទប់ Socket.IO ។",
-  expectedOutcome: "ម៉ាស៊ីនជជែកពីចុងដល់ចប់ ជាមួយនឹងការបន្តសារ សូចនាករវាយបញ្ចូល និងបង្កាន់ដៃចែកចាយ។",
+  summary: `Enterprise Real-time Chat Architecture រួមបញ្ចូលគ្នានូវ Database persistence ជាមួយនឹង WebSocket communication។ នៅពេលដែលសារត្រូវបានផ្ញើ នោះ Server ធ្វើ Validation លើ Payload, persist សារទៅ MongoDB សម្រាប់ទុកជា conversation history, និង broadcast ព្រឹត្តិការណ៍នេះទៅកាន់ Chat Rooms តាមរយៈ Socket.IO សម្រាប់ការចែកចាយតាម real-time ក្រោម 100ms។`,
+  tip: "តែងតែ persist សារទៅកាន់ MongoDB មុនពេល broadcast លើ Socket.IO ដូច្នេះ message history ត្រូវបានធានាជានិច្ច ទោះបីជា Client ផ្តាច់ការតភ្ជាប់ពាក់កណ្តាលទីក៏ដោយ។",
+  objective: "រៀបចំ Architecture នៃ Real-time Chat Pipeline ពេញលេញដែលរួមបញ្ចូល MongoDB persistence ជាមួយ Socket.IO Rooms។",
+  expectedOutcome: "ទទួលបាន End-to-end Chat Engine ជាមួយនឹង message persistence, typing indicators, និង delivery receipts។",
   codeSnippet: "// Complete Real-Time Chat Handler:\nsocket.on(\"send_chat_message\", async ({ conversationId, text }, ack) => {\n  try {\n    // 1. Persist message in MongoDB\n    const message = await Message.create({\n      conversation: conversationId,\n      sender: socket.user.id,\n      text,\n      createdAt: new Date(),\n    });\n\n    // 2. Broadcast to all members in this conversation room\n    io.to(`conversation:${conversationId}`).emit(\"new_chat_message\", message);\n\n    // 3. Acknowledge back to sender\n    if (ack) ack({ success: true, messageId: message._id });\n  } catch (err) {\n    if (ack) ack({ success: false, error: err.message });\n  }\n});",
 };
 

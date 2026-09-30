@@ -97,20 +97,20 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           </div>
 
           {filename ? (
-            <span className="font-mono text-slate-300 font-medium ml-1">
+            <span className="font-mono text-white font-medium ml-1">
               {filename}
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 font-mono text-slate-400 ml-1">
+            <span className="flex items-center gap-1.5 font-mono text-slate-300 ml-1">
               <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-slate-300">{language}</span>
+              <span className="text-white font-medium">{language}</span>
             </span>
           )}
         </div>
 
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/60 hover:bg-slate-600/80 text-slate-300 hover:text-white border border-slate-600/60 transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/90 hover:bg-slate-700 text-white border border-slate-700 transition-all cursor-pointer shadow-2xs"
           title="Copy code to clipboard"
         >
           {copied ? (

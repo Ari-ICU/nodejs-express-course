@@ -362,7 +362,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 <CodeBlock
                   code={mdxMeta?.codeSnippet || activeTopic.codeSnippet || "// Loading lesson code..."}
                   language={activeTopic.codeLanguage || mdxMeta?.codeLanguage || "javascript"}
-                  filename={`${activeModule.id.toLowerCase()}-topic-${activeTopic.number}.${(activeTopic.codeLanguage || mdxMeta?.codeLanguage) === "bash" ? "sh" : "js"}`}
+                  filename={`${activeModule.id.toLowerCase()}-topic-${activeTopic.number}.${(activeTopic.codeLanguage || mdxMeta?.codeLanguage) === "bash" ? "sh" : (activeTopic.codeLanguage || mdxMeta?.codeLanguage) === "http" ? "http" : "js"}`}
                 />
               </div>
             )}

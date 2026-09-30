@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ទិដ្ឋភាពទូទៅនៃ Core Modules",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Core modules are compiled directly into the Node.js binary, providing low-level access to the operating system, network, cryptographic hardware, and filesystem without requiring external npm packages.",
-  tip: "Always prefix core imports with `node:` (e.g. `node:fs`, `node:path`, `node:crypto`) to guarantee loading the native module and avoid collision with npm packages.",
-  objective: "Explore the built-in standard library of Node.js.",
-  expectedOutcome: "Familiarity with Node's native capabilities before reaching for external dependencies.",
+  summary: `ម៉ូឌុលស្នូលត្រូវបានចងក្រងដោយផ្ទាល់ទៅក្នុងប្រព័ន្ធគោលពីរ Node.js ដោយផ្តល់នូវការចូលប្រើកម្រិតទាបទៅកាន់ប្រព័ន្ធប្រតិបត្តិការ បណ្តាញ ហាតវែរគ្រីប និងប្រព័ន្ធឯកសារដោយមិនទាមទារកញ្ចប់ npm ខាងក្រៅ។`,
+  tip: "តែងតែដាក់បុព្វបទការនាំចូលស្នូលជាមួយ `node:` (ឧ. `node:fs`, `node:path`, `node:crypto`) ដើម្បីធានាការផ្ទុកម៉ូឌុលដើម និងជៀសវាងការប៉ះទង្គិចជាមួយកញ្ចប់ npm។",
+  objective: "រុករកបណ្ណាល័យស្តង់ដារដែលភ្ជាប់មកជាមួយរបស់ Node.js ។",
+  expectedOutcome: "ស្គាល់សមត្ថភាពដើមរបស់ Node មុនពេលឈានដល់ភាពអាស្រ័យខាងក្រៅ។",
   codeSnippet: "// Preferred modern syntax with \"node:\" prefix\nimport fs from \"node:fs/promises\";\nimport path from \"node:path\";\nimport os from \"node:os\";\nimport crypto from \"node:crypto\";",
 };
 

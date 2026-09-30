@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការស្ទាក់ចាប់កំហុស Zod និង Mongoose validation នៅខាងក្នុងឧបករណ៍ដោះស្រាយកំហុសកណ្តាល ហើយបំប្លែងពួកវាទៅជាបញ្ជីកំហុសដែលងាយស្រួលប្រើសម្រាប់អតិថិជន។",
-  tip: "បំប្លែង​វត្ថុ​កំហុស​សុពលភាព​ឆៅ​ទៅ​ជា​អារេ​នៃ​ធាតុ `{ field, message }` សម្រាប់​ទម្រង់​មុខ។",
-  objective: "ធ្វើ​ឲ្យ​កំហុស​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ភាព​ធម្មតា​ទៅ​ជា​គ្រោងការណ៍​ស្តង់ដារ។",
-  expectedOutcome: "សារកំហុសក្នុងការផ្ទៀងផ្ទាត់ដែលងាយស្រួលប្រើ។",
+  tip: "បំប្លែង​វត្ថុ​កំហុស​Validation​ឆៅ​ទៅ​ជា​អារេ​នៃ​ធាតុ `{ field, message }` សម្រាប់​ទម្រង់​មុខ។",
+  objective: "ធ្វើ​ឲ្យ​កំហុស​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ភាព​ធម្មតា​ទៅ​ជា​Schema​ស្តង់ដារ។",
+  expectedOutcome: "សារកំហុសក្នុងAuthenticationដែលងាយស្រួលប្រើ។",
   codeSnippet: "if (err.name === \"ValidationError\") {\n  const issues = Object.values(err.errors).map(el => ({\n    field: el.path,\n    message: el.message\n  }));\n  return res.status(400).json({ success: false, error: \"Validation Error\", issues });\n}",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Protected Endpoints ជាមួយ Authorization Headers",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Testing protected routes requires simulating authenticated sessions. Tests can either execute a live login request before protected calls to obtain a real token, or generate a signed test JWT directly using test secret keys and attach it via `.set('Authorization', 'Bearer ' + token)`.",
-  tip: "Create a test helper `getAuthToken(user)` to sign test JWTs quickly without making repetitive HTTP login calls in every test.",
-  objective: "Test route access control, valid token acceptance, and rejection of unauthorized calls.",
-  expectedOutcome: "Automated verification of authentication and role guards.",
+  summary: `ការធ្វើតេស្តផ្លូវដែលត្រូវបានការពារតម្រូវឱ្យក្លែងធ្វើវគ្គដែលបានផ្ទៀងផ្ទាត់។ ការធ្វើតេស្តអាចអនុវត្តសំណើចូលផ្ទាល់ មុនពេលការហៅទូរសព្ទដែលមានការការពារ ដើម្បីទទួលបានសញ្ញាសម្ងាត់ពិតប្រាកដ ឬបង្កើតការធ្វើតេស្តដែលបានចុះហត្ថលេខា JWT ដោយផ្ទាល់ដោយប្រើសោសម្ងាត់សាកល្បង ហើយភ្ជាប់វាតាមរយៈ \`.set('Authorization', 'Bearer ' + token)\`។`,
+  tip: "បង្កើតជំនួយការសាកល្បង `getAuthToken(user)` ដើម្បីចុះហត្ថលេខាលើការធ្វើតេស្ត JWTs យ៉ាងឆាប់រហ័សដោយមិនចាំបាច់ធ្វើការហៅចូល HTTP ដដែលៗក្នុងរាល់ការសាកល្បង។",
+  objective: "សាកល្បងការគ្រប់គ្រងការចូលប្រើផ្លូវ ការទទួលយកសញ្ញាសម្ងាត់ត្រឹមត្រូវ និងការបដិសេធការហៅទូរសព្ទដែលគ្មានAuthorization។",
+  expectedOutcome: "Authenticationដោយស្វ័យប្រវត្តិនៃAuthentication និងតួនាទីឆ្មាំ។",
   codeSnippet: "import { generateAccessToken } from \"../utils/jwt.js\";\n\ndescribe(\"Protected Routes Auth Testing\", () => {\n  it(\"should reject requests without a Bearer token with 401\", async () => {\n    const res = await request(app)\n      .get(\"/api/v1/users/me\")\n      .expect(401);\n\n    expect(res.body.message).toMatch(/not logged in/i);\n  });\n\n  it(\"should permit access when a valid JWT token is provided\", async () => {\n    const testToken = generateAccessToken(\"test_user_id_123\", \"user\");\n\n    const res = await request(app)\n      .get(\"/api/v1/users/me\")\n      .set(\"Authorization\", `Bearer ${testToken}`)\n      .expect(200);\n\n    expect(res.body.data.user).toBeDefined();\n  });\n});",
 };
 

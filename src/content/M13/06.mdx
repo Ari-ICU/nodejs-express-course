@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Services សម្រាប់អនុវត្ត Database Queries",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបញ្ចូលសំណួរមូលដ្ឋានទិន្នន័យ Mongoose ការប្រមូលផ្តុំ និងការត្រួតពិនិត្យអាជីវកម្មនៅក្នុងម៉ូឌុលសេវាកម្មដែលខិតខំប្រឹងប្រែង។",
-  tip: "សេវាកម្មគួរតែទទួលខុសត្រូវចំពោះប្រតិបត្តិការមូលដ្ឋានទិន្នន័យ និងសុពលភាពអាជីវកម្ម។",
-  objective: "ញែកតក្កវិជ្ជាសួរមូលដ្ឋានទិន្នន័យទាំងអស់នៅក្នុងសេវាកម្មដែលខិតខំប្រឹងប្រែង។",
-  expectedOutcome: "មុខងារសេវាមូលដ្ឋានទិន្នន័យដែលអាចប្រើឡើងវិញបាន និងអាចសាកល្បងបាន។",
+  summary: `ការបញ្ចូលសំណួរDatabase Mongoose Collectionsផ្តុំ និងការត្រួតពិនិត្យអាជីវកម្មនៅក្នុងម៉ូឌុលServicesដែលខិតខំប្រឹងប្រែង។`,
+  tip: "Servicesគួរតែទទួលខុសត្រូវចំពោះប្រតិបត្តិការDatabase និងValidationអាជីវកម្ម។",
+  objective: "ញែកតក្កវិជ្ជាសួរDatabaseទាំងអស់នៅក្នុងServicesដែលខិតខំប្រឹងប្រែង។",
+  expectedOutcome: "មុខងារសេវាDatabaseដែលអាចប្រើឡើងវិញបាន និងអាចសាកល្បងបាន។",
   codeSnippet: "// services/product.service.js\nimport { Product } from \"../models/product.model.js\";\n\nexport const listProducts = async (filters) => {\n  const query = {};\n  if (filters.category) query.category = filters.category;\n  return await Product.find(query).lean();\n};",
 };
 

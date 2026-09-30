@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Test Database ជាមួយ mongodb-memory-server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Automated tests must never execute against production or shared development databases. Using `mongodb-memory-server` spins up a lightweight, ephemeral MongoDB instance running entirely in system RAM. Each test suite runs against isolated in-memory collections that are wiped clean after tests finish.",
-  tip: "Use `mongodb-memory-server` in test hooks (`beforeAll`, `afterEach`, `afterAll`) to guarantee zero cross-test data pollution.",
-  objective: "Configure an isolated in-memory MongoDB environment for integration testing.",
-  expectedOutcome: "Fast, isolated database testing with automatic cleanup after test completion.",
+  summary: `ការធ្វើតេស្តស្វ័យប្រវត្តិមិនត្រូវអនុវត្តប្រឆាំងនឹងDatabaseផលិតកម្ម ឬការអភិវឌ្ឍរួមគ្នាទេ។ ការប្រើប្រាស់ \`mongodb-memory-server\` បង្កើននូវវត្ថុ MongoDB ដែលមានទម្ងន់ស្រាល ដែលដំណើរការទាំងស្រុងនៅក្នុង RAM ប្រព័ន្ធ។ ឈុតសាកល្បងនីមួយៗដំណើរការប្រឆាំងនឹងបណ្តុំអង្គចងចាំដាច់ដោយឡែកដែលត្រូវបានសម្អាតបន្ទាប់ពីការធ្វើតេស្តបានបញ្ចប់។`,
+  tip: "ប្រើ `mongodb-memory-server` ក្នុងទំពក់សាកល្បង (`beforeAll`, `afterEach`, `afterAll`) ដើម្បីធានាការបំពុលទិន្នន័យឆ្លងកាត់ការធ្វើតេស្តសូន្យ។",
+  objective: "កំណត់រចនាសម្ព័ន្ធបរិស្ថាន MongoDB ដាច់ដោយឡែកក្នុងសតិសម្រាប់ការធ្វើតេស្តរួមបញ្ចូល។",
+  expectedOutcome: "ការ​ធ្វើ​តេស្ដ​មូលដ្ឋាន​ទិន្នន័យ​ដាច់​ដោយ​ឡែក​យ៉ាង​លឿន​ជាមួយ​នឹង​ការ​សម្អាត​ដោយ​ស្វ័យ​ប្រវត្តិ​បន្ទាប់​ពី​ការ​បញ្ចប់​ការ​សាកល្បង។",
   codeSnippet: "import { MongoMemoryServer } from \"mongodb-memory-server\";\nimport mongoose from \"mongoose\";\nimport { beforeAll, afterAll, afterEach } from \"vitest\";\n\nlet mongoServer;\n\nbeforeAll(async () => {\n  mongoServer = await MongoMemoryServer.create();\n  const uri = mongoServer.getUri();\n  await mongoose.connect(uri);\n});\n\nafterEach(async () => {\n  // Clear all collections between individual tests\n  const collections = mongoose.connection.collections;\n  for (const key in collections) {\n    await collections[key].deleteMany({});\n  }\n});\n\nafterAll(async () => {\n  await mongoose.disconnect();\n  await mongoServer.stop();\n});",
 };
 

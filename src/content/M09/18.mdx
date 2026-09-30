@@ -23,8 +23,8 @@ When phasing out older API versions, inform client developers programmatically u
 * \`Deprecation: true\` (or date string)
 * \`Sunset: Wed, 11 Nov 2026 00:00:00 GMT\` (Exact date of shutdown)
 * \`Link: <https://docs.api.com/migration>; rel="deprecation"\``,
-  tip: "កំណែ URI (`/api/v1/...`) គឺជាស្តង់ដារជាក់ស្តែងបំផុត និងត្រូវបានអនុម័តយ៉ាងទូលំទូលាយនៅក្នុងការអភិវឌ្ឍគេហទំព័រទំនើប (ប្រើដោយ Stripe, Twilio, Google និង GitHub)។ មានតែកំណែសំខាន់ៗប៉ុណ្ណោះ នៅពេលណែនាំការផ្លាស់ប្តូរគ្រោងការណ៍បំបែក។",
-  objective: "ប្រៀបធៀបវិធីសាស្រ្តកំណែ API និងអនុវត្តការកំណត់ផ្លូវដែលត្រូវគ្នានឹងថយក្រោយនៅក្នុង Express ជាមួយនឹងបឋមកថាបដិសេធ។",
+  tip: "កំណែ URI (`/api/v1/...`) គឺជាស្តង់ដារជាក់ស្តែងបំផុត និងត្រូវបានអនុម័តយ៉ាងទូលំទូលាយនៅក្នុងការអភិវឌ្ឍគេហទំព័រទំនើប (ប្រើដោយ Stripe, Twilio, Google និង GitHub)។ មានតែកំណែសំខាន់ៗប៉ុណ្ណោះ នៅពេលណែនាំការផ្លាស់ប្តូរSchemaបំបែក។",
+  objective: "ប្រៀបធៀបវិធីសាស្រ្តកំណែ API និងអនុវត្តការកំណត់ផ្លូវដែលត្រូវគ្នានឹងថយក្រោយនៅក្នុង Express ជាមួយនឹងHeadersបដិសេធ។",
   expectedOutcome: "សមត្ថភាពស្ថាបត្យកម្មដើម្បីគាំទ្រជំនាន់ API ជាច្រើនក្នុងពេលដំណាលគ្នាដោយមិនធ្វើឱ្យខូចអ្នកប្រើប្រាស់កេរ្តិ៍ដំណែល។",
   codeSnippet: `/**
  * Multi-Version Express Architecture with Deprecation Headers

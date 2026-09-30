@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `**CRUD** តំណាងឱ្យប្រតិបត្តិការទិន្នន័យមូលដ្ឋានចំនួនបួន៖ **បង្កើត**, **អាន**, **ធ្វើបច្ចុប្បន្នភាព**, និង **លុប**។ នៅក្នុងការរចនា RESTful ប្រតិបត្តិការកម្រិតមូលដ្ឋានទិន្នន័យទាំងនេះធ្វើផែនទីដោយផ្ទាល់ទៅនឹងវិធីសាស្ត្រ HTTP ស្តង់ដារ ដោយបង្កើតកិច្ចសន្យាឆើតឆាយ និងឯកសណ្ឋាន។
+  summary: `**CRUD** តំណាងឱ្យប្រតិបត្តិការទិន្នន័យមូលដ្ឋានចំនួនបួន៖ **បង្កើត**, **អាន**, **ធ្វើបច្ចុប្បន្នភាព**, និង **លុប**។ នៅក្នុងការរចនា RESTful ប្រតិបត្តិការកម្រិតDatabaseទាំងនេះធ្វើផែនទីដោយផ្ទាល់ទៅនឹងវិធីសាស្ត្រ HTTP ស្តង់ដារ ដោយបង្កើតកិច្ចសន្យាឆើតឆាយ និងឯកសណ្ឋាន។
 
 ### 1. CRUD ទៅ HTTP Semantic Mapping
 ** បង្កើត -> \\`POST\`**: Submits an entity to the collection. The server assigns an ID, creates the resource, and returns \`201 Created\` along with a \`Location\` header.
@@ -19,8 +19,8 @@ export const meta = {
 * **Safe**: Invoking the method does not change server state (\`GET\`, \`HEAD\`, \`OPTIONS\`).
 * **Idempotent**: Making multiple identical requests produces the exact same end state on the server as making a single request (\`GET\`, \`PUT\`, \`DELETE\`).`,
   tip: "ចងចាំច្បាប់ Golden Rule of Idempotence៖ ប្រសិនបើបណ្តាញស្វ័យប្រវត្តិដែលព្យាយាមម្តងទៀតបានផ្ញើសំណើដូចគ្នាពិតប្រាកដចំនួន 5 ដង ដោយសារការតភ្ជាប់វ៉ាយហ្វាយធ្លាក់ចុះ Endpoint Idempotent (`GET`, `PUT`, `DELETE`) ធានាថាស្ថានភាពServerត្រូវបានកែប្រែតែម្តងគត់ ដោយការពារការចោទប្រកាន់ឬអំពើពុករលួយ។",
-  objective: "ការធ្វើផែនទី Master mapping ប្រតិបត្តិការមូលដ្ឋានទិន្នន័យ CRUD ទៅនឹងវិធីសាស្ត្រ HTTP ស្តង់ដារ និងការយល់ដឹងពីសុវត្ថិភាព និង Ideempotency ។",
-  expectedOutcome: "ការជ្រើសរើសដោយទំនុកចិត្តនៃកិរិយាសព្ទ HTTP លេខកូដស្ថានភាព និងការធានា ideempotency សម្រាប់អន្តរកម្មមូលដ្ឋានទិន្នន័យទាំងអស់។",
+  objective: "ការធ្វើផែនទី Master mapping ប្រតិបត្តិការDatabase CRUD ទៅនឹងវិធីសាស្ត្រ HTTP ស្តង់ដារ និងការយល់ដឹងពីសុវត្ថិភាព និង Ideempotency ។",
+  expectedOutcome: "ការជ្រើសរើសដោយទំនុកចិត្តនៃHTTP Verbs លេខកូដស្ថានភាព និងការធានា ideempotency សម្រាប់អន្តរកម្មDatabaseទាំងអស់។",
   codeSnippet: `/**
  * Complete CRUD Mapping Matrix in Express.js
  */

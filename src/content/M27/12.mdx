@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Tests Directory (Unit, Integration, E2E)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Structuring tests into `unit/` (testing pure services and utilities in memory) and `integration/` (testing full HTTP routes with Supertest and MongoDB Memory Server) ensures quick test execution during development and comprehensive test coverage before production deployments.",
-  tip: "Keep unit tests fast (<1s total) so developers run them continuously on every file save.",
-  objective: "Structure scalable test directories separating fast unit tests from comprehensive integration suites.",
-  expectedOutcome: "Organized test suites matching the backend folder architecture.",
+  summary: `ការធ្វើតេស្តរចនាសម្ព័ន្ធទៅក្នុង \`unit/\` (សាកល្បងServicesសុទ្ធ និងឧបករណ៍ប្រើប្រាស់ក្នុងសតិ) និង \`integration/\` (សាកល្បងផ្លូវ HTTP ពេញលេញជាមួយ Supertest និង MongoDB សតិ Server) ធានាបាននូវការបំពេញបន្ថែមនៃការធ្វើតេស្តមុនពេលផលិត និងបញ្ចប់ការសាកល្បង។`,
+  tip: "រក្សាការសាកល្បងឯកតាឱ្យបានលឿន (សរុប <1s) ដូច្នេះអ្នកអភិវឌ្ឍន៍ដំណើរការវាជាបន្តបន្ទាប់លើរាល់ការរក្សាទុកឯកសារ។",
+  objective: "រចនាសម្ព័នថតការធ្វើតេស្តដែលអាចធ្វើមាត្រដ្ឋានបានបំបែកការធ្វើតេស្តឯកតាលឿនចេញពីឈុតរួមបញ្ចូលគ្នាដ៏ទូលំទូលាយ។",
+  expectedOutcome: "ឈុតសាកល្បងដែលបានរៀបចំត្រូវគ្នានឹងស្ថាបត្យកម្មថតឯកសារខាងក្រោយ។",
   codeSnippet: "tests/\n├── setup.js            # Vitest global setup (in-memory MongoDB)\n├── helpers/            # getAuthToken(), createTestUser()\n├── unit/               # Fast, mocked tests\n│   ├── services/\n│   └── utils/\n└── integration/        # Route & HTTP tests\n    ├── auth.test.js\n    └── products.test.js",
 };
 

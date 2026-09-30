@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "សារៈសំខាន់នៃ HTTP Headers",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "បឋមកថា HTTP អនុញ្ញាតឱ្យអតិថិជន និងServerផ្លាស់ប្តូរទិន្នន័យមេតានៃការគ្រប់គ្រង៖ ការចរចាខ្លឹមសារ (`Accept`, `Content-Type`), ការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវ (`Authorization`), ឃ្លាំងសម្ងាត់ (`Cache-Control`, `ETag`) និងគោលការណ៍សុវត្ថិភាព (`CORS`, `CSP`)។",
-  tip: "ឈ្មោះបឋមកថាមិនប្រកាន់អក្សរតូចធំនៅក្នុងលក្ខណៈជាក់លាក់របស់ HTTP ប៉ុន្តែ Node.js អក្សរតូចដោយស្វ័យប្រវត្តិនូវសោបឋមកថាចូលទាំងអស់សម្រាប់ការចូលដំណើរការស្របគ្នា។",
-  objective: "អានុភាពបឋមកថាសម្រាប់ការផ្ទៀងផ្ទាត់ ឃ្លាំងសម្ងាត់ និងការចរចាខ្លឹមសារ។",
+  summary: `Headers HTTP អនុញ្ញាតឱ្យអតិថិជន និងServerផ្លាស់ប្តូរទិន្នន័យមេតានៃការគ្រប់គ្រង៖ ការចរចាខ្លឹមសារ (\`Accept\`, \`Content-Type\`), Authentication (\`Authorization\`), Cache (\`Cache-Control\`, \`ETag\`) និងគោលការណ៍សុវត្ថិភាព (\`CORS\`, \`CSP\`)។`,
+  tip: "ឈ្មោះHeadersមិនប្រកាន់អក្សរតូចធំនៅក្នុងលក្ខណៈជាក់លាក់របស់ HTTP ប៉ុន្តែ Node.js អក្សរតូចដោយស្វ័យប្រវត្តិនូវសោHeadersចូលទាំងអស់សម្រាប់ការចូលដំណើរការស្របគ្នា។",
+  objective: "អានុភាពHeadersសម្រាប់Authentication Cache និងការចរចាខ្លឹមសារ។",
   expectedOutcome: "ការអានយ៉ាងស្ទាត់ជំនាញ និងការកំណត់ក្បាលសំណើ និងការឆ្លើយតប។",
   codeSnippet: "// Reading Authorization header safely\nconst authHeader = req.headers[\"authorization\"]; // e.g. \"Bearer eyJhb...\"\n\nif (!authHeader || !authHeader.startsWith(\"Bearer \")) {\n  res.writeHead(401, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Missing or invalid Bearer token\" }));\n}",
 };

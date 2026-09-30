@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម Scalable Backend កម្រិត Enterprise (Full Architecture Blueprint)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "An enterprise-grade scalable backend unites the layered architecture: Nginx reverse proxy load balancer -> stateless Express API servers (clustered horizontally) -> Redis caching & queue layer -> MongoDB database cluster with replica sets. Background workers scale independently to handle async tasks without consuming API web server resources.",
-  tip: "Design your Express servers to be 100% stateless — store no session data in local server RAM. This allows you to add or remove servers behind a load balancer with zero user disruption.",
-  objective: "Synthesize all backend layers into an enterprise-scale architecture blueprint.",
-  expectedOutcome: "Production-ready, highly available, and scalable backend architecture design.",
+  summary: `Backendដែលអាចធ្វើមាត្រដ្ឋានបានតាមលំដាប់ថ្នាក់សហគ្រាសបង្រួបបង្រួមស្ថាបត្យកម្មស្រទាប់៖ Nginx ប្រូកស៊ីផ្ទុកតុល្យភាពផ្ទុកប្រូកស៊ីបញ្ច្រាស -> Express API Server (ចង្កោមផ្តេក) -> Redis Cache & ស្រទាប់ជួរ -> MongoDB សំណុំDatabaseចម្លង។ បុគ្គលិកផ្ទៃខាងក្រោយធ្វើមាត្រដ្ឋានដោយឯករាជ្យដើម្បីដោះស្រាយកិច្ចការ async ដោយមិនចាំបាច់ប្រើប្រាស់ធនធានServerគេហទំព័រ API ។`,
+  tip: "រចនាServer Express របស់អ្នកឱ្យក្លាយជា 100% គ្មានរដ្ឋ — រក្សាទុកទិន្នន័យសម័យនៅក្នុង RAM Serverមូលដ្ឋាន។ នេះអនុញ្ញាតឱ្យអ្នកបន្ថែម ឬលុបServerនៅពីក្រោយឧបករណ៍ផ្ទុកតុល្យភាពដោយមិនមានការរំខានដល់អ្នកប្រើប្រាស់។",
+  objective: "សំយោគស្រទាប់ខាងក្រោយទាំងអស់ទៅជាប្លង់មេស្ថាបត្យកម្មខ្នាតសហគ្រាស។",
+  expectedOutcome: "ផលិតរួចរាល់ អាចរកបានខ្ពស់ និងការរចនាស្ថាបត្យកម្មBackendដែលអាចធ្វើមាត្រដ្ឋានបាន។",
   codeSnippet: "// Enterprise High-Availability Topology:\n//\n//              [Client Browser / Mobile App]\n//                           │ (HTTPS)\n//                           ↓\n//                [Nginx Reverse Proxy / CDN]\n//                           │\n//            ┌──────────────┴──────────────┐\n//            ↓ (Round-Robin)               ↓\n//   [Node.js API Server 1]       [Node.js API Server 2]\n//            │                             │\n//            ├──────────────┬──────────────┤\n//            ↓              ↓              ↓\n//    [Redis Cache]   [BullMQ Queue]   [MongoDB Replica Set]\n//                           │\n//                           ↓\n//                [Background Worker Nodes]",
 };
 

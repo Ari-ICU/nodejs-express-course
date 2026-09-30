@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Pagination (Limit & Skip)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការទាញយកការប្រមូលមូលដ្ឋានទិន្នន័យទាំងមូលដោយគ្មានការរឹតបន្តឹងបណ្តាលឱ្យការប្រើប្រាស់ស៊ីភីយូមូលដ្ឋានទិន្នន័យខ្ពស់ ការផ្ទុកបណ្តាញដ៏ធំ និងដំណើរការ Node.js ដំណើរការក្រៅអង្គចងចាំ (OOM) គាំង។ **Pagination** បែងចែកសំណុំទិន្នន័យធំទៅជាកំណាត់ដែលអាចគ្រប់គ្រងបាន។
+  summary: `ការទាញយកCollectionsDatabaseទាំងមូលដោយគ្មានការរឹតបន្តឹងបណ្តាលឱ្យការប្រើប្រាស់ស៊ីភីយូDatabaseខ្ពស់ ការផ្ទុកបណ្តាញដ៏ធំ និងដំណើរការ Node.js ដំណើរការក្រៅអង្គចងចាំ (OOM) គាំង។ **Pagination** បែងចែកសំណុំទិន្នន័យធំទៅជាកំណាត់ដែលអាចគ្រប់គ្រងបាន។
 
 ### 1. Offset-Based Pagination Formula
-អតិថិជនឆ្លងកាត់ប៉ារ៉ាម៉ែត្រសំណួរ URL ពីរ៖
+អតិថិជនឆ្លងកាត់Paramsសំណួរ URL ពីរ៖
 * **\`page\`**: The target page number (1-indexed).
 * **\`limit\`**: The number of items to return per page.
 * **Skip Calculation**: \`skip = (page - 1) * limit\`.
@@ -17,8 +17,8 @@ export const meta = {
 
 ### 2. Defense Against Denial of Service (DoS)
 Never trust user-supplied limits blindly! A malicious user could request \`?limit=10000000\`, exhausting server memory. Always enforce a hard maximum ceiling: \`const safeLimit = Math.min(parseInt(req.query.limit) || 10, 100)\`.`,
-  tip: "ភ្ជាប់ប៉ារ៉ាម៉ែត្រ `limit` របស់ API របស់អ្នកជាប់នឹងព្រំដែនខាងលើ (ឧ. `Math.min(limit, 100)`)។ សម្រាប់មតិព័ត៌មានរមូរគ្មានកំណត់ដែលមានជួររាប់លាន សូមពិចារណាលើទំព័រដែលមានមូលដ្ឋានលើទស្សន៍ទ្រនិច (`?after=cursor_id`) ជំនួសឱ្យការបិទទំព័រដែលមានមូលដ្ឋានលើអុហ្វសិត ដើម្បីជៀសវាងការបំផ្លាញការអនុវត្ត SQL OFFSET ជ្រៅ។",
-  objective: "អនុវត្តការបិទភ្ជាប់ដោយសុវត្ថិភាពដែលមានមូលដ្ឋានលើអុហ្វសិតជាមួយនឹងអនាម័យនៃការបញ្ចូល ការគៀបកម្រិតអតិបរមា និងស្រោមសំបុត្រទិន្នន័យមេតានៃទំព័រពេញលេញ។",
+  tip: "ភ្ជាប់Params `limit` របស់ API របស់អ្នកជាប់នឹងព្រំដែនខាងលើ (ឧ. `Math.min(limit, 100)`)។ សម្រាប់មតិព័ត៌មានរមូរគ្មានកំណត់ដែលមានជួររាប់លាន សូមពិចារណាលើទំព័រដែលមានមូលដ្ឋានលើទស្សន៍ទ្រនិច (`?after=cursor_id`) ជំនួសឱ្យការបិទទំព័រដែលមានមូលដ្ឋានលើអុហ្វសិត ដើម្បីជៀសវាងការបំផ្លាញការអនុវត្ត SQL OFFSET ជ្រៅ។",
+  objective: "អនុវត្តការបិទភ្ជាប់ដោយសុវត្ថិភាពដែលមានមូលដ្ឋានលើអុហ្វសិតជាមួយនឹងSanitizationនៃការបញ្ចូល ការគៀបកម្រិតអតិបរមា និងResponse Envelopeទិន្នន័យមេតានៃទំព័រពេញលេញ។",
   expectedOutcome: "ផ្លូវទំព័រទំព័រដែលមានប្រសិទ្ធភាពខ្ពស់ដែលផ្តល់នូវការគណនាទំព័រ ចំនួនសរុប និងទិន្នន័យមេតារុករក។",
   codeSnippet: `const express = require("express");
 const app = express();

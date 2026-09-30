@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ប្រភេទ BSON Types ក្នុង Mongoose (String, Number, Date, ObjectId)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Mongoose គាំទ្រប្រភេទគ្រោងការណ៍ស្តង់ដារ៖ String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Array, Decimal128, និង Map។",
+  summary: `Mongoose គាំទ្រប្រភេទSchemaស្តង់ដារ៖ String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Array, Decimal128, និង Map។`,
   tip: "ប្រើ `Schema.Types.ObjectId` ជាមួយជម្រើស `ref` ដើម្បីបង្កើតទំនាក់ទំនងជាមួយម៉ូដែលផ្សេងទៀត។",
-  objective: "ជ្រើសរើសប្រភេទគ្រោងការណ៍ត្រឹមត្រូវសម្រាប់គុណលក្ខណៈទិន្នន័យផ្សេងៗគ្នា។",
-  expectedOutcome: "និយមន័យវាលគ្រោងការណ៍សុវត្ថិភាពប្រភេទ។",
+  objective: "ជ្រើសរើសប្រភេទSchemaត្រឹមត្រូវសម្រាប់គុណលក្ខណៈទិន្នន័យផ្សេងៗគ្នា។",
+  expectedOutcome: "និយមន័យវាលSchemaសុវត្ថិភាពប្រភេទ។",
   codeSnippet: "const orderSchema = new Schema({\n  userId: { type: Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{ productId: Schema.Types.ObjectId, quantity: Number }],\n  paid: { type: Boolean, default: false },\n  metadata: { type: Schema.Types.Mixed } // Freeform object\n});",
 };
 

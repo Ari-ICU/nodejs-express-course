@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ប្រតិបត្តិការមិនរាំងស្ទះ (Non-blocking I/O)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការមិនទប់ស្កាត់ I/O អនុញ្ញាតឱ្យ Node.js ចាប់ផ្តើមប្រតិបត្តិការមួយ (អានឯកសារឌីស សួរមូលដ្ឋានទិន្នន័យ ហៅច្រកផ្លូវបង់ប្រាក់ខាងក្រៅ) ហើយបន្តភ្លាមៗដើម្បីដោះស្រាយសំណើផ្សេងទៀតដោយមិនរង់ចាំឱ្យប្រតិបត្តិការបញ្ចប់។",
+  summary: `ការមិនទប់ស្កាត់ I/O អនុញ្ញាតឱ្យ Node.js ចាប់ផ្តើមប្រតិបត្តិការមួយ (អានឯកសារឌីស សួរDatabase ហៅច្រកផ្លូវបង់ប្រាក់ខាងក្រៅ) ហើយបន្តភ្លាមៗដើម្បីដោះស្រាយសំណើផ្សេងទៀតដោយមិនរង់ចាំឱ្យប្រតិបត្តិការបញ្ចប់។`,
   tip: "កូដមិនទប់ស្កាត់ធានាថា ខណៈពេលដែលប្រតិបត្តិការយឺត (ឌីស ឬបណ្តាញ I/O) រង់ចាំការឆ្លើយតប ខ្សែអក្សរ JavaScript ចម្បងនៅតែបន្តបម្រើអតិថិជនផ្សេងទៀត។",
-  objective: "បង្ហាញការទប់ស្កាត់សមកាលកម្មធៀបនឹងការប្រតិបត្តិមិនទប់ស្កាត់អសមកាល។",
+  objective: "បង្ហាញការទប់ស្កាត់Synchronousធៀបនឹងការប្រតិបត្តិមិនទប់ស្កាត់អសមកាល។",
   expectedOutcome: "ភស្តុតាងជាក់ស្តែងដែលច្បាស់លាស់ថាកូដមិនទប់ស្កាត់ធ្វើឱ្យServerឆ្លើយតប។",
   codeSnippet: "// Non-blocking Asynchronous Execution Flow:\nconsole.log(\"1. Request received: Start simulated background I/O...\");\n\n// Offloaded to background — does NOT freeze the main thread\nsetTimeout(() => {\n  console.log(\"3. Background task complete! Callback executed.\");\n}, 500);\n\nconsole.log(\"2. Main thread stays 100% free to handle other incoming users!\");",
 };

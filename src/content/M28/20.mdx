@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "បញ្ជីត្រួតពិនិត្យចុងក្រោយមុនពេល Launch (Production Go-Live Checklist)",
   type: "architecture",
   codeLanguage: "markdown",
-  summary: "Before launching an API to real users, engineers must verify a comprehensive production checklist. This covers environment secrets validation, database indexes, rate limiting, error logging to external tools (Sentry), automated backups, SSL encryption, and health checks.",
-  tip: "Always create an automated daily MongoDB backup cron job (`mongodump`) and upload archives to S3/R2 before opening your application to public users.",
-  objective: "Execute a thorough production readiness audit ensuring zero launch gaps.",
-  expectedOutcome: "Rock-solid, audit-verified backend ready for real-world enterprise traffic.",
+  summary: `មុនពេលចាប់ផ្តើម API ដល់អ្នកប្រើប្រាស់ពិតប្រាកដ វិស្វករត្រូវតែផ្ទៀងផ្ទាត់បញ្ជីត្រួតពិនិត្យផលិតកម្មដ៏ទូលំទូលាយមួយ។ នេះគ្របដណ្ដប់លើValidationនៃអាថ៌កំបាំងបរិស្ថាន លិបិក្រមDatabase Rate Limiting Loggingកំហុសទៅកាន់ឧបករណ៍ខាងក្រៅ (Sentry) ការបម្រុងទុកដោយស្វ័យប្រវត្តិ ការអ៊ិនគ្រីប SSL និងការពិនិត្យសុខភាព។`,
+  tip: "តែងតែបង្កើតការងារ MongoDB បម្រុងទុកប្រចាំថ្ងៃដោយស្វ័យប្រវត្តិ (`mongodump`) ហើយបង្ហោះបណ្ណសារទៅ S3/R2 មុនពេលបើកកម្មវិធីរបស់អ្នកដល់អ្នកប្រើប្រាស់សាធារណៈ។",
+  objective: "អនុវត្តសវនកម្មការត្រៀមផលិតឱ្យបានហ្មត់ចត់ ដើម្បីធានាបាននូវចន្លោះប្រហោងនៃការបើកដំណើរការ។",
+  expectedOutcome: "Backendដែលផ្ទៀងផ្ទាត់ដោយសវនកម្ម Rock-solid រួចរាល់សម្រាប់ចរាចរណ៍សហគ្រាសក្នុងពិភពពិត។",
   codeSnippet: "## Enterprise Production Go-Live Checklist:\n- [ ] 1. Security: Helmet headers active & X-Powered-By removed\n- [ ] 2. CORS: Explicit origin whitelisting configured (No wildcard '*')\n- [ ] 3. Secrets: All passwords & JWT secrets have 32+ bytes entropy in env\n- [ ] 4. Database: Compound indexes created & query latency verified with explain()\n- [ ] 5. Rate Limiting: Active on all endpoints, strict on auth (/login)\n- [ ] 6. Caching: Redis TTL configured on read-heavy public endpoints\n- [ ] 7. Error Handling: No internal stack traces leaked in 500 responses\n- [ ] 8. Monitoring: Health check route (/health) returning DB + Redis status\n- [ ] 9. Backups: Daily automated database snapshots to Cloud storage (R2/S3)\n- [ ] 10. SSL/TLS: Valid HTTPS certificate with auto-renewal active",
 };
 

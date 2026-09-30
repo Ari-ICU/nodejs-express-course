@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Secret Keys និង Environment Variables ដោយសុវត្ថិភាព",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "អាថ៌កំបាំងដូចជាការភ្ជាប់មូលដ្ឋានទិន្នន័យ URIs សោចុះហត្ថលេខា JWT និងសញ្ញាសម្ងាត់ច្រកចេញចូលនៃការទូទាត់ត្រូវតែមិនត្រូវបាន hardcoded នៅក្នុងកូដប្រភព ឬប្តេជ្ញាចិត្តចំពោះឃ្លាំង Git ឡើយ។ ការរក្សាទុកពួកវានៅក្នុងឯកសារ `.env` ក្នុងស្រុក និងអថេរបរិស្ថានក្នុងផលិតកម្មរក្សាប្រភពកូដឱ្យមានសុវត្ថិភាពពីការលេចធ្លាយអាថ៌កំបាំងដ៏មហន្តរាយ។",
-  tip: "បន្ថែម `.env*` ទៅ `.gitignore` របស់អ្នកភ្លាមៗនៅពេលចាប់ផ្តើមគម្រោង។ ផ្តល់គំរូ `.env.example` ប្រកបដោយអនាម័យជាមួយនឹងតម្លៃអត់ចេះសោះសម្រាប់ការចាប់ផ្តើមក្រុម។",
+  summary: `អាថ៌កំបាំងដូចជាការភ្ជាប់Database URIs សោចុះហត្ថលេខា JWT និងសញ្ញាសម្ងាត់ច្រកចេញចូលនៃការទូទាត់ត្រូវតែមិនត្រូវបាន hardcoded នៅក្នុងSource Code ឬប្តេជ្ញាចិត្តចំពោះឃ្លាំង Git ឡើយ។ ការរក្សាទុកពួកវានៅក្នុងឯកសារ \`.env\` ក្នុងស្រុក និងអថេរបរិស្ថានក្នុងផលិតកម្មរក្សាប្រភពកូដឱ្យមានសុវត្ថិភាពពីការលេចធ្លាយអាថ៌កំបាំងដ៏មហន្តរាយ។`,
+  tip: "បន្ថែម `.env*` ទៅ `.gitignore` របស់អ្នកភ្លាមៗនៅពេលចាប់ផ្តើមគម្រោង។ ផ្តល់គំរូ `.env.example` ប្រកបដោយSanitizationជាមួយនឹងតម្លៃអត់ចេះសោះសម្រាប់ការចាប់ផ្តើមក្រុម។",
   objective: "បង្កើតលំហូរការងារកំណត់រចនាសម្ព័ន្ធបរិស្ថានសុវត្ថិភាពការពារការលេចធ្លាយព័ត៌មានសម្ងាត់ចំពោះការគ្រប់គ្រងកំណែ។",
-  expectedOutcome: "លេខសម្គាល់រឹងកូដសូន្យនៅក្នុងកូដប្រភព និងការបែងចែកបរិស្ថានស្អាត។",
+  expectedOutcome: "លេខសម្គាល់រឹងកូដសូន្យនៅក្នុងSource Code និងការបែងចែកបរិស្ថានស្អាត។",
   codeSnippet: "# .env.example (Safe to commit to Git)\nNODE_ENV=development\nPORT=5000\nMONGODB_URI=mongodb://localhost:27017/app_dev\nJWT_ACCESS_SECRET=replace_with_min_32_bytes_random_hex_key\nJWT_REFRESH_SECRET=replace_with_min_32_bytes_random_hex_key\n\n# .gitignore (MANDATORY)\n.env\n.env.local\n.env.production",
 };
 

@@ -5,20 +5,20 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាង Frontend និង Backend",
   type: "concept",
   imageUrl: "/images/lessons/frontend-vs-backend.png",
-  summary: `**Frontend** — executes inside the user's browser:
-- Built with HTML, CSS, JavaScript (React, Next.js, Vue)
-- Renders user interfaces, animations, and form inputs
-- Manages client-side state and browser cookies
-- Sends requests to the backend via HTTP/REST APIs
-- Has **zero privacy** — all source code is readable by users
+  summary: `**Frontend** — ប្រតិបត្តិក្នុង browser របស់អ្នកប្រើ៖
+- បង្កើតជាមួយ HTML, CSS, JavaScript (React, Next.js, Vue)
+- បង្ហាញUI (User Interface) ចលនា និងForm Inputs
+- គ្រប់គ្រងស្ថានភាពផ្នែកខាងអតិថិជន និងBrowser Cookies
+- ផ្ញើសំណើទៅBackendតាមរយៈ HTTP/REST APIs
+- មាន **សូន្យភាពឯកជន** — Source Codeទាំងអស់អាចអានបានដោយអ្នកប្រើប្រាស់
 
-**Backend** — runs on a secure, private server:
-- Built with Node.js, Express, databases (MongoDB, PostgreSQL)
-- Enforces authentication, authorization, and data validation
-- Executes database reads/writes with ACID transactions
-- Safely protects private API secrets and payment keys
-- Transmits sanitized JSON responses back to the client`,
-  tip: "Never store private API keys, database credentials, or secret hashing salts on the frontend.",
-  objective: "Differentiate client execution boundaries from server execution boundaries.",
-  expectedOutcome: "Confident identification of which responsibilities belong to the server versus the client.",
+**Backend** — ដំណើរការលើServerឯកជនដែលមានសុវត្ថិភាព៖
+- បង្កើតឡើងដោយ Node.js, Express, Database (MongoDB, PostgreSQL)
+- អនុវត្តAuthentication Authorization និងValidationទិន្នន័យ
+- ប្រតិបត្តិការអាន/សរសេរDatabaseជាមួយនឹងប្រតិបត្តិការ ACID
+- ការពារអាថ៌កំបាំង API ឯកជន និងសោទូទាត់ដោយសុវត្ថិភាព
+- បញ្ជូនការឆ្លើយតប JSON ដែលមានSanitizationត្រឡប់ទៅអតិថិជនវិញ។`,
+  tip: "កុំរក្សាទុកសោ API ឯកជន អត្តសញ្ញាណDatabase ឬអំបិលលាក់កំបាំងនៅលើFrontend។",
+  objective: "បែងចែកព្រំដែនប្រតិបត្តិការClientខុសគ្នាពីព្រំដែនប្រតិបត្តិServer។",
+  expectedOutcome: "ការកំណត់អត្តសញ្ញាណប្រកបដោយទំនុកចិត្តនៃទំនួលខុសត្រូវណាមួយជារបស់Serverធៀបនឹងអតិថិជន។",
 };

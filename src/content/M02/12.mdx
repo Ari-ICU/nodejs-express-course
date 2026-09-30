@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "ម៉ូឌុល ECMAScript (ESM) គឺជាប្រព័ន្ធម៉ូឌុលផ្លូវការស្តង់ដារនៃ JavaScript ។ វាគាំទ្រការវិភាគឋិតិវន្ត កម្រិតកំពូល `await` ការផ្ទុកអសមកាល និងវាក្យសម្ព័ន្ធបង្រួបបង្រួមនៅទូទាំងFrontend និងBackend។",
   tip: "នៅក្នុង Node.js ESM ដើម ចងចាំជានិច្ចដើម្បីរួមបញ្ចូលផ្នែកបន្ថែមឯកសារ `.js` នៅក្នុងការនាំចូលដែលទាក់ទង (ឧ. `import { auth } from './auth.js'`) ។",
-  objective: "Master ES Module exports, default exports, named imports, and top-level await in Node.js.",
+  objective: "ការនាំចេញ Master ES Module ការនាំចេញលំនាំដើម ការនាំចូលដែលមានឈ្មោះ និងកម្រិតកំពូលកំពុងរង់ចាំនៅក្នុង Node.js ។",
   expectedOutcome: "ស្អាត ទំនើប អនាគត ម៉ូឌុល ភស្តុតាង",
   codeSnippet: "// utils.js\nexport const calculateTax = (price, rate = 0.1) => price * rate;\nexport default function formatCurrency(amount) {\n  return `$${amount.toFixed(2)}`;\n}\n\n// server.js\nimport formatCurrency, { calculateTax } from \"./utils.js\";\n\n// Top-level await is natively supported in ESM!\nconst tax = calculateTax(100);\nconsole.log(\"Tax:\", formatCurrency(tax));",
 };

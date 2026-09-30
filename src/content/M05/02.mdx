@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធនៃ HTTP Request (req)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "សំណើ HTTP រួមមានកិរិយាសព្ទ HTTP (GET, POST ។",
+  summary: `សំណើ HTTP រួមមានHTTP Verbs (GET, POST ។`,
   tip: "នៅក្នុងServer Node.js HTTP ដើម `req` គឺជាស្ទ្រីមដែលអាចអានបានដែលចូលមក មានន័យថាបន្ទុកធំមកដល់ជាបំណែកជាជាងទាំងអស់ក្នុងពេលតែមួយ។",
   objective: "ពិនិត្យ និងញែកសមាសធាតុទាំងអស់នៃសំណើ HTTP ចូល។",
-  expectedOutcome: "សមត្ថភាពក្នុងការទាញយកបឋមកថា IP របស់អតិថិជន ផ្លូវ និងវិធីសាស្ត្រពីសំណើណាមួយ។",
+  expectedOutcome: "សមត្ថភាពក្នុងការទាញយកHeaders IP របស់អតិថិជន ផ្លូវ និងវិធីសាស្ត្រពីសំណើណាមួយ។",
   codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  console.log(\"Method:\", req.method);\n  console.log(\"URL Path:\", req.url);\n  console.log(\"User-Agent:\", req.headers[\"user-agent\"]);\n  res.end(\"Request logged\");\n});",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ម៉ូឌុលផ្លូវឯកសារ path Module",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "The `node:path` module provides cross-platform path resolution utilities, correctly resolving path separators (`/` on macOS/Linux vs `\\` on Windows), calculating relative paths, and extracting file extensions.",
-  tip: "Never manually concatenate file paths with `+ '/' +`; always use `path.join()` or `path.resolve()` for reliable cross-platform execution.",
-  objective: "Resolve and manipulate file system paths safely across operating systems.",
-  expectedOutcome: "Cross-platform filesystem path resolution without hardcoded slashes.",
+  summary: `ម៉ូឌុល \`node:path\` ផ្តល់ឧបករណ៍ប្រើប្រាស់ដំណោះស្រាយផ្លូវឆ្លងវេទិកា ដោះស្រាយផ្លូវបំបែកបានត្រឹមត្រូវ (\`/\` នៅលើ macOS/Linux ទល់នឹង \`\\\` នៅលើ Windows) ការគណនាផ្លូវដែលទាក់ទង និងទាញយកផ្នែកបន្ថែមឯកសារ។`,
+  tip: "កុំភ្ជាប់ផ្លូវឯកសារដោយដៃជាមួយ `+ '/' +`; តែងតែប្រើ `path.join()` ឬ `path.resolve()` សម្រាប់ការប្រតិបត្តិឆ្លងវេទិកាដែលអាចទុកចិត្តបាន។",
+  objective: "ដោះស្រាយ និងរៀបចំផ្លូវប្រព័ន្ធឯកសារដោយសុវត្ថិភាពឆ្លងកាត់ប្រព័ន្ធប្រតិបត្តិការ។",
+  expectedOutcome: "ដំណោះស្រាយផ្លូវប្រព័ន្ធឯកសារឆ្លងវេទិកាដោយមិនមានសញ្ញាកាត់។",
   codeSnippet: "import path from \"node:path\";\n\n// Safe cross-platform path joining\nconst uploadPath = path.join(process.cwd(), \"public\", \"uploads\", \"avatar.png\");\n\n// Extract metadata\nconsole.log(\"Directory:\", path.dirname(uploadPath));\nconsole.log(\"Filename:\", path.basename(uploadPath));\nconsole.log(\"Extension:\", path.extname(uploadPath));",
 };
 

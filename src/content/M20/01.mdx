@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធផ្ញើ Email ក្នុង Web Application",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ការផ្ញើអ៊ីមែលប្រតិបត្តិការ (កំណត់ពាក្យសម្ងាត់ឡើងវិញ សារស្វាគមន៍ បង្កាន់ដៃទិញ) ទាមទារស្ថាបត្យកម្មដឹកជញ្ជូនដែលអាចទុកចិត្តបាន។ ការហៅទៅServer SMTP ខាងក្រៅធ្វើសមកាលកម្មរារាំងការឆ្លើយតប HTTP ដោយបន្ថែមភាពយឺតយ៉ាវវិនាទី។ ស្ថាបត្យកម្មផលិតកម្មកាត់បន្ថយការបង្កើតអ៊ីមែលពីការចែកចាយដោយប្រើការប្រតិបត្តិអសមកាល។",
+  summary: `ការផ្ញើអ៊ីមែលប្រតិបត្តិការ (កំណត់ពាក្យសម្ងាត់ឡើងវិញ សារស្វាគមន៍ បង្កាន់ដៃទិញ) ទាមទារស្ថាបត្យកម្មដឹកជញ្ជូនដែលអាចទុកចិត្តបាន។ ការហៅទៅServer SMTP ខាងក្រៅធ្វើSynchronousរារាំងការឆ្លើយតប HTTP ដោយបន្ថែមភាពយឺតយ៉ាវវិនាទី។ ស្ថាបត្យកម្មផលិតកម្មកាត់បន្ថយការបង្កើតអ៊ីមែលពីការចែកចាយដោយប្រើការប្រតិបត្តិអសមកាល។`,
   tip: "កុំរង់ចាំការចាប់ដៃ SMTP យឺតដោយផ្ទាល់នៅក្នុងសំណើ HTTP ដែលប្រឈមមុខនឹងអតិថិជន។ ផ្ញើអ៊ីមែលផ្ញើដោយអសមកាល ដូច្នេះការឆ្លើយតបរបស់អតិថិជនស្ថិតនៅក្រោម 100ms។",
-  objective: "ស្វែងយល់អំពីស្ថាបត្យកម្មនៃការបញ្ជូនអ៊ីមែលដែលធ្វើសមកាលកម្មទល់នឹងអសមកាលនៅក្នុង Node.js ។",
-  expectedOutcome: "High-performance architecture where slow SMTP handshakes never block HTTP responses.",
+  objective: "ស្វែងយល់អំពីស្ថាបត្យកម្មនៃការបញ្ជូនអ៊ីមែលដែលធ្វើSynchronousទល់នឹងអសមកាលនៅក្នុង Node.js ។",
+  expectedOutcome: "ស្ថាបត្យកម្មដែលមានប្រសិទ្ធភាពខ្ពស់ដែលការចាប់ដៃ SMTP យឺតមិនដែលរារាំងការឆ្លើយតប HTTP ទេ។",
   codeSnippet: "// Asynchronous Email Delivery Architecture:\n//\n// 1. Client sends POST /api/v1/auth/register\n// 2. Controller validates input & saves user to database (<20ms)\n// 3. Controller dispatches background email delivery asynchronously (non-blocking)\n// 4. Controller immediately responds 201 Created to the user (<50ms!)\n// 5. Email service completes SMTP handshake and transmission in the background",
 };
 

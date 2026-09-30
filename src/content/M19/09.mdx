@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Multer DiskStorage លើ Local Filesystem",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ម៉ាស៊ីន `diskStorage` របស់ Multer ផ្តល់ការគ្រប់គ្រងពេញលេញលើកន្លែងដែលឯកសារត្រូវបានសរសេរ និងរបៀបដែលពួកវាត្រូវបានដាក់ឈ្មោះ។ ការហៅត្រឡប់មកវិញផ្ទាល់ខ្លួន `destination` បញ្ជូនឯកសារទៅជាថតរងដែលបានរៀបចំ (ឧ. `uploads/avatars`) ខណៈពេលដែល `filename` ការហៅត្រលប់ក្រោយដាក់ត្រាពេលវេលាតែមួយគត់ ឬ UUID ដើម្បីជៀសវាងការប៉ះទង្គិចគ្នានៃការសរសេរជាន់លើឈ្មោះ។",
+  summary: `ម៉ាស៊ីន \`diskStorage\` របស់ Multer ផ្តល់ការគ្រប់គ្រងពេញលេញលើកន្លែងដែលឯកសារត្រូវបានសរសេរ និងរបៀបដែលពួកវាត្រូវបានដាក់ឈ្មោះ។ Callbacksមកវិញផ្ទាល់ខ្លួន \`destination\` បញ្ជូនឯកសារទៅជាថតរងដែលបានរៀបចំ (ឧ. \`uploads/avatars\`) ខណៈពេលដែល \`filename\` ការហៅត្រលប់ក្រោយដាក់Timestampsតែមួយគត់ ឬ UUID ដើម្បីជៀសវាងការប៉ះទង្គិចគ្នានៃការសរសេរជាន់លើឈ្មោះ។`,
   tip: "តែងតែបង្កើតឈ្មោះឯកសារចៃដន្យ (ឧ. `user-123-1773729600.jpg`) ជាជាងរក្សាទុក `file.originalname` ដែលអាចមានចន្លោះ ឬតួអក្សរឆ្លងកាត់ (`../../`)។",
   objective: "កំណត់រចនាសម្ព័ន្ធ Multer diskStorage ជាមួយនឹងការបង្កើតផ្លូវកំណត់ និងឈ្មោះដែលមិនមានការប៉ះទង្គិច។",
-  expectedOutcome: "ការរៀបចំកន្លែងផ្ទុកនៅលើឌីសជាមួយនឹងការដាក់ឈ្មោះឯកសារដែលមានអនាម័យ គ្មានការប៉ះទង្គិច។",
+  expectedOutcome: "ការរៀបចំកន្លែងផ្ទុកនៅលើឌីសជាមួយនឹងការដាក់ឈ្មោះឯកសារដែលមានSanitization គ្មានការប៉ះទង្គិច។",
   codeSnippet: "import multer from \"multer\";\nimport path from \"node:path\";\nimport crypto from \"node:crypto\";\n\nconst storage = multer.diskStorage({\n  destination: (req, file, cb) => {\n    cb(null, \"public/uploads/avatars\");\n  },\n  filename: (req, file, cb) => {\n    // Generate: user-<id>-<randomHex><ext>\n    const uniqueSuffix = crypto.randomBytes(8).toString(\"hex\");\n    const ext = path.extname(file.originalname).toLowerCase();\n    cb(null, `user-${req.user?._id || \"anon\"}-${uniqueSuffix}${ext}`);\n  },\n});\n\nexport const uploadAvatarLocal = multer({ storage });",
 };
 

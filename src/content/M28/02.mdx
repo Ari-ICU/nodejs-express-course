@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Environment Variables ក្នុង Production",
   type: "lab",
   codeLanguage: "bash",
-  summary: "In production, environment variables should be injected directly by the hosting platform (Docker environment flags, Kubernetes secrets, or VPS systemd environment configurations) rather than read from physical `.env` files on disk. This prevents secrets from persisting in container images or leaking via file permissions.",
-  tip: "Never commit `.env` files into Docker images or Git repositories. Use Docker Compose `environment:` or pass `--env-file` at runtime.",
-  objective: "Inject production environment variables securely via container runtimes and VPS environments.",
-  expectedOutcome: "Secure credential management without plaintext files in images or repositories.",
+  summary: `នៅក្នុងការផលិត អថេរបរិស្ថានគួរតែត្រូវបានចាក់ដោយផ្ទាល់ដោយវេទិកាបង្ហោះ (Docker ទង់បរិស្ថាន អាថ៌កំបាំង Kubernetes ឬការកំណត់រចនាសម្ព័ន្ធបរិស្ថាន VPS) ជាជាងអានពីឯកសារ \`.env\` នៅលើថាស។ វាការពារការសម្ងាត់ពីការបន្តនៅក្នុងរូបភាពកុងតឺន័រ ឬការលេចធ្លាយតាមរយៈAuthorizationឯកសារ។`,
+  tip: "កុំដាក់ឯកសារ `.env` ទៅក្នុងរូបភាព Docker ឬឃ្លាំង Git ។ ប្រើ Docker សរសេរ `environment:` ឬឆ្លងកាត់ `--env-file` នៅពេលដំណើរការ។",
+  objective: "បញ្ចូលអថេរបរិយាកាសផលិតកម្មដោយសុវត្ថិភាពតាមរយៈកុងតឺន័រដំណើរការ និងបរិស្ថាន VPS ។",
+  expectedOutcome: "ការគ្រប់គ្រងព័ត៌មានសម្ងាត់ដោយសុវត្ថិភាពដោយគ្មានឯកសារអត្ថបទធម្មតានៅក្នុងរូបភាព ឬឃ្លាំង។",
   codeSnippet: "# 1. Passing env vars to Docker container at runtime:\ndocker run -d   -p 5000:5000   -e NODE_ENV=production   -e MONGODB_URI=\"mongodb+srv://admin:secret@cluster.mongodb.net/prod\"   --name my-api   my-enterprise-api:latest\n\n# 2. Or using Docker Compose secrets / env_file:\n# docker compose --env-file .env.production up -d",
 };
 

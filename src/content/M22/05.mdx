@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការដំឡើង និងដំណើរការ Vitest ក្នុង Node.js",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Vitest is a blazing-fast, modern next-generation test runner powered by Vite. It features out-of-the-box native TypeScript and ES Modules support, instantaneous hot module reloading (watch mode), Jest-compatible assertion syntax, and multi-threaded test execution.",
-  tip: "Add `\"test\": \"vitest run\"` and `\"test:watch\": \"vitest\"` to your `package.json` scripts for lightning-fast test execution.",
-  objective: "Install, configure, and execute automated test suites using Vitest.",
-  expectedOutcome: "Configured Vitest environment running tests with sub-second execution speeds.",
+  summary: `Vitest គឺជាអ្នករត់ការសាកល្បងជំនាន់ក្រោយដ៏ទំនើប និងរហ័សរហួនដែលដំណើរការដោយ Vite ។ វាមានលក្ខណៈពិសេសក្រៅប្រអប់ TypeScript និង ES Modules ការគាំទ្រ ការផ្ទុកម៉ូឌុលក្តៅភ្លាមៗ (របៀបមើល) វាក្យសម្ព័ន្ធការអះអាងដែលឆបគ្នាជាមួយ Jest និងការអនុវត្តការធ្វើតេស្តពហុខ្សែ។`,
+  tip: "បន្ថែម `\"test\": \"vitest run\"` និង `\"test:watch\": \"vitest\"` ទៅក្នុងស្គ្រីប `package.json` របស់អ្នកសម្រាប់ការប្រតិបត្តិការធ្វើតេស្តលឿន។",
+  objective: "ដំឡើង កំណត់រចនាសម្ព័ន្ធ និងប្រតិបត្តិឈុតសាកល្បងស្វ័យប្រវត្តិដោយប្រើ Vitest។",
+  expectedOutcome: "បានកំណត់រចនាសម្ព័ន្ធ Vitest បរិស្ថានដែលកំពុងដំណើរការសាកល្បងជាមួយនឹងល្បឿនប្រតិបត្តិអនុវិនាទី។",
   codeSnippet: "// vitest.config.js\nimport { defineConfig } from \"vitest/config\";\n\nexport default defineConfig({\n  test: {\n    globals: true,\n    environment: \"node\",\n    testTimeout: 10000,\n    coverage: {\n      provider: \"v8\",\n      reporter: [\"text\", \"json\", \"html\"],\n    },\n  },\n});",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី In-Memory Data Store (Redis)",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Redis (Remote Dictionary Server) is an open-source, in-memory key-value data structure store. Because it holds all data in RAM rather than spinning disks or flash memory, read and write operations execute in sub-millisecond speeds (over 100,000 operations per second). Redis supports versatile data types: strings, hashes, lists, sets, and sorted sets.",
-  tip: "Run Redis locally in one command using Docker: `docker run -d -p 6379:6379 redis:alpine`.",
-  objective: "Understand Redis architecture, memory-first performance, and supported data structures.",
-  expectedOutcome: "Preparedness to integrate Redis as an application caching and state layer.",
+  summary: `Redis (វចនានុក្រមពីចម្ងាយ Server) គឺជាប្រភពបើកចំហ ឃ្លាំងទិន្នន័យរចនាសម្ព័ន្ធតម្លៃសោនៅក្នុងអង្គចងចាំ។ ដោយសារតែវាផ្ទុកទិន្នន័យទាំងអស់នៅក្នុង RAM ជាជាងបង្វិលថាស ឬអង្គចងចាំពន្លឺ ប្រតិបត្តិការអាន និងសរសេរដំណើរការក្នុងល្បឿនរងមីលីវិនាទី (ជាង 100,000 ប្រតិបត្តិការក្នុងមួយវិនាទី)។ Redis គាំទ្រប្រភេទទិន្នន័យដែលអាចប្រើប្រាស់បាន៖ ខ្សែអក្សរ សញ្ញា បញ្ជី សំណុំ និងសំណុំដែលបានតម្រៀប។`,
+  tip: "ដំណើរការ Redis ក្នុងមូលដ្ឋានក្នុងពាក្យបញ្ជាមួយដោយប្រើ Docker៖ `docker run -d -p 6379:6379 redis:alpine` ។",
+  objective: "យល់អំពី Redis ស្ថាបត្យកម្ម ដំណើរការអង្គចងចាំដំបូង និងរចនាសម្ព័ន្ធទិន្នន័យដែលគាំទ្រ។",
+  expectedOutcome: "ការត្រៀមខ្លួនដើម្បីរួមបញ្ចូល Redis ជាCacheកម្មវិធី និងស្រទាប់រដ្ឋ។",
   codeSnippet: "# Common Redis CLI commands:\nSET user:100:name \"Alice\" EX 3600  # Set key with 1-hour expiration (TTL)\nGET user:100:name                  # Retrieve value -> \"Alice\"\nDEL user:100:name                  # Delete key immediately\nKEYS product:*                     # Search keys (use SCAN in production!)\nTTL user:100:name                  # Check remaining seconds before expiry",
 };
 

@@ -7,8 +7,8 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "ការដកឯកសារចេញពីបណ្តុំដោយប្រើ `findByIdAndDelete()`, `deleteOne()` និង `deleteMany()` ។",
   tip: "នៅក្នុងប្រព័ន្ធផលិតកម្ម សូមពិចារណាលើការលុបទន់ (`isDeleted: true`) ដើម្បីការពារទំនាក់ទំនងបរទេស និងប្រវត្តិនៃការបញ្ជាទិញ។",
-  objective: "លុបកំណត់ត្រាពីការប្រមូលមូលដ្ឋានទិន្នន័យ។",
-  expectedOutcome: "ការដកយកចេញត្រឹមត្រូវនៃអង្គភាពមូលដ្ឋានទិន្នន័យ។",
+  objective: "លុបកំណត់ត្រាពីCollectionsDatabase។",
+  expectedOutcome: "ការដកយកចេញត្រឹមត្រូវនៃអង្គភាពDatabase។",
   codeSnippet: "// Hard delete\nawait Product.findByIdAndDelete(productId);\n\n// Soft delete (Alternative production pattern)\nawait Product.findByIdAndUpdate(productId, { isDeleted: true, deletedAt: new Date() });",
 };
 

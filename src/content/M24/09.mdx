@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការតាមដានវត្តមាន Online Users (Presence Tracking)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Tracking user presence (online, away, offline) requires managing connected state across socket lifecycles. Maintaining a connected user registry in memory or a Redis Set allows broadcasting presence updates to all clients whenever a user connects or disconnects.",
-  tip: "Use Redis Sets (`SADD online_users userId` / `SREM online_users userId`) for presence tracking in multi-server architectures so all cluster nodes share the active user list.",
-  objective: "Implement online presence tracking with connection registries and disconnect event hooks.",
-  expectedOutcome: "Live user presence system updating contact online/offline indicators in real time.",
+  summary: `ការតាមដានវត្តមានរបស់អ្នកប្រើប្រាស់ (អនឡាញ ឆ្ងាយ ក្រៅបណ្តាញ) ទាមទារការគ្រប់គ្រងស្ថានភាពដែលបានតភ្ជាប់ឆ្លងកាត់វដ្តជីវិតរបស់រន្ធ។ ការរក្សាបញ្ជីឈ្មោះអ្នកប្រើប្រាស់ដែលបានភ្ជាប់នៅក្នុងអង្គចងចាំ ឬសំណុំ Redis អនុញ្ញាតការផ្សាយព័ត៌មានថ្មីៗអំពីវត្តមានដល់អតិថិជនទាំងអស់ នៅពេលណាដែលអ្នកប្រើប្រាស់ភ្ជាប់ ឬផ្តាច់។`,
+  tip: "ប្រើ Redis Sets (`SADD online_users userId` / `SREM online_users userId`) សម្រាប់ការតាមដានវត្តមាននៅក្នុងស្ថាបត្យកម្មពហុ server ដូច្នេះថ្នាំងចង្កោមទាំងអស់ចែករំលែកបញ្ជីអ្នកប្រើប្រាស់សកម្ម។",
+  objective: "អនុវត្តការតាមដានវត្តមានលើអ៊ីនធឺណិតជាមួយការចុះឈ្មោះការតភ្ជាប់ និងផ្តាច់ទំពក់ព្រឹត្តិការណ៍។",
+  expectedOutcome: "ប្រព័ន្ធវត្តមានអ្នកប្រើប្រាស់បន្តផ្ទាល់ ធ្វើបច្ចុប្បន្នភាពទំនាក់ទំនងតាមអ៊ីនធឺណិត/ក្រៅបណ្តាញតាមពេលវេលាជាក់ស្តែង",
   codeSnippet: "// In-memory or Redis presence tracking:\nconst onlineUsers = new Map(); // userId -> Set of socketIds\n\nio.on(\"connection\", (socket) => {\n  const userId = socket.user?.id;\n  if (userId) {\n    if (!onlineUsers.has(userId)) onlineUsers.set(userId, new Set());\n    onlineUsers.get(userId).add(socket.id);\n\n    // Broadcast user is online\n    io.emit(\"user_status_change\", { userId, status: \"online\" });\n  }\n\n  socket.on(\"disconnect\", () => {\n    if (userId && onlineUsers.has(userId)) {\n      const userSockets = onlineUsers.get(userId);\n      userSockets.delete(socket.id);\n      if (userSockets.size === 0) {\n        onlineUsers.delete(userId);\n        io.emit(\"user_status_change\", { userId, status: \"offline\" });\n      }\n    }\n  });\n});",
 };
 

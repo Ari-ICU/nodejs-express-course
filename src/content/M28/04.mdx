@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកត់ត្រា Logs ប្រកបដោយស្តង់ដារជាមួយ Winston ឬ Pino",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "In production, `console.log()` is synchronous and can block the event loop under heavy throughput. Structured logging libraries like `pino` or `winston` output logs as machine-readable JSON strings formatted with timestamps, log levels (info, warn, error), request IDs, and context metadata for indexing in Datadog, ELK, or Logstash.",
-  tip: "Use `pino` for maximum performance — it is up to 5x faster than Winston and produces minimal CPU overhead under heavy traffic.",
-  objective: "Configure structured JSON logging with request tracing and error diagnostics.",
-  expectedOutcome: "High-performance structured logs ready for cloud log aggregator indexing.",
+  summary: `នៅក្នុងការផលិត \`console.log()\` មានភាពស៊ីសង្វាក់គ្នា ហើយអាចរារាំងEvent Loopក្រោមការបញ្ជូនខ្លាំង។ បណ្ណាល័យកត់ត្រាដែលមានរចនាសម្ព័ន្ធដូចជា \`pino\` ឬ \`winston\` កំណត់ហេតុលទ្ធផលជាខ្សែអក្សរ JSON ដែលម៉ាស៊ីនអាចអានបានដែលធ្វើទ្រង់ទ្រាយជាមួយTimestamps កម្រិតកំណត់ហេតុ (ព័ត៌មាន ព្រមាន កំហុស) លេខសម្គាល់សំណើ និងទិន្នន័យមេតាបរិបទសម្រាប់ការធ្វើលិបិក្រមក្នុង Datadog, ELK ឬ Logstash ។`,
+  tip: "ប្រើ `pino` សម្រាប់ដំណើរការអតិបរមា — វាលឿនជាង Winston ដល់ទៅ 5 ដង ហើយផលិត CPU តិចបំផុតនៅក្រោមចរាចរណ៍ច្រើន។",
+  objective: "កំណត់រចនាសម្ព័ន្ធLogging JSON ជាមួយនឹងការតាមដានសំណើ និងការវិនិច្ឆ័យកំហុស។",
+  expectedOutcome: "កំណត់​ហេតុ​ដែល​មាន​រចនាសម្ព័ន្ធ​ដំណើរការ​ខ្ពស់​ត្រៀម​ខ្លួន​ជា​ស្រេច​សម្រាប់​ការ​ធ្វើ​លិបិក្រម​កម្មវិធី​ប្រមូល​ទិន្នន័យ​លើ​ពពក។",
   codeSnippet: "import pino from \"pino\";\n\nexport const logger = pino({\n  level: process.env.LOG_LEVEL || \"info\",\n  timestamp: pino.stdTimeFunctions.isoTime,\n  formatters: {\n    level: (label) => ({ level: label.toUpperCase() }),\n  },\n});\n\n// Usage across application:\n// logger.info({ userId: \"123\", action: \"ORDER_PLACED\" }, \"User completed purchase\");\n// logger.error({ err, route: \"/checkout\" }, \"Payment gateway timeout\");",
 };
 

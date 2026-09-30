@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការការពារប្រព័ន្ធតាមរយៈ Input Validation",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ភាពត្រឹមត្រូវនៃការបញ្ចូលយ៉ាងម៉ត់ចត់គឺជាខ្សែការពារចម្បងប្រឆាំងនឹងការវាយប្រហារដោយការចាក់ ភាពមិនប្រក្រតីនៃសតិបណ្ដោះអាសន្ន និងអំពើពុករលួយទិន្នន័យ។ តាមរយៈការកំណត់កិច្ចសន្យាគ្រោងការណ៍ដ៏តឹងរឹងដោយប្រើ Zod ឬ Joi រាល់វាលចូលត្រូវតែប្រកាន់ខ្ជាប់នូវប្រភេទទិន្នន័យដែលរំពឹងទុក ព្រំដែនប្រវែងខ្សែអក្សរ លំនាំ regex និងតម្លៃដែលអាចអនុញ្ញាតបាន មុនពេលដំណើរការតក្កវិជ្ជាអាជីវកម្មណាមួយ។",
-  tip: "ដកលក្ខណៈសម្បត្តិដែលមិនបានរំពឹងទុកដោយស្វ័យប្រវត្តិដោយប្រើឧបករណ៍ញែកគ្រោងការណ៍ដ៏តឹងរឹង (`schema.parse()`) ដើម្បីការពារការវាយប្រហារដោយ Mass Assignment ដែលអ្នកប្រើប្រាស់បញ្ចូលវាលដែលគ្មានការអនុញ្ញាតដូចជា `isAdmin: true` ។",
-  objective: "អនុវត្តច្បាប់កំណត់សុពលភាពគ្រោងការណ៍ដ៏តឹងរ៉ឹង ដើម្បីការពារបន្ទុកព្យាបាទពីការឈានដល់ស្រទាប់កម្មវិធី។",
-  expectedOutcome: "សូន្យទិន្នន័យដែលមិនមានសុពលភាពដែលជ្រៀតចូលលើសពីស្រទាប់ Express Middleware ។",
+  summary: `ភាពត្រឹមត្រូវនៃការបញ្ចូលយ៉ាងម៉ត់ចត់គឺជាខ្សែការពារចម្បងប្រឆាំងនឹងការវាយប្រហារដោយការចាក់ ភាពមិនប្រក្រតីនៃសតិបណ្ដោះអាសន្ន និងអំពើពុករលួយទិន្នន័យ។ តាមរយៈការកំណត់កិច្ចសន្យាSchemaដ៏តឹងរឹងដោយប្រើ Zod ឬ Joi រាល់វាលចូលត្រូវតែប្រកាន់ខ្ជាប់នូវប្រភេទទិន្នន័យដែលរំពឹងទុក ព្រំដែនប្រវែងខ្សែអក្សរ លំនាំ regex និងតម្លៃដែលអាចអនុញ្ញាតបាន មុនពេលដំណើរការតក្កវិជ្ជាអាជីវកម្មណាមួយ។`,
+  tip: "ដកលក្ខណៈសម្បត្តិដែលមិនបានរំពឹងទុកដោយស្វ័យប្រវត្តិដោយប្រើឧបករណ៍ញែកSchemaដ៏តឹងរឹង (`schema.parse()`) ដើម្បីការពារការវាយប្រហារដោយ Mass Assignment ដែលអ្នកប្រើប្រាស់បញ្ចូលវាលដែលគ្មានAuthorizationដូចជា `isAdmin: true` ។",
+  objective: "អនុវត្តច្បាប់កំណត់ValidationSchemaដ៏តឹងរ៉ឹង ដើម្បីការពារបន្ទុកព្យាបាទពីការឈានដល់ស្រទាប់កម្មវិធី។",
+  expectedOutcome: "សូន្យទិន្នន័យដែលមិនមានValidationដែលជ្រៀតចូលលើសពីស្រទាប់ Express Middleware ។",
   codeSnippet: "import { z } from \"zod\";\n\nexport const updateProfileSchema = z.object({\n  name: z.string().trim().min(2).max(50),\n  bio: z.string().trim().max(300).optional(),\n  website: z.string().url().optional(),\n}).strict(); // .strict() rejects any payload containing unknown fields like 'role'!\n\nexport const validateUpdateProfile = (req, res, next) => {\n  const result = updateProfileSchema.safeParse(req.body);\n  if (!result.success) {\n    return res.status(400).json({\n      status: \"fail\",\n      errors: result.error.flatten().fieldErrors,\n    });\n  }\n  req.body = result.data; // replace with sanitized data\n  next();\n};",
 };
 

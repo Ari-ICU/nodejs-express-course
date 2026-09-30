@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការដំណើរការ JavaScript ជាមួយ Node.js",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Running JavaScript through the `node` CLI executes files directly against the V8 engine and operating system APIs, providing full access to filesystem, networking, and system environments without a web browser.",
-  tip: "Use the native `--watch` flag in Node.js 18+ to auto-reload on file changes without third-party packages like nodemon.",
-  objective: "Execute JavaScript scripts from the terminal using the Node CLI.",
-  expectedOutcome: "Comfortable command-line script execution with hot-reloading support.",
+  summary: `ការដំណើរការ JavaScript តាមរយៈ \`node\` CLI ប្រតិបត្តិឯកសារដោយផ្ទាល់ប្រឆាំងនឹងម៉ាស៊ីន V8 និង APIs ប្រព័ន្ធប្រតិបត្តិការ ដោយផ្តល់នូវការចូលដំណើរការពេញលេញទៅកាន់ប្រព័ន្ធឯកសារ បណ្តាញ និងបរិស្ថានប្រព័ន្ធដោយគ្មានBrowserតាមអ៊ីនធឺណិត។`,
+  tip: "ប្រើទង់ជាតិដើម `--watch` នៅក្នុង Node.js 18+ ដើម្បីផ្ទុកឡើងវិញដោយស្វ័យប្រវត្តិលើការផ្លាស់ប្តូរឯកសារដោយគ្មានកញ្ចប់ភាគីទីបីដូចជា nodemon ។",
+  objective: "ប្រតិបត្តិស្គ្រីប JavaScript ពីស្ថានីយដោយប្រើ Node CLI ។",
+  expectedOutcome: "ការប្រតិបត្តិស្គ្រីបបន្ទាត់ពាក្យបញ្ជាប្រកបដោយផាសុកភាពជាមួយនឹងការគាំទ្រការផ្ទុកឡើងវិញក្តៅ។",
   codeSnippet: "# Run a JavaScript script directly\nnode app.js\n\n# Run with native file-watcher auto-reload (Node.js 18.11+)\nnode --watch app.js\n\n# Evaluate inline JavaScript expressions\nnode -e \"console.log('Today is:', new Date().toISOString())\"",
 };
 

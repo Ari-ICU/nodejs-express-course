@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ Client ទៅកាន់ Socket.IO Server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Frontend clients connect using the `socket.io-client` library. The client establishes a persistent connection, listens for server-dispatched events via `socket.on()`, and transmits client events using `socket.emit()`.",
-  tip: "Always clean up socket listeners (`socket.off()`) when unmounting React components to prevent memory leaks and duplicate event firings.",
-  objective: "Connect frontend clients to Socket.IO and establish bidirectional event communication.",
-  expectedOutcome: "Operational client-server socket connection handling connect and disconnect states.",
+  summary: `Frontend អតិថិជនភ្ជាប់ដោយប្រើបណ្ណាល័យ \`socket.io-client\` ។ Clientបង្កើតការតភ្ជាប់ជាប់លាប់ ស្តាប់ព្រឹត្តិការណ៍ដែលបញ្ជូនដោយServerតាមរយៈ \`socket.on()\` និងបញ្ជូនព្រឹត្តិការណ៍Clientដោយប្រើ \`socket.emit()\` ។`,
+  tip: "សម្អាតឧបករណ៍ស្តាប់រន្ធ (`socket.off()`) ជានិច្ច នៅពេលអាន់ម៉ោនសមាសធាតុ React ដើម្បីការពារការលេចធ្លាយអង្គចងចាំ និងការបញ្ឆេះព្រឹត្តិការណ៍ស្ទួន។",
+  objective: "ភ្ជាប់អតិថិជនFrontendទៅ Socket.IO និងបង្កើតទំនាក់ទំនងព្រឹត្តិការណ៍ទ្វេទិស។",
+  expectedOutcome: "ការដោះស្រាយការតភ្ជាប់រន្ធអតិថិជន-Serverប្រតិបត្តិការ ភ្ជាប់ និងផ្តាច់រដ្ឋ។",
   codeSnippet: "// In Frontend (React or Vanilla JS):\nimport { io } from \"socket.io-client\";\n\nconst socket = io(\"http://localhost:5000\", {\n  autoConnect: true,\n  reconnectionAttempts: 5,\n  reconnectionDelay: 1000,\n});\n\nsocket.on(\"connect\", () => {\n  console.log(\"Connected to server with ID:\", socket.id);\n});\n\nsocket.on(\"connect_error\", (err) => {\n  console.error(\"Connection failed:\", err.message);\n});",
 };
 

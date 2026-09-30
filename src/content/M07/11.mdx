@@ -8,7 +8,7 @@ export const meta = {
   summary: "ការភ្ជាប់រ៉ោតទ័រនៅក្រោមបុព្វបទផ្លូវទូទៅ (ឧ. `/api/v1/auth`) លុបបំបាត់ការវាយបញ្ចូលផ្លូវដដែលៗនៅក្នុងការកំណត់ផ្លូវនីមួយៗ។",
   tip: "Middleware ទាំងអស់ដែលបានអនុវត្តចំពោះរ៉ោតទ័រដែលបានម៉ោន ប្រតិបត្តិសម្រាប់រាល់ផ្លូវរងនៅក្នុងក្រុមនោះ។",
   objective: "Endpointដែលទាក់ទងជាក្រុមក្រោមបុព្វបទទូទៅ និងឧបករណ៍ការពារកណ្តាលដែលបានចែករំលែក។",
-  expectedOutcome: "ការប្រកាសផ្លូវ DRY ជាមួយនឹងការការពារឧបករណ៍កណ្តាលដែលមានវិសាលភាព។",
+  expectedOutcome: "ការប្រកាសផ្លូវ DRY ជាមួយនឹងការការពារMiddlewareដែលមានវិសាលភាព។",
   codeSnippet: "// Mount admin router with shared admin authentication guard\nimport adminRouter from \"./routes/admin.routes.js\";\nimport { verifyAdmin } from \"./middleware/auth.js\";\n\napp.use(\"/api/v1/admin\", verifyAdmin, adminRouter);",
 };
 

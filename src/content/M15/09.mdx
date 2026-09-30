@@ -6,9 +6,9 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការដោះស្រាយកំហុសសោស្ទួន MongoDB (កូដ 11000) កំហុសក្នុងការខាស (ObjectId មិនត្រឹមត្រូវ) និងការអស់ពេលនៃការតភ្ជាប់យ៉ាងរលូន។",
-  tip: "កុំបង្ហាញសារកំហុសមូលដ្ឋានទិន្នន័យ MongoDB ឆៅទៅកាន់អ្នកប្រើប្រាស់ API សាធារណៈ។",
-  objective: "សម្អាតកំហុសមូលដ្ឋានទិន្នន័យ មុនពេលផ្ញើការឆ្លើយតបរបស់អតិថិជន។",
-  expectedOutcome: "ការដោះស្រាយកំហុសដោយសុវត្ថិភាព ការពារព័ត៌មានលម្អិតនៃគ្រោងការណ៍មូលដ្ឋានទិន្នន័យខាងក្នុង។",
+  tip: "កុំបង្ហាញសារកំហុសDatabase MongoDB ឆៅទៅកាន់អ្នកប្រើប្រាស់ API សាធារណៈ។",
+  objective: "សម្អាតកំហុសDatabase មុនពេលផ្ញើការឆ្លើយតបរបស់អតិថិជន។",
+  expectedOutcome: "ការដោះស្រាយកំហុសដោយសុវត្ថិភាព ការពារព័ត៌មានលម្អិតនៃSchemaDatabaseខាងក្នុង។",
   codeSnippet: "// Handling MongoDB duplicate key (e.g. unique email)\nif (err.code === 11000) {\n  const value = Object.values(err.keyValue)[0];\n  return res.status(409).json({\n    success: false,\n    error: `Duplicate value '${value}'. Please use another value.`\n  });\n}",
 };
 

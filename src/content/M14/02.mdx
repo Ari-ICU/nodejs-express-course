@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "យុទ្ធសាស្ត្រផ្ទៀងផ្ទាត់ Request (Body, Query, Params)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "យុទ្ធសាស្ត្រផ្ទៀងផ្ទាត់សំណើពេញលេញធ្វើឱ្យមានសុពលភាពប្រភពបញ្ចូលទាំងបី៖ `req.body` (បន្ទុកបន្ទុក), `req.query` (តម្រង) និង `req.params` (អ្នកកំណត់អត្តសញ្ញាណ)។",
-  tip: "ធ្វើឱ្យប៉ារ៉ាម៉ែត្រផ្លូវមានសុពលភាព (ឧ. ពិនិត្យមើលថា `:id` គឺជាវត្ថុលេខគោលដប់ប្រាំមួយ 24 តួអក្សរត្រឹមត្រូវ) មុនពេលសាកសួរមូលដ្ឋានទិន្នន័យ។",
-  objective: "កំណត់វ៉ិចទ័របញ្ចូលម៉ាស៊ីនភ្ញៀវទាំងអស់ដែលទាមទារឱ្យមានសុពលភាព។",
-  expectedOutcome: "ការការពារដ៏ទូលំទូលាយនៅទូទាំងរាងកាយ សំណួរ និងវ៉ិចទ័រប៉ារ៉ាម៉ែត្រ។",
+  summary: `យុទ្ធសាស្ត្រផ្ទៀងផ្ទាត់សំណើពេញលេញធ្វើឱ្យមានValidationប្រភពបញ្ចូលទាំងបី៖ \`req.body\` (បន្ទុកបន្ទុក), \`req.query\` (Filter) និង \`req.params\` (អ្នកកំណត់អត្តសញ្ញាណ)។`,
+  tip: "ធ្វើឱ្យParamsផ្លូវមានValidation (ឧ. ពិនិត្យមើលថា `:id` គឺជាវត្ថុលេខគោលដប់ប្រាំមួយ 24 តួអក្សរត្រឹមត្រូវ) មុនពេលសាកសួរDatabase។",
+  objective: "កំណត់វ៉ិចទ័របញ្ចូលClientទាំងអស់ដែលទាមទារឱ្យមានValidation។",
+  expectedOutcome: "ការការពារដ៏ទូលំទូលាយនៅទូទាំងរាងកាយ សំណួរ និងវ៉ិចទ័រParams។",
   codeSnippet: "/* Three Input Vectors to Validate:\n   1. req.body   -> Payloads on POST, PUT, PATCH\n   2. req.query  -> Filters and pagination on GET\n   3. req.params -> Resource identifiers in URL paths\n*/",
 };
 

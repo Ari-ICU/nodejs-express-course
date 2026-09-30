@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "ការហៅទូរសព្ទទៅ `express()` បង្កើតឧទាហរណ៍កម្មវិធី។ វត្ថុ `app` រក្សាការកំណត់រចនាសម្ព័ន្ធ ចុះឈ្មោះបំពង់កណ្តាល កំណត់ផ្លូវ HTTP និងផ្ទេររន្ធស្តាប់ទៅប្រព័ន្ធប្រតិបត្តិការ។",
-  tip: "រក្សា `app.js` ឧទ្ទិសដល់ការកំណត់រចនាសម្ព័ន្ធឧបករណ៍កណ្តាល និងការចងផ្លូវ ហើយចងច្រកបណ្តាញនៅក្នុងឯកសារ `server.js` ដាច់ដោយឡែកសម្រាប់ការធ្វើតេស្តគ្មានថ្នេរ។",
+  tip: "រក្សា `app.js` ឧទ្ទិសដល់ការកំណត់រចនាសម្ព័ន្ធMiddleware និងការចងផ្លូវ ហើយចងច្រកបណ្តាញនៅក្នុងឯកសារ `server.js` ដាច់ដោយឡែកសម្រាប់ការធ្វើតេស្តគ្មានថ្នេរ។",
   objective: "ភ្លាមៗ និងកំណត់រចនាសម្ព័ន្ធកម្មវិធីកណ្តាល Express ។",
   expectedOutcome: "សម្អាតលំនាំចាប់ផ្តើមកម្មវិធីដែលបំបែកចេញពីការស្តាប់Server។",
   codeSnippet: "// src/app.js\nimport express from \"express\";\n\nconst app = express();\n\n// Application settings\napp.disable(\"x-powered-by\"); // Hide Express signature for security\napp.use(express.json());\n\nexport default app;",

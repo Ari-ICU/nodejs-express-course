@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Unit Testing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Unit testing verifies individual units of source code — typically isolated functions or service classes — in complete isolation from external dependencies like databases, file systems, or network sockets. By mocking out external systems, unit tests execute in milliseconds.",
-  tip: "Keep unit tests deterministic: given the same input, a unit test must always produce the exact same assertion output regardless of environment.",
-  objective: "Learn the principles of isolated unit testing and the Arrange-Act-Assert (AAA) pattern.",
-  expectedOutcome: "Ability to identify testable units and write fast, deterministic unit tests.",
+  summary: `ការធ្វើតេស្តឯកតាផ្ទៀងផ្ទាត់ឯកតានីមួយៗនៃSource Code — ជាទូទៅមុខងារដាច់ពីគ្នា ឬថ្នាក់Services — នៅក្នុងភាពឯកោពេញលេញពីភាពអាស្រ័យខាងក្រៅដូចជា Database ប្រព័ន្ធឯកសារ ឬរន្ធបណ្តាញ។ ដោយការមើលងាយប្រព័ន្ធខាងក្រៅ ការធ្វើតេស្តឯកតាដំណើរការគិតជាមិល្លីវិនាទី។`,
+  tip: "រក្សា​ការ​ធ្វើ​តេស្ដ​ឯកតា​កំណត់៖ ដោយ​ផ្ដល់​ការ​បញ្ចូល​ដូច​គ្នា ការ​ធ្វើ​តេស្ត​ឯកតា​ត្រូវ​តែ​បង្កើត​លទ្ធផល​អះអាង​ដូច​គ្នា​ជានិច្ច​ដោយ​មិន​គិត​ពី​បរិស្ថាន។",
+  objective: "ស្វែងយល់ពីគោលការណ៍នៃការធ្វើតេស្តឯកតាដាច់ដោយឡែក និងលំនាំ Arrange-Act-Assert (AAA)។",
+  expectedOutcome: "សមត្ថភាពក្នុងការកំណត់អត្តសញ្ញាណឯកតាដែលអាចសាកល្បងបាន និងសរសេរបានលឿន និងកំណត់ការធ្វើតេស្តឯកតា។",
   codeSnippet: "// Arrange - Act - Assert (AAA) Pattern:\nimport { describe, it, expect } from \"vitest\";\nimport { calculateDiscount } from \"../services/pricing.service.js\";\n\ndescribe(\"calculateDiscount\", () => {\n  it(\"should apply 20% discount for orders exceeding $100\", () => {\n    // 1. Arrange\n    const originalPrice = 120;\n    const discountRate = 0.20;\n\n    // 2. Act\n    const finalPrice = calculateDiscount(originalPrice, discountRate);\n\n    // 3. Assert\n    expect(finalPrice).toBe(96);\n  });\n});",
 };
 

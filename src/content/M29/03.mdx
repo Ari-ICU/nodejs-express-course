@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៣ ៖ Full Auth System ជាមួយ JWT និង HttpOnly Cookies",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build a complete authentication system: registration with bcrypt hashing, login with dual JWT tokens (short-lived access token + long-lived refresh token in HttpOnly cookie), protected /me endpoint, logout (cookie invalidation and database token cleanup), forgot password with email reset token, and password reset. Serves as the authentication backbone for enterprise projects.",
-  tip: "Test your token expiry logic thoroughly — simulate expired access tokens, cookie-based refresh, and the full re-authentication cycle.",
-  objective: "Implement a complete, production-grade JWT authentication system with dual tokens and cookie security.",
-  expectedOutcome: "Secure authentication API: register, login, refresh, logout, and password recovery.",
+  summary: `បង្កើតប្រព័ន្ធផ្ទៀងផ្ទាត់ពេញលេញ៖ ការចុះឈ្មោះដោយប្រើសញ្ញា bcrypt ចូលដោយប្រើសញ្ញាសម្ងាត់ JWT ពីរ (សញ្ញាសម្ងាត់ចូលប្រើរយៈពេលខ្លី + និមិត្តសញ្ញាធ្វើឱ្យស្រស់ដែលមានអាយុកាលយូរនៅក្នុងCookies HttpOnly) Endpointsដែលត្រូវបានការពារ /me ការចាកចេញ (ការធ្វើឱ្យCookiesអValidation និងការកំណត់លេខសម្ងាត់Databaseឡើងវិញ ដើម្បីលុបពាក្យសម្ងាត់ឡើងវិញ) បម្រើជាឆ្អឹងខ្នងនៃAuthenticationសម្រាប់គម្រោងសហគ្រាស។`,
+  tip: "សាកល្បងតក្កវិជ្ជានៃការផុតកំណត់ថូខឹនរបស់អ្នកឱ្យបានហ្មត់ចត់ — ក្លែងធ្វើសញ្ញាសម្ងាត់ចូលប្រើដែលផុតកំណត់ ការធ្វើឱ្យស្រស់ផ្អែកលើCookies និងវដ្តនៃAuthenticationឡើងវិញពេញលេញ។",
+  objective: "អនុវត្តប្រព័ន្ធផ្ទៀងផ្ទាត់កម្រិតផលិតកម្ម JWT ពេញលេញជាមួយនឹងសញ្ញាសម្ងាត់ពីរ និងសុវត្ថិភាពCookies។",
+  expectedOutcome: "Authenticationដោយសុវត្ថិភាព API៖ ចុះឈ្មោះ ចូល ធ្វើឱ្យស្រស់ ចេញពីគណនី និងការសង្គ្រោះពាក្យសម្ងាត់។",
   codeSnippet: "export const login = async ({ email, password }) => {\n  const user = await User.findOne({ email }).select(\"+password\");\n  if (!user || !(await bcrypt.compare(password, user.password))) {\n    throw new AppError(\"Invalid email or password\", 401);\n  }\n  const accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: \"15m\" });\n  const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: \"7d\" });\n  return { user: sanitizeUser(user), accessToken, refreshToken };\n};",
 };
 

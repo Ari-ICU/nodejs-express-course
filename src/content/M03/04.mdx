@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ម៉ូឌុលព័ត៌មានប្រព័ន្ធប្រតិបត្តិការ os Module",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The `node:os` module exposes operating system hardware metrics: CPU core count, system uptime, free/total memory, network interfaces, and host architecture, which is vital for clustering and health-check monitoring.",
-  tip: "Use `os.cpus().length` when determining how many worker processes to fork in Node cluster deployments.",
-  objective: "Query host system metrics for health-check endpoints and cluster scaling.",
-  expectedOutcome: "Ability to monitor server resource utilization natively.",
+  summary: `ម៉ូឌុល \`node:os\` បង្ហាញរង្វាស់ផ្នែករឹងរបស់ប្រព័ន្ធប្រតិបត្តិការ៖ ចំនួនស្នូលស៊ីភីយូ ម៉ោងដំណើរការប្រព័ន្ធ អង្គចងចាំឥតគិតថ្លៃ/សរុប Interfaceបណ្តាញ និងស្ថាបត្យកម្មម៉ាស៊ីន ដែលមានសារៈសំខាន់សម្រាប់ការត្រួតពិនិត្យចង្កោម និងការត្រួតពិនិត្យសុខភាព។`,
+  tip: "ប្រើ `os.cpus().length` នៅពេលកំណត់ថាតើដំណើរការកម្មករប៉ុន្មាននាក់ដែលត្រូវបំបែកនៅក្នុងការដាក់ពង្រាយ Node cluster ។",
+  objective: "Query មាត្រដ្ឋានប្រព័ន្ធម៉ាស៊ីនសម្រាប់Endpointsពិនិត្យសុខភាព និងការធ្វើមាត្រដ្ឋានចង្កោម។",
+  expectedOutcome: "សមត្ថភាពក្នុងការត្រួតពិនិត្យការប្រើប្រាស់ធនធានServer។",
   codeSnippet: "import os from \"node:os\";\n\nconsole.log(\"Hostname:\", os.hostname());\nconsole.log(\"CPU Cores:\", os.cpus().length);\nconsole.log(\"Free Memory:\", (os.freemem() / 1024 / 1024 / 1024).toFixed(2), \"GB\");\nconsole.log(\"Total Memory:\", (os.totalmem() / 1024 / 1024 / 1024).toFixed(2), \"GB\");\nconsole.log(\"System Uptime:\", (os.uptime() / 3600).toFixed(1), \"hours\");",
 };
 

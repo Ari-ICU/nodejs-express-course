@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: `នៅក្នុង RESTful APIs, **Query Filtering** អនុញ្ញាតឱ្យអតិថិជនបង្រួមសំណុំទិន្នន័យប្រមូលដោយគុណលក្ខណៈជាក់លាក់ដោយមិនបង្កើតEndpoint URL ជាក់លាក់សម្រាប់រាល់ការបញ្ចូលគ្នា។
 
-### 1. លំនាំវាក្យសម្ព័ន្ធតម្រង REST ទូទៅ
+### 1. លំនាំវាក្យសម្ព័ន្ធFilter REST ទូទៅ
 ** ការផ្គូផ្គងពិតប្រាកដ **៖ \\`/products?category=electronics&brand=apple\`
 * **Comparison Operators (Range)**:
   * Prefix style: \`/products?minPrice=50&maxPrice=200\`
@@ -17,9 +17,9 @@ export const meta = {
 
 ### 2. Building Dynamic Database Queries Safely
 Extract \`req.query\`, sanitize values, and dynamically construct query clauses. In production ORMs (Prisma, Mongoose, Knex), always use parameterized queries to avoid injection vulnerabilities.`,
-  tip: "តែងតែបំប្លែង និងធ្វើឱ្យប្រភេទទិន្នន័យមានសុពលភាពនៅពេលអាន `req.query`។ តាមលំនាំដើមក្នុង Express តម្លៃ `req.query` ទាំងអស់មកដល់ជាខ្សែអក្សរ! ឧទាហរណ៍ `'true' !== true` និង `typeof req.query.price === 'string'`។",
-  objective: "បង្កើតម៉ាស៊ីនត្រងសំណួរពហុប៉ារ៉ាម៉ែត្រថាមវន្តនៅក្នុងការផ្គូផ្គងប្រភេទគាំទ្រ Express ជួរតម្លៃ និងភាពអាចរកបានប៊ូលីន។",
-  expectedOutcome: "សមត្ថភាពក្នុងការដោះស្រាយតម្រងសំណួរដែលអាចបត់បែនបានតាមលក្ខណៈថាមវន្ត ខណៈពេលដែលការបញ្ជាក់ប្រភេទ និងការការពារពីប៉ារ៉ាម៉ែត្រខុសទម្រង់។",
+  tip: "តែងតែបំប្លែង និងធ្វើឱ្យប្រភេទទិន្នន័យមានValidationនៅពេលអាន `req.query`។ តាមលំនាំដើមក្នុង Express តម្លៃ `req.query` ទាំងអស់មកដល់ជាខ្សែអក្សរ! ឧទាហរណ៍ `'true' !== true` និង `typeof req.query.price === 'string'`។",
+  objective: "បង្កើតម៉ាស៊ីនត្រងសំណួរពហុParamsថាមវន្តនៅក្នុងការផ្គូផ្គងប្រភេទគាំទ្រ Express ជួរតម្លៃ និងភាពអាចរកបានប៊ូលីន។",
+  expectedOutcome: "សមត្ថភាពក្នុងការដោះស្រាយFilterសំណួរដែលអាចបត់បែនបានតាមលក្ខណៈថាមវន្ត ខណៈពេលដែលការបញ្ជាក់ប្រភេទ និងការការពារពីParamsខុសទម្រង់។",
   codeSnippet: `const express = require("express");
 const app = express();
 

@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម Promises (Pending, Fulfilled, Rejected)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "A Promise represents the eventual completion or failure of an asynchronous operation and its resulting value. Promises have three mutually exclusive states: pending, fulfilled, or rejected.",
+  summary: `Promise តំណាងឱ្យការបញ្ចប់ ឬបរាជ័យជាយថាហេតុនៃប្រតិបត្តិការអសមកាល និងតម្លៃលទ្ធផលរបស់វា។ Promises មានរដ្ឋផ្តាច់មុខចំនួនបី៖ រង់ចាំ បំពេញ ឬបដិសេធ។`,
   tip: "ប្រើ `Promise.all()` ដើម្បីដំណើរការប្រតិបត្តិការ async ឯករាជ្យស្របគ្នា ដោយកាត់បន្ថយពេលវេលាឆ្លើយតបសរុបយ៉ាងសំខាន់។",
-  objective: "បង្កើត ដោះស្រាយ បដិសេធ និងខ្សែសង្វាក់ការសន្យាប្រកបដោយប្រសិទ្ធភាព។",
+  objective: "បង្កើត ដោះស្រាយ បដិសេធ និងខ្សែសង្វាក់Promisesប្រកបដោយប្រសិទ្ធភាព។",
   expectedOutcome: "សមត្ថភាពក្នុងការដោះស្រាយកិច្ចការអសមកាលជាមួយនឹងបំពង់ `.then()` និង `.catch()` ស្អាត។",
   codeSnippet: "const verifyStock = (productId, quantity) => {\n  return new Promise((resolve, reject) => {\n    if (quantity <= 5) {\n      resolve({ available: true, productId });\n    } else {\n      reject(new Error(\"Insufficient warehouse stock\"));\n    }\n  });\n};\n\nverifyStock(\"P_99\", 2)\n  .then(res => console.log(\"Stock confirmed:\", res))\n  .catch(err => console.error(\"Order failed:\", err.message));",
 };

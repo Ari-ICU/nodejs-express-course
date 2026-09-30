@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ async / await ទំនើប",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Syntactic sugar over Promises ដែលអនុញ្ញាតឱ្យអានកូដអសមកាល និងរៀបចំរចនាសម្ព័ន្ធដោយសមកាលកម្ម។ មុខងារ Async តែងតែត្រឡប់ការសន្យា ហើយ `await` ផ្អាកការប្រតិបត្តិរហូតដល់ការសន្យាដោះស្រាយ។",
-  tip: "ផ្សំ `Promise.all()` ជាមួយ `await` នៅពេលហៅសេវាកម្មឯករាជ្យជាច្រើនក្នុងពេលដំណាលគ្នា។",
-  objective: "សរសេរសេវាកម្មBackendអសមកាលលីនេអ៊ែរ ស្អាត ដោយប្រើ async/await។",
-  expectedOutcome: "ឧបករណ៍បញ្ជាអសមកាលដែលត្រៀមរួចជាស្រេចក្នុងការផលិត និងការអនុវត្តសេវាកម្ម។",
+  summary: `Syntactic sugar over Promises ដែលអនុញ្ញាតឱ្យអានកូដអសមកាល និងរៀបចំរចនាសម្ព័ន្ធដោយSynchronous។ មុខងារ Async តែងតែត្រឡប់Promises ហើយ \`await\` ផ្អាកការប្រតិបត្តិរហូតដល់Promisesដោះស្រាយ។`,
+  tip: "ផ្សំ `Promise.all()` ជាមួយ `await` នៅពេលហៅServicesឯករាជ្យជាច្រើនក្នុងពេលដំណាលគ្នា។",
+  objective: "សរសេរServicesBackendអសមកាលលីនេអ៊ែរ ស្អាត ដោយប្រើ async/await។",
+  expectedOutcome: "Controllersអសមកាលដែលត្រៀមរួចជាស្រេចក្នុងការផលិត និងការអនុវត្តServices។",
   codeSnippet: "async function fetchDashboardData(userId) {\n  try {\n    // Run both queries concurrently!\n    const [user, orders] = await Promise.all([\n      db.users.findById(userId),\n      db.orders.find({ userId })\n    ]);\n    return { user, orders };\n  } catch (error) {\n    console.error(\"Dashboard query failed:\", error);\n    throw error;\n  }\n}",
 };
 

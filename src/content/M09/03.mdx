@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ការរចនា REST APIs ប្រកបដោយវិជ្ជាជីវៈ និងវិចារណញាណតម្រូវឱ្យមានភាពស៊ីសង្វាក់គ្នាយ៉ាងតឹងរឹងនៅទូទាំង URI កាយវិភាគសាស្ត្រ គ្រោងការណ៍ដាក់ឈ្មោះ និងការដាក់ធនធាន។ API ដែលត្រូវបានរចនាយ៉ាងល្អ គឺជាការពន្យល់ដោយខ្លួនឯង ដែលអាចទស្សន៍ទាយបាន និងរីករាយសម្រាប់អ្នកអភិវឌ្ឍន៍អតិថិជនប្រើប្រាស់។
+  summary: `ការរចនា REST APIs ប្រកបដោយវិជ្ជាជីវៈ និងវិចារណញាណតម្រូវឱ្យមានភាពស៊ីសង្វាក់គ្នាយ៉ាងតឹងរឹងនៅទូទាំង URI កាយវិភាគសាស្ត្រ Schemaដាក់ឈ្មោះ និងការដាក់ធនធាន។ API ដែលត្រូវបានរចនាយ៉ាងល្អ គឺជាការពន្យល់ដោយខ្លួនឯង ដែលអាចទស្សន៍ទាយបាន និងរីករាយសម្រាប់អ្នកអភិវឌ្ឍន៍អតិថិជនប្រើប្រាស់។
 
 ### 1. ច្បាប់ដាក់ឈ្មោះធនធាន
-* ** ប្រើនាមពហុវចនៈ **៖ តែងតែដាក់ឈ្មោះការប្រមូលធនធានជាមួយនាមពហុវចនៈអក្សរតូច (ឧ. \\`/users\`, \`/articles\`, \`/orders\`). Never use verbs in paths like \`/getUsers\` or \`/createOrder\`.
+* ** ប្រើនាមពហុវចនៈ **៖ តែងតែដាក់ឈ្មោះCollectionsធនធានជាមួយនាមពហុវចនៈអក្សរតូច (ឧ. \\`/users\`, \`/articles\`, \`/orders\`). Never use verbs in paths like \`/getUsers\` or \`/createOrder\`.
 * **Kebab-case in URIs**: Use lowercase with hyphens for multi-word paths (\`/payment-methods\`, \`/shipping-addresses\`), never camelCase or snake_case.
 * **Hierarchical Nesting for Relations**: Express parent-child relationships through natural URL paths: \`/users/15/orders/302\`. Limit nesting to a maximum of **2 levels deep** to prevent unwieldy URLs; flatten subsequent lookups to root endpoints.
 

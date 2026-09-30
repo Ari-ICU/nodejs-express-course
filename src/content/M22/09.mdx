@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Business Logic ក្នុង Service Layer",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Services encapsulate core business logic independent of Express request and response objects. Because service functions accept plain JavaScript parameters and return data, testing them requires no HTTP overhead, resulting in blistering test execution speeds.",
-  tip: "Keep business logic in services rather than controllers — this makes testing business logic 10x faster because you don't need HTTP request simulation.",
-  objective: "Write isolated unit tests for business logic methods inside the service layer.",
-  expectedOutcome: "High test coverage over core business algorithms and data transformations.",
+  summary: `Services បង្កប់នូវតក្កវិជ្ជាស្នូលអាជីវកម្មដោយឯករាជ្យពីវត្ថុសំណើ និងការឆ្លើយតប Express ។ ដោយសារតែមុខងារServicesទទួលយកParams JavaScript ធម្មតា និងបញ្ជូនទិន្នន័យមកវិញ ការធ្វើតេស្តពួកវាមិនតម្រូវឱ្យមានការចំណាយលើស HTTP ដែលបណ្តាលឱ្យមានល្បឿនដំណើរការសាកល្បង។`,
+  tip: "រក្សាតក្កវិជ្ជាអាជីវកម្មនៅក្នុងServicesជាជាងControllers — វាធ្វើឱ្យការសាកល្បងតក្កវិជ្ជាអាជីវកម្មលឿនជាងមុន 10 ដង ដោយសារអ្នកមិនត្រូវការការក្លែងធ្វើសំណើ HTTP ។",
+  objective: "សរសេរការធ្វើតេស្តឯកតាដាច់ដោយឡែកសម្រាប់វិធីសាស្ត្រតក្កវិជ្ជាអាជីវកម្មនៅខាងក្នុងស្រទាប់Services។",
+  expectedOutcome: "ការធ្វើតេស្តគ្របដណ្តប់ខ្ពស់លើក្បួនដោះស្រាយអាជីវកម្មស្នូល និងការបំប្លែងទិន្នន័យ។",
   codeSnippet: "import { describe, it, expect } from \"vitest\";\nimport { OrderService } from \"../services/order.service.js\";\n\ndescribe(\"OrderService.calculateTotal\", () => {\n  it(\"should compute subtotal, tax, and shipping correctly\", () => {\n    const items = [\n      { price: 50, quantity: 2 },\n      { price: 100, quantity: 1 },\n    ];\n    const taxRate = 0.10; // 10%\n\n    const total = OrderService.calculateTotal(items, taxRate);\n\n    // Subtotal: 200, Tax: 20 -> Total: 220\n    expect(total).toBe(220);\n  });\n});",
 };
 

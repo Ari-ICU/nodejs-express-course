@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "បរិស្ថានប្រតិបត្តិការ Node.js Runtime",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ពេលវេលាដំណើរការ Node.js មានម៉ាស៊ីន V8 របស់ Google (ចងក្រង JS ទៅជាកូដម៉ាស៊ីន) libuv (បណ្ណាល័យ C ដែលផ្តល់រង្វិលជុំព្រឹត្តិការណ៍ និងបណ្តុំខ្សែស្រឡាយ) ការចង C++ ស្នូល និងម៉ូឌុល JavaScript API ដែលមានស្រាប់ (fs, http, crypto, path)។",
+  summary: `ពេលវេលាដំណើរការ Node.js មានម៉ាស៊ីន V8 របស់ Google (ចងក្រង JS ទៅជាកូដម៉ាស៊ីន) libuv (បណ្ណាល័យ C ដែលផ្តល់Event Loop និងបណ្តុំThreads) ការចង C++ ស្នូល និងម៉ូឌុល JavaScript API ដែលមានស្រាប់ (fs, http, crypto, path)។`,
   tip: "ការប្រតិបត្តិ JavaScript នៅក្នុង Node គឺ single-threaded ប៉ុន្តែ libuv offloads blocking file និង network operations to background C++ threads។",
   objective: "បំបែកសមាសធាតុខាងក្នុងនៃបរិយាកាសពេលដំណើរការ Node.js ។",
   expectedOutcome: "ការយល់ដឹងពីរបៀបដែល V8 និង libuv សហការគ្នាដើម្បីប្រតិបត្តិ JavaScript អសមកាល។",

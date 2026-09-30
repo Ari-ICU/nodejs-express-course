@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ និងគ្រប់គ្រង Resources",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `នៅក្នុង REST **ធនធាន** គឺជាគោលគំនិត អង្គភាព ឬវត្ថុមូលដ្ឋានណាមួយដែលអាចត្រូវបានដាក់ឈ្មោះ អាសយដ្ឋាន និងរៀបចំនៅលើបណ្តាញ។ ធនធានមិនមែនជាតារាងមូលដ្ឋានទិន្នន័យខ្លួនវាទេ ប៉ុន្តែជាតំណាងអរូបីដែលលាតត្រដាងឆ្លងកាត់ព្រំដែន HTTP ។
+  summary: `នៅក្នុង REST **ធនធាន** គឺជាគោលគំនិត អង្គភាព ឬវត្ថុមូលដ្ឋានណាមួយដែលអាចត្រូវបានដាក់ឈ្មោះ អាសយដ្ឋាន និងរៀបចំនៅលើបណ្តាញ។ ធនធានមិនមែនជាតារាងDatabaseខ្លួនវាទេ ប៉ុន្តែជាតំណាងអរូបីដែលលាតត្រដាងឆ្លងកាត់ព្រំដែន HTTP ។
 
 ### 1. ប្រភេទនៃធនធាន
 ** ធនធានឯកសារ **៖ វត្ថុតែមួយ ឬវត្ថុទិន្នន័យទិន្នន័យ (ឧ. \\`/users/usr_101\`).
@@ -15,9 +15,9 @@ export const meta = {
 
 ### 2. Resources vs Representations
 Clients never directly touch the physical database row; instead, they receive a **Representation** of that resource (usually serialised JSON). The server may omit internal fields like \`password_hash\`, format dates into ISO-8601 strings, and compute dynamic fields like \`fullName\` or \`discountedPrice\`.`,
-  tip: "នៅពេលបង្កើតគំរូធនធានឧបករណ៍បញ្ជា (សកម្មភាពដែលមិនសមស្របនឹងស្តង់ដារ CRUD ដូចជា 'ការបញ្ជូនការផ្ទៀងផ្ទាត់អ៊ីមែលឡើងវិញ' ឬ 'លុបចោលការបញ្ជាទិញ') ធ្វើគំរូសកម្មភាពជាធនធានរង ឬការផ្លាស់ប្តូររដ្ឋ៖ `POST /orders/12/cancellation` ឬ `POST /auth/resend-verification` ។",
+  tip: "នៅពេលបង្កើតគំរូធនធានControllers (សកម្មភាពដែលមិនសមស្របនឹងស្តង់ដារ CRUD ដូចជា 'ការបញ្ជូនAuthenticationអ៊ីមែលឡើងវិញ' ឬ 'លុបចោលការបញ្ជាទិញ') ធ្វើគំរូសកម្មភាពជាធនធានរង ឬការផ្លាស់ប្តូររដ្ឋ៖ `POST /orders/12/cancellation` ឬ `POST /auth/resend-verification` ។",
   objective: "ស្វែងយល់ពីរបៀបកំណត់អត្តសញ្ញាណ ចាត់ថ្នាក់ និងតំណាងឱ្យអង្គភាពដែនជាធនធាន REST ដាច់ដោយឡែក។",
-  expectedOutcome: "ភាពស្ទាត់ជំនាញក្នុងការបំបែកដែនអាជីវកម្មដ៏ស្មុគស្មាញទៅជាគំរូឯកសារ ការប្រមូល និងឧបករណ៍ត្រួតពិនិត្យច្បាស់លាស់។",
+  expectedOutcome: "ភាពស្ទាត់ជំនាញក្នុងការបំបែកដែនអាជីវកម្មដ៏ស្មុគស្មាញទៅជាគំរូឯកសារ Collections និងឧបករណ៍ត្រួតពិនិត្យច្បាស់លាស់។",
   codeSnippet: `/**
  * Resource Representation Transformation
  * Internal DB Model -> Client-Facing Resource Representation

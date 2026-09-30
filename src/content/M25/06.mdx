@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "យុទ្ធសាស្ត្រ Pagination (Offset vs Cursor-based Pagination)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Returning entire collections in a single API call degrades database performance and crashes mobile clients. Offset pagination (`skip` + `limit`) is simple to implement but suffers from performance degradation at high offsets (`skip(100000)` scans 100,000 documents). Cursor-based pagination (`_id: { $gt: lastId }`) maintains constant O(1) performance regardless of dataset depth.",
-  tip: "Use cursor-based pagination (keyset pagination) for infinite scroll feeds to achieve constant O(1) query time.",
-  objective: "Implement both offset and high-performance cursor-based pagination in Express APIs.",
-  expectedOutcome: "Scalable pagination strategies preventing memory saturation and slow deep queries.",
+  summary: `ការត្រលប់មកវិញនូវបណ្តុំទាំងមូលនៅក្នុងការហៅទូរសព្ទ API តែមួយបំផ្លាញដំណើរការDatabase និងធ្វើឱ្យClientចល័តគាំង។ offset pagination (\`skip\` + \`limit\`) គឺសាមញ្ញក្នុងការអនុវត្ត ប៉ុន្តែទទួលរងពីការថយចុះនៃការអនុវត្តនៅ offsets ខ្ពស់ (\`skip(100000)\` ស្កេនឯកសារ 100,000)។ ការកំណត់ទំព័រផ្អែកលើទស្សន៍ទ្រនិច (\`_id: { $gt: lastId }\`) រក្សាដំណើរការ O(1) ថេរដោយមិនគិតពីជម្រៅសំណុំទិន្នន័យ។`,
+  tip: "ប្រើPaginationដែលផ្អែកលើទស្សន៍ទ្រនិច (ការកំណត់ទំព័រគ្រាប់ចុច) សម្រាប់ព័ត៌មានរមូរគ្មានកំណត់ ដើម្បីសម្រេចបាននូវពេលវេលាសំណួរ O(1) ថេរ។",
+  objective: "អនុវត្តទាំងអុហ្វសិត និងការបង្ហាញទំព័រផ្អែកលើទស្សន៍ទ្រនិចដែលមានប្រសិទ្ធភាពខ្ពស់នៅក្នុង Express APIs ។",
+  expectedOutcome: "យុទ្ធសាស្ត្របង្កើតទំព័រដែលអាចធ្វើមាត្រដ្ឋានបាន ការពារការតិត្ថិភាពនៃការចងចាំ និងសំណួរជ្រៅយឺត។",
   codeSnippet: "// 1. Offset Pagination (Good for numbered page UI):\nconst page = Number(req.query.page) || 1;\nconst limit = Number(req.query.limit) || 20;\nconst skip = (page - 1) * limit;\nconst items = await Product.find().skip(skip).limit(limit).lean();\n\n// 2. Cursor Pagination (Optimal for Infinite Scroll & Massive Datasets):\n// Query: /api/products?cursor=64f1a2b3c4...&limit=20\nconst { cursor, limit = 20 } = req.query;\nconst query = cursor ? { _id: { $lt: cursor } } : {}; // uses indexed _id directly!\n\nconst products = await Product.find(query)\n  .sort({ _id: -1 })\n  .limit(Number(limit))\n  .lean();",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ និងដាក់ឱ្យដំណើរការលើ Virtual Private Server (VPS)",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Deploying to a Virtual Private Server (VPS from DigitalOcean, Linode, AWS EC2, or Hetzner) gives total root control over your hosting infrastructure. The workflow involves provisioning an Ubuntu server, configuring SSH key authentication, setting up firewalls (UFW), installing Docker, and pulling application images.",
-  tip: "Always disable password authentication in `/etc/ssh/sshd_config` (`PasswordAuthentication no`) and use SSH keys exclusively to protect against SSH brute-force attacks.",
-  objective: "Provision, secure, and deploy a containerized backend on a live cloud VPS.",
-  expectedOutcome: "Live production server reachable at a public IP/domain running your backend.",
+  summary: `ការដាក់ពង្រាយទៅ Virtual Private Server (VPS ពី DigitalOcean, Linode, AWS EC2 ឬ Hetzner) ផ្តល់ការគ្រប់គ្រងជា root សរុបលើហេដ្ឋារចនាសម្ព័ន្ធបង្ហោះរបស់អ្នក។ ដំណើរការការងារពាក់ព័ន្ធនឹងការផ្តល់Serverអ៊ូប៊ុនទូ កំណត់រចនាសម្ព័ន្ធAuthenticationសោ SSH ការដំឡើងជញ្ជាំងភ្លើង (UFW) ការដំឡើង Docker និងការទាញរូបភាពកម្មវិធី។`,
+  tip: "តែងតែបិទAuthenticationពាក្យសម្ងាត់នៅក្នុង `/etc/ssh/sshd_config` (`PasswordAuthentication no`) ហើយប្រើសោ SSH ទាំងស្រុងដើម្បីការពារប្រឆាំងនឹងការវាយប្រហារដោយកម្លាំង SSH ។",
+  objective: "ផ្តល់ សុវត្ថិភាព និងដាក់ពង្រាយ backend កុងតឺន័រនៅលើពពកផ្ទាល់ VPS ។",
+  expectedOutcome: "Serverផលិតកម្មបន្តផ្ទាល់អាចទៅដល់ IP/domain សាធារណៈដែលដំណើរការBackendរបស់អ្នក។",
   codeSnippet: "# 1. Connect to VPS via SSH Key:\nssh -i ~/.ssh/id_ed25519 deploy@your-server-ip\n\n# 2. Configure Uncomplicated Firewall (UFW):\nsudo ufw default deny incoming\nsudo ufw default allow outgoing\nsudo ufw allow ssh        # Port 22\nsudo ufw allow http       # Port 80\nsudo ufw allow https      # Port 443\nsudo ufw enable",
 };
 

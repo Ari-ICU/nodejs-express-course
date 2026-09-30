@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "សារៈសំខាន់នៃ Header Content-Type",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "បឋមកថា `Content-Type` ជូនដំណឹងដល់អ្នកទទួលពីរបៀបបកស្រាយបៃបៃគោលពីរនៅក្នុងផ្នែកសំណើរ ឬការឆ្លើយតប (ឧ. `application/json`, `text/html`, `multipart/form-data`, `application/pdf`)។",
+  summary: `Headers \`Content-Type\` ជូនដំណឹងដល់អ្នកទទួលពីរបៀបបកស្រាយបៃបៃគោលពីរនៅក្នុងផ្នែកសំណើរ ឬការឆ្លើយតប (ឧ. \`application/json\`, \`text/html\`, \`multipart/form-data\`, \`application/pdf\`)។`,
   tip: "នៅពេលបង្កើត APIs តែងតែកំណត់ `res.setHeader('Content-Type', 'application/json')` ដូច្នេះអតិថិជន HTTP libraries ញែកការឆ្លើយតបជា JSON ដោយស្វ័យប្រវត្តិ។",
-  objective: "កំណត់រចនាសម្ព័ន្ធបឋមកថាប្រភេទមាតិកាសមស្របសម្រាប់ទម្រង់បន្ទុកផ្សេងៗគ្នា។",
+  objective: "កំណត់រចនាសម្ព័ន្ធHeadersប្រភេទមាតិកាសមស្របសម្រាប់ទម្រង់បន្ទុកផ្សេងៗគ្នា។",
   expectedOutcome: "កែតម្រូវការចរចាប្រភេទ MIME នៅគ្រប់Endpointទាំងអស់។",
   codeSnippet: "// Sending JSON\nres.writeHead(200, { \"Content-Type\": \"application/json\" });\nres.end(JSON.stringify({ success: true }));\n\n// Sending HTML\n// res.writeHead(200, { \"Content-Type\": \"text/html\" });\n// res.end(\"<h1>Welcome to API</h1>\");",
 };

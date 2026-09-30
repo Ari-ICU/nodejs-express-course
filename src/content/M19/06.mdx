@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់ប្រភេទ និងភាពត្រឹមត្រូវនៃឯកសារ (File Filter)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Multer ផ្តល់ការហៅត្រឡប់មកវិញ `fileFilter` ដើម្បីវាយតម្លៃឯកសារចូលមុនពេលរក្សាទុកពួកវា។ តម្រងទទួលបាន `req`, `file` និង `cb` ហៅត្រឡប់មកវិញ។ ឆ្លងកាត់ `cb(null, true)` ទទួលយកឯកសារ ខណៈពេលដែល `cb(new AppError(...), false)` បដិសេធការបង្ហោះ។ ការធ្វើឱ្យមានសុពលភាពទាំងប្រភេទ MIME និងផ្នែកបន្ថែមបញ្ឈប់ការបង្ហោះស្គ្រីបព្យាបាទ។",
-  tip: "ច្រានចោលឯកសារ SVG ប្រសិនបើរូបតំណាងរបស់អ្នកប្រើប្រាស់ត្រូវបានបង្ហាញដោយផ្ទាល់នៅក្នុងBrowserតាមអ៊ីនធឺណិត លុះត្រាតែមានអនាម័យ - SVGs អាចបង្កប់ JavaScript ក្នុងជួរ និងបង្កឱ្យមានការវាយប្រហារ XSS ។",
-  objective: "អនុវត្តការហៅត្រលប់មកវិញនូវតម្រងឯកសារផ្ទាល់ខ្លួន ដោយបដិសេធប្រភេទឯកសារគ្រោះថ្នាក់។",
+  summary: `Multer ផ្តល់Callbacksមកវិញ \`fileFilter\` ដើម្បីវាយតម្លៃឯកសារចូលមុនពេលរក្សាទុកពួកវា។ Filterទទួលបាន \`req\`, \`file\` និង \`cb\` ហៅត្រឡប់មកវិញ។ ឆ្លងកាត់ \`cb(null, true)\` ទទួលយកឯកសារ ខណៈពេលដែល \`cb(new AppError(...), false)\` បដិសេធការបង្ហោះ។ ការធ្វើឱ្យមានValidationទាំងប្រភេទ MIME និងផ្នែកបន្ថែមបញ្ឈប់ការបង្ហោះស្គ្រីបព្យាបាទ។`,
+  tip: "ច្រានចោលឯកសារ SVG ប្រសិនបើរូបតំណាងរបស់អ្នកប្រើប្រាស់ត្រូវបានបង្ហាញដោយផ្ទាល់នៅក្នុងBrowserតាមអ៊ីនធឺណិត លុះត្រាតែមានSanitization - SVGs អាចបង្កប់ JavaScript ក្នុងជួរ និងបង្កឱ្យមានការវាយប្រហារ XSS ។",
+  objective: "អនុវត្តការហៅត្រលប់មកវិញនូវFilterឯកសារផ្ទាល់ខ្លួន ដោយបដិសេធប្រភេទឯកសារគ្រោះថ្នាក់។",
   expectedOutcome: "ការត្រងឯកសារតឹងរ៉ឹងការពារការផ្ទុកServerពីផ្នែកបន្ថែមឯកសារព្យាបាទ។",
   codeSnippet: "import path from \"node:path\";\n\nconst imageFileFilter = (req, file, cb) => {\n  const allowedExtensions = /jpeg|jpg|png|webp/;\n  const ext = path.extname(file.originalname).toLowerCase();\n  const isValidExt = allowedExtensions.test(ext);\n  const isValidMime = file.mimetype.startsWith(\"image/\");\n\n  if (isValidExt && isValidMime) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Only image files (JPEG, PNG, WebP) are allowed!\", 400), false);\n  }\n};",
 };

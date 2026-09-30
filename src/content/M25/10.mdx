@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Express Cache Middleware ជាមួយ Redis",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Response caching intercepts incoming GET requests, constructs a cache key from the request URL, and checks Redis. If cached, it sends the stored JSON string immediately (<2ms), bypassing database lookups and controller handlers entirely. When data mutations occur (POST/PUT/DELETE), the cache key is purged.",
-  tip: "Use `req.originalUrl` as the Redis cache key so query parameters (e.g. `?page=1&limit=10`) are preserved in distinct cache entries.",
-  objective: "Construct an Express caching middleware that automatically intercepts and caches responses.",
-  expectedOutcome: "Dramatic response time reduction from ~150ms to ~2ms for cached endpoints.",
+  summary: `Response Cacheស្ទាក់ចាប់សំណើ GET ចូល បង្កើតសោCacheពី URL សំណើ និងពិនិត្យ Redis ។ ប្រសិនបើទុកក្នុងCache វាផ្ញើខ្សែអក្សរ JSON ដែលបានរក្សាទុកភ្លាមៗ (<2ms) ដោយឆ្លងកាត់ការរកមើលDatabase និងឧបករណ៍ដោះស្រាយControllersទាំងស្រុង។ នៅពេលដែលការផ្លាស់ប្តូរទិន្នន័យកើតឡើង (POST/PUT/DELETE) គ្រាប់ចុចCacheត្រូវបានសម្អាត។`,
+  tip: "ប្រើ `req.originalUrl` ជាគ្រាប់ចុចCache Redis ដូច្នេះParamsសំណួរ (ឧ. `?page=1&limit=10`) ត្រូវបានរក្សានៅក្នុងធាតុCacheដាច់ដោយឡែក។",
+  objective: "បង្កើត Express MiddlewareCache ដែលស្ទាក់ចាប់ និងរក្សាទុកការឆ្លើយតបដោយស្វ័យប្រវត្តិ។",
+  expectedOutcome: "ការកាត់បន្ថយពេលវេលាឆ្លើយតបយ៉ាងខ្លាំងពី ~ 150ms ទៅ ~ 2ms សម្រាប់Endpointsដែលបានរក្សាទុក។",
   codeSnippet: "// middleware/cache.js\nimport { redis } from \"../config/redis.js\";\n\nexport const cache = (durationInSeconds = 300) => async (req, res, next) => {\n  if (req.method !== \"GET\") return next();\n\n  const key = `cache:${req.originalUrl}`;\n  try {\n    const cachedData = await redis.get(key);\n    if (cachedData) {\n      return res.status(200).json(JSON.parse(cachedData));\n    }\n\n    // Intercept res.json to capture response before sending\n    const originalJson = res.json.bind(res);\n    res.json = (body) => {\n      // Store in Redis with TTL\n      redis.set(key, JSON.stringify(body), \"EX\", durationInSeconds);\n      return originalJson(body);\n    };\n\n    next();\n  } catch (err) {\n    next(); // On cache failure, gracefully proceed to database\n  }\n};",
 };
 

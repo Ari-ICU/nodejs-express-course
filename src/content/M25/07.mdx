@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Caching (Cache-Aside Pattern & TTL)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Caching stores copies of frequently accessed data in high-speed, volatile storage layers (such as RAM) so future requests can be served instantly without querying the primary database. In the Cache-Aside pattern, the application checks the cache first: if found (cache hit), it returns data immediately; if missing (cache miss), it queries the database, populates the cache with a Time-To-Live (TTL), and responds.",
-  tip: "Always configure a Time-To-Live (TTL) on cached items to prevent stale data from lingering permanently.",
-  objective: "Master the Cache-Aside pattern, cache hit/miss flows, and TTL expiration strategies.",
-  expectedOutcome: "Solid theoretical and practical grasp of distributed caching concepts.",
+  summary: `Caching រក្សាទុកច្បាប់ចម្លងនៃទិន្នន័យដែលបានចូលប្រើញឹកញាប់នៅក្នុងស្រទាប់ផ្ទុកដែលមានល្បឿនលឿន និងងាយនឹងបង្កជាហេតុ (ដូចជា RAM) ដូច្នេះសំណើនាពេលអនាគតអាចត្រូវបានបម្រើភ្លាមៗដោយមិនចាំបាច់សួររកDatabaseបឋម។ នៅក្នុងលំនាំ Cache-Aside កម្មវិធីពិនិត្យមើលCacheជាមុនសិន៖ ប្រសិនបើរកឃើញ (Cacheបុក) វាត្រឡប់ទិន្នន័យភ្លាមៗ។ ប្រសិនបើបាត់ (បាត់Cache) វាសួរDatabase ផ្ទុកCacheជាមួយ Time-To-Live (TTL) និងឆ្លើយតប។`,
+  tip: "កំណត់​រចនាសម្ព័ន្ធ Time-To-Live (TTL) លើ​ធាតុ​ក្នុង​ឃ្លាំង​សម្ងាត់​ជានិច្ច ដើម្បី​ការពារ​ទិន្នន័យ​ដែល​ជាប់​គាំង​មិន​ឱ្យ​នៅ​បន្ត​រហូត។",
+  objective: "គ្រប់គ្រងលំនាំ Cache- មួយឡែក Cacheបុក/ខកខានលំហូរ និងយុទ្ធសាស្ត្រផុតកំណត់ TTL ។",
+  expectedOutcome: "ការចាប់យកទ្រឹស្តី និងការអនុវត្តជាក់ស្តែងនៃគំនិតCacheដែលបានចែកចាយ។",
   codeSnippet: "// Cache-Aside Workflow:\n//\n// Client Request -> [Check Cache (Redis)]\n//                         │\n//            ┌────────────┴────────────┐\n//         Hit (Data exists)        Miss (Not in cache)\n//            │                         │\n//            ↓                         ↓\n//     Return cached data      Query Primary Database (MongoDB)\n//                                      │\n//                                      ↓\n//                             Save to Cache (with TTL)\n//                                      │\n//                                      ↓\n//                             Return data to client",
 };
 

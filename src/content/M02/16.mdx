@@ -8,7 +8,7 @@ export const meta = {
   summary: "អាគុយម៉ង់បន្ទាត់ពាក្យបញ្ជាបានឆ្លងកាត់នៅពេលចាប់ផ្តើមស្គ្រីប (`node script.js --port 8080`) អាចចូលប្រើបានក្នុង `process.argv` ។ Node.js ទំនើបផ្តល់ `util.parseArgs()` ដើម្បីញែកទង់ ប៊ូលីន និងតម្លៃខ្សែអក្សរដើម។",
   tip: "ប្រើ `util.parseArgs()` ដែលបានណែនាំនៅក្នុង Node.js 18+ ដើម្បីញែកទង់ជាតិដើមដោយគ្មានកញ្ចប់ខាងក្រៅដូចជា យ៉ាក។",
   objective: "ញែកជម្រើសបន្ទាត់ពាក្យបញ្ជាផ្ទាល់ខ្លួន និងទង់នៅក្នុងឧបករណ៍ និងស្គ្រីប CLI ។",
-  expectedOutcome: "Ability to write versatile command-line utilities and migration scripts.",
+  expectedOutcome: "សមត្ថភាពក្នុងការសរសេរឧបករណ៍ប្រើប្រាស់បន្ទាត់ពាក្យបញ្ជាដែលអាចប្រើបាន និងស្គ្រីបផ្ទេរ។",
   codeSnippet: "import { parseArgs } from \"node:util\";\n\nconst options = {\n  port: { type: \"string\", short: \"p\", default: \"5000\" },\n  migrate: { type: \"boolean\", default: false }\n};\n\nconst { values } = parseArgs({ options });\nconsole.log(\"Configured Port:\", values.port);\nconsole.log(\"Run Migration?\", values.migrate);",
 };
 

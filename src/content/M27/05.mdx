@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Models Layer (Mongoose Schemas)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Models layer defines the database schema, data validation rules, indexes, virtuals, and lifecycle hooks (pre/post middleware). Models represent the single source of truth for database structure and data integrity.",
-  tip: "Encapsulate instance-specific helper logic (like password hashing or token verification) as Mongoose instance methods directly on the model.",
-  objective: "Design cohesive Mongoose schemas with validation, indexes, and virtual fields.",
-  expectedOutcome: "Robust data models enforcing schema integrity at the database layer.",
+  summary: `ស្រទាប់ Models កំណត់SchemaDatabase ច្បាប់Validationទិន្នន័យ លិបិក្រម Virtuals និងទំពក់ជីវិត (មុន/ក្រោយMiddleware)។ គំរូតំណាងឱ្យប្រភពតែមួយនៃការពិតសម្រាប់រចនាសម្ព័ន្ធDatabase និងភាពត្រឹមត្រូវនៃទិន្នន័យ។`,
+  tip: "បញ្ចូល​តក្កវិជ្ជា​ជំនួយ​ជាក់លាក់​របស់​វត្ថុ (ដូចជា​ការ​បំបិទ​ពាក្យ​សម្ងាត់ ឬ​ការ​ផ្ទៀងផ្ទាត់​សញ្ញាសម្ងាត់) ជា​វិធីសាស្ត្រ​វត្ថុ Mongoose ដោយផ្ទាល់​លើ​គំរូ។",
+  objective: "រចនាSchema Mongoose ស្អិតរមួតជាមួយនឹងValidation លិបិក្រម និងវាលVirtuals។",
+  expectedOutcome: "គំរូទិន្នន័យរឹងមាំដែលពង្រឹងភាពត្រឹមត្រូវនៃSchemaនៅស្រទាប់Database។",
   codeSnippet: "// models/order.model.js\nimport mongoose from \"mongoose\";\n\nconst orderSchema = new mongoose.Schema({\n  user: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{\n    product: { type: mongoose.Schema.Types.ObjectId, ref: \"Product\" },\n    quantity: { type: Number, default: 1 },\n    price: Number,\n  }],\n  totalAmount: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"pending\", \"processing\", \"shipped\", \"delivered\", \"cancelled\"],\n    default: \"pending\",\n  },\n}, { timestamps: true });\n\norderSchema.index({ user: 1, createdAt: -1 });\n\nexport const Order = mongoose.model(\"Order\", orderSchema);",
 };
 

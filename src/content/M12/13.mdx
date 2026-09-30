@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "គំរូ Mongoose ផ្តល់ជំនួយសំណួរដ៏សំបូរបែប៖ `find()`, `findOne()`, `findById()` និងអ្នកបង្កើតសំណួរដែលអាចច្រវ៉ាក់បានដូចជា `.where()`, `.sort()`, `.select()`, និង `.lean()`។",
   tip: "តែងតែបន្ថែម `.lean()` ទៅសំណួរបានតែអាន (`Product.find().lean()`) ដើម្បីរំលងការបង្កើតករណីឯកសារ Mongoose ធ្ងន់ ដោយបង្កើនល្បឿនដំណើរការសំណួររហូតដល់ 5x។",
-  objective: "បង្កើតសំណួរអានមូលដ្ឋានទិន្នន័យដែលបានធ្វើឱ្យប្រសើរ។",
+  objective: "បង្កើតសំណួរអានDatabaseដែលបានធ្វើឱ្យប្រសើរ។",
   expectedOutcome: "សំណួរដែលមានប្រសិទ្ធភាពខ្ពស់ដោយប្រើ `.lean()` សម្រាប់ប្រតិបត្តិការអាន។",
   codeSnippet: "// High-performance read-only query\nconst activeProducts = await Product.find({ inStock: true })\n  .select(\"name price category\")\n  .sort(\"-createdAt\")\n  .limit(10)\n  .lean();",
 };

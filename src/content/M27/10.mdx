@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Database Connection Pool និង Lifecycle Hooks",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Database configuration module manages the MongoDB connection lifecycle. It configures connection pooling (`maxPoolSize`), handles initial connect attempts with retries, and registers event listeners for disconnects, reconnections, and errors.",
-  tip: "Set `maxPoolSize: 50` in Mongoose connection options for high-traffic servers to handle concurrent queries efficiently without socket starvation.",
-  objective: "Build a resilient MongoDB connection module with pooling and lifecycle logging.",
-  expectedOutcome: "Robust database connection singleton with auto-reconnect resilience.",
+  summary: `ម៉ូឌុលកំណត់រចនាសម្ព័ន្ធ Database គ្រប់គ្រងវដ្តជីវិតនៃការតភ្ជាប់ MongoDB ។ វាកំណត់រចនាសម្ព័ន្ធការភ្ជាប់ការតភ្ជាប់ (\`maxPoolSize\`) គ្រប់គ្រងការព្យាយាមភ្ជាប់ដំបូងជាមួយនឹងការព្យាយាមម្តងទៀត និងចុះឈ្មោះអ្នកស្តាប់ព្រឹត្តិការណ៍សម្រាប់ការផ្តាច់ ការភ្ជាប់ឡើងវិញ និងកំហុស។`,
+  tip: "កំណត់ `maxPoolSize: 50` ក្នុងជម្រើសការតភ្ជាប់ Mongoose សម្រាប់Serverដែលមានចរាចរណ៍ខ្ពស់ ដើម្បីដោះស្រាយសំណួរក្នុងពេលដំណាលគ្នាប្រកបដោយប្រសិទ្ធភាពដោយមិនមានការអត់ឃ្លានរន្ធ។",
+  objective: "បង្កើតម៉ូឌុលការតភ្ជាប់ MongoDB ធន់នឹងការបញ្ចូល និងកំណត់ហេតុជីវិត។",
+  expectedOutcome: "ការតភ្ជាប់Databaseរឹងមាំ singleton ជាមួយនឹងភាពធន់នឹងការភ្ជាប់ឡើងវិញដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "// config/database.js\nimport mongoose from \"mongoose\";\n\nexport const connectDatabase = async (uri) => {\n  try {\n    const conn = await mongoose.connect(uri, {\n      maxPoolSize: 50, // Connection pool size\n      serverSelectionTimeoutMS: 5000,\n      socketTimeoutMS: 45000,\n    });\n    console.log(`MongoDB Connected: ${conn.connection.host}`);\n  } catch (err) {\n    console.error(\"MongoDB Connection Error:\", err.message);\n    process.exit(1);\n  }\n};\n\nmongoose.connection.on(\"disconnected\", () => console.warn(\"MongoDB disconnected!\"));\nmongoose.connection.on(\"reconnected\", () => console.log(\"MongoDB reconnected!\"));",
 };
 

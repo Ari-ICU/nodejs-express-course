@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងសិទ្ធិលម្អិត (Fine-grained Permissions)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "នៅពេលដែលតួនាទីឋិតិវន្តមិនគ្រប់គ្រាន់សម្រាប់កម្មវិធីស្មុគ្រស្មាញ ប្រព័ន្ធអនុញ្ញាតដែលមានលក្ខណៈល្អិតល្អន់ធ្វើផែនទីសកម្មភាពទៅនឹងធនធានដោយប្រើកិរិយាស័ព្ទដូចជា `products:create`, `orders:refund` ឬ `users:ban` ។ ម៉ាទ្រីសចូលដំណើរការវាយតម្លៃថាតើតួនាទីដែលបានកំណត់របស់អ្នកប្រើ ឬសំណុំការអនុញ្ញាតដោយផ្ទាល់មានសកម្មភាពធនធានដែលត្រូវការមុនពេលបន្ត។",
-  tip: "ប្រើសញ្ញាសម្គាល់ពោះវៀនធំសម្រាប់ការអនុញ្ញាតជាក្រឡា៖ `<resource>:<action>` (ឧ. `articles:publish`, `finance:export`)។",
-  objective: "គំរូ​ខ្សែអក្សរ​ការអនុញ្ញាត​ធនធាន​សកម្មភាព​ជា​ក្រឡា និង​ការ​គូសផែនទី​ការអនុញ្ញាត​តួនាទី។",
+  summary: `នៅពេលដែលតួនាទីឋិតិវន្តមិនគ្រប់គ្រាន់សម្រាប់កម្មវិធីស្មុគ្រស្មាញ ប្រព័ន្ធអនុញ្ញាតដែលមានលក្ខណៈល្អិតល្អន់ធ្វើផែនទីសកម្មភាពទៅនឹងធនធានដោយប្រើកិរិយាស័ព្ទដូចជា \`products:create\`, \`orders:refund\` ឬ \`users:ban\` ។ ម៉ាទ្រីសចូលដំណើរការវាយតម្លៃថាតើតួនាទីដែលបានកំណត់របស់អ្នកប្រើ ឬសំណុំAuthorizationដោយផ្ទាល់មានសកម្មភាពធនធានដែលត្រូវការមុនពេលបន្ត។`,
+  tip: "ប្រើសញ្ញាសម្គាល់ពោះវៀនធំសម្រាប់Authorizationជាក្រឡា៖ `<resource>:<action>` (ឧ. `articles:publish`, `finance:export`)។",
+  objective: "គំរូ​ខ្សែអក្សរ​Authorization​ធនធាន​សកម្មភាព​ជា​ក្រឡា និង​ការ​គូសផែនទី​Authorization​តួនាទី។",
   expectedOutcome: "ម៉ាទ្រីស​អនុញ្ញាត​ដែល​អាច​ធ្វើ​មាត្រដ្ឋាន​បាន​ដែល​មាន​សមត្ថភាព​នៃ​ការ​គ្រប់គ្រង​ការ​ចូល​ដំណើរការ​ដែល​មាន​លក្ខណៈ​ល្អិតល្អន់​លើស​ពី​តួនាទី​សាមញ្ញ។",
   codeSnippet: "// config/permissions.js\nexport const ROLE_PERMISSIONS = {\n  user: [\"products:read\", \"orders:create\", \"orders:read_own\"],\n  moderator: [\"products:read\", \"reviews:moderate\", \"comments:delete\"],\n  admin: [\n    \"products:create\", \"products:update\", \"products:delete\",\n    \"orders:read_all\", \"orders:refund\", \"users:manage\"\n  ]\n};\n\nexport const hasPermission = (userRole, requiredPermission) => {\n  const permissions = ROLE_PERMISSIONS[userRole] || [];\n  return permissions.includes(requiredPermission);\n};",
 };

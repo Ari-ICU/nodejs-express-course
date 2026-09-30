@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គម្រោងទី ២ ៖ Student Management API ជាមួយ Swagger",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build a Student Management API with comprehensive CRUD, full-text student search, course enrollment relationships with Mongoose population, grade tracking, Zod schema validation, and complete OpenAPI/Swagger interactive documentation. Demonstrates professional data modeling and interactive documentation.",
-  tip: "Use Mongoose pre-populate middleware on find queries so course details are attached automatically without repeating populate() in every controller.",
-  objective: "Construct an educational records API with relational population and interactive Swagger documentation.",
-  expectedOutcome: "Fully documented Student Management API with relational data integrity.",
+  summary: `បង្កើតការគ្រប់គ្រងសិស្ស API ជាមួយនឹងការទូលំទូលាយ CRUD Searchសិស្សអត្ថបទពេញលេញ ទំនាក់ទំនងការចុះឈ្មោះវគ្គសិក្សាជាមួយPopulation Mongoose ការតាមដានកម្រិត Zod ValidationSchema និងឯកសារពេញលេញ OpenAPI/Swagger អន្តរកម្ម បង្ហាញគំរូទិន្នន័យប្រកបដោយវិជ្ជាជីវៈ និងឯកសារអន្តរកម្ម។`,
+  tip: "ប្រើ Mongoose បញ្ចូលកម្មវិធីកណ្តាលជាមុនលើសំណួរស្វែងរក ដូច្នេះព័ត៌មានលម្អិតនៃវគ្គសិក្សាត្រូវបានភ្ជាប់ដោយស្វ័យប្រវត្តិដោយមិនចាំបាច់បញ្ចូលម្តងទៀតនៅក្នុងគ្រប់Controllers។",
+  objective: "បង្កើតកំណត់ត្រាអប់រំ API ជាមួយនឹងPopulationដែលទាក់ទង និងឯកសារ Swagger អន្តរកម្ម។",
+  expectedOutcome: "បានចងក្រងឯកសារយ៉ាងពេញលេញ ការគ្រប់គ្រងសិស្ស API ជាមួយនឹងភាពត្រឹមត្រូវនៃទិន្នន័យទំនាក់ទំនង។",
   codeSnippet: "// routes/student.routes.js with OpenAPI annotations\n/**\n * @openapi\n * /api/v1/students:\n *   get:\n *     summary: Retrieve paginated students with course population\n *     tags: [Students]\n *     parameters:\n *       - in: query\n *         name: search\n *         schema:\n *           type: string\n *     responses:\n *       200:\n *         description: List of students\n */\nrouter.get(\"/students\", studentController.getStudents);",
 };
 

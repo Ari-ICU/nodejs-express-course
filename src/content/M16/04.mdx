@@ -6,7 +6,7 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "អំបិលគ្រីបគ្រីបគឺជាខ្សែអក្សរចៃដន្យនៃប៊ីតដែលបង្កើតដោយឡែកសម្រាប់អ្នកប្រើប្រាស់គ្រប់រូបមុនពេល hash ។ Salting ធានាថាពាក្យសម្ងាត់ដូចគ្នាបេះបិទចំនួនពីរ (ឧទាហរណ៍ 'password123') បង្កើតលទ្ធផល hash ខុសគ្នាទាំងស្រុង ដោយធ្វើឱ្យអព្យាក្រឹតទាំងស្រុងនូវការវាយប្រហារ Rainbow Table ដែលបានគណនាជាមុន។ នៅក្នុង bcrypt, អំបិល, algorithm identifier, cost factor, and hash ទាំងអស់ត្រូវបានបញ្ចូលទៅក្នុងខ្សែតែមួយដែលធ្វើទ្រង់ទ្រាយដូចជា `$2a$12$salt...hash...` ។",
-  tip: "អ្នកមិនត្រូវការជួរឈរមូលដ្ឋានទិន្នន័យដាច់ដោយឡែកសម្រាប់អំបិលជាមួយ bcrypt ទេ! ខ្សែអក្សរ hash ដែលបង្កើតរួចរួមបញ្ចូលអំបិល និងកត្តាការងារនៅក្នុងបុព្វបទបឋមកថារបស់វា។",
+  tip: "អ្នកមិនត្រូវការជួរឈរDatabaseដាច់ដោយឡែកសម្រាប់អំបិលជាមួយ bcrypt ទេ! ខ្សែអក្សរ hash ដែលបង្កើតរួចរួមបញ្ចូលអំបិល និងកត្តាការងារនៅក្នុងបុព្វបទHeadersរបស់វា។",
   objective: "ស្វែងយល់ពីរបៀបដែលអំបិលគ្រីបគ្រីបចៃដន្យលុបបំបាត់តារាងឥន្ទធនូ និងការវាយប្រហារតាមវចនានុក្រម។",
   expectedOutcome: "ការយល់ដឹងច្បាស់អំពីកាយវិភាគសាស្ត្រនៃខ្សែអក្សរ bcrypt hash ($2b$12$...)",
   codeSnippet: "// Anatomy of a bcrypt hash string:\n// $2b$12$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy\n// ├── 2b     -> bcrypt algorithm revision identifier\n// ├── 12     -> Cost factor (2^12 = 4,096 iterations)\n// ├── N9qo8uLOickgx2ZMRZoMye -> 22-character cryptographic salt (16 bytes base64)\n// └── IjZAgcfl7p92ldGxad68... -> 31-character encrypted hash string\n\n// Notice: No separate salt table or column is required in your database schema.",

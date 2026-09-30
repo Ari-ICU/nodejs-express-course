@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "តួនាទីនៃ Route Definitions",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Routes serve purely as routing tables that map HTTP paths and verbs to middleware guards and controller handlers.",
-  tip: "Route files should contain zero business logic—only URL path definitions and middleware bindings.",
-  objective: "Maintain lean, declarative route definition files.",
+  summary: `Routes បម្រើសុទ្ធសាធជាតារាងនាំផ្លូវដែលគូសផែនទី HTTP ផ្លូវ និងកិរិយាស័ព្ទទៅកាន់ឆ្មាំកណ្តាល និងអ្នកដោះស្រាយControllers។`,
+  tip: "ឯកសារផ្លូវគួរតែមានតក្កវិជ្ជាអាជីវកម្មសូន្យ - មានតែការកំណត់ផ្លូវ URL និងការចងផ្នែកកណ្តាលប៉ុណ្ណោះ។",
+  objective: "រក្សា​ទុក​ឯកសារ​និយមន័យ​ផ្លូវ​ដែល​គ្មាន​ខ្លាញ់​និង​ការ​ប្រកាស។",
   expectedOutcome: "សម្អាត​ការ​ប្រកាស​ផ្លូវ​ដែល​អាន​ដូច​តារាង​មាតិកា API។",
   codeSnippet: "import { Router } from \"express\";\nimport * as productController from \"../controllers/product.controller.js\";\nimport { authenticate } from \"../middleware/auth.js\";\n\nconst router = Router();\n\nrouter.get(\"/\", productController.getAllProducts);\nrouter.post(\"/\", authenticate, productController.createProduct);\n\nexport default router;",
 };

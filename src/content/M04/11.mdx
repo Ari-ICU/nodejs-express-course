@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការធានាប្រតិបត្តិការមិនរាំងស្ទះ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "យុទ្ធសាស្រ្តដើម្បីការពារការបិទរង្វិលជុំព្រឹត្តិការណ៍៖ បំបែកការគណនា CPU ដ៏ធំទៅជាកំណាត់ជាមួយ `setImmediate` ដោយប្រើ Worker Threads សម្រាប់ការគណនាគណិតវិទ្យាធ្ងន់ៗ និងប្រើប្រាស់យ៉ាងតឹងរឹងនូវមូលដ្ឋានទិន្នន័យអសមកាល និងកម្មវិធីបញ្ជាឯកសារ។",
+  summary: `យុទ្ធសាស្រ្តដើម្បីការពារការបិទEvent Loop៖ បំបែកការគណនា CPU ដ៏ធំទៅជាកំណាត់ជាមួយ \`setImmediate\` ដោយប្រើ Worker Threads សម្រាប់ការគណនាគណិតវិទ្យាធ្ងន់ៗ និងប្រើប្រាស់យ៉ាងតឹងរឹងនូវDatabaseអសមកាល និងកម្មវិធីបញ្ជាឯកសារ។`,
   tip: "ប្រើ `clinic.js` ឬ Node ដែលភ្ជាប់មកជាមួយ profiler ដើម្បីរកមើលភាពយឺតយ៉ាវនៃព្រឹត្តិការណ៍ដែលបណ្តាលមកពីប្រតិបត្តិការទប់ស្កាត់។",
   objective: "រក្សា​ខ្សែ​មេ​ឆ្លើយតប​ដោយ​លុប​បំបាត់​ប្រតិបត្តិការ​ទប់ស្កាត់។",
-  expectedOutcome: "ភាពយឺតយ៉ាវនៃរង្វិលជុំព្រឹត្តិការណ៍រងមីលីវិនាទីក្រោមបរិមាណសំណើស្របគ្នាខ្លាំង។",
+  expectedOutcome: "ភាពយឺតយ៉ាវនៃEvent Loopរងមីលីវិនាទីក្រោមបរិមាណសំណើស្របគ្នាខ្លាំង។",
   codeSnippet: "// Chunking a large array calculation across Event Loop ticks\nfunction processLargeArrayInChunks(items, batchSize = 1000) {\n  let index = 0;\n  function processChunk() {\n    const end = Math.min(index + batchSize, items.length);\n    for (; index < end; index++) {\n      // Process item\n    }\n    if (index < items.length) {\n      setImmediate(processChunk); // Yield control back to Event Loop!\n    }\n  }\n  processChunk();\n}",
 };
 

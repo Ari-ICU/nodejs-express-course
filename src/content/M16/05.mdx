@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "លំហូរនៃការចុះឈ្មោះអ្នកប្រើប្រាស់ (Registration Flow)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "លំហូរ​ចុះឈ្មោះ​សម្របសម្រួល​ការ​បញ្ចូល​សុពលភាព ការត្រួតពិនិត្យ​ស្ទួន ការ​បិទ​ពាក្យសម្ងាត់ និង​ការបន្ត។ ឧបករណ៍បញ្ជាការចុះឈ្មោះដែលមានសុវត្ថិភាពពិនិត្យមើលថាតើអ៊ីមែលមានរួចហើយ ធ្វើឱ្យមានសុពលភាពពាក្យសម្ងាត់ជាមួយ Zod អនុវត្តការបំប្លែងកូដសម្ងាត់នៅខាងក្នុង Mongoose pre-save middleware បន្តឯកសារ និងឆ្លើយតបជាមួយទិន្នន័យមេតារបស់អ្នកប្រើប្រាស់ ខណៈពេលដែលមិនរាប់បញ្ចូលលេខសម្ងាត់យ៉ាងតឹងរឹង។",
+  summary: `លំហូរ​ចុះឈ្មោះ​សម្របសម្រួល​ការ​បញ្ចូល​Validation ការត្រួតពិនិត្យ​ស្ទួន ការ​បិទ​ពាក្យសម្ងាត់ និង​ការបន្ត។ Controllersការចុះឈ្មោះដែលមានសុវត្ថិភាពពិនិត្យមើលថាតើអ៊ីមែលមានរួចហើយ ធ្វើឱ្យមានValidationពាក្យសម្ងាត់ជាមួយ Zod អនុវត្តការបំប្លែងកូដសម្ងាត់នៅខាងក្នុង Mongoose pre-save middleware បន្តឯកសារ និងឆ្លើយតបជាមួយទិន្នន័យមេតារបស់អ្នកប្រើប្រាស់ ខណៈពេលដែលមិនរាប់បញ្ចូលលេខសម្ងាត់យ៉ាងតឹងរឹង។`,
   tip: "ប្រើ Mongoose pre-save middleware (`userSchema.pre('save')`) ដើម្បី hash passwords ដោយស្វ័យប្រវត្ត ធានាថាពាក្យសម្ងាត់មិនត្រូវបានរក្សាទុកជាអត្ថបទធម្មតាទេ សូម្បីតែក្នុងអំឡុងពេលស្គ្រីបគ្រាប់ពូជ ឬការធ្វើចំណាកស្រុកក៏ដោយ។",
   objective: "បង្កើតEndpointនៃការចុះឈ្មោះសហគ្រាសជាមួយនឹងការធ្វើឱ្យមានលក្ខណៈធម្មតាតាមអ៊ីមែល ការបិទពាក្យសម្ងាត់ និងការព្យាករណ៍ការឆ្លើយតបស្អាត។",
-  expectedOutcome: "សុវត្ថិភាពនៃការចុះឈ្មោះបញ្ចប់ដែលបង្កើតកំណត់ត្រាអ្នកប្រើប្រាស់ដែលមានអនាម័យដោយមិនមានការលេចធ្លាយ។",
+  expectedOutcome: "សុវត្ថិភាពនៃការចុះឈ្មោះបញ្ចប់ដែលបង្កើតកំណត់ត្រាអ្នកប្រើប្រាស់ដែលមានSanitizationដោយមិនមានការលេចធ្លាយ។",
   codeSnippet: "// controllers/auth.controller.js\nimport { User } from \"../models/user.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const register = async (req, res, next) => {\n  try {\n    const { name, email, password } = req.body;\n\n    // 1. Check existing user\n    const existing = await User.findOne({ email: email.toLowerCase() });\n    if (existing) throw new AppError(\"Email is already registered\", 409);\n\n    // 2. Create user (password automatically hashed by mongoose pre-save hook)\n    const user = await User.create({\n      name,\n      email: email.toLowerCase(),\n      password,\n    });\n\n    // 3. Exclude password hash from response payload\n    const safeUser = user.toObject();\n    delete safeUser.password;\n\n    res.status(201).json({\n      status: \"success\",\n      message: \"User registered successfully\",\n      data: { user: safeUser },\n    });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

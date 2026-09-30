@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត Custom Validators ក្នុង Mongoose",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការសរសេរមុខងារផ្ទៀងផ្ទាត់សមកាលកម្ម ឬអសមកាលផ្ទាល់ខ្លួនសម្រាប់ការត្រួតពិនិត្យអាជីវកម្មដ៏ស្មុគស្មាញ (ឧ. បញ្ជាក់លេខទូរសព្ទ ឬដែនកំណត់បញ្ចុះតម្លៃ)។",
-  tip: "មុខងារកំណត់សុពលភាពផ្ទាល់ខ្លួនត្រូវតែត្រឡប់ `true` ប្រសិនបើត្រឹមត្រូវ ឬ `false` ប្រសិនបើមិនត្រឹមត្រូវ។",
-  objective: "អនុវត្តការផ្ទៀងផ្ទាត់ដែនផ្ទាល់ខ្លួននៅលើវាលគ្រោងការណ៍។",
-  expectedOutcome: "សុពលភាពនៃច្បាប់អាជីវកម្មស្មុគស្មាញ មុនពេលបន្តទៅមូលដ្ឋានទិន្នន័យ។",
+  summary: `ការសរសេរមុខងារផ្ទៀងផ្ទាត់Synchronous ឬអសមកាលផ្ទាល់ខ្លួនសម្រាប់ការត្រួតពិនិត្យអាជីវកម្មដ៏ស្មុគស្មាញ (ឧ. បញ្ជាក់លេខទូរសព្ទ ឬដែនកំណត់បញ្ចុះតម្លៃ)។`,
+  tip: "មុខងារកំណត់Validationផ្ទាល់ខ្លួនត្រូវតែត្រឡប់ `true` ប្រសិនបើត្រឹមត្រូវ ឬ `false` ប្រសិនបើមិនត្រឹមត្រូវ។",
+  objective: "អនុវត្តAuthenticationដែនផ្ទាល់ខ្លួននៅលើវាលSchema។",
+  expectedOutcome: "Validationនៃច្បាប់អាជីវកម្មស្មុគស្មាញ មុនពេលបន្តទៅDatabase។",
   codeSnippet: "const userSchema = new Schema({\n  phoneNumber: {\n    type: String,\n    validate: {\n      validator: function(v) {\n        return /^[0-9]{9,10}$/.test(v); // Cambodian phone number check\n      },\n      message: props => `${props.value} is not a valid phone number!`\n    }\n  }\n});",
 };
 

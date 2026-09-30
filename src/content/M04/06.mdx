@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំហុស Asynchronous Error Handling",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការដោះស្រាយកំហុសនៅក្នុងកូដអសមកាលដោយប្រើប្លុក `try/catch` និងការទទួលយកការបដិសេធដែលមិនបានដោះស្រាយការពារការគាំងServer។",
-  tip: "ការបដិសេធដោយមិនបានដោះស្រាយការសន្យានៅក្នុងកំណែ Node.js ទំនើបនឹងបញ្ចប់ដំណើរការជាមួយនឹងលេខកូដចេញមិនមែនសូន្យ។",
+  summary: `ការដោះស្រាយកំហុសនៅក្នុងកូដអសមកាលដោយប្រើប្លុក \`try/catch\` និងការទទួលយកUnhandled RejectionsការពារការគាំងServer។`,
+  tip: "ការបដិសេធដោយមិនបានដោះស្រាយPromisesនៅក្នុងកំណែ Node.js ទំនើបនឹងបញ្ចប់ដំណើរការជាមួយនឹងលេខកូដចេញមិនមែនសូន្យ។",
   objective: "អនុវត្តព្រំដែនកំហុសដែលធន់ទ្រាំជុំវិញប្រតិបត្តិការអសមកាល។",
-  expectedOutcome: "ការដោះស្រាយកំហុស async ភស្តុតាងគាំងនៅក្នុងឧបករណ៍បញ្ជាទាំងអស់។",
+  expectedOutcome: "ការដោះស្រាយកំហុស async ភស្តុតាងគាំងនៅក្នុងControllersទាំងអស់។",
   codeSnippet: "process.on(\"unhandledRejection\", (reason, promise) => {\n  console.error(\"CRITICAL: Unhandled Promise Rejection at:\", promise, \"reason:\", reason);\n  // Gracefully log and restart process\n});\n\n// Always wrap async route logic in try/catch or async wrapper\nasync function handler(req, res, next) {\n  try {\n    const result = await riskyOperation();\n    res.json(result);\n  } catch (err) {\n    next(err); // Hand off to central error middleware\n  }\n}",
 };
 

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត CRUD Endpoints ពេញលេញ (Full CRUD Test Suite)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "A complete CRUD test suite covers the entire lifecycle of a resource: creating a new record (POST 201), fetching the collection (GET 200), retrieving by ID (GET 200), modifying properties (PATCH 200), and deleting the record (DELETE 204 or 200).",
-  tip: "Save the created resource's `_id` in a variable during the POST test and reuse it across GET by ID, PATCH, and DELETE tests.",
-  objective: "Construct an end-to-end CRUD test suite exercising all REST operations.",
-  expectedOutcome: "Comprehensive test suite guaranteeing functional integrity of CRUD endpoints.",
+  summary: `ឈុតសាកល្បង CRUD ពេញលេញគ្របដណ្តប់វដ្តជីវិតទាំងមូលនៃធនធាន៖ ការបង្កើតកំណត់ត្រាថ្មី (POST 201) ទាញយកCollections (GET 200) យកមកវិញដោយលេខសម្គាល់ (GET 200) ការកែប្រែលក្ខណៈសម្បត្តិ (PATCH 200) និងការលុបកំណត់ត្រា (DELETE 204 ឬ 200)។`,
+  tip: "រក្សាទុក `_id` របស់ធនធានដែលបានបង្កើតនៅក្នុងអថេរកំឡុងពេលធ្វើតេស្ត POST ហើយប្រើវាឡើងវិញតាមរយៈ GET ដោយ ID, PATCH និង DELETE tests។",
+  objective: "បង្កើតឈុតសាកល្បង CRUD ពីចុងដល់ចប់ អនុវត្តប្រតិបត្តិការ REST ទាំងអស់។",
+  expectedOutcome: "ឈុតសាកល្បងដ៏ទូលំទូលាយធានានូវភាពត្រឹមត្រូវមុខងារនៃ CRUD Endpoints។",
   codeSnippet: "describe(\"Products CRUD API\", () => {\n  let createdProductId = \"\";\n\n  it(\"POST /api/products -> 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/products\")\n      .send({ title: \"Gaming Mouse\", price: 49.99 })\n      .expect(201);\n\n    createdProductId = res.body.data.product._id;\n    expect(createdProductId).toBeDefined();\n  });\n\n  it(\"GET /api/products/:id -> 200 OK\", async () => {\n    const res = await request(app)\n      .get(`/api/products/${createdProductId}`)\n      .expect(200);\n\n    expect(res.body.data.product.title).toBe(\"Gaming Mouse\");\n  });\n\n  it(\"DELETE /api/products/:id -> 200 OK\", async () => {\n    await request(app)\n      .delete(`/api/products/${createdProductId}`)\n      .expect(200);\n  });\n});",
 };
 

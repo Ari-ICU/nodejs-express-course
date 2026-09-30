@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៥ ៖ Complete E-Commerce Backend Platform",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build an end-to-end e-commerce backend platform including user cart management, wishlist, checkout order creation, Stripe payment integration, background email receipts via BullMQ, role-based order management for administrators, and stock inventory decrement with database transactions.",
-  tip: "Use MongoDB multi-document transactions (`session.withTransaction()`) during checkout to ensure stock decrement and order creation succeed or fail together atomically.",
-  objective: "Build an enterprise e-commerce backend with payments, background jobs, and ACID transactions.",
-  expectedOutcome: "Production-ready e-commerce platform orchestrating orders, payments, and background jobs.",
+  summary: `បង្កើតវេទិកាខាងក្រោយនៃពាណិជ្ជកម្មអេឡិចត្រូនិកពីចុងដល់ចប់ រួមទាំងការគ្រប់គ្រងរទេះអ្នកប្រើប្រាស់ បញ្ជីចង់បាន ការបង្កើតការបញ្ជាទិញចេញ ការរួមបញ្ចូលការទូទាត់ Stripe បង្កាន់ដៃអ៊ីមែលផ្ទៃខាងក្រោយតាមរយៈ BullMQ ការគ្រប់គ្រងការបញ្ជាទិញដោយផ្អែកលើតួនាទីសម្រាប់អ្នកគ្រប់គ្រង និងការថយចុះសារពើភ័ណ្ឌជាមួយនឹងប្រតិបត្តិការDatabase។`,
+  tip: "ប្រើ MongoDB ប្រតិបត្តិការឯកសារច្រើន (`session.withTransaction()`) កំឡុងពេលពិនិត្យចេញ ដើម្បីធានាថាការបន្ថយភាគហ៊ុន និងការបង្កើតការបញ្ជាទិញបានជោគជ័យ ឬបរាជ័យជាមួយគ្នា។",
+  objective: "បង្កើត backend e-commerce សហគ្រាសជាមួយនឹងការបង់ប្រាក់ ការងារផ្ទៃខាងក្រោយ និងប្រតិបត្តិការ ACID ។",
+  expectedOutcome: "វេទិកាពាណិជ្ជកម្មអេឡិចត្រូនិកដែលត្រៀមរួចជាស្រេចក្នុងផលិតកម្មរៀបចំការបញ្ជាទិញ ការទូទាត់ និងការងារផ្ទៃខាងក្រោយ។",
   codeSnippet: "// Checkout with MongoDB Transaction:\nexport const checkout = async (userId, items) => {\n  const session = await mongoose.startSession();\n  return session.withTransaction(async () => {\n    // 1. Decrement stock atomically\n    for (const item of items) {\n      const product = await Product.findOneAndUpdate(\n        { _id: item.productId, stock: { $gte: item.quantity } },\n        { $inc: { stock: -item.quantity } },\n        { session, new: true }\n      );\n      if (!product) throw new AppError(`Insufficient stock for ${item.title}`, 400);\n    }\n    // 2. Create order document & trigger email job\n    const order = await Order.create([{ user: userId, items }], { session });\n    await emailQueue.add(\"order-confirmation\", { orderId: order[0]._id });\n    return order[0];\n  });\n};",
 };
 

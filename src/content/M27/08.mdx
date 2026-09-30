@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Shared Utilities និង Helper Functions",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Utils directory contains generic, reusable helper functions and classes that are domain-independent. Typical utilities include the `AppError` class, async handler wrappers (`catchAsync`), date formatters, cryptographic helpers, and string transformers.",
-  tip: "Only place functions in `utils/` if they are pure and have no direct dependency on database models or business rules.",
-  objective: "Build a shared utility toolbox for error handling, formatting, and async flow.",
-  expectedOutcome: "Clean, tested utility functions eliminating duplicate code across the project.",
+  summary: `បញ្ជីឈ្មោះ Utils មានមុខងារជំនួយការទូទៅ ដែលអាចប្រើឡើងវិញបាន និងថ្នាក់ដែលឯករាជ្យដោយដែន។ ឧបករណ៍ប្រើប្រាស់ធម្មតារួមមានថ្នាក់ \`AppError\`, async handler wrappers (\`catchAsync\`), date formatters, cryptographic helpers និង string transformers។`,
+  tip: "ដាក់តែមុខងារនៅក្នុង `utils/` ប្រសិនបើពួកវាសុទ្ធសាធ និងមិនមានការពឹងផ្អែកដោយផ្ទាល់លើគំរូDatabase ឬច្បាប់អាជីវកម្ម។",
+  objective: "បង្កើតប្រអប់ឧបករណ៍ប្រើប្រាស់រួមគ្នាសម្រាប់ការដោះស្រាយកំហុស ការធ្វើទ្រង់ទ្រាយ និងលំហូរអសមកាល។",
+  expectedOutcome: "សម្អាត និងសាកល្បងមុខងារឧបករណ៍ប្រើប្រាស់ដែលលុបបំបាត់កូដស្ទួនទូទាំងគម្រោង។",
   codeSnippet: "// utils/catchAsync.js\n// Wraps async route handlers to catch rejected promises and forward to next(err)\nexport const catchAsync = (fn) => (req, res, next) => {\n  Promise.resolve(fn(req, res, next)).catch(next);\n};\n\n// utils/AppError.js\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true;\n    Error.captureStackTrace(this, this.constructor);\n  }\n}",
 };
 

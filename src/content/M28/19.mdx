@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត GitHub Actions Workflow សម្រាប់ Test និង Auto-deploy",
   type: "lab",
   codeLanguage: "yaml",
-  summary: "GitHub Actions automates your software workflows directly within your GitHub repository. A `.github/workflows/deploy.yml` file defines automated triggers (`push: branches: [main]`), spins up Ubuntu runners, executes tests, builds Docker images, and deploys the passing image to your VPS over SSH.",
-  tip: "Store sensitive deployment credentials (SSH private keys, Docker tokens) securely in GitHub Repository Secrets (`Settings -> Secrets and variables -> Actions`).",
-  objective: "Author an automated GitHub Actions workflow running tests and deploying to a server.",
-  expectedOutcome: "Automated pipeline that tests and deploys code on every push to main.",
+  summary: `GitHub Actions ធ្វើស្វ័យប្រវត្តិកម្មលំហូរការងារកម្មវិធីរបស់អ្នកដោយផ្ទាល់នៅក្នុងឃ្លាំង GitHub របស់អ្នក។ ឯកសារ \`.github/workflows/deploy.yml\` កំណត់ការកេះដោយស្វ័យប្រវត្តិ (\`push: branches: [main]\`) បង្កើនអ្នករត់ Ubuntu ប្រតិបត្តិការធ្វើតេស្ត បង្កើតរូបភាព Docker និងដាក់ពង្រាយរូបភាពឆ្លងកាត់ទៅ VPS របស់អ្នកនៅលើ SSH ។`,
+  tip: "រក្សាទុកព័ត៌មានសម្ងាត់នៃការប្រើប្រាស់ដ៏រសើប (សោឯកជន SSH, Docker tokens) ដោយសុវត្ថិភាពនៅក្នុង GitHub Repository អាថ៌កំបាំង (`Settings -> Secrets and variables -> Actions`)។",
+  objective: "បង្កើតលំហូរការងារ GitHub Actions ដោយស្វ័យប្រវត្តិដែលកំពុងដំណើរការសាកល្បង និងដាក់ពង្រាយទៅកាន់Server។",
+  expectedOutcome: "បំពង់បង្ហូរដោយស្វ័យប្រវត្តិដែលសាកល្បង និងដាក់ពង្រាយកូដនៅលើរាល់ការជំរុញទៅកាន់មេ។",
   codeSnippet: "name: CI/CD Pipeline\n\non:\n  push:\n    branches: [main]\n\njobs:\n  test-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: \"npm\"\n\n      - run: npm ci\n      - run: npm run test:run\n\n      - name: Deploy to VPS over SSH\n        uses: appleboy/ssh-action@master\n        with:\n          host: ${{ secrets.VPS_HOST }}\n          username: ${{ secrets.VPS_USER }}\n          key: ${{ secrets.VPS_SSH_KEY }}\n          script: |\n            cd /opt/enterprise-app\n            git pull origin main\n            docker compose down\n            docker compose up -d --build",
 };
 

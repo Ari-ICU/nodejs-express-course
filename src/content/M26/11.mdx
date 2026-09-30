@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការកំណត់ Scheduled Cron Jobs ក្នុង BullMQ (Repeatable Jobs)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Repeatable jobs execute automatically on a scheduled recurring basis using standard 5-part cron syntax (e.g. `0 0 * * *` for daily at midnight). Unlike local OS crontabs or in-process node-cron schedulers, BullMQ repeatable jobs are synchronized across cluster instances via Redis, preventing duplicate execution.",
-  tip: "BullMQ repeatable jobs automatically deduplicate across multiple server instances — only ONE worker in your cluster will run the scheduled job at midnight.",
-  objective: "Configure cluster-safe repeatable scheduled jobs using cron expressions.",
-  expectedOutcome: "Reliable scheduled tasks (daily digest, database vacuum, report exports).",
+  summary: `ការងារដែលអាចធ្វើម្តងទៀតបានដំណើរការដោយស្វ័យប្រវត្តិនៅលើមូលដ្ឋានកើតឡើងដដែលៗដែលបានកំណត់ពេលដោយប្រើវាក្យសម្ព័ន្ធ cron 5 ផ្នែកស្តង់ដារ (ឧ. \`0 0 * * *\` សម្រាប់រាល់ថ្ងៃនៅពាក់កណ្តាលអធ្រាត្រ)។ មិនដូច OS crontabs ក្នុងស្រុក ឬកម្មវិធីកំណត់ពេល node-cron ដែលកំពុងដំណើរការទេ BullMQ ការងារដែលអាចធ្វើឡើងវិញបានត្រូវបានធ្វើSynchronousនៅទូទាំងវត្ថុចង្កោមតាមរយៈ Redis ដោយការពារការប្រតិបត្តិស្ទួន។`,
+  tip: "BullMQ ការងារដែលអាចធ្វើម្តងទៀតបានស្ទួនដោយស្វ័យប្រវត្តិនៅទូទាំងServerជាច្រើន — មានតែបុគ្គលិកម្នាក់គត់នៅក្នុងចង្កោមរបស់អ្នកនឹងដំណើរការការងារដែលបានកំណត់ពេលពាក់កណ្តាលអធ្រាត្រ។",
+  objective: "កំណត់រចនាសម្ព័ន្ធការងារដែលអាចធ្វើម្តងទៀតបានដោយសុវត្ថិភាពចង្កោមដោយប្រើកន្សោម cron ។",
+  expectedOutcome: "កិច្ចការដែលបានកំណត់ពេលដែលអាចទុកចិត្តបាន (ការសង្ខេបប្រចាំថ្ងៃ ការខ្វះចន្លោះនៃDatabase ការនាំចេញរបាយការណ៍)។",
   codeSnippet: "// Schedule a repeatable job to run every day at midnight (UTC)\nawait reportQueue.add(\n  \"daily-sales-summary\",\n  { department: \"ecommerce\" },\n  {\n    repeat: {\n      pattern: \"0 0 * * *\", // Standard Cron: minute hour day month weekday\n    },\n  }\n);\n\nconsole.log(\"Repeatable daily job scheduled!\");",
 };
 

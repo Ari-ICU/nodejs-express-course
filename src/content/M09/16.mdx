@@ -14,17 +14,17 @@ export const meta = {
 ### 2. Search Implementations & Performance
 * **In-Memory / Regex Search**: Good for small datasets. Always escape special regex characters to prevent **ReDoS (Regular Expression Denial of Service)** attacks!
 * **Full-Text Indexes (Database Level)**: For production databases (MongoDB \`$text\` or PostgreSQL \`to_tsvector\`), create full-text search indexes with stemming, stop-word elimination, and relevance scoring.`,
-  tip: "កុំឆ្លងកាត់សំណួរស្វែងរកអ្នកប្រើប្រាស់ដែលមិនមានអនាម័យដោយផ្ទាល់ទៅក្នុង `new RegExp(req.query.q)`។ ប្រសិនបើអ្នកប្រើបញ្ចូល `?q=(a+)+កុំឆ្លងកាត់សំណួរស្វែងរកអ្នកប្រើប្រាស់ដែលមិនមានអនាម័យដោយផ្ទាល់ទៅក្នុង `new RegExp(req.query.q)`។ ប្រសិនបើអ្នកប្រើបញ្ចូល  វានឹងបង្កឱ្យមានការតាមដានមហន្តរាយ និងបង្កករង្វិលជុំព្រឹត្តិការណ៍ Node.js របស់អ្នក។ តែងតែគេចចេញពីតួអក្សរ regex ជាមុនសិន៖ `query.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\__CODE_2__')`។",
+  tip: "កុំឆ្លងកាត់សំណួរស្វែងរកអ្នកប្រើប្រាស់ដែលមិនមានSanitizationដោយផ្ទាល់ទៅក្នុង `new RegExp(req.query.q)`។ ប្រសិនបើអ្នកប្រើបញ្ចូល `?q=(a+)+កុំឆ្លងកាត់សំណួរស្វែងរកអ្នកប្រើប្រាស់ដែលមិនមានSanitizationដោយផ្ទាល់ទៅក្នុង `new RegExp(req.query.q)`។ ប្រសិនបើអ្នកប្រើបញ្ចូល  វានឹងបង្កឱ្យមានការតាមដានមហន្តរាយ និងបង្កកEvent Loop Node.js របស់អ្នក។ តែងតែគេចចេញពីតួអក្សរ regex ជាមុនសិន៖ `query.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\__CODE_2__')`។",
   objective: "អនុវត្តEndpointស្វែងរកពហុវាលដែលមានសុវត្ថិភាពនៅក្នុង Express ជាមួយនឹងការរត់គេចពី regex ត្រឹមត្រូវ និងការការពារការវាយប្រហារ ReDoS ។",
-  expectedOutcome: "កម្មវិធីដោះស្រាយការស្វែងរកដែលមានភាពធន់អាចផ្គូផ្គងចំណងជើង និងការពិពណ៌នាដោយសុវត្ថិភាពដោយមិនប៉ះពាល់ដល់ដំណើរការServer។",
+  expectedOutcome: "កម្មវិធីដោះស្រាយSearchដែលមានភាពធន់អាចផ្គូផ្គងចំណងជើង និងការពិពណ៌នាដោយសុវត្ថិភាពដោយមិនប៉ះពាល់ដល់ដំណើរការServer។",
   codeSnippet: `const express = require("express");
 const app = express();
 
 const articles = [
   { id: 1, title: "Building Scalable Node.js APIs", summary: "ស្វែងយល់ពីគំរូស្ថាបត្យកម្មសម្រាប់ Express ។" },
-  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "ការរចនាគ្រោងការណ៍ NoSQL និងបង្កើនប្រសិទ្ធភាពលិបិក្រម។" },
+  { id: 2, title: "Mastering MongoDB & Mongoose", summary: `ការរចនាSchema NoSQL និងបង្កើនប្រសិទ្ធភាពលិបិក្រម។` },
   { id: 3, title: "Full-Stack React & Express", summary: "ការបង្កើតកម្មវិធីបណ្តាញដែលមានប្រតិកម្មជាមួយ Node ។" },
-  { id: 4, title: "Dockerizing Node Services", summary: "រក្សាទុកសេវាកម្មមីក្រូសម្រាប់ចង្កោមផលិតកម្ម។" },
+  { id: 4, title: "Dockerizing Node Services", summary: `រក្សាទុកServicesមីក្រូសម្រាប់ចង្កោមផលិតកម្ម។` },
 ];
 
 // Helper: Escape regex special characters to prevent ReDoS attacks

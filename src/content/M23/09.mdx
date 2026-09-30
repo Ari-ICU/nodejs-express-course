@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការប្រៀបធៀប និងការធ្វើសមាហរណកម្ម Swagger UI ជាមួយ Postman",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Swagger UI and Postman complement each other. Swagger UI serves as the official, self-documenting contract embedded in the backend codebase, while Postman serves as an exploratory workbench and CI test runner. Postman can directly import OpenAPI JSON specs to instantly generate ready-to-test collections.",
-  tip: "Import your live `/api/docs.json` URL directly into Postman using 'Import -> Link' to generate fully configured Postman collections in seconds.",
-  objective: "Import OpenAPI specifications into Postman to synchronize documentation and test collections.",
-  expectedOutcome: "Automated collection generation directly from OpenAPI/Swagger definitions.",
+  summary: `Swagger UI និង Postman បំពេញគ្នាទៅវិញទៅមក។ Swagger UI បម្រើជាកិច្ចសន្យាផ្លូវការ ធ្វើឯកសារដោយខ្លួនឯង ដែលបានបង្កប់នៅក្នុងមូលដ្ឋានកូដ backend ខណៈពេលដែល Postman បម្រើជាកន្លែងធ្វើការរុករក និងជាអ្នករត់ការសាកល្បង CI ។ Postman អាចនាំចូលដោយផ្ទាល់ OpenAPI JSON លក្ខណៈជាក់លាក់ ដើម្បីបង្កើតបណ្តុំដែលត្រៀមរួចរាល់ដើម្បីសាកល្បងភ្លាមៗ។`,
+  tip: "នាំចូល `/api/docs.json` URL ផ្ទាល់របស់អ្នកទៅក្នុង Postman ដោយប្រើ 'នាំចូល -> តំណ' ដើម្បីបង្កើតបណ្តុំ Postman ដែលបានកំណត់រចនាសម្ព័ន្ធពេញលេញក្នុងរយៈពេលប៉ុន្មានវិនាទី។",
+  objective: "នាំចូលការបញ្ជាក់ OpenAPI ទៅក្នុង Postman ដើម្បីធ្វើSynchronousឯកសារ និងCollectionsសាកល្បង។",
+  expectedOutcome: "ការបង្កើតCollectionsដោយស្វ័យប្រវត្តិដោយផ្ទាល់ពី OpenAPI/Swagger និយមន័យ។",
   codeSnippet: "// Workflow:\n// 1. Express server exposes OpenAPI spec at: http://localhost:5000/api/docs.json\n// 2. Open Postman -> Click \"Import\"\n// 3. Paste URL: http://localhost:5000/api/docs.json\n// 4. Select: \"Generate Postman Collection\"\n// 5. Result: Complete collection generated automatically with all paths, params, and schemas!",
 };
 

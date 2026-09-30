@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ម៉ូឌុលគ្រប់គ្រងឯកសារ fs Module",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "The `node:fs` module provides comprehensive file system APIs to create, read, update, rename, and delete files and directories, offering synchronous, callback, and promise-based interfaces.",
-  tip: "Always import `node:fs/promises` for clean, readable async/await code instead of nesting callbacks.",
-  objective: "Perform CRUD operations on the local server filesystem.",
-  expectedOutcome: "Competency with file operations using modern async/await patterns.",
+  summary: `ម៉ូឌុល \`node:fs\` ផ្ដល់នូវប្រព័ន្ធឯកសារដ៏ទូលំទូលាយ APIs ដើម្បីបង្កើត អាន ធ្វើបច្ចុប្បន្នភាព ប្តូរឈ្មោះ និងលុបឯកសារ និងថត ដោយផ្តល់ជូននូវInterfaceដែលផ្អែកលើSynchronous Callbacksមកវិញ និងPromises។`,
+  tip: "នាំចូល `node:fs/promises` ជានិច្ចសម្រាប់កូដ async/await ដែលស្អាត និងអាចអានបាន ជំនួសឱ្យការហៅត្រលប់មកវិញ។",
+  objective: "អនុវត្តប្រតិបត្តិការ CRUD នៅលើប្រព័ន្ធឯកសារServerមូលដ្ឋាន។",
+  expectedOutcome: "សមត្ថភាពជាមួយប្រតិបត្តិការឯកសារដោយប្រើលំនាំ async/ait ទំនើប។",
   codeSnippet: "import fs from \"node:fs/promises\";\n\n// Write a file\nawait fs.writeFile(\"app.log\", \"System started successfully\\n\", \"utf-8\");\n\n// Append data\nawait fs.appendFile(\"app.log\", \"User logged in\\n\");\n\n// Read content\nconst content = await fs.readFile(\"app.log\", \"utf-8\");\nconsole.log(content);",
 };
 

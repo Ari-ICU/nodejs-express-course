@@ -6,7 +6,7 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "មុខងារ​ឧបករណ៍​កណ្តាល​ផ្ទាល់​ខ្លួន​បង្កប់​នូវ​កង្វល់​ក្នុង​ការ​កាត់​គ្នា (ការ​ស្នើ​សុំ​ពេល​វេលា ការ​បញ្ចូល​បរិបទ​អ្នក​ប្រើ ការ​កត់ត្រា​សវនកម្ម ការ​កំណត់​អត្រា) ទៅ​ក្នុង​សមាសធាតុ​ដែល​អាច​ប្រើ​ឡើងវិញ​បាន។",
-  tip: "ភ្ជាប់លក្ខណសម្បត្តិផ្ទាល់ខ្លួនទៅ `req` (ឧ. `req.user`, `req.startTime`) ដើម្បីចែករំលែកទិន្នន័យតាមបរិបទនៅទូទាំងផ្នែកកណ្តាល និងឧបករណ៍បញ្ជា។",
+  tip: "ភ្ជាប់លក្ខណសម្បត្តិផ្ទាល់ខ្លួនទៅ `req` (ឧ. `req.user`, `req.startTime`) ដើម្បីចែករំលែកទិន្នន័យតាមបរិបទនៅទូទាំងផ្នែកកណ្តាល និងControllers។",
   objective: "អ្នកនិពន្ធមុខងារ Middleware ផ្ទាល់ខ្លួនដែលពិនិត្យ និងផ្លាស់ប្តូរបរិបទសំណើ។",
   expectedOutcome: "ឧបករណ៍ដំណើរការសំណើដែលអាចប្រើឡើងវិញបាន។",
   codeSnippet: "// Middleware to attach a unique Request ID for tracing logs\nimport crypto from \"node:crypto\";\n\nexport const requestIdMiddleware = (req, res, next) => {\n  req.id = req.headers[\"x-request-id\"] || crypto.randomUUID();\n  res.setHeader(\"X-Request-Id\", req.id);\n  next();\n};",

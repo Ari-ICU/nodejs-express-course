@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងរៀបចំ API Collections ក្នុង Postman",
   type: "lab",
   codeLanguage: "json",
-  summary: "A Postman Collection is a group of saved API requests organized into logical folders (e.g. Auth, Users, Products, Orders). Collections can be exported as JSON files and checked into Git repositories alongside backend source code, allowing entire engineering teams to share verified API requests.",
-  tip: "Store your exported Postman collection JSON inside a `/docs/postman` folder in your project repo so all developers stay in sync.",
-  objective: "Structure and organize enterprise REST API requests into modular Postman collections.",
-  expectedOutcome: "Structured, shareable Postman collection mirroring your backend routing hierarchy.",
+  summary: `Collections Postman គឺជាក្រុមនៃសំណើ API ដែលបានរក្សាទុកដែលបានរៀបចំទៅក្នុងថតឡូជីខល (ឧ. សិទ្ធិ អ្នកប្រើប្រាស់ ផលិតផល ការបញ្ជាទិញ)។ Collectionsអាចត្រូវបាននាំចេញជាឯកសារ JSON ហើយបានពិនិត្យទៅក្នុងឃ្លាំង Git រួមជាមួយនឹងSource Codeខាងក្រោយ ដែលអនុញ្ញាតឱ្យក្រុមវិស្វកម្មទាំងមូលចែករំលែកសំណើ API ដែលបានផ្ទៀងផ្ទាត់។`,
+  tip: "រក្សាទុកបណ្តុំ Postman ដែលបាននាំចេញរបស់អ្នក JSON នៅខាងក្នុងថត `/docs/postman` នៅក្នុងឃ្លាំងគម្រោងរបស់អ្នក ដូច្នេះអ្នកអភិវឌ្ឍន៍ទាំងអស់រក្សាSynchronous។",
+  objective: "រចនាសម្ព័ន និងរៀបចំសហគ្រាស REST API សំណើទៅជាបណ្តុំ Postman ម៉ូឌុល។",
+  expectedOutcome: "Collections Postman ដែលមានរចនាសម្ព័ន្ធ អាចចែករំលែកបាន ឆ្លុះបញ្ចាំងពីឋានានុក្រមកំណត់ផ្លូវនៅខាងក្រោយរបស់អ្នក។",
   codeSnippet: "// Postman Collection Structure:\n// 📁 My-Enterprise-API\n//   ├── 📁 01-Authentication\n//   │   ├── POST Register\n//   │   ├── POST Login\n//   │   └── POST Refresh Token\n//   ├── 📁 02-Products\n//   │   ├── GET All Products\n//   │   ├── POST Create Product\n//   │   └── DELETE Product\n//   └── 📁 03-Orders\n//       ├── POST Checkout\n//       └── GET My Orders",
 };
 

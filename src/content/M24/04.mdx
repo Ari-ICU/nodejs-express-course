@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងភ្ជាប់ Socket.IO ជាមួយ Express HTTP Server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "In Node.js, Socket.IO attaches to a native Node `http.Server` instance rather than directly to the Express `app` object. Express handles traditional REST endpoints while Socket.IO handles real-time WebSocket traffic over the exact same port.",
-  tip: "Configure CORS on the Socket.IO server separately from Express, as WebSocket upgrade handshakes require distinct origin verification.",
-  objective: "Initialize and attach a Socket.IO server to an Express HTTP server instance.",
-  expectedOutcome: "Unified HTTP and WebSocket server listening on a single port.",
+  summary: `នៅក្នុង Node.js Socket.IO ភ្ជាប់ទៅថ្នាំងដើម \`http.Server\` ជាជាងដោយផ្ទាល់ទៅវត្ថុ Express \`app\` ។ Express គ្រប់គ្រងEndpoints REST ប្រពៃណី ខណៈដែល Socket.IO គ្រប់គ្រងចរាចរណ៍ WebSocket ក្នុងពេលជាក់ស្ដែងនៅលើច្រកដូចគ្នា។`,
+  tip: "កំណត់រចនាសម្ព័ន្ធ CORS នៅលើServer Socket.IO ដាច់ដោយឡែកពី Express ដោយសារតែ WebSocket ការចាប់ដៃធ្វើឱ្យប្រសើរឡើងតម្រូវឱ្យមានAuthenticationប្រភពដើមផ្សេងគ្នា។",
+  objective: "ចាប់ផ្តើម និងភ្ជាប់Server Socket.IO ទៅនឹងឧទាហរណ៍Server Express HTTP ។",
+  expectedOutcome: "បង្រួបបង្រួម HTTP និង WebSocket Serverស្តាប់នៅលើច្រកតែមួយ។",
   codeSnippet: "import http from \"node:http\";\nimport express from \"express\";\nimport { Server } from \"socket.io\";\n\nconst app = express();\nconst server = http.createServer(app);\n\n// Initialize Socket.IO with CORS\nconst io = new Server(server, {\n  cors: {\n    origin: process.env.CLIENT_URL || \"http://localhost:3000\",\n    methods: [\"GET\", \"POST\"],\n    credentials: true,\n  },\n});\n\nio.on(\"connection\", (socket) => {\n  console.log(\"New client connected. Socket ID:\", socket.id);\n\n  socket.on(\"disconnect\", (reason) => {\n    console.log(`Client ${socket.id} disconnected: ${reason}`);\n  });\n});\n\nserver.listen(5000, () => console.log(\"Server listening on port 5000\"));",
 };
 

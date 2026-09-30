@@ -7,7 +7,7 @@ export const meta = {
   codeLanguage: "javascript",
   summary: "មុខងារ​ឧបករណ៍​កណ្តាល​ដោះស្រាយ​បញ្ហា​មាន​អាគុយម៉ង់​ចំនួន​បួន៖ `(err, req, res, next)`។ Express កំណត់អត្តសញ្ញាណ error middleware ដោយ arity (ទទួលយក 4 arguments) ហើយរំលងរាល់ middleware ដែលមិនមែនជា error នៅពេលដែល `next(err)` ត្រូវបានហៅ។",
   tip: "កុំធ្លាយដានជង់ឆៅ (`err.stack`) ទៅកាន់អតិថិជននៅក្នុងបរិយាកាសផលិតកម្ម ដើម្បីជៀសវាងការបង្ហាញពីភាពងាយរងគ្រោះផ្នែកសុវត្ថិភាព។",
-  objective: "ការដោះស្រាយកំហុសកម្មវិធីជាកណ្តាលទៅក្នុងឧបករណ៍កណ្តាលដែលមានប៉ារ៉ាម៉ែត្របួន។",
+  objective: "ការដោះស្រាយកំហុសកម្មវិធីជាកណ្តាលទៅក្នុងMiddlewareដែលមានParamsបួន។",
   expectedOutcome: "ការឆ្លើយតបកំហុស JSON ដែលមានរចនាសម្ព័ន្ធជាប់លាប់នៅទូទាំងករណីបរាជ័យទាំងអស់។",
   codeSnippet: "// Centralized Error Handling Middleware (MUST have 4 arguments!)\nexport const errorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const message = err.message || \"Internal Server Error\";\n\n  console.error(`[${req.method}] ${req.url} Error:`, err);\n\n  res.status(statusCode).json({\n    success: false,\n    error: message,\n    ...(process.env.NODE_ENV === \"development\" && { stack: err.stack })\n  });\n};",
 };

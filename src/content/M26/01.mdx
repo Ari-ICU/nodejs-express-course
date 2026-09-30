@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី Background Jobs ក្នុង Web Backend",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Background jobs are asynchronous tasks that execute outside the critical request-response cycle of an HTTP server. Heavy computations (video transcoding, large CSV generation, external API syncs, batch emails) that take seconds or minutes to complete are moved out of HTTP handlers so users receive instant HTTP responses.",
-  tip: "If a task takes longer than 200ms to complete, offload it to a background job instead of holding the HTTP connection open.",
-  objective: "Understand why long-running computational tasks must run asynchronously in the background.",
-  expectedOutcome: "Clear criteria for identifying tasks that should be offloaded from HTTP threads.",
+  summary: `ការងារផ្ទៃខាងក្រោយគឺជាកិច្ចការអសមកាលដែលប្រតិបត្តិនៅខាងក្រៅវដ្តនៃការឆ្លើយតបសំណើដ៏សំខាន់នៃServer HTTP ។ ការគណនាខ្លាំង (ការបំលែងកូដវីដេអូ ជំនាន់ CSV ធំ ខាងក្រៅ API ការធ្វើSynchronous អ៊ីមែលបាច់) ដែលចំណាយពេលប៉ុន្មានវិនាទី ឬនាទីដើម្បីបញ្ចប់ត្រូវបានផ្លាស់ទីចេញពីឧបករណ៍ដោះស្រាយ HTTP ដូច្នេះអ្នកប្រើប្រាស់ទទួលបានការឆ្លើយតប HTTP ភ្លាមៗ។`,
+  tip: "ប្រសិនបើកិច្ចការត្រូវចំណាយពេលយូរជាង 200ms ដើម្បីបញ្ចប់ ទាញយកវាទៅការងារផ្ទៃខាងក្រោយជំនួសឱ្យការបើកការតភ្ជាប់ HTTP ។",
+  objective: "យល់​ថា​ហេតុ​អ្វី​បាន​ជា​កិច្ចការ​គណនា​ដែល​មាន​រយៈពេល​យូរ​ត្រូវ​តែ​ដំណើរការ​ដោយ​អសមកាល​ក្នុង​ផ្ទៃ​ខាង​ក្រោយ។",
+  expectedOutcome: "លក្ខណៈវិនិច្ឆ័យច្បាស់លាស់សម្រាប់កំណត់អត្តសញ្ញាណកិច្ចការដែលគួរត្រូវបានដកចេញពី HTTP Threads។",
   codeSnippet: "// Synchronous (Bad UX - 5s delay):\n// POST /checkout -> [Charge Card] -> [Generate PDF Invoice (4s)] -> [Send Email (1s)] -> 200 OK (5.2s total!)\n\n// Asynchronous Background Jobs (Great UX - 50ms):\n// POST /checkout -> [Charge Card] -> [Enqueue Job: invoice + email] -> 200 OK (50ms!)\n// [Background Worker] consumes job in background and emails PDF without blocking user.",
 };
 

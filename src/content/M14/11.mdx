@@ -5,9 +5,9 @@ export const meta = {
   khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ Data Validation",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "គោលការណ៍នៃសុពលភាពសហគ្រាស៖ ធ្វើឱ្យមានសុពលភាពដំបូងនៅព្រំដែនឧបករណ៍កណ្តាល ត្រឡប់សារកំហុសកម្រិតវាលស្អាត ដកវាលដែលមិនស្គាល់ និងសម្អាតខ្សែអក្សរ។",
-  tip: "រួមបញ្ចូលគ្នានូវសុពលភាពរបស់ឧបករណ៍កណ្តាលជាមួយនឹងសុពលភាពគំរូ Mongoose សម្រាប់ស្រទាប់ការពារពីរ (Defense in Depth)។",
-  objective: "ទទួលយកលំនាំសុពលភាពជាស្រទាប់នៅទូទាំងកម្មវិធី។",
+  summary: `គោលការណ៍នៃValidationសហគ្រាស៖ ធ្វើឱ្យមានValidationដំបូងនៅព្រំដែនMiddleware ត្រឡប់សារកំហុសកម្រិតវាលស្អាត ដកវាលដែលមិនស្គាល់ និងសម្អាតខ្សែអក្សរ។`,
+  tip: "រួមបញ្ចូលគ្នានូវValidationរបស់MiddlewareជាមួយនឹងValidationគំរូ Mongoose សម្រាប់ស្រទាប់ការពារពីរ (Defense in Depth)។",
+  objective: "ទទួលយកលំនាំValidationជាស្រទាប់នៅទូទាំងកម្មវិធី។",
   expectedOutcome: "ភាពត្រឹមត្រូវនៃទិន្នន័យការពារគ្រាប់កាំភ្លើងនៅគ្រប់Endpointទាំងអស់។",
   codeSnippet: "/* Validation Defense in Depth:\n   Layer 1: Express Middleware (Zod schema validates input structure)\n   Layer 2: Controller / Service (Business logic rules & permissions)\n   Layer 3: Mongoose Model (Database constraint enforcement)\n*/",
 };

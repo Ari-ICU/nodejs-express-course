@@ -5,23 +5,28 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ Express ទៅកាន់ MongoDB ជាមួយ mongoose.connect()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការបង្កើតបណ្តុំការតភ្ជាប់ដែលធន់នឹង MongoDB ដោយប្រើ \`mongoose.connect()\` ដោះស្រាយព្រឹត្តិការណ៍តភ្ជាប់ និងព្យាយាមBusiness Logicម្តងទៀត។`,
-  tip: "តែងតែនាំចេញម៉ូឌុលឧបករណ៍ភ្ជាប់ Database ជាក់លាក់ ហើយហៅវាមុនពេលចាប់ផ្តើម `app.listen()`។",
-  objective: "បង្កើតបណ្តុំការតភ្ជាប់ Database ជាប់លាប់។",
-  expectedOutcome: "ការចាប់ផ្តើមការតភ្ជាប់ដោយស្វ័យប្រវត្តិជាមួយឧបករណ៍ស្តាប់ព្រឹត្តិការណ៍ភ្ជាប់ឡើងវិញ។",
-  codeSnippet: "import mongoose from \"mongoose\";\n\nexport const connectDB = async () => {\n  try {\n    const conn = await mongoose.connect(process.env.DATABASE_URL);\n    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);\n  } catch (error) {\n    console.error(\"❌ MongoDB connection error:\", error.message);\n    process.exit(1); // Exit with failure\n  }\n};",
+  summary: "ការបង្កើត Connection Module ដាច់ដោយឡែកនៅ **`src/config/db.js`** ដើម្បីភ្ជាប់ទៅកាន់ MongoDB តាមរយៈ `mongoose.connect()`៖\n\nគោលការណ៍សំខាន់ៗ៖\n* អាន Connection URI ពី `process.env.DATABASE_URL`\n* ប្រើប្រាស់ `try/catch` ដើម្បីចាប់កំហុសនៅពេល Database មិនអាចតភ្ជាប់បាន\n* ត្រួតពិនិត្យ Connection Events (`connected`, `error`, `disconnected`)",
+  tip: "តែងតែហៅ `await connectDB()` មុនពេល `app.listen(PORT)` ដំណើរការ ដើម្បីធានាថា Server មិនទទួល Requests មុនពេល Database ភ្ជាប់រួចរាល់ឡើយ។",
+  objective: "ចេះបង្កើត Persistent Connection Pool ទៅកាន់ MongoDB។",
+  expectedOutcome: "Server តភ្ជាប់ទៅកាន់ MongoDB Atlas ដោយរលូន និងមាន Event Listeners។",
+  codeSnippet: "// src/config/db.js\nimport mongoose from \"mongoose\";\n\nexport const connectDB = async () => {\n  try {\n    const conn = await mongoose.connect(process.env.DATABASE_URL);\n    console.log(`✅ MongoDB Connected: ${conn.connection.host} / ${conn.connection.name}`);\n  } catch (error) {\n    console.error(\"❌ MongoDB Connection Failed:\", error.message);\n    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production\n  }\n};\n\n// Event Listeners for connection lifecycle\nmongoose.connection.on(\"disconnected\", () => console.warn(\"⚠️ MongoDB disconnected!\"));\nmongoose.connection.on(\"reconnected\", () => console.log(\"🔄 MongoDB reconnected!\"));",
 };
 
 ```javascript
+// src/config/db.js
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.DATABASE_URL);
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host} / ${conn.connection.name}`);
   } catch (error) {
-    console.error("❌ MongoDB connection error:", error.message);
-    process.exit(1); // Exit with failure
+    console.error("❌ MongoDB Connection Failed:", error.message);
+    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production
   }
 };
+
+// Event Listeners for connection lifecycle
+mongoose.connection.on("disconnected", () => console.warn("⚠️ MongoDB disconnected!"));
+mongoose.connection.on("reconnected", () => console.log("🔄 MongoDB reconnected!"));
 ```

@@ -1,20 +1,29 @@
 export const meta = {
   id: "M15-10",
   number: "10",
-  title: "404 Errors",
-  khmerTitle: "ការបង្កើត 404 Route Not Found Handler",
+  title: "Handling MongoDB Duplicate Key Errors (11000)",
+  khmerTitle: "ការដោះស្រាយកំហុស MongoDB Duplicate Key Error (Code 11000)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការចាប់យកផ្លូវ URL ដែលមិនបានគ្រប់គ្រងទាំងអស់ដោយប្រើ Middleware ជំនួសជំនួស (\`app.all('*')\`) ដែលបោះ 404 \`AppError\` ។`,
-  tip: "ចុះឈ្មោះផ្លូវ 404 catch-all ភ្លាមៗបន្ទាប់ពីការកំណត់ផ្លូវទាំងអស់ ហើយនៅចំពោះមុខ Error Handler សកល។",
-  objective: "ចាប់យកផ្លូវ API ដែលមិនបានគ្រប់គ្រងទាំងអស់ជាមួយនឹង Response 404 ស្តង់ដារ។",
-  expectedOutcome: "Response 404 ស្របគ្នាសម្រាប់ Endpoint មិនត្រឹមត្រូវ។",
-  codeSnippet: "// 404 Catch-All Route (Must be placed after all active routes)\napp.all(\"*\", (req, res, next) => {\n  next(new AppError(`Cannot find ${req.method} ${req.originalUrl} on this server!`, 404));\n});",
+  summary: "នៅពេលដែល Client ព្យាយាមបង្កើត Course ដែលមាន Title ឬ Slug ជាន់គ្នាលើ Field ដែលមាន `unique: true` MongoDB Driver នឹងបោះកំហុសដែលមាន **`code: 11000`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.code === 11000)`\n* ស្រង់ឈ្មោះ Field ដែលស្ទួនចេញពី Error\n* បញ្ជូន **`409 Conflict`** ត្រឡប់ទៅ Client៖\n  `new AppError(`Duplicate field value: '${value}'. Please use another value!`, 409)`",
+  tip: "ប្រើប្រាស់ Status Code 409 Conflict សម្រាប់ Duplicate Data ព្រោះវាជា HTTP Standard សមស្របបំផុត។",
+  objective: "ចេះចាប់ និងបំប្លែង MongoDB Error 11000 ទៅជា 409 Conflict Response។",
+  expectedOutcome: "ការពារការស្ទួនទិន្នន័យ និងជូនដំណឹងដល់ User យ៉ាងច្បាស់លាស់។",
+  codeSnippet: "import { AppError } from \"../errors/AppError.js\";\n\n// Helper: Handle MongoDB Duplicate Unique Field (Error code 11000)\nexport const handleMongoDuplicateKeyError = (err) => {\n  // Extract duplicate field key and value from keyValue object\n  const field = Object.keys(err.keyValue)[0];\n  const value = err.keyValue[field];\n  const message = `Duplicate field error: Course with ${field} '${value}' already exists. Please choose another.`;\n  return new AppError(message, 409); // 409 Conflict!\n};\n\n// In global error handler:\n// if (err.code === 11000) err = handleMongoDuplicateKeyError(err);",
 };
 
 ```javascript
-// 404 Catch-All Route (Must be placed after all active routes)
-app.all("*", (req, res, next) => {
-  next(new AppError(`Cannot find ${req.method} ${req.originalUrl} on this server!`, 404));
-});
+import { AppError } from "../errors/AppError.js";
+
+// Helper: Handle MongoDB Duplicate Unique Field (Error code 11000)
+export const handleMongoDuplicateKeyError = (err) => {
+  // Extract duplicate field key and value from keyValue object
+  const field = Object.keys(err.keyValue)[0];
+  const value = err.keyValue[field];
+  const message = `Duplicate field error: Course with ${field} '${value}' already exists. Please choose another.`;
+  return new AppError(message, 409); // 409 Conflict!
+};
+
+// In global error handler:
+// if (err.code === 11000) err = handleMongoDuplicateKeyError(err);
 ```

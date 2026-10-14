@@ -1,26 +1,32 @@
 export const meta = {
   id: "M13-04",
   number: "04",
-  title: "Creating Models",
-  khmerTitle: "ការបង្កើត និងរៀបចំ Data Models ក្នុងគម្រោង",
+  title: "Creating Course & Lesson Models",
+  khmerTitle: "ការបង្កើត Data Models និង Indexes ក្នុងគម្រោង",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ការកំណត់គំរូ Mongoose ដែលមានរចនាសម្ព័ន្ធសម្រាប់ Entity កម្មវិធី (អ្នកប្រើប្រាស់ ផលិតផល ប្រភេទ ការបញ្ជាទិញ) ជាមួយនឹងសន្ទស្សន៍ Schema ។`,
-  tip: "បង្កើត​Index​ផ្សំ​លើ​វាល​ដែល​បាន​សួរ​ញឹកញាប់ (ឧ. `{ category: 1, price: -1 }`) ។",
-  objective: "បង្កើតគំរូ Entity ផលិតកម្មដែលមានសន្ទស្សន៍សមស្រប។",
-  expectedOutcome: "Index និយមន័យ Schema ដែលមាន Validation រួចរាល់សម្រាប់ CRUD APIs ។",
-  codeSnippet: "// models/product.model.js\nimport { Schema, model } from \"mongoose\";\n\nconst productSchema = new Schema({\n  name: { type: String, required: true, trim: true, index: true },\n  price: { type: Number, required: true, min: 0 },\n  category: { type: Schema.Types.ObjectId, ref: \"Category\", required: true }\n}, { timestamps: true });\n\nexport const Product = model(\"Product\", productSchema);",
+  summary: "ការរៀបចំ Data Models សម្រាប់ Course Catalog API ដោយមាន **Indexes** សម្រាប់បង្កើនល្បឿន Query៖\n\n* **Single Field Index**៖ `title: { type: String, index: true }`\n* **Compound Index**៖ `courseSchema.index({ level: 1, price: -1 })` សម្រាប់បង្កើនល្បឿន Query ដែលច្រោះតាម Level និងតម្រៀបតាម Price ដំណាលគ្នា",
+  tip: "Compound Index ជួយកាត់បន្ថយពេលវេលា Query ពី O(N) មកត្រឹម O(log N) លើ Database ដែលមានទិន្នន័យរាប់សែន Records។",
+  objective: "ចេះបង្កើត Data Models ជាមួយ Single និង Compound Indexes។",
+  expectedOutcome: "Schema ដែលមាន Indexing ត្រៀមខ្លួនសម្រាប់ Production CRUD Queries។",
+  codeSnippet: "// src/models/course.model.js\nimport { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true, trim: true, index: true },\n  slug: { type: String, required: true, unique: true },\n  instructor: { type: String, required: true },\n  price: { type: Number, required: true, min: 0 },\n  level: { type: String, enum: [\"beginner\", \"intermediate\", \"advanced\"], default: \"beginner\" },\n  published: { type: Boolean, default: false }\n}, { timestamps: true });\n\n// 💡 Teaching Note: Compound index for filtering by level and sorting by price!\ncourseSchema.index({ level: 1, price: -1 });\n\nexport const Course = model(\"Course\", courseSchema);",
 };
 
 ```javascript
-// models/product.model.js
+// src/models/course.model.js
 import { Schema, model } from "mongoose";
 
-const productSchema = new Schema({
-  name: { type: String, required: true, trim: true, index: true },
+const courseSchema = new Schema({
+  title: { type: String, required: true, trim: true, index: true },
+  slug: { type: String, required: true, unique: true },
+  instructor: { type: String, required: true },
   price: { type: Number, required: true, min: 0 },
-  category: { type: Schema.Types.ObjectId, ref: "Category", required: true }
+  level: { type: String, enum: ["beginner", "intermediate", "advanced"], default: "beginner" },
+  published: { type: Boolean, default: false }
 }, { timestamps: true });
 
-export const Product = model("Product", productSchema);
+// 💡 Teaching Note: Compound index for filtering by level and sorting by price!
+courseSchema.index({ level: 1, price: -1 });
+
+export const Course = model("Course", courseSchema);
 ```

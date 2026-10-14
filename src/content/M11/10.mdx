@@ -1,24 +1,30 @@
 export const meta = {
   id: "M11-10",
   number: "10",
-  title: "References",
+  title: "Document References (Normalization)",
   khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងតាមរយៈ References (Normalization)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការយោងរក្សាទុកទិន្នន័យដែលពាក់ព័ន្ធនៅក្នុង Collections ដាច់ដោយឡែក ហើយភ្ជាប់ពួកវាដោយប្រើឯកសារគោលដៅ \`_id\` (ឧ. រក្សាទុក \`userId\` នៅលើឯកសារបញ្ជាទិញ)។ នេះរារាំងការលូតលាស់ឯកសារគ្មានដែនកំណត់។`,
-  tip: "ប្រើឯកសារយោងនៅពេលដែលសំណុំទិន្នន័យកុមារអាចកើនឡើងដោយគ្មានកំណត់ (1 ទៅ 1 លាន) ឬនៅពេលដែលទិន្នន័យកុមារត្រូវបានចែករំលែកនៅទូទាំងឪពុកម្តាយច្រើន។",
-  objective: "គំរូទំនាក់ទំនងពី 1 ទៅច្រើន និងច្រើន ដោយប្រើឯកសារយោង។",
-  expectedOutcome: "គំរូទិន្នន័យធម្មតាការពារការហៀរឯកសារ 16MB ដែលមិនមានដែនកំណត់។",
-  codeSnippet: "// Referencing Pattern:\n// User Document: { _id: ObjectId(\"U1\"), name: \"Dara\" }\n// Order Document:\n{\n  \"_id\": ObjectId(\"ORD_99\"),\n  \"userId\": ObjectId(\"U1\"), // Reference to User collection\n  \"total\": 150.00\n}",
+  summary: "យុទ្ធសាស្ត្រទីពីរគឺ **Document References (Normalization)** ដែលរក្សាទុកឯកសារក្នុង Collections ដាច់ដោយឡែកពីគ្នា ហើយភ្ជាប់គ្នាដោយ **ObjectId**។\n\nពេលណាគួរប្រើ References សម្រាប់ Course API៖\n* ទំនាក់ទំនង **1-to-Many** ធំៗ (ឧ. Course មួយមាន Lessons រាប់សិប)\n* ទំនាក់ទំនង **Many-to-Many** (ឧ. សិស្សរាប់ពាន់នាក់ចុះឈ្មោះក្នុង Courses ច្រើន)\n* ទិន្នន័យដែលត្រូវ Update ញឹកញាប់ដោយឯករាជ្យ (ជៀសវាងការ Update ច្រើនកន្លែង)",
+  tip: "ប្រើប្រាស់ References នៅពេលដែល Collection ទាំងពីរមានទំហំធំ ឬចាំបាច់ត្រូវ Query ដោយឡែកពីគ្នា។",
+  objective: "ចេះភ្ជាប់ទំនាក់ទំនងរវាង Collections តាមរយៈ ObjectId References។",
+  expectedOutcome: "រចនាសម្ព័ន្ធទិន្នន័យ Normalized ដែលមានតុល្យភាពរវាង Storage និង Query Flexibility។",
+  codeSnippet: "// 1. Course Document (in \"courses\" collection)\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Enterprise Node.js Architecture\",\n  \"instructorId\": ObjectId(\"507f191e810c19729de860ea\") // Reference to Users collection\n}\n\n// 2. Lesson Document (in \"lessons\" collection referencing parent course)\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78999\"),\n  \"courseId\": ObjectId(\"6648e58319f3a9e224e78891\"), // 💡 Foreign reference to Course\n  \"title\": \"Introduction to Controller-Service Pattern\",\n  \"durationMinutes\": 15\n}",
 };
 
 ```javascript
-// Referencing Pattern:
-// User Document: { _id: ObjectId("U1"), name: "Dara" }
-// Order Document:
+// 1. Course Document (in "courses" collection)
 {
-  "_id": ObjectId("ORD_99"),
-  "userId": ObjectId("U1"), // Reference to User collection
-  "total": 150.00
+  "_id": ObjectId("6648e58319f3a9e224e78891"),
+  "title": "Enterprise Node.js Architecture",
+  "instructorId": ObjectId("507f191e810c19729de860ea") // Reference to Users collection
+}
+
+// 2. Lesson Document (in "lessons" collection referencing parent course)
+{
+  "_id": ObjectId("6648e58319f3a9e224e78999"),
+  "courseId": ObjectId("6648e58319f3a9e224e78891"), // 💡 Foreign reference to Course
+  "title": "Introduction to Controller-Service Pattern",
+  "durationMinutes": 15
 }
 ```

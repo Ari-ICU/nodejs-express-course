@@ -1,22 +1,25 @@
 export const meta = {
   id: "M12-09",
   number: "09",
-  title: "Required Fields",
-  khmerTitle: "ការកំណត់ Required Fields និង Custom Error Messages",
-  type: "lab",
+  title: "Default Values in Schema",
+  khmerTitle: "ការកំណត់ Default Values ក្នុង Schema",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: `ការ​សម្គាល់​វាល​ជា​កាតព្វកិច្ច​ជាមួយ​នឹង​សារ​កំហុស​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ផ្ទាល់​ខ្លួន (\`[true, 'Please provide an email address']\`) ។`,
-  tip: "តែងតែផ្តល់សារកំហុសផ្ទាល់ខ្លួនក្នុងទម្រង់Array `[true, 'Custom error message']` សម្រាប់ Response របស់ Client ដែលរួសរាយរាក់ទាក់។",
-  objective: "អនុវត្តច្បាប់វាលដែលត្រូវការជាមួយនឹងសារកំហុសច្បាស់លាស់។",
-  expectedOutcome: "ការបដិសេធឯកសារមិនពេញលេញជាមួយនឹងសារកំហុសច្បាស់លាស់។",
-  codeSnippet: "const userSchema = new Schema({\n  email: {\n    type: String,\n    required: [true, \"Email address is strictly required\"]\n  }\n});",
+  summary: "ប្រសិនបើ Client មិនបានបញ្ជូន Field ណាមួយមកទេ Mongoose នឹងបំពេញ **Default Value** ដោយស្វ័យប្រវត្តិតាមការកំណត់របស់យើងក្នុង Schema។\n\nអាចជា៖\n* តម្លៃថេរ (Static value)៖ `default: false`, `default: \"beginner\"`\n* អនុគមន៍ (Dynamic function)៖ `default: Date.now`",
+  tip: "កុំសរសេរ `default: Date.now()` (មានវង់ក្រចក) ព្រោះវានឹង Execute តែម្តងគត់ពេល Server Start! ត្រូវសរសេរ `default: Date.now` (គ្មានវង់ក្រចក)។",
+  objective: "ចេះកំណត់ Static និង Dynamic Default Values ក្នុង Schema។",
+  expectedOutcome: "កាត់បន្ថយការសរសេរ Default Checks ដោយដៃក្នុង Controller/Service។",
+  codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: { type: String, required: true },\n  published: { type: Boolean, default: false }, // Default unpublished\n  level: { type: String, default: \"beginner\" },\n  viewsCount: { type: Number, default: 0 },\n  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function\n});",
 };
 
 ```javascript
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: [true, "Email address is strictly required"]
-  }
+import { Schema } from "mongoose";
+
+export const courseSchema = new Schema({
+  title: { type: String, required: true },
+  published: { type: Boolean, default: false }, // Default unpublished
+  level: { type: String, default: "beginner" },
+  viewsCount: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function
 });
 ```

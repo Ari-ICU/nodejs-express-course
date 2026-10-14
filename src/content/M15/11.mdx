@@ -1,33 +1,44 @@
 export const meta = {
   id: "M15-11",
   number: "11",
-  title: "Production Error Responses",
-  khmerTitle: "ការបែងចែកទម្រង់ Error រវាង Development និង Production",
-  type: "lab",
+  title: "Production vs Development Error Responses",
+  khmerTitle: "ការបែងចែកទម្រង់ Error Response រវាង Development និង Production",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "ការផ្ញើព័ត៌មានអំពីបញ្ហាលម្អិត (Stack trace ឈ្មោះកំហុស ព័ត៌មានលម្អិតដើម) ក្នុងការអភិវឌ្ឍ ខណៈពេលដែលត្រឡប់សារកំហុសទូទៅ និងសុវត្ថិភាពនៅក្នុងផលិតកម្ម។",
-  tip: "ការលេចធ្លាយStack traceនៅក្នុងផលិតកម្មបង្ហាញផ្លូវឯកសារ SchemaDatabase និងបណ្ណាល័យដែលងាយរងគ្រោះដល់អ្នកវាយប្រហារ។",
-  objective: "អនុវត្ត Response កំហុសដែលដឹងពីEnvironment។",
-  expectedOutcome: "ទិន្នន័យបំបាត់កំហុសដ៏សំបូរបែបនៅក្នុងមូលដ្ឋានជាមួយនឹងសុវត្ថិភាពការពារគ្រាប់កាំភ្លើងនៅក្នុងផលិតកម្ម។",
-  codeSnippet: "const sendDevError = (err, res) => {\n  res.status(err.statusCode || 500).json({\n    success: false,\n    error: err.message,\n    stack: err.stack,\n    err\n  });\n};\n\nconst sendProdError = (err, res) => {\n  if (err.isOperational) {\n    res.status(err.statusCode).json({ success: false, error: err.message });\n  } else {\n    // Unknown bug: don't leak details!\n    res.status(500).json({ success: false, error: \"Something went wrong!\" });\n  }\n};",
+  summary: "នៅក្នុង Professional Architecture ទម្រង់ឆ្លើយតបនៃកំហុសត្រូវតែបែងចែកជា ២ ផ្អែកលើ **`process.env.NODE_ENV`**៖\n\n1. **Development Environment (`NODE_ENV=development`)**៖\n   * បង្ហាញ Stack Trace ពេញលេញ, Error Object ទាំងមូល, និង Original Message សម្រាប់ Developer ងាយស្រួល Debug\n2. **Production Environment (`NODE_ENV=production`)**៖\n   * លាក់ Stack Trace ទាំងស្រុង\n   * បង្ហាញតែ Sanitized Error Message សម្រាប់ Operational Errors\n   * ប្រសិនបើជា Programming Bug បញ្ជូនសារទូទៅ `\"Something went very wrong!\"`",
+  tip: "ច្បាប់សុវត្ថិភាព OWASP៖ ហាមបង្ហាញ Stack Trace នៅលើ Production ជាដាច់ខាត ព្រោះវាបង្ហាញ File Paths, Third-party Libraries, និង Database details។",
+  objective: "ចេះរៀបចំ Environment-driven Error Formatting សម្រាប់ Development និង Production។",
+  expectedOutcome: "ធានាបានទាំងភាពងាយស្រួលក្នុងការ Debug (Dev) និងសុវត្ថិភាពខ្ពស់បំផុត (Prod)។",
+  codeSnippet: "// Send detailed error during Development\nconst sendErrorDev = (err, res) => {\n  res.status(err.statusCode || 500).json({\n    success: false,\n    status: err.status,\n    error: err,\n    message: err.message,\n    stack: err.stack // 💡 Stack trace exposed ONLY in development!\n  });\n};\n\n// Send safe, sanitized error in Production\nconst sendErrorProd = (err, res) => {\n  // Operational, trusted error: send message to client\n  if (err.isOperational) {\n    res.status(err.statusCode).json({\n      success: false,\n      error: { message: err.message }\n    });\n  } else {\n    // Programming bug or unknown leak: don't leak details!\n    console.error(\"ERROR 💥\", err);\n    res.status(500).json({\n      success: false,\n      error: { message: \"Internal server error. Please try again later.\" }\n    });\n  }\n};",
 };
 
 ```javascript
-const sendDevError = (err, res) => {
+// Send detailed error during Development
+const sendErrorDev = (err, res) => {
   res.status(err.statusCode || 500).json({
     success: false,
-    error: err.message,
-    stack: err.stack,
-    err
+    status: err.status,
+    error: err,
+    message: err.message,
+    stack: err.stack // 💡 Stack trace exposed ONLY in development!
   });
 };
 
-const sendProdError = (err, res) => {
+// Send safe, sanitized error in Production
+const sendErrorProd = (err, res) => {
+  // Operational, trusted error: send message to client
   if (err.isOperational) {
-    res.status(err.statusCode).json({ success: false, error: err.message });
+    res.status(err.statusCode).json({
+      success: false,
+      error: { message: err.message }
+    });
   } else {
-    // Unknown bug: don't leak details!
-    res.status(500).json({ success: false, error: "Something went wrong!" });
+    // Programming bug or unknown leak: don't leak details!
+    console.error("ERROR 💥", err);
+    res.status(500).json({
+      success: false,
+      error: { message: "Internal server error. Please try again later." }
+    });
   }
 };
 ```

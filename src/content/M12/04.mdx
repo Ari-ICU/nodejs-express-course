@@ -1,24 +1,45 @@
 export const meta = {
   id: "M12-04",
   number: "04",
-  title: "Schema",
-  khmerTitle: "ការបង្កើត និងរៀបចំ Mongoose Schema",
+  title: "Mongoose Schema",
+  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ CourseSchema ជាមួយ mongoose.Schema",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Mongoose Schema គូសផែនទីទៅបណ្តុំ MongoDB ហើយកំណត់រូបរាងឯកសារ តម្លៃលំនាំដើម Validation Receiver និងអ្នកកំណត់។`,
-  tip: "ប្រើជម្រើស Schema `timestamps: true` ដើម្បីរក្សាវាលកាលបរិច្ឆេទ `createdAt` និង `updatedAt` ដោយស្វ័យប្រវត្តិ។",
-  objective: "កំណត់ Schema រចនាសម្ព័ន្ធសម្រាប់ Entity កម្មវិធី។",
-  expectedOutcome: "និយមន័យ Schema ដ៏ទូលំទូលាយពង្រឹងរចនាសម្ព័ន្ធវាល។",
-  codeSnippet: "import { Schema } from \"mongoose\";\n\nconst userSchema = new Schema({\n  name: { type: String, required: true, trim: true },\n  email: { type: String, required: true, unique: true, lowercase: true }\n}, {\n  timestamps: true // Auto-manages createdAt and updatedAt!\n});",
+  summary: "**Schema** គឺជាប្លង់មេ (Blueprint) ដែលកំណត់ថាតើ Document នីមួយៗក្នុង Collection ត្រូវមាន Fields អ្វីខ្លះ ប្រភេទ Data Type ណា និងលក្ខខណ្ឌ Validation យ៉ាងដូចម្តេច។\n\nការរៀបចំ `courseSchema` សម្រាប់ Course API របស់យើង៖\n* `title` (String)\n* `instructor` (String)\n* `price` (Number)\n* `level` (String)\n* `published` (Boolean)",
+  tip: "Schema កំណត់តែរចនាសម្ព័ន្ធប៉ុណ្ណោះ។ ដើម្បីធ្វើប្រតិបត្តិការ CRUD បាន អ្នកត្រូវយក Schema ទៅ Compile ឱ្យក្លាយជា **Model** ជាមុនសិន។",
+  objective: "ចេះកំណត់ Mongoose Schema សម្រាប់ Resource។",
+  expectedOutcome: "មាន Blueprint ច្បាស់លាស់សម្រាប់គ្រប់គ្រងទិន្នន័យ Course។",
+  codeSnippet: "// src/models/course.schema.js\nimport { Schema } from \"mongoose\";\n\n// Step 1: Define Schema Blueprint\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: [true, \"Course title is required\"],\n    trim: true\n  },\n  instructor: {\n    type: String,\n    required: [true, \"Instructor name is required\"]\n  },\n  price: {\n    type: Number,\n    required: [true, \"Price is required\"],\n    min: [0, \"Price cannot be negative\"]\n  },\n  level: {\n    type: String,\n    enum: [\"beginner\", \"intermediate\", \"advanced\"],\n    default: \"beginner\"\n  },\n  published: {\n    type: Boolean,\n    default: false\n  }\n});",
 };
 
 ```javascript
+// src/models/course.schema.js
 import { Schema } from "mongoose";
 
-const userSchema = new Schema({
-  name: { type: String, required: true, trim: true },
-  email: { type: String, required: true, unique: true, lowercase: true }
-}, {
-  timestamps: true // Auto-manages createdAt and updatedAt!
+// Step 1: Define Schema Blueprint
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: [true, "Course title is required"],
+    trim: true
+  },
+  instructor: {
+    type: String,
+    required: [true, "Instructor name is required"]
+  },
+  price: {
+    type: Number,
+    required: [true, "Price is required"],
+    min: [0, "Price cannot be negative"]
+  },
+  level: {
+    type: String,
+    enum: ["beginner", "intermediate", "advanced"],
+    default: "beginner"
+  },
+  published: {
+    type: Boolean,
+    default: false
+  }
 });
 ```

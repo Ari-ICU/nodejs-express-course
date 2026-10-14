@@ -1,23 +1,29 @@
 export const meta = {
   id: "M13-01",
   number: "01",
-  title: "Connecting Express to MongoDB",
-  khmerTitle: "ការភ្ជាប់ Express App ទៅកាន់ MongoDB Database",
+  title: "Express MongoDB Setup",
+  khmerTitle: "ការភ្ជាប់ Express ជាមួយ MongoDB នៅពេល Server ចាប់ផ្តើម",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការចាប់ផ្ដើមកម្មវិធី Express ជាមួយនឹងការភ្ជាប់ MongoDB ជាប់លាប់ ផ្ទៀងផ្ទាត់ភាពអាចរកបាននៃ Database មុនពេលស្តាប់នៅលើច្រក។`,
-  tip: "ភ្ជាប់ទៅ Database ជានិច្ច មុនពេលcall `app.listen()` ដើម្បីធានាថាគ្មាន Incoming Request មកក្នុង Database ដែលមិនដំណើរការ។",
-  objective: "ការចាប់ផ្តើម Server Wire Express ទៅនឹងការត្រៀមខ្លួននៃការតភ្ជាប់ MongoDB ។",
-  expectedOutcome: "ការចាប់ផ្តើម Server ដែលមានភាពធន់ជាមួយនឹងការតភ្ជាប់ Database ដែលបានផ្ទៀងផ្ទាត់។",
-  codeSnippet: "import app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\nawait connectDB(); // Await DB connection first!\napp.listen(PORT, () => console.log(`Server on port ${PORT}`));",
+  summary: "ការភ្ជាប់ Express Application ជាមួយ MongoDB ឱ្យដំណើរការស្របគ្នា៖\n\nលំដាប់លំដោយនៃការ Boot Server ត្រឹមត្រូវ៖\n1. ហៅ `await connectDB()` ជាមុនសិន\n2. នៅពេល MongoDB តភ្ជាប់ជោគជ័យ ទើបហៅ `app.listen(PORT)`\n\nវិធីនេះធានាថា គ្មាន Request របស់ Client ណាមួយមកដល់ Server នៅពេលដែល Database មិនទាន់ Ready ឡើយ។",
+  tip: "ប្រសិនបើ Database តភ្ជាប់មិនជោគជ័យ ចូរបញ្ឈប់ Process ភ្លាមៗ (`process.exit(1)`) ជៀសវាង Server ដំណើរការក្នុងស្ថានភាព Zombie State។",
+  objective: "ចេះភ្ជាប់ Express Server Startup ជាមួយ MongoDB Connection Readiness។",
+  expectedOutcome: "Server ចាប់ផ្តើមប្រកបដោយស្ថេរភាពខ្ពស់ និងផ្ទៀងផ្ទាត់ Database Connectivity ជាមុន។",
+  codeSnippet: "// src/server.js\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\n// Step 1: Connect to MongoDB first!\nawait connectDB();\n\n// Step 2: Start Express HTTP listener after DB is connected\napp.listen(PORT, () => {\n  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);\n});",
 };
 
 ```javascript
+// src/server.js
 import app from "./app.js";
 import { connectDB } from "./config/db.js";
 
 const PORT = process.env.PORT || 5000;
 
-await connectDB(); // Await DB connection first!
-app.listen(PORT, () => console.log(`Server on port ${PORT}`));
+// Step 1: Connect to MongoDB first!
+await connectDB();
+
+// Step 2: Start Express HTTP listener after DB is connected
+app.listen(PORT, () => {
+  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);
+});
 ```

@@ -1,26 +1,33 @@
 export const meta = {
   id: "M15-05",
   number: "05",
-  title: "Custom Error Classes",
-  khmerTitle: "ការបង្កើត Custom AppError Class",
+  title: "Centralized Global Error Handler",
+  khmerTitle: "ការបង្កើត Global Error Handling Middleware (4 Parameters)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបង្កើតថ្នាក់ `AppError` ផ្ទាល់ខ្លួនដែលទទួលមរតកពី `Error` បញ្ចូលកូដស្ថានភាព HTTP ទង់ស្ថានភាពប្រតិបត្តិការ និងការចាប់យកStack trace។",
-  tip: "ការដាក់ទង់កំហុសផ្ទាល់ខ្លួនជាមួយ `this.isOperational = true` អនុញ្ញាតឱ្យ Middleware មានកំហុសដើម្បីបែងចែកកំហុសដែលគេស្គាល់ពីការគាំងដែលមិនរំពឹងទុក។",
-  objective: "បង្កើតថ្នាក់ AppError ផ្ទាល់ខ្លួនដែលអាចប្រើឡើងវិញបាន។",
-  expectedOutcome: "សម្អាតកំហុសឆ្គងភ្លាមៗជាមួយនឹង HTTP Status Codes ដែលបានភ្ជាប់។",
-  codeSnippet: "export class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true; // Marks this as a known, trusted error!\n\n    Error.captureStackTrace(this, this.constructor);\n  }\n}",
+  summary: "Global Error Middleware គឺជា Middleware ចុងក្រោយគេបង្អស់ក្នុង `app.js` ដែលមាន Parameters ទាំង ៤៖ **`(err, req, res, next)`**។\n\nតួនាទីស្នូល៖\n* ទទួលកំហុសទាំងអស់ដែលបញ្ជូនតាមរយៈ `next(err)`\n* កំណត់ Status Code (Default: `500 Internal Server Error`)\n* កសាង Standard Error Response Envelope",
+  tip: "កុំភ្លេច Parameter ទាំង ៤ (err, req, res, next)! ប្រសិនបើអ្នកសរសេរត្រឹម ៣ Express នឹងមិនចាត់ទុកវាជា Error Middleware ឡើយ។",
+  objective: "ចេះបង្កើត Centralized Error Middleware និងដោះស្រាយកំហុសទាំងអស់នៅកន្លែងតែមួយ។",
+  expectedOutcome: "API ឆ្លើយតប Error Envelope ស្របតាមទម្រង់ស្តង់ដារឧស្សាហកម្មជានិច្ច។",
+  codeSnippet: "// src/middlewares/error.middleware.js\nexport const globalErrorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const status = err.status || \"error\";\n\n  console.error(\"💥 ERROR CAUGHT BY GLOBAL HANDLER:\", err);\n\n  res.status(statusCode).json({\n    success: false,\n    status,\n    error: {\n      message: err.message || \"Something went wrong on the server\",\n      statusCode,\n      timestamp: new Date().toISOString()\n    }\n  });\n};",
 };
 
 ```javascript
-export class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
-    this.isOperational = true; // Marks this as a known, trusted error!
+// src/middlewares/error.middleware.js
+export const globalErrorHandler = (err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const status = err.status || "error";
 
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
+  console.error("💥 ERROR CAUGHT BY GLOBAL HANDLER:", err);
+
+  res.status(statusCode).json({
+    success: false,
+    status,
+    error: {
+      message: err.message || "Something went wrong on the server",
+      statusCode,
+      timestamp: new Date().toISOString()
+    }
+  });
+};
 ```

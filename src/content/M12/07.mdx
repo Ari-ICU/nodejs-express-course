@@ -1,22 +1,39 @@
 export const meta = {
   id: "M12-07",
   number: "07",
-  title: "Schema Types",
-  khmerTitle: "ប្រភេទ BSON Types ក្នុង Mongoose (String, Number, Date, ObjectId)",
+  title: "Schema Validation in Mongoose",
+  khmerTitle: "ការត្រួតពិនិត្យទិន្នន័យតាមរយៈ Built-in Validators",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Mongoose គាំទ្រប្រភេទ Schema ស្តង់ដារ៖ String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Array, Decimal128, និង Map ។`,
-  tip: "ប្រើ `Schema.Types.ObjectId` ជាមួយជម្រើស `ref` ដើម្បីបង្កើតទំនាក់ទំនងជាមួយម៉ូដែលផ្សេងទៀត។",
-  objective: "ជ្រើសរើសប្រភេទ Schema ត្រឹមត្រូវសម្រាប់គុណលក្ខណៈទិន្នន័យផ្សេងៗគ្នា។",
-  expectedOutcome: "និយមន័យវាល Schema សុវត្ថិភាពប្រភេទ។",
-  codeSnippet: "const orderSchema = new Schema({\n  userId: { type: Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{ productId: Schema.Types.ObjectId, quantity: Number }],\n  paid: { type: Boolean, default: false },\n  metadata: { type: Schema.Types.Mixed } // Freeform object\n});",
+  summary: "Mongoose អនុវត្ត **Validation** នៅកម្រិត Application មុនពេល Document ត្រូវបានបញ្ជូនទៅ Save ក្នុង MongoDB។\n\nBuilt-in Validators សំខាន់ៗ៖\n* **`min` និង `max`** សម្រាប់ Numbers\n* **`minlength` និង `maxlength`** សម្រាប់ Strings\n* **`enum`** សម្រាប់កំណត់តម្លៃជម្រើសថេរ (Fixed Choices)\n* **`match`** សម្រាប់ត្រួតពិនិត្យ Regular Expression (Regex)",
+  tip: "Validation របស់ Mongoose ដំណើរការលើ `save()` និង `create()` ប៉ុន្តែត្រូវកំណត់ `{ runValidators: true }` ពេលប្រើ `findByIdAndUpdate()`។",
+  objective: "ចេះប្រើប្រាស់ Built-in Validators ដើម្បីការពារទិន្នន័យមិនត្រឹមត្រូវ។",
+  expectedOutcome: "ទិន្នន័យ Course ត្រូវបាន Validate ត្រឹមត្រូវតាម Business Rules។",
+  codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: true,\n    minlength: [5, \"Title must be at least 5 characters long\"],\n    maxlength: [100, \"Title cannot exceed 100 characters\"]\n  },\n  price: {\n    type: Number,\n    required: true,\n    min: [0, \"Course price cannot be negative\"],\n    max: [999, \"Course price cannot exceed $999\"]\n  },\n  level: {\n    type: String,\n    enum: {\n      values: [\"beginner\", \"intermediate\", \"advanced\"],\n      message: \"{VALUE} is not a valid course level\"\n    }\n  }\n});",
 };
 
 ```javascript
-const orderSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  items: [{ productId: Schema.Types.ObjectId, quantity: Number }],
-  paid: { type: Boolean, default: false },
-  metadata: { type: Schema.Types.Mixed } // Freeform object
+import { Schema } from "mongoose";
+
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+    minlength: [5, "Title must be at least 5 characters long"],
+    maxlength: [100, "Title cannot exceed 100 characters"]
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: [0, "Course price cannot be negative"],
+    max: [999, "Course price cannot exceed $999"]
+  },
+  level: {
+    type: String,
+    enum: {
+      values: ["beginner", "intermediate", "advanced"],
+      message: "{VALUE} is not a valid course level"
+    }
+  }
 });
 ```

@@ -1,20 +1,30 @@
 export const meta = {
   id: "M13-08",
   number: "08",
-  title: "Create Resource",
-  khmerTitle: "ការអនុវត្ត Create Resource Endpoint",
+  title: "Creating Resources in MongoDB",
+  khmerTitle: "ការបង្កើត Course ថ្មីក្នុង MongoDB (Course.create)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការអនុវត្ត Endpoint នៃ POST ជាមួយនឹង Validation នៃ Payload ភាពស្ថិតស្ថេរនៃគំរូ និង HTTP Response 201 ។`,
-  tip: "ត្រូវប្រាកដថាឧបសគ្គតែមួយគត់ (ដូចជាអ៊ីមែលស្ទួន ឬ slugs) ត្រូវបានដោះស្រាយយ៉ាងរលូនជាមួយនឹង HTTP Status Codes ជម្លោះចំនួន 409 ។",
-  objective: "បង្កើត APIs បង្កើតធនធានជាមួយនឹងការដោះស្រាយកំហុសស្ទួន។",
-  expectedOutcome: "ធានាសុវត្ថិភាពនៃការបង្កើតធនធាន។",
-  codeSnippet: "export const createProduct = async (req, res) => {\n  const product = await Product.create(req.body);\n  res.status(201).json({ success: true, data: product });\n};",
+  summary: "ការអនុវត្ត Service Function សម្រាប់បង្កើត Course Document ថ្មីក្នុង MongoDB៖\n\nជំហានអនុវត្ត៖\n1. ទទួល `courseData`\n2. ហៅ `Course.create(courseData)`\n3. Mongoose ដំណើរការ Schema Validation និង Pre-save Hooks\n4. បញ្ជូន Document ថ្មីដែលបាន Save ត្រឡប់មកវិញ",
+  tip: "ប្រសិនបើមាន Duplicate Key Error (ឧ. Slug ស្ទួនគ្នា) Mongoose នឹង Throw Error Code 11000 ដែលយើងនឹង Handle ក្នុង Module 15។",
+  objective: "ចេះសរសេរ Service Function សម្រាប់បង្កើត Document ថ្មីក្នុង MongoDB។",
+  expectedOutcome: "បង្កើត Record ថ្មីដោយជោគជ័យ និងទទួលបាន MongoDB Generated ObjectId។",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\nexport const createCourseService = async (courseData) => {\n  // Step 1: Persist new course document to MongoDB\n  const newCourse = await Course.create({\n    title: courseData.title,\n    instructor: courseData.instructor,\n    price: courseData.price,\n    level: courseData.level || \"beginner\"\n  });\n\n  return newCourse;\n};",
 };
 
 ```javascript
-export const createProduct = async (req, res) => {
-  const product = await Product.create(req.body);
-  res.status(201).json({ success: true, data: product });
+// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+
+export const createCourseService = async (courseData) => {
+  // Step 1: Persist new course document to MongoDB
+  const newCourse = await Course.create({
+    title: courseData.title,
+    instructor: courseData.instructor,
+    price: courseData.price,
+    level: courseData.level || "beginner"
+  });
+
+  return newCourse;
 };
 ```

@@ -1,23 +1,32 @@
 export const meta = {
   id: "M13-13",
   number: "13",
-  title: "Search",
-  khmerTitle: "ការអនុវត្ត Search Pipeline ជាមួយ Text Indexes",
+  title: "Dynamic Query Filtering",
+  khmerTitle: "ការបង្កើត Dynamic Query Filtering ជាមួយ MongoDB Operators",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការអនុវត្ត Search អត្ថបទនៅលើឯកសារ MongoDB ដោយប្រើសន្ទស្សន៍ \`$regex\` ឬ \`$text\` ។`,
-  tip: "សន្ទស្សន៍​អត្ថបទ​រួម​នៅ​ទូទាំង​វាល​ច្រើន (`title: 'text', description: 'text'`) អនុញ្ញាត​ឱ្យ​ស្វែង​រក​នៅ​ទូទាំង​គុណលក្ខណៈ​ផលិតផល​ទាំង​អស់។",
-  objective: "បង្កើតសំណួរស្វែងរកពហុវាល។",
-  expectedOutcome: "Endpoint ស្វែងរករហ័សសម្រាប់កាតាឡុក និងថត។",
-  codeSnippet: "export const searchProducts = async (req, res) => {\n  const { q } = req.query;\n  const products = await Product.find({\n    $text: { $search: q }\n  }).lean();\n  res.json({ success: true, data: products });\n};",
+  summary: "ការបំប្លែង REST API Query Parameters ទៅជា **MongoDB Query Filter** ដោយស្វ័យប្រវត្តិ៖\n\nបំប្លែង Parameter ពី URL ដូចជា `price[gte]=20` ទៅជា MongoDB Filter `{ price: { $gte: 20 } }`៖\n1. ចម្លង `req.query`\n2. ជំនួស `gte`, `gt`, `lte`, `lt` ដោយបន្ថែមសញ្ញា `$` នៅខាងមុខតាមរយៈ Regex",
+  tip: "រូបមន្ត Regex: `queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => `$${match}`)` គឺជាស្តង់ដារឧស្សាហកម្មសម្រាប់ REST APIs។",
+  objective: "ចេះបំប្លែង URL query parameters ទៅជា MongoDB query operators ដោយស្វ័យប្រវត្តិ។",
+  expectedOutcome: "API គាំទ្រការ Filter តម្លៃ កាលបរិច្ឆេទ និង Ratings យ៉ាងបត់បែន។",
+  codeSnippet: "import { Course } from \"../models/course.model.js\";\n\nexport const filterCoursesService = async (queryString) => {\n  // Step 1: Copy query and exclude pagination/sort reserved keys\n  const queryObj = { ...queryString };\n  const excludedFields = [\"page\", \"sort\", \"limit\", \"fields\"];\n  excludedFields.forEach(el => delete queryObj[el]);\n\n  // Step 2: Advanced Filtering: Convert gte, gt, lte, lt to $gte, $gt, etc.\n  let queryStr = JSON.stringify(queryObj);\n  queryStr = queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => `$${match}`);\n\n  // Step 3: Execute filtered MongoDB query\n  const courses = await Course.find(JSON.parse(queryStr));\n  return courses;\n};",
 };
 
 ```javascript
-export const searchProducts = async (req, res) => {
-  const { q } = req.query;
-  const products = await Product.find({
-    $text: { $search: q }
-  }).lean();
-  res.json({ success: true, data: products });
+import { Course } from "../models/course.model.js";
+
+export const filterCoursesService = async (queryString) => {
+  // Step 1: Copy query and exclude pagination/sort reserved keys
+  const queryObj = { ...queryString };
+  const excludedFields = ["page", "sort", "limit", "fields"];
+  excludedFields.forEach(el => delete queryObj[el]);
+
+  // Step 2: Advanced Filtering: Convert gte, gt, lte, lt to $gte, $gt, etc.
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+  // Step 3: Execute filtered MongoDB query
+  const courses = await Course.find(JSON.parse(queryStr));
+  return courses;
 };
 ```

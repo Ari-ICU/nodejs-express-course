@@ -1,20 +1,27 @@
 export const meta = {
   id: "M11-05",
   number: "05",
-  title: "Collections",
-  khmerTitle: "ការគ្រប់គ្រង Collections",
+  title: "Collections in MongoDB",
+  khmerTitle: "ការគ្រប់គ្រង Collections (courses, lessons, instructors)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Collections គឺជាក្រុមនៃឯកសារ MongoDB ដែលស្រដៀងទៅនឹងតារាងក្នុង Database ទំនាក់ទំនង។ Collections មិនអនុវត្ត Schema ដ៏តឹងរឹងនៅកម្រិតម៉ាស៊ីន Database ដែលអនុញ្ញាតឱ្យឯកសារដែលមានវាលផ្សេងៗគ្នាអាចរួមរស់ជាមួយគ្នាបាន។`,
-  tip: "តែងតែដាក់ឈ្មោះបណ្តុំដោយប្រើនាមពហុវចនៈតូច (ឧ. `users`, `products`, `orders`) ។",
-  objective: "បង្កើត ពិនិត្យ និងទម្លាក់ Collections នៅក្នុង MongoDB ។",
-  expectedOutcome: "ការគ្រប់គ្រងសុវត្ថិភាពនៃ Collections ទិន្នន័យ។",
-  codeSnippet: "// Create and inspect collections\ndb.createCollection(\"products\");\nshow collections;\ndb.products.drop(); // Drop collection",
+  summary: "**Collection** គឺជាបណ្តុំនៃ Documents ដែលប្រៀបដូចជា Table ក្នុង SQL ដែរ។\n\nលក្ខណៈពិសេស៖\n* Collections មិនបង្ខំ Strict Schema នៅកម្រិត Database Engine ឡើយ\n* អនុសញ្ញាដាក់ឈ្មោះ៖ ប្រើ **Lowercase Plural Nouns** ជានិច្ច (ដូចជា `courses`, `lessons`, `users`)\n* Collections ចម្បងក្នុង Course API របស់យើង៖ `courses`, `lessons`, និង `users`",
+  tip: "ជៀសវាងដាក់ឈ្មោះ Collection ជាឯកវចនៈ (ដូចជា `course`) ព្រោះស្តង់ដារ REST និង MongoDB អនុវត្តតាម Plural (`courses`)។",
+  objective: "ចេះបង្កើត ពិនិត្យមើល និងគ្រប់គ្រង Collections ក្នុង MongoDB។",
+  expectedOutcome: "បង្កើត Collections សម្រាប់ Course Catalog API បានត្រឹមត្រូវ។",
+  codeSnippet: "// In mongosh:\n// Step 1: Explicitly create collection\ndb.createCollection(\"courses\");\ndb.createCollection(\"lessons\");\n\n// Step 2: List all collections in current database\nshow collections;\n// Output: courses, lessons\n\n// Step 3: Drop collection if needed\n// db.courses.drop();",
 };
 
 ```javascript
-// Create and inspect collections
-db.createCollection("products");
+// In mongosh:
+// Step 1: Explicitly create collection
+db.createCollection("courses");
+db.createCollection("lessons");
+
+// Step 2: List all collections in current database
 show collections;
-db.products.drop(); // Drop collection
+// Output: courses, lessons
+
+// Step 3: Drop collection if needed
+// db.courses.drop();
 ```

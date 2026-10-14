@@ -1,19 +1,25 @@
 export const meta = {
   id: "M11-04",
   number: "04",
-  title: "Database",
-  khmerTitle: "ការបង្កើត និងគ្រប់គ្រង Database",
+  title: "Database in MongoDB",
+  khmerTitle: "ការបង្កើត និងគ្រប់គ្រង Database (course_catalog_db)",
   type: "concept",
-  codeLanguage: "javascript",
-  summary: `នៅក្នុង MongoDB Database គឺជាធុងជាក់ស្តែងសម្រាប់ Collections ។ ClusterServer MongoDB តែមួយអាចផ្ទុក Database ឯករាជ្យជាច្រើន (ឧ. \`auth_db\`, \`ecommerce_db\`)។`,
-  tip: "នៅក្នុង MongoDB Database ត្រូវបានបង្កើតដោយស្វ័យប្រវត្តិជាលើកដំបូងដែលអ្នកបញ្ចូលឯកសារទៅក្នុងបណ្តុំណាមួយរបស់វា។",
-  objective: "រុករក និងបង្កើត Database MongoDB ។",
-  expectedOutcome: "ជំនាញជាមួយការជ្រើសរើស Database និងការបែងចែកឈ្មោះ។",
-  codeSnippet: "// In MongoDB Shell (mongosh):\nuse ecommerce_db; // Switch or create database\ndb.getName();     // Confirms active database",
+  codeLanguage: "bash",
+  summary: "នៅក្នុង MongoDB **Database** គឺជា Container រូបវន្តសម្រាប់ផ្ទុក Collections ទាំងអស់។\n\nចំនុចពិសេសរបស់ MongoDB៖\n* Database នឹងត្រូវបង្កើតឡើងដោយស្វ័យប្រវត្តិ នៅពេលដែលអ្នកបញ្ចូល Document ដំបូងបង្អស់ចូលទៅកាន់ Collection ណាមួយ\n* Server មួយអាចផ្ទុក Databases ច្រើនដាច់ដោយឡែកពីគ្នា\n* សម្រាប់ Course របស់យើង យើងនឹងប្រើប្រាស់ Database ឈ្មោះ **`course_catalog_db`**",
+  tip: "នៅក្នុង MongoDB Shell (`mongosh`) ពាក្យបញ្ជា `use course_catalog_db` នឹងប្តូរទៅកាន់ Database នោះភ្លាម ទោះបីជាវាមិនទាន់ត្រូវបានរក្សាទុកលើ Disk ក៏ដោយ។",
+  objective: "ចេះ Switch និងបង្កើត Database ក្នុង MongoDB Shell (mongosh)។",
+  expectedOutcome: "គ្រប់គ្រង Database namespace សម្រាប់គម្រោង Course API បានត្រឹមត្រូវ។",
+  codeSnippet: "# Step 1: Open MongoDB Shell\nmongosh\n\n# Step 2: Switch or create Course Catalog Database\nuse course_catalog_db\n\n# Step 3: Check currently selected database\ndb.getName()\n# Output: course_catalog_db",
 };
 
-```javascript
-// In MongoDB Shell (mongosh):
-use ecommerce_db; // Switch or create database
-db.getName();     // Confirms active database
+```bash
+# Step 1: Open MongoDB Shell
+mongosh
+
+# Step 2: Switch or create Course Catalog Database
+use course_catalog_db
+
+# Step 3: Check currently selected database
+db.getName()
+# Output: course_catalog_db
 ```

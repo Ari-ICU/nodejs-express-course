@@ -1,20 +1,34 @@
 export const meta = {
   id: "M11-12",
   number: "12",
-  title: "MongoDB Compass",
-  khmerTitle: "ការប្រើប្រាស់ GUI Tool (MongoDB Compass)",
+  title: "MongoDB Shell (mongosh) Basics",
+  khmerTitle: "ការប្រើប្រាស់ mongosh សម្រាប់ CRUD Operations",
   type: "lab",
-  codeLanguage: "bash",
-  summary: `MongoDB Compass គឺជា UI (User Interface) ក្រាហ្វិកផ្លូវការ (GUI) សម្រាប់ MongoDB ដែលបើកដំណើរការសំណួរដែលមើលឃើញ ការគ្រប់គ្រងសន្ទស្សន៍ ការកែសម្រួលឯកសារ និងការវិភាគដំណើរការសំណួរ។`,
-  tip: "ប្រើផ្ទាំង 'ពន្យល់ផែនការ' ក្នុងត្រីវិស័យ ដើម្បីមើលថាតើសំណួរកំពុងដំណើរការស្កេនបណ្តុំយឺត (COLLSAN) ឬប្រើIndex (IXSCAN) ។",
-  objective: "ពិនិត្យ និងគ្រប់គ្រង Database ដោយមើលឃើញដោយប្រើ MongoDB Compass ។",
-  expectedOutcome: "ការគ្រប់គ្រង Database ដែលមើលឃើញ និងដំណើរការទម្រង់សំណួរ។",
-  codeSnippet: "# Connect via Compass using connection URI:\nmongodb://localhost:27017/my_database\n# OR for Atlas Cloud:\nmongodb+srv://user:pass@cluster.mongodb.net/my_database",
+  codeLanguage: "javascript",
+  summary: "**mongosh (MongoDB Shell)** គឺជា Interactive Command-line Interface ទំនើបសម្រាប់ Query និងគ្រប់គ្រង MongoDB។\n\nBasic CRUD Commands សម្រាប់ Course Catalog៖\n* **Create**៖ `db.courses.insertOne({ title, price })`\n* **Read**៖ `db.courses.find({ price: { $lte: 50 } })`\n* **Update**៖ `db.courses.updateOne({ _id }, { $set: { published: true } })`\n* **Delete**៖ `db.courses.deleteOne({ _id })`",
+  tip: "ប្រើប្រាស់ `.pretty()` ក្នុង shell ចាស់ៗ ឬ mongosh ទំនើបនឹង Format JSON ឱ្យស្អាតដោយស្វ័យប្រវត្តិ។",
+  objective: "ស្ទាត់ជំនាញប្រើប្រាស់ mongosh CLI សម្រាប់បង្កើត និងអានទិន្នន័យ។",
+  expectedOutcome: "សមត្ថភាព Debug និងត្រួតពិនិត្យទិន្នន័យផ្ទាល់ក្នុង Database Shell។",
+  codeSnippet: "// Step 1: Insert sample course in mongosh\ndb.courses.insertOne({\n  title: \"Docker for Node Developers\",\n  price: 29.99,\n  published: true\n});\n\n// Step 2: Find all published courses\ndb.courses.find({ published: true });\n\n// Step 3: Update price using $set operator\ndb.courses.updateOne(\n  { title: \"Docker for Node Developers\" },\n  { $set: { price: 34.99, updatedAt: new Date() } }\n);\n\n// Step 4: Verify count\ndb.courses.countDocuments();",
 };
 
-```bash
-# Connect via Compass using connection URI:
-mongodb://localhost:27017/my_database
-# OR for Atlas Cloud:
-mongodb+srv://user:pass@cluster.mongodb.net/my_database
+```javascript
+// Step 1: Insert sample course in mongosh
+db.courses.insertOne({
+  title: "Docker for Node Developers",
+  price: 29.99,
+  published: true
+});
+
+// Step 2: Find all published courses
+db.courses.find({ published: true });
+
+// Step 3: Update price using $set operator
+db.courses.updateOne(
+  { title: "Docker for Node Developers" },
+  { $set: { price: 34.99, updatedAt: new Date() } }
+);
+
+// Step 4: Verify count
+db.courses.countDocuments();
 ```

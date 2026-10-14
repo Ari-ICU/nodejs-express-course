@@ -2,20 +2,30 @@ export const meta = {
   id: "M12-17",
   number: "17",
   title: "Deleting Documents",
-  khmerTitle: "ការលុបទិន្នន័យ (findByIdAndDelete, deleteOne)",
+  khmerTitle: "ការលុបទិន្នន័យ (findByIdAndDelete & Soft Deletes)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការដកឯកសារចេញពីបណ្តុំដោយប្រើ `findByIdAndDelete()`, `deleteOne()` និង `deleteMany()` ។",
-  tip: "នៅក្នុងប្រព័ន្ធផលិតកម្ម សូមពិចារណាលើការលុបទន់ (`isDeleted: true`) ដើម្បីការពារទំនាក់ទំនងបរទេស និងប្រវត្តិនៃការបញ្ជាទិញ។",
-  objective: "លុបកំណត់ត្រាពី CollectionsDatabase ។",
-  expectedOutcome: "ការដកយកចេញត្រឹមត្រូវនៃ EntityDatabase ។",
-  codeSnippet: "// Hard delete\nawait Product.findByIdAndDelete(productId);\n\n// Soft delete (Alternative production pattern)\nawait Product.findByIdAndUpdate(productId, { isDeleted: true, deletedAt: new Date() });",
+  summary: "ការលុប Document ជាមួយ Mongoose៖\n\n1. **Hard Delete**៖ `Course.findByIdAndDelete(courseId)`\n2. **Soft Delete (អនុសាសន៍ Production)**៖ `Course.findByIdAndUpdate(courseId, { isDeleted: true, deletedAt: new Date() })`",
+  tip: "ការប្រើ Soft Delete ជួយការពារការបាត់បង់ទិន្នន័យជាយថាហេតុ និងរក្សាបាននូវ Parent-Child integrity ជាមួយ Lessons និង Enrollments។",
+  objective: "ចេះលុបទិន្នន័យទាំង Hard Delete និង Soft Delete តាមរយៈ Mongoose។",
+  expectedOutcome: "សមត្ថភាពគ្រប់គ្រងការលុបទិន្នន័យប្រកបដោយទំនួលខុសត្រូវខ្ពស់។",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Hard Delete: Permanently purged from MongoDB\nexport const purgeCourse = async (id) => {\n  return await Course.findByIdAndDelete(id);\n};\n\n// Soft Delete: Preserves record for audit/recovery\nexport const softDeleteCourse = async (id) => {\n  return await Course.findByIdAndUpdate(\n    id,\n    { isDeleted: true, deletedAt: new Date() },\n    { new: true }\n  );\n};",
 };
 
 ```javascript
-// Hard delete
-await Product.findByIdAndDelete(productId);
+import { Course } from "./models/course.model.js";
 
-// Soft delete (Alternative production pattern)
-await Product.findByIdAndUpdate(productId, { isDeleted: true, deletedAt: new Date() });
+// Hard Delete: Permanently purged from MongoDB
+export const purgeCourse = async (id) => {
+  return await Course.findByIdAndDelete(id);
+};
+
+// Soft Delete: Preserves record for audit/recovery
+export const softDeleteCourse = async (id) => {
+  return await Course.findByIdAndUpdate(
+    id,
+    { isDeleted: true, deletedAt: new Date() },
+    { new: true }
+  );
+};
 ```

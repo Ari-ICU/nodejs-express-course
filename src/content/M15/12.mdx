@@ -1,28 +1,32 @@
 export const meta = {
   id: "M15-12",
   number: "12",
-  title: "Error Logging",
-  khmerTitle: "ការកត់ត្រាកំហុស (Logging) ជាមួយ Winston / Sentry",
+  title: "Unhandled Rejections & Uncaught Exceptions",
+  khmerTitle: "ការចាប់កំហុស Unhandled Rejections និង Uncaught Exceptions",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `កំហុសក្នុងការផលិតកំណត់ហេតុចំពោះឯកសារកំណត់ហេតុប្រើប្រាស់បានយូរ ឬ Services ត្រួតពិនិត្យលើពពក (Sentry, Datadog) សម្រាប់ការជូនដំណឹងភ្លាមៗ និងការបំបាត់កំហុសក្រោយការស្លាប់។`,
-  tip: "កត់ត្រាកំហុសអ្នកសរសេរកម្មវិធីនៅកម្រិត `'error'` និងកំហុសប្រតិបត្តិការនៅកម្រិត `'warn'` ។",
-  objective: "រួមបញ្ចូល Logging កំហុសដែលមានរចនាសម្ព័ន្ធសម្រាប់ការត្រួតពិនិត្យផលិតកម្ម។",
-  expectedOutcome: "ការមើលឃើញភ្លាមៗចំពោះករណីលើកលែងរបស់ Server នៅក្នុងProduction environment។",
-  codeSnippet: "import winston from \"winston\";\n\nconst logger = winston.createLogger({\n  level: \"error\",\n  format: winston.format.json(),\n  transports: [\n    new winston.transports.File({ filename: \"logs/error.log\" })\n  ]\n});\n\n// Inside error middleware:\nlogger.error({ message: err.message, stack: err.stack, url: req.url });",
+  summary: "រនាំងសុវត្ថិភាពចុងក្រោយបង្អស់ (Safety Net) សម្រាប់ Node.js Backend៖\n\n1. **`uncaughtException`**៖ ចាប់កំហុស Sync Bugs ដែលកើតឡើងក្រៅ Express Handlers\n2. **`unhandledRejection`**៖ ចាប់ Async Promises ដែល Reject ហើយគ្មាន `.catch()` (ដូចជា MongoDB Connection ធ្លាក់)\n3. **Graceful Exit**៖ នៅពេលមាន Exception ធ្ងន់ធ្ងរ ត្រូវបិទ HTTP Server (`server.close()`) រួច `process.exit(1)` ដើម្បីឱ្យ Process Manager (PM2 / Docker / Kubernetes) Restart Container ថ្មីដែលស្អាត!",
+  tip: "កុំបណ្តោយឱ្យ Server បន្តដំណើរការក្រោយពេលមាន `uncaughtException` ព្រោះ Memory State របស់ Node.js អាចខូចខាត (Corrupted)។ ត្រូវ Restart ជានិច្ច។",
+  objective: "ចេះដោះស្រាយ Unhandled Rejections និង Uncaught Exceptions តាមរយៈ Graceful Process Termination។",
+  expectedOutcome: "Server មានប្រព័ន្ធការពារកម្រិត Enterprise ធានាសុវត្ថិភាពប្រព័ន្ធទាំងមូល។",
+  codeSnippet: "// In src/server.js:\n// 1. Safety net for unhandled Promise rejections (e.g. DB connection dropped)\nprocess.on(\"unhandledRejection\", (err) => {\n  console.error(\"UNHANDLED REJECTION! 💥 Shutting down gracefully...\");\n  console.error(err.name, err.message);\n  server.close(() => {\n    process.exit(1); // Exit process and let Docker/PM2 restart it!\n  });\n});\n\n// 2. Safety net for synchronous uncaught exceptions\nprocess.on(\"uncaughtException\", (err) => {\n  console.error(\"UNCAUGHT EXCEPTION! 💥 Shutting down immediately...\");\n  console.error(err.name, err.message);\n  process.exit(1);\n});",
 };
 
 ```javascript
-import winston from "winston";
-
-const logger = winston.createLogger({
-  level: "error",
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: "logs/error.log" })
-  ]
+// In src/server.js:
+// 1. Safety net for unhandled Promise rejections (e.g. DB connection dropped)
+process.on("unhandledRejection", (err) => {
+  console.error("UNHANDLED REJECTION! 💥 Shutting down gracefully...");
+  console.error(err.name, err.message);
+  server.close(() => {
+    process.exit(1); // Exit process and let Docker/PM2 restart it!
+  });
 });
 
-// Inside error middleware:
-logger.error({ message: err.message, stack: err.stack, url: req.url });
+// 2. Safety net for synchronous uncaught exceptions
+process.on("uncaughtException", (err) => {
+  console.error("UNCAUGHT EXCEPTION! 💥 Shutting down immediately...");
+  console.error(err.name, err.message);
+  process.exit(1);
+});
 ```

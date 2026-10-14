@@ -1,19 +1,24 @@
 export const meta = {
   id: "M11-08",
   number: "08",
-  title: "ObjectId",
+  title: "ObjectId Deep Dive",
   khmerTitle: "ការស្វែងយល់ពី ObjectId (12-byte BSON Identifier)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `វាល \`_id\` លំនាំដើមនៅក្នុង MongoDB គឺជា BSON ObjectId ទំហំ 12 បៃ។ វាមានTimestamps 4 បៃ តម្លៃចៃដន្យ 5 បៃ និងបញ្ជរបង្កើន 3 បៃ ដែលធានានូវភាពឯកោជាសកលនៅទូទាំងថ្នាំងServerដែលបានចែកចាយ។`,
-  tip: "អ្នកអាចទាញយក Timestamps បង្កើតពិតប្រាកដពី ObjectId ដោយប្រើ `objectId.getTimestamp()` ដោយមិនចាំបាច់រក្សាទុកវាលកាលបរិច្ឆេទបង្កើតដាច់ដោយឡែក។",
-  objective: "ស្វែងយល់ពីកាយវិភាគសាស្ត្រ និងអត្ថប្រយោជន៍នៃ ObjectIds ដែលបានចែកចាយ។",
-  expectedOutcome: "សមត្ថភាពក្នុងការទាញយក Timestamps និងត្រួតពិនិត្យ ObjectIds ។",
-  codeSnippet: "// In mongosh:\nconst id = ObjectId(\"6648e58319f3a9e224e78891\");\nconsole.log(\"Timestamp embedded in ID:\", id.getTimestamp());",
+  summary: "**ObjectId** គឺជា Primary Key លំនាំដើមរបស់ MongoDB។ វាមានទំហំ **12 Bytes (24 Hexadecimal Characters)**៖\n\nរចនាសម្ព័ន្ធខាងក្នុងនៃ 12 Bytes៖\n* **4 Bytes**៖ Timestamp (វិនាទីដែល Document ត្រូវបានបង្កើតឡើង)\n* **5 Bytes**៖ Random Value (ម៉ាស៊ីន និង Process Identifier)\n* **3 Bytes**៖ Incrementing Counter (រាប់ចំនួនកើនឡើងជាបន្តបន្ទាប់)\n\nដោយសារតែ ៤ Bytes ដំបូងជា Timestamp យើងអាចទាញយកពេលវេលាបង្កើតចេញពី `_id` បានដោយមិនបាច់បង្កើត Field ដាច់ដោយឡែកឡើយ!",
+  tip: "អ្នកអាចទាញយកពេលវេលាបង្កើតពី ObjectId តាមរយៈ `objectId.getTimestamp()` ក្នុង mongosh ឬ JavaScript។",
+  objective: "យល់ច្បាស់ពីសមាសធាតុផ្សំនៃ 12-byte ObjectId របស់ MongoDB។",
+  expectedOutcome: "ដឹងពីរបៀបដែល MongoDB បង្កើត Unique Primary Keys ដោយមិនចាំបាច់មាន Central Auto-increment Lock។",
+  codeSnippet: "// ObjectId Decomposition (24 hex characters):\n// \"6648e583 19f3a9e224 e78891\"\n//  └─Time─┘ └──Random──┘ └Counter┘\n\n// In mongosh:\nconst courseId = ObjectId(\"6648e58319f3a9e224e78891\");\nconsole.log(\"Created at:\", courseId.getTimestamp());\n// Output: 2024-05-18T17:35:31.000Z",
 };
 
 ```javascript
+// ObjectId Decomposition (24 hex characters):
+// "6648e583 19f3a9e224 e78891"
+//  └─Time─┘ └──Random──┘ └Counter┘
+
 // In mongosh:
-const id = ObjectId("6648e58319f3a9e224e78891");
-console.log("Timestamp embedded in ID:", id.getTimestamp());
+const courseId = ObjectId("6648e58319f3a9e224e78891");
+console.log("Created at:", courseId.getTimestamp());
+// Output: 2024-05-18T17:35:31.000Z
 ```

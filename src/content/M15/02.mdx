@@ -1,20 +1,27 @@
 export const meta = {
   id: "M15-02",
   number: "02",
-  title: "JavaScript Errors",
-  khmerTitle: "Native JavaScript Error Objects (Error, TypeError, SyntaxError)",
+  title: "Synchronous Errors",
+  khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Synchronous Code",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "ការយល់ដឹងអំពីវត្ថុ JavaScript ដើម `Error` `message` `name` និង `stack` លក្ខណៈសម្បត្តិដានរបស់វា និងរបៀបដែលថ្នាក់រងដូចជា `TypeError` និង `RangeError` ប្រព្រឹត្ត។",
-  tip: "តែងតែបញ្ជូន String ពណ៌នាទៅ `new Error('Description')` ដើម្បីជួយក្នុងការបំបាត់កំហុស។",
-  objective: "ប្រើប្រាស់វត្ថុកំហុស JavaScript ដើម និងStack trace។",
-  expectedOutcome: "ជំនាញក្នុងការត្រួតពិនិត្យកំហុសឆ្គងសម្រាប់ការវិភាគឫសគល់។",
-  codeSnippet: "const err = new Error(\"Database query timed out\");\nconsole.log(\"Error Name:\", err.name);       // \"Error\"\nconsole.log(\"Error Message:\", err.message); // \"Database query timed out\"\nconsole.log(\"Stack Trace:\", err.stack);",
+  summary: "នៅក្នុង Synchronous Code (កូដដែលដំណើរការតាមលំដាប់លំដោយធម្មតា) Express នឹងស្ទាក់ចាប់កំហុសដែល `throw` ដោយស្វ័យប្រវត្តិ ហើយបញ្ជូនវាទៅកាន់ Error Middleware ភ្លាមៗ។\n\nឧទាហរណ៍៖\n```javascript\napp.get(\"/sync-error\", (req, res) => {\n  throw new Error(\"Something broke synchronously!\"); // Express catches this automatically!\n});\n```",
+  tip: "ទោះបីជា Express ចាប់ Synchronous Errors ដោយស្វ័យប្រវត្តិក៏ដោយ នៅក្នុង Real-world Backend កូដស្ទើរតែទាំងអស់គឺជា Asynchronous (ទាញយកទិន្នន័យពី MongoDB)។",
+  objective: "យល់ដឹងពីរបៀបដែល Express ដោះស្រាយ Synchronous Errors។",
+  expectedOutcome: "ដឹងពីភាពខុសគ្នារវាង Synchronous និង Asynchronous Error Handling។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Synchronous route handler\napp.get(\"/api/v1/courses/sync-check\", (req, res) => {\n  if (!req.query.token) {\n    // 💡 Synchronously thrown errors are automatically caught by Express!\n    throw new Error(\"Missing required security verification token\");\n  }\n  res.json({ success: true });\n});",
 };
 
 ```javascript
-const err = new Error("Database query timed out");
-console.log("Error Name:", err.name);       // "Error"
-console.log("Error Message:", err.message); // "Database query timed out"
-console.log("Stack Trace:", err.stack);
+import express from "express";
+const app = express();
+
+// Synchronous route handler
+app.get("/api/v1/courses/sync-check", (req, res) => {
+  if (!req.query.token) {
+    // 💡 Synchronously thrown errors are automatically caught by Express!
+    throw new Error("Missing required security verification token");
+  }
+  res.json({ success: true });
+});
 ```

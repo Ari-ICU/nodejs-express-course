@@ -1,21 +1,22 @@
 export const meta = {
   id: "M14-02",
   number: "02",
-  title: "Request Validation",
-  khmerTitle: "យុទ្ធសាស្ត្រផ្ទៀងផ្ទាត់ Request (Body, Query, Params)",
+  title: "Client vs Server Validation",
+  khmerTitle: "ភាពខុសគ្នារវាង Client-Side និង Server-Side Validation",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `យុទ្ធសាស្ត្រផ្ទៀងផ្ទាត់ Request ពេញលេញធ្វើឱ្យមាន Validation ប្រភពបញ្ចូលទាំងបី៖ \`req.body\` (បន្ទុកបន្ទុក), \`req.query\` (Filter) និង \`req.params\` (អ្នកកំណត់អត្តសញ្ញាណ)។`,
-  tip: "ធ្វើឱ្យ Params ផ្លូវមាន Validation (ឧ. ពិនិត្យមើលថា `:id` គឺជាវត្ថុលេខគោលដប់ប្រាំមួយ 24 តួអក្សរត្រឹមត្រូវ) មុនពេលសាកសួរ Database ។",
-  objective: "កំណត់វ៉ិចទ័របញ្ចូល Client ទាំងអស់ដែលទាមទារឱ្យមាន Validation ។",
-  expectedOutcome: "ការការពារដ៏ទូលំទូលាយនៅទូទាំងរាងកាយ សំណួរ និងវ៉ិចទ័រ Params ។",
-  codeSnippet: "/* Three Input Vectors to Validate:\n   1. req.body   -> Payloads on POST, PUT, PATCH\n   2. req.query  -> Filters and pagination on GET\n   3. req.params -> Resource identifiers in URL paths\n*/",
+  summary: "ការប្រៀបធៀបរវាង Client-Side និង Server-Side Validation៖\n\n* **Client-Side Validation (Frontend)**៖\n  * ផ្តោតលើ **User Experience (UX)** (ផ្តល់ Feedback រហ័សពេល User កំពុងវាយ)\n  * **គ្មានសុវត្ថិភាពឡើយ** — Attackers អាច Bypass Client-side validation ដោយងាយតាមរយៈ Postman ឬ cURL!\n* **Server-Side Validation (Backend)**៖\n  * ផ្តោតលើ **Security & Data Integrity**\n  * ជារនាំងការពារចុងក្រោយដែលមិនអាច Bypass បានឡើយ",
+  tip: "កុំពឹងផ្អែកលើ Frontend Validation ឱ្យសោះ។ ត្រូវសរសេរ Server-side Validation ឱ្យរឹងមាំជានិច្ច។",
+  objective: "បែងចែកតួនាទីរវាង Client និង Server Validation។",
+  expectedOutcome: "ដឹងពីមូលហេតុដែល Server Validation ជាតម្រូវការចាំបាច់មិនអាចខ្វះបាន។",
+  codeSnippet: "/* Comparison Summary:\n   -------------------------------------------------------------\n   Client-Side Validation (React / Next.js)  ➔ For Instant UX\n   Server-Side Validation (Express + Zod)    ➔ For True Security\n   -------------------------------------------------------------\n*/",
 };
 
 ```javascript
-/* Three Input Vectors to Validate:
-   1. req.body   -> Payloads on POST, PUT, PATCH
-   2. req.query  -> Filters and pagination on GET
-   3. req.params -> Resource identifiers in URL paths
+/* Comparison Summary:
+   -------------------------------------------------------------
+   Client-Side Validation (React / Next.js)  ➔ For Instant UX
+   Server-Side Validation (Express + Zod)    ➔ For True Security
+   -------------------------------------------------------------
 */
 ```

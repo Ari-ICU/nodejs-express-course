@@ -1,21 +1,18 @@
 export const meta = {
   id: "M14-04",
   number: "04",
-  title: "Query Validation",
-  khmerTitle: "ការផ្ទៀងផ្ទាត់ Query Parameters",
-  type: "lab",
+  title: "Introduction to Zod",
+  khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ Zod",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: `ធ្វើ​ឱ្យ​មាន​Validation និង​បង្ខិត​បង្ខំ​Params​String​សំណួរ (ការ​ញែក​លេខ ពង្រឹង​វាល​តម្រៀប​ដែល​អាច​អនុញ្ញាត​បាន និង​ដែនកំណត់) ។`,
-  tip: "ប្រើ `z.coerce.number()` របស់ Zod ដើម្បីញែក Params សំណួរ String ដោយស្វ័យប្រវត្តិទៅជាលេខ។",
-  objective: "ធ្វើ ValidationParams សំណួរ និងប្រភេទបង្ខិតបង្ខំដោយសុវត្ថិភាព។",
-  expectedOutcome: "វាយបញ្ចូល Params សំណួរសុវត្ថិភាព ជាមួយនឹង Helmet ។",
-  codeSnippet: "export const querySchema = z.object({\n  page: z.coerce.number().int().positive().default(1),\n  limit: z.coerce.number().int().min(1).max(100).default(10),\n  sort: z.enum([\"createdAt\", \"-createdAt\", \"price\", \"-price\"]).optional()\n});",
+  summary: "**Zod** គឺជាបណ្ណាល័យ TypeScript/JavaScript Schema Declaration និង Validation ដ៏ពេញនិយមបំផុតនាពេលបច្ចុប្បន្ន។\n\nហេតុអ្វី Zod លេចធ្លោជាងគេ៖\n* **Zero Dependencies** និងទំហំស្រាលខ្លាំង\n* **Type Inference** ដ៏អស្ចារ្យ (អាចទាញយក Types ចេញពី Schema ដោយស្វ័យប្រវត្តិ)\n* **Composable & Chainable** API (ងាយស្រួលសរសេរ `z.string().min(5).max(100)`)\n* គាំទ្រទាំង Node.js, Express, React, និង Next.js",
+  tip: "Zod បានក្លាយជាស្តង់ដារលេខមួយក្នុង Modern JavaScript Ecosystem ជំនួស Joi និង Yup ដោយសារតែភាពងាយស្រួល និង Type-safety។",
+  objective: "ស្គាល់ និងយល់ពីអត្ថប្រយោជន៍នៃ Zod ក្នុង Node.js Backend។",
+  expectedOutcome: "ចេះដំឡើង និងចាប់ផ្តើមប្រើប្រាស់ Zod ក្នុង Express API។",
+  codeSnippet: "# Install Zod library\nnpm install zod",
 };
 
 ```javascript
-export const querySchema = z.object({
-  page: z.coerce.number().int().positive().default(1),
-  limit: z.coerce.number().int().min(1).max(100).default(10),
-  sort: z.enum(["createdAt", "-createdAt", "price", "-price"]).optional()
-});
+# Install Zod library
+npm install zod
 ```

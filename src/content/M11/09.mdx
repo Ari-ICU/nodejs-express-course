@@ -1,26 +1,32 @@
 export const meta = {
   id: "M11-09",
   number: "09",
-  title: "Embedded Documents",
+  title: "Embedded Documents (Denormalization)",
   khmerTitle: "ការបង្កប់ឯកសារ (Embedding / Denormalization)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការបង្កប់រក្សាទុកទិន្នន័យដែលពាក់ព័ន្ធដោយផ្ទាល់នៅក្នុងឯកសារតែមួយ (ឧ. រក្សាទុកឯកសាររងអាសយដ្ឋាននៅក្នុងឯកសារអ្នកប្រើប្រាស់) ។ នេះអនុញ្ញាតឱ្យទៅយកទិន្នន័យដែលពាក់ព័ន្ធទាំងអស់នៅក្នុងសំណួរដែលមានល្បឿនលឿនតែមួយដោយគ្មាន JOINs ។`,
-  tip: "បង្កប់ទិន្នន័យនៅពេលដែលទំនាក់ទំនងមានពី 1 ទៅពីរបី ហើយទិន្នន័យកុមារតែងតែត្រូវបានចូលប្រើរួមគ្នាជាមួយឯកសារមេ។",
-  objective: "គំរូទំនាក់ទំនងពី 1 ទៅពីរបីដោយប្រើឯកសាររងដែលបានបង្កប់។",
-  expectedOutcome: "សំណួរដែលមានប្រសិទ្ធភាពខ្ពស់ដោយមិនមានទំនាក់ទំនងលើស។",
-  codeSnippet: "// Embedded Sub-Document pattern:\n{\n  \"_id\": ObjectId(\"...\"),\n  \"name\": \"Dara\",\n  \"shippingAddress\": {\n    \"street\": \"123 Norodom Blvd\",\n    \"city\": \"Phnom Penh\",\n    \"country\": \"Cambodia\"\n  }\n}",
+  summary: "នៅក្នុង MongoDB មានយុទ្ធសាស្ត្ររៀបចំទំនាក់ទំនង ២ បែប។ ទីមួយគឺ **Embedding (Denormalization)** ដែលជាការដាក់ Sub-documents នៅក្នុង Document មេតែមួយ។\n\nពេលណាគួរប្រើ Embedding សម្រាប់ Course API៖\n* ទំនាក់ទំនង **1-to-Few** (ឧ. Course មួយមាន Course Requirements ចំនួន ៣-៥ ចំណុច ឬ Syllabus Summary)\n* ទិន្នន័យដែលតែងតែអានជាមួយគ្នាជានិច្ចក្នុង Request តែមួយ\n* ផ្តល់ល្បឿនអានលឿនបំផុតព្រោះមិនបាច់ធ្វើ JOIN ឬ $lookup",
+  tip: "ច្បាប់ណែនាំ៖ ប្រសិនបើទិន្នន័យកើនឡើងគ្មានដែនកំណត់ (Unbounded Growth ដូចជា Course Reviews រាប់សែន) កុំប្រើ Embedding ត្រូវប្រើ References ជំនួសវិញ។",
+  objective: "ចេះរចនា Embedded Documents សម្រាប់ទិន្នន័យដែលអានជាមួយគ្នាញឹកញាប់។",
+  expectedOutcome: "សមត្ថភាពបង្កើន Performance នៃការអានទិន្នន័យដោយកាត់បន្ថយ Multi-collection queries។",
+  codeSnippet: "// Embedded Document Pattern: Course with embedded Instructor Profile\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Mastering Node.js & Express\",\n  \"price\": 49.99,\n  // 💡 Embedded sub-document: Always loaded together in 1 fast query!\n  \"instructor\": {\n    \"name\": \"Ratha\",\n    \"bio\": \"Senior Backend Architect\",\n    \"avatar\": \"https://cdn.example.com/ratha.jpg\"\n  },\n  \"modules\": [\n    { \"order\": 1, \"title\": \"Express Basics\" },\n    { \"order\": 2, \"title\": \"MongoDB Mastery\" }\n  ]\n}",
 };
 
 ```javascript
-// Embedded Sub-Document pattern:
+// Embedded Document Pattern: Course with embedded Instructor Profile
 {
-  "_id": ObjectId("..."),
-  "name": "Dara",
-  "shippingAddress": {
-    "street": "123 Norodom Blvd",
-    "city": "Phnom Penh",
-    "country": "Cambodia"
-  }
+  "_id": ObjectId("6648e58319f3a9e224e78891"),
+  "title": "Mastering Node.js & Express",
+  "price": 49.99,
+  // 💡 Embedded sub-document: Always loaded together in 1 fast query!
+  "instructor": {
+    "name": "Ratha",
+    "bio": "Senior Backend Architect",
+    "avatar": "https://cdn.example.com/ratha.jpg"
+  },
+  "modules": [
+    { "order": 1, "title": "Express Basics" },
+    { "order": 2, "title": "MongoDB Mastery" }
+  ]
 }
 ```

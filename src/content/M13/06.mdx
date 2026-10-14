@@ -1,24 +1,32 @@
 export const meta = {
   id: "M13-06",
   number: "06",
-  title: "Creating Services",
-  khmerTitle: "ការបង្កើត Services សម្រាប់អនុវត្ត Database Queries",
+  title: "Creating Course Routes",
+  khmerTitle: "ការចងភ្ជាប់ Routes ទៅកាន់ Database Controllers",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការបញ្ចូលសំណួរ Database Mongoose Collections ផ្តុំ និងការត្រួតពិនិត្យអាជីវកម្មនៅក្នុងម៉ូឌុល Services ដែលខិតខំប្រឹងប្រែង។`,
-  tip: "Services គួរតែទទួលខុសត្រូវចំពោះប្រតិបត្តិការ Database និង Validation អាជីវកម្ម។",
-  objective: "ញែក Business Logic សួរ Database ទាំងអស់នៅក្នុង Services ដែលខិតខំប្រឹងប្រែង។",
-  expectedOutcome: "មុខងារសេវា Database ដែលអាចប្រើឡើងវិញបាន និងអាចសាកល្បងបាន។",
-  codeSnippet: "// services/product.service.js\nimport { Product } from \"../models/product.model.js\";\n\nexport const listProducts = async (filters) => {\n  const query = {};\n  if (filters.category) query.category = filters.category;\n  return await Product.find(query).lean();\n};",
+  summary: "ការចងភ្ជាប់ Routes ក្នុង `src/routes/course.routes.js` ជាមួយ Controller Handlers តាមរយៈ `express.Router()`៖\n\nរចនាសម្ព័ន្ធកូដស្អាតតាមរយៈ `router.route()`:\n* `router.route(\"/\").get(getCourses).post(createCourse)`\n* `router.route(\"/:id\").get(getCourseById).patch(updateCourse).delete(deleteCourse)`",
+  tip: "ការប្រើប្រាស់ `router.route()` ជួយឱ្យងាយស្រួល Add Middlewares (ដូចជា Validation ឬ Auth Guards) លើ Method នីមួយៗ។",
+  objective: "ចេះរៀបចំ Course Routes សម្រាប់ Full Database CRUD API។",
+  expectedOutcome: "Routes ត្រូវបានរៀបចំតាមស្តង់ដារ RESTful Routing និងភ្ជាប់ជាមួយ Controllers។",
+  codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
 };
 
 ```javascript
-// services/product.service.js
-import { Product } from "../models/product.model.js";
+// src/routes/course.routes.js
+import express from "express";
+import * as courseController from "../controllers/course.controller.js";
 
-export const listProducts = async (filters) => {
-  const query = {};
-  if (filters.category) query.category = filters.category;
-  return await Product.find(query).lean();
-};
+const router = express.Router();
+
+router.route("/")
+  .get(courseController.getCourses)
+  .post(courseController.createCourse);
+
+router.route("/:id")
+  .get(courseController.getCourseById)
+  .patch(courseController.updateCourse)
+  .delete(courseController.deleteCourse);
+
+export default router;
 ```

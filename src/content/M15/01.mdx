@@ -1,26 +1,23 @@
 export const meta = {
   id: "M15-01",
   number: "01",
-  title: "Types of Errors",
-  khmerTitle: "ការយល់ដឹងអំពីប្រភេទនៃកំហុសក្នុង Server",
+  title: "What is Error Handling?",
+  khmerTitle: "ទស្សនវិជ្ជានៃការគ្រប់គ្រងកំហុស (Error Handling) ក្នុង Express",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `កំហុសរបស់ Server ធ្លាក់ជាពីរប្រភេទផ្សេងគ្នា៖ កំហុសប្រតិបត្តិការ (ការបរាជ័យពេលដំណើរការដែលអាចព្យាករណ៍បានដូចជាការបញ្ចូលរបស់អ្នកប្រើមិនត្រឹមត្រូវ ថូខឹនផុតកំណត់ ធនធានដែលបាត់) និងកំហុសអ្នកសរសេរកម្មវិធី (កំហុស កំហុសវាក្យសម្ព័ន្ធ ការអានលក្ខណសម្បត្តិនៃការមិនបានកំណត់) ។`,
-  tip: "កំហុសក្នុងប្រតិបត្តិការគួរតែត្រូវបានចាប់ និងបញ្ជូនមកវិញជាសារ JSON ដែលងាយស្រួលប្រើ។ កំហុសអ្នកសរសេរកម្មវិធីបង្ហាញពីកំហុសដែលទាមទារឱ្យអ្នកអភិវឌ្ឍន៍ជួសជុល។",
-  objective: "បែងចែកកំហុសប្រតិបត្តិការពីកំហុសក្នុងការសរសេរកម្មវិធី។",
-  expectedOutcome: "សម្អាតយុទ្ធសាស្រ្តចាត់ថ្នាក់កំហុសសម្រាប់ការបរាជ័យ Server ទាំងអស់។",
-  codeSnippet: "/* Error Classification:\n   Operational Errors (Expected):\n   - 400 Invalid email format\n   - 404 User not found in DB\n   - 401 Expired JWT token\n\n   Programmer Errors (Bugs):\n   - TypeError: Cannot read property of undefined\n   - SyntaxError: Invalid JSON string\n*/",
+  summary: "**Error Handling** គឺជាយន្តការស្ទាក់ចាប់ ដោះស្រាយ និងឆ្លើយតបចំពោះកំហុសបច្ចេកទេសទាំងអស់ដែលកើតឡើងក្នុង Application ដោយមិនធ្វើឱ្យ Server Crash ឬបែកធ្លាយព័ត៌មានរសើប។\n\nគោលបំណងសំខាន់ៗ៖\n* ធានាថា Server នៅតែបន្តដំណើរការបានរលូនទោះបីជាមានកំហុសលើ Request ណាមួយក៏ដោយ\n* ឆ្លើយតបនូវ Standard Error Envelope ដ៏ច្បាស់លាស់ដល់ Client\n* កត់ត្រា (Log) កំហុសសម្រាប់ Developer ងាយស្រួល Debug",
+  tip: "ច្បាប់លេខមួយនៃ Error Handling៖ កុំទុកឱ្យ Request ព្យួរចោលដោយគ្មាន Response ឬធ្វើឱ្យ Node.js Process ដួលរលំដោយសារ Unhandled Error។",
+  objective: "យល់ដឹងពីសារៈសំខាន់នៃ Centralized Error Handling ក្នុង Production APIs។",
+  expectedOutcome: "មានផែនការដោះស្រាយកំហុសគ្រប់ជ្រុងជ្រោយសម្រាប់ Course Catalog Backend។",
+  codeSnippet: "// Unified Error Architecture Flow:\n// Controller/Service (throws error) ➔ next(err) ➔ [ Centralized Error Middleware ]\n//                                                           │\n//                                     ┌─────────────────────┴─────────────────────┐\n//                                     ▼                                           ▼\n//                          [ Development Mode ]                         [ Production Mode ]\n//                          (Full Stack Trace)                           (Sanitized Envelope)",
 };
 
 ```javascript
-/* Error Classification:
-   Operational Errors (Expected):
-   - 400 Invalid email format
-   - 404 User not found in DB
-   - 401 Expired JWT token
-
-   Programmer Errors (Bugs):
-   - TypeError: Cannot read property of undefined
-   - SyntaxError: Invalid JSON string
-*/
+// Unified Error Architecture Flow:
+// Controller/Service (throws error) ➔ next(err) ➔ [ Centralized Error Middleware ]
+//                                                           │
+//                                     ┌─────────────────────┴─────────────────────┐
+//                                     ▼                                           ▼
+//                          [ Development Mode ]                         [ Production Mode ]
+//                          (Full Stack Trace)                           (Sanitized Envelope)
 ```

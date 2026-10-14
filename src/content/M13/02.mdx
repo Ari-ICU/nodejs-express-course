@@ -1,22 +1,28 @@
 export const meta = {
   id: "M13-02",
   number: "02",
-  title: "Database Configuration",
-  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Database Configuration",
+  title: "Database Configuration Options",
+  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Connection Pool ក្នុង Mongoose",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ការកំណត់រចនាសម្ព័ន្ធជម្រើសនៃការតភ្ជាប់ MongoDB ៖ ទំហំអាងតភ្ជាប់ ការអស់ពេលនៃរន្ធ KeepAlive និងព្យាយាម Business Logic ម្តងទៀត។`,
-  tip: "កំណត់រចនាសម្ព័ន្ធ `maxPoolSize: 50` នៅក្នុងផលិតកម្ម ដើម្បីគ្រប់គ្រងចរាចរក្នុងពេលដំណាលគ្នាដោយមិនអស់ការភ្ជាប់ Database ។",
-  objective: "កំណត់​រចនាសម្ព័ន្ធ​ជម្រើស​នៃ​ការ​តភ្ជាប់​សម្រាប់​ការ​ផលិត​ដែល​ស្របគ្នា​ខ្ពស់។",
-  expectedOutcome: "ការកំណត់រចនាសម្ព័ន្ធកម្មវិធីបញ្ជា Database បានធ្វើឱ្យប្រសើរ។",
-  codeSnippet: "const mongooseOptions = {\n  maxPoolSize: 50,          // Maintain up to 50 socket connections\n  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5s\n  socketTimeoutMS: 45000,   // Close sockets after 45s of inactivity\n};\nawait mongoose.connect(process.env.DATABASE_URL, mongooseOptions);",
+  summary: "ការកំណត់ Connection Options ស្តង់ដារសម្រាប់ Production MongoDB Deployment៖\n\n* **`maxPoolSize: 50`**៖ រក្សាទុក Socket Connections រហូតដល់ ៥០ សម្រាប់ដំណើរការ Concurrent Requests\n* **`serverSelectionTimeoutMS: 5000`**៖ កំណត់រយៈពេល ៥ វិនាទីដើម្បីស្វែងរក Node ក្នុង Replica Set មុននឹង Timeout\n* **`socketTimeoutMS: 45000`**៖ បិទ Socket ដែលអសកម្មក្រោយ ៤៥ វិនាទី",
+  tip: "ការកំណត់ `maxPoolSize` ត្រឹមត្រូវជួយការពារកុំឱ្យ Node.js បង្កើត Socket Connections ច្រើនជ្រុលហួសកម្រិត RAM របស់ Database Server។",
+  objective: "ចេះកំណត់ Mongoose Connection Pool Options សម្រាប់ High-traffic Production។",
+  expectedOutcome: "Database Driver ដំណើរការប្រកបដោយប្រសិទ្ធភាពខ្ពស់ និងធន់នឹង Traffic Spikes។",
+  codeSnippet: "// src/config/db.js\nimport mongoose from \"mongoose\";\n\nconst mongooseOptions = {\n  maxPoolSize: 50,                // 💡 Up to 50 concurrent socket connections\n  serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds if DB is down\n  socketTimeoutMS: 45000,         // Close inactive sockets\n};\n\nexport const connectDB = async () => {\n  await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);\n};",
 };
 
 ```javascript
+// src/config/db.js
+import mongoose from "mongoose";
+
 const mongooseOptions = {
-  maxPoolSize: 50,          // Maintain up to 50 socket connections
-  serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5s
-  socketTimeoutMS: 45000,   // Close sockets after 45s of inactivity
+  maxPoolSize: 50,                // 💡 Up to 50 concurrent socket connections
+  serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds if DB is down
+  socketTimeoutMS: 45000,         // Close inactive sockets
 };
-await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);
+
+export const connectDB = async () => {
+  await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);
+};
 ```

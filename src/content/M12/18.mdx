@@ -1,26 +1,36 @@
 export const meta = {
   id: "M12-18",
   number: "18",
-  title: "Mongoose Methods",
-  khmerTitle: "ការបង្កើត Instance Methods & Static Methods",
+  title: "Mongoose Methods (Instance & Static)",
+  khmerTitle: "ការបង្កើត Instance Methods និង Static Methods",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Instance method ដំណើរការលើ instance ឯកសារបុគ្គល (ឧ. \`product.applyDiscount()\`) ខណៈពេលដែល Static method ដំណើរការលើCollections Model (ឧ. \`Product.findByCategory()\`)។`,
-  tip: "កុំប្រើមុខងារព្រួញ (`() => {}`) សម្រាប់វិធី Mongoose ពីព្រោះមុខងារព្រួញមិនចង `this` ទៅនឹងឧទាហរណ៍ឯកសារ។",
-  objective: "បន្ថែម Business Logic ដែនផ្ទាល់ខ្លួនដោយផ្ទាល់ទៅលើ Mongoose Models ។",
-  expectedOutcome: "ការ​បញ្ចូល​គំរូ​ដែន​សម្បូរ​ដោយ​Methods​ឧទាហរណ៍ និង​ឋិតិវន្ត។",
-  codeSnippet: "// Instance method (operates on individual document instance):\nproductSchema.methods.applyDiscount = function(percent) {\n  this.price = Math.round(this.price * (1 - percent / 100));\n  return this.save();\n};\n\n// Static method (operates on model collection):\nproductSchema.statics.findByCategory = function(category) {\n  return this.find({ category });\n};",
+  summary: "Mongoose អនុញ្ញាតឱ្យយើងសរសេរ Custom Domain Methods លើ Model ដោយផ្ទាល់៖\n\n* **Instance Methods (`methods`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. `course.publishCourse()`)\n* **Static Methods (`statics`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. `Course.findTopRated()`)",
+  tip: "កុំប្រើ Arrow Function (`() => {}`) ពេលបង្កើត Methods លើ Schema ពីព្រោះ Arrow Function មិនមាន Binding លើ `this` context ឡើយ! ត្រូវប្រើ `function() {}` ធម្មតា។",
+  objective: "ចេះបន្ថែម Instance Methods និង Static Methods លើ Mongoose Model។",
+  expectedOutcome: "កូដ Domain Logic ត្រូវបានរៀបចំយ៉ាងស្អាតក្នុង Model Layer។",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: String,\n  published: { type: Boolean, default: false },\n  rating: { type: Number, default: 0 }\n});\n\n// Step 1: Instance Method (operates on 1 document)\ncourseSchema.methods.publish = async function() {\n  this.published = true;\n  return await this.save();\n};\n\n// Step 2: Static Method (operates on the Model collection)\ncourseSchema.statics.findTopRated = function(minRating = 4.5) {\n  return this.find({ rating: { $gte: minRating } });\n};\n\nexport const Course = model(\"Course\", courseSchema);",
 };
 
 ```javascript
-// Instance method (operates on individual document instance):
-productSchema.methods.applyDiscount = function(percent) {
-  this.price = Math.round(this.price * (1 - percent / 100));
-  return this.save();
+import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: String,
+  published: { type: Boolean, default: false },
+  rating: { type: Number, default: 0 }
+});
+
+// Step 1: Instance Method (operates on 1 document)
+courseSchema.methods.publish = async function() {
+  this.published = true;
+  return await this.save();
 };
 
-// Static method (operates on model collection):
-productSchema.statics.findByCategory = function(category) {
-  return this.find({ category });
+// Step 2: Static Method (operates on the Model collection)
+courseSchema.statics.findTopRated = function(minRating = 4.5) {
+  return this.find({ rating: { $gte: minRating } });
 };
+
+export const Course = model("Course", courseSchema);
 ```

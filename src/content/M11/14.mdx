@@ -1,22 +1,28 @@
 export const meta = {
   id: "M11-14",
   number: "14",
-  title: "Database Design",
-  khmerTitle: "គោលការណ៍រចនា Database (Embedding vs Referencing Rule)",
+  title: "Data Modeling Rules",
+  khmerTitle: "គោលការណ៍រចនា Data Modeling សម្រាប់ MongoDB",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ច្បាប់ជាមូលដ្ឋាននៃការរចនា Schema MongoDB ៖ 'ទិន្នន័យដែលត្រូវបានចូលប្រើជាមួយគ្នាគួរតែត្រូវបានរក្សាទុកជាមួយគ្នា។' រចនា Schema ជុំវិញលំនាំការចូលប្រើសំណួរនៃកម្មវិធីរបស់អ្នក ជាជាងការធ្វើឱ្យមានលក្ខណៈធម្មតានៃធាតុអរូបីសុទ្ធសាធ។`,
-  tip: "សួរខ្លួនអ្នកថា 'តើArrayនេះនឹងកើនឡើងលើសពី 1,000 ធាតុទេ?' បើបាទ/ចាស ប្រើឯកសារយោង; បើទេ បង្កប់។",
-  objective: "ធ្វើការសម្រេចចិត្តស្ថាបត្យកម្មដែលមានព័ត៌មានរវាងការបង្កប់ និងការយោង។",
-  expectedOutcome: "Schema MongoDB ដែលមានប្រសិទ្ធភាពខ្ពស់បានធ្វើឱ្យប្រសើរសម្រាប់សំណួរកម្មវិធីក្នុងពិភពពិត។",
-  codeSnippet: "/* Schema Design Decision Framework:\n   1:1  (User:Profile)     ➔ Embed inside parent document\n   1:Few (Order:Items)      ➔ Embed array of sub-documents\n   1:Many (Post:Comments)   ➔ Reference (comments store postId)\n   1:Huge (Sensor:Logs)     ➔ Parent-reference (logs store sensorId)\n*/",
+  summary: "ច្បាប់មាសនៃ **MongoDB Data Modeling** សម្រាប់ High Performance APIs៖\n\n1. **Model for Application Access Patterns**៖ រចនាទិន្នន័យផ្អែកលើរបៀបដែល Application ត្រូវអានទិន្នន័យ (Read-heavy vs Write-heavy)\n2. **Favor Embedding unless there's a compelling reason**៖ បង្កប់ទិន្នន័យប្រសិនបើវាត្រូវបានអានជាមួយគ្នាជានិច្ច\n3. **Avoid Unbounded Arrays**៖ កុំឱ្យ Array ក្នុង Document កើនឡើងគ្មានទីបញ្ចប់ (ហានិភ័យលើសទំហំ 16MB)\n4. **Use References for Many-to-Many Relationships**៖ ប្រើ ObjectId References សម្រាប់ទំនាក់ទំនងធំៗ",
+  tip: "នៅក្នុង NoSQL Data Modeling មិនមែនដូច SQL ទេ៖ ការ Duplicate ទិន្នន័យតិចតួច (Denormalization) ដើម្បីឱ្យ Query លឿន គឺជាការអនុវត្តទូទៅ និងត្រូវបានលើកទឹកចិត្ត។",
+  objective: "យល់ដឹងពីយុទ្ធសាស្ត្ររចនា Schema NoSQL ប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
+  expectedOutcome: "រចនា Database Schema សម្រាប់ Course Catalog API ដែលដំណើរការលឿន និង Scalable។",
+  codeSnippet: "/* SUMMARY OF DATA MODELING PATTERNS:\n   -------------------------------------------------------------\n   1. 1-to-Few (Course -> Requirements)\n      ➔ Embed as an Array of Strings: [\"JavaScript Basics\", \"Git\"]\n\n   2. 1-to-Many (Course -> Lessons)\n      ➔ Reference: Lessons store parent courseId: ObjectId(\"...\")\n\n   3. Many-to-Many (Users <-> Courses Enrollments)\n      ➔ Separate Collection \"enrollments\" referencing both userId and courseId\n   -------------------------------------------------------------\n*/",
 };
 
 ```javascript
-/* Schema Design Decision Framework:
-   1:1  (User:Profile)     ➔ Embed inside parent document
-   1:Few (Order:Items)      ➔ Embed array of sub-documents
-   1:Many (Post:Comments)   ➔ Reference (comments store postId)
-   1:Huge (Sensor:Logs)     ➔ Parent-reference (logs store sensorId)
+/* SUMMARY OF DATA MODELING PATTERNS:
+   -------------------------------------------------------------
+   1. 1-to-Few (Course -> Requirements)
+      ➔ Embed as an Array of Strings: ["JavaScript Basics", "Git"]
+
+   2. 1-to-Many (Course -> Lessons)
+      ➔ Reference: Lessons store parent courseId: ObjectId("...")
+
+   3. Many-to-Many (Users <-> Courses Enrollments)
+      ➔ Separate Collection "enrollments" referencing both userId and courseId
+   -------------------------------------------------------------
 */
 ```

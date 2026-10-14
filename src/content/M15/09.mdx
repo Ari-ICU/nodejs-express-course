@@ -1,24 +1,26 @@
 export const meta = {
   id: "M15-09",
   number: "09",
-  title: "Database Errors",
-  khmerTitle: "ការគ្រប់គ្រងកំហុស Database ក្នុង Central Handler",
+  title: "Handling Mongoose CastError (Invalid ObjectId)",
+  khmerTitle: "ការដោះស្រាយកំហុស Mongoose CastError លើ MongoDB ObjectId",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការដោះស្រាយកំហុសសោស្ទួន MongoDB (កូដ 11000) កំហុសក្នុងការខាស (ObjectId មិនត្រឹមត្រូវ) និងការអស់ពេលនៃការតភ្ជាប់យ៉ាងរលូន។",
-  tip: "កុំបង្ហាញសារកំហុស Database MongoDB ឆៅទៅកាន់អ្នកប្រើប្រាស់ API សាធារណៈ។",
-  objective: "សម្អាតកំហុស Database មុនពេលផ្ញើ Response របស់ Client ។",
-  expectedOutcome: "ការដោះស្រាយកំហុសដោយសុវត្ថិភាព ការពារព័ត៌មានលម្អិតនៃ SchemaDatabase ខាងក្នុង។",
-  codeSnippet: "// Handling MongoDB duplicate key (e.g. unique email)\nif (err.code === 11000) {\n  const value = Object.values(err.keyValue)[0];\n  return res.status(409).json({\n    success: false,\n    error: `Duplicate value '${value}'. Please use another value.`\n  });\n}",
+  summary: "នៅពេល Client បញ្ជូន ID មិនត្រូវតាមទម្រង់ 24 Hex Characters នៃ MongoDB ObjectId (ឧ. `/api/v1/courses/invalid-id-123`) Mongoose នឹងបោះកំហុស **`CastError`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.name === \"CastError\")`\n* បំប្លែងទៅជា Human-readable 400 Bad Request៖\n  `new AppError(`Invalid ${err.path}: ${err.value}`, 400)`",
+  tip: "ការដោះស្រាយ CastError ការពារកុំឱ្យ Error នេះធ្លាយចេញជា 500 Internal Server Error ដ៏អាក្រក់មើល។",
+  objective: "ចេះដោះស្រាយ CastError នៃ MongoDB ObjectId ឱ្យក្លាយជា 400 Bad Request។",
+  expectedOutcome: "API ឆ្លើយតបសារកំហុសសមរម្យនៅពេល Client វាយ ID ខុសទម្រង់។",
+  codeSnippet: "import { AppError } from \"../errors/AppError.js\";\n\n// Helper: Handle Invalid MongoDB ObjectId CastError\nexport const handleMongooseCastError = (err) => {\n  const message = `Invalid ${err.path}: '${err.value}' is not a valid MongoDB ObjectId`;\n  return new AppError(message, 400);\n};\n\n// In global error handler:\n// if (err.name === \"CastError\") err = handleMongooseCastError(err);",
 };
 
 ```javascript
-// Handling MongoDB duplicate key (e.g. unique email)
-if (err.code === 11000) {
-  const value = Object.values(err.keyValue)[0];
-  return res.status(409).json({
-    success: false,
-    error: `Duplicate value '${value}'. Please use another value.`
-  });
-}
+import { AppError } from "../errors/AppError.js";
+
+// Helper: Handle Invalid MongoDB ObjectId CastError
+export const handleMongooseCastError = (err) => {
+  const message = `Invalid ${err.path}: '${err.value}' is not a valid MongoDB ObjectId`;
+  return new AppError(message, 400);
+};
+
+// In global error handler:
+// if (err.name === "CastError") err = handleMongooseCastError(err);
 ```

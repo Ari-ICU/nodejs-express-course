@@ -1,19 +1,31 @@
 export const meta = {
   id: "M13-17",
   number: "17",
-  title: "Population",
-  khmerTitle: "ការអនុវត្ត Relational Population ក្នុង API Responses",
+  title: "Full-Text Search with Text Indexes",
+  khmerTitle: "ការស្វែងរកទិន្នន័យតាមរយៈ MongoDB Text Index ($text)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការបញ្ចូលឯកសារយោងគន្លឹះបរទេស មុនពេលបញ្ជូន JSON Response ទៅកាន់ Client ។`,
-  tip: "បញ្ចូល​តែ​វាល​ចាំបាច់​ប៉ុណ្ណោះ​ដើម្បី​ជៀសវាង​ការ​ទាញ​យក​លើស​និង​ការ​ផ្ទេរ​Payload​មូលដ្ឋាន​ទិន្នន័យ​ដែល​មិន​ចាំបាច់។",
-  objective: "ផ្តល់ Request មដល់ទិន្នន័យ Entity ពាក់ព័ន្ធនៅក្នុង Response API ។",
-  expectedOutcome: "JSON Response ទំនាក់ទំនងសម្បូរបែបដោយគ្មាន SQL JOINs ។",
-  codeSnippet: "const order = await Order.findById(orderId)\n  .populate(\"user\", \"name email\")\n  .populate(\"items.product\", \"name price sku\");",
+  summary: "ជំនួសឱ្យការប្រើ Regex យឺត MongoDB ផ្តល់នូវ **Full-Text Search Indexes** ដ៏មានអានុភាព៖\n\n1. បង្កើត Text Index លើ Schema៖\n   `courseSchema.index({ title: \"text\", description: \"text\" })`\n2. ធ្វើការ Search ដោយប្រើ `$text` Operator៖\n   `Course.find({ $text: { $search: \"express node\" } })`\n3. គាំទ្រ Word Stemming, Case-insensitivity, និង Relevance Scoring!",
+  tip: "MongoDB Text Search ដំណើរការលឿនជាង Regex រាប់រយដង ព្រោះវាប្រើប្រាស់ Inverted Index Architecture។",
+  objective: "ចេះបង្កើត Text Indexes និង Query ដោយប្រើ $text operator ក្នុង MongoDB។",
+  expectedOutcome: "ប្រព័ន្ធ Search រហ័ស និងមានសមត្ថភាពខ្ពស់លើ Course Catalog។",
+  codeSnippet: "// 1. In Course Schema: Create compound text index\n// courseSchema.index({ title: \"text\", description: \"text\" });\n\nimport { Course } from \"../models/course.model.js\";\n\n// Step 2: Full-text Search service function\nexport const searchCoursesService = async (searchTerm) => {\n  // Query using MongoDB $text operator\n  const courses = await Course.find(\n    { $text: { $search: searchTerm } },\n    { score: { $meta: \"textScore\" } } // Calculate search relevance score\n  ).sort({ score: { $meta: \"textScore\" } }); // Sort by most relevant!\n\n  return courses;\n};",
 };
 
 ```javascript
-const order = await Order.findById(orderId)
-  .populate("user", "name email")
-  .populate("items.product", "name price sku");
+// 1. In Course Schema: Create compound text index
+// courseSchema.index({ title: "text", description: "text" });
+
+import { Course } from "../models/course.model.js";
+
+// Step 2: Full-text Search service function
+export const searchCoursesService = async (searchTerm) => {
+  // Query using MongoDB $text operator
+  const courses = await Course.find(
+    { $text: { $search: searchTerm } },
+    { score: { $meta: "textScore" } } // Calculate search relevance score
+  ).sort({ score: { $meta: "textScore" } }); // Sort by most relevant!
+
+  return courses;
+};
 ```

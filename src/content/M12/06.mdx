@@ -1,20 +1,28 @@
 export const meta = {
   id: "M12-06",
   number: "06",
-  title: "Documents",
-  khmerTitle: "ការគ្រប់គ្រង Mongoose Document Instances",
-  type: "lab",
+  title: "SchemaTypes in Mongoose",
+  khmerTitle: "ការស្វែងយល់ពី SchemaTypes ទាំងអស់ក្នុង Mongoose",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: `ឯកសារ Mongoose គឺជាឧទាហរណ៍នៃគំរូមួយដែលមាន Methods ជំនួយដែលភ្ជាប់មកជាមួយដូចជា \`.save()\`, \`.remove()\` និង \`.isModified()\` ។`,
-  tip: "ប្រើ `.isModified('password')` ក្នុង pre-save middleware ដើម្បីតែ hash passwords នៅពេលដែលអ្នកប្រើប្រាស់ពិតជាផ្លាស់ប្តូរ Password របស់ពួកគេ។",
-  objective: "ផ្លាស់ប្តូរ និងផ្លាស់ប្តូរគំរូឯកសារគំរូ។",
-  expectedOutcome: "ជំនាញក្នុងការធ្វើការជាមួយឯកសារសកម្ម។",
-  codeSnippet: "const user = new User({ name: \"Sokha\", email: \"sokha@test.com\" });\nuser.name = \"Sokha Mean\";\nconsole.log(\"Is name modified?\", user.isModified(\"name\")); // true\nawait user.save();",
+  summary: "Mongoose ផ្តល់នូវ **SchemaTypes** ស្តង់ដារជាច្រើន៖\n\n* **`String`**៖ អត្ថបទ (គាំទ្រ `trim`, `lowercase`, `uppercase`, `minlength`, `maxlength`)\n* **`Number`**៖ លេខ (គាំទ្រ `min`, `max`)\n* **`Boolean`**៖ តម្លៃពិត ឬមិនពិត\n* **`Date`**៖ កាលបរិច្ឆេទ\n* **`Buffer`**៖ ទិន្នន័យ Binary\n* **`Schema.Types.ObjectId`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង\n* **`Array`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents",
+  tip: "ប្រើប្រាស់ `trim: true` លើ String fields ជានិច្ច ដើម្បីលុប White Space ខាងដើម និងខាងចុងដែល User ច្រឡំវាយបញ្ចូល។",
+  objective: "ចេះប្រើប្រាស់ SchemaTypes សមស្របតាមប្រភេទ Fields នៃ Course API។",
+  expectedOutcome: "Schema មានភាពរឹងមាំ និងមានការកំណត់ Types ត្រឹមត្រូវតាមស្ដង់ដារ។",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseDetailsSchema = new Schema({\n  title: { type: String, trim: true, required: true },\n  durationHours: { type: Number, min: 1 },\n  isCertificateIncluded: { type: Boolean, default: true },\n  releaseDate: { type: Date, default: Date.now },\n  tags: [{ type: String, lowercase: true }], // Array of lowercase strings\n  instructorId: { type: Schema.Types.ObjectId, ref: \"User\" } // Reference to User Model!\n});\n\nexport const CourseDetails = model(\"CourseDetails\", courseDetailsSchema);",
 };
 
 ```javascript
-const user = new User({ name: "Sokha", email: "sokha@test.com" });
-user.name = "Sokha Mean";
-console.log("Is name modified?", user.isModified("name")); // true
-await user.save();
+import { Schema, model } from "mongoose";
+
+const courseDetailsSchema = new Schema({
+  title: { type: String, trim: true, required: true },
+  durationHours: { type: Number, min: 1 },
+  isCertificateIncluded: { type: Boolean, default: true },
+  releaseDate: { type: Date, default: Date.now },
+  tags: [{ type: String, lowercase: true }], // Array of lowercase strings
+  instructorId: { type: Schema.Types.ObjectId, ref: "User" } // Reference to User Model!
+});
+
+export const CourseDetails = model("CourseDetails", courseDetailsSchema);
 ```

@@ -1,26 +1,32 @@
 export const meta = {
   id: "M13-18",
   number: "18",
-  title: "Database Error Handling",
-  khmerTitle: "ការគ្រប់គ្រងកំហុស Database (CastError, DuplicateKey, ValidationError)",
+  title: "Course & Lesson Relationships",
+  khmerTitle: "ការគ្រប់គ្រងទំនាក់ទំនងរវាង Course និង Lessons ក្នុង Database",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការបកប្រែកំហុសកម្មវិធីបញ្ជាជាក់លាក់ MongoDB (CastError, លេខកូដ 11000 ស្ទួនសោរ, ValidationError) ទៅជា HTTP Response 400/409/422 ដែលងាយស្រួលប្រើ។`,
-  tip: "ចាប់លេខកូដកំហុស MongoDB `11000` ដើម្បីជូនដំណឹងដល់អ្នកប្រើប្រាស់ថាមានអ៊ីមែល ឬឈ្មោះអ្នកប្រើប្រាស់ដែលមានស្ថានភាព 409 រួចហើយ។",
-  objective: "បកប្រែកំហុសកម្មវិធីបញ្ជា MongoDB កម្រិតទាបទៅជាការផ្ទុកកំហុស HTTP ស្អាត។",
-  expectedOutcome: "Raw stack traceសូន្យបានលេចធ្លាយដល់ Client ។",
-  codeSnippet: "export const handleDbError = (err) => {\n  if (err.name === \"CastError\") {\n    return { statusCode: 400, message: `Invalid ${err.path}: ${err.value}` };\n  }\n  if (err.code === 11000) {\n    const field = Object.keys(err.keyValue)[0];\n    return { statusCode: 409, message: `Duplicate value for ${field}. Please use another value.` };\n  }\n  return { statusCode: 500, message: \"Database Error\" };\n};",
+  summary: "ការភ្ជាប់ទំនាក់ទំនង Parent-Child រវាង Course Collection និង Lesson Collection ក្នុង MongoDB៖\n\nរចនាសម្ព័ន្ធ៖\n* Course Document ផ្ទុកព័ត៌មានទូទៅនៃ Course\n* Lesson Document ផ្ទុក `courseId: { type: Schema.Types.ObjectId, ref: \"Course\" }`\n* សរសេរ Endpoint `GET /api/v1/courses/:courseId/lessons` ដោយ Query តាម `{ courseId }`",
+  tip: "ការដាក់ Index លើ `courseId` ក្នុង `LessonSchema` គឺចាំបាច់បំផុត ដើម្បីឱ្យការទាញយក Lessons តាម Course មានល្បឿនលឿន។",
+  objective: "ចេះភ្ជាប់ទំនាក់ទំនងរវាង Course និង Lessons តាមរយៈ Foreign ObjectId References។",
+  expectedOutcome: "ដោះស្រាយ Parent-Child Relationships ក្នុង REST Endpoints បានយ៉ាងស្ទាត់ជំនាញ។",
+  codeSnippet: "import { Lesson } from \"../models/lesson.model.js\";\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\n// GET /api/v1/courses/:courseId/lessons\nexport const getLessonsForCourse = async (courseId) => {\n  // 1. Verify parent course exists\n  const courseExists = await Course.exists({ _id: courseId });\n  if (!courseExists) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // 2. Fetch all child lessons belonging to this course\n  const lessons = await Lesson.find({ courseId }).sort(\"orderIndex\");\n  return lessons;\n};",
 };
 
 ```javascript
-export const handleDbError = (err) => {
-  if (err.name === "CastError") {
-    return { statusCode: 400, message: `Invalid ${err.path}: ${err.value}` };
+import { Lesson } from "../models/lesson.model.js";
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
+
+// GET /api/v1/courses/:courseId/lessons
+export const getLessonsForCourse = async (courseId) => {
+  // 1. Verify parent course exists
+  const courseExists = await Course.exists({ _id: courseId });
+  if (!courseExists) {
+    throw new AppError("Course not found", 404);
   }
-  if (err.code === 11000) {
-    const field = Object.keys(err.keyValue)[0];
-    return { statusCode: 409, message: `Duplicate value for ${field}. Please use another value.` };
-  }
-  return { statusCode: 500, message: "Database Error" };
+
+  // 2. Fetch all child lessons belonging to this course
+  const lessons = await Lesson.find({ courseId }).sort("orderIndex");
+  return lessons;
 };
 ```

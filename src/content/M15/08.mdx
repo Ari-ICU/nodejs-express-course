@@ -1,23 +1,28 @@
 export const meta = {
   id: "M15-08",
   number: "08",
-  title: "Validation Errors",
-  khmerTitle: "ការគ្រប់គ្រង និងកែច្នៃកំហុស Validation",
+  title: "Handling Mongoose Validation Errors",
+  khmerTitle: "ការដោះស្រាយកំហុស Mongoose ValidationError",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការស្ទាក់ចាប់កំហុស Zod និង Mongoose validation នៅខាងក្នុងCentralized Error Handler ហើយបំប្លែងពួកវាទៅជាបញ្ជីកំហុសដែលងាយស្រួលប្រើសម្រាប់ Client ។`,
-  tip: "បំប្លែង​វត្ថុ​កំហុស​Validation​ឆៅ​ទៅ​ជា​Array​នៃ​ធាតុ `{ field, message }` សម្រាប់​ទម្រង់​មុខ។",
-  objective: "ធ្វើ​ឲ្យ​កំហុស​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ភាព​ធម្មតា​ទៅ​ជា​Schema​ស្តង់ដារ។",
-  expectedOutcome: "សារកំហុសក្នុង Authentication ដែលងាយស្រួលប្រើ។",
-  codeSnippet: "if (err.name === \"ValidationError\") {\n  const issues = Object.values(err.errors).map(el => ({\n    field: el.path,\n    message: el.message\n  }));\n  return res.status(400).json({ success: false, error: \"Validation Error\", issues });\n}",
+  summary: "នៅពេលដែលទិន្នន័យមិនត្រូវតាម Schema Rules Mongoose នឹងបោះកំហុសឈ្មោះ **`ValidationError`** (Status Code 500 ជាលំនាំដើម)។\n\nយើងត្រូវបង្កើត Handler ពិសេសមួយដើម្បីបំប្លែងវាឱ្យក្លាយជា **400 Bad Request** ដ៏ស្អាត៖\n* ស្រង់យក Messages ចេញពី `Object.values(err.errors)`\n* បង្កើត `new AppError(message, 400)`",
+  tip: "ការបំប្លែង Mongoose ValidationError ទៅជា AppError ជួយឱ្យ Status Code ប្តូរពី 500 (Server Bug) មកជា 400 (Client Input Error) វិញ។",
+  objective: "ចេះស្ទាក់ចាប់ និងបំប្លែង Mongoose ValidationError ទៅជា 400 Bad Request Envelope។",
+  expectedOutcome: "Client ទទួលបានបញ្ជី Validation Errors ច្បាស់លាស់ពី Mongoose Schema។",
+  codeSnippet: "import { AppError } from \"../errors/AppError.js\";\n\n// Helper: Handle Mongoose Schema Validation Errors\nexport const handleMongooseValidationError = (err) => {\n  // Extract all validation failure messages\n  const errorMessages = Object.values(err.errors).map(el => el.message);\n  const message = `Invalid input data: ${errorMessages.join(\". \")}`;\n  return new AppError(message, 400);\n};\n\n// In global error handler:\n// if (err.name === \"ValidationError\") err = handleMongooseValidationError(err);",
 };
 
 ```javascript
-if (err.name === "ValidationError") {
-  const issues = Object.values(err.errors).map(el => ({
-    field: el.path,
-    message: el.message
-  }));
-  return res.status(400).json({ success: false, error: "Validation Error", issues });
-}
+import { AppError } from "../errors/AppError.js";
+
+// Helper: Handle Mongoose Schema Validation Errors
+export const handleMongooseValidationError = (err) => {
+  // Extract all validation failure messages
+  const errorMessages = Object.values(err.errors).map(el => el.message);
+  const message = `Invalid input data: ${errorMessages.join(". ")}`;
+  return new AppError(message, 400);
+};
+
+// In global error handler:
+// if (err.name === "ValidationError") err = handleMongooseValidationError(err);
 ```

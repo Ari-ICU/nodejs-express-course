@@ -1,19 +1,31 @@
 export const meta = {
   id: "M13-15",
   number: "15",
-  title: "Sorting",
-  khmerTitle: "ការអនុវត្ត Multi-field Sorting",
+  title: "Sorting in MongoDB (.sort())",
+  khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting ក្នុង MongoDB",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការញែកការណែនាំតម្រៀបដោយបំបែកដោយសញ្ញាក្បៀសទៅជាជម្រើសតម្រៀប Mongoose ។",
-  tip: "តែងតែផ្តល់នូវ Sorting ថយក្រោយដែលមានស្ថេរភាព (ឧ. `-_id` ឬ `-createdAt`) ដូច្នេះលទ្ធផលដែលបានបិទភ្ជាប់មិនដែលផ្លាស់ប្តូរលំដាប់ដោយមិនបានរំពឹងទុកទេ។",
-  objective: "អនុវត្ត Sorting ពហុវាល។",
-  expectedOutcome: "Sorting លទ្ធផលដែលគ្រប់គ្រងដោយ Client ដែលកំណត់ដោយការកំណត់។",
-  codeSnippet: "export const buildSort = (sortParam) => {\n  return sortParam ? sortParam.split(\",\").join(\" \") : \"-createdAt\";\n};",
+  summary: "ការតម្រៀបទិន្នន័យក្នុង MongoDB តាមរយៈ **`.sort()`**៖\n\n* **Ascending (ពីតូចទៅធំ)**៖ `.sort(\"price\")` ឬ `.sort({ price: 1 })`\n* **Descending (ពីធំទៅតូច)**៖ `.sort(\"-price\")` ឬ `.sort({ price: -1 })`\n* **Multi-field Sorting**៖ `.sort(\"-price createdAt\")` (តម្រៀបតាមតម្លៃខ្ពស់មុន បើតម្លៃស្មើគ្នា តម្រៀបតាមថ្ងៃបង្កើតថ្មីបំផុត)",
+  tip: "ដើម្បីឱ្យ Sorting ដំណើរការលឿនលើ Dataset ធំៗ ត្រូវប្រាកដថា Field នោះមាន **Index** ក្នុង Schema។",
+  objective: "ចេះតម្រៀបទិន្នន័យតាម Field មួយ ឬច្រើនក្នុង MongoDB។",
+  expectedOutcome: "API គាំទ្រការតម្រៀបទិន្នន័យប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
+  codeSnippet: "import { Course } from \"../models/course.model.js\";\n\n// Sort dynamically from query: ?sort=-price,title\nexport const getSortedCourses = async (sortQuery) => {\n  let query = Course.find();\n\n  if (sortQuery) {\n    const sortBy = sortQuery.split(\",\").join(\" \");\n    query = query.sort(sortBy);\n  } else {\n    query = query.sort(\"-createdAt\"); // Default: Newest first\n  }\n\n  return await query;\n};",
 };
 
 ```javascript
-export const buildSort = (sortParam) => {
-  return sortParam ? sortParam.split(",").join(" ") : "-createdAt";
+import { Course } from "../models/course.model.js";
+
+// Sort dynamically from query: ?sort=-price,title
+export const getSortedCourses = async (sortQuery) => {
+  let query = Course.find();
+
+  if (sortQuery) {
+    const sortBy = sortQuery.split(",").join(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt"); // Default: Newest first
+  }
+
+  return await query;
 };
 ```

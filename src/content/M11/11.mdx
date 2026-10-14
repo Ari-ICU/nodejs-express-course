@@ -1,27 +1,21 @@
 export const meta = {
   id: "M11-11",
   number: "11",
-  title: "MongoDB CRUD",
-  khmerTitle: "ប្រតិបត្តិការ CRUD មូលដ្ឋានក្នុង MongoDB",
+  title: "MongoDB Atlas Cloud Setup",
+  khmerTitle: "ការបង្កើត និងរៀបចំ Cloud Database ជាមួយ MongoDB Atlas",
   type: "lab",
-  codeLanguage: "javascript",
-  summary: `កំពុងដំណើរការសំណួរស្នូលដោយប្រើ \`insertOne()\`, \`insertMany()\`, \`find()\`, \`findOne()\`, \`updateOne()\`, និង \`deleteOne()\` នៅក្នុង MongoDB ។`,
-  tip: "តែងតែប្រើ Filter សំណួរជាមួយ `deleteOne()` និង `updateOne()` ដើម្បីជៀសវាងការកែប្រែទ្រង់ទ្រាយធំដោយអចេតនា។",
-  objective: "អនុវត្តប្រតិបត្តិការ CRUD តាមរយៈប្រតិបត្តិករសំណួរ MongoDB ។",
-  expectedOutcome: "ស្ទាត់ជំនាញជាមួយភាសាសំណួរ MongoDB ដើម។",
-  codeSnippet: "// Insert\ndb.users.insertOne({ name: \"Sokha\", role: \"admin\" });\n\n// Find\ndb.users.find({ role: \"admin\" });\n\n// Update\ndb.users.updateOne({ name: \"Sokha\" }, { $set: { verified: true } });\n\n// Delete\ndb.users.deleteOne({ name: \"Sokha\" });",
+  codeLanguage: "bash",
+  summary: "**MongoDB Atlas** គឺជា Fully-Managed Cloud Database Service ផ្លូវការរបស់ MongoDB ដែលដំណើរការលើ AWS, Google Cloud, ឬ Azure។\n\nជំហានបង្កើត Free M0 Cluster សម្រាប់ Course API៖\n1. បង្កើត Account លើ [cloud.mongodb.com](https://cloud.mongodb.com)\n2. បង្កើត Cluster (ជ្រើសរើស Cloud Provider និង Region ដែលជិតបំផុត ដូចជា Singapore)\n3. បង្កើត Database User (Username & Secure Password)\n4. Configure Network Access៖ Allow IP Address (`0.0.0.0/0` សម្រាប់ Development)\n5. ចម្លង **Connection String URI** សម្រាប់ដាក់ក្នុង `.env`",
+  tip: "កុំដាក់ Password ពិតប្រាកដក្នុង Git Repository! តែងតែរក្សាទុក Connection String ក្នុង `.env` និងបញ្ចូល `.env` ក្នុង `.gitignore`។",
+  objective: "ចេះ Setup Cloud MongoDB Atlas Cluster និងទាញយក Connection String។",
+  expectedOutcome: "ទទួលបាន Production-ready Cloud MongoDB Cluster សម្រាប់ភ្ជាប់ជាមួយ Express Backend។",
+  codeSnippet: "# Standard MongoDB Atlas Connection String URI Format:\n# mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority\n\n# Example for our Course Catalog Project:\nDATABASE_URL=mongodb+srv://course_admin:SuperSecretPass123@cluster0.abcde.mongodb.net/course_catalog_db?retryWrites=true&w=majority",
 };
 
-```javascript
-// Insert
-db.users.insertOne({ name: "Sokha", role: "admin" });
+```bash
+# Standard MongoDB Atlas Connection String URI Format:
+# mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority
 
-// Find
-db.users.find({ role: "admin" });
-
-// Update
-db.users.updateOne({ name: "Sokha" }, { $set: { verified: true } });
-
-// Delete
-db.users.deleteOne({ name: "Sokha" });
+# Example for our Course Catalog Project:
+DATABASE_URL=mongodb+srv://course_admin:SuperSecretPass123@cluster0.abcde.mongodb.net/course_catalog_db?retryWrites=true&w=majority
 ```

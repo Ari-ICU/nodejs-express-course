@@ -1,24 +1,26 @@
 export const meta = {
   id: "M13-07",
   number: "07",
-  title: "CRUD API with MongoDB",
-  khmerTitle: "ស្ថាបត្យកម្ម CRUD API ពេញលេញជាមួយ MongoDB",
-  type: "architecture",
+  title: "Full CRUD API Integration",
+  khmerTitle: "ការរួមបញ្ចូលប្រព័ន្ធ CRUD ពេញលេញជាមួយ MongoDB",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: `ស្ថាបត្យកម្មពីចុងដល់ចុងតភ្ជាប់ផ្លូវ Controllers Services និងគំរូ Mongoose សម្រាប់ធនធាន CRUD ពេញលេញ។`,
-  tip: "តែងតែប្រើ HTTP Verbs ស្តង់ដារ និងផ្លូវ RESTful URL នៅទូទាំងធនធាន CRUD ទាំងអស់។",
-  objective: "ប្រមូលផ្តុំ CRUD API ពេញលេញពី HTTP ទៅ MongoDB និងត្រឡប់មកវិញ។",
-  expectedOutcome: "បំពេញសមត្ថភាព CRUD ពីចុងដល់ចប់សម្រាប់ Entity កម្មវិធីណាមួយ។",
-  codeSnippet: "/* Complete CRUD Flow:\n   1. Client: POST /api/v1/products -> \n   2. Route: validates body -> \n   3. Controller: extracts req.body -> \n   4. Service: calls Product.create() -> \n   5. DB: persists document -> \n   6. Client: receives 201 Created JSON\n*/",
+  summary: "ការរួមបញ្ចូលគ្រប់ស្រទាប់ (Routes -> Controllers -> Services -> MongoDB Model) ឱ្យក្លាយជា **Full Production CRUD API** ពេញលេញ៖\n\n* **POST /courses** ➔ បង្កើត Course ក្នុង MongoDB\n* **GET /courses** ➔ ទាញយកបញ្ជី Courses ពី MongoDB\n* **GET /courses/:id** ➔ ទាញយក Course តាម ID\n* **PATCH /courses/:id** ➔ កែប្រែទិន្នន័យ Course ក្នុង MongoDB\n* **DELETE /courses/:id** ➔ លុប Course ចេញពី MongoDB",
+  tip: "នេះគឺជាចំណុចកំពូលនៃការរួមបញ្ចូលគ្នារវាង Express Architecture (Modules 06-10) និង MongoDB (Modules 11-12)។",
+  objective: "ចេះសរសេរ End-to-End CRUD API ជាមួយ MongoDB និង Mongoose។",
+  expectedOutcome: "ប្រព័ន្ធ CRUD API ដំណើរការពេញលេញលើ Cloud MongoDB Database។",
+  codeSnippet: "// Service Layer (src/services/course.service.js)\nimport { Course } from \"../models/course.model.js\";\n\nexport const getAllCourses = async (query) => await Course.find(query);\nexport const getCourseById = async (id) => await Course.findById(id);\nexport const createCourse = async (data) => await Course.create(data);\nexport const updateCourse = async (id, data) => {\n  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });\n};\nexport const deleteCourse = async (id) => await Course.findByIdAndDelete(id);",
 };
 
 ```javascript
-/* Complete CRUD Flow:
-   1. Client: POST /api/v1/products -> 
-   2. Route: validates body -> 
-   3. Controller: extracts req.body -> 
-   4. Service: calls Product.create() -> 
-   5. DB: persists document -> 
-   6. Client: receives 201 Created JSON
-*/
+// Service Layer (src/services/course.service.js)
+import { Course } from "../models/course.model.js";
+
+export const getAllCourses = async (query) => await Course.find(query);
+export const getCourseById = async (id) => await Course.findById(id);
+export const createCourse = async (data) => await Course.create(data);
+export const updateCourse = async (id, data) => {
+  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+};
+export const deleteCourse = async (id) => await Course.findByIdAndDelete(id);
 ```

@@ -1,19 +1,25 @@
 export const meta = {
   id: "M13-03",
   number: "03",
-  title: "Environment Variables",
+  title: "Environment Variables for Database",
   khmerTitle: "ការគ្រប់គ្រង Database Credentials ក្នុង .env",
   type: "lab",
   codeLanguage: "bash",
-  summary: `ការធានានូវព័ត៌មានសម្ងាត់ Database Connection string សំណុំឈ្មោះចម្លង និងប្រភពនៃ Authentication នៅក្នុងEnvironment Variables។`,
-  tip: "កុំដាក់ PasswordDatabase ឬAtlas connection string ទៅការគ្រប់គ្រងប្រភព។",
-  objective: "ធ្វើខាងក្រៅConnection string Database ទាំងអស់ទៅក្នុងEnvironment Variables។",
-  expectedOutcome: "ការគ្រប់គ្រងព័ត៌មានសម្ងាត់ Database សុវត្ថិភាព។",
-  codeSnippet: "# .env configuration:\nDATABASE_URL=mongodb+srv://admin:StrongPass99@cluster.net/shop_db\nPORT=5000",
+  summary: "សុវត្ថិភាព Database Credentials គឺជាកាតព្វកិច្ចចម្បងរបស់ Backend Developer៖\n\n* មិនត្រូវ Commit Password ឬ Atlas Connection Strings ចូលទៅកាន់ Git Repo ជាដាច់ខាត\n* ប្រើប្រាស់ `.env.example` សម្រាប់ចែករំលែក Template ទៅកាន់ Team\n* ប្រើប្រាស់ `dotenv` ដើម្បី Load អថេរទៅក្នុង `process.env`",
+  tip: "ត្រូវប្រាកដថា `.env` ស្ថិតនៅក្នុង `.gitignore` ជានិច្ច មុននឹងធ្វើ `git commit` ដំបូង។",
+  objective: "ចេះគ្រប់គ្រង Database Connection Strings តាមរយៈ Environment Variables ដោយសុវត្ថិភាព។",
+  expectedOutcome: "Credentials ទាំងអស់ត្រូវបានការពារ មិនមានហានិភ័យបែកធ្លាយលើ GitHub/GitLab។",
+  codeSnippet: "# .env (Never commit to Git!)\nPORT=5000\nNODE_ENV=development\nDATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority\n\n# .env.example (Safe to commit for team onboarding)\nPORT=5000\nNODE_ENV=development\nDATABASE_URL=your_mongodb_connection_string_here",
 };
 
 ```bash
-# .env configuration:
-DATABASE_URL=mongodb+srv://admin:StrongPass99@cluster.net/shop_db
+# .env (Never commit to Git!)
 PORT=5000
+NODE_ENV=development
+DATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority
+
+# .env.example (Safe to commit for team onboarding)
+PORT=5000
+NODE_ENV=development
+DATABASE_URL=your_mongodb_connection_string_here
 ```

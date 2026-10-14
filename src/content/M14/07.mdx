@@ -1,22 +1,29 @@
 export const meta = {
   id: "M14-07",
   number: "07",
-  title: "Joi",
-  khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ Joi Schema Validation",
-  type: "concept",
+  title: "Validating Request Params (MongoDB ObjectId)",
+  khmerTitle: "ការ Validate Route Parameters និង MongoDB ObjectId",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: `Joi គឺជាភាសាពិពណ៌នា Schema ដ៏មានឥទ្ធិពល និង Validation ទិន្នន័យសម្រាប់ JavaScript ដែលត្រូវបានប្រើប្រាស់យ៉ាងទូលំទូលាយនៅក្នុង Services Node.js Legacy និងសហគ្រាស។`,
-  tip: "Joi មានថាមពលខ្លាំងសម្រាប់គម្រោង JavaScript សុទ្ធ ប៉ុន្តែ Zod បានជំនួសវាយ៉ាងទូលំទូលាយសម្រាប់កម្មវិធី TypeScript និង ESM ទំនើប។",
-  objective: "ស្វែងយល់ពីនិយមន័យនៃ Schema Joi និង Methods ផ្ទៀងផ្ទាត់។",
-  expectedOutcome: "ភាពស៊ាំជាមួយ Schema Joi សម្រាប់ការថែរក្សាមូលដ្ឋានកូដ Legacy ។",
-  codeSnippet: "import Joi from \"joi\";\n\nconst schema = Joi.object({\n  username: Joi.string().alphanum().min(3).max(30).required(),\n  email: Joi.string().email().required()\n});",
+  summary: "នៅពេល Client ហៅ Endpoint ដូចជា `/api/v1/courses/:id` ប្រសិនបើ Client បញ្ជូន ID មិនត្រឹមត្រូវ (ដូចជា `/courses/abc`) MongoDB នឹងបោះកំហុស **CastError**។\n\nយើងអាច Validate `req.params.id` ជាមុនដោយប្រើ Zod Regex ផ្ទៀងផ្ទាត់ **24 Hexadecimal Characters** នៃ MongoDB ObjectId៖\n`z.string().regex(/^[0-9a-fA-F]{24}$/, \"Invalid MongoDB ObjectId\")`",
+  tip: "ការ Validate ID នៅកម្រិត Route Params ការពារកុំឱ្យ Invalid Requests ទៅរំខានដល់ Database Driver។",
+  objective: "ចេះ Validate MongoDB ObjectId ក្នុង Route Parameters តាមរយៈ Zod Regex។",
+  expectedOutcome: "Endpoint បដិសេធ Invalid ObjectIds ភ្លាមៗជាមួយ 400 Bad Request។",
+  codeSnippet: "import { z } from \"zod\";\n\n// Step 1: Define MongoDB ObjectId Validator Schema\nexport const mongoIdParamSchema = z.object({\n  id: z\n    .string()\n    .regex(/^[0-9a-fA-F]{24}$/, \"Invalid MongoDB ObjectId parameter format\")\n});\n\n// Step 2: Test validation\nconst testParam = { id: \"6648e58319f3a9e224e78891\" }; // Valid 24 hex chars\nconst check = mongoIdParamSchema.safeParse(testParam);\nconsole.log(\"Is valid ObjectId?\", check.success); // true",
 };
 
 ```javascript
-import Joi from "joi";
+import { z } from "zod";
 
-const schema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  email: Joi.string().email().required()
+// Step 1: Define MongoDB ObjectId Validator Schema
+export const mongoIdParamSchema = z.object({
+  id: z
+    .string()
+    .regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ObjectId parameter format")
 });
+
+// Step 2: Test validation
+const testParam = { id: "6648e58319f3a9e224e78891" }; // Valid 24 hex chars
+const check = mongoIdParamSchema.safeParse(testParam);
+console.log("Is valid ObjectId?", check.success); // true
 ```

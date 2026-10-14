@@ -1,24 +1,31 @@
 export const meta = {
   id: "M13-05",
   number: "05",
-  title: "Creating Controllers",
+  title: "Course Controller with Database Operations",
   khmerTitle: "ការបង្កើត Controllers សម្រាប់ Database Endpoints",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `បង្កើតកម្មវិធីគ្រប់គ្រង Controllers ស្ដើងដែលញែក Request បញ្ចូល និងរៀបចំ ResponseDatabase ។`,
-  tip: "មុខងាររបស់ Controllers រុំនៅក្នុងឧបករណ៍ដោះស្រាយ async ដើម្បីលុបបំបាត់ `try/catch` boilerplate ដែលមិនត្រូវការ។",
-  objective: "បង្កើត Controllers ដែលគ្រប់គ្រង Params HTTP និងត្រឡប់លទ្ធផល Database ។",
-  expectedOutcome: "សម្អាត Controllers ដែលជាប់លាប់។",
-  codeSnippet: "export const getProducts = async (req, res, next) => {\n  try {\n    const products = await productService.listProducts(req.query);\n    res.json({ success: true, data: products });\n  } catch (err) {\n    next(err);\n  }\n};",
+  summary: "ការសរសេរ Course Controller ដែលភ្ជាប់ទៅកាន់ MongoDB Service Layer៖\n\nលក្ខណៈស្តង់ដារ៖\n* រុំដោយ `asyncHandler` ដើម្បីកាត់បន្ថយ `try/catch` boilerplate\n* ទទួល `req.body` ឬ `req.query` រួចហៅ Service\n* បញ្ជូន Standard JSON Envelope ត្រឡប់ទៅ Client",
+  tip: "រក្សា Controller ឱ្យស្គម (Slim Controller) ដោយមិនសរសេរ Mongoose Query ដោយផ្ទាល់ក្នុង Controller ឡើយ។",
+  objective: "ចេះសរសេរ Controller ដែល Handle Database Queries តាមស្ថាបត្យកម្មស្អាត។",
+  expectedOutcome: "Controller មានរបៀបរៀបរយ និងបញ្ជូន Errors ទៅ Error Middleware ដោយស្វ័យប្រវត្តិ។",
+  codeSnippet: "// src/controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\nimport { asyncHandler } from \"../utils/asyncHandler.js\";\n\n// GET /api/v1/courses\nexport const getCourses = asyncHandler(async (req, res) => {\n  const courses = await courseService.getAllCourses(req.query);\n  res.status(200).json({ success: true, count: courses.length, data: courses });\n});\n\n// POST /api/v1/courses\nexport const createCourse = asyncHandler(async (req, res) => {\n  const newCourse = await courseService.createCourse(req.body);\n  res.status(201).json({ success: true, data: newCourse });\n});",
 };
 
 ```javascript
-export const getProducts = async (req, res, next) => {
-  try {
-    const products = await productService.listProducts(req.query);
-    res.json({ success: true, data: products });
-  } catch (err) {
-    next(err);
-  }
-};
+// src/controllers/course.controller.js
+import * as courseService from "../services/course.service.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+
+// GET /api/v1/courses
+export const getCourses = asyncHandler(async (req, res) => {
+  const courses = await courseService.getAllCourses(req.query);
+  res.status(200).json({ success: true, count: courses.length, data: courses });
+});
+
+// POST /api/v1/courses
+export const createCourse = asyncHandler(async (req, res) => {
+  const newCourse = await courseService.createCourse(req.body);
+  res.status(201).json({ success: true, data: newCourse });
+});
 ```

@@ -1,25 +1,33 @@
 export const meta = {
   id: "M14-06",
   number: "06",
-  title: "Validation Errors",
-  khmerTitle: "ទម្រង់ឆ្លើយតបកំហុស Validation (Field-level feedback)",
+  title: "Validating Request Body",
+  khmerTitle: "ការត្រួតពិនិត្យ Request Body ជាមួយ Zod parse()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការ​ធ្វើ​ទ្រង់ទ្រាយ​កំហុស​ក្នុង​ការ​ផ្ទៀងផ្ទាត់​ទៅ​ក្នុង​សារ​កំហុស​កម្រិត​វាល ដូច្នេះ​ផ្នែក​ខាង​មុខ​អាច​រំលេច​វាល​បញ្ចូល​ជាក់លាក់​ដែល​បរាជ័យ។",
-  tip: "ត្រឡប់ HTTP `422 Unprocessable Entity` ឬ `400 Bad Request` ជាមួយArrayនៃបញ្ហា។",
-  objective: "បង្កើត Response កំហុសនៃ Authentication កម្រិតវាលដែលអាចធ្វើសកម្មភាពបាន។",
-  expectedOutcome: "ជម្រះ Payload កំហុស វាល ដោយ វាល សម្រាប់ អ្នកប្រើប្រាស់ API ។",
-  codeSnippet: "// Formatted error response\n{\n  \"success\": false,\n  \"error\": \"Validation failed\",\n  \"issues\": [\n    { \"field\": \"email\", \"message\": \"Invalid email address\" },\n    { \"field\": \"password\", \"message\": \"Must be at least 8 characters\" }\n  ]\n}",
+  summary: "Zod ផ្តល់នូវ Methods ពីរសម្រាប់ធ្វើ Validation៖\n\n1. **`schema.parse(data)`**៖ ប្រសិនបើទិន្នន័យត្រឹមត្រូវ ត្រឡប់ Parsed Data; ប្រសិនបើខុស នឹង **Throw ZodError** ភ្លាមៗ\n2. **`schema.safeParse(data)`**៖ មិន Throw Error ទេ ប៉ុន្តែត្រឡប់ Object `{ success: true, data }` ឬ `{ success: false, error }`",
+  tip: "ប្រើប្រាស់ `safeParse()` នៅក្នុង Express Middlewares ដើម្បីឱ្យយើងអាចចាប់កំហុស និង Format Error Envelope បានយ៉ាងរលូនដោយមិនបាច់ប្រើ try/catch។",
+  objective: "ចេះប្រើប្រាស់ parse() និង safeParse() ដើម្បី Validate Request Payloads។",
+  expectedOutcome: "ដឹងពីរបៀបស្ទាក់ចាប់កំហុស Validation មុនពេលទៅដល់ Route Handler។",
+  codeSnippet: "import { createCourseSchema } from \"./validations/course.validation.js\";\n\n// Test parsing with safeParse\nconst testPayload = {\n  title: \"Node API\",\n  instructor: \"Ratha\",\n  price: -10 // Invalid price!\n};\n\nconst result = createCourseSchema.safeParse(testPayload);\n\nif (!result.success) {\n  console.log(\"❌ Validation failed with issues:\");\n  console.log(result.error.issues);\n} else {\n  console.log(\"✅ Valid data:\", result.data);\n}",
 };
 
 ```javascript
-// Formatted error response
-{
-  "success": false,
-  "error": "Validation failed",
-  "issues": [
-    { "field": "email", "message": "Invalid email address" },
-    { "field": "password", "message": "Must be at least 8 characters" }
-  ]
+import { createCourseSchema } from "./validations/course.validation.js";
+
+// Test parsing with safeParse
+const testPayload = {
+  title: "Node API",
+  instructor: "Ratha",
+  price: -10 // Invalid price!
+};
+
+const result = createCourseSchema.safeParse(testPayload);
+
+if (!result.success) {
+  console.log("❌ Validation failed with issues:");
+  console.log(result.error.issues);
+} else {
+  console.log("✅ Valid data:", result.data);
 }
 ```

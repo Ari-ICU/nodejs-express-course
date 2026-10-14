@@ -1,19 +1,37 @@
 export const meta = {
   id: "M14-10",
   number: "10",
-  title: "Sanitization",
-  khmerTitle: "ការធ្វើ Data Sanitization ដើម្បីការពារ Injection",
+  title: "Formatting Validation Error Envelopes",
+  khmerTitle: "ការរៀបចំទម្រង់ Error Response ចេញពី Zod Errors",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "សម្អាតធាតុចូលរបស់អ្នកប្រើប្រាស់ (កាត់បន្ថយចន្លោះទទេ អក្សរតូច អ៊ីមែល ដកស្លាក HTML គេចពីប្រតិបត្តិករ MongoDB) ដើម្បីការពារការចាក់ XSS និង NoSQL ។",
-  tip: "កាត់ String អ៊ីមែល និងអក្សរតូចជានិច្ច ដើម្បីជៀសវាងការប៉ះទង្គិចគណនីស្ទួន ដែលបណ្តាលមកពីភាពខុសគ្នានៃប្រអប់។",
-  objective: "អនុវត្តការធ្វើ Sanitization ទិន្នន័យដោយស្វ័យប្រវត្តិលើអត្ថបទដែលចូលមក។",
-  expectedOutcome: "សម្អាត​ទិន្នន័យ​បញ្ចូល​ធម្មតា​ដែល​រក្សាទុក​ក្នុង​មូលដ្ឋាន​ទិន្នន័យ។",
-  codeSnippet: "export const sanitizeEmail = (email) => {\n  return typeof email === \"string\" ? email.trim().toLowerCase() : \"\";\n};",
+  summary: "នៅពេលដែល Validation បរាជ័យ Zod នឹង Throw `ZodError` ដែលផ្ទុកនូវ Array នៃ Issues។\n\nយើងត្រូវបំប្លែង Zod Issues ទាំងនោះឱ្យក្លាយជា **Standard Error Envelope** ដ៏ស្អាត៖\n```json\n{\n  \"success\": false,\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Validation failed for course creation\",\n    \"details\": [\n      { \"field\": \"price\", \"message\": \"Price cannot be negative\" }\n    ]\n  }\n}\n```",
+  tip: "ការផ្តល់ព័ត៌មានលម្អិតតាម `details` ជួយឱ្យ Frontend Developers អាច Map Error Message ទៅដាក់ក្រោម Input Field នីមួយៗលើ Form ដោយស្វ័យប្រវត្តិ។",
+  objective: "ចេះ Format ZodError ឱ្យក្លាយជាស្ដង់ដារ Error Response Envelope។",
+  expectedOutcome: "Frontend ទទួលបានបញ្ជីកំហុសច្បាស់លាស់ ងាយស្រួលបង្ហាញជូន User។",
+  codeSnippet: "import { ZodError } from \"zod\";\n\n// Helper to format Zod errors into a clean array\nexport const formatZodErrors = (zodError) => {\n  return zodError.issues.map(issue => ({\n    field: issue.path.join(\".\"),\n    message: issue.message\n  }));\n};\n\n// Example in centralized error handler:\n// if (err instanceof ZodError) {\n//   return res.status(400).json({\n//     success: false,\n//     error: {\n//       code: \"VALIDATION_ERROR\",\n//       message: \"Invalid request payload\",\n//       details: formatZodErrors(err)\n//     }\n//   });\n// }",
 };
 
 ```javascript
-export const sanitizeEmail = (email) => {
-  return typeof email === "string" ? email.trim().toLowerCase() : "";
+import { ZodError } from "zod";
+
+// Helper to format Zod errors into a clean array
+export const formatZodErrors = (zodError) => {
+  return zodError.issues.map(issue => ({
+    field: issue.path.join("."),
+    message: issue.message
+  }));
 };
+
+// Example in centralized error handler:
+// if (err instanceof ZodError) {
+//   return res.status(400).json({
+//     success: false,
+//     error: {
+//       code: "VALIDATION_ERROR",
+//       message: "Invalid request payload",
+//       details: formatZodErrors(err)
+//     }
+//   });
+// }
 ```

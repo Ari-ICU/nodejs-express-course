@@ -1,18 +1,32 @@
 export const meta = {
   id: "M12-15",
   number: "15",
-  title: "Reading Documents",
-  khmerTitle: "ការទាញយកឯកសារ (Single & Multiple)",
+  title: "Query Filter Operators ($gte, $lte, $in)",
+  khmerTitle: "ការប្រើប្រាស់ Query Filter Operators ក្នុង Mongoose",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការទាញយកកំណត់ត្រាដោយប្រើលក្ខណៈវិនិច្ឆ័យជាក់លាក់ ការព្យាករណ៍វាលដែលបានជ្រើសរើស (`.select('+password')` ឬ `.select('-__v')`) និងពិនិត្យមើលអត្ថិភាព។",
-  tip: "ប្រើ `.select('-password')` តាមលំនាំដើមលើម៉ូដែលអ្នកប្រើប្រាស់ ដូច្នេះ Token មិនត្រូវបានផ្ញើទៅ Client ទេ។",
-  objective: "អាន​និង​គម្រោង​វាល​ជាក់លាក់​ពី​ឯកសារ។",
-  expectedOutcome: "ការទាញយកទិន្នន័យដោយសុវត្ថិភាព ដោយមិនរាប់បញ្ចូលវាលរសើប។",
-  codeSnippet: "// Find user by ID excluding internal fields\nconst user = await User.findById(userId).select(\"-password -__v\");",
+  summary: "MongoDB Filter Operators ដ៏មានឥទ្ធិពល៖\n\n* **Comparison**៖ `$gt` (>), `$gte` (>=), `$lt` (<), `$lte` (<=), `$ne` (!=)\n* **Inclusion**៖ `$in: [...]` (ផ្គូផ្គងតម្លៃណាមួយក្នុង Array)\n* **Logical**៖ `$or: [...]`, `$and: [...]`",
+  tip: "សញ្ញា Dollar Sign (`$`) នៅពីមុខពាក្យ គឺជាអនុសញ្ញារបស់ MongoDB សម្រាប់សម្គាល់ Operators។",
+  objective: "ចេះប្រើប្រាស់ Comparison និង Logical Operators ក្នុង Mongoose Queries។",
+  expectedOutcome: "សមត្ថភាពសរសេរ Complex Queries សម្រាប់ Filtering Course Catalog។",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Filter: Price between $20 and $60, and level is beginner or intermediate\nconst filteredCourses = await Course.find({\n  price: { $gte: 20, $lte: 60 },\n  level: { $in: [\"beginner\", \"intermediate\"] },\n  published: true\n});\n\n// Logical OR Query: Free courses OR Special promo courses\nconst promoCourses = await Course.find({\n  $or: [\n    { price: 0 },\n    { isPromo: true }\n  ]\n});",
 };
 
 ```javascript
-// Find user by ID excluding internal fields
-const user = await User.findById(userId).select("-password -__v");
+import { Course } from "./models/course.model.js";
+
+// Filter: Price between $20 and $60, and level is beginner or intermediate
+const filteredCourses = await Course.find({
+  price: { $gte: 20, $lte: 60 },
+  level: { $in: ["beginner", "intermediate"] },
+  published: true
+});
+
+// Logical OR Query: Free courses OR Special promo courses
+const promoCourses = await Course.find({
+  $or: [
+    { price: 0 },
+    { isPromo: true }
+  ]
+});
 ```

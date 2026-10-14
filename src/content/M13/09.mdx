@@ -1,20 +1,30 @@
 export const meta = {
   id: "M13-09",
   number: "09",
-  title: "Get Resources",
-  khmerTitle: "ការអនុវត្ត Get Collection Endpoint ជាមួយ Filters",
+  title: "Reading Resources from MongoDB",
+  khmerTitle: "ការទាញយក Course ពី MongoDB (Course.find & findById)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការអនុវត្ត Endpoint នៃបញ្ជី GET ជាមួយនឹងការត្រងសំណួរ Sorting និងការដាក់ទំព័រ។`,
-  tip: "តែងតែប្រើ `.lean()` លើសំណួរប្រមូលដើម្បីរក្សាទុកMemory និងបង្កើនប្រសិទ្ធភាព។",
-  objective: "បង្កើត Endpoint នៃ Collections ដែលអាចធ្វើមាត្រដ្ឋានបាន។",
-  expectedOutcome: "សំណួរប្រមូលរហ័សដែលគាំទ្រ FilterClient ។",
-  codeSnippet: "export const getProducts = async (req, res) => {\n  const products = await Product.find(req.query).lean();\n  res.json({ success: true, count: products.length, data: products });\n};",
+  summary: "ការទាញយក Course Documents ពី MongoDB តាមរយៈ Mongoose Queries៖\n\n* ពិនិត្យវត្តមាន Course តាម `_id` ជាមួយ `Course.findById(id)`\n* ប្រសិនបើរករកមិនឃើញ Throw Domain Error ភ្លាមៗ (កុំឱ្យ Controller ត្រូវ Check `if (!course)` ច្រើនដង)",
+  tip: "ការបោះ Custom AppError ចេញពី Service ជួយឱ្យកូដ Controller មានភាពខ្លី និងស្អាត។",
+  objective: "ចេះទាញយកទិន្នន័យពី MongoDB និង Handle ករណី NotFound។",
+  expectedOutcome: "សរសេរ Query Service Functions ដែលមានសុវត្ថិភាព និងច្បាស់លាស់។",
+  codeSnippet: "import { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const getCourseByIdService = async (courseId) => {\n  // Step 1: Query MongoDB collection by ObjectId\n  const course = await Course.findById(courseId);\n\n  // ⚠️ If not found in MongoDB -> Throw 404 AppError\n  if (!course) {\n    throw new AppError(`Course with ID ${courseId} not found in database`, 404);\n  }\n\n  return course;\n};",
 };
 
 ```javascript
-export const getProducts = async (req, res) => {
-  const products = await Product.find(req.query).lean();
-  res.json({ success: true, count: products.length, data: products });
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
+
+export const getCourseByIdService = async (courseId) => {
+  // Step 1: Query MongoDB collection by ObjectId
+  const course = await Course.findById(courseId);
+
+  // ⚠️ If not found in MongoDB -> Throw 404 AppError
+  if (!course) {
+    throw new AppError(`Course with ID ${courseId} not found in database`, 404);
+  }
+
+  return course;
 };
 ```

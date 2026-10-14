@@ -1,21 +1,31 @@
 export const meta = {
   id: "M12-16",
   number: "16",
-  title: "Updating Documents",
-  khmerTitle: "ការកែប្រែទិន្នន័យ (findByIdAndUpdate, updateOne)",
+  title: "Updating Documents in Mongoose",
+  khmerTitle: "ការកែប្រែទិន្នន័យ (findByIdAndUpdate & runValidators)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការធ្វើបច្ចុប្បន្នភាពឯកសារដោយប្រើ `findByIdAndUpdate()`, `updateOne()` និង `updateMany()` ។ ការកំណត់រចនាសម្ព័ន្ធ `{ new: true, runValidators: true }` ។",
-  tip: "តាមលំនាំដើម សំណួរអាប់ដេតមិនដំណើរការកម្មវិធីផ្ទៀងផ្ទាត់ Schema ទេ។ អ្នកត្រូវតែឆ្លងកាត់ `{ runValidators: true }` ដើម្បីអនុវត្តច្បាប់ Schema លើបច្ចុប្បន្នភាព!",
-  objective: "ធ្វើបច្ចុប្បន្នភាពឯកសារដែលមានស្រាប់ ខណៈពេលដែលរក្សា Validation នៃ Schema ។",
-  expectedOutcome: "ការផ្លាស់ប្តូរឯកសារប្រកបដោយសុវត្ថិភាព អនុវត្តច្បាប់ Validation ។",
-  codeSnippet: "const updatedProduct = await Product.findByIdAndUpdate(\n  productId,\n  { $set: req.body },\n  { new: true, runValidators: true } // Return updated doc & run validations!\n);",
+  summary: "Method ពេញនិយមបំផុតសម្រាប់កែប្រែ Document គឺ **`Course.findByIdAndUpdate(id, update, options)`**។\n\nOptions ដ៏សំខាន់ដែលមិនអាចខ្វះបាន៖\n* **`new: true`**៖ ត្រឡប់ Document ថ្មីដែលបានកែប្រែរួច (តាមលំនាំដើម Mongoose ត្រឡប់ Document ចាស់មុនកែប្រែ)\n* **`runValidators: true`**៖ បង្ខំឱ្យ Mongoose ដំណើរការ Schema Validation ឡើងវិញលើ Fields ថ្មី!",
+  tip: "⚠️ កំហុសញឹកញាប់៖ បើអ្នកមិនដាក់ `{ runValidators: true }` ទេ User អាច Update តម្លៃ `price: -100` បានដោយមិនជាប់ Error ឡើយ!",
+  objective: "ចេះប្រើប្រាស់ findByIdAndUpdate ជាមួយ options { new: true, runValidators: true }។",
+  expectedOutcome: "កែប្រែទិន្នន័យប្រកបដោយសុវត្ថិភាព និងអនុលោមតាម Schema Rules។",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  // Step 1: Update with critical options enabled\n  const updatedCourse = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    {\n      new: true,           // 💡 Return the modified document!\n      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!\n    }\n  );\n\n  return updatedCourse;\n};",
 };
 
 ```javascript
-const updatedProduct = await Product.findByIdAndUpdate(
-  productId,
-  { $set: req.body },
-  { new: true, runValidators: true } // Return updated doc & run validations!
-);
+import { Course } from "./models/course.model.js";
+
+export const updateCourseService = async (courseId, updateData) => {
+  // Step 1: Update with critical options enabled
+  const updatedCourse = await Course.findByIdAndUpdate(
+    courseId,
+    { $set: updateData },
+    {
+      new: true,           // 💡 Return the modified document!
+      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!
+    }
+  );
+
+  return updatedCourse;
+};
 ```

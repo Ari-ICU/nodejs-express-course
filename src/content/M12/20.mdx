@@ -1,20 +1,26 @@
 export const meta = {
   id: "M12-20",
   number: "20",
-  title: "Population",
+  title: "Mongoose Population (.populate())",
   khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងឯកសារជាមួយ .populate()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Population គឺជាការជំនួសរបស់ Mongoose សម្រាប់ SQL JOINs ។ វាជំនួសឯកសារយោងផ្លូវឯកសារដែលបានបញ្ជាក់ដោយស្វ័យប្រវត្តិជាមួយនឹងឯកសារយោងជាក់ស្តែងពី Collections ផ្សេងទៀត។`,
-  tip: "ប្រើការជ្រើសរើសវាលនៅខាងក្នុងបំពេញ (`.populate('author', 'name email')`) ដើម្បីជៀសវាងការទាញយកវាលដែលមិនចង់បានដូចជា Password ។",
-  objective: "ដោះស្រាយឯកសារយោងដោយប្រើ Population ។",
-  expectedOutcome: "ជាតិទឹកគ្មានថ្នេរនៃឯកសារយោងគន្លឹះបរទេសដែលទាក់ទង។",
-  codeSnippet: "// Replaces author ObjectId with the actual User document!\nconst post = await Post.findById(postId)\n  .populate(\"author\", \"name email avatar\")\n  .populate(\"comments.user\", \"name\");",
+  summary: "**Population** គឺជាជម្រើសជំនួស SQL JOINs ក្នុង Mongoose។\n\nដំណើរការការងារ៖\n* Lesson Document រក្សាទុកតែ `courseId: ObjectId(\"...\")` ប៉ុណ្ណោះ\n* នៅពេលហៅ `.populate(\"courseId\")` Mongoose នឹង Query ទៅកាន់ `courses` Collection ដោយស្វ័យប្រវត្តិតាមរយៈ `$lookup` ហើយជំនួស `courseId` ដោយ Course Document ពេញលេញ!",
+  tip: "ប្រើប្រាស់ Field Selection ក្នុង populate (`.populate('courseId', 'title price')`) ដើម្បីទាញយកតែ Fields ដែលត្រូវការ ជួយសន្សំសំចៃ Memory និង Network Bandwidth។",
+  objective: "ចេះប្រើប្រាស់ .populate() ដើម្បី Hydrate Relational References ក្នុង MongoDB។",
+  expectedOutcome: "ជំនាញដោះស្រាយ Parent-Child Relationships ក្នុង REST API Responses។",
+  codeSnippet: "import { Lesson } from \"./models/lesson.model.js\";\n\n// Fetch lesson and automatically populate parent Course data\nexport const getLessonWithCourse = async (lessonId) => {\n  // 💡 Teaching Note: Replaces courseId ObjectId with full Course Document!\n  const lesson = await Lesson.findById(lessonId)\n    .populate(\"courseId\", \"title instructor price level\");\n\n  return lesson;\n};",
 };
 
 ```javascript
-// Replaces author ObjectId with the actual User document!
-const post = await Post.findById(postId)
-  .populate("author", "name email avatar")
-  .populate("comments.user", "name");
+import { Lesson } from "./models/lesson.model.js";
+
+// Fetch lesson and automatically populate parent Course data
+export const getLessonWithCourse = async (lessonId) => {
+  // 💡 Teaching Note: Replaces courseId ObjectId with full Course Document!
+  const lesson = await Lesson.findById(lessonId)
+    .populate("courseId", "title instructor price level");
+
+  return lesson;
+};
 ```

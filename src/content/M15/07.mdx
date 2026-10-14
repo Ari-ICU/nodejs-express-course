@@ -1,28 +1,23 @@
 export const meta = {
   id: "M15-07",
   number: "07",
-  title: "Async Error Handling",
-  khmerTitle: "ការគ្រប់គ្រងកំហុស Asynchronous (catchAsync Wrapper)",
+  title: "Catch-All 404 Route Handler",
+  khmerTitle: "ការបង្កើត 404 Route Handler សម្រាប់ URL ដែលមិនមានក្នុងប្រព័ន្ធ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការលុបបំបាត់ប្លុក \`try/catch\` ច្រំដែលនៅក្នុងControllersដោយប្រើអនុគមន៍រុំ \`catchAsync\` លំដាប់ខ្ពស់ជាង ដែលចាប់យកPromisesដែលបានច្រានចោល ហើយបញ្ជូនពួកគេទៅ \`next(err)\` ។`,
-  tip: "Wrapper `catchAsync` 4 ជួររក្សាទុករាប់ពាន់បន្ទាត់នៃ try/catch boilerplate ឆ្លងកាត់មូលដ្ឋានកូដសហគ្រាស។",
-  objective: "លុបបំបាត់ការសាកល្បង/ចាប់បន្ទះ boilerplate ដោយប្រើឧបករណ៍រុំអសមកាល។",
-  expectedOutcome: "សម្អាតមុខងារ Controllers សង្ខេប។",
-  codeSnippet: "// Higher-Order Function to eliminate try/catch\nexport const catchAsync = (fn) => {\n  return (req, res, next) => {\n    fn(req, res, next).catch(next);\n  };\n};\n\n// Clean controller without any try/catch!\nexport const getUser = catchAsync(async (req, res) => {\n  const user = await userService.getUserById(req.params.id);\n  res.json({ success: true, data: user });\n});",
+  summary: "នៅពេល Client ហៅ URL ដែលមិនត្រឹមត្រូវ (ឧ. `GET /api/v1/invalid-route`) ប្រសិនបើយើងមិនមាន Catch-all Handler ទេ Express នឹងត្រឡប់ Default HTML 404 page ដែលមិនមែនជាទម្រង់ JSON REST API ឡើយ។\n\nដំណោះស្រាយ៖\n* ដាក់ Catch-all Middleware នៅខាងក្រោម Route ទាំងអស់\n* បង្កើត `new AppError(`Cannot find ${req.originalUrl} on this server!`, 404)`\n* បញ្ជូនទៅកាន់ `next(err)`",
+  tip: "Catch-all 404 Handler ត្រូវតែដាក់នៅពីក្រោម Route Definitions ទាំងអស់ និងនៅពីលើ Centralized Error Middleware ជានិច្ច។",
+  objective: "ចេះបង្កើត Catch-all 404 JSON Handler សម្រាប់ REST API។",
+  expectedOutcome: "រាល់ Invalid Endpoints ទាំងអស់ឆ្លើយតបជា JSON Error Envelope ត្រឹមត្រូវ។",
+  codeSnippet: "import { AppError } from \"./errors/AppError.js\";\n\n// Step 1: Place AFTER all valid routes in app.js\napp.all(\"*\", (req, res, next) => {\n  // 💡 Teaching Note: Passes clean 404 AppError directly to global error handler!\n  next(new AppError(`Endpoint ${req.method} ${req.originalUrl} does not exist on this server`, 404));\n});",
 };
 
 ```javascript
-// Higher-Order Function to eliminate try/catch
-export const catchAsync = (fn) => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
-  };
-};
+import { AppError } from "./errors/AppError.js";
 
-// Clean controller without any try/catch!
-export const getUser = catchAsync(async (req, res) => {
-  const user = await userService.getUserById(req.params.id);
-  res.json({ success: true, data: user });
+// Step 1: Place AFTER all valid routes in app.js
+app.all("*", (req, res, next) => {
+  // 💡 Teaching Note: Passes clean 404 AppError directly to global error handler!
+  next(new AppError(`Endpoint ${req.method} ${req.originalUrl} does not exist on this server`, 404));
 });
 ```

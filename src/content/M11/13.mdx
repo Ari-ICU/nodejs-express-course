@@ -1,18 +1,23 @@
 export const meta = {
   id: "M11-13",
   number: "13",
-  title: "MongoDB Atlas",
-  khmerTitle: "ការរៀបចំ Cloud Database ជាមួយ MongoDB Atlas",
+  title: "MongoDB Compass GUI",
+  khmerTitle: "ការប្រើប្រាស់ MongoDB Compass សម្រាប់ Visual Database Management",
   type: "lab",
   codeLanguage: "bash",
-  summary: `MongoDB Atlas គឺជា ServicesDatabase ពពកដែលត្រូវបានគ្រប់គ្រងយ៉ាងពេញលេញដែលត្រូវបានដាក់ឱ្យប្រើប្រាស់នៅលើ AWS, GCP, ឬ Azure ដោយផ្តល់នូវការបម្រុងទុកដោយស្វ័យប្រវត្តិ ការចម្លង ការត្រួតពិនិត្យ និងការធ្វើមាត្រដ្ឋាន។`,
-  tip: "នៅក្នុង Atlas កុំភ្លេចកំណត់រចនាសម្ព័ន្ធ IP Access List (បញ្ជីស `0.0.0.0/0` កំឡុងពេលអភិវឌ្ឍន៍ ឬ IP ឋិតិវន្តរបស់ Server ជាក់លាក់នៅក្នុងផលិតកម្ម) ។",
-  objective: "ផ្តល់ និងភ្ជាប់ពពក MongoDB Atlas cluster ។",
-  expectedOutcome: "ClusterDatabase ពពកផ្ទាល់ត្រៀមរួចរាល់សម្រាប់ការដាក់ពង្រាយផលិតកម្ម។",
-  codeSnippet: "# Connect string format for MongoDB Atlas:\nDATABASE_URL=mongodb+srv://admin_user:SecurePassword123@cluster0.abcde.mongodb.net/prod_db?retryWrites=true&w=majority",
+  summary: "**MongoDB Compass** គឺជា Official Graphical User Interface (GUI) របស់ MongoDB។\n\nសមត្ថភាពសំខាន់ៗរបស់ Compass សម្រាប់ Developer៖\n* **Visual Document Explorer**៖ មើល កែប្រែ បន្ថែម និងលុប Documents ដោយចុច Mouse\n* **Query Bar & Filters**៖ សាកល្បង Query Filters ដូចជា `{ price: { $gte: 30 } }`\n* **Performance Index Analyzer**៖ ពិនិត្យមើល Performance នៃ Queries និងបង្កើត Indexes\n* **Schema Tab**៖ វិភាគ Types និងទម្រង់នៃ Fields ទាំងអស់ក្នុង Collection",
+  tip: "Compass អនុញ្ញាតឱ្យអ្នក Export Queries ទៅជា JavaScript (Node.js) Code ដោយផ្ទាល់តាមរយៈប៊ូតុង 'Export to Language'!",
+  objective: "ចេះប្រើប្រាស់ MongoDB Compass GUI ដើម្បីពិនិត្យ និង Optimize ទិន្នន័យ។",
+  expectedOutcome: "មានឧបករណ៍ Visual Tool ងាយស្រួលត្រួតពិនិត្យ Database ពេលសរសេរ Express APIs។",
+  codeSnippet: "# Connect Compass to Local or Atlas Cluster:\n# 1. Open MongoDB Compass\n# 2. Paste connection string:\nmongodb+srv://course_admin:password@cluster0.net/course_catalog_db\n\n# 3. Click 'Connect'\n# 4. Explore 'courses' and 'lessons' collections visually!",
 };
 
 ```bash
-# Connect string format for MongoDB Atlas:
-DATABASE_URL=mongodb+srv://admin_user:SecurePassword123@cluster0.abcde.mongodb.net/prod_db?retryWrites=true&w=majority
+# Connect Compass to Local or Atlas Cluster:
+# 1. Open MongoDB Compass
+# 2. Paste connection string:
+mongodb+srv://course_admin:password@cluster0.net/course_catalog_db
+
+# 3. Click 'Connect'
+# 4. Explore 'courses' and 'lessons' collections visually!
 ```

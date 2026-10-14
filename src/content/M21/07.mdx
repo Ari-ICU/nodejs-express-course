@@ -5,23 +5,23 @@ export const meta = {
   khmerTitle: "ការសរសេរឯកសារ HTTP Responses (200, 201, 400, 404, 500)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Endpoint ត្រូវតែចងក្រងរាល់ Response ស្ថានភាព HTTP ដែលអាចធ្វើទៅបាន រួមទាំងលទ្ធផលជោគជ័យទាំងពីរ (200 OK, 201 Created) និងសេណារីយ៉ូបរាជ័យ។ Entity ឆ្លើយតបគួរតែភ្ជាប់ទៅ Schema សមាសភាគ ឬកំណត់រចនាសម្ព័ន្ធ JSON Response ច្បាស់លាស់។`,
-  tip: "ចងក្រងលេខកូដកំហុសទូទៅ (400, 401, 403, 404) សម្រាប់គ្រប់ Endpoint ដូច្នេះវិស្វករ Frontend អាចដោះស្រាយគ្រប់លក្ខខណ្ឌសាខាទាំងអស់។",
-  objective: "ចងក្រងឯកសារស្តង់ដារ ជោគជ័យ និងបរាជ័យ HTTP Response ជាមួយនឹង Schema payload ។",
-  expectedOutcome: "API Contract API ដែលអាចទស្សន៍ទាយបានកំណត់ទាំងផ្លូវរីករាយ និងសេណារីយ៉ូបរាជ័យ។",
-  codeSnippet: "/**\n * @openapi\n * /api/v1/products:\n *   post:\n *     summary: Create a new product\n *     tags: [Products]\n *     responses:\n *       201:\n *         description: Product created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Product'\n *       400:\n *         description: Bad Request (Validation failure)\n */",
+  summary: "Endpoints must document every possible HTTP status response, including both successful outcomes (200 OK, 201 Created) and failure scenarios. Response bodies should link to component schemas or define clear JSON response structures.",
+  tip: "Document common error codes (400, 401, 403, 404) for every endpoint so frontend engineers can handle all branch conditions.",
+  objective: "Document standard success and failure HTTP responses with payload schemas.",
+  expectedOutcome: "Predictable API contracts defining both happy path and failure scenarios.",
+  codeSnippet: "/**\n * @openapi\n * /api/v1/courses:\n *   post:\n *     summary: Create a new course\n *     tags: [Courses]\n *     responses:\n *       201:\n *         description: Course created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Course'\n *       400:\n *         description: Bad Request (Validation failure)\n */",
 };
 
 ```javascript
 /**
  * @openapi
- * /api/v1/products:
+ * /api/v1/courses:
  *   post:
- *     summary: Create a new product
- *     tags: [Products]
+ *     summary: Create a new course
+ *     tags: [Courses]
  *     responses:
  *       201:
- *         description: Product created successfully
+ *         description: Course created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -31,7 +31,7 @@ export const meta = {
  *                   type: string
  *                   example: success
  *                 data:
- *                   $ref: '#/components/schemas/Product'
+ *                   $ref: '#/components/schemas/Course'
  *       400:
  *         description: Bad Request (Validation failure)
  */

@@ -5,10 +5,10 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត HTTP API តាមបែបស្វ័យប្រវត្តិ",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការធ្វើតេស្ត API ចាត់ទុក Backend ជាប្រអប់ខ្មៅ បញ្ជូន Request HTTP សំយោគ និងការអះអាងលើកូដស្ថានភាព Headers ឆ្លើយតប JSON រចនាសម្ព័ន្ធ Payload និងភាពយឺតយ៉ាវនៃ Response ។ វាផ្ទៀងផ្ទាត់ការអនុលោមតាម API Contract ដោយគ្មានការធ្វើតេស្តភ្ជាប់ទៅព័ត៌មានលម្អិតនៃការអនុវត្តផ្ទៃក្នុង។`,
-  tip: "តែងតែសាកល្បងទាំង HTTP Status Codes ជោគជ័យ (200, 201) និង Response កំហុស (400, 401, 403, 404, 409) សម្រាប់ការគ្របដណ្តប់ពេញលេញ។",
-  objective: "បង្កើតសំណុំការអះអាង HTTP ដោយស្វ័យប្រវត្តិ ដោយវាយតម្លៃ HTTP Status Codes Headers និង Payload ។",
-  expectedOutcome: "លក្ខណៈបច្ចេកទេសនៃការធ្វើតេស្តដ៏រឹងមាំដែលបញ្ជាក់ពីឥរិយាបថសាធារណៈ API ។",
+  summary: "API testing treats the backend as a black box, dispatching synthetic HTTP requests and asserting on status codes, response headers, JSON payload structures, and response latency. It verifies contract compliance without coupling tests to internal implementation details.",
+  tip: "Always test both success status codes (200, 201) and error responses (400, 401, 403, 404, 409) for complete endpoint coverage.",
+  objective: "Formulate automated HTTP assertion suites evaluating status codes, headers, and payloads.",
+  expectedOutcome: "Robust test specifications validating public API behavior.",
   codeSnippet: "// API Testing Expectations:\n// 1. Correct HTTP Status Code (200, 201, 400, 401, 404)\n// 2. Correct Content-Type Header (application/json; charset=utf-8)\n// 3. JSON Payload Contract (contains expected fields and data types)\n// 4. Database Side Effects (record created, updated, or deleted in DB)",
 };
 

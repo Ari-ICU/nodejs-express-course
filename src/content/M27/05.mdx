@@ -5,33 +5,30 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Models Layer (Mongoose Schemas)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ស្រទាប់ Models កំណត់ SchemaDatabase ច្បាប់ Validation ទិន្នន័យ Index Virtuals និង Hooks ជីវិត (មុន/ក្រោយ Middleware) ។ គំរូតំណាងឱ្យប្រភពតែមួយនៃការពិតសម្រាប់រចនាសម្ព័ន្ធ Database និងភាពត្រឹមត្រូវនៃទិន្នន័យ។`,
-  tip: "បញ្ចូល​Business Logic​ជំនួយ​ជាក់លាក់​របស់​វត្ថុ (ដូចជា​ការ​បំបិទ​ពាក្យ​សម្ងាត់ ឬ​ការ​ផ្ទៀងផ្ទាត់​Token) ជា​Methods​វត្ថុ Mongoose ដោយផ្ទាល់​លើ​គំរូ។",
-  objective: "រចនា Schema Mongoose ស្អិតរមួតជាមួយនឹង Validation Index និងវាល Virtuals ។",
-  expectedOutcome: "គំរូទិន្នន័យរឹងមាំដែលពង្រឹងភាពត្រឹមត្រូវនៃ Schema នៅស្រទាប់ Database ។",
-  codeSnippet: "// models/order.model.js\nimport mongoose from \"mongoose\";\n\nconst orderSchema = new mongoose.Schema({\n  user: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{\n    product: { type: mongoose.Schema.Types.ObjectId, ref: \"Product\" },\n    quantity: { type: Number, default: 1 },\n    price: Number,\n  }],\n  totalAmount: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"pending\", \"processing\", \"shipped\", \"delivered\", \"cancelled\"],\n    default: \"pending\",\n  },\n}, { timestamps: true });\n\norderSchema.index({ user: 1, createdAt: -1 });\n\nexport const Order = mongoose.model(\"Order\", orderSchema);",
+  summary: "The Models layer defines the database schema, data validation rules, indexes, virtuals, and lifecycle hooks (pre/post middleware). Models represent the single source of truth for database structure and data integrity.",
+  tip: "Encapsulate instance-specific helper logic (like password hashing or token verification) as Mongoose instance methods directly on the model.",
+  objective: "Design cohesive Mongoose schemas with validation, indexes, and virtual fields.",
+  expectedOutcome: "Robust data models enforcing schema integrity at the database layer.",
+  codeSnippet: "// models/enrollment.model.js\nimport mongoose from \"mongoose\";\n\nconst enrollmentSchema = new mongoose.Schema({\n  student: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  course: { type: mongoose.Schema.Types.ObjectId, ref: \"Course\", required: true },\n  enrolledPrice: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"active\", \"completed\", \"cancelled\"],\n    default: \"active\",\n  },\n  progress: { type: Number, min: 0, max: 100, default: 0 },\n}, { timestamps: true });\n\nenrollmentSchema.index({ student: 1, course: 1 }, { unique: true });\n\nexport const Enrollment = mongoose.model(\"Enrollment\", enrollmentSchema);",
 };
 
 ```javascript
-// models/order.model.js
+// models/enrollment.model.js
 import mongoose from "mongoose";
 
-const orderSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  items: [{
-    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-    quantity: { type: Number, default: 1 },
-    price: Number,
-  }],
-  totalAmount: { type: Number, required: true },
+const enrollmentSchema = new mongoose.Schema({
+  student: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  course: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
+  enrolledPrice: { type: Number, required: true },
   status: {
     type: String,
-    enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
-    default: "pending",
+    enum: ["active", "completed", "cancelled"],
+    default: "active",
   },
+  progress: { type: Number, min: 0, max: 100, default: 0 },
 }, { timestamps: true });
 
-orderSchema.index({ user: 1, createdAt: -1 });
+enrollmentSchema.index({ student: 1, course: 1 }, { unique: true });
 
-export const Order = mongoose.model("Order", orderSchema);
+export const Enrollment = mongoose.model("Enrollment", enrollmentSchema);
 ```

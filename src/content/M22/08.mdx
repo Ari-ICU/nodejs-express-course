@@ -5,21 +5,21 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Controllers តាមរយៈ Supertest",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ឧបករណ៍ត្រួតពិនិត្យការសាកល្បងផ្ទៀងផ្ទាត់ថា Params ស្នើសុំ Payload រាងកាយ និង Filter សំណួរត្រូវបានដំណើរការត្រឹមត្រូវ និង HTTP Status Codes សមស្រប ហើយ Response Envelope JSON ត្រូវបានប្រគល់មកវិញ។ ការក្លែងបន្លំ MethodsServices មូលដ្ឋានអនុញ្ញាតឱ្យធ្វើតេស្តករណីគែម Controllers ដូចជាកំហុសក្នុង Authentication និងការលើកលែងផ្ទាល់ខ្លួន។`,
-  tip: "នាំចេញ Express `app` របស់អ្នកពី `app.js` ដោយមិនចាំបាច់ហៅទូរស័ព្ទទៅ `listen()` ហើយបង្កើត `server.js` ដាច់ដោយឡែកសម្រាប់ការចាប់ផ្តើម។ នេះអនុញ្ញាតឱ្យការធ្វើតេស្តនាំចូល `app` យ៉ាងស្អាត។",
-  objective: "សរសេរការសាកល្បងគោលដៅដែលបញ្ជាក់ពី Response របស់ Controllers HTTP Status Codes និង JSON Body ។",
-  expectedOutcome: "Controllers ដែលបានផ្ទៀងផ្ទាត់គ្រប់គ្រងទាំងធាតុបញ្ចូលត្រឹមត្រូវ និងលក្ខខណ្ឌកំហុស។",
-  codeSnippet: "describe(\"POST /api/v1/products\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidProduct = { price: 29.99 };\n\n    const res = await request(app)\n      .post(\"/api/v1/products\")\n      .send(invalidProduct)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});",
+  summary: "Testing controllers verifies that request parameters, body payloads, and query filters are processed correctly and appropriate status codes and JSON envelopes are returned. Mocking underlying service methods allows testing controller edge cases like validation errors and custom exceptions.",
+  tip: "Export your Express `app` from `app.js` without calling `listen()`, and create a separate `server.js` for startup. This allows tests to import `app` cleanly.",
+  objective: "Write targeted tests validating controller responses, status codes, and JSON bodies.",
+  expectedOutcome: "Verified controllers handling both valid inputs and error conditions.",
+  codeSnippet: "describe(\"POST /api/v1/courses\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidCourse = { price: 49.99, level: \"beginner\" };\n\n    const res = await request(app)\n      .post(\"/api/v1/courses\")\n      .send(invalidCourse)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});",
 };
 
 ```javascript
-describe("POST /api/v1/products", () => {
+describe("POST /api/v1/courses", () => {
   it("should return 400 when title is missing", async () => {
-    const invalidProduct = { price: 29.99 };
+    const invalidCourse = { price: 49.99, level: "beginner" };
 
     const res = await request(app)
-      .post("/api/v1/products")
-      .send(invalidProduct)
+      .post("/api/v1/courses")
+      .send(invalidCourse)
       .expect(400);
 
     expect(res.body.status).toBe("fail");

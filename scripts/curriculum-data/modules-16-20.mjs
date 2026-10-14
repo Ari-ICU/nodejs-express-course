@@ -298,7 +298,7 @@ export const restrictTo = (...allowedRoles) => {
     if (!req.user || !allowedRoles.includes(req.user.role)) {
       return next(
         new AppError(
-          `Forbidden: Role '${req.user?.role || "anonymous"}' does not have permission`,
+          \`Forbidden: Role '\${req.user?.role || "anonymous"}' does not have permission\`,
           403
         )
       );

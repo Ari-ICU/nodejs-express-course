@@ -474,9 +474,9 @@ const MODULE_TOPICS: Record<string, LessonTopic[]> = {
     {"id":"M29-01","number":"01","title":"Project 01: Todo REST API","khmerTitle":"គម្រោងទី ១ ៖ Todo REST API","type":"lab","codeLanguage":"javascript"},
     {"id":"M29-02","number":"02","title":"Project 02: Student Management API","khmerTitle":"គម្រោងទី ២ ៖ Student Management API ជាមួយ Swagger","type":"lab","codeLanguage":"javascript"},
     {"id":"M29-03","number":"03","title":"Project 03: Authentication API","khmerTitle":"គម្រោងទី ៣ ៖ Full Auth System ជាមួយ JWT និង HttpOnly Cookies","type":"lab","codeLanguage":"javascript"},
-    {"id":"M29-04","number":"04","title":"Project 04: Product Management API","khmerTitle":"គម្រោងទី ៤ ៖ E-Commerce Product Catalog API ជាមួយ Caching","type":"lab","codeLanguage":"javascript"},
-    {"id":"M29-05","number":"05","title":"Project 05: E-Commerce Backend","khmerTitle":"គម្រោងទី ៥ ៖ Complete E-Commerce Backend Platform","type":"lab","codeLanguage":"javascript"},
-    {"id":"M29-06","number":"06","title":"Project 06: Final Project (Production REST API)","khmerTitle":"គម្រោងទី ៦ ៖ Final Production REST API Capstone","type":"architecture","codeLanguage":"javascript"},
+    {"id":"M29-04","number":"04","title":"Project 04: Course Media & File Service","khmerTitle":"គម្រោងទី ៤ ៖ Course Media & File Upload Service ជាមួយ Redis Caching","type":"lab","codeLanguage":"javascript"},
+    {"id":"M29-05","number":"05","title":"Project 05: Course Platform Enrollment & Payment Backend","khmerTitle":"គម្រោងទី ៥ ៖ Course Platform Enrollment & Payments ជាមួយ Transactions","type":"lab","codeLanguage":"javascript"},
+    {"id":"M29-06","number":"06","title":"Project 06: Final Project (Production REST API)","khmerTitle":"គម្រោងទី ៦ ៖ Final Production Course Platform REST API Capstone","type":"architecture","codeLanguage":"javascript"},
   ],
 };
 

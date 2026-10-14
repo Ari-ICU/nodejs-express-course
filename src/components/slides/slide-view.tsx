@@ -25,7 +25,7 @@ import { useMdxContent } from "@/hooks/useMdxContent";
 import { SlideNavOverlay } from "./slide-nav-overlay";
 import { FieldNotes } from "./field-notes";
 import { DeploymentAnim } from "./deployment-anim";
-import { getAssetUrl } from "@/lib/utils";
+import { getAssetUrl, resolveCodeFilename } from "@/lib/utils";
 import {
   getStoredProgress,
   saveProgress,
@@ -362,7 +362,14 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 <CodeBlock
                   code={mdxMeta?.codeSnippet || activeTopic.codeSnippet || "// Loading lesson code..."}
                   language={activeTopic.codeLanguage || mdxMeta?.codeLanguage || "javascript"}
-                  filename={`${activeModule.id.toLowerCase()}-topic-${activeTopic.number}.${(activeTopic.codeLanguage || mdxMeta?.codeLanguage) === "bash" ? "sh" : (activeTopic.codeLanguage || mdxMeta?.codeLanguage) === "http" ? "http" : "js"}`}
+                  filename={resolveCodeFilename(
+                    mdxMeta?.codeSnippet || activeTopic.codeSnippet,
+                    mdxMeta?.filename || activeTopic.filename,
+                    activeTopic.title,
+                    activeTopic.codeLanguage || mdxMeta?.codeLanguage,
+                    activeModule.id,
+                    activeTopic.number
+                  )}
                 />
               </div>
             )}

@@ -26,6 +26,7 @@ export interface TopicMeta {
   codeLanguage: string;
   summary: string;      // prose description (also rendered as MDX body)
   codeSnippet?: string;
+  filename?: string;
   tip?: string;
   objective?: string;
   expectedOutcome?: string;

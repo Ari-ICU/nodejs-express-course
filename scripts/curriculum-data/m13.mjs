@@ -257,7 +257,8 @@ export const createCourseService = async (courseData) => {
     tip: "ការបោះ Custom AppError ចេញពី Service ជួយឱ្យកូដ Controller មានភាពខ្លី និងស្អាត។",
     objective: "ចេះទាញយកទិន្នន័យពី MongoDB និង Handle ករណី NotFound។",
     expectedOutcome: "សរសេរ Query Service Functions ដែលមានសុវត្ថិភាព និងច្បាស់លាស់។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 import { AppError } from "../errors/AppError.js";
 
 export const getCourseByIdService = async (courseId) => {
@@ -288,7 +289,8 @@ export const getCourseByIdService = async (courseId) => {
     tip: "ចងចាំ៖ ប្រសិនបើគ្មាន `{ runValidators: true }` នោះ Mongoose នឹងមិន Validate `min`, `max`, ឬ `enum` នៅពេល Update ឡើយ!",
     objective: "ចេះ Update Document ក្នុង MongoDB ប្រកបដោយសុវត្ថិភាព។",
     expectedOutcome: "ទិន្នន័យក្នុង MongoDB ត្រូវបានកែប្រែត្រឹមត្រូវតាមលក្ខខណ្ឌ Schema។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 import { AppError } from "../errors/AppError.js";
 
 export const updateCourseService = async (courseId, updateData) => {
@@ -320,7 +322,8 @@ export const updateCourseService = async (courseId, updateData) => {
     tip: "Orphaned Records (ទិន្នន័យកូនដែលគ្មានឪពុកម្តាយ) ធ្វើឱ្យខាតបង់ទំហំ Database និងអាចបង្កឱ្យកើតមាន Bugs ក្នុង UI។",
     objective: "ចេះលុប Parent Document និង Cascading Delete លើ Child Records។",
     expectedOutcome: "Database មានភាពស្អាត គ្មាន Orphaned Records នៅសល់។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 import { Lesson } from "../models/lesson.model.js";
 import { AppError } from "../errors/AppError.js";
 
@@ -355,7 +358,8 @@ export const deleteCourseWithLessons = async (courseId) => {
     tip: "Method Chaining ក្នុង Mongoose មិនទាន់ Query ទៅកាន់ Database ភ្លាមៗទេ រហូតដល់អ្នកហៅ `await` ឬ `.exec()` (Lazy Execution)។",
     objective: "ចេះប្រើប្រាស់ Query Chaining ក្នុង Mongoose ដើម្បីបង្កើត Custom Query Pipelines។",
     expectedOutcome: "សរសេរ Queries ដែលមានល្បឿនលឿន និងទាញយកតែទិន្នន័យចាំបាច់។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
 // Advanced Chained Query
 export const getFeaturedCourses = async () => {
@@ -378,10 +382,11 @@ export const getFeaturedCourses = async () => {
 បំប្លែង Parameter ពី URL ដូចជា \`price[gte]=20\` ទៅជា MongoDB Filter \`{ price: { $gte: 20 } }\`៖
 1. ចម្លង \`req.query\`
 2. ជំនួស \`gte\`, \`gt\`, \`lte\`, \`lt\` ដោយបន្ថែមសញ្ញា \`$\` នៅខាងមុខតាមរយៈ Regex`,
-    tip: "រូបមន្ត Regex: `queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => `$${match}`)` គឺជាស្តង់ដារឧស្សាហកម្មសម្រាប់ REST APIs។",
+    tip: "រូបមន្ត Regex: `queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => `${match}`)` គឺជាស្តង់ដារឧស្សាហកម្មសម្រាប់ REST APIs។",
     objective: "ចេះបំប្លែង URL query parameters ទៅជា MongoDB query operators ដោយស្វ័យប្រវត្តិ។",
     expectedOutcome: "API គាំទ្រការ Filter តម្លៃ កាលបរិច្ឆេទ និង Ratings យ៉ាងបត់បែន។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
 export const filterCoursesService = async (queryString) => {
   // Step 1: Copy query and exclude pagination/sort reserved keys
@@ -414,7 +419,8 @@ export const filterCoursesService = async (queryString) => {
     tip: "តែងតែដក `__v` (Mongoose version key) ចេញពី API Responses (`.select('-__v')`) ដើម្បីឱ្យ JSON Response ស្អាត។",
     objective: "ចេះប្រើប្រាស់ .select() ដើម្បីជ្រើសរើស ឬដក Fields ជាក់លាក់។",
     expectedOutcome: "កាត់បន្ថយទំហំ Payload និងបង្កើនល្បឿន Network Response។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
 // Include only title, price, and level (exclude __v)
 export const getCourseSummaries = async () => {
@@ -449,7 +455,8 @@ export const getCoursesWithFields = async (fieldsQuery) => {
     tip: "ដើម្បីឱ្យ Sorting ដំណើរការលឿនលើ Dataset ធំៗ ត្រូវប្រាកដថា Field នោះមាន **Index** ក្នុង Schema។",
     objective: "ចេះតម្រៀបទិន្នន័យតាម Field មួយ ឬច្រើនក្នុង MongoDB។",
     expectedOutcome: "API គាំទ្រការតម្រៀបទិន្នន័យប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
 // Sort dynamically from query: ?sort=-price,title
 export const getSortedCourses = async (sortQuery) => {
@@ -480,7 +487,8 @@ export const getSortedCourses = async (sortQuery) => {
     tip: "សម្រាប់ Pagination ដែលមានទិន្នន័យរាប់លាន records គេអាចប្រើ **Cursor-based Pagination** (ស្វែងរកតាម `_id: { $gt: lastId }`) ដែលលឿនជាង `skip()`។",
     objective: "ចេះបង្កើត Production Pagination ជាមួយ MongoDB Mongoose។",
     expectedOutcome: "Endpoints អាចទាញយកទិន្នន័យជាទំព័រៗយ៉ាងរហ័ស ជាមួយ Pagination Metadata។",
-    codeSnippet: `import { Course } from "../models/course.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
 export const getPaginatedCourses = async (page = 1, limit = 10) => {
   const pageNum = Math.max(1, parseInt(page, 10));
@@ -525,7 +533,7 @@ export const getPaginatedCourses = async (page = 1, limit = 10) => {
     tip: "MongoDB Text Search ដំណើរការលឿនជាង Regex រាប់រយដង ព្រោះវាប្រើប្រាស់ Inverted Index Architecture។",
     objective: "ចេះបង្កើត Text Indexes និង Query ដោយប្រើ $text operator ក្នុង MongoDB។",
     expectedOutcome: "ប្រព័ន្ធ Search រហ័ស និងមានសមត្ថភាពខ្ពស់លើ Course Catalog។",
-    codeSnippet: `// 1. In Course Schema: Create compound text index
+    codeSnippet: `// src/models/course.model.js (Text Indexes)
 // courseSchema.index({ title: "text", description: "text" });
 
 import { Course } from "../models/course.model.js";
@@ -557,7 +565,8 @@ export const searchCoursesService = async (searchTerm) => {
     tip: "ការដាក់ Index លើ `courseId` ក្នុង `LessonSchema` គឺចាំបាច់បំផុត ដើម្បីឱ្យការទាញយក Lessons តាម Course មានល្បឿនលឿន។",
     objective: "ចេះភ្ជាប់ទំនាក់ទំនងរវាង Course និង Lessons តាមរយៈ Foreign ObjectId References។",
     expectedOutcome: "ដោះស្រាយ Parent-Child Relationships ក្នុង REST Endpoints បានយ៉ាងស្ទាត់ជំនាញ។",
-    codeSnippet: `import { Lesson } from "../models/lesson.model.js";
+    codeSnippet: `// src/services/course.service.js
+import { Lesson } from "../models/lesson.model.js";
 import { Course } from "../models/course.model.js";
 import { AppError } from "../errors/AppError.js";
 
@@ -591,7 +600,8 @@ export const getLessonsForCourse = async (courseId) => {
     tip: "Transactions តម្រូវឱ្យ MongoDB ដំណើរការលើ Replica Set (Atlas គាំទ្រដោយស្វ័យប្រវត្តិ)។ ប្រើប្រាស់ `mongoose.startSession()`។",
     objective: "ចេះប្រើប្រាស់ MongoDB Transactions ដើម្បីការពារ Data Inconsistency។",
     expectedOutcome: "បង្កើត Atomic Business Transactions ដែលមានភាពជឿជាក់ខ្ពស់បំផុត។",
-    codeSnippet: `import mongoose from "mongoose";
+    codeSnippet: `// src/services/enrollment.service.js
+import mongoose from "mongoose";
 import { Course } from "../models/course.model.js";
 import { Enrollment } from "../models/enrollment.model.js";
 

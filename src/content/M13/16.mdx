@@ -9,10 +9,11 @@ export const meta = {
   tip: "សម្រាប់ Pagination ដែលមានទិន្នន័យរាប់លាន records គេអាចប្រើ **Cursor-based Pagination** (ស្វែងរកតាម `_id: { $gt: lastId }`) ដែលលឿនជាង `skip()`។",
   objective: "ចេះបង្កើត Production Pagination ជាមួយ MongoDB Mongoose។",
   expectedOutcome: "Endpoints អាចទាញយកទិន្នន័យជាទំព័រៗយ៉ាងរហ័ស ជាមួយ Pagination Metadata។",
-  codeSnippet: "import { Course } from \"../models/course.model.js\";\n\nexport const getPaginatedCourses = async (page = 1, limit = 10) => {\n  const pageNum = Math.max(1, parseInt(page, 10));\n  const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));\n  const skip = (pageNum - 1) * limitNum;\n\n  // Step 1: Query paginated items and count in parallel\n  const [courses, totalItems] = await Promise.all([\n    Course.find().skip(skip).limit(limitNum).sort(\"-createdAt\"),\n    Course.countDocuments()\n  ]);\n\n  const totalPages = Math.ceil(totalItems / limitNum);\n\n  return {\n    courses,\n    pagination: {\n      currentPage: pageNum,\n      limit: limitNum,\n      totalItems,\n      totalPages,\n      hasNextPage: pageNum < totalPages,\n      hasPrevPage: pageNum > 1\n    }\n  };\n};",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\nexport const getPaginatedCourses = async (page = 1, limit = 10) => {\n  const pageNum = Math.max(1, parseInt(page, 10));\n  const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));\n  const skip = (pageNum - 1) * limitNum;\n\n  // Step 1: Query paginated items and count in parallel\n  const [courses, totalItems] = await Promise.all([\n    Course.find().skip(skip).limit(limitNum).sort(\"-createdAt\"),\n    Course.countDocuments()\n  ]);\n\n  const totalPages = Math.ceil(totalItems / limitNum);\n\n  return {\n    courses,\n    pagination: {\n      currentPage: pageNum,\n      limit: limitNum,\n      totalItems,\n      totalPages,\n      hasNextPage: pageNum < totalPages,\n      hasPrevPage: pageNum > 1\n    }\n  };\n};",
 };
 
 ```javascript
+// src/services/course.service.js
 import { Course } from "../models/course.model.js";
 
 export const getPaginatedCourses = async (page = 1, limit = 10) => {

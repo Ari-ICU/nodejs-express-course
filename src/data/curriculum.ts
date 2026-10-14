@@ -17,6 +17,7 @@ export interface LessonTopic {
   khmerTitle: string;
   type: "concept" | "lab" | "architecture";
   codeLanguage?: string;
+  filename?: string;
   summary?: string;
   codeSnippet?: string;
   tip?: string;

@@ -9,10 +9,11 @@ export const meta = {
   tip: "ចងចាំ៖ ប្រសិនបើគ្មាន `{ runValidators: true }` នោះ Mongoose នឹងមិន Validate `min`, `max`, ឬ `enum` នៅពេល Update ឡើយ!",
   objective: "ចេះ Update Document ក្នុង MongoDB ប្រកបដោយសុវត្ថិភាព។",
   expectedOutcome: "ទិន្នន័យក្នុង MongoDB ត្រូវបានកែប្រែត្រឹមត្រូវតាមលក្ខខណ្ឌ Schema។",
-  codeSnippet: "import { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  const updated = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    { new: true, runValidators: true }\n  );\n\n  if (!updated) {\n    throw new AppError(`Cannot update: Course ${courseId} not found`, 404);\n  }\n\n  return updated;\n};",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  const updated = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    { new: true, runValidators: true }\n  );\n\n  if (!updated) {\n    throw new AppError(`Cannot update: Course ${courseId} not found`, 404);\n  }\n\n  return updated;\n};",
 };
 
 ```javascript
+// src/services/course.service.js
 import { Course } from "../models/course.model.js";
 import { AppError } from "../errors/AppError.js";
 

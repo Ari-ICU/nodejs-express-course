@@ -9,10 +9,11 @@ export const meta = {
   tip: "តែងតែដក `__v` (Mongoose version key) ចេញពី API Responses (`.select('-__v')`) ដើម្បីឱ្យ JSON Response ស្អាត។",
   objective: "ចេះប្រើប្រាស់ .select() ដើម្បីជ្រើសរើស ឬដក Fields ជាក់លាក់។",
   expectedOutcome: "កាត់បន្ថយទំហំ Payload និងបង្កើនល្បឿន Network Response។",
-  codeSnippet: "import { Course } from \"../models/course.model.js\";\n\n// Include only title, price, and level (exclude __v)\nexport const getCourseSummaries = async () => {\n  return await Course.find()\n    .select(\"title price level -__v\");\n};\n\n// Dynamic Projection from URL: ?fields=title,price\nexport const getCoursesWithFields = async (fieldsQuery) => {\n  let query = Course.find();\n  if (fieldsQuery) {\n    const fields = fieldsQuery.split(\",\").join(\" \");\n    query = query.select(fields);\n  } else {\n    query = query.select(\"-__v\");\n  }\n  return await query;\n};",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\n// Include only title, price, and level (exclude __v)\nexport const getCourseSummaries = async () => {\n  return await Course.find()\n    .select(\"title price level -__v\");\n};\n\n// Dynamic Projection from URL: ?fields=title,price\nexport const getCoursesWithFields = async (fieldsQuery) => {\n  let query = Course.find();\n  if (fieldsQuery) {\n    const fields = fieldsQuery.split(\",\").join(\" \");\n    query = query.select(fields);\n  } else {\n    query = query.select(\"-__v\");\n  }\n  return await query;\n};",
 };
 
 ```javascript
+// src/services/course.service.js
 import { Course } from "../models/course.model.js";
 
 // Include only title, price, and level (exclude __v)

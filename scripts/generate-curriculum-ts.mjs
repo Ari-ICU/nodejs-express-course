@@ -38,6 +38,7 @@ for (const [modId, topics] of Object.entries(ALL_MODULES)) {
       codeLanguage: t.codeLanguage || "javascript",
     };
     if (t.imageUrl) item.imageUrl = t.imageUrl;
+    if (t.filename) item.filename = t.filename;
     moduleTopicsLines.push(`    ${JSON.stringify(item)},`);
   }
   moduleTopicsLines.push(`  ],`);
@@ -62,6 +63,7 @@ export interface LessonTopic {
   khmerTitle: string;
   type: "concept" | "lab" | "architecture";
   codeLanguage?: string;
+  filename?: string;
   summary?: string;
   codeSnippet?: string;
   tip?: string;

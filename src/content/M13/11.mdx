@@ -9,10 +9,11 @@ export const meta = {
   tip: "Orphaned Records (ទិន្នន័យកូនដែលគ្មានឪពុកម្តាយ) ធ្វើឱ្យខាតបង់ទំហំ Database និងអាចបង្កឱ្យកើតមាន Bugs ក្នុង UI។",
   objective: "ចេះលុប Parent Document និង Cascading Delete លើ Child Records។",
   expectedOutcome: "Database មានភាពស្អាត គ្មាន Orphaned Records នៅសល់។",
-  codeSnippet: "import { Course } from \"../models/course.model.js\";\nimport { Lesson } from \"../models/lesson.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const deleteCourseWithLessons = async (courseId) => {\n  // Step 1: Delete parent course\n  const deletedCourse = await Course.findByIdAndDelete(courseId);\n  if (!deletedCourse) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // Step 2: Cascading Delete all child lessons belonging to this course!\n  const deletedLessons = await Lesson.deleteMany({ courseId });\n  console.log(`Deleted ${deletedLessons.deletedCount} associated lessons`);\n\n  return deletedCourse;\n};",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { Lesson } from \"../models/lesson.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const deleteCourseWithLessons = async (courseId) => {\n  // Step 1: Delete parent course\n  const deletedCourse = await Course.findByIdAndDelete(courseId);\n  if (!deletedCourse) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // Step 2: Cascading Delete all child lessons belonging to this course!\n  const deletedLessons = await Lesson.deleteMany({ courseId });\n  console.log(`Deleted ${deletedLessons.deletedCount} associated lessons`);\n\n  return deletedCourse;\n};",
 };
 
 ```javascript
+// src/services/course.service.js
 import { Course } from "../models/course.model.js";
 import { Lesson } from "../models/lesson.model.js";
 import { AppError } from "../errors/AppError.js";

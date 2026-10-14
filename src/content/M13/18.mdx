@@ -9,10 +9,11 @@ export const meta = {
   tip: "ការដាក់ Index លើ `courseId` ក្នុង `LessonSchema` គឺចាំបាច់បំផុត ដើម្បីឱ្យការទាញយក Lessons តាម Course មានល្បឿនលឿន។",
   objective: "ចេះភ្ជាប់ទំនាក់ទំនងរវាង Course និង Lessons តាមរយៈ Foreign ObjectId References។",
   expectedOutcome: "ដោះស្រាយ Parent-Child Relationships ក្នុង REST Endpoints បានយ៉ាងស្ទាត់ជំនាញ។",
-  codeSnippet: "import { Lesson } from \"../models/lesson.model.js\";\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\n// GET /api/v1/courses/:courseId/lessons\nexport const getLessonsForCourse = async (courseId) => {\n  // 1. Verify parent course exists\n  const courseExists = await Course.exists({ _id: courseId });\n  if (!courseExists) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // 2. Fetch all child lessons belonging to this course\n  const lessons = await Lesson.find({ courseId }).sort(\"orderIndex\");\n  return lessons;\n};",
+  codeSnippet: "// src/services/course.service.js\nimport { Lesson } from \"../models/lesson.model.js\";\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\n// GET /api/v1/courses/:courseId/lessons\nexport const getLessonsForCourse = async (courseId) => {\n  // 1. Verify parent course exists\n  const courseExists = await Course.exists({ _id: courseId });\n  if (!courseExists) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // 2. Fetch all child lessons belonging to this course\n  const lessons = await Lesson.find({ courseId }).sort(\"orderIndex\");\n  return lessons;\n};",
 };
 
 ```javascript
+// src/services/course.service.js
 import { Lesson } from "../models/lesson.model.js";
 import { Course } from "../models/course.model.js";
 import { AppError } from "../errors/AppError.js";

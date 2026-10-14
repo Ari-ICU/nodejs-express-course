@@ -1,28 +1,46 @@
 export const meta = {
   id: "M13-05",
   number: "05",
-  title: "Course Controller with Database Operations",
-  khmerTitle: "ការបង្កើត Controllers សម្រាប់ Database Endpoints",
-  type: "lab",
+  title: "Separation of Concerns (MVC to 3-Tier)",
+  khmerTitle: "ការបែងចែកទំនួលខុសត្រូវ (From MVC to 3-Tier Architecture)",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "ការសរសេរ Course Controller ដែលភ្ជាប់ទៅកាន់ MongoDB Service Layer៖\n\nលក្ខណៈស្តង់ដារ៖\n* រុំដោយ `asyncHandler` ដើម្បីកាត់បន្ថយ `try/catch` boilerplate\n* ទទួល `req.body` ឬ `req.query` រួចហៅ Service\n* បញ្ជូន Standard JSON Envelope ត្រឡប់ទៅ Client",
-  codeSnippet: "// src/controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\nimport { asyncHandler } from \"../utils/asyncHandler.js\";\n\n// GET /api/v1/courses\nexport const getCourses = asyncHandler(async (req, res) => {\n  const courses = await courseService.getAllCourses(req.query);\n  res.status(200).json({ success: true, count: courses.length, data: courses });\n});\n\n// POST /api/v1/courses\nexport const createCourse = asyncHandler(async (req, res) => {\n  const newCourse = await courseService.createCourse(req.body);\n  res.status(201).json({ success: true, data: newCourse });\n});",
+  summary: "ស្ថាបត្យកម្ម **Separation of Concerns (SoC)** អភិវឌ្ឍពីប្រព័ន្ធ **MVC (Model-View-Controller)** ទៅជា **Layered Architecture (3-Tier)** យ៉ាងច្បាស់លាស់សម្រាប់ REST APIs៖\n\n### ការប្រៀបធៀបរវាង Traditional MVC និង Modern REST API៖\n* **Model (M)** ➔ **Mongoose Models (`models/`)**៖ កំណត់ Schema, Indexes និងទំនាក់ទំនង Database\n* **View (V)** ➔ **Decoupled Frontend / JSON Envelopes**៖ នៅក្នុង REST API យើងមិន Render HTML (EJS/Pug) ឡើយ ដោយ View ត្រូវបានជំនួសដោយ Client App (Next.js/React) និង Standard JSON Response (`{ success: true, data: ... }`)\n* **Controller (C)** ➔ **Slim Controllers (`controllers/`)**៖ Unpack Request (`req.body`, `req.params`) និង Pack Response (`res.status().json()`)\n* **Service Layer** ➔ **Pure Business Logic (`services/`)**៖ បន្ថែមថ្មីដើម្បីការពារបញ្ហា Fat Controller ដោយផ្ទុក Business Rules, External APIs, និង Reusable Logic\n\n### ស្រទាប់ទាំង ៤ នៃ Modern Enterprise Backend៖\n1. **Routing Layer (`routes/`)**៖ កំណត់ HTTP Method & URL Path, ភ្ជាប់ Middlewares (Auth, Validation)\n2. **Controller Layer (`controllers/`)** [C]៖ Unpack HTTP Request, Orchestrate ទៅកាន់ Services, Return HTTP Status\n3. **Service Layer (`services/`)**៖ Pure Business Logic, Calculations, Domain Rules\n4. **Data Access Layer (`models/`)** [M]៖ Mongoose Schemas & MongoDB Database operations",
+  codeSnippet: "/*\n  ========================================================================\n  EVOLUTION: TRADITIONAL MVC  VS.  MODERN REST API LAYERED ARCHITECTURE\n  ========================================================================\n\n  1. TRADITIONAL MVC (Monolith Web App with Server-rendered HTML):\n  Client (Browser) ────► [ Controller ] ◄────► [ Model (DB) ]\n                              │\n                              ▼\n                         [ View (HTML/EJS/Pug) ] ────► Browser Display\n\n  ------------------------------------------------------------------------\n\n  2. MODERN ENTERPRISE REST API (Decoupled Layered Architecture):\n  Client (Next.js / Mobile)\n        │ HTTP Request (JSON)\n        ▼\n  [ 1. Routes Layer ]        --> URL matching & Middlewares (Auth, Zod)\n        │\n        ▼\n  [ 2. Controllers (C) ]     --> Slim HTTP Orchestrator (No direct DB queries!)\n        │\n        ▼\n  [ 3. Services Layer ]      --> Pure Business Logic (Reusable across HTTP/CLI/Jobs)\n        │\n        ▼\n  [ 4. Models (M) ]          --> Mongoose Schema / MongoDB Database Access\n        │\n        ▲ (Data flows back up cleanly)\n        │\n  JSON Response Envelope     --> { success: true, data: [...] } as the API \"View\"\n  ========================================================================\n*/",
 };
 
 ```javascript
-// src/controllers/course.controller.js
-import * as courseService from "../services/course.service.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+/*
+  ========================================================================
+  EVOLUTION: TRADITIONAL MVC  VS.  MODERN REST API LAYERED ARCHITECTURE
+  ========================================================================
 
-// GET /api/v1/courses
-export const getCourses = asyncHandler(async (req, res) => {
-  const courses = await courseService.getAllCourses(req.query);
-  res.status(200).json({ success: true, count: courses.length, data: courses });
-});
+  1. TRADITIONAL MVC (Monolith Web App with Server-rendered HTML):
+  Client (Browser) ────► [ Controller ] ◄────► [ Model (DB) ]
+                              │
+                              ▼
+                         [ View (HTML/EJS/Pug) ] ────► Browser Display
 
-// POST /api/v1/courses
-export const createCourse = asyncHandler(async (req, res) => {
-  const newCourse = await courseService.createCourse(req.body);
-  res.status(201).json({ success: true, data: newCourse });
-});
+  ------------------------------------------------------------------------
+
+  2. MODERN ENTERPRISE REST API (Decoupled Layered Architecture):
+  Client (Next.js / Mobile)
+        │ HTTP Request (JSON)
+        ▼
+  [ 1. Routes Layer ]        --> URL matching & Middlewares (Auth, Zod)
+        │
+        ▼
+  [ 2. Controllers (C) ]     --> Slim HTTP Orchestrator (No direct DB queries!)
+        │
+        ▼
+  [ 3. Services Layer ]      --> Pure Business Logic (Reusable across HTTP/CLI/Jobs)
+        │
+        ▼
+  [ 4. Models (M) ]          --> Mongoose Schema / MongoDB Database Access
+        │
+        ▲ (Data flows back up cleanly)
+        │
+  JSON Response Envelope     --> { success: true, data: [...] } as the API "View"
+  ========================================================================
+*/
 ```

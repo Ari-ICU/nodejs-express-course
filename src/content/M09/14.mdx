@@ -1,51 +1,25 @@
 export const meta = {
   id: "M09-14",
   number: "14",
-  title: "Pagination (Limit & Offset/Skip)",
-  khmerTitle: "ការរៀបចំ Pagination ជាមួយ Page, Limit និង Skip",
-  type: "lab",
+  title: "Data Modeling Rules",
+  khmerTitle: "គោលការណ៍រចនា Data Modeling សម្រាប់ MongoDB",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "ប្រសិនបើ Database មាន Courses ចំនួន ១០,០០០ យើងមិនអាចទាញយកទាំងអស់ក្នុង Request តែមួយបានឡើយ។ យើងត្រូវប្រើ **Pagination**។\n\nរូបមន្តគណនា **Limit & Skip**៖\n* `page` (ទំព័របច្ចុប្បន្ន ឧ. 1, 2, 3...)\n* `limit` (ចំនួន Items ក្នុងមួយទំព័រ ឧ. 10)\n* `skip = (page - 1) * limit`\n\nResponse ត្រូវត្រឡប់នូវ Pagination Metadata ដូចជា `totalPages`, `currentPage`, និង `totalItems`។",
-  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Mock store with 25 courses\nconst allCourses = Array.from({ length: 25 }, (_, i) => ({\n  id: i + 1,\n  title: `Mastering Express Module ${i + 1}`,\n  price: 29 + i\n}));\n\n// GET /api/v1/courses?page=2&limit=5\napp.get(\"/api/v1/courses\", (req, res) => {\n  // Step 1: Parse and sanitize page & limit\n  const page = Math.max(1, parseInt(req.query.page, 10) || 1);\n  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 5)); // Max 50 items\n\n  // Step 2: Calculate skip offset\n  const skip = (page - 1) * limit;\n\n  // Step 3: Slice data and calculate total pages\n  const paginatedCourses = allCourses.slice(skip, skip + limit);\n  const totalItems = allCourses.length;\n  const totalPages = Math.ceil(totalItems / limit);\n\n  return res.status(200).json({\n    success: true,\n    count: paginatedCourses.length,\n    data: paginatedCourses,\n    pagination: {\n      currentPage: page,\n      limit,\n      totalItems,\n      totalPages,\n      hasNextPage: page < totalPages,\n      hasPrevPage: page > 1\n    }\n  });\n});",
+  summary: "ច្បាប់មាសនៃ **MongoDB Data Modeling** សម្រាប់ High Performance APIs៖\n\n1. **Model for Application Access Patterns**៖ រចនាទិន្នន័យផ្អែកលើរបៀបដែល Application ត្រូវអានទិន្នន័យ (Read-heavy vs Write-heavy)\n2. **Favor Embedding unless there's a compelling reason**៖ បង្កប់ទិន្នន័យប្រសិនបើវាត្រូវបានអានជាមួយគ្នាជានិច្ច\n3. **Avoid Unbounded Arrays**៖ កុំឱ្យ Array ក្នុង Document កើនឡើងគ្មានទីបញ្ចប់ (ហានិភ័យលើសទំហំ 16MB)\n4. **Use References for Many-to-Many Relationships**៖ ប្រើ ObjectId References សម្រាប់ទំនាក់ទំនងធំៗ",
+  codeSnippet: "/* SUMMARY OF DATA MODELING PATTERNS:\n   -------------------------------------------------------------\n   1. 1-to-Few (Course -> Requirements)\n      ➔ Embed as an Array of Strings: [\"JavaScript Basics\", \"Git\"]\n\n   2. 1-to-Many (Course -> Lessons)\n      ➔ Reference: Lessons store parent courseId: ObjectId(\"...\")\n\n   3. Many-to-Many (Users <-> Courses Enrollments)\n      ➔ Separate Collection \"enrollments\" referencing both userId and courseId\n   -------------------------------------------------------------\n*/",
 };
 
 ```javascript
-import express from "express";
-const app = express();
+/* SUMMARY OF DATA MODELING PATTERNS:
+   -------------------------------------------------------------
+   1. 1-to-Few (Course -> Requirements)
+      ➔ Embed as an Array of Strings: ["JavaScript Basics", "Git"]
 
-// Mock store with 25 courses
-const allCourses = Array.from({ length: 25 }, (_, i) => ({
-  id: i + 1,
-  title: `Mastering Express Module ${i + 1}`,
-  price: 29 + i
-}));
+   2. 1-to-Many (Course -> Lessons)
+      ➔ Reference: Lessons store parent courseId: ObjectId("...")
 
-// GET /api/v1/courses?page=2&limit=5
-app.get("/api/v1/courses", (req, res) => {
-  // Step 1: Parse and sanitize page & limit
-  const page = Math.max(1, parseInt(req.query.page, 10) || 1);
-  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 5)); // Max 50 items
-
-  // Step 2: Calculate skip offset
-  const skip = (page - 1) * limit;
-
-  // Step 3: Slice data and calculate total pages
-  const paginatedCourses = allCourses.slice(skip, skip + limit);
-  const totalItems = allCourses.length;
-  const totalPages = Math.ceil(totalItems / limit);
-
-  return res.status(200).json({
-    success: true,
-    count: paginatedCourses.length,
-    data: paginatedCourses,
-    pagination: {
-      currentPage: page,
-      limit,
-      totalItems,
-      totalPages,
-      hasNextPage: page < totalPages,
-      hasPrevPage: page > 1
-    }
-  });
-});
+   3. Many-to-Many (Users <-> Courses Enrollments)
+      ➔ Separate Collection "enrollments" referencing both userId and courseId
+   -------------------------------------------------------------
+*/
 ```

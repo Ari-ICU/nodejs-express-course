@@ -1,23 +1,26 @@
 export const meta = {
   id: "M12-01",
   number: "01",
-  title: "What is Mongoose?",
-  khmerTitle: "អ្វីជា Mongoose ODM និងអត្ថប្រយោជន៍លើ Node.js",
-  type: "concept",
+  title: "Express MongoDB Setup",
+  khmerTitle: "ការភ្ជាប់ Express ជាមួយ MongoDB នៅពេល Server ចាប់ផ្តើម",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "**Mongoose** គឺជា **Object Data Modeling (ODM)** Library ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ MongoDB និង Node.js។\n\nMongoose ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៤៖\n1. **Schema Definition**៖ កំណត់រចនាសម្ព័ន្ធទិន្នន័យច្បាស់លាស់ ជួយការពារទិន្នន័យមិនឱ្យរញ៉េរញ៉ៃ\n2. **Built-in Validation**៖ ត្រួតពិនិត្យប្រភេទទិន្នន័យមុនពេល Save ទៅកាន់ Database\n3. **Middleware Hooks**៖ ដំណើរការកូដស្វ័យប្រវត្តិកំឡុង Lifecycle (`pre('save')`, `post('save')`)\n4. **Population ($lookup replacement)**៖ ភ្ជាប់ទំនាក់ទំនងឯកសាររវាង Collections យ៉ាងងាយស្រួល",
-  codeSnippet: "import mongoose, { Schema } from \"mongoose\";\n\n// Step 1: Define Course Schema with Mongoose ODM\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true, min: 0 }\n});\n\n// Step 2: Compile Model\nexport const Course = mongoose.model(\"Course\", courseSchema);",
+  summary: "ការភ្ជាប់ Express Application ជាមួយ MongoDB ឱ្យដំណើរការស្របគ្នា៖\n\nលំដាប់លំដោយនៃការ Boot Server ត្រឹមត្រូវ៖\n1. ហៅ `await connectDB()` ជាមុនសិន\n2. នៅពេល MongoDB តភ្ជាប់ជោគជ័យ ទើបហៅ `app.listen(PORT)`\n\nវិធីនេះធានាថា គ្មាន Request របស់ Client ណាមួយមកដល់ Server នៅពេលដែល Database មិនទាន់ Ready ឡើយ។",
+  codeSnippet: "// src/server.js\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\n// Step 1: Connect to MongoDB first!\nawait connectDB();\n\n// Step 2: Start Express HTTP listener after DB is connected\napp.listen(PORT, () => {\n  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);\n});",
 };
 
 ```javascript
-import mongoose, { Schema } from "mongoose";
+// src/server.js
+import app from "./app.js";
+import { connectDB } from "./config/db.js";
 
-// Step 1: Define Course Schema with Mongoose ODM
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true, min: 0 }
+const PORT = process.env.PORT || 5000;
+
+// Step 1: Connect to MongoDB first!
+await connectDB();
+
+// Step 2: Start Express HTTP listener after DB is connected
+app.listen(PORT, () => {
+  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);
 });
-
-// Step 2: Compile Model
-export const Course = mongoose.model("Course", courseSchema);
 ```

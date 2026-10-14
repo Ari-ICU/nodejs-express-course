@@ -1,29 +1,27 @@
 export const meta = {
   id: "M12-08",
   number: "08",
-  title: "Required Fields & Custom Messages",
-  khmerTitle: "ការកំណត់ Required Fields និង Custom Error Messages",
+  title: "Creating Resources in MongoDB",
+  khmerTitle: "ការបង្កើត Course ថ្មីក្នុង MongoDB (Course.create)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការកំណត់ Required Field ក្នុង Mongoose អាចសរសេរបាន ២ របៀប៖\n\n* សាមញ្ញ៖ `required: true` (បង្ហាញ Error Message លំនាំដើមរបស់ Mongoose)\n* **វិជ្ជាជីវៈ (អនុសាសន៍)**៖ ផ្តល់នូវ Custom Error Message តាមរយៈ Array៖\n  `required: [true, \"Custom error message here\"]`\n\nវិធីនេះជួយឱ្យ Error Response របស់ API មានភាពរួសរាយ និងងាយយល់សម្រាប់ Client។",
-  codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: [true, \"A course must have an official title\"]\n  },\n  slug: {\n    type: String,\n    required: [true, \"URL slug is strictly required for SEO\"]\n  },\n  instructor: {\n    type: String,\n    required: [true, \"Course must be assigned to an instructor\"]\n  }\n});",
+  summary: "ការអនុវត្ត Service Function សម្រាប់បង្កើត Course Document ថ្មីក្នុង MongoDB៖\n\nជំហានអនុវត្ត៖\n1. ទទួល `courseData`\n2. ហៅ `Course.create(courseData)`\n3. Mongoose ដំណើរការ Schema Validation និង Pre-save Hooks\n4. បញ្ជូន Document ថ្មីដែលបាន Save ត្រឡប់មកវិញ",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\nexport const createCourseService = async (courseData) => {\n  // Step 1: Persist new course document to MongoDB\n  const newCourse = await Course.create({\n    title: courseData.title,\n    instructor: courseData.instructor,\n    price: courseData.price,\n    level: courseData.level || \"beginner\"\n  });\n\n  return newCourse;\n};",
 };
 
 ```javascript
-import { Schema } from "mongoose";
+// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-export const courseSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, "A course must have an official title"]
-  },
-  slug: {
-    type: String,
-    required: [true, "URL slug is strictly required for SEO"]
-  },
-  instructor: {
-    type: String,
-    required: [true, "Course must be assigned to an instructor"]
-  }
-});
+export const createCourseService = async (courseData) => {
+  // Step 1: Persist new course document to MongoDB
+  const newCourse = await Course.create({
+    title: courseData.title,
+    instructor: courseData.instructor,
+    price: courseData.price,
+    level: courseData.level || "beginner"
+  });
+
+  return newCourse;
+};
 ```

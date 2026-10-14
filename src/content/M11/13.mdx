@@ -1,20 +1,42 @@
 export const meta = {
   id: "M11-13",
   number: "13",
-  title: "MongoDB Compass GUI",
-  khmerTitle: "ការប្រើប្រាស់ MongoDB Compass សម្រាប់ Visual Database Management",
-  type: "lab",
-  codeLanguage: "bash",
-  summary: "**MongoDB Compass** គឺជា Official Graphical User Interface (GUI) របស់ MongoDB។\n\nសមត្ថភាពសំខាន់ៗរបស់ Compass សម្រាប់ Developer៖\n* **Visual Document Explorer**៖ មើល កែប្រែ បន្ថែម និងលុប Documents ដោយចុច Mouse\n* **Query Bar & Filters**៖ សាកល្បង Query Filters ដូចជា `{ price: { $gte: 30 } }`\n* **Performance Index Analyzer**៖ ពិនិត្យមើល Performance នៃ Queries និងបង្កើត Indexes\n* **Schema Tab**៖ វិភាគ Types និងទម្រង់នៃ Fields ទាំងអស់ក្នុង Collection",
-  codeSnippet: "# Connect Compass to Local or Atlas Cluster:\n# 1. Open MongoDB Compass\n# 2. Paste connection string:\nmongodb+srv://course_admin:password@cluster0.net/course_catalog_db\n\n# 3. Click 'Connect'\n# 4. Explore 'courses' and 'lessons' collections visually!",
+  title: "API Error Structure (Error Envelope)",
+  khmerTitle: "ទម្រង់ឆ្លើយតបកំហុសស្តង់ដារ Error Envelope",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "នៅពេលមានបញ្ហា Server ត្រូវតែឆ្លើយតបតាម **Standardized Error Envelope** ជានិច្ច ដើម្បីឱ្យ Frontend អាច Parse និងបង្ហាញ Error Message ដល់ User បានច្បាស់លាស់។\n\nរចនាសម្ព័ន្ធស្តង់ដារ៖\n* `success: false`\n* `error.message`៖ ការពន្យល់ខ្លី និងងាយយល់\n* `error.code`៖ Unique Machine-readable Error Code (ឧ. `COURSE_NOT_FOUND`)\n* `error.details`៖ Array នៃ Validation Errors (បើមាន)",
+  codeSnippet: "// Reusable Error Helper Utility\nexport const sendError = (res, statusCode, message, errorCode = \"BAD_REQUEST\", details = null) => {\n  return res.status(statusCode).json({\n    success: false,\n    error: {\n      code: errorCode,\n      message,\n      statusCode,\n      details,\n      timestamp: new Date().toISOString()\n    }\n  });\n};\n\n// Example Error Response sent by server:\n/*\n{\n  \"success\": false,\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"Validation failed for course creation\",\n    \"statusCode\": 400,\n    \"details\": [\n      { \"field\": \"price\", \"message\": \"Price must be greater than 0\" }\n    ],\n    \"timestamp\": \"2026-10-14T10:00:00.000Z\"\n  }\n}\n*/",
 };
 
-```bash
-# Connect Compass to Local or Atlas Cluster:
-# 1. Open MongoDB Compass
-# 2. Paste connection string:
-mongodb+srv://course_admin:password@cluster0.net/course_catalog_db
+```javascript
+// Reusable Error Helper Utility
+export const sendError = (res, statusCode, message, errorCode = "BAD_REQUEST", details = null) => {
+  return res.status(statusCode).json({
+    success: false,
+    error: {
+      code: errorCode,
+      message,
+      statusCode,
+      details,
+      timestamp: new Date().toISOString()
+    }
+  });
+};
 
-# 3. Click 'Connect'
-# 4. Explore 'courses' and 'lessons' collections visually!
+// Example Error Response sent by server:
+/*
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "Validation failed for course creation",
+    "statusCode": 400,
+    "details": [
+      { "field": "price", "message": "Price must be greater than 0" }
+    ],
+    "timestamp": "2026-10-14T10:00:00.000Z"
+  }
+}
+*/
 ```

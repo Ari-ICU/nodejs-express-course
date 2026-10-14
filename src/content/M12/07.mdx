@@ -1,36 +1,23 @@
 export const meta = {
   id: "M12-07",
   number: "07",
-  title: "Schema Validation in Mongoose",
-  khmerTitle: "ការត្រួតពិនិត្យទិន្នន័យតាមរយៈ Built-in Validators",
-  type: "concept",
+  title: "Full CRUD API Integration",
+  khmerTitle: "ការរួមបញ្ចូលប្រព័ន្ធ CRUD ពេញលេញជាមួយ MongoDB",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "Mongoose អនុវត្ត **Validation** នៅកម្រិត Application មុនពេល Document ត្រូវបានបញ្ជូនទៅ Save ក្នុង MongoDB។\n\nBuilt-in Validators សំខាន់ៗ៖\n* **`min` និង `max`** សម្រាប់ Numbers\n* **`minlength` និង `maxlength`** សម្រាប់ Strings\n* **`enum`** សម្រាប់កំណត់តម្លៃជម្រើសថេរ (Fixed Choices)\n* **`match`** សម្រាប់ត្រួតពិនិត្យ Regular Expression (Regex)",
-  codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: true,\n    minlength: [5, \"Title must be at least 5 characters long\"],\n    maxlength: [100, \"Title cannot exceed 100 characters\"]\n  },\n  price: {\n    type: Number,\n    required: true,\n    min: [0, \"Course price cannot be negative\"],\n    max: [999, \"Course price cannot exceed $999\"]\n  },\n  level: {\n    type: String,\n    enum: {\n      values: [\"beginner\", \"intermediate\", \"advanced\"],\n      message: \"{VALUE} is not a valid course level\"\n    }\n  }\n});",
+  summary: "ការរួមបញ្ចូលគ្រប់ស្រទាប់ (Routes -> Controllers -> Services -> MongoDB Model) ឱ្យក្លាយជា **Full Production CRUD API** ពេញលេញ៖\n\n* **POST /courses** ➔ បង្កើត Course ក្នុង MongoDB\n* **GET /courses** ➔ ទាញយកបញ្ជី Courses ពី MongoDB\n* **GET /courses/:id** ➔ ទាញយក Course តាម ID\n* **PATCH /courses/:id** ➔ កែប្រែទិន្នន័យ Course ក្នុង MongoDB\n* **DELETE /courses/:id** ➔ លុប Course ចេញពី MongoDB",
+  codeSnippet: "// Service Layer (src/services/course.service.js)\nimport { Course } from \"../models/course.model.js\";\n\nexport const getAllCourses = async (query) => await Course.find(query);\nexport const getCourseById = async (id) => await Course.findById(id);\nexport const createCourse = async (data) => await Course.create(data);\nexport const updateCourse = async (id, data) => {\n  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });\n};\nexport const deleteCourse = async (id) => await Course.findByIdAndDelete(id);",
 };
 
 ```javascript
-import { Schema } from "mongoose";
+// Service Layer (src/services/course.service.js)
+import { Course } from "../models/course.model.js";
 
-export const courseSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-    minlength: [5, "Title must be at least 5 characters long"],
-    maxlength: [100, "Title cannot exceed 100 characters"]
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: [0, "Course price cannot be negative"],
-    max: [999, "Course price cannot exceed $999"]
-  },
-  level: {
-    type: String,
-    enum: {
-      values: ["beginner", "intermediate", "advanced"],
-      message: "{VALUE} is not a valid course level"
-    }
-  }
-});
+export const getAllCourses = async (query) => await Course.find(query);
+export const getCourseById = async (id) => await Course.findById(id);
+export const createCourse = async (data) => await Course.create(data);
+export const updateCourse = async (id, data) => {
+  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+};
+export const deleteCourse = async (id) => await Course.findByIdAndDelete(id);
 ```

@@ -1,28 +1,34 @@
 export const meta = {
   id: "M13-09",
   number: "09",
-  title: "Reading Resources from MongoDB",
-  khmerTitle: "ការទាញយក Course ពី MongoDB (Course.find & findById)",
-  type: "lab",
-  codeLanguage: "javascript",
-  summary: "ការទាញយក Course Documents ពី MongoDB តាមរយៈ Mongoose Queries៖\n\n* ពិនិត្យវត្តមាន Course តាម `_id` ជាមួយ `Course.findById(id)`\n* ប្រសិនបើរករកមិនឃើញ Throw Domain Error ភ្លាមៗ (កុំឱ្យ Controller ត្រូវ Check `if (!course)` ច្រើនដង)",
-  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const getCourseByIdService = async (courseId) => {\n  // Step 1: Query MongoDB collection by ObjectId\n  const course = await Course.findById(courseId);\n\n  // ⚠️ If not found in MongoDB -> Throw 404 AppError\n  if (!course) {\n    throw new AppError(`Course with ID ${courseId} not found in database`, 404);\n  }\n\n  return course;\n};",
+  title: "Enterprise Project Organization",
+  khmerTitle: "ការរៀបចំ Directory និងឯកសារ Controller-Service ក្នុងគម្រោងធំ",
+  type: "architecture",
+  codeLanguage: "bash",
+  summary: "រចនាសម្ព័ន្ធ Folder ស្តង់ដារ Enterprise សម្រាប់ **Course Catalog API** បន្ទាប់ពី Refactoring ជាមួយ Controllers និង Services៖\n\n* **src/routes/**៖ ផ្ទុកតែ Route Definitions\n* **src/controllers/**៖ ផ្ទុក Controllers ដែលសម្របសម្រួល HTTP\n* **src/services/**៖ ផ្ទុក Pure Business Logic\n* **src/errors/**៖ ផ្ទុក `AppError` classes\n* **src/middlewares/**៖ ផ្ទុក Auth, Validation, Logger, និង Central Error Handler",
+  codeSnippet: "course-catalog-api/\n├── package.json\n├── src/\n│   ├── app.js                          # Express app configuration & middleware pipeline\n│   ├── server.js                       # Server entry point (app.listen & shutdown)\n│   ├── routes/\n│   │   ├── index.js                    # Central API aggregator (/api/v1)\n│   │   ├── course.routes.js            # Course endpoints mapping\n│   │   └── lesson.routes.js            # Lesson endpoints mapping\n│   ├── controllers/\n│   │   ├── course.controller.js        # Slim HTTP controllers\n│   │   └── lesson.controller.js\n│   ├── services/\n│   │   ├── course.service.js           # Reusable pure business logic\n│   │   └── lesson.service.js\n│   ├── errors/\n│   │   └── AppError.js                 # Central domain error class\n│   └── middlewares/\n│       ├── auth.middleware.js          # requireAuth & restrictTo guards\n│       ├── validate.middleware.js      # Input validators\n│       └── error.middleware.js         # 4-parameter error handler",
 };
 
-```javascript
-// src/services/course.service.js
-import { Course } from "../models/course.model.js";
-import { AppError } from "../errors/AppError.js";
-
-export const getCourseByIdService = async (courseId) => {
-  // Step 1: Query MongoDB collection by ObjectId
-  const course = await Course.findById(courseId);
-
-  // ⚠️ If not found in MongoDB -> Throw 404 AppError
-  if (!course) {
-    throw new AppError(`Course with ID ${courseId} not found in database`, 404);
-  }
-
-  return course;
-};
+```bash
+course-catalog-api/
+├── package.json
+├── src/
+│   ├── app.js                          # Express app configuration & middleware pipeline
+│   ├── server.js                       # Server entry point (app.listen & shutdown)
+│   ├── routes/
+│   │   ├── index.js                    # Central API aggregator (/api/v1)
+│   │   ├── course.routes.js            # Course endpoints mapping
+│   │   └── lesson.routes.js            # Lesson endpoints mapping
+│   ├── controllers/
+│   │   ├── course.controller.js        # Slim HTTP controllers
+│   │   └── lesson.controller.js
+│   ├── services/
+│   │   ├── course.service.js           # Reusable pure business logic
+│   │   └── lesson.service.js
+│   ├── errors/
+│   │   └── AppError.js                 # Central domain error class
+│   └── middlewares/
+│       ├── auth.middleware.js          # requireAuth & restrictTo guards
+│       ├── validate.middleware.js      # Input validators
+│       └── error.middleware.js         # 4-parameter error handler
 ```

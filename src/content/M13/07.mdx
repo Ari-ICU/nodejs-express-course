@@ -1,23 +1,31 @@
 export const meta = {
   id: "M13-07",
   number: "07",
-  title: "Full CRUD API Integration",
-  khmerTitle: "ការរួមបញ្ចូលប្រព័ន្ធ CRUD ពេញលេញជាមួយ MongoDB",
+  title: "Reusable Business Logic Across Contexts",
+  khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបានគ្រប់ Contexts",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការរួមបញ្ចូលគ្រប់ស្រទាប់ (Routes -> Controllers -> Services -> MongoDB Model) ឱ្យក្លាយជា **Full Production CRUD API** ពេញលេញ៖\n\n* **POST /courses** ➔ បង្កើត Course ក្នុង MongoDB\n* **GET /courses** ➔ ទាញយកបញ្ជី Courses ពី MongoDB\n* **GET /courses/:id** ➔ ទាញយក Course តាម ID\n* **PATCH /courses/:id** ➔ កែប្រែទិន្នន័យ Course ក្នុង MongoDB\n* **DELETE /courses/:id** ➔ លុប Course ចេញពី MongoDB",
-  codeSnippet: "// Service Layer (src/services/course.service.js)\nimport { Course } from \"../models/course.model.js\";\n\nexport const getAllCourses = async (query) => await Course.find(query);\nexport const getCourseById = async (id) => await Course.findById(id);\nexport const createCourse = async (data) => await Course.create(data);\nexport const updateCourse = async (id, data) => {\n  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });\n};\nexport const deleteCourse = async (id) => await Course.findByIdAndDelete(id);",
+  summary: "អត្ថប្រយោជន៍ដ៏អស្ចារ្យបំផុតនៃ Service Layer គឺ **Reusability (ការប្រើឡើងវិញ)**។\n\nអនុគមន៍ `generateCourseReport()` នៅក្នុង Service អាចត្រូវបានហៅប្រើប្រាស់ដោយ៖\n1. **Express HTTP Controller** (ពេល Admin ចុចមើលរបាយការណ៍លើ Dashboard)\n2. **Scheduled Cron Job** (ផ្ញើ Email សង្ខេបរបាយការណ៍រៀងរាល់យប់ម៉ោង ១២)\n3. **CLI Script / Seed Command** (ពេល Developer ដំណើរការតាម Terminal)",
+  codeSnippet: "// src/services/course.service.js\nexport const calculateCourseMetrics = (courses) => {\n  const totalRevenue = courses.reduce((sum, c) => sum + (c.price * (c.enrolledCount || 0)), 0);\n  const totalStudents = courses.reduce((sum, c) => sum + (c.enrolledCount || 0), 0);\n  return { totalRevenue, totalStudents, averagePrice: totalRevenue / (totalStudents || 1) };\n};\n\n// 💡 Teaching Note: Context 1: Express Controller\n// export const getMetricsController = (req, res) => {\n//   const metrics = calculateCourseMetrics(courses);\n//   res.json({ success: true, data: metrics });\n// };\n\n// 💡 Teaching Note: Context 2: Daily Scheduled Cron Job\n// cron.schedule(\"0 0 * * *\", () => {\n//   const metrics = calculateCourseMetrics(courses);\n//   sendDailyReportEmail(\"admin@school.com\", metrics);\n// });",
 };
 
 ```javascript
-// Service Layer (src/services/course.service.js)
-import { Course } from "../models/course.model.js";
-
-export const getAllCourses = async (query) => await Course.find(query);
-export const getCourseById = async (id) => await Course.findById(id);
-export const createCourse = async (data) => await Course.create(data);
-export const updateCourse = async (id, data) => {
-  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+// src/services/course.service.js
+export const calculateCourseMetrics = (courses) => {
+  const totalRevenue = courses.reduce((sum, c) => sum + (c.price * (c.enrolledCount || 0)), 0);
+  const totalStudents = courses.reduce((sum, c) => sum + (c.enrolledCount || 0), 0);
+  return { totalRevenue, totalStudents, averagePrice: totalRevenue / (totalStudents || 1) };
 };
-export const deleteCourse = async (id) => await Course.findByIdAndDelete(id);
+
+// 💡 Teaching Note: Context 1: Express Controller
+// export const getMetricsController = (req, res) => {
+//   const metrics = calculateCourseMetrics(courses);
+//   res.json({ success: true, data: metrics });
+// };
+
+// 💡 Teaching Note: Context 2: Daily Scheduled Cron Job
+// cron.schedule("0 0 * * *", () => {
+//   const metrics = calculateCourseMetrics(courses);
+//   sendDailyReportEmail("admin@school.com", metrics);
+// });
 ```

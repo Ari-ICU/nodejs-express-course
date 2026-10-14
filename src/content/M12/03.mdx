@@ -1,29 +1,22 @@
 export const meta = {
   id: "M12-03",
   number: "03",
-  title: "Connecting MongoDB",
-  khmerTitle: "ការភ្ជាប់ Express ទៅកាន់ MongoDB ជាមួយ mongoose.connect()",
+  title: "Environment Variables for Database",
+  khmerTitle: "ការគ្រប់គ្រង Database Credentials ក្នុង .env",
   type: "lab",
-  codeLanguage: "javascript",
-  summary: "ការបង្កើត Connection Module ដាច់ដោយឡែកនៅ **`src/config/db.js`** ដើម្បីភ្ជាប់ទៅកាន់ MongoDB តាមរយៈ `mongoose.connect()`៖\n\nគោលការណ៍សំខាន់ៗ៖\n* អាន Connection URI ពី `process.env.DATABASE_URL`\n* ប្រើប្រាស់ `try/catch` ដើម្បីចាប់កំហុសនៅពេល Database មិនអាចតភ្ជាប់បាន\n* ត្រួតពិនិត្យ Connection Events (`connected`, `error`, `disconnected`)",
-  codeSnippet: "// src/config/db.js\nimport mongoose from \"mongoose\";\n\nexport const connectDB = async () => {\n  try {\n    const conn = await mongoose.connect(process.env.DATABASE_URL);\n    console.log(`✅ MongoDB Connected: ${conn.connection.host} / ${conn.connection.name}`);\n  } catch (error) {\n    console.error(\"❌ MongoDB Connection Failed:\", error.message);\n    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production\n  }\n};\n\n// Event Listeners for connection lifecycle\nmongoose.connection.on(\"disconnected\", () => console.warn(\"⚠️ MongoDB disconnected!\"));\nmongoose.connection.on(\"reconnected\", () => console.log(\"🔄 MongoDB reconnected!\"));",
+  codeLanguage: "bash",
+  summary: "សុវត្ថិភាព Database Credentials គឺជាកាតព្វកិច្ចចម្បងរបស់ Backend Developer៖\n\n* មិនត្រូវ Commit Password ឬ Atlas Connection Strings ចូលទៅកាន់ Git Repo ជាដាច់ខាត\n* ប្រើប្រាស់ `.env.example` សម្រាប់ចែករំលែក Template ទៅកាន់ Team\n* ប្រើប្រាស់ `dotenv` ដើម្បី Load អថេរទៅក្នុង `process.env`",
+  codeSnippet: "# .env (Never commit to Git!)\nPORT=5000\nNODE_ENV=development\nDATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority\n\n# .env.example (Safe to commit for team onboarding)\nPORT=5000\nNODE_ENV=development\nDATABASE_URL=your_mongodb_connection_string_here",
 };
 
-```javascript
-// src/config/db.js
-import mongoose from "mongoose";
+```bash
+# .env (Never commit to Git!)
+PORT=5000
+NODE_ENV=development
+DATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority
 
-export const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.DATABASE_URL);
-    console.log(`✅ MongoDB Connected: ${conn.connection.host} / ${conn.connection.name}`);
-  } catch (error) {
-    console.error("❌ MongoDB Connection Failed:", error.message);
-    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production
-  }
-};
-
-// Event Listeners for connection lifecycle
-mongoose.connection.on("disconnected", () => console.warn("⚠️ MongoDB disconnected!"));
-mongoose.connection.on("reconnected", () => console.log("🔄 MongoDB reconnected!"));
+# .env.example (Safe to commit for team onboarding)
+PORT=5000
+NODE_ENV=development
+DATABASE_URL=your_mongodb_connection_string_here
 ```

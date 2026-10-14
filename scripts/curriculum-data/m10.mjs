@@ -1,392 +1,580 @@
 /**
- * m10.mjs - Module 10: Controllers & Services (10 topics)
- * Domain: Course Catalog API (Enterprise 3-Tier Architecture Refactoring)
+ * m12.mjs - Module 10: Mongoose ODM (20 topics)
+ * Domain: Course Catalog API (Mongoose Schema, Model, CRUD, Hooks, Virtuals, Population)
  */
 
 export const M10 = [
   {
     id: "M10-01",
     number: "01",
-    title: "Why Separate Business Logic?",
-    khmerTitle: "ហេតុអ្វីត្រូវបំបែក Business Logic ចេញពី Controller?",
+    title: "What is Mongoose?",
+    khmerTitle: "អ្វីជា Mongoose ODM និងអត្ថប្រយោជន៍លើ Node.js",
     type: "concept",
     codeLanguage: "javascript",
-    summary: `នៅក្នុងគម្រោងដំបូងៗ អ្នកបង្កើតកម្មវិធីច្រើនតែសរសេរអ្វីៗទាំងអស់ (Validation, Database Queries, Email Sending, Payment Calculations) បញ្ចូលគ្នាក្នុង Route Callback តែមួយ — នេះហៅថា **"Fat Controller"** ឬ **Spaghetti Code**។
+    summary: `**Mongoose** គឺជា **Object Data Modeling (ODM)** Library ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ MongoDB និង Node.js។
 
-ផលប៉ះពាល់អវិជ្ជមាននៃ Fat Controller៖
-* **ពិបាក Test (Untestable)**៖ អ្នកត្រូវ Mock ទាំង \`req\` និង \`res\` ទើបអាច Test Logic បាន
-* **មិនអាចប្រើឡើងវិញបាន (Non-reusable)**៖ មិនអាចហៅ Logic ដដែលនោះពី Background Job ឬ CLI Tool បានឡើយ
-* **ពិបាក Maintain**៖ ឯកសារមួយមានកូដរាប់ពាន់ជួរ ងាយនឹងបង្កើត Bugs
+Mongoose ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៤៖
+1. **Schema Definition**៖ កំណត់រចនាសម្ព័ន្ធទិន្នន័យច្បាស់លាស់ ជួយការពារទិន្នន័យមិនឱ្យរញ៉េរញ៉ៃ
+2. **Built-in Validation**៖ ត្រួតពិនិត្យប្រភេទទិន្នន័យមុនពេល Save ទៅកាន់ Database
+3. **Middleware Hooks**៖ ដំណើរការកូដស្វ័យប្រវត្តិកំឡុង Lifecycle (\`pre('save')\`, \`post('save')\`)
+4. **Population ($lookup replacement)**៖ ភ្ជាប់ទំនាក់ទំនងឯកសាររវាង Collections យ៉ាងងាយស្រួល`,
+    codeSnippet: `import mongoose, { Schema } from "mongoose";
 
-**ដំណោះស្រាយ**៖ បែងចែកជា ៣ ស្រទាប់ (3-Tier Architecture)៖ **Routes ➔ Controllers ➔ Services**។`,
-    codeSnippet: `// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)
-app.post("/api/v1/courses/:id/enroll", async (req, res) => {
-  // 1. Validation mixed in
-  if (!req.body.studentId) return res.status(400).send();
-  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)
-  const course = await Course.findById(req.params.id);
-  // 3. Discount calculation mixed in
-  const price = course.price * 0.9;
-  // 4. Payment processing mixed in
-  await stripe.charges.create({ amount: price });
-  // 5. Email receipt mixed in
-  await mailer.sendReceipt();
-  // 6. Response sending
-  res.json({ enrolled: true });
+// Step 1: Define Course Schema with Mongoose ODM
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true, min: 0 }
 });
 
-// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)
-`,
+// Step 2: Compile Model
+export const Course = mongoose.model("Course", courseSchema);`,
   },
   {
     id: "M10-02",
     number: "02",
-    title: "Controllers (Request Orchestrators)",
-    khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Controllers",
-    type: "concept",
-    codeLanguage: "javascript",
-    summary: `**Controller** ដើរតួជា **Request Orchestrator (អ្នកសម្របសម្រួល HTTP)**៖
+    title: "Installing Mongoose",
+    khmerTitle: "ការដំឡើងកញ្ចប់ Mongoose ក្នុង Node.js Project",
+    type: "lab",
+    codeLanguage: "bash",
+    summary: `ការដំឡើងកញ្ចប់ **\`mongoose\`** ក្នុង Course API Project តាមរយៈ npm៖
 
-តួនាទីតែមួយគត់របស់ Controller៖
-1. **Unpack HTTP Request**៖ ទាញយកទិន្នន័យពី \`req.body\`, \`req.params\`, \`req.query\`
-2. **Delegate to Service**៖ បញ្ជូនទិន្នន័យទាំងនោះទៅឱ្យ Service Function ដំណើរការ
-3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (\`200\`, \`201\`)
+* ដំឡើងជំនាន់ចុងក្រោយ (\`mongoose@latest\`)
+* Mongoose ជំនាន់ v8+ គាំទ្រ ES Modules (\`import/export\`) និង Native JavaScript Promises ដោយមិនបាច់ប្រើ Callbacks ទៀតឡើយ`,
+    codeSnippet: `# Install Mongoose into the course-catalog-api project
+npm install mongoose
 
-Controller មិនត្រូវមាន Business Logic, MongoDB Queries ដោយផ្ទាល់ ឬ Payment Code ឡើយ!`,
-    codeSnippet: `// src/controllers/course.controller.js
-import * as courseService from "../services/course.service.js";
-
-// Step 1: Slim Controller Handler for Fetching Courses
-export const getAllCourses = async (req, res, next) => {
-  try {
-    // 1. Extract query parameters
-    const { level, maxPrice } = req.query;
-
-    // 2. Delegate purely to service layer
-    const courses = await courseService.findAllCourses({ level, maxPrice });
-
-    // 3. Send standard HTTP response
-    return res.status(200).json({
-      success: true,
-      count: courses.length,
-      data: courses
-    });
-  } catch (error) {
-    next(error); // Forward to centralized error middleware!
-  }
-};`,
+# Verify installation in package.json
+cat package.json | grep mongoose`,
   },
   {
     id: "M10-03",
     number: "03",
-    title: "Services (Pure Business Logic)",
-    khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Service Layer",
-    type: "concept",
+    title: "Connecting MongoDB",
+    khmerTitle: "ការភ្ជាប់ Express ទៅកាន់ MongoDB ជាមួយ mongoose.connect()",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `**Service Layer** គឺជាបេះដូងនៃ Application ដែលផ្ទុកនូវ **Business Rules និង Domain Logic ទាំងអស់**។
+    summary: `ការបង្កើត Connection Module ដាច់ដោយឡែកនៅ **\`src/config/db.js\`** ដើម្បីភ្ជាប់ទៅកាន់ MongoDB តាមរយៈ \`mongoose.connect()\`៖
 
-លក្ខណៈសម្បត្តិនៃ Service Function ល្អ៖
-* **Pure JavaScript Functions**៖ ទទួល Pure Input (Objects, Strings, Numbers) និង Return Pure Output
-* **គ្មានការពាក់ព័ន្ធនឹង HTTP**៖ មិនដែលឃើញពាក្យ \`req\` ឬ \`res\` ក្នុង Service ឡើយ
-* **Throw Custom Domain Errors**៖ បោះកំហុស \`AppError\` នៅពេលខុសលក្ខខណ្ឌ Business Rule
-* **100% Testable**៖ អាចសរសេរ Unit Test បានយ៉ាងងាយស្រួលដោយមិនបាច់ប្រើ Express ឬ Supertest!`,
-    codeSnippet: `// src/services/course.service.js
+គោលការណ៍សំខាន់ៗ៖
+* អាន Connection URI ពី \`process.env.DATABASE_URL\`
+* ប្រើប្រាស់ \`try/catch\` ដើម្បីចាប់កំហុសនៅពេល Database មិនអាចតភ្ជាប់បាន
+* ត្រួតពិនិត្យ Connection Events (\`connected\`, \`error\`, \`disconnected\`)`,
+    codeSnippet: `// src/config/db.js
+import mongoose from "mongoose";
 
-// Simulated database data store
-const courses = [
-  { id: 1, title: "Modern JavaScript", price: 29.99, level: "beginner" },
-  { id: 2, title: "Full-Stack Express", price: 49.99, level: "advanced" }
-];
-
-// Step 1: Pure Business Logic Service function (No req, no res!)
-// 💡 Teaching Note: In Modules 11-13, this queries MongoDB via Mongoose Model:
-// export const findAllCourses = async (filters = {}) => await Course.find(filters);
-export const findAllCourses = async (filters = {}) => {
-  let result = [...courses];
-
-  if (filters.level) {
-    result = result.filter(c => c.level === filters.level);
+export const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DATABASE_URL);
+    console.log(\`✅ MongoDB Connected: \${conn.connection.host} / \${conn.connection.name}\`);
+  } catch (error) {
+    console.error("❌ MongoDB Connection Failed:", error.message);
+    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production
   }
-  if (filters.maxPrice) {
-    result = result.filter(c => c.price <= Number(filters.maxPrice));
-  }
-
-  return result;
 };
 
-// Step 2: Create Course Service with business validation
-// 💡 Teaching Note: With MongoDB, this delegates to: await Course.create(courseData);
-export const createCourse = async (courseData) => {
-  if (courseData.price < 0) {
-    throw new Error("Course price cannot be negative");
-  }
-
-  const newCourse = {
-    id: courses.length + 1,
-    ...courseData,
-    createdAt: new Date().toISOString()
-  };
-
-  courses.push(newCourse);
-  return newCourse;
-};`,
+// Event Listeners for connection lifecycle
+mongoose.connection.on("disconnected", () => console.warn("⚠️ MongoDB disconnected!"));
+mongoose.connection.on("reconnected", () => console.log("🔄 MongoDB reconnected!"));`,
   },
   {
     id: "M10-04",
     number: "04",
-    title: "Routes (Declarative Route Mapping)",
-    khmerTitle: "តួនាទីនៃ Route Definitions (Declarative Wiring)",
+    title: "Mongoose Schema",
+    khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ CourseSchema ជាមួយ mongoose.Schema",
     type: "concept",
     codeLanguage: "javascript",
-    summary: `នៅក្នុង 3-Tier Architecture ឯកសារ **Routes** គ្រាន់តែជាកន្លែង **Wiring (ភ្ជាប់ខ្សែរវាង URL, Middleware, និង Controller)** ប៉ុណ្ណោះ។
+    summary: `**Schema** គឺជាប្លង់មេ (Blueprint) ដែលកំណត់ថាតើ Document នីមួយៗក្នុង Collection ត្រូវមាន Fields អ្វីខ្លះ ប្រភេទ Data Type ណា និងលក្ខខណ្ឌ Validation យ៉ាងដូចម្តេច។
 
-វាមិនផ្ទុក Logic ណាមួយឡើយ ក្រៅពីការប្រកាសយ៉ាងច្បាស់លាស់ (Declarative Syntax)៖
-\`\`\`javascript
-router.get("/:id", authGuard, courseController.getCourseById);
-\`\`\`
+ការរៀបចំ \`courseSchema\` សម្រាប់ Course API របស់យើង៖
+* \`title\` (String)
+* \`instructor\` (String)
+* \`price\` (Number)
+* \`level\` (String)
+* \`published\` (Boolean)`,
+    codeSnippet: `// src/models/course.schema.js
+import { Schema } from "mongoose";
 
-រចនាសម្ព័ន្ធបែបនេះជួយឱ្យអ្នកណាក៏ដោយដែលបើកមើលឯកសារ Routes អាចយល់បានភ្លាមៗក្នុងរយៈពេល ៥ វិនាទីពី Endpoints ទាំងអស់នៃ Module។`,
-    codeSnippet: `// src/routes/course.routes.js
-import express from "express";
-import * as courseController from "../controllers/course.controller.js";
-
-const router = express.Router();
-
-// Step 1: Wire endpoints directly to controller methods
-router.route("/")
-  .get(courseController.getAllCourses)
-  .post(courseController.createCourse);
-
-router.route("/:id")
-  .get(courseController.getCourseById)
-  .put(courseController.updateCourse)
-  .delete(courseController.deleteCourse);
-
-export default router;`,
+// Step 1: Define Schema Blueprint
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: [true, "Course title is required"],
+    trim: true
+  },
+  instructor: {
+    type: String,
+    required: [true, "Instructor name is required"]
+  },
+  price: {
+    type: Number,
+    required: [true, "Price is required"],
+    min: [0, "Price cannot be negative"]
+  },
+  level: {
+    type: String,
+    enum: ["beginner", "intermediate", "advanced"],
+    default: "beginner"
+  },
+  published: {
+    type: Boolean,
+    default: false
+  }
+});`,
   },
   {
     id: "M10-05",
     number: "05",
-    title: "Separation of Concerns (3-Tier)",
-    khmerTitle: "ការបែងចែកទំនួលខុសត្រូវ (Separation of Concerns) តាម 3 ស្រទាប់",
-    type: "architecture",
+    title: "Mongoose Model",
+    khmerTitle: "ការបង្កើត Model តាមរយៈ mongoose.model()",
+    type: "concept",
     codeLanguage: "javascript",
-    summary: `ស្ថាបត្យកម្ម **Separation of Concerns (SoC)** ចែកចេញជា ៣ ស្រទាប់ច្បាស់លាស់៖
+    summary: `**Model** គឺជា Wrapper ដែលចងភ្ជាប់ Schema ទៅនឹង MongoDB Collection ជាក់ស្តែង។
 
-1. **Routing Layer (\`routes/\`)**៖
-   * កំណត់ HTTP Method & URL Path
-   * ភ្ជាប់ Middlewares (Auth, Validation)
-2. **Controller Layer (\`controllers/\`)**៖
-   * Unpack HTTP Request (\`req.body\`, \`req.params\`)
-   * Pack HTTP Response (\`res.status(200).json()\`)
-   * ដោះស្រាយ HTTP Status Codes
-3. **Service Layer (\`services/\`)**៖
-   * ផ្ទុក Business Logic, Calculations, Security Rules
-   * ទំនាក់ទំនងជាមួយ MongoDB Database (Mongoose Models)`,
-    codeSnippet: `/*
-  ==============================================================
-  DATA FLOW IN 3-TIER ARCHITECTURE (Node + Express + MongoDB):
-  ==============================================================
-  Client Request (HTTP GET /api/v1/courses)
-        │
-        ▼
-  [ 1. Routing Layer ]        --> Matches URL, applies middlewares
-        │
-        ▼
-  [ 2. Controller Layer ]     --> Extracts req.query, orchestrates
-        │
-        ▼
-  [ 3. Service Layer ]        --> Executes business rules & calls Mongoose
-        │
-        ▼
-  [ 4. MongoDB Database ]     --> Returns BSON Documents via Model.find()
-        │
-        ▲ (Data flows back up cleanly)
-        │
-  Client Response (JSON 200 OK)
-  ==============================================================
-*/`,
+របៀបដែល Mongoose បង្កើត Collection Name ដោយស្វ័យប្រវត្តិ៖
+* នៅពេលអ្នកប្រកាស \`mongoose.model("Course", courseSchema)\`
+* Mongoose នឹងយកឈ្មោះ \`"Course"\` ទៅធ្វើជា **Lowercase Plural** ដោយស្វ័យប្រវត្តិ គឺ **\`"courses"\`**!`,
+    codeSnippet: `// src/models/course.model.js
+import mongoose, { Schema } from "mongoose";
+
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true }
+});
+
+// Step 1: Compile Schema into Model
+// 💡 Teaching Note: "Course" compiles to collection name "courses"
+export const Course = mongoose.model("Course", courseSchema);`,
   },
   {
     id: "M10-06",
     number: "06",
-    title: "Controller-Service Integration",
-    khmerTitle: "ការរួមបញ្ចូល Controller និង Service ក្នុង Course Enrollment Workflow",
-    type: "architecture",
+    title: "SchemaTypes in Mongoose",
+    khmerTitle: "ការស្វែងយល់ពី SchemaTypes ទាំងអស់ក្នុង Mongoose",
+    type: "concept",
     codeLanguage: "javascript",
-    summary: `អនុវត្តជាក់ស្តែងនូវ **Complete Course Enrollment Workflow** ដោយរួមបញ្ចូលគ្នារវាង Controller និង Service៖
+    summary: `Mongoose ផ្តល់នូវ **SchemaTypes** ស្តង់ដារជាច្រើន៖
 
-1. **Student ស្នើសុំចុះឈ្មោះចូលរៀន** (\`POST /courses/:id/enroll\`)
-2. **Controller**៖ ដកស្រង់ \`courseId\` និង \`studentId\` ពី Request រួចបញ្ជូនទៅកាន់ Service
-3. **Service**៖
-   * ពិនិត្យថាតើ Course មានពិតមែនឬអត់
-   * ពិនិត្យថាតើ Course ពេញហើយឬនៅ
-   * គណនាតម្លៃបញ្ចុះតម្លៃ (Discount)
-   * បញ្ចូលឈ្មោះ Student ទៅក្នុងបញ្ជី
-4. **Controller**៖ ទទួលលទ្ធផលជោគជ័យ រួចឆ្លើយតប \`200 OK\` ជាមួយ Enrollment Receipt`,
-    codeSnippet: `// 1. IN SERVICE (src/services/enrollment.service.js):
-export const enrollStudentInCourse = async (courseId, student) => {
-  // Business Rule 1: Validate course exists
-  const course = await getCourseById(courseId);
-  if (!course) throw new Error("Course not found");
+* **\`String\`**៖ អត្ថបទ (គាំទ្រ \`trim\`, \`lowercase\`, \`uppercase\`, \`minlength\`, \`maxlength\`)
+* **\`Number\`**៖ លេខ (គាំទ្រ \`min\`, \`max\`)
+* **\`Boolean\`**៖ តម្លៃពិត ឬមិនពិត
+* **\`Date\`**៖ កាលបរិច្ឆេទ
+* **\`Buffer\`**៖ ទិន្នន័យ Binary
+* **\`Schema.Types.ObjectId\`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង
+* **\`Array\`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents`,
+    codeSnippet: `import { Schema, model } from "mongoose";
 
-  // Business Rule 2: Calculate pricing with student discount
-  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;
+const courseDetailsSchema = new Schema({
+  title: { type: String, trim: true, required: true },
+  durationHours: { type: Number, min: 1 },
+  isCertificateIncluded: { type: Boolean, default: true },
+  releaseDate: { type: Date, default: Date.now },
+  tags: [{ type: String, lowercase: true }], // Array of lowercase strings
+  instructorId: { type: Schema.Types.ObjectId, ref: "User" } // Reference to User Model!
+});
 
-  // Business Rule 3: Record enrollment
-  const enrollment = {
-    id: Date.now(),
-    courseId,
-    studentId: student.id,
-    amountPaid: finalPrice,
-    enrolledAt: new Date().toISOString()
-  };
-
-  return enrollment;
-};
-
-// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):
-export const handleEnrollment = async (req, res, next) => {
-  try {
-    const courseId = Number(req.params.id);
-    const enrollment = await enrollStudentInCourse(courseId, req.user);
-    res.status(201).json({ success: true, data: enrollment });
-  } catch (err) {
-    next(err);
-  }
-};`,
+export const CourseDetails = model("CourseDetails", courseDetailsSchema);`,
   },
   {
     id: "M10-07",
     number: "07",
-    title: "Reusable Business Logic Across Contexts",
-    khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបានគ្រប់ Contexts",
-    type: "lab",
+    title: "Schema Validation in Mongoose",
+    khmerTitle: "ការត្រួតពិនិត្យទិន្នន័យតាមរយៈ Built-in Validators",
+    type: "concept",
     codeLanguage: "javascript",
-    summary: `អត្ថប្រយោជន៍ដ៏អស្ចារ្យបំផុតនៃ Service Layer គឺ **Reusability (ការប្រើឡើងវិញ)**។
+    summary: `Mongoose អនុវត្ត **Validation** នៅកម្រិត Application មុនពេល Document ត្រូវបានបញ្ជូនទៅ Save ក្នុង MongoDB។
 
-អនុគមន៍ \`generateCourseReport()\` នៅក្នុង Service អាចត្រូវបានហៅប្រើប្រាស់ដោយ៖
-1. **Express HTTP Controller** (ពេល Admin ចុចមើលរបាយការណ៍លើ Dashboard)
-2. **Scheduled Cron Job** (ផ្ញើ Email សង្ខេបរបាយការណ៍រៀងរាល់យប់ម៉ោង ១២)
-3. **CLI Script / Seed Command** (ពេល Developer ដំណើរការតាម Terminal)`,
-    codeSnippet: `// src/services/course.service.js
-export const calculateCourseMetrics = (courses) => {
-  const totalRevenue = courses.reduce((sum, c) => sum + (c.price * (c.enrolledCount || 0)), 0);
-  const totalStudents = courses.reduce((sum, c) => sum + (c.enrolledCount || 0), 0);
-  return { totalRevenue, totalStudents, averagePrice: totalRevenue / (totalStudents || 1) };
-};
+Built-in Validators សំខាន់ៗ៖
+* **\`min\` និង \`max\`** សម្រាប់ Numbers
+* **\`minlength\` និង \`maxlength\`** សម្រាប់ Strings
+* **\`enum\`** សម្រាប់កំណត់តម្លៃជម្រើសថេរ (Fixed Choices)
+* **\`match\`** សម្រាប់ត្រួតពិនិត្យ Regular Expression (Regex)`,
+    codeSnippet: `import { Schema } from "mongoose";
 
-// 💡 Teaching Note: Context 1: Express Controller
-// export const getMetricsController = (req, res) => {
-//   const metrics = calculateCourseMetrics(courses);
-//   res.json({ success: true, data: metrics });
-// };
-
-// 💡 Teaching Note: Context 2: Daily Scheduled Cron Job
-// cron.schedule("0 0 * * *", () => {
-//   const metrics = calculateCourseMetrics(courses);
-//   sendDailyReportEmail("admin@school.com", metrics);
-// });`,
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+    minlength: [5, "Title must be at least 5 characters long"],
+    maxlength: [100, "Title cannot exceed 100 characters"]
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: [0, "Course price cannot be negative"],
+    max: [999, "Course price cannot exceed $999"]
+  },
+  level: {
+    type: String,
+    enum: {
+      values: ["beginner", "intermediate", "advanced"],
+      message: "{VALUE} is not a valid course level"
+    }
+  }
+});`,
   },
   {
     id: "M10-08",
     number: "08",
-    title: "Error Handling in Service Layer (AppError)",
-    khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Service Layer តាមរយៈ AppError Class",
+    title: "Required Fields & Custom Messages",
+    khmerTitle: "ការកំណត់ Required Fields និង Custom Error Messages",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `នៅក្នុង Service Layer នៅពេលមានកំហុសផ្នែក Business Logic (ដូចជា រក Course មិនឃើញ ឬ Course ពេញ) យើងមិនត្រូវហៅ \`res.status(404).json()\` ឡើយ។
+    summary: `ការកំណត់ Required Field ក្នុង Mongoose អាចសរសេរបាន ២ របៀប៖
 
-**ដំណោះស្រាយស្តង់ដារ**៖ បង្កើត Custom **\`AppError\`** Class ដែលពង្រីកពី \`Error\` ដើមរបស់ JavaScript ដោយបន្ថែម \`statusCode\` និង \`isOperational\` flag។
+* សាមញ្ញ៖ \`required: true\` (បង្ហាញ Error Message លំនាំដើមរបស់ Mongoose)
+* **វិជ្ជាជីវៈ (អនុសាសន៍)**៖ ផ្តល់នូវ Custom Error Message តាមរយៈ Array៖
+  \`required: [true, "Custom error message here"]\`
 
-បន្ទាប់មក Service គ្រាន់តែ \`throw new AppError("Course not found", 404)\` ហើយ Centralized Error Middleware នឹងចាប់យកទៅចាត់ចែងដោយស្វ័យប្រវត្តិ។`,
-    codeSnippet: `// Step 1: Enterprise Custom Application Error Class
-export class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-    this.status = \`\${statusCode}\`.startsWith("4") ? "fail" : "error";
-    this.isOperational = true; // Expected operational error
-    Error.captureStackTrace(this, this.constructor);
+វិធីនេះជួយឱ្យ Error Response របស់ API មានភាពរួសរាយ និងងាយយល់សម្រាប់ Client។`,
+    codeSnippet: `import { Schema } from "mongoose";
+
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: [true, "A course must have an official title"]
+  },
+  slug: {
+    type: String,
+    required: [true, "URL slug is strictly required for SEO"]
+  },
+  instructor: {
+    type: String,
+    required: [true, "Course must be assigned to an instructor"]
   }
-}
-
-// Step 2: In Service Layer - Throw domain error cleanly!
-export const getCourseById = (id, courses) => {
-  const course = courses.find(c => c.id === id);
-  if (!course) {
-    throw new AppError(\`Course with ID \${id} does not exist\`, 404);
-  }
-  return course;
-};
-
-// Step 3: Controller simply passes error forward with asyncHandler!
-// const course = getCourseById(req.params.id, courses);
-// res.json({ success: true, data: course });`,
+});`,
   },
   {
     id: "M10-09",
     number: "09",
-    title: "Enterprise Project Organization",
-    khmerTitle: "ការរៀបចំ Directory និងឯកសារ Controller-Service ក្នុងគម្រោងធំ",
-    type: "architecture",
-    codeLanguage: "bash",
-    summary: `រចនាសម្ព័ន្ធ Folder ស្តង់ដារ Enterprise សម្រាប់ **Course Catalog API** បន្ទាប់ពី Refactoring ជាមួយ Controllers និង Services៖
+    title: "Default Values in Schema",
+    khmerTitle: "ការកំណត់ Default Values ក្នុង Schema",
+    type: "concept",
+    codeLanguage: "javascript",
+    summary: `ប្រសិនបើ Client មិនបានបញ្ជូន Field ណាមួយមកទេ Mongoose នឹងបំពេញ **Default Value** ដោយស្វ័យប្រវត្តិតាមការកំណត់របស់យើងក្នុង Schema។
 
-* **src/routes/**៖ ផ្ទុកតែ Route Definitions
-* **src/controllers/**៖ ផ្ទុក Controllers ដែលសម្របសម្រួល HTTP
-* **src/services/**៖ ផ្ទុក Pure Business Logic
-* **src/errors/**៖ ផ្ទុក \`AppError\` classes
-* **src/middlewares/**៖ ផ្ទុក Auth, Validation, Logger, និង Central Error Handler`,
-    codeSnippet: `course-catalog-api/
-├── package.json
-├── src/
-│   ├── app.js                          # Express app configuration & middleware pipeline
-│   ├── server.js                       # Server entry point (app.listen & shutdown)
-│   ├── routes/
-│   │   ├── index.js                    # Central API aggregator (/api/v1)
-│   │   ├── course.routes.js            # Course endpoints mapping
-│   │   └── lesson.routes.js            # Lesson endpoints mapping
-│   ├── controllers/
-│   │   ├── course.controller.js        # Slim HTTP controllers
-│   │   └── lesson.controller.js
-│   ├── services/
-│   │   ├── course.service.js           # Reusable pure business logic
-│   │   └── lesson.service.js
-│   ├── errors/
-│   │   └── AppError.js                 # Central domain error class
-│   └── middlewares/
-│       ├── auth.middleware.js          # requireAuth & restrictTo guards
-│       ├── validate.middleware.js      # Input validators
-│       └── error.middleware.js         # 4-parameter error handler`,
+អាចជា៖
+* តម្លៃថេរ (Static value)៖ \`default: false\`, \`default: "beginner"\`
+* អនុគមន៍ (Dynamic function)៖ \`default: Date.now\``,
+    codeSnippet: `import { Schema } from "mongoose";
+
+export const courseSchema = new Schema({
+  title: { type: String, required: true },
+  published: { type: Boolean, default: false }, // Default unpublished
+  level: { type: String, default: "beginner" },
+  viewsCount: { type: Number, default: 0 },
+  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function
+});`,
   },
   {
     id: "M10-10",
     number: "10",
-    title: "Backend Architecture Best Practices",
-    khmerTitle: "ការអនុវត្តស្ថាបត្យកម្មល្អបំផុតសម្រាប់ Enterprise Node.js Backend",
-    type: "architecture",
+    title: "Timestamps Option",
+    khmerTitle: "ការប្រើប្រាស់ Option { timestamps: true }",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `បញ្ជីត្រួតពិនិត្យស្ថាបត្យកម្ម (Architecture Review Checklist) សម្រាប់ Backend Engineers៖
+    summary: `ជំនួសឱ្យការបង្កើត Fields \`createdAt\` និង \`updatedAt\` ដោយដៃ Mongoose ផ្តល់ Option **\`{ timestamps: true }\`** ដែលជាដំណោះស្រាយដ៏ឆ្លាតវៃ។
 
-1. **Separation of Concerns (SoC)**៖ Routes (HTTP mapping) ➔ Controllers (Orchestration) ➔ Services (Business Logic) ➔ Models (Data Access)
-2. **Fail Fast & Validate Early**៖ ត្រួតពិនិត្យទិន្នន័យបញ្ចូលតាម Middleware មុនពេលទៅដល់ Controller
-3. **Never Expose Sensitive Details**៖ លាក់ Stack Trace នៅលើ Production Environment
-4. **Environment Isolation**៖ មិន Hardcode Secrets ឬ Ports (ប្រើប្រាស់ \`.env\`)
-5. **Deterministic Testing**៖ សរសេរ Unit Tests លើ Service Layer និង Integration Tests (Supertest) លើ Endpoints`,
-    codeSnippet: `/*
-  ==============================================================
-  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:
-  ==============================================================
-  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)
-  [x] 2. Centralized Error Handling (Single 4-arg error middleware)
-  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })
-  [x] 4. Defensive ReDoS Protection (Sanitized regex search)
-  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)
-  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)
-  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)
-  [x] 8. Automated Integration Tests (Supertest test runner)
-  ==============================================================
+មុខងារស្វ័យប្រវត្តិ៖
+* បន្ថែម \`createdAt\` កាលបរិច្ឆេទដែល Document ត្រូវបានបង្កើតដំបូង
+* បន្ថែម និងកែប្រែ \`updatedAt\` ដោយស្វ័យប្រវត្តិកំឡុងពេល \`save()\` ឬ \`findByIdAndUpdate()\` នីមួយៗ`,
+    codeSnippet: `import { Schema, model } from "mongoose";
+
+// Step 1: Pass { timestamps: true } as the second argument to Schema
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true }
+}, {
+  timestamps: true // Automatically manages createdAt and updatedAt!
+});
+
+export const Course = model("Course", courseSchema);`,
+  },
+  {
+    id: "M10-11",
+    number: "11",
+    title: "Mongoose Virtuals",
+    khmerTitle: "ការបង្កើត Virtual Properties (Computed Fields)",
+    type: "concept",
+    codeLanguage: "javascript",
+    summary: `**Virtuals** គឺជា Document Properties ដែលអ្នកអាចអាន ឬសរសេរបាន ប៉ុន្តែពួកវា **មិនត្រូវបានរក្សាទុកលើ MongoDB Database ឡើយ** (វាត្រូវបានគណនានៅពេល Run-time)។
+
+ឧទាហរណ៍ជាក់ស្តែងលើ Course API៖
+* គណនាតម្លៃបញ្ចុះតម្លៃ \`discountedPrice\`
+* គណនា \`durationHours\` ចេញពី \`durationMinutes\`
+* ត្រូវកំណត់ \`{ virtuals: true }\` ក្នុង \`toJSON\` Option ដើម្បីឱ្យវាបង្ហាញពេលផ្ញើ Response ទៅកាន់ Client`,
+    codeSnippet: `import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true },
+  discountPercent: { type: Number, default: 10 }
+}, {
+  toJSON: { virtuals: true }, // 💡 Include virtuals when converting to JSON!
+  toObject: { virtuals: true }
+});
+
+// Step 1: Define Virtual Property for Final Price
+courseSchema.virtual("finalPrice").get(function() {
+  // "this" points to the current document
+  return Number((this.price * (1 - this.discountPercent / 100)).toFixed(2));
+});
+
+export const Course = model("Course", courseSchema);`,
+  },
+  {
+    id: "M10-12",
+    number: "12",
+    title: "CRUD with Mongoose",
+    khmerTitle: "ទិដ្ឋភាពទូទៅនៃប្រតិបត្តិការ CRUD ជាមួយ Mongoose",
+    type: "concept",
+    codeLanguage: "javascript",
+    summary: `Mongoose ផ្តល់ជូននូវ Methods សម្បូរបែបសម្រាប់ប្រតិបត្តិការ CRUD លើ MongoDB៖
+
+* **Create**៖ \`Model.create()\`, \`new Model()\` + \`save()\`
+* **Read**៖ \`Model.find()\`, \`Model.findById()\`, \`Model.findOne()\`
+* **Update**៖ \`Model.findByIdAndUpdate()\`, \`Model.updateOne()\`
+* **Delete**៖ \`Model.findByIdAndDelete()\`, \`Model.deleteOne()\`
+
+Methods ទាំងអស់នេះ Return **Mongoose Query Promises** ដែលគាំទ្រ Async/Await យ៉ាងរលូន។`,
+    codeSnippet: `/* MONGOOSE CRUD CHEATSHEET FOR COURSE API:
+   -------------------------------------------------------------
+   CREATE:  const newCourse = await Course.create(req.body);
+   READ:    const courses   = await Course.find({ published: true });
+   READ 1:  const course    = await Course.findById(id);
+   UPDATE:  const updated   = await Course.findByIdAndUpdate(id, req.body, { new: true });
+   DELETE:  await Course.findByIdAndDelete(id);
+   -------------------------------------------------------------
 */`,
+  },
+  {
+    id: "M10-13",
+    number: "13",
+    title: "Creating Documents",
+    khmerTitle: "ការបញ្ចូល Document ថ្មី (Course.create & new Course)",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `មាន ២ របៀបក្នុងការបង្កើត Document ថ្មីក្នុង Mongoose៖
+
+1. **\`Course.create(data)\` (ពេញនិយមបំផុត)**៖ ខ្លី រហ័ស និងធ្វើ Validation រួច Save ទៅកាន់ MongoDB ក្នុងមួយជំហាន
+2. **\`new Course(data)\` + \`course.save()\`**៖ ផ្តល់ភាពបត់បែននៅពេលអ្នកចង់កែប្រែ Properties ខ្លះសិនមុននឹង Save`,
+    codeSnippet: `import { Course } from "./models/course.model.js";
+
+// Method 1: Direct Course.create() (Recommended for Services)
+export const addCourse = async (courseData) => {
+  const course = await Course.create({
+    title: courseData.title,
+    instructor: courseData.instructor,
+    price: courseData.price
+  });
+  console.log("Created Course ID:", course._id);
+  return course;
+};
+
+// Method 2: new Course() instance + save()
+export const addCourseWithCustomLogic = async (courseData) => {
+  const course = new Course(courseData);
+  // Custom business modification before saving:
+  course.title = course.title.toUpperCase();
+  await course.save();
+  return course;
+};`,
+  },
+  {
+    id: "M10-14",
+    number: "14",
+    title: "Finding Documents",
+    khmerTitle: "ការទាញយក Documents (find, findById, findOne)",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `Methods សំខាន់ៗទាំង ៣ សម្រាប់អានទិន្នន័យពី MongoDB៖
+
+1. **\`Course.find(filter)\`**៖ ត្រឡប់ Array នៃ Documents (ត្រឡប់ \`[]\` បើគ្មាន)
+2. **\`Course.findById(id)\`**៖ ស្វែងរកតាម \`_id\` ដោយផ្ទាល់ (ត្រឡប់ \`null\` បើគ្មាន)
+3. **\`Course.findOne(filter)\`**៖ ស្វែងរក Document ដំបូងបង្អស់ដែលត្រូវនឹងលក្ខខណ្ឌ`,
+    codeSnippet: `import { Course } from "./models/course.model.js";
+
+// 1. Fetch all published courses
+const allPublished = await Course.find({ published: true });
+
+// 2. Fetch single course by ID
+const course = await Course.findById("6648e58319f3a9e224e78891");
+if (!course) {
+  console.log("Course not found!");
+}
+
+// 3. Find unique course by title slug
+const uniqueCourse = await Course.findOne({ slug: "mastering-express" });`,
+  },
+  {
+    id: "M10-15",
+    number: "15",
+    title: "Query Filter Operators ($gte, $lte, $in)",
+    khmerTitle: "ការប្រើប្រាស់ Query Filter Operators ក្នុង Mongoose",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `MongoDB Filter Operators ដ៏មានឥទ្ធិពល៖
+
+* **Comparison**៖ \`$gt\` (>), \`$gte\` (>=), \`$lt\` (<), \`$lte\` (<=), \`$ne\` (!=)
+* **Inclusion**៖ \`$in: [...]\` (ផ្គូផ្គងតម្លៃណាមួយក្នុង Array)
+* **Logical**៖ \`$or: [...]\`, \`$and: [...]\``,
+    codeSnippet: `import { Course } from "./models/course.model.js";
+
+// Filter: Price between $20 and $60, and level is beginner or intermediate
+const filteredCourses = await Course.find({
+  price: { $gte: 20, $lte: 60 },
+  level: { $in: ["beginner", "intermediate"] },
+  published: true
+});
+
+// Logical OR Query: Free courses OR Special promo courses
+const promoCourses = await Course.find({
+  $or: [
+    { price: 0 },
+    { isPromo: true }
+  ]
+});`,
+  },
+  {
+    id: "M10-16",
+    number: "16",
+    title: "Updating Documents in Mongoose",
+    khmerTitle: "ការកែប្រែទិន្នន័យ (findByIdAndUpdate & runValidators)",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `Method ពេញនិយមបំផុតសម្រាប់កែប្រែ Document គឺ **\`Course.findByIdAndUpdate(id, update, options)\`**។
+
+Options ដ៏សំខាន់ដែលមិនអាចខ្វះបាន៖
+* **\`new: true\`**៖ ត្រឡប់ Document ថ្មីដែលបានកែប្រែរួច (តាមលំនាំដើម Mongoose ត្រឡប់ Document ចាស់មុនកែប្រែ)
+* **\`runValidators: true\`**៖ បង្ខំឱ្យ Mongoose ដំណើរការ Schema Validation ឡើងវិញលើ Fields ថ្មី!`,
+    codeSnippet: `import { Course } from "./models/course.model.js";
+
+export const updateCourseService = async (courseId, updateData) => {
+  // Step 1: Update with critical options enabled
+  const updatedCourse = await Course.findByIdAndUpdate(
+    courseId,
+    { $set: updateData },
+    {
+      new: true,           // 💡 Return the modified document!
+      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!
+    }
+  );
+
+  return updatedCourse;
+};`,
+  },
+  {
+    id: "M10-17",
+    number: "17",
+    title: "Deleting Documents",
+    khmerTitle: "ការលុបទិន្នន័យ (findByIdAndDelete & Soft Deletes)",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `ការលុប Document ជាមួយ Mongoose៖
+
+1. **Hard Delete**៖ \`Course.findByIdAndDelete(courseId)\`
+2. **Soft Delete (អនុសាសន៍ Production)**៖ \`Course.findByIdAndUpdate(courseId, { isDeleted: true, deletedAt: new Date() })\``,
+    codeSnippet: `import { Course } from "./models/course.model.js";
+
+// Hard Delete: Permanently purged from MongoDB
+export const purgeCourse = async (id) => {
+  return await Course.findByIdAndDelete(id);
+};
+
+// Soft Delete: Preserves record for audit/recovery
+export const softDeleteCourse = async (id) => {
+  return await Course.findByIdAndUpdate(
+    id,
+    { isDeleted: true, deletedAt: new Date() },
+    { new: true }
+  );
+};`,
+  },
+  {
+    id: "M10-18",
+    number: "18",
+    title: "Mongoose Methods (Instance & Static)",
+    khmerTitle: "ការបង្កើត Instance Methods និង Static Methods",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `Mongoose អនុញ្ញាតឱ្យយើងសរសេរ Custom Domain Methods លើ Model ដោយផ្ទាល់៖
+
+* **Instance Methods (\`methods\`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. \`course.publishCourse()\`)
+* **Static Methods (\`statics\`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. \`Course.findTopRated()\`)`,
+    codeSnippet: `import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: String,
+  published: { type: Boolean, default: false },
+  rating: { type: Number, default: 0 }
+});
+
+// Step 1: Instance Method (operates on 1 document)
+courseSchema.methods.publish = async function() {
+  this.published = true;
+  return await this.save();
+};
+
+// Step 2: Static Method (operates on the Model collection)
+courseSchema.statics.findTopRated = function(minRating = 4.5) {
+  return this.find({ rating: { $gte: minRating } });
+};
+
+export const Course = model("Course", courseSchema);`,
+  },
+  {
+    id: "M10-19",
+    number: "19",
+    title: "Mongoose Middleware (Pre & Post Hooks)",
+    khmerTitle: "ការប្រើប្រាស់ Mongoose Pre & Post Hooks",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `**Mongoose Middleware (Hooks)** អនុញ្ញាតឱ្យយើងស្ទាក់ចាប់ (Intercept) Document មុន ឬក្រោយពេល Save, Validate, ឬ Remove។
+
+ករណីប្រើប្រាស់ជាក់ស្តែងសម្រាប់ Course API៖
+* **\`pre('save')\`**៖ បង្កើត SEO URL Slug ស្វ័យប្រវត្តិចេញពី \`title\`
+* **\`pre('save')\`**៖ ធ្វើ Password Hashing មុននឹង Save User Document
+* **\`post('save')\`**៖ កត់ត្រា Audit Log ឬផ្ញើ Notification បន្ទាប់ពី Save ជោគជ័យ`,
+    codeSnippet: `import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  slug: String
+});
+
+// Step 1: Pre-save hook to generate URL Slug automatically!
+courseSchema.pre("save", function(next) {
+  if (this.isModified("title")) {
+    this.slug = this.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  }
+  next();
+});
+
+export const Course = model("Course", courseSchema);`,
+  },
+  {
+    id: "M10-20",
+    number: "20",
+    title: "Mongoose Population (.populate())",
+    khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងឯកសារជាមួយ .populate()",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `**Population** គឺជាជម្រើសជំនួស SQL JOINs ក្នុង Mongoose។
+
+ដំណើរការការងារ៖
+* Lesson Document រក្សាទុកតែ \`courseId: ObjectId("...")\` ប៉ុណ្ណោះ
+* នៅពេលហៅ \`.populate("courseId")\` Mongoose នឹង Query ទៅកាន់ \`courses\` Collection ដោយស្វ័យប្រវត្តិតាមរយៈ \`$lookup\` ហើយជំនួស \`courseId\` ដោយ Course Document ពេញលេញ!`,
+    codeSnippet: `import { Lesson } from "./models/lesson.model.js";
+
+// Fetch lesson and automatically populate parent Course data
+export const getLessonWithCourse = async (lessonId) => {
+  // 💡 Teaching Note: Replaces courseId ObjectId with full Course Document!
+  const lesson = await Lesson.findById(lessonId)
+    .populate("courseId", "title instructor price level");
+
+  return lesson;
+};`,
   },
 ];

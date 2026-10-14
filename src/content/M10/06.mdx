@@ -1,44 +1,25 @@
 export const meta = {
   id: "M10-06",
   number: "06",
-  title: "Controller-Service Integration",
-  khmerTitle: "ការរួមបញ្ចូល Controller និង Service ក្នុង Course Enrollment Workflow",
-  type: "architecture",
+  title: "SchemaTypes in Mongoose",
+  khmerTitle: "ការស្វែងយល់ពី SchemaTypes ទាំងអស់ក្នុង Mongoose",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "អនុវត្តជាក់ស្តែងនូវ **Complete Course Enrollment Workflow** ដោយរួមបញ្ចូលគ្នារវាង Controller និង Service៖\n\n1. **Student ស្នើសុំចុះឈ្មោះចូលរៀន** (`POST /courses/:id/enroll`)\n2. **Controller**៖ ដកស្រង់ `courseId` និង `studentId` ពី Request រួចបញ្ជូនទៅកាន់ Service\n3. **Service**៖\n   * ពិនិត្យថាតើ Course មានពិតមែនឬអត់\n   * ពិនិត្យថាតើ Course ពេញហើយឬនៅ\n   * គណនាតម្លៃបញ្ចុះតម្លៃ (Discount)\n   * បញ្ចូលឈ្មោះ Student ទៅក្នុងបញ្ជី\n4. **Controller**៖ ទទួលលទ្ធផលជោគជ័យ រួចឆ្លើយតប `200 OK` ជាមួយ Enrollment Receipt",
-  codeSnippet: "// 1. IN SERVICE (src/services/enrollment.service.js):\nexport const enrollStudentInCourse = async (courseId, student) => {\n  // Business Rule 1: Validate course exists\n  const course = await getCourseById(courseId);\n  if (!course) throw new Error(\"Course not found\");\n\n  // Business Rule 2: Calculate pricing with student discount\n  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;\n\n  // Business Rule 3: Record enrollment\n  const enrollment = {\n    id: Date.now(),\n    courseId,\n    studentId: student.id,\n    amountPaid: finalPrice,\n    enrolledAt: new Date().toISOString()\n  };\n\n  return enrollment;\n};\n\n// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):\nexport const handleEnrollment = async (req, res, next) => {\n  try {\n    const courseId = Number(req.params.id);\n    const enrollment = await enrollStudentInCourse(courseId, req.user);\n    res.status(201).json({ success: true, data: enrollment });\n  } catch (err) {\n    next(err);\n  }\n};",
+  summary: "Mongoose ផ្តល់នូវ **SchemaTypes** ស្តង់ដារជាច្រើន៖\n\n* **`String`**៖ អត្ថបទ (គាំទ្រ `trim`, `lowercase`, `uppercase`, `minlength`, `maxlength`)\n* **`Number`**៖ លេខ (គាំទ្រ `min`, `max`)\n* **`Boolean`**៖ តម្លៃពិត ឬមិនពិត\n* **`Date`**៖ កាលបរិច្ឆេទ\n* **`Buffer`**៖ ទិន្នន័យ Binary\n* **`Schema.Types.ObjectId`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង\n* **`Array`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseDetailsSchema = new Schema({\n  title: { type: String, trim: true, required: true },\n  durationHours: { type: Number, min: 1 },\n  isCertificateIncluded: { type: Boolean, default: true },\n  releaseDate: { type: Date, default: Date.now },\n  tags: [{ type: String, lowercase: true }], // Array of lowercase strings\n  instructorId: { type: Schema.Types.ObjectId, ref: \"User\" } // Reference to User Model!\n});\n\nexport const CourseDetails = model(\"CourseDetails\", courseDetailsSchema);",
 };
 
 ```javascript
-// 1. IN SERVICE (src/services/enrollment.service.js):
-export const enrollStudentInCourse = async (courseId, student) => {
-  // Business Rule 1: Validate course exists
-  const course = await getCourseById(courseId);
-  if (!course) throw new Error("Course not found");
+import { Schema, model } from "mongoose";
 
-  // Business Rule 2: Calculate pricing with student discount
-  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;
+const courseDetailsSchema = new Schema({
+  title: { type: String, trim: true, required: true },
+  durationHours: { type: Number, min: 1 },
+  isCertificateIncluded: { type: Boolean, default: true },
+  releaseDate: { type: Date, default: Date.now },
+  tags: [{ type: String, lowercase: true }], // Array of lowercase strings
+  instructorId: { type: Schema.Types.ObjectId, ref: "User" } // Reference to User Model!
+});
 
-  // Business Rule 3: Record enrollment
-  const enrollment = {
-    id: Date.now(),
-    courseId,
-    studentId: student.id,
-    amountPaid: finalPrice,
-    enrolledAt: new Date().toISOString()
-  };
-
-  return enrollment;
-};
-
-// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):
-export const handleEnrollment = async (req, res, next) => {
-  try {
-    const courseId = Number(req.params.id);
-    const enrollment = await enrollStudentInCourse(courseId, req.user);
-    res.status(201).json({ success: true, data: enrollment });
-  } catch (err) {
-    next(err);
-  }
-};
+export const CourseDetails = model("CourseDetails", courseDetailsSchema);
 ```

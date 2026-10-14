@@ -1,25 +1,30 @@
 export const meta = {
   id: "M11-03",
   number: "03",
-  title: "MongoDB Architecture",
-  khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ MongoDB (Replica Sets & Sharding)",
+  title: "RESTful API Design",
+  khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ (URL Conventions)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "MongoDB សម្រេចបាននូវ High Availability និង Scalability តាមរយៈយន្តការពីរ៖\n\n1. **Replica Sets (High Availability)**៖ ប្រព័ន្ធ cluster ដែលមានយ៉ាងហោចណាស់ ៣ Nodes (Primary ១ និង Secondary ២)។ Primary ទទួលខុសត្រូវលើ Writes ទាំងអស់ ហើយធ្វើ Replicate ទិន្នន័យទៅ Secondaries ដោយស្វ័យប្រវត្តិតាមរយៈ Oplog។\n2. **Sharding (Horizontal Scalability)**៖ ការបំបែកទិន្នន័យជាចំណែកៗ (Partitions) ឆ្លងកាត់ Servers ច្រើននៅពេលទិន្នន័យកើនដល់រាប់លាន Records។",
-  codeSnippet: "/* MongoDB Replica Set Architecture for Course Catalog:\n   [Express API Client (Node.js)]\n              │\n              ▼\n   ┌───────────────────────┐\n   │    PRIMARY NODE       │ (Handles Writes & Primary Reads)\n   └──────────┬────────────┘\n              │ (Asynchronous Replication via Oplog)\n        ┌─────┴─────┐\n        ▼           ▼\n   [SECONDARY] [SECONDARY] (Auto Failover & Read Scalability)\n*/",
+  summary: "ច្បាប់មាសសម្រាប់ការរចនា **RESTful URIs**៖\n\n* **ប្រើ Nouns មិនប្រើ Verbs**៖ `/courses` (✅) មិនមែន `/getCourses` (❌)\n* **ប្រើ Plural Nouns (ពហុវចនៈ)**៖ `/courses`, `/lessons`, `/users`\n* **ប្រើ Lowercase និង Hyphens**៖ `/course-reviews` មិនមែន `/course_reviews` ឬ `/courseReviews`\n* **បង្ហាញ Hierarchy ដោយ Nested Paths**៖ `/courses/:id/lessons`\n* **ប្រើ Query Parameters សម្រាប់ Actions បន្ថែម**៖ `?sort=price&filter=published`",
+  codeSnippet: "/*\n  ==============================================================\n  PROFESSIONAL RESTFUL URL CONVENTIONS:\n  ==============================================================\n  ✅ GET    /api/v1/courses               (Fetch course collection)\n  ✅ POST   /api/v1/courses               (Create new course)\n  ✅ GET    /api/v1/courses/42            (Fetch specific course)\n  ✅ PATCH  /api/v1/courses/42            (Update fields)\n  ✅ DELETE /api/v1/courses/42            (Remove course)\n  ✅ GET    /api/v1/courses/42/lessons    (Fetch lessons for course 42)\n\n  ❌ BAD URL CONVENTIONS (Avoid at all costs):\n  ❌ /api/v1/getAllCourses\n  ❌ /api/v1/createNewCourse\n  ❌ /api/v1/course/42/delete\n  ❌ /api/v1/course_reviews_by_user\n*/",
 };
 
 ```javascript
-/* MongoDB Replica Set Architecture for Course Catalog:
-   [Express API Client (Node.js)]
-              │
-              ▼
-   ┌───────────────────────┐
-   │    PRIMARY NODE       │ (Handles Writes & Primary Reads)
-   └──────────┬────────────┘
-              │ (Asynchronous Replication via Oplog)
-        ┌─────┴─────┐
-        ▼           ▼
-   [SECONDARY] [SECONDARY] (Auto Failover & Read Scalability)
+/*
+  ==============================================================
+  PROFESSIONAL RESTFUL URL CONVENTIONS:
+  ==============================================================
+  ✅ GET    /api/v1/courses               (Fetch course collection)
+  ✅ POST   /api/v1/courses               (Create new course)
+  ✅ GET    /api/v1/courses/42            (Fetch specific course)
+  ✅ PATCH  /api/v1/courses/42            (Update fields)
+  ✅ DELETE /api/v1/courses/42            (Remove course)
+  ✅ GET    /api/v1/courses/42/lessons    (Fetch lessons for course 42)
+
+  ❌ BAD URL CONVENTIONS (Avoid at all costs):
+  ❌ /api/v1/getAllCourses
+  ❌ /api/v1/createNewCourse
+  ❌ /api/v1/course/42/delete
+  ❌ /api/v1/course_reviews_by_user
 */
 ```

@@ -1,27 +1,24 @@
 export const meta = {
   id: "M10-10",
   number: "10",
-  title: "Backend Architecture Best Practices",
-  khmerTitle: "ការអនុវត្តស្ថាបត្យកម្មល្អបំផុតសម្រាប់ Enterprise Node.js Backend",
-  type: "architecture",
+  title: "Timestamps Option",
+  khmerTitle: "ការប្រើប្រាស់ Option { timestamps: true }",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "បញ្ជីត្រួតពិនិត្យស្ថាបត្យកម្ម (Architecture Review Checklist) សម្រាប់ Backend Engineers៖\n\n1. **Separation of Concerns (SoC)**៖ Routes (HTTP mapping) ➔ Controllers (Orchestration) ➔ Services (Business Logic) ➔ Models (Data Access)\n2. **Fail Fast & Validate Early**៖ ត្រួតពិនិត្យទិន្នន័យបញ្ចូលតាម Middleware មុនពេលទៅដល់ Controller\n3. **Never Expose Sensitive Details**៖ លាក់ Stack Trace នៅលើ Production Environment\n4. **Environment Isolation**៖ មិន Hardcode Secrets ឬ Ports (ប្រើប្រាស់ `.env`)\n5. **Deterministic Testing**៖ សរសេរ Unit Tests លើ Service Layer និង Integration Tests (Supertest) លើ Endpoints",
-  codeSnippet: "/*\n  ==============================================================\n  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:\n  ==============================================================\n  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)\n  [x] 2. Centralized Error Handling (Single 4-arg error middleware)\n  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })\n  [x] 4. Defensive ReDoS Protection (Sanitized regex search)\n  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)\n  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)\n  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)\n  [x] 8. Automated Integration Tests (Supertest test runner)\n  ==============================================================\n*/",
+  summary: "ជំនួសឱ្យការបង្កើត Fields `createdAt` និង `updatedAt` ដោយដៃ Mongoose ផ្តល់ Option **`{ timestamps: true }`** ដែលជាដំណោះស្រាយដ៏ឆ្លាតវៃ។\n\nមុខងារស្វ័យប្រវត្តិ៖\n* បន្ថែម `createdAt` កាលបរិច្ឆេទដែល Document ត្រូវបានបង្កើតដំបូង\n* បន្ថែម និងកែប្រែ `updatedAt` ដោយស្វ័យប្រវត្តិកំឡុងពេល `save()` ឬ `findByIdAndUpdate()` នីមួយៗ",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\n// Step 1: Pass { timestamps: true } as the second argument to Schema\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true }\n}, {\n  timestamps: true // Automatically manages createdAt and updatedAt!\n});\n\nexport const Course = model(\"Course\", courseSchema);",
 };
 
 ```javascript
-/*
-  ==============================================================
-  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:
-  ==============================================================
-  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)
-  [x] 2. Centralized Error Handling (Single 4-arg error middleware)
-  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })
-  [x] 4. Defensive ReDoS Protection (Sanitized regex search)
-  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)
-  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)
-  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)
-  [x] 8. Automated Integration Tests (Supertest test runner)
-  ==============================================================
-*/
+import { Schema, model } from "mongoose";
+
+// Step 1: Pass { timestamps: true } as the second argument to Schema
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true }
+}, {
+  timestamps: true // Automatically manages createdAt and updatedAt!
+});
+
+export const Course = model("Course", courseSchema);
 ```

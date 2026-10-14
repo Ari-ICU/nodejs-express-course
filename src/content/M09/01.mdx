@@ -1,28 +1,24 @@
 export const meta = {
   id: "M09-01",
   number: "01",
-  title: "What is REST?",
-  khmerTitle: "អ្វីជាស្ថាបត្យកម្ម REST និង Uniform Interface?",
+  title: "What is MongoDB?",
+  khmerTitle: "អ្វីជាប្រព័ន្ធទិន្នន័យ MongoDB?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "**REST (Representational State Transfer)** គឺជាស្ថាបត្យកម្មរចនា API បែបស្តង់ដារដែលបង្កើតឡើងដោយ Roy Fielding ក្នុងឆ្នាំ ២០០០។\n\nគោលគំនិតស្នូលនៃ REST ក្នុង Course Catalog API៖\n* **Resources**៖ អ្វីៗគ្រប់យ៉ាងត្រូវបានចាត់ទុកជា Resource (ដូចជា `courses`, `lessons`, `users`)\n* **Representations**៖ Client ទទួលបាន Representation នៃ Resource ជាទម្រង់ JSON\n* **Statelessness**៖ Request នីមួយៗផ្ទុកនូវព័ត៌មានគ្រប់គ្រាន់ដើម្បីដំណើរការដោយខ្លួនឯង ដោយមិនពឹងផ្អែកលើ Session ក្នុង Memory របស់ Server ឡើយ",
-  codeSnippet: "// Representation of Course Resource in REST (JSON)\n// GET /api/v1/courses/101\n{\n  \"id\": 101,\n  \"title\": \"Full-Stack Node.js & Express Architecture\",\n  \"instructor\": \"Ratha\",\n  \"price\": 49.99,\n  \"level\": \"intermediate\",\n  \"published\": true,\n  \"links\": {\n    \"self\": \"/api/v1/courses/101\",\n    \"lessons\": \"/api/v1/courses/101/lessons\",\n    \"reviews\": \"/api/v1/courses/101/reviews\"\n  }\n}",
+  summary: "**MongoDB** គឺជា Database NoSQL បែប Document-oriented ដ៏ទំនើប និងពេញនិយមបំផុតសម្រាប់ Node.js Backend។\n\nលក្ខណៈពិសេសចម្បងៗ៖\n* រក្សាទុកទិន្នន័យជាឯកសារ **BSON (Binary JSON)** ដែលមានទម្រង់ដូចជា JavaScript Object ១០០%\n* គាំទ្រ Dynamic & Flexible Schema — មិនចាំបាច់រៀបចំ Table Migrations តឹងរឹងដូច SQL ឡើយ\n* ផ្តល់នូវ High Scalability តាមរយៈ Horizontal Sharding និង Automatic Failover Replicas\n\nនៅក្នុង Course នេះ យើងនឹងភ្ជាប់ **Course Catalog API** ពី Modules 06-10 ទៅកាន់ MongoDB Database ពិតប្រាកដ។",
+  codeSnippet: "// A MongoDB document looks and feels just like a native JavaScript object!\n{\n  \"_id\": \"6648e58319f3a9e224e78891\",\n  \"title\": \"Full-Stack Node.js & Express Architecture\",\n  \"instructor\": \"Ratha\",\n  \"price\": 49.99,\n  \"level\": \"intermediate\",\n  \"published\": true,\n  \"tags\": [\"nodejs\", \"express\", \"mongodb\"],\n  \"createdAt\": \"2026-10-14T08:00:00.000Z\"\n}",
 };
 
 ```javascript
-// Representation of Course Resource in REST (JSON)
-// GET /api/v1/courses/101
+// A MongoDB document looks and feels just like a native JavaScript object!
 {
-  "id": 101,
+  "_id": "6648e58319f3a9e224e78891",
   "title": "Full-Stack Node.js & Express Architecture",
   "instructor": "Ratha",
   "price": 49.99,
   "level": "intermediate",
   "published": true,
-  "links": {
-    "self": "/api/v1/courses/101",
-    "lessons": "/api/v1/courses/101/lessons",
-    "reviews": "/api/v1/courses/101/reviews"
-  }
+  "tags": ["nodejs", "express", "mongodb"],
+  "createdAt": "2026-10-14T08:00:00.000Z"
 }
 ```

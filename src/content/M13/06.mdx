@@ -1,29 +1,44 @@
 export const meta = {
   id: "M13-06",
   number: "06",
-  title: "Creating Course Routes",
-  khmerTitle: "ការចងភ្ជាប់ Routes ទៅកាន់ Database Controllers",
-  type: "lab",
+  title: "Controller-Service Integration",
+  khmerTitle: "ការរួមបញ្ចូល Controller និង Service ក្នុង Course Enrollment Workflow",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "ការចងភ្ជាប់ Routes ក្នុង `src/routes/course.routes.js` ជាមួយ Controller Handlers តាមរយៈ `express.Router()`៖\n\nរចនាសម្ព័ន្ធកូដស្អាតតាមរយៈ `router.route()`:\n* `router.route(\"/\").get(getCourses).post(createCourse)`\n* `router.route(\"/:id\").get(getCourseById).patch(updateCourse).delete(deleteCourse)`",
-  codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
+  summary: "អនុវត្តជាក់ស្តែងនូវ **Complete Course Enrollment Workflow** ដោយរួមបញ្ចូលគ្នារវាង Controller និង Service៖\n\n1. **Student ស្នើសុំចុះឈ្មោះចូលរៀន** (`POST /courses/:id/enroll`)\n2. **Controller**៖ ដកស្រង់ `courseId` និង `studentId` ពី Request រួចបញ្ជូនទៅកាន់ Service\n3. **Service**៖\n   * ពិនិត្យថាតើ Course មានពិតមែនឬអត់\n   * ពិនិត្យថាតើ Course ពេញហើយឬនៅ\n   * គណនាតម្លៃបញ្ចុះតម្លៃ (Discount)\n   * បញ្ចូលឈ្មោះ Student ទៅក្នុងបញ្ជី\n4. **Controller**៖ ទទួលលទ្ធផលជោគជ័យ រួចឆ្លើយតប `200 OK` ជាមួយ Enrollment Receipt",
+  codeSnippet: "// 1. IN SERVICE (src/services/enrollment.service.js):\nexport const enrollStudentInCourse = async (courseId, student) => {\n  // Business Rule 1: Validate course exists\n  const course = await getCourseById(courseId);\n  if (!course) throw new Error(\"Course not found\");\n\n  // Business Rule 2: Calculate pricing with student discount\n  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;\n\n  // Business Rule 3: Record enrollment\n  const enrollment = {\n    id: Date.now(),\n    courseId,\n    studentId: student.id,\n    amountPaid: finalPrice,\n    enrolledAt: new Date().toISOString()\n  };\n\n  return enrollment;\n};\n\n// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):\nexport const handleEnrollment = async (req, res, next) => {\n  try {\n    const courseId = Number(req.params.id);\n    const enrollment = await enrollStudentInCourse(courseId, req.user);\n    res.status(201).json({ success: true, data: enrollment });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 
 ```javascript
-// src/routes/course.routes.js
-import express from "express";
-import * as courseController from "../controllers/course.controller.js";
+// 1. IN SERVICE (src/services/enrollment.service.js):
+export const enrollStudentInCourse = async (courseId, student) => {
+  // Business Rule 1: Validate course exists
+  const course = await getCourseById(courseId);
+  if (!course) throw new Error("Course not found");
 
-const router = express.Router();
+  // Business Rule 2: Calculate pricing with student discount
+  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;
 
-router.route("/")
-  .get(courseController.getCourses)
-  .post(courseController.createCourse);
+  // Business Rule 3: Record enrollment
+  const enrollment = {
+    id: Date.now(),
+    courseId,
+    studentId: student.id,
+    amountPaid: finalPrice,
+    enrolledAt: new Date().toISOString()
+  };
 
-router.route("/:id")
-  .get(courseController.getCourseById)
-  .patch(courseController.updateCourse)
-  .delete(courseController.deleteCourse);
+  return enrollment;
+};
 
-export default router;
+// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):
+export const handleEnrollment = async (req, res, next) => {
+  try {
+    const courseId = Number(req.params.id);
+    const enrollment = await enrollStudentInCourse(courseId, req.user);
+    res.status(201).json({ success: true, data: enrollment });
+  } catch (err) {
+    next(err);
+  }
+};
 ```

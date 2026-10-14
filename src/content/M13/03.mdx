@@ -1,22 +1,53 @@
 export const meta = {
   id: "M13-03",
   number: "03",
-  title: "Environment Variables for Database",
-  khmerTitle: "ការគ្រប់គ្រង Database Credentials ក្នុង .env",
-  type: "lab",
-  codeLanguage: "bash",
-  summary: "សុវត្ថិភាព Database Credentials គឺជាកាតព្វកិច្ចចម្បងរបស់ Backend Developer៖\n\n* មិនត្រូវ Commit Password ឬ Atlas Connection Strings ចូលទៅកាន់ Git Repo ជាដាច់ខាត\n* ប្រើប្រាស់ `.env.example` សម្រាប់ចែករំលែក Template ទៅកាន់ Team\n* ប្រើប្រាស់ `dotenv` ដើម្បី Load អថេរទៅក្នុង `process.env`",
-  codeSnippet: "# .env (Never commit to Git!)\nPORT=5000\nNODE_ENV=development\nDATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority\n\n# .env.example (Safe to commit for team onboarding)\nPORT=5000\nNODE_ENV=development\nDATABASE_URL=your_mongodb_connection_string_here",
+  title: "Services (Pure Business Logic)",
+  khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Service Layer",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "**Service Layer** គឺជាបេះដូងនៃ Application ដែលផ្ទុកនូវ **Business Rules និង Domain Logic ទាំងអស់**។\n\nលក្ខណៈសម្បត្តិនៃ Service Function ល្អ៖\n* **Pure JavaScript Functions**៖ ទទួល Pure Input (Objects, Strings, Numbers) និង Return Pure Output\n* **គ្មានការពាក់ព័ន្ធនឹង HTTP**៖ មិនដែលឃើញពាក្យ `req` ឬ `res` ក្នុង Service ឡើយ\n* **Throw Custom Domain Errors**៖ បោះកំហុស `AppError` នៅពេលខុសលក្ខខណ្ឌ Business Rule\n* **100% Testable**៖ អាចសរសេរ Unit Test បានយ៉ាងងាយស្រួលដោយមិនបាច់ប្រើ Express ឬ Supertest!",
+  codeSnippet: "// src/services/course.service.js\n\n// Simulated database data store\nconst courses = [\n  { id: 1, title: \"Modern JavaScript\", price: 29.99, level: \"beginner\" },\n  { id: 2, title: \"Full-Stack Express\", price: 49.99, level: \"advanced\" }\n];\n\n// Step 1: Pure Business Logic Service function (No req, no res!)\n// 💡 Teaching Note: In Modules 11-13, this queries MongoDB via Mongoose Model:\n// export const findAllCourses = async (filters = {}) => await Course.find(filters);\nexport const findAllCourses = async (filters = {}) => {\n  let result = [...courses];\n\n  if (filters.level) {\n    result = result.filter(c => c.level === filters.level);\n  }\n  if (filters.maxPrice) {\n    result = result.filter(c => c.price <= Number(filters.maxPrice));\n  }\n\n  return result;\n};\n\n// Step 2: Create Course Service with business validation\n// 💡 Teaching Note: With MongoDB, this delegates to: await Course.create(courseData);\nexport const createCourse = async (courseData) => {\n  if (courseData.price < 0) {\n    throw new Error(\"Course price cannot be negative\");\n  }\n\n  const newCourse = {\n    id: courses.length + 1,\n    ...courseData,\n    createdAt: new Date().toISOString()\n  };\n\n  courses.push(newCourse);\n  return newCourse;\n};",
 };
 
-```bash
-# .env (Never commit to Git!)
-PORT=5000
-NODE_ENV=development
-DATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority
+```javascript
+// src/services/course.service.js
 
-# .env.example (Safe to commit for team onboarding)
-PORT=5000
-NODE_ENV=development
-DATABASE_URL=your_mongodb_connection_string_here
+// Simulated database data store
+const courses = [
+  { id: 1, title: "Modern JavaScript", price: 29.99, level: "beginner" },
+  { id: 2, title: "Full-Stack Express", price: 49.99, level: "advanced" }
+];
+
+// Step 1: Pure Business Logic Service function (No req, no res!)
+// 💡 Teaching Note: In Modules 11-13, this queries MongoDB via Mongoose Model:
+// export const findAllCourses = async (filters = {}) => await Course.find(filters);
+export const findAllCourses = async (filters = {}) => {
+  let result = [...courses];
+
+  if (filters.level) {
+    result = result.filter(c => c.level === filters.level);
+  }
+  if (filters.maxPrice) {
+    result = result.filter(c => c.price <= Number(filters.maxPrice));
+  }
+
+  return result;
+};
+
+// Step 2: Create Course Service with business validation
+// 💡 Teaching Note: With MongoDB, this delegates to: await Course.create(courseData);
+export const createCourse = async (courseData) => {
+  if (courseData.price < 0) {
+    throw new Error("Course price cannot be negative");
+  }
+
+  const newCourse = {
+    id: courses.length + 1,
+    ...courseData,
+    createdAt: new Date().toISOString()
+  };
+
+  courses.push(newCourse);
+  return newCourse;
+};
 ```

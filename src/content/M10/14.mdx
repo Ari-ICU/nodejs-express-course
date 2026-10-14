@@ -1,0 +1,26 @@
+export const meta = {
+  id: "M10-14",
+  number: "14",
+  title: "Finding Documents",
+  khmerTitle: "ការទាញយក Documents (find, findById, findOne)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Methods សំខាន់ៗទាំង ៣ សម្រាប់អានទិន្នន័យពី MongoDB៖\n\n1. **`Course.find(filter)`**៖ ត្រឡប់ Array នៃ Documents (ត្រឡប់ `[]` បើគ្មាន)\n2. **`Course.findById(id)`**៖ ស្វែងរកតាម `_id` ដោយផ្ទាល់ (ត្រឡប់ `null` បើគ្មាន)\n3. **`Course.findOne(filter)`**៖ ស្វែងរក Document ដំបូងបង្អស់ដែលត្រូវនឹងលក្ខខណ្ឌ",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// 1. Fetch all published courses\nconst allPublished = await Course.find({ published: true });\n\n// 2. Fetch single course by ID\nconst course = await Course.findById(\"6648e58319f3a9e224e78891\");\nif (!course) {\n  console.log(\"Course not found!\");\n}\n\n// 3. Find unique course by title slug\nconst uniqueCourse = await Course.findOne({ slug: \"mastering-express\" });",
+};
+
+```javascript
+import { Course } from "./models/course.model.js";
+
+// 1. Fetch all published courses
+const allPublished = await Course.find({ published: true });
+
+// 2. Fetch single course by ID
+const course = await Course.findById("6648e58319f3a9e224e78891");
+if (!course) {
+  console.log("Course not found!");
+}
+
+// 3. Find unique course by title slug
+const uniqueCourse = await Course.findOne({ slug: "mastering-express" });
+```

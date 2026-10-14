@@ -1,25 +1,29 @@
 export const meta = {
   id: "M12-06",
   number: "06",
-  title: "SchemaTypes in Mongoose",
-  khmerTitle: "ការស្វែងយល់ពី SchemaTypes ទាំងអស់ក្នុង Mongoose",
-  type: "concept",
+  title: "Creating Course Routes",
+  khmerTitle: "ការចងភ្ជាប់ Routes ទៅកាន់ Database Controllers",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "Mongoose ផ្តល់នូវ **SchemaTypes** ស្តង់ដារជាច្រើន៖\n\n* **`String`**៖ អត្ថបទ (គាំទ្រ `trim`, `lowercase`, `uppercase`, `minlength`, `maxlength`)\n* **`Number`**៖ លេខ (គាំទ្រ `min`, `max`)\n* **`Boolean`**៖ តម្លៃពិត ឬមិនពិត\n* **`Date`**៖ កាលបរិច្ឆេទ\n* **`Buffer`**៖ ទិន្នន័យ Binary\n* **`Schema.Types.ObjectId`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង\n* **`Array`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents",
-  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseDetailsSchema = new Schema({\n  title: { type: String, trim: true, required: true },\n  durationHours: { type: Number, min: 1 },\n  isCertificateIncluded: { type: Boolean, default: true },\n  releaseDate: { type: Date, default: Date.now },\n  tags: [{ type: String, lowercase: true }], // Array of lowercase strings\n  instructorId: { type: Schema.Types.ObjectId, ref: \"User\" } // Reference to User Model!\n});\n\nexport const CourseDetails = model(\"CourseDetails\", courseDetailsSchema);",
+  summary: "ការចងភ្ជាប់ Routes ក្នុង `src/routes/course.routes.js` ជាមួយ Controller Handlers តាមរយៈ `express.Router()`៖\n\nរចនាសម្ព័ន្ធកូដស្អាតតាមរយៈ `router.route()`:\n* `router.route(\"/\").get(getCourses).post(createCourse)`\n* `router.route(\"/:id\").get(getCourseById).patch(updateCourse).delete(deleteCourse)`",
+  codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
 };
 
 ```javascript
-import { Schema, model } from "mongoose";
+// src/routes/course.routes.js
+import express from "express";
+import * as courseController from "../controllers/course.controller.js";
 
-const courseDetailsSchema = new Schema({
-  title: { type: String, trim: true, required: true },
-  durationHours: { type: Number, min: 1 },
-  isCertificateIncluded: { type: Boolean, default: true },
-  releaseDate: { type: Date, default: Date.now },
-  tags: [{ type: String, lowercase: true }], // Array of lowercase strings
-  instructorId: { type: Schema.Types.ObjectId, ref: "User" } // Reference to User Model!
-});
+const router = express.Router();
 
-export const CourseDetails = model("CourseDetails", courseDetailsSchema);
+router.route("/")
+  .get(courseController.getCourses)
+  .post(courseController.createCourse);
+
+router.route("/:id")
+  .get(courseController.getCourseById)
+  .patch(courseController.updateCourse)
+  .delete(courseController.deleteCourse);
+
+export default router;
 ```

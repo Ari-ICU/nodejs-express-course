@@ -1,30 +1,42 @@
 export const meta = {
   id: "M10-04",
   number: "04",
-  title: "Routes (Declarative Route Mapping)",
-  khmerTitle: "តួនាទីនៃ Route Definitions (Declarative Wiring)",
+  title: "Mongoose Schema",
+  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ CourseSchema ជាមួយ mongoose.Schema",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "នៅក្នុង 3-Tier Architecture ឯកសារ **Routes** គ្រាន់តែជាកន្លែង **Wiring (ភ្ជាប់ខ្សែរវាង URL, Middleware, និង Controller)** ប៉ុណ្ណោះ។\n\nវាមិនផ្ទុក Logic ណាមួយឡើយ ក្រៅពីការប្រកាសយ៉ាងច្បាស់លាស់ (Declarative Syntax)៖\n```javascript\nrouter.get(\"/:id\", authGuard, courseController.getCourseById);\n```\n\nរចនាសម្ព័ន្ធបែបនេះជួយឱ្យអ្នកណាក៏ដោយដែលបើកមើលឯកសារ Routes អាចយល់បានភ្លាមៗក្នុងរយៈពេល ៥ វិនាទីពី Endpoints ទាំងអស់នៃ Module។",
-  codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\n// Step 1: Wire endpoints directly to controller methods\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .put(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
+  summary: "**Schema** គឺជាប្លង់មេ (Blueprint) ដែលកំណត់ថាតើ Document នីមួយៗក្នុង Collection ត្រូវមាន Fields អ្វីខ្លះ ប្រភេទ Data Type ណា និងលក្ខខណ្ឌ Validation យ៉ាងដូចម្តេច។\n\nការរៀបចំ `courseSchema` សម្រាប់ Course API របស់យើង៖\n* `title` (String)\n* `instructor` (String)\n* `price` (Number)\n* `level` (String)\n* `published` (Boolean)",
+  codeSnippet: "// src/models/course.schema.js\nimport { Schema } from \"mongoose\";\n\n// Step 1: Define Schema Blueprint\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: [true, \"Course title is required\"],\n    trim: true\n  },\n  instructor: {\n    type: String,\n    required: [true, \"Instructor name is required\"]\n  },\n  price: {\n    type: Number,\n    required: [true, \"Price is required\"],\n    min: [0, \"Price cannot be negative\"]\n  },\n  level: {\n    type: String,\n    enum: [\"beginner\", \"intermediate\", \"advanced\"],\n    default: \"beginner\"\n  },\n  published: {\n    type: Boolean,\n    default: false\n  }\n});",
 };
 
 ```javascript
-// src/routes/course.routes.js
-import express from "express";
-import * as courseController from "../controllers/course.controller.js";
+// src/models/course.schema.js
+import { Schema } from "mongoose";
 
-const router = express.Router();
-
-// Step 1: Wire endpoints directly to controller methods
-router.route("/")
-  .get(courseController.getAllCourses)
-  .post(courseController.createCourse);
-
-router.route("/:id")
-  .get(courseController.getCourseById)
-  .put(courseController.updateCourse)
-  .delete(courseController.deleteCourse);
-
-export default router;
+// Step 1: Define Schema Blueprint
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: [true, "Course title is required"],
+    trim: true
+  },
+  instructor: {
+    type: String,
+    required: [true, "Instructor name is required"]
+  },
+  price: {
+    type: Number,
+    required: [true, "Price is required"],
+    min: [0, "Price cannot be negative"]
+  },
+  level: {
+    type: String,
+    enum: ["beginner", "intermediate", "advanced"],
+    default: "beginner"
+  },
+  published: {
+    type: Boolean,
+    default: false
+  }
+});
 ```

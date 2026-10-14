@@ -1,31 +1,23 @@
 export const meta = {
   id: "M10-01",
   number: "01",
-  title: "Why Separate Business Logic?",
-  khmerTitle: "ហេតុអ្វីត្រូវបំបែក Business Logic ចេញពី Controller?",
+  title: "What is Mongoose?",
+  khmerTitle: "អ្វីជា Mongoose ODM និងអត្ថប្រយោជន៍លើ Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "នៅក្នុងគម្រោងដំបូងៗ អ្នកបង្កើតកម្មវិធីច្រើនតែសរសេរអ្វីៗទាំងអស់ (Validation, Database Queries, Email Sending, Payment Calculations) បញ្ចូលគ្នាក្នុង Route Callback តែមួយ — នេះហៅថា **\"Fat Controller\"** ឬ **Spaghetti Code**។\n\nផលប៉ះពាល់អវិជ្ជមាននៃ Fat Controller៖\n* **ពិបាក Test (Untestable)**៖ អ្នកត្រូវ Mock ទាំង `req` និង `res` ទើបអាច Test Logic បាន\n* **មិនអាចប្រើឡើងវិញបាន (Non-reusable)**៖ មិនអាចហៅ Logic ដដែលនោះពី Background Job ឬ CLI Tool បានឡើយ\n* **ពិបាក Maintain**៖ ឯកសារមួយមានកូដរាប់ពាន់ជួរ ងាយនឹងបង្កើត Bugs\n\n**ដំណោះស្រាយ**៖ បែងចែកជា ៣ ស្រទាប់ (3-Tier Architecture)៖ **Routes ➔ Controllers ➔ Services**។",
-  codeSnippet: "// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)\napp.post(\"/api/v1/courses/:id/enroll\", async (req, res) => {\n  // 1. Validation mixed in\n  if (!req.body.studentId) return res.status(400).send();\n  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)\n  const course = await Course.findById(req.params.id);\n  // 3. Discount calculation mixed in\n  const price = course.price * 0.9;\n  // 4. Payment processing mixed in\n  await stripe.charges.create({ amount: price });\n  // 5. Email receipt mixed in\n  await mailer.sendReceipt();\n  // 6. Response sending\n  res.json({ enrolled: true });\n});\n\n// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)\n",
+  summary: "**Mongoose** គឺជា **Object Data Modeling (ODM)** Library ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ MongoDB និង Node.js។\n\nMongoose ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៤៖\n1. **Schema Definition**៖ កំណត់រចនាសម្ព័ន្ធទិន្នន័យច្បាស់លាស់ ជួយការពារទិន្នន័យមិនឱ្យរញ៉េរញ៉ៃ\n2. **Built-in Validation**៖ ត្រួតពិនិត្យប្រភេទទិន្នន័យមុនពេល Save ទៅកាន់ Database\n3. **Middleware Hooks**៖ ដំណើរការកូដស្វ័យប្រវត្តិកំឡុង Lifecycle (`pre('save')`, `post('save')`)\n4. **Population ($lookup replacement)**៖ ភ្ជាប់ទំនាក់ទំនងឯកសាររវាង Collections យ៉ាងងាយស្រួល",
+  codeSnippet: "import mongoose, { Schema } from \"mongoose\";\n\n// Step 1: Define Course Schema with Mongoose ODM\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true, min: 0 }\n});\n\n// Step 2: Compile Model\nexport const Course = mongoose.model(\"Course\", courseSchema);",
 };
 
 ```javascript
-// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)
-app.post("/api/v1/courses/:id/enroll", async (req, res) => {
-  // 1. Validation mixed in
-  if (!req.body.studentId) return res.status(400).send();
-  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)
-  const course = await Course.findById(req.params.id);
-  // 3. Discount calculation mixed in
-  const price = course.price * 0.9;
-  // 4. Payment processing mixed in
-  await stripe.charges.create({ amount: price });
-  // 5. Email receipt mixed in
-  await mailer.sendReceipt();
-  // 6. Response sending
-  res.json({ enrolled: true });
+import mongoose, { Schema } from "mongoose";
+
+// Step 1: Define Course Schema with Mongoose ODM
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true, min: 0 }
 });
 
-// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)
-
+// Step 2: Compile Model
+export const Course = mongoose.model("Course", courseSchema);
 ```

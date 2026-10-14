@@ -1,0 +1,22 @@
+export const meta = {
+  id: "M10-12",
+  number: "12",
+  title: "CRUD with Mongoose",
+  khmerTitle: "ទិដ្ឋភាពទូទៅនៃប្រតិបត្តិការ CRUD ជាមួយ Mongoose",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "Mongoose ផ្តល់ជូននូវ Methods សម្បូរបែបសម្រាប់ប្រតិបត្តិការ CRUD លើ MongoDB៖\n\n* **Create**៖ `Model.create()`, `new Model()` + `save()`\n* **Read**៖ `Model.find()`, `Model.findById()`, `Model.findOne()`\n* **Update**៖ `Model.findByIdAndUpdate()`, `Model.updateOne()`\n* **Delete**៖ `Model.findByIdAndDelete()`, `Model.deleteOne()`\n\nMethods ទាំងអស់នេះ Return **Mongoose Query Promises** ដែលគាំទ្រ Async/Await យ៉ាងរលូន។",
+  codeSnippet: "/* MONGOOSE CRUD CHEATSHEET FOR COURSE API:\n   -------------------------------------------------------------\n   CREATE:  const newCourse = await Course.create(req.body);\n   READ:    const courses   = await Course.find({ published: true });\n   READ 1:  const course    = await Course.findById(id);\n   UPDATE:  const updated   = await Course.findByIdAndUpdate(id, req.body, { new: true });\n   DELETE:  await Course.findByIdAndDelete(id);\n   -------------------------------------------------------------\n*/",
+};
+
+```javascript
+/* MONGOOSE CRUD CHEATSHEET FOR COURSE API:
+   -------------------------------------------------------------
+   CREATE:  const newCourse = await Course.create(req.body);
+   READ:    const courses   = await Course.find({ published: true });
+   READ 1:  const course    = await Course.findById(id);
+   UPDATE:  const updated   = await Course.findByIdAndUpdate(id, req.body, { new: true });
+   DELETE:  await Course.findByIdAndDelete(id);
+   -------------------------------------------------------------
+*/
+```

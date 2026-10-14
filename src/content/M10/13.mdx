@@ -1,0 +1,34 @@
+export const meta = {
+  id: "M10-13",
+  number: "13",
+  title: "Creating Documents",
+  khmerTitle: "ការបញ្ចូល Document ថ្មី (Course.create & new Course)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "មាន ២ របៀបក្នុងការបង្កើត Document ថ្មីក្នុង Mongoose៖\n\n1. **`Course.create(data)` (ពេញនិយមបំផុត)**៖ ខ្លី រហ័ស និងធ្វើ Validation រួច Save ទៅកាន់ MongoDB ក្នុងមួយជំហាន\n2. **`new Course(data)` + `course.save()`**៖ ផ្តល់ភាពបត់បែននៅពេលអ្នកចង់កែប្រែ Properties ខ្លះសិនមុននឹង Save",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Method 1: Direct Course.create() (Recommended for Services)\nexport const addCourse = async (courseData) => {\n  const course = await Course.create({\n    title: courseData.title,\n    instructor: courseData.instructor,\n    price: courseData.price\n  });\n  console.log(\"Created Course ID:\", course._id);\n  return course;\n};\n\n// Method 2: new Course() instance + save()\nexport const addCourseWithCustomLogic = async (courseData) => {\n  const course = new Course(courseData);\n  // Custom business modification before saving:\n  course.title = course.title.toUpperCase();\n  await course.save();\n  return course;\n};",
+};
+
+```javascript
+import { Course } from "./models/course.model.js";
+
+// Method 1: Direct Course.create() (Recommended for Services)
+export const addCourse = async (courseData) => {
+  const course = await Course.create({
+    title: courseData.title,
+    instructor: courseData.instructor,
+    price: courseData.price
+  });
+  console.log("Created Course ID:", course._id);
+  return course;
+};
+
+// Method 2: new Course() instance + save()
+export const addCourseWithCustomLogic = async (courseData) => {
+  const course = new Course(courseData);
+  // Custom business modification before saving:
+  course.title = course.title.toUpperCase();
+  await course.save();
+  return course;
+};
+```

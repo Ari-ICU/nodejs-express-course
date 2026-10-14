@@ -1,34 +1,22 @@
 export const meta = {
   id: "M09-04",
   number: "04",
-  title: "Resource Modeling",
-  khmerTitle: "ការកំណត់ និងគ្រប់គ្រង Resources (Courses, Lessons, Categories)",
+  title: "Database in MongoDB",
+  khmerTitle: "ការបង្កើត និងគ្រប់គ្រង Database (course_catalog_db)",
   type: "concept",
-  codeLanguage: "javascript",
-  summary: "នៅក្នុង Course API គំរូទិន្នន័យ (Resources) ត្រូវបានបែងចែកជា៖\n\n1. **Courses (Top-level Resource)**៖ `/api/v1/courses`\n2. **Lessons (Sub-resource របស់ Course)**៖ `/api/v1/courses/:courseId/lessons`\n3. **Categories (Independent Resource)**៖ `/api/v1/categories`\n\nការរៀបចំ Resource Modeling ច្បាស់លាស់ជួយឱ្យ Schema Database និង API Routing មានភាពស៊ីសង្វាក់គ្នា។",
-  codeSnippet: "// Resource Schemas in Course Catalog Domain\nexport const CourseSchema = {\n  id: \"number\",\n  title: \"string\",\n  slug: \"string\",           // e.g., \"mastering-express-architecture\"\n  instructor: \"string\",\n  price: \"number\",\n  level: \"beginner | intermediate | advanced\",\n  published: \"boolean\",\n  categoryId: \"number\",\n  createdAt: \"ISO8601 string\"\n};\n\nexport const LessonSchema = {\n  id: \"ObjectId\",           // MongoDB ObjectId\n  courseId: \"ObjectId\",     // MongoDB Reference to Course (_id)\n  title: \"string\",\n  durationMinutes: \"number\",\n  videoUrl: \"string\",\n  orderIndex: \"number\"\n};",
+  codeLanguage: "bash",
+  summary: "នៅក្នុង MongoDB **Database** គឺជា Container រូបវន្តសម្រាប់ផ្ទុក Collections ទាំងអស់។\n\nចំនុចពិសេសរបស់ MongoDB៖\n* Database នឹងត្រូវបង្កើតឡើងដោយស្វ័យប្រវត្តិ នៅពេលដែលអ្នកបញ្ចូល Document ដំបូងបង្អស់ចូលទៅកាន់ Collection ណាមួយ\n* Server មួយអាចផ្ទុក Databases ច្រើនដាច់ដោយឡែកពីគ្នា\n* សម្រាប់ Course របស់យើង យើងនឹងប្រើប្រាស់ Database ឈ្មោះ **`course_catalog_db`**",
+  codeSnippet: "# Step 1: Open MongoDB Shell\nmongosh\n\n# Step 2: Switch or create Course Catalog Database\nuse course_catalog_db\n\n# Step 3: Check currently selected database\ndb.getName()\n# Output: course_catalog_db",
 };
 
-```javascript
-// Resource Schemas in Course Catalog Domain
-export const CourseSchema = {
-  id: "number",
-  title: "string",
-  slug: "string",           // e.g., "mastering-express-architecture"
-  instructor: "string",
-  price: "number",
-  level: "beginner | intermediate | advanced",
-  published: "boolean",
-  categoryId: "number",
-  createdAt: "ISO8601 string"
-};
+```bash
+# Step 1: Open MongoDB Shell
+mongosh
 
-export const LessonSchema = {
-  id: "ObjectId",           // MongoDB ObjectId
-  courseId: "ObjectId",     // MongoDB Reference to Course (_id)
-  title: "string",
-  durationMinutes: "number",
-  videoUrl: "string",
-  orderIndex: "number"
-};
+# Step 2: Switch or create Course Catalog Database
+use course_catalog_db
+
+# Step 3: Check currently selected database
+db.getName()
+# Output: course_catalog_db
 ```

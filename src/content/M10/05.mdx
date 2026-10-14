@@ -1,36 +1,24 @@
 export const meta = {
   id: "M10-05",
   number: "05",
-  title: "Separation of Concerns (3-Tier)",
-  khmerTitle: "ការបែងចែកទំនួលខុសត្រូវ (Separation of Concerns) តាម 3 ស្រទាប់",
-  type: "architecture",
+  title: "Mongoose Model",
+  khmerTitle: "ការបង្កើត Model តាមរយៈ mongoose.model()",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "ស្ថាបត្យកម្ម **Separation of Concerns (SoC)** ចែកចេញជា ៣ ស្រទាប់ច្បាស់លាស់៖\n\n1. **Routing Layer (`routes/`)**៖\n   * កំណត់ HTTP Method & URL Path\n   * ភ្ជាប់ Middlewares (Auth, Validation)\n2. **Controller Layer (`controllers/`)**៖\n   * Unpack HTTP Request (`req.body`, `req.params`)\n   * Pack HTTP Response (`res.status(200).json()`)\n   * ដោះស្រាយ HTTP Status Codes\n3. **Service Layer (`services/`)**៖\n   * ផ្ទុក Business Logic, Calculations, Security Rules\n   * ទំនាក់ទំនងជាមួយ MongoDB Database (Mongoose Models)",
-  codeSnippet: "/*\n  ==============================================================\n  DATA FLOW IN 3-TIER ARCHITECTURE (Node + Express + MongoDB):\n  ==============================================================\n  Client Request (HTTP GET /api/v1/courses)\n        │\n        ▼\n  [ 1. Routing Layer ]        --> Matches URL, applies middlewares\n        │\n        ▼\n  [ 2. Controller Layer ]     --> Extracts req.query, orchestrates\n        │\n        ▼\n  [ 3. Service Layer ]        --> Executes business rules & calls Mongoose\n        │\n        ▼\n  [ 4. MongoDB Database ]     --> Returns BSON Documents via Model.find()\n        │\n        ▲ (Data flows back up cleanly)\n        │\n  Client Response (JSON 200 OK)\n  ==============================================================\n*/",
+  summary: "**Model** គឺជា Wrapper ដែលចងភ្ជាប់ Schema ទៅនឹង MongoDB Collection ជាក់ស្តែង។\n\nរបៀបដែល Mongoose បង្កើត Collection Name ដោយស្វ័យប្រវត្តិ៖\n* នៅពេលអ្នកប្រកាស `mongoose.model(\"Course\", courseSchema)`\n* Mongoose នឹងយកឈ្មោះ `\"Course\"` ទៅធ្វើជា **Lowercase Plural** ដោយស្វ័យប្រវត្តិ គឺ **`\"courses\"`**!",
+  codeSnippet: "// src/models/course.model.js\nimport mongoose, { Schema } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true }\n});\n\n// Step 1: Compile Schema into Model\n// 💡 Teaching Note: \"Course\" compiles to collection name \"courses\"\nexport const Course = mongoose.model(\"Course\", courseSchema);",
 };
 
 ```javascript
-/*
-  ==============================================================
-  DATA FLOW IN 3-TIER ARCHITECTURE (Node + Express + MongoDB):
-  ==============================================================
-  Client Request (HTTP GET /api/v1/courses)
-        │
-        ▼
-  [ 1. Routing Layer ]        --> Matches URL, applies middlewares
-        │
-        ▼
-  [ 2. Controller Layer ]     --> Extracts req.query, orchestrates
-        │
-        ▼
-  [ 3. Service Layer ]        --> Executes business rules & calls Mongoose
-        │
-        ▼
-  [ 4. MongoDB Database ]     --> Returns BSON Documents via Model.find()
-        │
-        ▲ (Data flows back up cleanly)
-        │
-  Client Response (JSON 200 OK)
-  ==============================================================
-*/
+// src/models/course.model.js
+import mongoose, { Schema } from "mongoose";
+
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true }
+});
+
+// Step 1: Compile Schema into Model
+// 💡 Teaching Note: "Course" compiles to collection name "courses"
+export const Course = mongoose.model("Course", courseSchema);
 ```

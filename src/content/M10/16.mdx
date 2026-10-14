@@ -1,0 +1,28 @@
+export const meta = {
+  id: "M10-16",
+  number: "16",
+  title: "Updating Documents in Mongoose",
+  khmerTitle: "ការកែប្រែទិន្នន័យ (findByIdAndUpdate & runValidators)",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Method ពេញនិយមបំផុតសម្រាប់កែប្រែ Document គឺ **`Course.findByIdAndUpdate(id, update, options)`**។\n\nOptions ដ៏សំខាន់ដែលមិនអាចខ្វះបាន៖\n* **`new: true`**៖ ត្រឡប់ Document ថ្មីដែលបានកែប្រែរួច (តាមលំនាំដើម Mongoose ត្រឡប់ Document ចាស់មុនកែប្រែ)\n* **`runValidators: true`**៖ បង្ខំឱ្យ Mongoose ដំណើរការ Schema Validation ឡើងវិញលើ Fields ថ្មី!",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  // Step 1: Update with critical options enabled\n  const updatedCourse = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    {\n      new: true,           // 💡 Return the modified document!\n      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!\n    }\n  );\n\n  return updatedCourse;\n};",
+};
+
+```javascript
+import { Course } from "./models/course.model.js";
+
+export const updateCourseService = async (courseId, updateData) => {
+  // Step 1: Update with critical options enabled
+  const updatedCourse = await Course.findByIdAndUpdate(
+    courseId,
+    { $set: updateData },
+    {
+      new: true,           // 💡 Return the modified document!
+      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!
+    }
+  );
+
+  return updatedCourse;
+};
+```

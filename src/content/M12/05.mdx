@@ -1,24 +1,28 @@
 export const meta = {
   id: "M12-05",
   number: "05",
-  title: "Mongoose Model",
-  khmerTitle: "ការបង្កើត Model តាមរយៈ mongoose.model()",
-  type: "concept",
+  title: "Course Controller with Database Operations",
+  khmerTitle: "ការបង្កើត Controllers សម្រាប់ Database Endpoints",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "**Model** គឺជា Wrapper ដែលចងភ្ជាប់ Schema ទៅនឹង MongoDB Collection ជាក់ស្តែង។\n\nរបៀបដែល Mongoose បង្កើត Collection Name ដោយស្វ័យប្រវត្តិ៖\n* នៅពេលអ្នកប្រកាស `mongoose.model(\"Course\", courseSchema)`\n* Mongoose នឹងយកឈ្មោះ `\"Course\"` ទៅធ្វើជា **Lowercase Plural** ដោយស្វ័យប្រវត្តិ គឺ **`\"courses\"`**!",
-  codeSnippet: "// src/models/course.model.js\nimport mongoose, { Schema } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true }\n});\n\n// Step 1: Compile Schema into Model\n// 💡 Teaching Note: \"Course\" compiles to collection name \"courses\"\nexport const Course = mongoose.model(\"Course\", courseSchema);",
+  summary: "ការសរសេរ Course Controller ដែលភ្ជាប់ទៅកាន់ MongoDB Service Layer៖\n\nលក្ខណៈស្តង់ដារ៖\n* រុំដោយ `asyncHandler` ដើម្បីកាត់បន្ថយ `try/catch` boilerplate\n* ទទួល `req.body` ឬ `req.query` រួចហៅ Service\n* បញ្ជូន Standard JSON Envelope ត្រឡប់ទៅ Client",
+  codeSnippet: "// src/controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\nimport { asyncHandler } from \"../utils/asyncHandler.js\";\n\n// GET /api/v1/courses\nexport const getCourses = asyncHandler(async (req, res) => {\n  const courses = await courseService.getAllCourses(req.query);\n  res.status(200).json({ success: true, count: courses.length, data: courses });\n});\n\n// POST /api/v1/courses\nexport const createCourse = asyncHandler(async (req, res) => {\n  const newCourse = await courseService.createCourse(req.body);\n  res.status(201).json({ success: true, data: newCourse });\n});",
 };
 
 ```javascript
-// src/models/course.model.js
-import mongoose, { Schema } from "mongoose";
+// src/controllers/course.controller.js
+import * as courseService from "../services/course.service.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true }
+// GET /api/v1/courses
+export const getCourses = asyncHandler(async (req, res) => {
+  const courses = await courseService.getAllCourses(req.query);
+  res.status(200).json({ success: true, count: courses.length, data: courses });
 });
 
-// Step 1: Compile Schema into Model
-// 💡 Teaching Note: "Course" compiles to collection name "courses"
-export const Course = mongoose.model("Course", courseSchema);
+// POST /api/v1/courses
+export const createCourse = asyncHandler(async (req, res) => {
+  const newCourse = await courseService.createCourse(req.body);
+  res.status(201).json({ success: true, data: newCourse });
+});
 ```

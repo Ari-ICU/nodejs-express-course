@@ -1,29 +1,30 @@
 export const meta = {
   id: "M13-04",
   number: "04",
-  title: "Creating Course & Lesson Models",
-  khmerTitle: "ការបង្កើត Data Models និង Indexes ក្នុងគម្រោង",
-  type: "architecture",
+  title: "Routes (Declarative Route Mapping)",
+  khmerTitle: "តួនាទីនៃ Route Definitions (Declarative Wiring)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "ការរៀបចំ Data Models សម្រាប់ Course Catalog API ដោយមាន **Indexes** សម្រាប់បង្កើនល្បឿន Query៖\n\n* **Single Field Index**៖ `title: { type: String, index: true }`\n* **Compound Index**៖ `courseSchema.index({ level: 1, price: -1 })` សម្រាប់បង្កើនល្បឿន Query ដែលច្រោះតាម Level និងតម្រៀបតាម Price ដំណាលគ្នា",
-  codeSnippet: "// src/models/course.model.js\nimport { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true, trim: true, index: true },\n  slug: { type: String, required: true, unique: true },\n  instructor: { type: String, required: true },\n  price: { type: Number, required: true, min: 0 },\n  level: { type: String, enum: [\"beginner\", \"intermediate\", \"advanced\"], default: \"beginner\" },\n  published: { type: Boolean, default: false }\n}, { timestamps: true });\n\n// 💡 Teaching Note: Compound index for filtering by level and sorting by price!\ncourseSchema.index({ level: 1, price: -1 });\n\nexport const Course = model(\"Course\", courseSchema);",
+  summary: "នៅក្នុង 3-Tier Architecture ឯកសារ **Routes** គ្រាន់តែជាកន្លែង **Wiring (ភ្ជាប់ខ្សែរវាង URL, Middleware, និង Controller)** ប៉ុណ្ណោះ។\n\nវាមិនផ្ទុក Logic ណាមួយឡើយ ក្រៅពីការប្រកាសយ៉ាងច្បាស់លាស់ (Declarative Syntax)៖\n```javascript\nrouter.get(\"/:id\", authGuard, courseController.getCourseById);\n```\n\nរចនាសម្ព័ន្ធបែបនេះជួយឱ្យអ្នកណាក៏ដោយដែលបើកមើលឯកសារ Routes អាចយល់បានភ្លាមៗក្នុងរយៈពេល ៥ វិនាទីពី Endpoints ទាំងអស់នៃ Module។",
+  codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\n// Step 1: Wire endpoints directly to controller methods\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .put(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
 };
 
 ```javascript
-// src/models/course.model.js
-import { Schema, model } from "mongoose";
+// src/routes/course.routes.js
+import express from "express";
+import * as courseController from "../controllers/course.controller.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true, trim: true, index: true },
-  slug: { type: String, required: true, unique: true },
-  instructor: { type: String, required: true },
-  price: { type: Number, required: true, min: 0 },
-  level: { type: String, enum: ["beginner", "intermediate", "advanced"], default: "beginner" },
-  published: { type: Boolean, default: false }
-}, { timestamps: true });
+const router = express.Router();
 
-// 💡 Teaching Note: Compound index for filtering by level and sorting by price!
-courseSchema.index({ level: 1, price: -1 });
+// Step 1: Wire endpoints directly to controller methods
+router.route("/")
+  .get(courseController.getAllCourses)
+  .post(courseController.createCourse);
 
-export const Course = model("Course", courseSchema);
+router.route("/:id")
+  .get(courseController.getCourseById)
+  .put(courseController.updateCourse)
+  .delete(courseController.deleteCourse);
+
+export default router;
 ```

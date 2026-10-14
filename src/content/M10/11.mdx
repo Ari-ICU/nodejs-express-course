@@ -1,0 +1,31 @@
+export const meta = {
+  id: "M10-11",
+  number: "11",
+  title: "Mongoose Virtuals",
+  khmerTitle: "ការបង្កើត Virtual Properties (Computed Fields)",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "**Virtuals** គឺជា Document Properties ដែលអ្នកអាចអាន ឬសរសេរបាន ប៉ុន្តែពួកវា **មិនត្រូវបានរក្សាទុកលើ MongoDB Database ឡើយ** (វាត្រូវបានគណនានៅពេល Run-time)។\n\nឧទាហរណ៍ជាក់ស្តែងលើ Course API៖\n* គណនាតម្លៃបញ្ចុះតម្លៃ `discountedPrice`\n* គណនា `durationHours` ចេញពី `durationMinutes`\n* ត្រូវកំណត់ `{ virtuals: true }` ក្នុង `toJSON` Option ដើម្បីឱ្យវាបង្ហាញពេលផ្ញើ Response ទៅកាន់ Client",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true },\n  discountPercent: { type: Number, default: 10 }\n}, {\n  toJSON: { virtuals: true }, // 💡 Include virtuals when converting to JSON!\n  toObject: { virtuals: true }\n});\n\n// Step 1: Define Virtual Property for Final Price\ncourseSchema.virtual(\"finalPrice\").get(function() {\n  // \"this\" points to the current document\n  return Number((this.price * (1 - this.discountPercent / 100)).toFixed(2));\n});\n\nexport const Course = model(\"Course\", courseSchema);",
+};
+
+```javascript
+import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  price: { type: Number, required: true },
+  discountPercent: { type: Number, default: 10 }
+}, {
+  toJSON: { virtuals: true }, // 💡 Include virtuals when converting to JSON!
+  toObject: { virtuals: true }
+});
+
+// Step 1: Define Virtual Property for Final Price
+courseSchema.virtual("finalPrice").get(function() {
+  // "this" points to the current document
+  return Number((this.price * (1 - this.discountPercent / 100)).toFixed(2));
+});
+
+export const Course = model("Course", courseSchema);
+```

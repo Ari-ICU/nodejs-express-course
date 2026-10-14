@@ -84,22 +84,27 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
+  const lineCount = code.trim().split("\n").length;
+
   return (
-    <div className="relative group rounded-2xl border border-slate-700/60 bg-[#0d1117] overflow-hidden shadow-lg hover:border-slate-600/80 transition-all duration-200">
-      {/* ── Top bar ── */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-slate-700/60 text-xs text-slate-400">
-        <div className="flex items-center gap-2.5">
+    <div className="relative group rounded-3xl border border-slate-800/90 bg-[#0d1117] overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.12)] hover:border-slate-700 transition-all duration-200">
+      {/* ── Top Bar ── */}
+      <div className="flex items-center justify-between px-4 sm:px-5 py-3 bg-[#13171f] border-b border-slate-800/90 text-xs text-slate-400">
+        <div className="flex items-center gap-3">
           {/* macOS traffic lights */}
           <div className="flex items-center gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-            <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+            <div className="w-3 h-3 rounded-full bg-[#ff5f56] shadow-xs shadow-rose-500/20" />
+            <div className="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-xs shadow-amber-500/20" />
+            <div className="w-3 h-3 rounded-full bg-[#27c93f] shadow-xs shadow-emerald-500/20" />
           </div>
 
           {filename ? (
-            <span className="font-mono text-white font-medium ml-1">
-              {filename}
-            </span>
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
+              <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="font-mono text-slate-200 font-semibold tracking-tight">
+                {filename}
+              </span>
+            </div>
           ) : (
             <span className="flex items-center gap-1.5 font-mono text-slate-300 ml-1">
               <Terminal className="w-3.5 h-3.5 text-emerald-400" />
@@ -108,34 +113,39 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           )}
         </div>
 
-        <button
-          onClick={handleCopy}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800/90 hover:bg-slate-700 text-white border border-slate-700 transition-all cursor-pointer shadow-2xs"
-          title="Copy code to clipboard"
-        >
-          {copied ? (
-            <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-emerald-400 font-semibold">Copied!</span>
-            </>
-          ) : (
-            <>
-              <Copy className="w-3.5 h-3.5" />
-              <span>Copy</span>
-            </>
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-mono text-slate-500 hidden sm:inline">
+            {lineCount} lines
+          </span>
+          <button
+            onClick={handleCopy}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-800/90 hover:bg-slate-700/90 text-white border border-slate-700/80 transition-all cursor-pointer shadow-2xs active:scale-95"
+            title="Copy code to clipboard"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-emerald-400 font-semibold">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-slate-400" />
+                <span>Copy</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* ── Code body ── */}
+      {/* ── Code Body with Max Height & Custom Scrollbar ── */}
       {highlightedHtml ? (
         <div
-          className="shiki-wrapper overflow-x-auto text-sm leading-relaxed select-text"
+          className="shiki-wrapper overflow-x-auto text-xs sm:text-[13.5px] leading-relaxed select-text max-h-[calc(100vh-230px)] overflow-y-auto pb-4"
           dangerouslySetInnerHTML={{ __html: highlightedHtml }}
         />
       ) : (
         /* Loading skeleton / plain fallback */
-        <div className="p-4 overflow-x-auto text-sm font-mono leading-relaxed bg-[#0d1117] select-text">
+        <div className="p-5 overflow-x-auto text-xs sm:text-[13.5px] font-mono leading-relaxed bg-[#0d1117] select-text max-h-[calc(100vh-230px)] overflow-y-auto pb-4">
           <pre className="text-white font-mono whitespace-pre">
             {code.trim()}
           </pre>

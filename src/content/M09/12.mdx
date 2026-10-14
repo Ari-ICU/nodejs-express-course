@@ -1,28 +1,31 @@
 export const meta = {
   id: "M09-12",
   number: "12",
-  title: "API Response Structure (JSON Envelope)",
-  khmerTitle: "ទម្រង់ឆ្លើយតបស្តង់ដារ JSON Envelope ក្នុង REST APIs",
-  type: "concept",
+  title: "MongoDB Shell (mongosh) Basics",
+  khmerTitle: "ការប្រើប្រាស់ mongosh សម្រាប់ CRUD Operations",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "**Standard JSON Envelope** គឺជាការរចនា Response Object ដែលមានភាពស៊ីសង្វាក់គ្នា (Consistent) លើគ្រប់ Endpoints ទាំងអស់នៃប្រព័ន្ធ។\n\nរចនាសម្ព័ន្ធស្តង់ដារ៖\n```json\n{\n  \"success\": true,\n  \"count\": 2,\n  \"data\": [...],\n  \"meta\": {\n    \"page\": 1,\n    \"limit\": 10,\n    \"total\": 42\n  }\n}\n```",
-  codeSnippet: "// Reusable Response Helper Utility\nexport const sendSuccess = (res, statusCode, data, meta = {}) => {\n  return res.status(statusCode).json({\n    success: true,\n    count: Array.isArray(data) ? data.length : undefined,\n    data,\n    meta: {\n      timestamp: new Date().toISOString(),\n      ...meta\n    }\n  });\n};\n\n// Usage in Route:\n// sendSuccess(res, 200, courses, { page: 1, total: 42 });",
+  summary: "**mongosh (MongoDB Shell)** គឺជា Interactive Command-line Interface ទំនើបសម្រាប់ Query និងគ្រប់គ្រង MongoDB។\n\nBasic CRUD Commands សម្រាប់ Course Catalog៖\n* **Create**៖ `db.courses.insertOne({ title, price })`\n* **Read**៖ `db.courses.find({ price: { $lte: 50 } })`\n* **Update**៖ `db.courses.updateOne({ _id }, { $set: { published: true } })`\n* **Delete**៖ `db.courses.deleteOne({ _id })`",
+  codeSnippet: "// Step 1: Insert sample course in mongosh\ndb.courses.insertOne({\n  title: \"Docker for Node Developers\",\n  price: 29.99,\n  published: true\n});\n\n// Step 2: Find all published courses\ndb.courses.find({ published: true });\n\n// Step 3: Update price using $set operator\ndb.courses.updateOne(\n  { title: \"Docker for Node Developers\" },\n  { $set: { price: 34.99, updatedAt: new Date() } }\n);\n\n// Step 4: Verify count\ndb.courses.countDocuments();",
 };
 
 ```javascript
-// Reusable Response Helper Utility
-export const sendSuccess = (res, statusCode, data, meta = {}) => {
-  return res.status(statusCode).json({
-    success: true,
-    count: Array.isArray(data) ? data.length : undefined,
-    data,
-    meta: {
-      timestamp: new Date().toISOString(),
-      ...meta
-    }
-  });
-};
+// Step 1: Insert sample course in mongosh
+db.courses.insertOne({
+  title: "Docker for Node Developers",
+  price: 29.99,
+  published: true
+});
 
-// Usage in Route:
-// sendSuccess(res, 200, courses, { page: 1, total: 42 });
+// Step 2: Find all published courses
+db.courses.find({ published: true });
+
+// Step 3: Update price using $set operator
+db.courses.updateOne(
+  { title: "Docker for Node Developers" },
+  { $set: { price: 34.99, updatedAt: new Date() } }
+);
+
+// Step 4: Verify count
+db.courses.countDocuments();
 ```

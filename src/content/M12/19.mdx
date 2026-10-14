@@ -1,32 +1,48 @@
 export const meta = {
   id: "M12-19",
   number: "19",
-  title: "Mongoose Middleware (Pre & Post Hooks)",
-  khmerTitle: "ការប្រើប្រាស់ Mongoose Pre & Post Hooks",
+  title: "Database Transactions (ACID in MongoDB)",
+  khmerTitle: "ការប្រើប្រាស់ Database Transactions សម្រាប់ប្រតិបត្តិការ Atomic",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "**Mongoose Middleware (Hooks)** អនុញ្ញាតឱ្យយើងស្ទាក់ចាប់ (Intercept) Document មុន ឬក្រោយពេល Save, Validate, ឬ Remove។\n\nករណីប្រើប្រាស់ជាក់ស្តែងសម្រាប់ Course API៖\n* **`pre('save')`**៖ បង្កើត SEO URL Slug ស្វ័យប្រវត្តិចេញពី `title`\n* **`pre('save')`**៖ ធ្វើ Password Hashing មុននឹង Save User Document\n* **`post('save')`**៖ កត់ត្រា Audit Log ឬផ្ញើ Notification បន្ទាប់ពី Save ជោគជ័យ",
-  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  slug: String\n});\n\n// Step 1: Pre-save hook to generate URL Slug automatically!\ncourseSchema.pre(\"save\", function(next) {\n  if (this.isModified(\"title\")) {\n    this.slug = this.title\n      .toLowerCase()\n      .replace(/[^a-z0-9]+/g, \"-\")\n      .replace(/(^-|-$)+/g, \"\");\n  }\n  next();\n});\n\nexport const Course = model(\"Course\", courseSchema);",
+  summary: "**MongoDB Multi-Document Transactions** ផ្តល់នូវការធានា **ACID** ពេញលេញនៅពេលដែលអ្នកត្រូវកែប្រែ Documents ច្រើនក្នុងពេលតែមួយ។\n\nឧទាហរណ៍ជាក់ស្តែង៖ Course Enrollment Workflow\n1. បង្កើត Enrollment Record\n2. បន្ថែម Student Count លើ Course (`$inc: { studentsCount: 1 }`)\n3. កាត់កង Balance / Create Invoice\n4. ប្រសិនបើមានជំហានណាមួយបរាជ័យ (Fail) នោះ **Rollback** ការផ្លាស់ប្តូរទាំងអស់ត្រឡប់មកវិញដោយស្វ័យប្រវត្តិ (All-or-Nothing)!",
+  codeSnippet: "// src/services/enrollment.service.js\nimport mongoose from \"mongoose\";\nimport { Course } from \"../models/course.model.js\";\nimport { Enrollment } from \"../models/enrollment.model.js\";\n\nexport const enrollStudentTransaction = async (courseId, studentId) => {\n  // Step 1: Start Mongoose Client Session\n  const session = await mongoose.startSession();\n  session.startTransaction();\n\n  try {\n    // Step 2: Create Enrollment Document inside session\n    const [enrollment] = await Enrollment.create(\n      [{ courseId, studentId, enrolledAt: new Date() }],\n      { session }\n    );\n\n    // Step 3: Increment course student counter inside session\n    await Course.findByIdAndUpdate(\n      courseId,\n      { $inc: { studentsCount: 1 } },\n      { session }\n    );\n\n    // Step 4: Commit Transaction permanently to database\n    await session.commitTransaction();\n    return enrollment;\n  } catch (error) {\n    // ⚠️ On error: Abort transaction and rollback all database writes!\n    await session.abortTransaction();\n    throw error;\n  } finally {\n    session.endSession(); // Always end session!\n  }\n};",
 };
 
 ```javascript
-import { Schema, model } from "mongoose";
+// src/services/enrollment.service.js
+import mongoose from "mongoose";
+import { Course } from "../models/course.model.js";
+import { Enrollment } from "../models/enrollment.model.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  slug: String
-});
+export const enrollStudentTransaction = async (courseId, studentId) => {
+  // Step 1: Start Mongoose Client Session
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-// Step 1: Pre-save hook to generate URL Slug automatically!
-courseSchema.pre("save", function(next) {
-  if (this.isModified("title")) {
-    this.slug = this.title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)+/g, "");
+  try {
+    // Step 2: Create Enrollment Document inside session
+    const [enrollment] = await Enrollment.create(
+      [{ courseId, studentId, enrolledAt: new Date() }],
+      { session }
+    );
+
+    // Step 3: Increment course student counter inside session
+    await Course.findByIdAndUpdate(
+      courseId,
+      { $inc: { studentsCount: 1 } },
+      { session }
+    );
+
+    // Step 4: Commit Transaction permanently to database
+    await session.commitTransaction();
+    return enrollment;
+  } catch (error) {
+    // ⚠️ On error: Abort transaction and rollback all database writes!
+    await session.abortTransaction();
+    throw error;
+  } finally {
+    session.endSession(); // Always end session!
   }
-  next();
-});
-
-export const Course = model("Course", courseSchema);
+};
 ```

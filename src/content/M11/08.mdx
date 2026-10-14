@@ -1,21 +1,43 @@
 export const meta = {
   id: "M11-08",
   number: "08",
-  title: "ObjectId Deep Dive",
-  khmerTitle: "ការស្វែងយល់ពី ObjectId (12-byte BSON Identifier)",
-  type: "concept",
+  title: "Production PUT Endpoints",
+  khmerTitle: "ការអនុវត្ត Production PUT Endpoint (Full Replacement)",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "**ObjectId** គឺជា Primary Key លំនាំដើមរបស់ MongoDB។ វាមានទំហំ **12 Bytes (24 Hexadecimal Characters)**៖\n\nរចនាសម្ព័ន្ធខាងក្នុងនៃ 12 Bytes៖\n* **4 Bytes**៖ Timestamp (វិនាទីដែល Document ត្រូវបានបង្កើតឡើង)\n* **5 Bytes**៖ Random Value (ម៉ាស៊ីន និង Process Identifier)\n* **3 Bytes**៖ Incrementing Counter (រាប់ចំនួនកើនឡើងជាបន្តបន្ទាប់)\n\nដោយសារតែ ៤ Bytes ដំបូងជា Timestamp យើងអាចទាញយកពេលវេលាបង្កើតចេញពី `_id` បានដោយមិនបាច់បង្កើត Field ដាច់ដោយឡែកឡើយ!",
-  codeSnippet: "// ObjectId Decomposition (24 hex characters):\n// \"6648e583 19f3a9e224 e78891\"\n//  └─Time─┘ └──Random──┘ └Counter┘\n\n// In mongosh:\nconst courseId = ObjectId(\"6648e58319f3a9e224e78891\");\nconsole.log(\"Created at:\", courseId.getTimestamp());\n// Output: 2024-05-18T17:35:31.000Z",
+  summary: "ការអនុវត្ត **PUT Endpoint** តាមស្តង់ដារ RESTful៖\n\n* ត្រូវពិនិត្យវត្តមាន Resource ជាមុនសិន (`404 Not Found` បើគ្មាន)\n* ត្រូវទាមទារ (Enforce) នូវរាល់ Required Fields ទាំងអស់នៃ Resource\n* ជំនួស Object ទាំងមូលក្នុង Data Store ដោយមិនបន្សល់ទុក Fields ចាស់ដែល Client មិនបានផ្ញើមកឡើយ",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [\n  { id: 1, title: \"Old Title\", instructor: \"Old Teacher\", price: 10, published: false }\n];\n\napp.put(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const index = courses.findIndex(c => c.id === courseId);\n\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  const { title, instructor, price, published } = req.body;\n\n  // Validation: PUT requires ALL core properties\n  if (!title || !instructor || price === undefined || published === undefined) {\n    return res.status(400).json({\n      success: false,\n      error: \"PUT requires full entity payload: title, instructor, price, and published status\"\n    });\n  }\n\n  // Overwrite completely\n  courses[index] = { id: courseId, title, instructor, price: Number(price), published: Boolean(published) };\n  return res.status(200).json({ success: true, data: courses[index] });\n});",
 };
 
 ```javascript
-// ObjectId Decomposition (24 hex characters):
-// "6648e583 19f3a9e224 e78891"
-//  └─Time─┘ └──Random──┘ └Counter┘
+import express from "express";
+const app = express();
+app.use(express.json());
 
-// In mongosh:
-const courseId = ObjectId("6648e58319f3a9e224e78891");
-console.log("Created at:", courseId.getTimestamp());
-// Output: 2024-05-18T17:35:31.000Z
+let courses = [
+  { id: 1, title: "Old Title", instructor: "Old Teacher", price: 10, published: false }
+];
+
+app.put("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const index = courses.findIndex(c => c.id === courseId);
+
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  const { title, instructor, price, published } = req.body;
+
+  // Validation: PUT requires ALL core properties
+  if (!title || !instructor || price === undefined || published === undefined) {
+    return res.status(400).json({
+      success: false,
+      error: "PUT requires full entity payload: title, instructor, price, and published status"
+    });
+  }
+
+  // Overwrite completely
+  courses[index] = { id: courseId, title, instructor, price: Number(price), published: Boolean(published) };
+  return res.status(200).json({ success: true, data: courses[index] });
+});
 ```

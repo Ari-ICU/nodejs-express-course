@@ -1,25 +1,35 @@
 export const meta = {
   id: "M13-02",
   number: "02",
-  title: "Database Configuration Options",
-  khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Connection Pool ក្នុង Mongoose",
-  type: "architecture",
+  title: "Controllers (Request Orchestrators)",
+  khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Controllers",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "ការកំណត់ Connection Options ស្តង់ដារសម្រាប់ Production MongoDB Deployment៖\n\n* **`maxPoolSize: 50`**៖ រក្សាទុក Socket Connections រហូតដល់ ៥០ សម្រាប់ដំណើរការ Concurrent Requests\n* **`serverSelectionTimeoutMS: 5000`**៖ កំណត់រយៈពេល ៥ វិនាទីដើម្បីស្វែងរក Node ក្នុង Replica Set មុននឹង Timeout\n* **`socketTimeoutMS: 45000`**៖ បិទ Socket ដែលអសកម្មក្រោយ ៤៥ វិនាទី",
-  codeSnippet: "// src/config/db.js\nimport mongoose from \"mongoose\";\n\nconst mongooseOptions = {\n  maxPoolSize: 50,                // 💡 Up to 50 concurrent socket connections\n  serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds if DB is down\n  socketTimeoutMS: 45000,         // Close inactive sockets\n};\n\nexport const connectDB = async () => {\n  await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);\n};",
+  summary: "**Controller** ដើរតួជា **Request Orchestrator (អ្នកសម្របសម្រួល HTTP)**៖\n\nតួនាទីតែមួយគត់របស់ Controller៖\n1. **Unpack HTTP Request**៖ ទាញយកទិន្នន័យពី `req.body`, `req.params`, `req.query`\n2. **Delegate to Service**៖ បញ្ជូនទិន្នន័យទាំងនោះទៅឱ្យ Service Function ដំណើរការ\n3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (`200`, `201`)\n\nController មិនត្រូវមាន Business Logic, MongoDB Queries ដោយផ្ទាល់ ឬ Payment Code ឡើយ!",
+  codeSnippet: "// src/controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\n\n// Step 1: Slim Controller Handler for Fetching Courses\nexport const getAllCourses = async (req, res, next) => {\n  try {\n    // 1. Extract query parameters\n    const { level, maxPrice } = req.query;\n\n    // 2. Delegate purely to service layer\n    const courses = await courseService.findAllCourses({ level, maxPrice });\n\n    // 3. Send standard HTTP response\n    return res.status(200).json({\n      success: true,\n      count: courses.length,\n      data: courses\n    });\n  } catch (error) {\n    next(error); // Forward to centralized error middleware!\n  }\n};",
 };
 
 ```javascript
-// src/config/db.js
-import mongoose from "mongoose";
+// src/controllers/course.controller.js
+import * as courseService from "../services/course.service.js";
 
-const mongooseOptions = {
-  maxPoolSize: 50,                // 💡 Up to 50 concurrent socket connections
-  serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds if DB is down
-  socketTimeoutMS: 45000,         // Close inactive sockets
-};
+// Step 1: Slim Controller Handler for Fetching Courses
+export const getAllCourses = async (req, res, next) => {
+  try {
+    // 1. Extract query parameters
+    const { level, maxPrice } = req.query;
 
-export const connectDB = async () => {
-  await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);
+    // 2. Delegate purely to service layer
+    const courses = await courseService.findAllCourses({ level, maxPrice });
+
+    // 3. Send standard HTTP response
+    return res.status(200).json({
+      success: true,
+      count: courses.length,
+      data: courses
+    });
+  } catch (error) {
+    next(error); // Forward to centralized error middleware!
+  }
 };
 ```

@@ -1,31 +1,31 @@
 export const meta = {
   id: "M12-11",
   number: "11",
-  title: "Mongoose Virtuals",
-  khmerTitle: "ការបង្កើត Virtual Properties (Computed Fields)",
-  type: "concept",
+  title: "Deleting Resources & Cascading",
+  khmerTitle: "ការលុប Course និងការលុប Cascading Lessons ក្នុង MongoDB",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "**Virtuals** គឺជា Document Properties ដែលអ្នកអាចអាន ឬសរសេរបាន ប៉ុន្តែពួកវា **មិនត្រូវបានរក្សាទុកលើ MongoDB Database ឡើយ** (វាត្រូវបានគណនានៅពេល Run-time)។\n\nឧទាហរណ៍ជាក់ស្តែងលើ Course API៖\n* គណនាតម្លៃបញ្ចុះតម្លៃ `discountedPrice`\n* គណនា `durationHours` ចេញពី `durationMinutes`\n* ត្រូវកំណត់ `{ virtuals: true }` ក្នុង `toJSON` Option ដើម្បីឱ្យវាបង្ហាញពេលផ្ញើ Response ទៅកាន់ Client",
-  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true },\n  discountPercent: { type: Number, default: 10 }\n}, {\n  toJSON: { virtuals: true }, // 💡 Include virtuals when converting to JSON!\n  toObject: { virtuals: true }\n});\n\n// Step 1: Define Virtual Property for Final Price\ncourseSchema.virtual(\"finalPrice\").get(function() {\n  // \"this\" points to the current document\n  return Number((this.price * (1 - this.discountPercent / 100)).toFixed(2));\n});\n\nexport const Course = model(\"Course\", courseSchema);",
+  summary: "នៅពេលលុប Course មួយ យើងត្រូវគិតគូរដល់ **Parent-Child Cascading Cleanup**៖\n\nនៅពេល Course ត្រូវបានលុប៖\n1. លុប Course ចេញពី `courses` Collection\n2. លុបរាល់ Lessons ទាំងអស់ដែលជាកូនរបស់ Course នោះ (`Lesson.deleteMany({ courseId })`) ជៀសវាងការបន្សល់ទុក Orphaned Records ក្នុង Database!",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { Lesson } from \"../models/lesson.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const deleteCourseWithLessons = async (courseId) => {\n  // Step 1: Delete parent course\n  const deletedCourse = await Course.findByIdAndDelete(courseId);\n  if (!deletedCourse) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // Step 2: Cascading Delete all child lessons belonging to this course!\n  const deletedLessons = await Lesson.deleteMany({ courseId });\n  console.log(`Deleted ${deletedLessons.deletedCount} associated lessons`);\n\n  return deletedCourse;\n};",
 };
 
 ```javascript
-import { Schema, model } from "mongoose";
+// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+import { Lesson } from "../models/lesson.model.js";
+import { AppError } from "../errors/AppError.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true },
-  discountPercent: { type: Number, default: 10 }
-}, {
-  toJSON: { virtuals: true }, // 💡 Include virtuals when converting to JSON!
-  toObject: { virtuals: true }
-});
+export const deleteCourseWithLessons = async (courseId) => {
+  // Step 1: Delete parent course
+  const deletedCourse = await Course.findByIdAndDelete(courseId);
+  if (!deletedCourse) {
+    throw new AppError("Course not found", 404);
+  }
 
-// Step 1: Define Virtual Property for Final Price
-courseSchema.virtual("finalPrice").get(function() {
-  // "this" points to the current document
-  return Number((this.price * (1 - this.discountPercent / 100)).toFixed(2));
-});
+  // Step 2: Cascading Delete all child lessons belonging to this course!
+  const deletedLessons = await Lesson.deleteMany({ courseId });
+  console.log(`Deleted ${deletedLessons.deletedCount} associated lessons`);
 
-export const Course = model("Course", courseSchema);
+  return deletedCourse;
+};
 ```

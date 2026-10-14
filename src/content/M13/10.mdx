@@ -1,30 +1,27 @@
 export const meta = {
   id: "M13-10",
   number: "10",
-  title: "Updating Resources in MongoDB",
-  khmerTitle: "ការកែប្រែ Course ក្នុង MongoDB (findByIdAndUpdate)",
-  type: "lab",
+  title: "Backend Architecture Best Practices",
+  khmerTitle: "ការអនុវត្តស្ថាបត្យកម្មល្អបំផុតសម្រាប់ Enterprise Node.js Backend",
+  type: "architecture",
   codeLanguage: "javascript",
-  summary: "ការកែប្រែ Course ក្នុង MongoDB ដោយប្រើប្រាស់ `Course.findByIdAndUpdate()`៖\n\nជម្រើស Options ដ៏សំខាន់៖\n* `$set: updateData`៖ កែប្រែតែ Fields ដែលបានបញ្ជូនមកប៉ុណ្ណោះ\n* `{ new: true }`៖ ត្រឡប់ Updated Document ថ្មី\n* `{ runValidators: true }`៖ បង្ខំឱ្យ Mongoose Run Schema Validation លើទិន្នន័យថ្មី",
-  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  const updated = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    { new: true, runValidators: true }\n  );\n\n  if (!updated) {\n    throw new AppError(`Cannot update: Course ${courseId} not found`, 404);\n  }\n\n  return updated;\n};",
+  summary: "បញ្ជីត្រួតពិនិត្យស្ថាបត្យកម្ម (Architecture Review Checklist) សម្រាប់ Backend Engineers៖\n\n1. **Separation of Concerns (SoC)**៖ Routes (HTTP mapping) ➔ Controllers (Orchestration) ➔ Services (Business Logic) ➔ Models (Data Access)\n2. **Fail Fast & Validate Early**៖ ត្រួតពិនិត្យទិន្នន័យបញ្ចូលតាម Middleware មុនពេលទៅដល់ Controller\n3. **Never Expose Sensitive Details**៖ លាក់ Stack Trace នៅលើ Production Environment\n4. **Environment Isolation**៖ មិន Hardcode Secrets ឬ Ports (ប្រើប្រាស់ `.env`)\n5. **Deterministic Testing**៖ សរសេរ Unit Tests លើ Service Layer និង Integration Tests (Supertest) លើ Endpoints",
+  codeSnippet: "/*\n  ==============================================================\n  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:\n  ==============================================================\n  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)\n  [x] 2. Centralized Error Handling (Single 4-arg error middleware)\n  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })\n  [x] 4. Defensive ReDoS Protection (Sanitized regex search)\n  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)\n  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)\n  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)\n  [x] 8. Automated Integration Tests (Supertest test runner)\n  ==============================================================\n*/",
 };
 
 ```javascript
-// src/services/course.service.js
-import { Course } from "../models/course.model.js";
-import { AppError } from "../errors/AppError.js";
-
-export const updateCourseService = async (courseId, updateData) => {
-  const updated = await Course.findByIdAndUpdate(
-    courseId,
-    { $set: updateData },
-    { new: true, runValidators: true }
-  );
-
-  if (!updated) {
-    throw new AppError(`Cannot update: Course ${courseId} not found`, 404);
-  }
-
-  return updated;
-};
+/*
+  ==============================================================
+  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:
+  ==============================================================
+  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)
+  [x] 2. Centralized Error Handling (Single 4-arg error middleware)
+  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })
+  [x] 4. Defensive ReDoS Protection (Sanitized regex search)
+  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)
+  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)
+  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)
+  [x] 8. Automated Integration Tests (Supertest test runner)
+  ==============================================================
+*/
 ```

@@ -1,370 +1,714 @@
 /**
- * m11.mjs - Module 11: MongoDB Fundamentals (14 topics)
- * Domain: Course Catalog API (Transitioning from In-Memory to Real NoSQL Database)
+ * m09.mjs - Module 11: REST API Development (18 topics)
+ * Domain: Course Catalog API (Enterprise REST Standards, Envelopes, Pagination, Search)
  */
 
 export const M11 = [
   {
     id: "M11-01",
     number: "01",
-    title: "What is MongoDB?",
-    khmerTitle: "អ្វីជាប្រព័ន្ធទិន្នន័យ MongoDB?",
+    title: "What is REST?",
+    khmerTitle: "អ្វីជាស្ថាបត្យកម្ម REST និង Uniform Interface?",
     type: "concept",
     codeLanguage: "javascript",
-    summary: `**MongoDB** គឺជា Database NoSQL បែប Document-oriented ដ៏ទំនើប និងពេញនិយមបំផុតសម្រាប់ Node.js Backend។
+    summary: `**REST (Representational State Transfer)** គឺជាស្ថាបត្យកម្មរចនា API បែបស្តង់ដារដែលបង្កើតឡើងដោយ Roy Fielding ក្នុងឆ្នាំ ២០០០។
 
-លក្ខណៈពិសេសចម្បងៗ៖
-* រក្សាទុកទិន្នន័យជាឯកសារ **BSON (Binary JSON)** ដែលមានទម្រង់ដូចជា JavaScript Object ១០០%
-* គាំទ្រ Dynamic & Flexible Schema — មិនចាំបាច់រៀបចំ Table Migrations តឹងរឹងដូច SQL ឡើយ
-* ផ្តល់នូវ High Scalability តាមរយៈ Horizontal Sharding និង Automatic Failover Replicas
-
-នៅក្នុង Course នេះ យើងនឹងភ្ជាប់ **Course Catalog API** ពី Modules 06-10 ទៅកាន់ MongoDB Database ពិតប្រាកដ។`,
-    codeSnippet: `// A MongoDB document looks and feels just like a native JavaScript object!
+គោលគំនិតស្នូលនៃ REST ក្នុង Course Catalog API៖
+* **Resources**៖ អ្វីៗគ្រប់យ៉ាងត្រូវបានចាត់ទុកជា Resource (ដូចជា \`courses\`, \`lessons\`, \`users\`)
+* **Representations**៖ Client ទទួលបាន Representation នៃ Resource ជាទម្រង់ JSON
+* **Statelessness**៖ Request នីមួយៗផ្ទុកនូវព័ត៌មានគ្រប់គ្រាន់ដើម្បីដំណើរការដោយខ្លួនឯង ដោយមិនពឹងផ្អែកលើ Session ក្នុង Memory របស់ Server ឡើយ`,
+    codeSnippet: `// Representation of Course Resource in REST (JSON)
+// GET /api/v1/courses/101
 {
-  "_id": "6648e58319f3a9e224e78891",
+  "id": 101,
   "title": "Full-Stack Node.js & Express Architecture",
   "instructor": "Ratha",
   "price": 49.99,
   "level": "intermediate",
   "published": true,
-  "tags": ["nodejs", "express", "mongodb"],
-  "createdAt": "2026-10-14T08:00:00.000Z"
+  "links": {
+    "self": "/api/v1/courses/101",
+    "lessons": "/api/v1/courses/101/lessons",
+    "reviews": "/api/v1/courses/101/reviews"
+  }
 }`,
   },
   {
     id: "M11-02",
     number: "02",
-    title: "SQL vs NoSQL",
-    khmerTitle: "ការប្រៀបធៀប SQL vs NoSQL",
+    title: "REST Principles",
+    khmerTitle: "គោលការណ៍គ្រឹះទាំង ៦ នៃ REST (6 Architectural Constraints)",
     type: "concept",
     codeLanguage: "javascript",
-    summary: `ការប្រៀបធៀបរវាង **Relational SQL Databases** និង **Document NoSQL Database (MongoDB)**៖
+    summary: `API មួយត្រូវបានចាត់ទុកថាជា **RESTful** លុះត្រាតែវាគោរពតាមគោលការណ៍គ្រឹះទាំង ៦៖
 
-* **SQL Databases**៖ រក្សាទុកទិន្នន័យក្នុង Tables ដ៏តឹងរឹង (Rigid Schemas) ជាមួយ Foreign Keys និង Multi-table JOINs។
-* **Document NoSQL Database (MongoDB)**៖ រក្សាទុកទិន្នន័យជាឯកសារ BSON Documents (JSON-like) ដែលមានភាពបត់បែនខ្ពស់ (Polymorphic) ងាយស្រួល Scale តាមបែប Horizontal Sharding និងមានល្បឿន Query លឿនបំផុតជាមួយ Node.js & Express។
+1. **Client-Server Architecture**៖ បំបែក User Interface (React/Next.js) ចេញពី Data Storage (Express/MongoDB)
+2. **Stateless**៖ Server មិនរក្សាទុក Client Context រវាង Requests ឡើយ
+3. **Cacheable**៖ Response ត្រូវតែបញ្ជាក់ថាអាច Cache បានឬអត់តាមរយៈ HTTP Headers
+4. **Uniform Interface**៖ រចនាសម្ព័ន្ធ URL និង HTTP Methods ដូចគ្នាទូទាំងប្រព័ន្ធ
+5. **Layered System**៖ Client មិនបាច់ដឹងថាខ្លួនកំពុងតភ្ជាប់ផ្ទាល់ជាមួយ App Server, Proxy, ឬ Load Balancer ឡើយ
+6. **Code on Demand (Optional)**៖ អាចបញ្ជូន Script ទៅ Execute លើ Client (កម្រប្រើក្នុង REST APIs)`,
+    codeSnippet: `import express from "express";
+const app = express();
 
-នៅក្នុង Course នេះ យើងប្រើប្រាស់ **MongoDB** ជា Database ស្នូលជាមួយ Express តាមរយៈ **Mongoose ODM**។`,
-    codeSnippet: `/* SQL vs NoSQL Conceptual Comparison:
-   Relational SQL:              NoSQL (MongoDB - Used in this Course):
-   -----------------------      -------------------------------------
-   - Database                   - Database
-   - Table                      - Collection
-   - Row / Record               - Document (BSON)
-   - Column                     - Field
-   - Foreign Key JOIN           - Embedded Document or $lookup Reference
-   - Rigid Table Migration      - Dynamic, Flexible Document Schema
-*/`,
+// 💡 Teaching Note: Demonstrating Cache-Control header (Cacheable Constraint)
+app.get("/api/v1/courses", (req, res) => {
+  // Instruct clients and CDNs to cache this public course catalog for 1 hour (3600s)
+  res.setHeader("Cache-Control", "public, max-age=3600");
+
+  res.json({
+    success: true,
+    data: [{ id: 1, title: "Modern JavaScript" }]
+  });
+});`,
   },
   {
     id: "M11-03",
     number: "03",
-    title: "MongoDB Architecture",
-    khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ MongoDB (Replica Sets & Sharding)",
+    title: "RESTful API Design",
+    khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ (URL Conventions)",
     type: "architecture",
     codeLanguage: "javascript",
-    summary: `MongoDB សម្រេចបាននូវ High Availability និង Scalability តាមរយៈយន្តការពីរ៖
+    summary: `ច្បាប់មាសសម្រាប់ការរចនា **RESTful URIs**៖
 
-1. **Replica Sets (High Availability)**៖ ប្រព័ន្ធ cluster ដែលមានយ៉ាងហោចណាស់ ៣ Nodes (Primary ១ និង Secondary ២)។ Primary ទទួលខុសត្រូវលើ Writes ទាំងអស់ ហើយធ្វើ Replicate ទិន្នន័យទៅ Secondaries ដោយស្វ័យប្រវត្តិតាមរយៈ Oplog។
-2. **Sharding (Horizontal Scalability)**៖ ការបំបែកទិន្នន័យជាចំណែកៗ (Partitions) ឆ្លងកាត់ Servers ច្រើននៅពេលទិន្នន័យកើនដល់រាប់លាន Records។`,
-    codeSnippet: `/* MongoDB Replica Set Architecture for Course Catalog:
-   [Express API Client (Node.js)]
-              │
-              ▼
-   ┌───────────────────────┐
-   │    PRIMARY NODE       │ (Handles Writes & Primary Reads)
-   └──────────┬────────────┘
-              │ (Asynchronous Replication via Oplog)
-        ┌─────┴─────┐
-        ▼           ▼
-   [SECONDARY] [SECONDARY] (Auto Failover & Read Scalability)
+* **ប្រើ Nouns មិនប្រើ Verbs**៖ \`/courses\` (✅) មិនមែន \`/getCourses\` (❌)
+* **ប្រើ Plural Nouns (ពហុវចនៈ)**៖ \`/courses\`, \`/lessons\`, \`/users\`
+* **ប្រើ Lowercase និង Hyphens**៖ \`/course-reviews\` មិនមែន \`/course_reviews\` ឬ \`/courseReviews\`
+* **បង្ហាញ Hierarchy ដោយ Nested Paths**៖ \`/courses/:id/lessons\`
+* **ប្រើ Query Parameters សម្រាប់ Actions បន្ថែម**៖ \`?sort=price&filter=published\``,
+    codeSnippet: `/*
+  ==============================================================
+  PROFESSIONAL RESTFUL URL CONVENTIONS:
+  ==============================================================
+  ✅ GET    /api/v1/courses               (Fetch course collection)
+  ✅ POST   /api/v1/courses               (Create new course)
+  ✅ GET    /api/v1/courses/42            (Fetch specific course)
+  ✅ PATCH  /api/v1/courses/42            (Update fields)
+  ✅ DELETE /api/v1/courses/42            (Remove course)
+  ✅ GET    /api/v1/courses/42/lessons    (Fetch lessons for course 42)
+
+  ❌ BAD URL CONVENTIONS (Avoid at all costs):
+  ❌ /api/v1/getAllCourses
+  ❌ /api/v1/createNewCourse
+  ❌ /api/v1/course/42/delete
+  ❌ /api/v1/course_reviews_by_user
 */`,
   },
   {
     id: "M11-04",
     number: "04",
-    title: "Database in MongoDB",
-    khmerTitle: "ការបង្កើត និងគ្រប់គ្រង Database (course_catalog_db)",
+    title: "Resource Modeling",
+    khmerTitle: "ការកំណត់ និងគ្រប់គ្រង Resources (Courses, Lessons, Categories)",
     type: "concept",
-    codeLanguage: "bash",
-    summary: `នៅក្នុង MongoDB **Database** គឺជា Container រូបវន្តសម្រាប់ផ្ទុក Collections ទាំងអស់។
+    codeLanguage: "javascript",
+    summary: `នៅក្នុង Course API គំរូទិន្នន័យ (Resources) ត្រូវបានបែងចែកជា៖
 
-ចំនុចពិសេសរបស់ MongoDB៖
-* Database នឹងត្រូវបង្កើតឡើងដោយស្វ័យប្រវត្តិ នៅពេលដែលអ្នកបញ្ចូល Document ដំបូងបង្អស់ចូលទៅកាន់ Collection ណាមួយ
-* Server មួយអាចផ្ទុក Databases ច្រើនដាច់ដោយឡែកពីគ្នា
-* សម្រាប់ Course របស់យើង យើងនឹងប្រើប្រាស់ Database ឈ្មោះ **\`course_catalog_db\`**`,
-    codeSnippet: `# Step 1: Open MongoDB Shell
-mongosh
+1. **Courses (Top-level Resource)**៖ \`/api/v1/courses\`
+2. **Lessons (Sub-resource របស់ Course)**៖ \`/api/v1/courses/:courseId/lessons\`
+3. **Categories (Independent Resource)**៖ \`/api/v1/categories\`
 
-# Step 2: Switch or create Course Catalog Database
-use course_catalog_db
+ការរៀបចំ Resource Modeling ច្បាស់លាស់ជួយឱ្យ Schema Database និង API Routing មានភាពស៊ីសង្វាក់គ្នា។`,
+    codeSnippet: `// Resource Schemas in Course Catalog Domain
+export const CourseSchema = {
+  id: "number",
+  title: "string",
+  slug: "string",           // e.g., "mastering-express-architecture"
+  instructor: "string",
+  price: "number",
+  level: "beginner | intermediate | advanced",
+  published: "boolean",
+  categoryId: "number",
+  createdAt: "ISO8601 string"
+};
 
-# Step 3: Check currently selected database
-db.getName()
-# Output: course_catalog_db`,
+export const LessonSchema = {
+  id: "ObjectId",           // MongoDB ObjectId
+  courseId: "ObjectId",     // MongoDB Reference to Course (_id)
+  title: "string",
+  durationMinutes: "number",
+  videoUrl: "string",
+  orderIndex: "number"
+};`,
   },
   {
     id: "M11-05",
     number: "05",
-    title: "Collections in MongoDB",
-    khmerTitle: "ការគ្រប់គ្រង Collections (courses, lessons, instructors)",
+    title: "CRUD Operations Mapping",
+    khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP Verbs ក្នុង MongoDB",
     type: "concept",
     codeLanguage: "javascript",
-    summary: `**Collection** គឺជាបណ្តុំនៃ Documents ដែលប្រៀបដូចជា Table ក្នុង SQL ដែរ។
+    summary: `ការផ្សារភ្ជាប់រវាង **CRUD (Database Operations)** និង **HTTP Verbs (Web Protocols)** ជាមួយ **MongoDB & Mongoose**៖
 
-លក្ខណៈពិសេស៖
-* Collections មិនបង្ខំ Strict Schema នៅកម្រិត Database Engine ឡើយ
-* អនុសញ្ញាដាក់ឈ្មោះ៖ ប្រើ **Lowercase Plural Nouns** ជានិច្ច (ដូចជា \`courses\`, \`lessons\`, \`users\`)
-* Collections ចម្បងក្នុង Course API របស់យើង៖ \`courses\`, \`lessons\`, និង \`users\``,
-    codeSnippet: `// In mongosh:
-// Step 1: Explicitly create collection
-db.createCollection("courses");
-db.createCollection("lessons");
+| CRUD Operation | HTTP Method | Endpoint | សកម្មភាពលើ MongoDB (Mongoose Model) |
+|---|---|---|---|
+| **Create** | \`POST\` | \`/api/v1/courses\` | \`Course.create(req.body)\` |
+| **Read (All)** | \`GET\` | \`/api/v1/courses\` | \`Course.find(filter)\` |
+| **Read (One)** | \`GET\` | \`/api/v1/courses/:id\` | \`Course.findById(id)\` |
+| **Update (Full)** | \`PUT\` | \`/api/v1/courses/:id\` | \`Course.findOneAndReplace({ _id: id }, payload)\` |
+| **Update (Partial)** | \`PATCH\` | \`/api/v1/courses/:id\` | \`Course.findByIdAndUpdate(id, { $set: payload }, { new: true })\` |
+| **Delete** | \`DELETE\` | \`/api/v1/courses/:id\` | \`Course.findByIdAndDelete(id)\` |`,
+    codeSnippet: `import express from "express";
+const router = express.Router();
 
-// Step 2: List all collections in current database
-show collections;
-// Output: courses, lessons
+// 💡 Teaching Note: Clean CRUD Mapping declaration
+router.route("/")
+  .get((req, res) => res.json({ op: "READ_ALL_COURSES" }))
+  .post((req, res) => res.status(201).json({ op: "CREATE_COURSE" }));
 
-// Step 3: Drop collection if needed
-// db.courses.drop();`,
+router.route("/:id")
+  .get((req, res) => res.json({ op: "READ_ONE_COURSE", id: req.params.id }))
+  .put((req, res) => res.json({ op: "REPLACE_COURSE", id: req.params.id }))
+  .patch((req, res) => res.json({ op: "PARTIAL_UPDATE_COURSE", id: req.params.id }))
+  .delete((req, res) => res.status(204).send());
+
+export default router;`,
   },
   {
     id: "M11-06",
     number: "06",
-    title: "Documents (BSON Structure)",
-    khmerTitle: "រចនាសម្ព័ន្ធនៃ Document ក្នុង MongoDB",
-    type: "concept",
+    title: "Production GET Endpoints",
+    khmerTitle: "ការអនុវត្ត Production GET Endpoint ជាមួយ Metadata",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `**Document** គឺជា Record នីមួយៗដែលស្ថិតក្នុង Collection។ វាត្រូវបានរក្សាទុកជាទម្រង់ **BSON (Binary JSON)**។
+    summary: `Production GET Endpoint មិនគួរត្រឡប់ត្រឹមតែ Raw Array ឡើយ។ វាត្រូវត្រឡប់ Standard JSON Envelope ដែលមាន Metadata ច្បាស់លាស់៖
 
-លក្ខណៈសម្បត្តិនៃ Document៖
-* ផ្ទុកជា Field-and-Value pairs (ឧ. \`"title": "Node.js Basics"\`)
-* ទំហំអតិបរមានៃ Document មួយគឺ **16 MB**
-* Document នីមួយៗមាន Unique Primary Key ឈ្មោះ **\`_id\`** ដោយស្វ័យប្រវត្តិ`,
-    codeSnippet: `// Sample Course Document in BSON representation
-{
-  "_id": ObjectId("6648e58319f3a9e224e78891"),
-  "title": "Mastering Express.js Routing",
-  "price": 39.99,
-  "level": "intermediate",
-  "tags": ["backend", "express", "javascript"],
-  "instructor": {
-    "name": "Ratha",
-    "email": "ratha@example.com"
-  },
-  "isPublished": true,
-  "createdAt": ISODate("2026-10-14T08:00:00Z")
-}`,
+* \`success: true\` (Status indicator)
+* \`count\` (ចំនួន Items ក្នុង Response)
+* \`data\` (Array នៃ Resources)
+* \`timestamp\` (ពេលវេលា Response ត្រូវបានបង្កើត)`,
+    codeSnippet: `import express from "express";
+const app = express();
+
+const courses = [
+  { id: 1, title: "Node.js Fundamentals", price: 29.99, level: "beginner" },
+  { id: 2, title: "Express.js Architecture", price: 49.99, level: "advanced" }
+];
+
+// Production GET Endpoint
+app.get("/api/v1/courses", (req, res) => {
+  // Step 1: Query data from store
+  const results = courses;
+
+  // Step 2: Return standardized envelope with metadata
+  return res.status(200).json({
+    success: true,
+    count: results.length,
+    data: results,
+    meta: {
+      timestamp: new Date().toISOString(),
+      apiVersion: "1.0.0"
+    }
+  });
+});`,
   },
   {
     id: "M11-07",
     number: "07",
-    title: "Fields & BSON Data Types",
-    khmerTitle: "ការកំណត់ Fields និងប្រភេទ BSON Data Types",
-    type: "concept",
+    title: "Production POST Endpoints",
+    khmerTitle: "ការអនុវត្ត Production POST Endpoint និង Location Header",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `BSON គាំទ្រប្រភេទ Data Types សម្បូរបែបជាង JSON ធម្មតា៖
+    summary: `Production POST Endpoint ត្រូវអនុវត្តតាមលក្ខខណ្ឌវិជ្ជាជីវៈ៖
 
-* **String**៖ អត្ថបទ UTF-8
-* **NumberInt / NumberLong / Double**៖ លេខគត់ 32-bit, 64-bit, ឬ Floating point (តម្លៃ Price)
-* **Boolean**៖ \`true\` ឬ \`false\`
-* **Date**៖ 64-bit integer timestamp គិតជា milliseconds
-* **ObjectId**៖ 12-byte Unique Identifier របស់ MongoDB
-* **Array**៖ បញ្ជី Array នៃតម្លៃ ឬ Sub-documents
-* **Null**៖ តម្លៃទទេ`,
-    codeSnippet: `// Demonstrating varied BSON types in a Course Document
-{
-  "_id": ObjectId("6648e58319f3a9e224e78891"), // ObjectId
-  "title": "Node.js & MongoDB Essentials",      // String
-  "enrollmentCount": NumberInt(250),             // 32-bit Integer
-  "price": 49.99,                                // Double
-  "isFeatured": true,                            // Boolean
-  "prerequisites": ["HTML", "JavaScript"],       // Array of Strings
-  "publishedAt": ISODate("2026-10-14T00:00:00Z"),// Date
-  "discountPrice": null                          // Null
-}`,
+1. **Validation**៖ ពិនិត្យភាពត្រឹមត្រូវនៃ Payload
+2. **Duplicate Prevention**៖ ពិនិត្យថាតើ Course Title នេះមានរួចហើយឬនៅ
+3. **HTTP 201 Created**៖ ឆ្លើយតប Status 201
+4. **Location Header**៖ កំណត់ Header \`Location: /api/v1/courses/:id\` ដែលចង្អុលបង្ហាញផ្លូវទៅកាន់ Resource ដែលទើបនឹងបង្កើតថ្មី`,
+    codeSnippet: `import express from "express";
+const app = express();
+app.use(express.json());
+
+const courses = [{ id: 1, title: "Node.js Fundamentals" }];
+
+app.post("/api/v1/courses", (req, res) => {
+  const { title, price } = req.body;
+
+  // Step 1: Validation
+  if (!title || typeof title !== "string") {
+    return res.status(400).json({ success: false, error: "Title is required" });
+  }
+
+  // Step 2: Prevent duplicates
+  const exists = courses.some(c => c.title.toLowerCase() === title.toLowerCase());
+  if (exists) {
+    return res.status(409).json({ success: false, error: "A course with this title already exists" });
+  }
+
+  // Step 3: Create course entity
+  const newCourse = { id: courses.length + 1, title, price: Number(price) || 0 };
+  courses.push(newCourse);
+
+  // Step 4: Set Location header & respond with 201 Created
+  const resourceUrl = \`/api/v1/courses/\${newCourse.id}\`;
+  res.setHeader("Location", resourceUrl);
+
+  return res.status(201).json({
+    success: true,
+    data: newCourse,
+    location: resourceUrl
+  });
+});`,
   },
   {
     id: "M11-08",
     number: "08",
-    title: "ObjectId Deep Dive",
-    khmerTitle: "ការស្វែងយល់ពី ObjectId (12-byte BSON Identifier)",
-    type: "concept",
+    title: "Production PUT Endpoints",
+    khmerTitle: "ការអនុវត្ត Production PUT Endpoint (Full Replacement)",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `**ObjectId** គឺជា Primary Key លំនាំដើមរបស់ MongoDB។ វាមានទំហំ **12 Bytes (24 Hexadecimal Characters)**៖
+    summary: `ការអនុវត្ត **PUT Endpoint** តាមស្តង់ដារ RESTful៖
 
-រចនាសម្ព័ន្ធខាងក្នុងនៃ 12 Bytes៖
-* **4 Bytes**៖ Timestamp (វិនាទីដែល Document ត្រូវបានបង្កើតឡើង)
-* **5 Bytes**៖ Random Value (ម៉ាស៊ីន និង Process Identifier)
-* **3 Bytes**៖ Incrementing Counter (រាប់ចំនួនកើនឡើងជាបន្តបន្ទាប់)
+* ត្រូវពិនិត្យវត្តមាន Resource ជាមុនសិន (\`404 Not Found\` បើគ្មាន)
+* ត្រូវទាមទារ (Enforce) នូវរាល់ Required Fields ទាំងអស់នៃ Resource
+* ជំនួស Object ទាំងមូលក្នុង Data Store ដោយមិនបន្សល់ទុក Fields ចាស់ដែល Client មិនបានផ្ញើមកឡើយ`,
+    codeSnippet: `import express from "express";
+const app = express();
+app.use(express.json());
 
-ដោយសារតែ ៤ Bytes ដំបូងជា Timestamp យើងអាចទាញយកពេលវេលាបង្កើតចេញពី \`_id\` បានដោយមិនបាច់បង្កើត Field ដាច់ដោយឡែកឡើយ!`,
-    codeSnippet: `// ObjectId Decomposition (24 hex characters):
-// "6648e583 19f3a9e224 e78891"
-//  └─Time─┘ └──Random──┘ └Counter┘
+let courses = [
+  { id: 1, title: "Old Title", instructor: "Old Teacher", price: 10, published: false }
+];
 
-// In mongosh:
-const courseId = ObjectId("6648e58319f3a9e224e78891");
-console.log("Created at:", courseId.getTimestamp());
-// Output: 2024-05-18T17:35:31.000Z`,
+app.put("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const index = courses.findIndex(c => c.id === courseId);
+
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  const { title, instructor, price, published } = req.body;
+
+  // Validation: PUT requires ALL core properties
+  if (!title || !instructor || price === undefined || published === undefined) {
+    return res.status(400).json({
+      success: false,
+      error: "PUT requires full entity payload: title, instructor, price, and published status"
+    });
+  }
+
+  // Overwrite completely
+  courses[index] = { id: courseId, title, instructor, price: Number(price), published: Boolean(published) };
+  return res.status(200).json({ success: true, data: courses[index] });
+});`,
   },
   {
     id: "M11-09",
     number: "09",
-    title: "Embedded Documents (Denormalization)",
-    khmerTitle: "ការបង្កប់ឯកសារ (Embedding / Denormalization)",
-    type: "concept",
+    title: "Production PATCH Endpoints",
+    khmerTitle: "ការអនុវត្ត Production PATCH Endpoint (Partial Updates)",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `នៅក្នុង MongoDB មានយុទ្ធសាស្ត្ររៀបចំទំនាក់ទំនង ២ បែប។ ទីមួយគឺ **Embedding (Denormalization)** ដែលជាការដាក់ Sub-documents នៅក្នុង Document មេតែមួយ។
+    summary: `ការអនុវត្ត **PATCH Endpoint** ប្រកបដោយប្រសិទ្ធភាពខ្ពស់៖
 
-ពេលណាគួរប្រើ Embedding សម្រាប់ Course API៖
-* ទំនាក់ទំនង **1-to-Few** (ឧ. Course មួយមាន Course Requirements ចំនួន ៣-៥ ចំណុច ឬ Syllabus Summary)
-* ទិន្នន័យដែលតែងតែអានជាមួយគ្នាជានិច្ចក្នុង Request តែមួយ
-* ផ្តល់ល្បឿនអានលឿនបំផុតព្រោះមិនបាច់ធ្វើ JOIN ឬ $lookup`,
-    codeSnippet: `// Embedded Document Pattern: Course with embedded Instructor Profile
-{
-  "_id": ObjectId("6648e58319f3a9e224e78891"),
-  "title": "Mastering Node.js & Express",
-  "price": 49.99,
-  // 💡 Embedded sub-document: Always loaded together in 1 fast query!
-  "instructor": {
-    "name": "Ratha",
-    "bio": "Senior Backend Architect",
-    "avatar": "https://cdn.example.com/ratha.jpg"
-  },
-  "modules": [
-    { "order": 1, "title": "Express Basics" },
-    { "order": 2, "title": "MongoDB Mastery" }
-  ]
-}`,
+1. អាន \`req.body\`
+2. ច្រោះយកតែ **Allowed Update Fields** (ជៀសវាង Mass Assignment Vulnerability កុំឱ្យ Client កែប្រែ \`id\` ឬ \`createdAt\`)
+3. កែប្រែតែ Properties ដែលបានផ្តល់មក
+4. រក្សាទុក \`updatedAt\` timestamp ថ្មី`,
+    codeSnippet: `import express from "express";
+const app = express();
+app.use(express.json());
+
+let courses = [{ id: 1, title: "Original Title", price: 29.99, published: false }];
+
+app.patch("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId);
+
+  if (!course) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  // 🔒 Security: Only allow modifications on specific permitted fields (Whitelist)
+  const allowedUpdates = ["title", "price", "published"];
+  for (const key of Object.keys(req.body)) {
+    if (allowedUpdates.includes(key)) {
+      course[key] = req.body[key];
+    }
+  }
+
+  course.updatedAt = new Date().toISOString();
+  return res.status(200).json({ success: true, data: course });
+});`,
   },
   {
     id: "M11-10",
     number: "10",
-    title: "Document References (Normalization)",
-    khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងតាមរយៈ References (Normalization)",
-    type: "concept",
+    title: "Production DELETE Endpoints",
+    khmerTitle: "ការអនុវត្ត Production DELETE Endpoint (Soft Delete vs Hard Delete)",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `យុទ្ធសាស្ត្រទីពីរគឺ **Document References (Normalization)** ដែលរក្សាទុកឯកសារក្នុង Collections ដាច់ដោយឡែកពីគ្នា ហើយភ្ជាប់គ្នាដោយ **ObjectId**។
+    summary: `នៅក្នុង Production Applications មានយុទ្ធសាស្ត្រលុប ២ បែប៖
 
-ពេលណាគួរប្រើ References សម្រាប់ Course API៖
-* ទំនាក់ទំនង **1-to-Many** ធំៗ (ឧ. Course មួយមាន Lessons រាប់សិប)
-* ទំនាក់ទំនង **Many-to-Many** (ឧ. សិស្សរាប់ពាន់នាក់ចុះឈ្មោះក្នុង Courses ច្រើន)
-* ទិន្នន័យដែលត្រូវ Update ញឹកញាប់ដោយឯករាជ្យ (ជៀសវាងការ Update ច្រើនកន្លែង)`,
-    codeSnippet: `// 1. Course Document (in "courses" collection)
-{
-  "_id": ObjectId("6648e58319f3a9e224e78891"),
-  "title": "Enterprise Node.js Architecture",
-  "instructorId": ObjectId("507f191e810c19729de860ea") // Reference to Users collection
-}
+1. **Hard Delete**៖ លុប Record ចេញពី Database ទាំងស្រុង (\`courses.splice()\`)
+2. **Soft Delete (អនុសាសន៍)**៖ មិនលុបទិន្នន័យចោលទេ គ្រាន់តែសម្គាល់ \`isDeleted: true\` និង \`deletedAt = new Date()\`។ វិធីនេះអនុញ្ញាតឱ្យយើង Restore ទិន្នន័យមកវិញបាន និងរក្សាប្រវត្តិ Transactions`,
+    codeSnippet: `import express from "express";
+const app = express();
 
-// 2. Lesson Document (in "lessons" collection referencing parent course)
-{
-  "_id": ObjectId("6648e58319f3a9e224e78999"),
-  "courseId": ObjectId("6648e58319f3a9e224e78891"), // 💡 Foreign reference to Course
-  "title": "Introduction to Controller-Service Pattern",
-  "durationMinutes": 15
-}`,
+let courses = [
+  { id: 1, title: "Node.js Basics", isDeleted: false, deletedAt: null }
+];
+
+// Soft Delete Implementation (Recommended for Enterprise)
+app.delete("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId && !c.isDeleted);
+
+  if (!course) {
+    return res.status(404).json({ success: false, error: "Course not found or already deleted" });
+  }
+
+  // Perform soft delete
+  course.isDeleted = true;
+  course.deletedAt = new Date().toISOString();
+
+  return res.status(200).json({
+    success: true,
+    message: "Course has been soft-deleted successfully",
+    data: { id: course.id, deletedAt: course.deletedAt }
+  });
+});`,
   },
   {
     id: "M11-11",
     number: "11",
-    title: "MongoDB Atlas Cloud Setup",
-    khmerTitle: "ការបង្កើត និងរៀបចំ Cloud Database ជាមួយ MongoDB Atlas",
-    type: "lab",
-    codeLanguage: "bash",
-    summary: `**MongoDB Atlas** គឺជា Fully-Managed Cloud Database Service ផ្លូវការរបស់ MongoDB ដែលដំណើរការលើ AWS, Google Cloud, ឬ Azure។
+    title: "HTTP Status Codes Taxonomy",
+    khmerTitle: "តារាងចំណាត់ថ្នាក់ និងការជ្រើសរើស HTTP Status Codes",
+    type: "concept",
+    codeLanguage: "javascript",
+    summary: `សៀវភៅណែនាំ Status Codes សម្រាប់ REST API Development៖
 
-ជំហានបង្កើត Free M0 Cluster សម្រាប់ Course API៖
-1. បង្កើត Account លើ [cloud.mongodb.com](https://cloud.mongodb.com)
-2. បង្កើត Cluster (ជ្រើសរើស Cloud Provider និង Region ដែលជិតបំផុត ដូចជា Singapore)
-3. បង្កើត Database User (Username & Secure Password)
-4. Configure Network Access៖ Allow IP Address (\`0.0.0.0/0\` សម្រាប់ Development)
-5. ចម្លង **Connection String URI** សម្រាប់ដាក់ក្នុង \`.env\``,
-    codeSnippet: `# Standard MongoDB Atlas Connection String URI Format:
-# mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority
-
-# Example for our Course Catalog Project:
-DATABASE_URL=mongodb+srv://course_admin:SuperSecretPass123@cluster0.abcde.mongodb.net/course_catalog_db?retryWrites=true&w=majority`,
+* **2xx Success**៖
+  * \`200 OK\`៖ សំណើជោគជ័យ (GET, PUT, PATCH)
+  * \`201 Created\`៖ បង្កើត Resource ថ្មីបានសម្រេច (POST)
+  * \`204 No Content\`៖ ជោគជ័យតែគ្មាន Content ត្រឡប់មកវិញ (DELETE)
+* **4xx Client Errors**៖
+  * \`400 Bad Request\`៖ ទិន្នន័យមិនត្រឹមត្រូវតាម Schema
+  * \`401 Unauthorized\`៖ មិនទាន់ Login / គ្មាន Token
+  * \`403 Forbidden\`៖ បាន Login ហើយ តែគ្មានសិទ្ធិ
+  * \`404 Not Found\`៖ រក Resource មិនឃើញ
+  * \`409 Conflict\`៖ ទិន្នន័យជាន់គ្នា (ដូចជា Duplicate Email ឬ Slug)
+* **5xx Server Errors**៖
+  * \`500 Internal Server Error\`៖ Bug ក្នុង Server Code
+  * \`503 Service Unavailable\`៖ Database គាំង ឬ Server កំពុង Maintenance`,
+    codeSnippet: `// Status Code Reference Helper
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
+  SERVICE_UNAVAILABLE: 503
+};`,
   },
   {
     id: "M11-12",
     number: "12",
-    title: "MongoDB Shell (mongosh) Basics",
-    khmerTitle: "ការប្រើប្រាស់ mongosh សម្រាប់ CRUD Operations",
-    type: "lab",
+    title: "API Response Structure (JSON Envelope)",
+    khmerTitle: "ទម្រង់ឆ្លើយតបស្តង់ដារ JSON Envelope ក្នុង REST APIs",
+    type: "concept",
     codeLanguage: "javascript",
-    summary: `**mongosh (MongoDB Shell)** គឺជា Interactive Command-line Interface ទំនើបសម្រាប់ Query និងគ្រប់គ្រង MongoDB។
+    summary: `**Standard JSON Envelope** គឺជាការរចនា Response Object ដែលមានភាពស៊ីសង្វាក់គ្នា (Consistent) លើគ្រប់ Endpoints ទាំងអស់នៃប្រព័ន្ធ។
 
-Basic CRUD Commands សម្រាប់ Course Catalog៖
-* **Create**៖ \`db.courses.insertOne({ title, price })\`
-* **Read**៖ \`db.courses.find({ price: { $lte: 50 } })\`
-* **Update**៖ \`db.courses.updateOne({ _id }, { $set: { published: true } })\`
-* **Delete**៖ \`db.courses.deleteOne({ _id })\``,
-    codeSnippet: `// Step 1: Insert sample course in mongosh
-db.courses.insertOne({
-  title: "Docker for Node Developers",
-  price: 29.99,
-  published: true
-});
+រចនាសម្ព័ន្ធស្តង់ដារ៖
+\`\`\`json
+{
+  "success": true,
+  "count": 2,
+  "data": [...],
+  "meta": {
+    "page": 1,
+    "limit": 10,
+    "total": 42
+  }
+}
+\`\`\``,
+    codeSnippet: `// Reusable Response Helper Utility
+export const sendSuccess = (res, statusCode, data, meta = {}) => {
+  return res.status(statusCode).json({
+    success: true,
+    count: Array.isArray(data) ? data.length : undefined,
+    data,
+    meta: {
+      timestamp: new Date().toISOString(),
+      ...meta
+    }
+  });
+};
 
-// Step 2: Find all published courses
-db.courses.find({ published: true });
-
-// Step 3: Update price using $set operator
-db.courses.updateOne(
-  { title: "Docker for Node Developers" },
-  { $set: { price: 34.99, updatedAt: new Date() } }
-);
-
-// Step 4: Verify count
-db.courses.countDocuments();`,
+// Usage in Route:
+// sendSuccess(res, 200, courses, { page: 1, total: 42 });`,
   },
   {
     id: "M11-13",
     number: "13",
-    title: "MongoDB Compass GUI",
-    khmerTitle: "ការប្រើប្រាស់ MongoDB Compass សម្រាប់ Visual Database Management",
-    type: "lab",
-    codeLanguage: "bash",
-    summary: `**MongoDB Compass** គឺជា Official Graphical User Interface (GUI) របស់ MongoDB។
+    title: "API Error Structure (Error Envelope)",
+    khmerTitle: "ទម្រង់ឆ្លើយតបកំហុសស្តង់ដារ Error Envelope",
+    type: "concept",
+    codeLanguage: "javascript",
+    summary: `នៅពេលមានបញ្ហា Server ត្រូវតែឆ្លើយតបតាម **Standardized Error Envelope** ជានិច្ច ដើម្បីឱ្យ Frontend អាច Parse និងបង្ហាញ Error Message ដល់ User បានច្បាស់លាស់។
 
-សមត្ថភាពសំខាន់ៗរបស់ Compass សម្រាប់ Developer៖
-* **Visual Document Explorer**៖ មើល កែប្រែ បន្ថែម និងលុប Documents ដោយចុច Mouse
-* **Query Bar & Filters**៖ សាកល្បង Query Filters ដូចជា \`{ price: { $gte: 30 } }\`
-* **Performance Index Analyzer**៖ ពិនិត្យមើល Performance នៃ Queries និងបង្កើត Indexes
-* **Schema Tab**៖ វិភាគ Types និងទម្រង់នៃ Fields ទាំងអស់ក្នុង Collection`,
-    codeSnippet: `# Connect Compass to Local or Atlas Cluster:
-# 1. Open MongoDB Compass
-# 2. Paste connection string:
-mongodb+srv://course_admin:password@cluster0.net/course_catalog_db
+រចនាសម្ព័ន្ធស្តង់ដារ៖
+* \`success: false\`
+* \`error.message\`៖ ការពន្យល់ខ្លី និងងាយយល់
+* \`error.code\`៖ Unique Machine-readable Error Code (ឧ. \`COURSE_NOT_FOUND\`)
+* \`error.details\`៖ Array នៃ Validation Errors (បើមាន)`,
+    codeSnippet: `// Reusable Error Helper Utility
+export const sendError = (res, statusCode, message, errorCode = "BAD_REQUEST", details = null) => {
+  return res.status(statusCode).json({
+    success: false,
+    error: {
+      code: errorCode,
+      message,
+      statusCode,
+      details,
+      timestamp: new Date().toISOString()
+    }
+  });
+};
 
-# 3. Click 'Connect'
-# 4. Explore 'courses' and 'lessons' collections visually!`,
+// Example Error Response sent by server:
+/*
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "Validation failed for course creation",
+    "statusCode": 400,
+    "details": [
+      { "field": "price", "message": "Price must be greater than 0" }
+    ],
+    "timestamp": "2026-10-14T10:00:00.000Z"
+  }
+}
+*/`,
   },
   {
     id: "M11-14",
     number: "14",
-    title: "Data Modeling Rules",
-    khmerTitle: "គោលការណ៍រចនា Data Modeling សម្រាប់ MongoDB",
-    type: "architecture",
+    title: "Pagination (Limit & Offset/Skip)",
+    khmerTitle: "ការរៀបចំ Pagination ជាមួយ Page, Limit និង Skip",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `ច្បាប់មាសនៃ **MongoDB Data Modeling** សម្រាប់ High Performance APIs៖
+    summary: `ប្រសិនបើ Database មាន Courses ចំនួន ១០,០០០ យើងមិនអាចទាញយកទាំងអស់ក្នុង Request តែមួយបានឡើយ។ យើងត្រូវប្រើ **Pagination**។
 
-1. **Model for Application Access Patterns**៖ រចនាទិន្នន័យផ្អែកលើរបៀបដែល Application ត្រូវអានទិន្នន័យ (Read-heavy vs Write-heavy)
-2. **Favor Embedding unless there's a compelling reason**៖ បង្កប់ទិន្នន័យប្រសិនបើវាត្រូវបានអានជាមួយគ្នាជានិច្ច
-3. **Avoid Unbounded Arrays**៖ កុំឱ្យ Array ក្នុង Document កើនឡើងគ្មានទីបញ្ចប់ (ហានិភ័យលើសទំហំ 16MB)
-4. **Use References for Many-to-Many Relationships**៖ ប្រើ ObjectId References សម្រាប់ទំនាក់ទំនងធំៗ`,
-    codeSnippet: `/* SUMMARY OF DATA MODELING PATTERNS:
-   -------------------------------------------------------------
-   1. 1-to-Few (Course -> Requirements)
-      ➔ Embed as an Array of Strings: ["JavaScript Basics", "Git"]
+រូបមន្តគណនា **Limit & Skip**៖
+* \`page\` (ទំព័របច្ចុប្បន្ន ឧ. 1, 2, 3...)
+* \`limit\` (ចំនួន Items ក្នុងមួយទំព័រ ឧ. 10)
+* \`skip = (page - 1) * limit\`
 
-   2. 1-to-Many (Course -> Lessons)
-      ➔ Reference: Lessons store parent courseId: ObjectId("...")
+Response ត្រូវត្រឡប់នូវ Pagination Metadata ដូចជា \`totalPages\`, \`currentPage\`, និង \`totalItems\`។`,
+    codeSnippet: `import express from "express";
+const app = express();
 
-   3. Many-to-Many (Users <-> Courses Enrollments)
-      ➔ Separate Collection "enrollments" referencing both userId and courseId
-   -------------------------------------------------------------
-*/`,
+// Mock store with 25 courses
+const allCourses = Array.from({ length: 25 }, (_, i) => ({
+  id: i + 1,
+  title: \`Mastering Express Module \${i + 1}\`,
+  price: 29 + i
+}));
+
+// GET /api/v1/courses?page=2&limit=5
+app.get("/api/v1/courses", (req, res) => {
+  // Step 1: Parse and sanitize page & limit
+  const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 5)); // Max 50 items
+
+  // Step 2: Calculate skip offset
+  const skip = (page - 1) * limit;
+
+  // Step 3: Slice data and calculate total pages
+  const paginatedCourses = allCourses.slice(skip, skip + limit);
+  const totalItems = allCourses.length;
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return res.status(200).json({
+    success: true,
+    count: paginatedCourses.length,
+    data: paginatedCourses,
+    pagination: {
+      currentPage: page,
+      limit,
+      totalItems,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1
+    }
+  });
+});`,
+  },
+  {
+    id: "M11-15",
+    number: "15",
+    title: "Filtering Query Parameters",
+    khmerTitle: "ការបង្កើត Dynamic Query Filtering សម្រាប់ Categories និង Status",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `**Filtering** អនុញ្ញាតឱ្យ Client ច្រោះយកតែ Resources ណាដែលត្រូវនឹងលក្ខខណ្ឌជាក់លាក់ (ឧ. \`/api/v1/courses?level=beginner&published=true\`)។
+
+ដំណាក់កាលអនុវត្ត Filtering៖
+1. ចម្លង \`req.query\`
+2. ដកចេញនូវ Reserved Query Keys (ដូចជា \`page\`, \`limit\`, \`sort\`, \`fields\`)
+3. ផ្គូផ្គង Keys ដែលនៅសល់ជាមួយនឹង Properties នៃ Course`,
+    codeSnippet: `import express from "express";
+const app = express();
+
+const courses = [
+  { id: 1, title: "Node.js Basics", level: "beginner", published: true, price: 29 },
+  { id: 2, title: "Express Architecture", level: "advanced", published: true, price: 49 },
+  { id: 3, title: "Draft Course", level: "beginner", published: false, price: 19 }
+];
+
+app.get("/api/v1/courses", (req, res) => {
+  let filtered = [...courses];
+  const { level, published, maxPrice } = req.query;
+
+  // Filter 1: By Difficulty Level
+  if (level) {
+    filtered = filtered.filter(c => c.level.toLowerCase() === level.toLowerCase());
+  }
+
+  // Filter 2: By Published status (boolean conversion)
+  if (published !== undefined) {
+    const isPublished = published === "true";
+    filtered = filtered.filter(c => c.published === isPublished);
+  }
+
+  // Filter 3: By Maximum Price
+  if (maxPrice) {
+    filtered = filtered.filter(c => c.price <= Number(maxPrice));
+  }
+
+  res.json({ success: true, count: filtered.length, data: filtered });
+});`,
+  },
+  {
+    id: "M11-16",
+    number: "16",
+    title: "Searching with ReDoS Protection",
+    khmerTitle: "ការស្វែងរកទិន្នន័យ (Search) និងការការពារពីការវាយប្រហារ ReDoS",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `**Search** អនុញ្ញាតឱ្យ Client វាយពាក្យស្វែងរកសេរី (\`?q=express\`) ដើម្បីស្វែងរកលើ Fields ច្រើនដំណាលគ្នា (ដូចជា \`title\` និង \`description\`)។
+
+⚠️ **ការព្រមានសុវត្ថិភាព ReDoS (Regular Expression Denial of Service)**៖
+* ប្រសិនបើ Client បញ្ជូន Regex Pattern ពិសេសដូចជា \`?q=(a+)+$\` ចូលទៅកាន់ \`new RegExp(req.query.q)\` ដោយផ្ទាល់ វានឹងបង្កឱ្យមាន **Catastrophic Backtracking** ដែលធ្វើឱ្យ Event Loop របស់ Node.js គាំងទាំងស្រុង!
+* **ដំណោះស្រាយ**៖ ត្រូវតែ Escape តួអក្សរពិសេសនៃ Regex ជាមុនសិន។`,
+    codeSnippet: `import express from "express";
+const app = express();
+
+const courses = [
+  { id: 1, title: "Building Scalable APIs with Express.js", desc: "Enterprise architecture patterns" },
+  { id: 2, title: "Full-Stack Node.js & React", desc: "Complete web app guide" },
+  { id: 3, title: "Dockerizing Microservices", desc: "Container deployment pipelines" }
+];
+
+// 🔒 Helper: Escape regex special characters to prevent ReDoS attacks!
+const escapeRegex = (text) => text.replace(/[.*+?^$\${}()|[\\]\\\\]/g, "\\\\$&");
+
+// GET /api/v1/courses/search?q=express
+app.get("/api/v1/courses/search", (req, res) => {
+  const query = req.query.q;
+
+  if (!query || typeof query !== "string") {
+    return res.status(400).json({ success: false, error: "Query parameter 'q' is required" });
+  }
+
+  // Step 1: Escape untrusted user input safely
+  const safePattern = escapeRegex(query.trim());
+  const regex = new RegExp(safePattern, "i"); // "i" = case insensitive
+
+  // Step 2: Search across multiple fields (title and desc)
+  const matches = courses.filter(c => regex.test(c.title) || regex.test(c.desc));
+
+  return res.status(200).json({
+    success: true,
+    searchTerm: query,
+    count: matches.length,
+    data: matches
+  });
+});`,
+  },
+  {
+    id: "M11-17",
+    number: "17",
+    title: "Sorting (Ascending & Descending)",
+    khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting (Ascending & Descending)",
+    type: "lab",
+    codeLanguage: "javascript",
+    summary: `**Sorting** អនុញ្ញាតឱ្យ Client តម្រៀបទិន្នន័យតាមលំដាប់លំដោយជាក់លាក់ (ឧ. \`?sort=price\` សម្រាប់តម្លៃទាបទៅខ្ពស់ ឬ \`?sort=-price\` សម្រាប់តម្លៃខ្ពស់មកទាប)។
+
+អនុសញ្ញា RESTful Sorting៖
+* សញ្ញាដក (\`-\`) នៅពីមុខ Field តំណាងឱ្យ **Descending Order** (\`sort=-price\`)
+* គ្មានសញ្ញាដក តំណាងឱ្យ **Ascending Order** (\`sort=price\`)
+* អាចគាំទ្រ Multi-field Sorting ដូចជា \`?sort=-price,title\``,
+    codeSnippet: `import express from "express";
+const app = express();
+
+const courses = [
+  { id: 1, title: "Z - Advanced Microservices", price: 99 },
+  { id: 2, title: "A - Beginner JavaScript", price: 19 },
+  { id: 3, title: "M - Intermediate Express", price: 49 }
+];
+
+// GET /api/v1/courses?sort=-price
+app.get("/api/v1/courses", (req, res) => {
+  let result = [...courses];
+  const { sort } = req.query;
+
+  if (sort && typeof sort === "string") {
+    const isDescending = sort.startsWith("-");
+    const field = isDescending ? sort.substring(1) : sort;
+
+    result.sort((a, b) => {
+      if (a[field] < b[field]) return isDescending ? 1 : -1;
+      if (a[field] > b[field]) return isDescending ? -1 : 1;
+      return 0;
+    });
+  }
+
+  res.json({ success: true, count: result.length, data: result });
+});`,
+  },
+  {
+    id: "M11-18",
+    number: "18",
+    title: "API Versioning Strategies",
+    khmerTitle: "ការគ្រប់គ្រងកំណែ API Versioning (URI vs Header) និង Deprecation",
+    type: "concept",
+    codeLanguage: "javascript",
+    summary: `នៅពេលដែល API ត្រូវមាន Breaking Changes (ការផ្លាស់ប្តូរដែលធ្វើឱ្យ Clients ចាស់ដំណើរការលែងកើត) យើងត្រូវធ្វើ **API Versioning**។
+
+យុទ្ធសាស្ត្រ Versioning ចម្បងៗ៖
+1. **URI Path Versioning (ពេញនិយមបំផុត)**៖ \`/api/v1/courses\` និង \`/api/v2/courses\`
+2. **Custom Header Versioning**៖ Header \`X-API-Version: 2.0\`
+3. **Accept Header (Content Negotiation)**៖ \`Accept: application/vnd.company.v2+json\`
+
+ការប្រកាស Deprecation៖ ប្រើ Header \`Sunset\` និង \`Deprecation\` លើ v1 ដើម្បីជូនដំណឹងឱ្យ Client Update ទៅកាន់ v2។`,
+    codeSnippet: `import express from "express";
+const app = express();
+
+// Version 1 Router (Legacy)
+const v1Router = express.Router();
+v1Router.get("/courses", (req, res) => {
+  // Inform clients that v1 is deprecated and will sunset
+  res.setHeader("Deprecation", "true");
+  res.setHeader("Sunset", "Wed, 31 Dec 2026 23:59:59 GMT");
+  res.json({ version: "v1", data: ["Basic Course Title"] });
+});
+
+// Version 2 Router (Modern with enriched response)
+const v2Router = express.Router();
+v2Router.get("/courses", (req, res) => {
+  res.json({ version: "v2", data: [{ id: 1, title: "Modern Course", price: 49 }] });
+});
+
+// Mount versions side-by-side
+app.use("/api/v1", v1Router);
+app.use("/api/v2", v2Router);`,
   },
 ];

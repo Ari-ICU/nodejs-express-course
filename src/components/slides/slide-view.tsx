@@ -194,40 +194,46 @@ export const SlideView: React.FC<SlideViewProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col selection:bg-emerald-500/20 selection:text-emerald-900">
-      {/* 72px Top Header with light frosted styling */}
-      <header className="h-[72px] bg-white/90 backdrop-blur-xl border-b border-slate-200 sticky top-0 z-40 px-4 sm:px-8 flex items-center justify-between shadow-2xs">
-        <div className="flex items-center gap-4">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col selection:bg-emerald-500/20 selection:text-emerald-900 relative">
+      {/* ── Ambient Background Lighting ── */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[360px] bg-gradient-to-b from-emerald-500/5 via-teal-500/3 to-transparent blur-3xl rounded-full" />
+        <div className="absolute top-1/3 -right-32 w-[420px] h-[420px] bg-emerald-500/3 blur-3xl rounded-full" />
+      </div>
+
+      {/* ── 68px Top Header with Frosted Glass ── */}
+      <header className="h-[68px] bg-white/90 backdrop-blur-xl border-b border-slate-200/90 sticky top-0 z-40 px-4 sm:px-8 flex items-center justify-between shadow-2xs">
+        <div className="flex items-center gap-3 sm:gap-4">
           <Link
             href="/modules"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-slate-900 text-xs font-mono transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/90 text-slate-700 hover:text-slate-900 text-xs font-mono transition-all shadow-2xs"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5 text-slate-500" />
             <span className="hidden sm:inline font-medium font-sans">ត្រឡប់ទៅមាតិកាវគ្គសិក្សា (Curriculum)</span>
           </Link>
 
           {/* Chapter Selector Button with 'មេរៀនបច្ចុប្បន្ន' status */}
           <button
             onClick={() => setIsNavOpen(true)}
-            className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 cursor-pointer transition-all group shadow-2xs"
+            className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 cursor-pointer transition-all group shadow-2xs"
           >
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <div className="text-left">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase font-bold text-emerald-700">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] font-mono uppercase font-bold text-emerald-700 tracking-wider">
                   {activeModule.id} · មេរៀនបច្ចុប្បន្ន
                 </span>
               </div>
-              <span className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors block truncate max-w-[200px] sm:max-w-[340px]">
+              <span className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors block truncate max-w-[220px] sm:max-w-[420px]">
                 {activeModule.title}
               </span>
             </div>
-            <Layers className="w-4 h-4 text-slate-400 group-hover:text-slate-600 ml-1" />
+            <Layers className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 ml-1" />
           </button>
         </div>
 
         {/* Center Progress Indicators (Animated dots) */}
-        <div className="hidden lg:flex items-center gap-1.5">
+        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60 shadow-2xs">
           {activeModule.topics.map((t, idx) => {
             const isActive = idx === safeSlideIndex;
             const isDone = progressData.completedTopics.includes(t.id);
@@ -239,10 +245,10 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 title={`Jump to ${t.title}`}
                 className={`h-2 rounded-full transition-all cursor-pointer ${
                   isActive
-                    ? "w-8 bg-emerald-600 shadow-xs"
+                    ? "w-7 bg-emerald-600 shadow-xs"
                     : isDone
-                    ? "w-2.5 bg-emerald-400"
-                    : "w-2 bg-slate-200 hover:bg-slate-300"
+                    ? "w-2.5 bg-emerald-400 hover:bg-emerald-500"
+                    : "w-2 bg-slate-300 hover:bg-slate-400"
                 }`}
               />
             );
@@ -256,10 +262,10 @@ export const SlideView: React.FC<SlideViewProps> = ({
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-all cursor-pointer shadow-2xs ${
               isCompleted
                 ? "bg-emerald-50 text-emerald-700 border-emerald-300 font-bold"
-                : "bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                : "bg-white border-slate-200/90 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
             }`}
           >
-            <CheckCircle2 className="w-3.5 h-3.5" />
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
             <span className="hidden sm:inline font-sans">
               {isCompleted ? "បានបញ្ចប់ (Completed)" : "សម្គាល់ថាបានរៀន (Mark Done)"}
             </span>
@@ -270,7 +276,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
             className={`p-2 rounded-xl border text-xs transition-all cursor-pointer shadow-2xs ${
               isBookmarked
                 ? "bg-amber-50 text-amber-700 border-amber-300"
-                : "bg-white border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                : "bg-white border-slate-200/90 text-slate-500 hover:text-slate-900 hover:bg-slate-50"
             }`}
             title="Bookmark this slide"
           >
@@ -279,7 +285,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
 
           <button
             onClick={() => setIsNotesOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-700 hover:text-slate-900 text-xs font-mono cursor-pointer transition-colors shadow-2xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-slate-700 hover:text-slate-900 text-xs font-mono cursor-pointer transition-colors shadow-2xs"
           >
             <FileText className="w-3.5 h-3.5 text-emerald-600" />
             <span className="hidden sm:inline font-medium font-sans">កំណត់ចំណាំ (Field Notes)</span>
@@ -287,7 +293,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
 
           <button
             onClick={toggleFullscreenMode}
-            className="p-2 rounded-xl bg-white border border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors hidden sm:block shadow-2xs"
+            className="p-2 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-slate-500 hover:text-slate-900 cursor-pointer transition-colors hidden sm:block shadow-2xs"
             title="Toggle fullscreen"
           >
             {isFullscreen ? (
@@ -299,19 +305,19 @@ export const SlideView: React.FC<SlideViewProps> = ({
         </div>
       </header>
 
-      {/* Main Slide Presentation Stage (1800px Centered Container on clean white background) */}
-      <main className="flex-1 max-w-[1800px] w-full mx-auto px-4 sm:px-8 lg:px-12 py-6 sm:py-8 flex flex-col justify-start">
-        {/* 50/50 Balanced Split Screen Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start min-h-[600px]">
-          {/* Left Panel (6 cols on 12-grid) */}
-          <div className="lg:col-span-6 flex flex-col justify-between space-y-5">
+      {/* ── Main Slide Presentation Stage ── */}
+      <main className="flex-1 max-w-[1780px] w-full mx-auto px-4 sm:px-8 lg:px-10 py-5 sm:py-7 flex flex-col justify-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Left Panel: Narrative, Explanations, Tables */}
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col rounded-3xl border border-slate-200/90 bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-[0_4px_24px_rgba(15,23,42,0.03)] hover:border-slate-300/80 transition-all">
             <div>
               {/* Module and Topic Tag */}
-              <div className="flex items-center gap-2 mb-2.5">
-                <span className="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-mono font-bold tracking-tight shadow-2xs">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/80 text-xs font-mono font-bold tracking-tight shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
                   {activeModule.id} · TOPIC {activeTopic.number}
                 </span>
-                <span className="text-xs font-sans font-medium text-slate-600 px-2.5 py-0.5 rounded bg-slate-100 border border-slate-200">
+                <span className="inline-flex items-center text-xs font-sans font-medium text-slate-600 px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200/80">
                   {activeTopic.type === "lab"
                     ? "ការអនុវត្ត (Lab)"
                     : activeTopic.type === "architecture"
@@ -320,27 +326,25 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 </span>
               </div>
 
-              {/* Title & Khmer Subtitle */}
+              {/* Title & Khmer Subtitle Banner */}
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 leading-tight">
                 {activeTopic.title}
               </h1>
-              <p className="text-sm sm:text-base font-semibold text-emerald-700 mt-1.5 font-sans leading-relaxed">
+              <div className="mt-2.5 mb-4 px-3.5 py-2 rounded-xl bg-emerald-50/70 border-l-3 border-emerald-600 text-sm sm:text-base font-semibold text-emerald-900 font-sans leading-relaxed">
                 {activeTopic.khmerTitle}
-              </p>
-
-              {/* Main Narrative Explanation — sourced from MDX meta.summary */}
-              <div className="mt-4">
-                <MdxContent content={mdxMeta?.summary ?? activeTopic.summary ?? ""} />
               </div>
 
-
+              {/* Main Narrative Explanation — sourced from MDX meta.summary */}
+              <div className="mt-2">
+                <MdxContent content={mdxMeta?.summary ?? activeTopic.summary ?? ""} />
+              </div>
             </div>
           </div>
 
-          {/* Right Panel (6 cols on 12-grid) */}
-          <div className="lg:col-span-6 flex flex-col space-y-4">
+          {/* Right Panel: Sticky Code Block or Visual Stage */}
+          <div className="lg:col-span-6 xl:col-span-5 flex flex-col space-y-4 lg:sticky lg:top-24">
             {(mdxMeta?.imageUrl || activeTopic.imageUrl) ? (
-              <div className="relative group rounded-2xl border border-slate-700/60 bg-[#0d1117] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-4 sm:p-8 min-h-[460px]">
+              <div className="relative group rounded-3xl border border-slate-700/60 bg-[#0d1117] overflow-hidden shadow-2xl flex flex-col items-center justify-center p-4 sm:p-8 min-h-[460px]">
                 <div className="absolute top-3 left-4 flex items-center gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
@@ -350,7 +354,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 <img
                   src={getAssetUrl(mdxMeta?.imageUrl || activeTopic.imageUrl)}
                   alt={activeTopic.title}
-                  className="rounded-xl max-h-[440px] w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 group-hover:scale-[1.01]"
+                  className="rounded-2xl max-h-[440px] w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 group-hover:scale-[1.01]"
                 />
               </div>
             ) : activeModule.id === "M28" && safeSlideIndex === 0 ? (
@@ -375,33 +379,46 @@ export const SlideView: React.FC<SlideViewProps> = ({
         </div>
       </main>
 
-      {/* Floating Bottom Navigation Bar */}
-      <footer className="sticky bottom-0 z-30 bg-white/95 backdrop-blur-xl border-t border-slate-200 py-3 px-4 sm:px-8 shadow-xs">
-        <div className="max-w-[1800px] mx-auto flex items-center justify-between">
+      {/* ── Floating Bottom Navigation Dock ── */}
+      <footer className="sticky bottom-0 z-30 bg-white/95 backdrop-blur-xl border-t border-slate-200/90 py-3 px-4 sm:px-8 shadow-xs">
+        <div className="max-w-[1780px] mx-auto flex items-center justify-between">
+          {/* Previous Button */}
           <button
             onClick={handlePrevSlide}
-            className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 flex items-center justify-center cursor-pointer transition-all active:scale-95 shadow-xs"
+            className="group h-11 px-4 sm:px-5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 hover:text-slate-900 flex items-center gap-2 cursor-pointer transition-all active:scale-95 shadow-2xs"
             title="ស្លាយមុន (Previous slide)"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 text-slate-500 group-hover:text-slate-800 transition-transform group-hover:-translate-x-0.5" />
+            <span className="hidden sm:inline text-xs font-bold font-sans">ស្លាយមុន (Prev)</span>
           </button>
 
-          {/* Slide Indicator & Quick Help */}
-          <div className="flex flex-col items-center">
-            <span className="text-xs sm:text-sm font-sans font-bold text-slate-900">
-              ស្លាយទី {safeSlideIndex + 1} នៃ {totalSlides}
-            </span>
-            <span className="text-[11px] font-sans text-slate-500 hidden sm:block">
-              ចុច ← / → ឬ Space ដើម្បីប្តូរស្លាយ
-            </span>
+          {/* Center Slide Indicator & Progress Bar */}
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="flex items-center gap-3">
+              <span className="text-xs sm:text-sm font-sans font-bold text-slate-900">
+                ស្លាយទី {safeSlideIndex + 1} <span className="text-slate-400 font-normal">/</span> {totalSlides}
+              </span>
+              <span className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200/80 text-[10px] font-mono text-slate-500">
+                <kbd className="font-semibold text-slate-700">Space</kbd> ឬ <kbd className="font-semibold text-slate-700">←</kbd> <kbd className="font-semibold text-slate-700">→</kbd>
+              </span>
+            </div>
+            {/* Visual mini progress track */}
+            <div className="w-36 sm:w-56 h-1.5 bg-slate-100 rounded-full overflow-hidden border border-slate-200/60">
+              <div
+                className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-300"
+                style={{ width: `${((safeSlideIndex + 1) / totalSlides) * 100}%` }}
+              />
+            </div>
           </div>
 
+          {/* Next Button */}
           <button
             onClick={handleNextSlide}
-            className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center cursor-pointer transition-all active:scale-95 shadow-sm hover:shadow"
+            className="group h-11 px-5 sm:px-6 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-2 cursor-pointer transition-all active:scale-95 shadow-sm hover:shadow-md"
             title="ស្លាយបន្ទាប់ (Next slide)"
           >
-            <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+            <span className="text-xs font-bold font-sans">ស្លាយបន្ទាប់ (Next)</span>
+            <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5 stroke-[2.5]" />
           </button>
         </div>
       </footer>

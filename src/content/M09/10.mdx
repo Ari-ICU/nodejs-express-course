@@ -1,39 +1,27 @@
 export const meta = {
   id: "M09-10",
   number: "10",
-  title: "Production DELETE Endpoints",
-  khmerTitle: "ការអនុវត្ត Production DELETE Endpoint (Soft Delete vs Hard Delete)",
-  type: "lab",
+  title: "Document References (Normalization)",
+  khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងតាមរយៈ References (Normalization)",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "នៅក្នុង Production Applications មានយុទ្ធសាស្ត្រលុប ២ បែប៖\n\n1. **Hard Delete**៖ លុប Record ចេញពី Database ទាំងស្រុង (`courses.splice()`)\n2. **Soft Delete (អនុសាសន៍)**៖ មិនលុបទិន្នន័យចោលទេ គ្រាន់តែសម្គាល់ `isDeleted: true` និង `deletedAt = new Date()`។ វិធីនេះអនុញ្ញាតឱ្យយើង Restore ទិន្នន័យមកវិញបាន និងរក្សាប្រវត្តិ Transactions",
-  codeSnippet: "import express from \"express\";\nconst app = express();\n\nlet courses = [\n  { id: 1, title: \"Node.js Basics\", isDeleted: false, deletedAt: null }\n];\n\n// Soft Delete Implementation (Recommended for Enterprise)\napp.delete(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId && !c.isDeleted);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found or already deleted\" });\n  }\n\n  // Perform soft delete\n  course.isDeleted = true;\n  course.deletedAt = new Date().toISOString();\n\n  return res.status(200).json({\n    success: true,\n    message: \"Course has been soft-deleted successfully\",\n    data: { id: course.id, deletedAt: course.deletedAt }\n  });\n});",
+  summary: "យុទ្ធសាស្ត្រទីពីរគឺ **Document References (Normalization)** ដែលរក្សាទុកឯកសារក្នុង Collections ដាច់ដោយឡែកពីគ្នា ហើយភ្ជាប់គ្នាដោយ **ObjectId**។\n\nពេលណាគួរប្រើ References សម្រាប់ Course API៖\n* ទំនាក់ទំនង **1-to-Many** ធំៗ (ឧ. Course មួយមាន Lessons រាប់សិប)\n* ទំនាក់ទំនង **Many-to-Many** (ឧ. សិស្សរាប់ពាន់នាក់ចុះឈ្មោះក្នុង Courses ច្រើន)\n* ទិន្នន័យដែលត្រូវ Update ញឹកញាប់ដោយឯករាជ្យ (ជៀសវាងការ Update ច្រើនកន្លែង)",
+  codeSnippet: "// 1. Course Document (in \"courses\" collection)\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Enterprise Node.js Architecture\",\n  \"instructorId\": ObjectId(\"507f191e810c19729de860ea\") // Reference to Users collection\n}\n\n// 2. Lesson Document (in \"lessons\" collection referencing parent course)\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78999\"),\n  \"courseId\": ObjectId(\"6648e58319f3a9e224e78891\"), // 💡 Foreign reference to Course\n  \"title\": \"Introduction to Controller-Service Pattern\",\n  \"durationMinutes\": 15\n}",
 };
 
 ```javascript
-import express from "express";
-const app = express();
+// 1. Course Document (in "courses" collection)
+{
+  "_id": ObjectId("6648e58319f3a9e224e78891"),
+  "title": "Enterprise Node.js Architecture",
+  "instructorId": ObjectId("507f191e810c19729de860ea") // Reference to Users collection
+}
 
-let courses = [
-  { id: 1, title: "Node.js Basics", isDeleted: false, deletedAt: null }
-];
-
-// Soft Delete Implementation (Recommended for Enterprise)
-app.delete("/api/v1/courses/:id", (req, res) => {
-  const courseId = Number(req.params.id);
-  const course = courses.find(c => c.id === courseId && !c.isDeleted);
-
-  if (!course) {
-    return res.status(404).json({ success: false, error: "Course not found or already deleted" });
-  }
-
-  // Perform soft delete
-  course.isDeleted = true;
-  course.deletedAt = new Date().toISOString();
-
-  return res.status(200).json({
-    success: true,
-    message: "Course has been soft-deleted successfully",
-    data: { id: course.id, deletedAt: course.deletedAt }
-  });
-});
+// 2. Lesson Document (in "lessons" collection referencing parent course)
+{
+  "_id": ObjectId("6648e58319f3a9e224e78999"),
+  "courseId": ObjectId("6648e58319f3a9e224e78891"), // 💡 Foreign reference to Course
+  "title": "Introduction to Controller-Service Pattern",
+  "durationMinutes": 15
+}
 ```

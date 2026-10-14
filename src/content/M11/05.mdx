@@ -1,24 +1,28 @@
 export const meta = {
   id: "M11-05",
   number: "05",
-  title: "Collections in MongoDB",
-  khmerTitle: "ការគ្រប់គ្រង Collections (courses, lessons, instructors)",
+  title: "CRUD Operations Mapping",
+  khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP Verbs ក្នុង MongoDB",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "**Collection** គឺជាបណ្តុំនៃ Documents ដែលប្រៀបដូចជា Table ក្នុង SQL ដែរ។\n\nលក្ខណៈពិសេស៖\n* Collections មិនបង្ខំ Strict Schema នៅកម្រិត Database Engine ឡើយ\n* អនុសញ្ញាដាក់ឈ្មោះ៖ ប្រើ **Lowercase Plural Nouns** ជានិច្ច (ដូចជា `courses`, `lessons`, `users`)\n* Collections ចម្បងក្នុង Course API របស់យើង៖ `courses`, `lessons`, និង `users`",
-  codeSnippet: "// In mongosh:\n// Step 1: Explicitly create collection\ndb.createCollection(\"courses\");\ndb.createCollection(\"lessons\");\n\n// Step 2: List all collections in current database\nshow collections;\n// Output: courses, lessons\n\n// Step 3: Drop collection if needed\n// db.courses.drop();",
+  summary: "ការផ្សារភ្ជាប់រវាង **CRUD (Database Operations)** និង **HTTP Verbs (Web Protocols)** ជាមួយ **MongoDB & Mongoose**៖\n\n| CRUD Operation | HTTP Method | Endpoint | សកម្មភាពលើ MongoDB (Mongoose Model) |\n|---|---|---|---|\n| **Create** | `POST` | `/api/v1/courses` | `Course.create(req.body)` |\n| **Read (All)** | `GET` | `/api/v1/courses` | `Course.find(filter)` |\n| **Read (One)** | `GET` | `/api/v1/courses/:id` | `Course.findById(id)` |\n| **Update (Full)** | `PUT` | `/api/v1/courses/:id` | `Course.findOneAndReplace({ _id: id }, payload)` |\n| **Update (Partial)** | `PATCH` | `/api/v1/courses/:id` | `Course.findByIdAndUpdate(id, { $set: payload }, { new: true })` |\n| **Delete** | `DELETE` | `/api/v1/courses/:id` | `Course.findByIdAndDelete(id)` |",
+  codeSnippet: "import express from \"express\";\nconst router = express.Router();\n\n// 💡 Teaching Note: Clean CRUD Mapping declaration\nrouter.route(\"/\")\n  .get((req, res) => res.json({ op: \"READ_ALL_COURSES\" }))\n  .post((req, res) => res.status(201).json({ op: \"CREATE_COURSE\" }));\n\nrouter.route(\"/:id\")\n  .get((req, res) => res.json({ op: \"READ_ONE_COURSE\", id: req.params.id }))\n  .put((req, res) => res.json({ op: \"REPLACE_COURSE\", id: req.params.id }))\n  .patch((req, res) => res.json({ op: \"PARTIAL_UPDATE_COURSE\", id: req.params.id }))\n  .delete((req, res) => res.status(204).send());\n\nexport default router;",
 };
 
 ```javascript
-// In mongosh:
-// Step 1: Explicitly create collection
-db.createCollection("courses");
-db.createCollection("lessons");
+import express from "express";
+const router = express.Router();
 
-// Step 2: List all collections in current database
-show collections;
-// Output: courses, lessons
+// 💡 Teaching Note: Clean CRUD Mapping declaration
+router.route("/")
+  .get((req, res) => res.json({ op: "READ_ALL_COURSES" }))
+  .post((req, res) => res.status(201).json({ op: "CREATE_COURSE" }));
 
-// Step 3: Drop collection if needed
-// db.courses.drop();
+router.route("/:id")
+  .get((req, res) => res.json({ op: "READ_ONE_COURSE", id: req.params.id }))
+  .put((req, res) => res.json({ op: "REPLACE_COURSE", id: req.params.id }))
+  .patch((req, res) => res.json({ op: "PARTIAL_UPDATE_COURSE", id: req.params.id }))
+  .delete((req, res) => res.status(204).send());
+
+export default router;
 ```

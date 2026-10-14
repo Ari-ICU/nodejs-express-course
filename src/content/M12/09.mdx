@@ -1,22 +1,28 @@
 export const meta = {
   id: "M12-09",
   number: "09",
-  title: "Default Values in Schema",
-  khmerTitle: "ការកំណត់ Default Values ក្នុង Schema",
-  type: "concept",
+  title: "Reading Resources from MongoDB",
+  khmerTitle: "ការទាញយក Course ពី MongoDB (Course.find & findById)",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "ប្រសិនបើ Client មិនបានបញ្ជូន Field ណាមួយមកទេ Mongoose នឹងបំពេញ **Default Value** ដោយស្វ័យប្រវត្តិតាមការកំណត់របស់យើងក្នុង Schema។\n\nអាចជា៖\n* តម្លៃថេរ (Static value)៖ `default: false`, `default: \"beginner\"`\n* អនុគមន៍ (Dynamic function)៖ `default: Date.now`",
-  codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: { type: String, required: true },\n  published: { type: Boolean, default: false }, // Default unpublished\n  level: { type: String, default: \"beginner\" },\n  viewsCount: { type: Number, default: 0 },\n  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function\n});",
+  summary: "ការទាញយក Course Documents ពី MongoDB តាមរយៈ Mongoose Queries៖\n\n* ពិនិត្យវត្តមាន Course តាម `_id` ជាមួយ `Course.findById(id)`\n* ប្រសិនបើរករកមិនឃើញ Throw Domain Error ភ្លាមៗ (កុំឱ្យ Controller ត្រូវ Check `if (!course)` ច្រើនដង)",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const getCourseByIdService = async (courseId) => {\n  // Step 1: Query MongoDB collection by ObjectId\n  const course = await Course.findById(courseId);\n\n  // ⚠️ If not found in MongoDB -> Throw 404 AppError\n  if (!course) {\n    throw new AppError(`Course with ID ${courseId} not found in database`, 404);\n  }\n\n  return course;\n};",
 };
 
 ```javascript
-import { Schema } from "mongoose";
+// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
 
-export const courseSchema = new Schema({
-  title: { type: String, required: true },
-  published: { type: Boolean, default: false }, // Default unpublished
-  level: { type: String, default: "beginner" },
-  viewsCount: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function
-});
+export const getCourseByIdService = async (courseId) => {
+  // Step 1: Query MongoDB collection by ObjectId
+  const course = await Course.findById(courseId);
+
+  // ⚠️ If not found in MongoDB -> Throw 404 AppError
+  if (!course) {
+    throw new AppError(`Course with ID ${courseId} not found in database`, 404);
+  }
+
+  return course;
+};
 ```

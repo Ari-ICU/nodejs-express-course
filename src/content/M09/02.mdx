@@ -1,26 +1,23 @@
 export const meta = {
   id: "M09-02",
   number: "02",
-  title: "REST Principles",
-  khmerTitle: "គោលការណ៍គ្រឹះទាំង ៦ នៃ REST (6 Architectural Constraints)",
+  title: "SQL vs NoSQL",
+  khmerTitle: "ការប្រៀបធៀប SQL vs NoSQL",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "API មួយត្រូវបានចាត់ទុកថាជា **RESTful** លុះត្រាតែវាគោរពតាមគោលការណ៍គ្រឹះទាំង ៦៖\n\n1. **Client-Server Architecture**៖ បំបែក User Interface (React/Next.js) ចេញពី Data Storage (Express/MongoDB)\n2. **Stateless**៖ Server មិនរក្សាទុក Client Context រវាង Requests ឡើយ\n3. **Cacheable**៖ Response ត្រូវតែបញ្ជាក់ថាអាច Cache បានឬអត់តាមរយៈ HTTP Headers\n4. **Uniform Interface**៖ រចនាសម្ព័ន្ធ URL និង HTTP Methods ដូចគ្នាទូទាំងប្រព័ន្ធ\n5. **Layered System**៖ Client មិនបាច់ដឹងថាខ្លួនកំពុងតភ្ជាប់ផ្ទាល់ជាមួយ App Server, Proxy, ឬ Load Balancer ឡើយ\n6. **Code on Demand (Optional)**៖ អាចបញ្ជូន Script ទៅ Execute លើ Client (កម្រប្រើក្នុង REST APIs)",
-  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// 💡 Teaching Note: Demonstrating Cache-Control header (Cacheable Constraint)\napp.get(\"/api/v1/courses\", (req, res) => {\n  // Instruct clients and CDNs to cache this public course catalog for 1 hour (3600s)\n  res.setHeader(\"Cache-Control\", \"public, max-age=3600\");\n\n  res.json({\n    success: true,\n    data: [{ id: 1, title: \"Modern JavaScript\" }]\n  });\n});",
+  summary: "ការប្រៀបធៀបរវាង **Relational SQL Databases** និង **Document NoSQL Database (MongoDB)**៖\n\n* **SQL Databases**៖ រក្សាទុកទិន្នន័យក្នុង Tables ដ៏តឹងរឹង (Rigid Schemas) ជាមួយ Foreign Keys និង Multi-table JOINs។\n* **Document NoSQL Database (MongoDB)**៖ រក្សាទុកទិន្នន័យជាឯកសារ BSON Documents (JSON-like) ដែលមានភាពបត់បែនខ្ពស់ (Polymorphic) ងាយស្រួល Scale តាមបែប Horizontal Sharding និងមានល្បឿន Query លឿនបំផុតជាមួយ Node.js & Express។\n\nនៅក្នុង Course នេះ យើងប្រើប្រាស់ **MongoDB** ជា Database ស្នូលជាមួយ Express តាមរយៈ **Mongoose ODM**។",
+  codeSnippet: "/* SQL vs NoSQL Conceptual Comparison:\n   Relational SQL:              NoSQL (MongoDB - Used in this Course):\n   -----------------------      -------------------------------------\n   - Database                   - Database\n   - Table                      - Collection\n   - Row / Record               - Document (BSON)\n   - Column                     - Field\n   - Foreign Key JOIN           - Embedded Document or $lookup Reference\n   - Rigid Table Migration      - Dynamic, Flexible Document Schema\n*/",
 };
 
 ```javascript
-import express from "express";
-const app = express();
-
-// 💡 Teaching Note: Demonstrating Cache-Control header (Cacheable Constraint)
-app.get("/api/v1/courses", (req, res) => {
-  // Instruct clients and CDNs to cache this public course catalog for 1 hour (3600s)
-  res.setHeader("Cache-Control", "public, max-age=3600");
-
-  res.json({
-    success: true,
-    data: [{ id: 1, title: "Modern JavaScript" }]
-  });
-});
+/* SQL vs NoSQL Conceptual Comparison:
+   Relational SQL:              NoSQL (MongoDB - Used in this Course):
+   -----------------------      -------------------------------------
+   - Database                   - Database
+   - Table                      - Collection
+   - Row / Record               - Document (BSON)
+   - Column                     - Field
+   - Foreign Key JOIN           - Embedded Document or $lookup Reference
+   - Rigid Table Migration      - Dynamic, Flexible Document Schema
+*/
 ```

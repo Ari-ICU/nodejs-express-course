@@ -1,18 +1,26 @@
 export const meta = {
   id: "M11-11",
   number: "11",
-  title: "MongoDB Atlas Cloud Setup",
-  khmerTitle: "ការបង្កើត និងរៀបចំ Cloud Database ជាមួយ MongoDB Atlas",
-  type: "lab",
-  codeLanguage: "bash",
-  summary: "**MongoDB Atlas** គឺជា Fully-Managed Cloud Database Service ផ្លូវការរបស់ MongoDB ដែលដំណើរការលើ AWS, Google Cloud, ឬ Azure។\n\nជំហានបង្កើត Free M0 Cluster សម្រាប់ Course API៖\n1. បង្កើត Account លើ [cloud.mongodb.com](https://cloud.mongodb.com)\n2. បង្កើត Cluster (ជ្រើសរើស Cloud Provider និង Region ដែលជិតបំផុត ដូចជា Singapore)\n3. បង្កើត Database User (Username & Secure Password)\n4. Configure Network Access៖ Allow IP Address (`0.0.0.0/0` សម្រាប់ Development)\n5. ចម្លង **Connection String URI** សម្រាប់ដាក់ក្នុង `.env`",
-  codeSnippet: "# Standard MongoDB Atlas Connection String URI Format:\n# mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority\n\n# Example for our Course Catalog Project:\nDATABASE_URL=mongodb+srv://course_admin:SuperSecretPass123@cluster0.abcde.mongodb.net/course_catalog_db?retryWrites=true&w=majority",
+  title: "HTTP Status Codes Taxonomy",
+  khmerTitle: "តារាងចំណាត់ថ្នាក់ និងការជ្រើសរើស HTTP Status Codes",
+  type: "concept",
+  codeLanguage: "javascript",
+  summary: "សៀវភៅណែនាំ Status Codes សម្រាប់ REST API Development៖\n\n* **2xx Success**៖\n  * `200 OK`៖ សំណើជោគជ័យ (GET, PUT, PATCH)\n  * `201 Created`៖ បង្កើត Resource ថ្មីបានសម្រេច (POST)\n  * `204 No Content`៖ ជោគជ័យតែគ្មាន Content ត្រឡប់មកវិញ (DELETE)\n* **4xx Client Errors**៖\n  * `400 Bad Request`៖ ទិន្នន័យមិនត្រឹមត្រូវតាម Schema\n  * `401 Unauthorized`៖ មិនទាន់ Login / គ្មាន Token\n  * `403 Forbidden`៖ បាន Login ហើយ តែគ្មានសិទ្ធិ\n  * `404 Not Found`៖ រក Resource មិនឃើញ\n  * `409 Conflict`៖ ទិន្នន័យជាន់គ្នា (ដូចជា Duplicate Email ឬ Slug)\n* **5xx Server Errors**៖\n  * `500 Internal Server Error`៖ Bug ក្នុង Server Code\n  * `503 Service Unavailable`៖ Database គាំង ឬ Server កំពុង Maintenance",
+  codeSnippet: "// Status Code Reference Helper\nexport const HTTP_STATUS = {\n  OK: 200,\n  CREATED: 201,\n  NO_CONTENT: 204,\n  BAD_REQUEST: 400,\n  UNAUTHORIZED: 401,\n  FORBIDDEN: 403,\n  NOT_FOUND: 404,\n  CONFLICT: 409,\n  INTERNAL_SERVER_ERROR: 500,\n  SERVICE_UNAVAILABLE: 503\n};",
 };
 
-```bash
-# Standard MongoDB Atlas Connection String URI Format:
-# mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority
-
-# Example for our Course Catalog Project:
-DATABASE_URL=mongodb+srv://course_admin:SuperSecretPass123@cluster0.abcde.mongodb.net/course_catalog_db?retryWrites=true&w=majority
+```javascript
+// Status Code Reference Helper
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
+  SERVICE_UNAVAILABLE: 503
+};
 ```

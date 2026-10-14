@@ -1,26 +1,31 @@
 export const meta = {
   id: "M13-01",
   number: "01",
-  title: "Express MongoDB Setup",
-  khmerTitle: "ការភ្ជាប់ Express ជាមួយ MongoDB នៅពេល Server ចាប់ផ្តើម",
-  type: "lab",
+  title: "Why Separate Business Logic?",
+  khmerTitle: "ហេតុអ្វីត្រូវបំបែក Business Logic ចេញពី Controller?",
+  type: "concept",
   codeLanguage: "javascript",
-  summary: "ការភ្ជាប់ Express Application ជាមួយ MongoDB ឱ្យដំណើរការស្របគ្នា៖\n\nលំដាប់លំដោយនៃការ Boot Server ត្រឹមត្រូវ៖\n1. ហៅ `await connectDB()` ជាមុនសិន\n2. នៅពេល MongoDB តភ្ជាប់ជោគជ័យ ទើបហៅ `app.listen(PORT)`\n\nវិធីនេះធានាថា គ្មាន Request របស់ Client ណាមួយមកដល់ Server នៅពេលដែល Database មិនទាន់ Ready ឡើយ។",
-  codeSnippet: "// src/server.js\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\n// Step 1: Connect to MongoDB first!\nawait connectDB();\n\n// Step 2: Start Express HTTP listener after DB is connected\napp.listen(PORT, () => {\n  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);\n});",
+  summary: "នៅក្នុងស្ថាបត្យកម្មប្រពៃណី **MVC (Model-View-Controller)** ឬគម្រោងដំបូងៗ អ្នកបង្កើតកម្មវិធីច្រើនតែសរសេរអ្វីៗទាំងអស់ (Validation, Database Queries, Email Sending, Payment Calculations) បញ្ចូលគ្នាក្នុង Controller តែមួយ — នេះហៅថា **\"Fat Controller\"** ឬ **Spaghetti Code**។\n\nជាងនេះទៅទៀត នៅក្នុង **Modern REST API Backend**៖\n* **View (V)** លែងស្ថិតនៅលើ Server (ដូចជា EJS/Pug) ទៀតហើយ ព្រោះវាត្រូវបាន Decouple ទៅឱ្យ Frontend Client (Next.js, React, Mobile App) ហើយ Server ឆ្លើយតបជា **JSON Response Envelope** វិញ។\n* **Controller (C)** គួរតែជា **Slim Controller** ដែលទទួលខុសត្រូវតែលើ HTTP Request/Response Orchestration ប៉ុណ្ណោះ។\n* **Service Layer** ត្រូវបានបន្ថែមដើម្បីផ្ទុក Core Business Logic ដោយឯករាជ្យ។\n\nផលប៉ះពាល់អវិជ្ជមាននៃ Fat Controller ក្នុង Basic MVC៖\n* **ពិបាក Test (Untestable)**៖ អ្នកត្រូវ Mock ទាំង `req` និង `res` ទើបអាច Test Logic បាន\n* **មិនអាចប្រើឡើងវិញបាន (Non-reusable)**៖ មិនអាចហៅ Logic ដដែលនោះពី Background Job ឬ CLI Tool បានឡើយ\n* **ពិបាក Maintain**៖ ឯកសារមួយមានកូដរាប់ពាន់ជួរ ងាយនឹងបង្កើត Bugs\n\n**ដំណោះស្រាយ**៖ ពង្រីក MVC ទៅជា **Layered Architecture (3-Tier)**៖ **Routes ➔ Controllers (C) ➔ Services ➔ Models (M)**។",
+  codeSnippet: "// ❌ ANTI-PATTERN: Fat Controller in traditional MVC (Everything mixed together!)\napp.post(\"/api/v1/courses/:id/enroll\", async (req, res) => {\n  // 1. Validation mixed in\n  if (!req.body.studentId) return res.status(400).send();\n  // 2. Direct MongoDB Model query mixed in (Anti-pattern in Controller)\n  const course = await Course.findById(req.params.id);\n  // 3. Discount calculation mixed in\n  const price = course.price * 0.9;\n  // 4. Payment processing mixed in\n  await stripe.charges.create({ amount: price });\n  // 5. Email receipt mixed in\n  await mailer.sendReceipt();\n  // 6. Response sending\n  res.json({ enrolled: true });\n});\n\n// ✅ MODERN ARCHITECTURE: Slim Controller (C) + Rich Service + Model (M)\n",
 };
 
 ```javascript
-// src/server.js
-import app from "./app.js";
-import { connectDB } from "./config/db.js";
-
-const PORT = process.env.PORT || 5000;
-
-// Step 1: Connect to MongoDB first!
-await connectDB();
-
-// Step 2: Start Express HTTP listener after DB is connected
-app.listen(PORT, () => {
-  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);
+// ❌ ANTI-PATTERN: Fat Controller in traditional MVC (Everything mixed together!)
+app.post("/api/v1/courses/:id/enroll", async (req, res) => {
+  // 1. Validation mixed in
+  if (!req.body.studentId) return res.status(400).send();
+  // 2. Direct MongoDB Model query mixed in (Anti-pattern in Controller)
+  const course = await Course.findById(req.params.id);
+  // 3. Discount calculation mixed in
+  const price = course.price * 0.9;
+  // 4. Payment processing mixed in
+  await stripe.charges.create({ amount: price });
+  // 5. Email receipt mixed in
+  await mailer.sendReceipt();
+  // 6. Response sending
+  res.json({ enrolled: true });
 });
+
+// ✅ MODERN ARCHITECTURE: Slim Controller (C) + Rich Service + Model (M)
+
 ```

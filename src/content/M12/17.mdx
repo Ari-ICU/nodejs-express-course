@@ -1,28 +1,28 @@
 export const meta = {
   id: "M12-17",
   number: "17",
-  title: "Deleting Documents",
-  khmerTitle: "ការលុបទិន្នន័យ (findByIdAndDelete & Soft Deletes)",
+  title: "Full-Text Search with Text Indexes",
+  khmerTitle: "ការស្វែងរកទិន្នន័យតាមរយៈ MongoDB Text Index ($text)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការលុប Document ជាមួយ Mongoose៖\n\n1. **Hard Delete**៖ `Course.findByIdAndDelete(courseId)`\n2. **Soft Delete (អនុសាសន៍ Production)**៖ `Course.findByIdAndUpdate(courseId, { isDeleted: true, deletedAt: new Date() })`",
-  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Hard Delete: Permanently purged from MongoDB\nexport const purgeCourse = async (id) => {\n  return await Course.findByIdAndDelete(id);\n};\n\n// Soft Delete: Preserves record for audit/recovery\nexport const softDeleteCourse = async (id) => {\n  return await Course.findByIdAndUpdate(\n    id,\n    { isDeleted: true, deletedAt: new Date() },\n    { new: true }\n  );\n};",
+  summary: "ជំនួសឱ្យការប្រើ Regex យឺត MongoDB ផ្តល់នូវ **Full-Text Search Indexes** ដ៏មានអានុភាព៖\n\n1. បង្កើត Text Index លើ Schema៖\n   `courseSchema.index({ title: \"text\", description: \"text\" })`\n2. ធ្វើការ Search ដោយប្រើ `$text` Operator៖\n   `Course.find({ $text: { $search: \"express node\" } })`\n3. គាំទ្រ Word Stemming, Case-insensitivity, និង Relevance Scoring!",
+  codeSnippet: "// src/models/course.model.js (Text Indexes)\n// courseSchema.index({ title: \"text\", description: \"text\" });\n\nimport { Course } from \"../models/course.model.js\";\n\n// Step 2: Full-text Search service function\nexport const searchCoursesService = async (searchTerm) => {\n  // Query using MongoDB $text operator\n  const courses = await Course.find(\n    { $text: { $search: searchTerm } },\n    { score: { $meta: \"textScore\" } } // Calculate search relevance score\n  ).sort({ score: { $meta: \"textScore\" } }); // Sort by most relevant!\n\n  return courses;\n};",
 };
 
 ```javascript
-import { Course } from "./models/course.model.js";
+// src/models/course.model.js (Text Indexes)
+// courseSchema.index({ title: "text", description: "text" });
 
-// Hard Delete: Permanently purged from MongoDB
-export const purgeCourse = async (id) => {
-  return await Course.findByIdAndDelete(id);
-};
+import { Course } from "../models/course.model.js";
 
-// Soft Delete: Preserves record for audit/recovery
-export const softDeleteCourse = async (id) => {
-  return await Course.findByIdAndUpdate(
-    id,
-    { isDeleted: true, deletedAt: new Date() },
-    { new: true }
-  );
+// Step 2: Full-text Search service function
+export const searchCoursesService = async (searchTerm) => {
+  // Query using MongoDB $text operator
+  const courses = await Course.find(
+    { $text: { $search: searchTerm } },
+    { score: { $meta: "textScore" } } // Calculate search relevance score
+  ).sort({ score: { $meta: "textScore" } }); // Sort by most relevant!
+
+  return courses;
 };
 ```

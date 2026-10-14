@@ -1,35 +1,18 @@
 export const meta = {
   id: "M10-02",
   number: "02",
-  title: "Controllers (Request Orchestrators)",
-  khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Controllers",
-  type: "concept",
-  codeLanguage: "javascript",
-  summary: "**Controller** ដើរតួជា **Request Orchestrator (អ្នកសម្របសម្រួល HTTP)**៖\n\nតួនាទីតែមួយគត់របស់ Controller៖\n1. **Unpack HTTP Request**៖ ទាញយកទិន្នន័យពី `req.body`, `req.params`, `req.query`\n2. **Delegate to Service**៖ បញ្ជូនទិន្នន័យទាំងនោះទៅឱ្យ Service Function ដំណើរការ\n3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (`200`, `201`)\n\nController មិនត្រូវមាន Business Logic, MongoDB Queries ដោយផ្ទាល់ ឬ Payment Code ឡើយ!",
-  codeSnippet: "// src/controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\n\n// Step 1: Slim Controller Handler for Fetching Courses\nexport const getAllCourses = async (req, res, next) => {\n  try {\n    // 1. Extract query parameters\n    const { level, maxPrice } = req.query;\n\n    // 2. Delegate purely to service layer\n    const courses = await courseService.findAllCourses({ level, maxPrice });\n\n    // 3. Send standard HTTP response\n    return res.status(200).json({\n      success: true,\n      count: courses.length,\n      data: courses\n    });\n  } catch (error) {\n    next(error); // Forward to centralized error middleware!\n  }\n};",
+  title: "Installing Mongoose",
+  khmerTitle: "ការដំឡើងកញ្ចប់ Mongoose ក្នុង Node.js Project",
+  type: "lab",
+  codeLanguage: "bash",
+  summary: "ការដំឡើងកញ្ចប់ **`mongoose`** ក្នុង Course API Project តាមរយៈ npm៖\n\n* ដំឡើងជំនាន់ចុងក្រោយ (`mongoose@latest`)\n* Mongoose ជំនាន់ v8+ គាំទ្រ ES Modules (`import/export`) និង Native JavaScript Promises ដោយមិនបាច់ប្រើ Callbacks ទៀតឡើយ",
+  codeSnippet: "# Install Mongoose into the course-catalog-api project\nnpm install mongoose\n\n# Verify installation in package.json\ncat package.json | grep mongoose",
 };
 
-```javascript
-// src/controllers/course.controller.js
-import * as courseService from "../services/course.service.js";
+```bash
+# Install Mongoose into the course-catalog-api project
+npm install mongoose
 
-// Step 1: Slim Controller Handler for Fetching Courses
-export const getAllCourses = async (req, res, next) => {
-  try {
-    // 1. Extract query parameters
-    const { level, maxPrice } = req.query;
-
-    // 2. Delegate purely to service layer
-    const courses = await courseService.findAllCourses({ level, maxPrice });
-
-    // 3. Send standard HTTP response
-    return res.status(200).json({
-      success: true,
-      count: courses.length,
-      data: courses
-    });
-  } catch (error) {
-    next(error); // Forward to centralized error middleware!
-  }
-};
+# Verify installation in package.json
+cat package.json | grep mongoose
 ```

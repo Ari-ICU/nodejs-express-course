@@ -1,580 +1,582 @@
 /**
- * m12.mjs - Module 12: Mongoose ODM (20 topics)
- * Domain: Course Catalog API (Mongoose Schema, Model, CRUD, Hooks, Virtuals, Population)
+ * m13.mjs - Module 12: Database API Development (19 topics)
+ * Domain: Course Catalog API (Full End-to-End MongoDB CRUD, Filtering, Pagination, Search, Transactions)
  */
 
 export const M12 = [
   {
     id: "M12-01",
     number: "01",
-    title: "What is Mongoose?",
-    khmerTitle: "អ្វីជា Mongoose ODM និងអត្ថប្រយោជន៍លើ Node.js",
-    type: "concept",
+    title: "Express MongoDB Setup",
+    khmerTitle: "ការភ្ជាប់ Express ជាមួយ MongoDB នៅពេល Server ចាប់ផ្តើម",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `**Mongoose** គឺជា **Object Data Modeling (ODM)** Library ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ MongoDB និង Node.js។
+    summary: `ការភ្ជាប់ Express Application ជាមួយ MongoDB ឱ្យដំណើរការស្របគ្នា៖
 
-Mongoose ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៤៖
-1. **Schema Definition**៖ កំណត់រចនាសម្ព័ន្ធទិន្នន័យច្បាស់លាស់ ជួយការពារទិន្នន័យមិនឱ្យរញ៉េរញ៉ៃ
-2. **Built-in Validation**៖ ត្រួតពិនិត្យប្រភេទទិន្នន័យមុនពេល Save ទៅកាន់ Database
-3. **Middleware Hooks**៖ ដំណើរការកូដស្វ័យប្រវត្តិកំឡុង Lifecycle (\`pre('save')\`, \`post('save')\`)
-4. **Population ($lookup replacement)**៖ ភ្ជាប់ទំនាក់ទំនងឯកសាររវាង Collections យ៉ាងងាយស្រួល`,
-    codeSnippet: `import mongoose, { Schema } from "mongoose";
+លំដាប់លំដោយនៃការ Boot Server ត្រឹមត្រូវ៖
+1. ហៅ \`await connectDB()\` ជាមុនសិន
+2. នៅពេល MongoDB តភ្ជាប់ជោគជ័យ ទើបហៅ \`app.listen(PORT)\`
 
-// Step 1: Define Course Schema with Mongoose ODM
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true, min: 0 }
-});
+វិធីនេះធានាថា គ្មាន Request របស់ Client ណាមួយមកដល់ Server នៅពេលដែល Database មិនទាន់ Ready ឡើយ។`,
+    codeSnippet: `// src/server.js
+import app from "./app.js";
+import { connectDB } from "./config/db.js";
 
-// Step 2: Compile Model
-export const Course = mongoose.model("Course", courseSchema);`,
+const PORT = process.env.PORT || 5000;
+
+// Step 1: Connect to MongoDB first!
+await connectDB();
+
+// Step 2: Start Express HTTP listener after DB is connected
+app.listen(PORT, () => {
+  console.log(\`🚀 Course Catalog Server running on http://localhost:\${PORT}\`);
+});`,
   },
   {
     id: "M12-02",
     number: "02",
-    title: "Installing Mongoose",
-    khmerTitle: "ការដំឡើងកញ្ចប់ Mongoose ក្នុង Node.js Project",
-    type: "lab",
-    codeLanguage: "bash",
-    summary: `ការដំឡើងកញ្ចប់ **\`mongoose\`** ក្នុង Course API Project តាមរយៈ npm៖
+    title: "Database Configuration Options",
+    khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Connection Pool ក្នុង Mongoose",
+    type: "architecture",
+    codeLanguage: "javascript",
+    summary: `ការកំណត់ Connection Options ស្តង់ដារសម្រាប់ Production MongoDB Deployment៖
 
-* ដំឡើងជំនាន់ចុងក្រោយ (\`mongoose@latest\`)
-* Mongoose ជំនាន់ v8+ គាំទ្រ ES Modules (\`import/export\`) និង Native JavaScript Promises ដោយមិនបាច់ប្រើ Callbacks ទៀតឡើយ`,
-    codeSnippet: `# Install Mongoose into the course-catalog-api project
-npm install mongoose
+* **\`maxPoolSize: 50\`**៖ រក្សាទុក Socket Connections រហូតដល់ ៥០ សម្រាប់ដំណើរការ Concurrent Requests
+* **\`serverSelectionTimeoutMS: 5000\`**៖ កំណត់រយៈពេល ៥ វិនាទីដើម្បីស្វែងរក Node ក្នុង Replica Set មុននឹង Timeout
+* **\`socketTimeoutMS: 45000\`**៖ បិទ Socket ដែលអសកម្មក្រោយ ៤៥ វិនាទី`,
+    codeSnippet: `// src/config/db.js
+import mongoose from "mongoose";
 
-# Verify installation in package.json
-cat package.json | grep mongoose`,
+const mongooseOptions = {
+  maxPoolSize: 50,                // 💡 Up to 50 concurrent socket connections
+  serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds if DB is down
+  socketTimeoutMS: 45000,         // Close inactive sockets
+};
+
+export const connectDB = async () => {
+  await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);
+};`,
   },
   {
     id: "M12-03",
     number: "03",
-    title: "Connecting MongoDB",
-    khmerTitle: "ការភ្ជាប់ Express ទៅកាន់ MongoDB ជាមួយ mongoose.connect()",
+    title: "Environment Variables for Database",
+    khmerTitle: "ការគ្រប់គ្រង Database Credentials ក្នុង .env",
     type: "lab",
-    codeLanguage: "javascript",
-    summary: `ការបង្កើត Connection Module ដាច់ដោយឡែកនៅ **\`src/config/db.js\`** ដើម្បីភ្ជាប់ទៅកាន់ MongoDB តាមរយៈ \`mongoose.connect()\`៖
+    codeLanguage: "bash",
+    summary: `សុវត្ថិភាព Database Credentials គឺជាកាតព្វកិច្ចចម្បងរបស់ Backend Developer៖
 
-គោលការណ៍សំខាន់ៗ៖
-* អាន Connection URI ពី \`process.env.DATABASE_URL\`
-* ប្រើប្រាស់ \`try/catch\` ដើម្បីចាប់កំហុសនៅពេល Database មិនអាចតភ្ជាប់បាន
-* ត្រួតពិនិត្យ Connection Events (\`connected\`, \`error\`, \`disconnected\`)`,
-    codeSnippet: `// src/config/db.js
-import mongoose from "mongoose";
+* មិនត្រូវ Commit Password ឬ Atlas Connection Strings ចូលទៅកាន់ Git Repo ជាដាច់ខាត
+* ប្រើប្រាស់ \`.env.example\` សម្រាប់ចែករំលែក Template ទៅកាន់ Team
+* ប្រើប្រាស់ \`dotenv\` ដើម្បី Load អថេរទៅក្នុង \`process.env\``,
+    codeSnippet: `# .env (Never commit to Git!)
+PORT=5000
+NODE_ENV=development
+DATABASE_URL=mongodb+srv://course_admin:SecretPass99@cluster0.net/course_catalog_db?retryWrites=true&w=majority
 
-export const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.DATABASE_URL);
-    console.log(\`✅ MongoDB Connected: \${conn.connection.host} / \${conn.connection.name}\`);
-  } catch (error) {
-    console.error("❌ MongoDB Connection Failed:", error.message);
-    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production
-  }
-};
-
-// Event Listeners for connection lifecycle
-mongoose.connection.on("disconnected", () => console.warn("⚠️ MongoDB disconnected!"));
-mongoose.connection.on("reconnected", () => console.log("🔄 MongoDB reconnected!"));`,
+# .env.example (Safe to commit for team onboarding)
+PORT=5000
+NODE_ENV=development
+DATABASE_URL=your_mongodb_connection_string_here`,
   },
   {
     id: "M12-04",
     number: "04",
-    title: "Mongoose Schema",
-    khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ CourseSchema ជាមួយ mongoose.Schema",
-    type: "concept",
+    title: "Creating Course & Lesson Models",
+    khmerTitle: "ការបង្កើត Data Models និង Indexes ក្នុងគម្រោង",
+    type: "architecture",
     codeLanguage: "javascript",
-    summary: `**Schema** គឺជាប្លង់មេ (Blueprint) ដែលកំណត់ថាតើ Document នីមួយៗក្នុង Collection ត្រូវមាន Fields អ្វីខ្លះ ប្រភេទ Data Type ណា និងលក្ខខណ្ឌ Validation យ៉ាងដូចម្តេច។
+    summary: `ការរៀបចំ Data Models សម្រាប់ Course Catalog API ដោយមាន **Indexes** សម្រាប់បង្កើនល្បឿន Query៖
 
-ការរៀបចំ \`courseSchema\` សម្រាប់ Course API របស់យើង៖
-* \`title\` (String)
-* \`instructor\` (String)
-* \`price\` (Number)
-* \`level\` (String)
-* \`published\` (Boolean)`,
-    codeSnippet: `// src/models/course.schema.js
-import { Schema } from "mongoose";
+* **Single Field Index**៖ \`title: { type: String, index: true }\`
+* **Compound Index**៖ \`courseSchema.index({ level: 1, price: -1 })\` សម្រាប់បង្កើនល្បឿន Query ដែលច្រោះតាម Level និងតម្រៀបតាម Price ដំណាលគ្នា`,
+    codeSnippet: `// src/models/course.model.js
+import { Schema, model } from "mongoose";
 
-// Step 1: Define Schema Blueprint
-export const courseSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, "Course title is required"],
-    trim: true
-  },
-  instructor: {
-    type: String,
-    required: [true, "Instructor name is required"]
-  },
-  price: {
-    type: Number,
-    required: [true, "Price is required"],
-    min: [0, "Price cannot be negative"]
-  },
-  level: {
-    type: String,
-    enum: ["beginner", "intermediate", "advanced"],
-    default: "beginner"
-  },
-  published: {
-    type: Boolean,
-    default: false
-  }
-});`,
+const courseSchema = new Schema({
+  title: { type: String, required: true, trim: true, index: true },
+  slug: { type: String, required: true, unique: true },
+  instructor: { type: String, required: true },
+  price: { type: Number, required: true, min: 0 },
+  level: { type: String, enum: ["beginner", "intermediate", "advanced"], default: "beginner" },
+  published: { type: Boolean, default: false }
+}, { timestamps: true });
+
+// 💡 Teaching Note: Compound index for filtering by level and sorting by price!
+courseSchema.index({ level: 1, price: -1 });
+
+export const Course = model("Course", courseSchema);`,
   },
   {
     id: "M12-05",
     number: "05",
-    title: "Mongoose Model",
-    khmerTitle: "ការបង្កើត Model តាមរយៈ mongoose.model()",
-    type: "concept",
+    title: "Course Controller with Database Operations",
+    khmerTitle: "ការបង្កើត Controllers សម្រាប់ Database Endpoints",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `**Model** គឺជា Wrapper ដែលចងភ្ជាប់ Schema ទៅនឹង MongoDB Collection ជាក់ស្តែង។
+    summary: `ការសរសេរ Course Controller ដែលភ្ជាប់ទៅកាន់ MongoDB Service Layer៖
 
-របៀបដែល Mongoose បង្កើត Collection Name ដោយស្វ័យប្រវត្តិ៖
-* នៅពេលអ្នកប្រកាស \`mongoose.model("Course", courseSchema)\`
-* Mongoose នឹងយកឈ្មោះ \`"Course"\` ទៅធ្វើជា **Lowercase Plural** ដោយស្វ័យប្រវត្តិ គឺ **\`"courses"\`**!`,
-    codeSnippet: `// src/models/course.model.js
-import mongoose, { Schema } from "mongoose";
+លក្ខណៈស្តង់ដារ៖
+* រុំដោយ \`asyncHandler\` ដើម្បីកាត់បន្ថយ \`try/catch\` boilerplate
+* ទទួល \`req.body\` ឬ \`req.query\` រួចហៅ Service
+* បញ្ជូន Standard JSON Envelope ត្រឡប់ទៅ Client`,
+    codeSnippet: `// src/controllers/course.controller.js
+import * as courseService from "../services/course.service.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true }
+// GET /api/v1/courses
+export const getCourses = asyncHandler(async (req, res) => {
+  const courses = await courseService.getAllCourses(req.query);
+  res.status(200).json({ success: true, count: courses.length, data: courses });
 });
 
-// Step 1: Compile Schema into Model
-// 💡 Teaching Note: "Course" compiles to collection name "courses"
-export const Course = mongoose.model("Course", courseSchema);`,
+// POST /api/v1/courses
+export const createCourse = asyncHandler(async (req, res) => {
+  const newCourse = await courseService.createCourse(req.body);
+  res.status(201).json({ success: true, data: newCourse });
+});`,
   },
   {
     id: "M12-06",
     number: "06",
-    title: "SchemaTypes in Mongoose",
-    khmerTitle: "ការស្វែងយល់ពី SchemaTypes ទាំងអស់ក្នុង Mongoose",
-    type: "concept",
+    title: "Creating Course Routes",
+    khmerTitle: "ការចងភ្ជាប់ Routes ទៅកាន់ Database Controllers",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `Mongoose ផ្តល់នូវ **SchemaTypes** ស្តង់ដារជាច្រើន៖
+    summary: `ការចងភ្ជាប់ Routes ក្នុង \`src/routes/course.routes.js\` ជាមួយ Controller Handlers តាមរយៈ \`express.Router()\`៖
 
-* **\`String\`**៖ អត្ថបទ (គាំទ្រ \`trim\`, \`lowercase\`, \`uppercase\`, \`minlength\`, \`maxlength\`)
-* **\`Number\`**៖ លេខ (គាំទ្រ \`min\`, \`max\`)
-* **\`Boolean\`**៖ តម្លៃពិត ឬមិនពិត
-* **\`Date\`**៖ កាលបរិច្ឆេទ
-* **\`Buffer\`**៖ ទិន្នន័យ Binary
-* **\`Schema.Types.ObjectId\`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង
-* **\`Array\`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents`,
-    codeSnippet: `import { Schema, model } from "mongoose";
+រចនាសម្ព័ន្ធកូដស្អាតតាមរយៈ \`router.route()\`:
+* \`router.route("/").get(getCourses).post(createCourse)\`
+* \`router.route("/:id").get(getCourseById).patch(updateCourse).delete(deleteCourse)\``,
+    codeSnippet: `// src/routes/course.routes.js
+import express from "express";
+import * as courseController from "../controllers/course.controller.js";
 
-const courseDetailsSchema = new Schema({
-  title: { type: String, trim: true, required: true },
-  durationHours: { type: Number, min: 1 },
-  isCertificateIncluded: { type: Boolean, default: true },
-  releaseDate: { type: Date, default: Date.now },
-  tags: [{ type: String, lowercase: true }], // Array of lowercase strings
-  instructorId: { type: Schema.Types.ObjectId, ref: "User" } // Reference to User Model!
-});
+const router = express.Router();
 
-export const CourseDetails = model("CourseDetails", courseDetailsSchema);`,
+router.route("/")
+  .get(courseController.getCourses)
+  .post(courseController.createCourse);
+
+router.route("/:id")
+  .get(courseController.getCourseById)
+  .patch(courseController.updateCourse)
+  .delete(courseController.deleteCourse);
+
+export default router;`,
   },
   {
     id: "M12-07",
     number: "07",
-    title: "Schema Validation in Mongoose",
-    khmerTitle: "ការត្រួតពិនិត្យទិន្នន័យតាមរយៈ Built-in Validators",
-    type: "concept",
+    title: "Full CRUD API Integration",
+    khmerTitle: "ការរួមបញ្ចូលប្រព័ន្ធ CRUD ពេញលេញជាមួយ MongoDB",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `Mongoose អនុវត្ត **Validation** នៅកម្រិត Application មុនពេល Document ត្រូវបានបញ្ជូនទៅ Save ក្នុង MongoDB។
+    summary: `ការរួមបញ្ចូលគ្រប់ស្រទាប់ (Routes -> Controllers -> Services -> MongoDB Model) ឱ្យក្លាយជា **Full Production CRUD API** ពេញលេញ៖
 
-Built-in Validators សំខាន់ៗ៖
-* **\`min\` និង \`max\`** សម្រាប់ Numbers
-* **\`minlength\` និង \`maxlength\`** សម្រាប់ Strings
-* **\`enum\`** សម្រាប់កំណត់តម្លៃជម្រើសថេរ (Fixed Choices)
-* **\`match\`** សម្រាប់ត្រួតពិនិត្យ Regular Expression (Regex)`,
-    codeSnippet: `import { Schema } from "mongoose";
+* **POST /courses** ➔ បង្កើត Course ក្នុង MongoDB
+* **GET /courses** ➔ ទាញយកបញ្ជី Courses ពី MongoDB
+* **GET /courses/:id** ➔ ទាញយក Course តាម ID
+* **PATCH /courses/:id** ➔ កែប្រែទិន្នន័យ Course ក្នុង MongoDB
+* **DELETE /courses/:id** ➔ លុប Course ចេញពី MongoDB`,
+    codeSnippet: `// Service Layer (src/services/course.service.js)
+import { Course } from "../models/course.model.js";
 
-export const courseSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-    minlength: [5, "Title must be at least 5 characters long"],
-    maxlength: [100, "Title cannot exceed 100 characters"]
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: [0, "Course price cannot be negative"],
-    max: [999, "Course price cannot exceed $999"]
-  },
-  level: {
-    type: String,
-    enum: {
-      values: ["beginner", "intermediate", "advanced"],
-      message: "{VALUE} is not a valid course level"
-    }
-  }
-});`,
+export const getAllCourses = async (query) => await Course.find(query);
+export const getCourseById = async (id) => await Course.findById(id);
+export const createCourse = async (data) => await Course.create(data);
+export const updateCourse = async (id, data) => {
+  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });
+};
+export const deleteCourse = async (id) => await Course.findByIdAndDelete(id);`,
   },
   {
     id: "M12-08",
     number: "08",
-    title: "Required Fields & Custom Messages",
-    khmerTitle: "ការកំណត់ Required Fields និង Custom Error Messages",
+    title: "Creating Resources in MongoDB",
+    khmerTitle: "ការបង្កើត Course ថ្មីក្នុង MongoDB (Course.create)",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `ការកំណត់ Required Field ក្នុង Mongoose អាចសរសេរបាន ២ របៀប៖
+    summary: `ការអនុវត្ត Service Function សម្រាប់បង្កើត Course Document ថ្មីក្នុង MongoDB៖
 
-* សាមញ្ញ៖ \`required: true\` (បង្ហាញ Error Message លំនាំដើមរបស់ Mongoose)
-* **វិជ្ជាជីវៈ (អនុសាសន៍)**៖ ផ្តល់នូវ Custom Error Message តាមរយៈ Array៖
-  \`required: [true, "Custom error message here"]\`
+ជំហានអនុវត្ត៖
+1. ទទួល \`courseData\`
+2. ហៅ \`Course.create(courseData)\`
+3. Mongoose ដំណើរការ Schema Validation និង Pre-save Hooks
+4. បញ្ជូន Document ថ្មីដែលបាន Save ត្រឡប់មកវិញ`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-វិធីនេះជួយឱ្យ Error Response របស់ API មានភាពរួសរាយ និងងាយយល់សម្រាប់ Client។`,
-    codeSnippet: `import { Schema } from "mongoose";
+export const createCourseService = async (courseData) => {
+  // Step 1: Persist new course document to MongoDB
+  const newCourse = await Course.create({
+    title: courseData.title,
+    instructor: courseData.instructor,
+    price: courseData.price,
+    level: courseData.level || "beginner"
+  });
 
-export const courseSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, "A course must have an official title"]
-  },
-  slug: {
-    type: String,
-    required: [true, "URL slug is strictly required for SEO"]
-  },
-  instructor: {
-    type: String,
-    required: [true, "Course must be assigned to an instructor"]
-  }
-});`,
+  return newCourse;
+};`,
   },
   {
     id: "M12-09",
     number: "09",
-    title: "Default Values in Schema",
-    khmerTitle: "ការកំណត់ Default Values ក្នុង Schema",
-    type: "concept",
+    title: "Reading Resources from MongoDB",
+    khmerTitle: "ការទាញយក Course ពី MongoDB (Course.find & findById)",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `ប្រសិនបើ Client មិនបានបញ្ជូន Field ណាមួយមកទេ Mongoose នឹងបំពេញ **Default Value** ដោយស្វ័យប្រវត្តិតាមការកំណត់របស់យើងក្នុង Schema។
+    summary: `ការទាញយក Course Documents ពី MongoDB តាមរយៈ Mongoose Queries៖
 
-អាចជា៖
-* តម្លៃថេរ (Static value)៖ \`default: false\`, \`default: "beginner"\`
-* អនុគមន៍ (Dynamic function)៖ \`default: Date.now\``,
-    codeSnippet: `import { Schema } from "mongoose";
+* ពិនិត្យវត្តមាន Course តាម \`_id\` ជាមួយ \`Course.findById(id)\`
+* ប្រសិនបើរករកមិនឃើញ Throw Domain Error ភ្លាមៗ (កុំឱ្យ Controller ត្រូវ Check \`if (!course)\` ច្រើនដង)`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
 
-export const courseSchema = new Schema({
-  title: { type: String, required: true },
-  published: { type: Boolean, default: false }, // Default unpublished
-  level: { type: String, default: "beginner" },
-  viewsCount: { type: Number, default: 0 },
-  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function
-});`,
+export const getCourseByIdService = async (courseId) => {
+  // Step 1: Query MongoDB collection by ObjectId
+  const course = await Course.findById(courseId);
+
+  // ⚠️ If not found in MongoDB -> Throw 404 AppError
+  if (!course) {
+    throw new AppError(\`Course with ID \${courseId} not found in database\`, 404);
+  }
+
+  return course;
+};`,
   },
   {
     id: "M12-10",
     number: "10",
-    title: "Timestamps Option",
-    khmerTitle: "ការប្រើប្រាស់ Option { timestamps: true }",
+    title: "Updating Resources in MongoDB",
+    khmerTitle: "ការកែប្រែ Course ក្នុង MongoDB (findByIdAndUpdate)",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `ជំនួសឱ្យការបង្កើត Fields \`createdAt\` និង \`updatedAt\` ដោយដៃ Mongoose ផ្តល់ Option **\`{ timestamps: true }\`** ដែលជាដំណោះស្រាយដ៏ឆ្លាតវៃ។
+    summary: `ការកែប្រែ Course ក្នុង MongoDB ដោយប្រើប្រាស់ \`Course.findByIdAndUpdate()\`៖
 
-មុខងារស្វ័យប្រវត្តិ៖
-* បន្ថែម \`createdAt\` កាលបរិច្ឆេទដែល Document ត្រូវបានបង្កើតដំបូង
-* បន្ថែម និងកែប្រែ \`updatedAt\` ដោយស្វ័យប្រវត្តិកំឡុងពេល \`save()\` ឬ \`findByIdAndUpdate()\` នីមួយៗ`,
-    codeSnippet: `import { Schema, model } from "mongoose";
+ជម្រើស Options ដ៏សំខាន់៖
+* \`$set: updateData\`៖ កែប្រែតែ Fields ដែលបានបញ្ជូនមកប៉ុណ្ណោះ
+* \`{ new: true }\`៖ ត្រឡប់ Updated Document ថ្មី
+* \`{ runValidators: true }\`៖ បង្ខំឱ្យ Mongoose Run Schema Validation លើទិន្នន័យថ្មី`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
 
-// Step 1: Pass { timestamps: true } as the second argument to Schema
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true }
-}, {
-  timestamps: true // Automatically manages createdAt and updatedAt!
-});
+export const updateCourseService = async (courseId, updateData) => {
+  const updated = await Course.findByIdAndUpdate(
+    courseId,
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
 
-export const Course = model("Course", courseSchema);`,
+  if (!updated) {
+    throw new AppError(\`Cannot update: Course \${courseId} not found\`, 404);
+  }
+
+  return updated;
+};`,
   },
   {
     id: "M12-11",
     number: "11",
-    title: "Mongoose Virtuals",
-    khmerTitle: "ការបង្កើត Virtual Properties (Computed Fields)",
-    type: "concept",
+    title: "Deleting Resources & Cascading",
+    khmerTitle: "ការលុប Course និងការលុប Cascading Lessons ក្នុង MongoDB",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `**Virtuals** គឺជា Document Properties ដែលអ្នកអាចអាន ឬសរសេរបាន ប៉ុន្តែពួកវា **មិនត្រូវបានរក្សាទុកលើ MongoDB Database ឡើយ** (វាត្រូវបានគណនានៅពេល Run-time)។
+    summary: `នៅពេលលុប Course មួយ យើងត្រូវគិតគូរដល់ **Parent-Child Cascading Cleanup**៖
 
-ឧទាហរណ៍ជាក់ស្តែងលើ Course API៖
-* គណនាតម្លៃបញ្ចុះតម្លៃ \`discountedPrice\`
-* គណនា \`durationHours\` ចេញពី \`durationMinutes\`
-* ត្រូវកំណត់ \`{ virtuals: true }\` ក្នុង \`toJSON\` Option ដើម្បីឱ្យវាបង្ហាញពេលផ្ញើ Response ទៅកាន់ Client`,
-    codeSnippet: `import { Schema, model } from "mongoose";
+នៅពេល Course ត្រូវបានលុប៖
+1. លុប Course ចេញពី \`courses\` Collection
+2. លុបរាល់ Lessons ទាំងអស់ដែលជាកូនរបស់ Course នោះ (\`Lesson.deleteMany({ courseId })\`) ជៀសវាងការបន្សល់ទុក Orphaned Records ក្នុង Database!`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+import { Lesson } from "../models/lesson.model.js";
+import { AppError } from "../errors/AppError.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true },
-  discountPercent: { type: Number, default: 10 }
-}, {
-  toJSON: { virtuals: true }, // 💡 Include virtuals when converting to JSON!
-  toObject: { virtuals: true }
-});
+export const deleteCourseWithLessons = async (courseId) => {
+  // Step 1: Delete parent course
+  const deletedCourse = await Course.findByIdAndDelete(courseId);
+  if (!deletedCourse) {
+    throw new AppError("Course not found", 404);
+  }
 
-// Step 1: Define Virtual Property for Final Price
-courseSchema.virtual("finalPrice").get(function() {
-  // "this" points to the current document
-  return Number((this.price * (1 - this.discountPercent / 100)).toFixed(2));
-});
+  // Step 2: Cascading Delete all child lessons belonging to this course!
+  const deletedLessons = await Lesson.deleteMany({ courseId });
+  console.log(\`Deleted \${deletedLessons.deletedCount} associated lessons\`);
 
-export const Course = model("Course", courseSchema);`,
+  return deletedCourse;
+};`,
   },
   {
     id: "M12-12",
     number: "12",
-    title: "CRUD with Mongoose",
-    khmerTitle: "ទិដ្ឋភាពទូទៅនៃប្រតិបត្តិការ CRUD ជាមួយ Mongoose",
-    type: "concept",
+    title: "Advanced MongoDB Queries",
+    khmerTitle: "ការសរសេរ Advanced Queries ក្នុង Mongoose",
+    type: "lab",
     codeLanguage: "javascript",
-    summary: `Mongoose ផ្តល់ជូននូវ Methods សម្បូរបែបសម្រាប់ប្រតិបត្តិការ CRUD លើ MongoDB៖
+    summary: `Mongoose គាំទ្រការសរសេរ Method Chaining ដ៏មានឥទ្ធិពលសម្រាប់ Query Optimization៖
 
-* **Create**៖ \`Model.create()\`, \`new Model()\` + \`save()\`
-* **Read**៖ \`Model.find()\`, \`Model.findById()\`, \`Model.findOne()\`
-* **Update**៖ \`Model.findByIdAndUpdate()\`, \`Model.updateOne()\`
-* **Delete**៖ \`Model.findByIdAndDelete()\`, \`Model.deleteOne()\`
+* **Filtering**៖ \`.find({ published: true })\`
+* **Sorting**៖ \`.sort("-price")\`
+* **Selecting Specific Fields**៖ \`.select("title price")\`
+* **Pagination**៖ \`.skip(10).limit(5)\`
+* **Execution**៖ \`.exec()\` ដើម្បីទទួលបាន Real Promise`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-Methods ទាំងអស់នេះ Return **Mongoose Query Promises** ដែលគាំទ្រ Async/Await យ៉ាងរលូន។`,
-    codeSnippet: `/* MONGOOSE CRUD CHEATSHEET FOR COURSE API:
-   -------------------------------------------------------------
-   CREATE:  const newCourse = await Course.create(req.body);
-   READ:    const courses   = await Course.find({ published: true });
-   READ 1:  const course    = await Course.findById(id);
-   UPDATE:  const updated   = await Course.findByIdAndUpdate(id, req.body, { new: true });
-   DELETE:  await Course.findByIdAndDelete(id);
-   -------------------------------------------------------------
-*/`,
+// Advanced Chained Query
+export const getFeaturedCourses = async () => {
+  return await Course.find({ published: true })
+    .select("title price level instructor") // Field projection
+    .sort("-price")                         // Sort descending by price
+    .limit(10)                              // Top 10 only
+    .lean();                                // 💡 Teaching Note: .lean() returns plain JS object for 3x faster speed!
+};`,
   },
   {
     id: "M12-13",
     number: "13",
-    title: "Creating Documents",
-    khmerTitle: "ការបញ្ចូល Document ថ្មី (Course.create & new Course)",
+    title: "Dynamic Query Filtering",
+    khmerTitle: "ការបង្កើត Dynamic Query Filtering ជាមួយ MongoDB Operators",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `មាន ២ របៀបក្នុងការបង្កើត Document ថ្មីក្នុង Mongoose៖
+    summary: `ការបំប្លែង REST API Query Parameters ទៅជា **MongoDB Query Filter** ដោយស្វ័យប្រវត្តិ៖
 
-1. **\`Course.create(data)\` (ពេញនិយមបំផុត)**៖ ខ្លី រហ័ស និងធ្វើ Validation រួច Save ទៅកាន់ MongoDB ក្នុងមួយជំហាន
-2. **\`new Course(data)\` + \`course.save()\`**៖ ផ្តល់ភាពបត់បែននៅពេលអ្នកចង់កែប្រែ Properties ខ្លះសិនមុននឹង Save`,
-    codeSnippet: `import { Course } from "./models/course.model.js";
+បំប្លែង Parameter ពី URL ដូចជា \`price[gte]=20\` ទៅជា MongoDB Filter \`{ price: { $gte: 20 } }\`៖
+1. ចម្លង \`req.query\`
+2. ជំនួស \`gte\`, \`gt\`, \`lte\`, \`lt\` ដោយបន្ថែមសញ្ញា \`$\` នៅខាងមុខតាមរយៈ Regex`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-// Method 1: Direct Course.create() (Recommended for Services)
-export const addCourse = async (courseData) => {
-  const course = await Course.create({
-    title: courseData.title,
-    instructor: courseData.instructor,
-    price: courseData.price
-  });
-  console.log("Created Course ID:", course._id);
-  return course;
-};
+export const filterCoursesService = async (queryString) => {
+  // Step 1: Copy query and exclude pagination/sort reserved keys
+  const queryObj = { ...queryString };
+  const excludedFields = ["page", "sort", "limit", "fields"];
+  excludedFields.forEach(el => delete queryObj[el]);
 
-// Method 2: new Course() instance + save()
-export const addCourseWithCustomLogic = async (courseData) => {
-  const course = new Course(courseData);
-  // Custom business modification before saving:
-  course.title = course.title.toUpperCase();
-  await course.save();
-  return course;
+  // Step 2: Advanced Filtering: Convert gte, gt, lte, lt to $gte, $gt, etc.
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => \`$\${match}\`);
+
+  // Step 3: Execute filtered MongoDB query
+  const courses = await Course.find(JSON.parse(queryStr));
+  return courses;
 };`,
   },
   {
     id: "M12-14",
     number: "14",
-    title: "Finding Documents",
-    khmerTitle: "ការទាញយក Documents (find, findById, findOne)",
+    title: "Query Projection (.select())",
+    khmerTitle: "ការជ្រើសរើស Fields ជាក់លាក់តាមរយៈ Query Projection",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `Methods សំខាន់ៗទាំង ៣ សម្រាប់អានទិន្នន័យពី MongoDB៖
+    summary: `**Field Projection (\`.select()\`)** អនុញ្ញាតឱ្យ Client ជ្រើសរើសយកតែ Fields ណាដែលខ្លួនចង់បាន (ឧ. \`?fields=title,price\`)៖
 
-1. **\`Course.find(filter)\`**៖ ត្រឡប់ Array នៃ Documents (ត្រឡប់ \`[]\` បើគ្មាន)
-2. **\`Course.findById(id)\`**៖ ស្វែងរកតាម \`_id\` ដោយផ្ទាល់ (ត្រឡប់ \`null\` បើគ្មាន)
-3. **\`Course.findOne(filter)\`**៖ ស្វែងរក Document ដំបូងបង្អស់ដែលត្រូវនឹងលក្ខខណ្ឌ`,
-    codeSnippet: `import { Course } from "./models/course.model.js";
+អត្ថប្រយោជន៍ធំៗ៖
+* កាត់បន្ថយ Network Bandwidth រវាង MongoDB និង Node.js
+* ជៀសវាងការបញ្ជូន Sensitive Fields ទៅកាន់ Client (ដូចជា \`password\` ឬ Internal Notes)
+* សញ្ញាដក (\`-\`) នៅពីមុខ Field មានន័យថាដក Field នោះចេញ (\`.select("-__v")\`)`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-// 1. Fetch all published courses
-const allPublished = await Course.find({ published: true });
+// Include only title, price, and level (exclude __v)
+export const getCourseSummaries = async () => {
+  return await Course.find()
+    .select("title price level -__v");
+};
 
-// 2. Fetch single course by ID
-const course = await Course.findById("6648e58319f3a9e224e78891");
-if (!course) {
-  console.log("Course not found!");
-}
-
-// 3. Find unique course by title slug
-const uniqueCourse = await Course.findOne({ slug: "mastering-express" });`,
+// Dynamic Projection from URL: ?fields=title,price
+export const getCoursesWithFields = async (fieldsQuery) => {
+  let query = Course.find();
+  if (fieldsQuery) {
+    const fields = fieldsQuery.split(",").join(" ");
+    query = query.select(fields);
+  } else {
+    query = query.select("-__v");
+  }
+  return await query;
+};`,
   },
   {
     id: "M12-15",
     number: "15",
-    title: "Query Filter Operators ($gte, $lte, $in)",
-    khmerTitle: "ការប្រើប្រាស់ Query Filter Operators ក្នុង Mongoose",
+    title: "Sorting in MongoDB (.sort())",
+    khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting ក្នុង MongoDB",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `MongoDB Filter Operators ដ៏មានឥទ្ធិពល៖
+    summary: `ការតម្រៀបទិន្នន័យក្នុង MongoDB តាមរយៈ **\`.sort()\`**៖
 
-* **Comparison**៖ \`$gt\` (>), \`$gte\` (>=), \`$lt\` (<), \`$lte\` (<=), \`$ne\` (!=)
-* **Inclusion**៖ \`$in: [...]\` (ផ្គូផ្គងតម្លៃណាមួយក្នុង Array)
-* **Logical**៖ \`$or: [...]\`, \`$and: [...]\``,
-    codeSnippet: `import { Course } from "./models/course.model.js";
+* **Ascending (ពីតូចទៅធំ)**៖ \`.sort("price")\` ឬ \`.sort({ price: 1 })\`
+* **Descending (ពីធំទៅតូច)**៖ \`.sort("-price")\` ឬ \`.sort({ price: -1 })\`
+* **Multi-field Sorting**៖ \`.sort("-price createdAt")\` (តម្រៀបតាមតម្លៃខ្ពស់មុន បើតម្លៃស្មើគ្នា តម្រៀបតាមថ្ងៃបង្កើតថ្មីបំផុត)`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-// Filter: Price between $20 and $60, and level is beginner or intermediate
-const filteredCourses = await Course.find({
-  price: { $gte: 20, $lte: 60 },
-  level: { $in: ["beginner", "intermediate"] },
-  published: true
-});
+// Sort dynamically from query: ?sort=-price,title
+export const getSortedCourses = async (sortQuery) => {
+  let query = Course.find();
 
-// Logical OR Query: Free courses OR Special promo courses
-const promoCourses = await Course.find({
-  $or: [
-    { price: 0 },
-    { isPromo: true }
-  ]
-});`,
+  if (sortQuery) {
+    const sortBy = sortQuery.split(",").join(" ");
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort("-createdAt"); // Default: Newest first
+  }
+
+  return await query;
+};`,
   },
   {
     id: "M12-16",
     number: "16",
-    title: "Updating Documents in Mongoose",
-    khmerTitle: "ការកែប្រែទិន្នន័យ (findByIdAndUpdate & runValidators)",
+    title: "MongoDB Pagination (.skip() & .limit())",
+    khmerTitle: "ការរៀបចំ Pagination ជាមួយ MongoDB skip() និង limit()",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `Method ពេញនិយមបំផុតសម្រាប់កែប្រែ Document គឺ **\`Course.findByIdAndUpdate(id, update, options)\`**។
+    summary: `ការអនុវត្ត Pagination កម្រិត Production ជាមួយ MongoDB៖
 
-Options ដ៏សំខាន់ដែលមិនអាចខ្វះបាន៖
-* **\`new: true\`**៖ ត្រឡប់ Document ថ្មីដែលបានកែប្រែរួច (តាមលំនាំដើម Mongoose ត្រឡប់ Document ចាស់មុនកែប្រែ)
-* **\`runValidators: true\`**៖ បង្ខំឱ្យ Mongoose ដំណើរការ Schema Validation ឡើងវិញលើ Fields ថ្មី!`,
-    codeSnippet: `import { Course } from "./models/course.model.js";
+* \`skip = (page - 1) * limit\`
+* ប្រើ \`Course.countDocuments(filter)\` ដើម្បីរាប់ចំនួនសរុបនៃ Courses សម្រាប់គណនា \`totalPages\`
+* ប្រើ \`.skip(skip).limit(limit)\` លើ Mongoose Query`,
+    codeSnippet: `// src/services/course.service.js
+import { Course } from "../models/course.model.js";
 
-export const updateCourseService = async (courseId, updateData) => {
-  // Step 1: Update with critical options enabled
-  const updatedCourse = await Course.findByIdAndUpdate(
-    courseId,
-    { $set: updateData },
-    {
-      new: true,           // 💡 Return the modified document!
-      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!
+export const getPaginatedCourses = async (page = 1, limit = 10) => {
+  const pageNum = Math.max(1, parseInt(page, 10));
+  const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10)));
+  const skip = (pageNum - 1) * limitNum;
+
+  // Step 1: Query paginated items and count in parallel
+  const [courses, totalItems] = await Promise.all([
+    Course.find().skip(skip).limit(limitNum).sort("-createdAt"),
+    Course.countDocuments()
+  ]);
+
+  const totalPages = Math.ceil(totalItems / limitNum);
+
+  return {
+    courses,
+    pagination: {
+      currentPage: pageNum,
+      limit: limitNum,
+      totalItems,
+      totalPages,
+      hasNextPage: pageNum < totalPages,
+      hasPrevPage: pageNum > 1
     }
-  );
-
-  return updatedCourse;
+  };
 };`,
   },
   {
     id: "M12-17",
     number: "17",
-    title: "Deleting Documents",
-    khmerTitle: "ការលុបទិន្នន័យ (findByIdAndDelete & Soft Deletes)",
+    title: "Full-Text Search with Text Indexes",
+    khmerTitle: "ការស្វែងរកទិន្នន័យតាមរយៈ MongoDB Text Index ($text)",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `ការលុប Document ជាមួយ Mongoose៖
+    summary: `ជំនួសឱ្យការប្រើ Regex យឺត MongoDB ផ្តល់នូវ **Full-Text Search Indexes** ដ៏មានអានុភាព៖
 
-1. **Hard Delete**៖ \`Course.findByIdAndDelete(courseId)\`
-2. **Soft Delete (អនុសាសន៍ Production)**៖ \`Course.findByIdAndUpdate(courseId, { isDeleted: true, deletedAt: new Date() })\``,
-    codeSnippet: `import { Course } from "./models/course.model.js";
+1. បង្កើត Text Index លើ Schema៖
+   \`courseSchema.index({ title: "text", description: "text" })\`
+2. ធ្វើការ Search ដោយប្រើ \`$text\` Operator៖
+   \`Course.find({ $text: { $search: "express node" } })\`
+3. គាំទ្រ Word Stemming, Case-insensitivity, និង Relevance Scoring!`,
+    codeSnippet: `// src/models/course.model.js (Text Indexes)
+// courseSchema.index({ title: "text", description: "text" });
 
-// Hard Delete: Permanently purged from MongoDB
-export const purgeCourse = async (id) => {
-  return await Course.findByIdAndDelete(id);
-};
+import { Course } from "../models/course.model.js";
 
-// Soft Delete: Preserves record for audit/recovery
-export const softDeleteCourse = async (id) => {
-  return await Course.findByIdAndUpdate(
-    id,
-    { isDeleted: true, deletedAt: new Date() },
-    { new: true }
-  );
+// Step 2: Full-text Search service function
+export const searchCoursesService = async (searchTerm) => {
+  // Query using MongoDB $text operator
+  const courses = await Course.find(
+    { $text: { $search: searchTerm } },
+    { score: { $meta: "textScore" } } // Calculate search relevance score
+  ).sort({ score: { $meta: "textScore" } }); // Sort by most relevant!
+
+  return courses;
 };`,
   },
   {
     id: "M12-18",
     number: "18",
-    title: "Mongoose Methods (Instance & Static)",
-    khmerTitle: "ការបង្កើត Instance Methods និង Static Methods",
+    title: "Course & Lesson Relationships",
+    khmerTitle: "ការគ្រប់គ្រងទំនាក់ទំនងរវាង Course និង Lessons ក្នុង Database",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `Mongoose អនុញ្ញាតឱ្យយើងសរសេរ Custom Domain Methods លើ Model ដោយផ្ទាល់៖
+    summary: `ការភ្ជាប់ទំនាក់ទំនង Parent-Child រវាង Course Collection និង Lesson Collection ក្នុង MongoDB៖
 
-* **Instance Methods (\`methods\`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. \`course.publishCourse()\`)
-* **Static Methods (\`statics\`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. \`Course.findTopRated()\`)`,
-    codeSnippet: `import { Schema, model } from "mongoose";
+រចនាសម្ព័ន្ធ៖
+* Course Document ផ្ទុកព័ត៌មានទូទៅនៃ Course
+* Lesson Document ផ្ទុក \`courseId: { type: Schema.Types.ObjectId, ref: "Course" }\`
+* សរសេរ Endpoint \`GET /api/v1/courses/:courseId/lessons\` ដោយ Query តាម \`{ courseId }\``,
+    codeSnippet: `// src/services/course.service.js
+import { Lesson } from "../models/lesson.model.js";
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
 
-const courseSchema = new Schema({
-  title: String,
-  published: { type: Boolean, default: false },
-  rating: { type: Number, default: 0 }
-});
+// GET /api/v1/courses/:courseId/lessons
+export const getLessonsForCourse = async (courseId) => {
+  // 1. Verify parent course exists
+  const courseExists = await Course.exists({ _id: courseId });
+  if (!courseExists) {
+    throw new AppError("Course not found", 404);
+  }
 
-// Step 1: Instance Method (operates on 1 document)
-courseSchema.methods.publish = async function() {
-  this.published = true;
-  return await this.save();
-};
-
-// Step 2: Static Method (operates on the Model collection)
-courseSchema.statics.findTopRated = function(minRating = 4.5) {
-  return this.find({ rating: { $gte: minRating } });
-};
-
-export const Course = model("Course", courseSchema);`,
+  // 2. Fetch all child lessons belonging to this course
+  const lessons = await Lesson.find({ courseId }).sort("orderIndex");
+  return lessons;
+};`,
   },
   {
     id: "M12-19",
     number: "19",
-    title: "Mongoose Middleware (Pre & Post Hooks)",
-    khmerTitle: "ការប្រើប្រាស់ Mongoose Pre & Post Hooks",
+    title: "Database Transactions (ACID in MongoDB)",
+    khmerTitle: "ការប្រើប្រាស់ Database Transactions សម្រាប់ប្រតិបត្តិការ Atomic",
     type: "lab",
     codeLanguage: "javascript",
-    summary: `**Mongoose Middleware (Hooks)** អនុញ្ញាតឱ្យយើងស្ទាក់ចាប់ (Intercept) Document មុន ឬក្រោយពេល Save, Validate, ឬ Remove។
+    summary: `**MongoDB Multi-Document Transactions** ផ្តល់នូវការធានា **ACID** ពេញលេញនៅពេលដែលអ្នកត្រូវកែប្រែ Documents ច្រើនក្នុងពេលតែមួយ។
 
-ករណីប្រើប្រាស់ជាក់ស្តែងសម្រាប់ Course API៖
-* **\`pre('save')\`**៖ បង្កើត SEO URL Slug ស្វ័យប្រវត្តិចេញពី \`title\`
-* **\`pre('save')\`**៖ ធ្វើ Password Hashing មុននឹង Save User Document
-* **\`post('save')\`**៖ កត់ត្រា Audit Log ឬផ្ញើ Notification បន្ទាប់ពី Save ជោគជ័យ`,
-    codeSnippet: `import { Schema, model } from "mongoose";
+ឧទាហរណ៍ជាក់ស្តែង៖ Course Enrollment Workflow
+1. បង្កើត Enrollment Record
+2. បន្ថែម Student Count លើ Course (\`$inc: { studentsCount: 1 }\`)
+3. កាត់កង Balance / Create Invoice
+4. ប្រសិនបើមានជំហានណាមួយបរាជ័យ (Fail) នោះ **Rollback** ការផ្លាស់ប្តូរទាំងអស់ត្រឡប់មកវិញដោយស្វ័យប្រវត្តិ (All-or-Nothing)!`,
+    codeSnippet: `// src/services/enrollment.service.js
+import mongoose from "mongoose";
+import { Course } from "../models/course.model.js";
+import { Enrollment } from "../models/enrollment.model.js";
 
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  slug: String
-});
+export const enrollStudentTransaction = async (courseId, studentId) => {
+  // Step 1: Start Mongoose Client Session
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-// Step 1: Pre-save hook to generate URL Slug automatically!
-courseSchema.pre("save", function(next) {
-  if (this.isModified("title")) {
-    this.slug = this.title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)+/g, "");
+  try {
+    // Step 2: Create Enrollment Document inside session
+    const [enrollment] = await Enrollment.create(
+      [{ courseId, studentId, enrolledAt: new Date() }],
+      { session }
+    );
+
+    // Step 3: Increment course student counter inside session
+    await Course.findByIdAndUpdate(
+      courseId,
+      { $inc: { studentsCount: 1 } },
+      { session }
+    );
+
+    // Step 4: Commit Transaction permanently to database
+    await session.commitTransaction();
+    return enrollment;
+  } catch (error) {
+    // ⚠️ On error: Abort transaction and rollback all database writes!
+    await session.abortTransaction();
+    throw error;
+  } finally {
+    session.endSession(); // Always end session!
   }
-  next();
-});
-
-export const Course = model("Course", courseSchema);`,
-  },
-  {
-    id: "M12-20",
-    number: "20",
-    title: "Mongoose Population (.populate())",
-    khmerTitle: "ការភ្ជាប់ទំនាក់ទំនងឯកសារជាមួយ .populate()",
-    type: "lab",
-    codeLanguage: "javascript",
-    summary: `**Population** គឺជាជម្រើសជំនួស SQL JOINs ក្នុង Mongoose។
-
-ដំណើរការការងារ៖
-* Lesson Document រក្សាទុកតែ \`courseId: ObjectId("...")\` ប៉ុណ្ណោះ
-* នៅពេលហៅ \`.populate("courseId")\` Mongoose នឹង Query ទៅកាន់ \`courses\` Collection ដោយស្វ័យប្រវត្តិតាមរយៈ \`$lookup\` ហើយជំនួស \`courseId\` ដោយ Course Document ពេញលេញ!`,
-    codeSnippet: `import { Lesson } from "./models/lesson.model.js";
-
-// Fetch lesson and automatically populate parent Course data
-export const getLessonWithCourse = async (lessonId) => {
-  // 💡 Teaching Note: Replaces courseId ObjectId with full Course Document!
-  const lesson = await Lesson.findById(lessonId)
-    .populate("courseId", "title instructor price level");
-
-  return lesson;
 };`,
   },
 ];

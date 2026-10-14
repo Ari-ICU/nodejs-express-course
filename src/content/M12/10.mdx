@@ -1,24 +1,30 @@
 export const meta = {
   id: "M12-10",
   number: "10",
-  title: "Timestamps Option",
-  khmerTitle: "ការប្រើប្រាស់ Option { timestamps: true }",
+  title: "Updating Resources in MongoDB",
+  khmerTitle: "ការកែប្រែ Course ក្នុង MongoDB (findByIdAndUpdate)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ជំនួសឱ្យការបង្កើត Fields `createdAt` និង `updatedAt` ដោយដៃ Mongoose ផ្តល់ Option **`{ timestamps: true }`** ដែលជាដំណោះស្រាយដ៏ឆ្លាតវៃ។\n\nមុខងារស្វ័យប្រវត្តិ៖\n* បន្ថែម `createdAt` កាលបរិច្ឆេទដែល Document ត្រូវបានបង្កើតដំបូង\n* បន្ថែម និងកែប្រែ `updatedAt` ដោយស្វ័យប្រវត្តិកំឡុងពេល `save()` ឬ `findByIdAndUpdate()` នីមួយៗ",
-  codeSnippet: "import { Schema, model } from \"mongoose\";\n\n// Step 1: Pass { timestamps: true } as the second argument to Schema\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true }\n}, {\n  timestamps: true // Automatically manages createdAt and updatedAt!\n});\n\nexport const Course = model(\"Course\", courseSchema);",
+  summary: "ការកែប្រែ Course ក្នុង MongoDB ដោយប្រើប្រាស់ `Course.findByIdAndUpdate()`៖\n\nជម្រើស Options ដ៏សំខាន់៖\n* `$set: updateData`៖ កែប្រែតែ Fields ដែលបានបញ្ជូនមកប៉ុណ្ណោះ\n* `{ new: true }`៖ ត្រឡប់ Updated Document ថ្មី\n* `{ runValidators: true }`៖ បង្ខំឱ្យ Mongoose Run Schema Validation លើទិន្នន័យថ្មី",
+  codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  const updated = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    { new: true, runValidators: true }\n  );\n\n  if (!updated) {\n    throw new AppError(`Cannot update: Course ${courseId} not found`, 404);\n  }\n\n  return updated;\n};",
 };
 
 ```javascript
-import { Schema, model } from "mongoose";
+// src/services/course.service.js
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
 
-// Step 1: Pass { timestamps: true } as the second argument to Schema
-const courseSchema = new Schema({
-  title: { type: String, required: true },
-  price: { type: Number, required: true }
-}, {
-  timestamps: true // Automatically manages createdAt and updatedAt!
-});
+export const updateCourseService = async (courseId, updateData) => {
+  const updated = await Course.findByIdAndUpdate(
+    courseId,
+    { $set: updateData },
+    { new: true, runValidators: true }
+  );
 
-export const Course = model("Course", courseSchema);
+  if (!updated) {
+    throw new AppError(`Cannot update: Course ${courseId} not found`, 404);
+  }
+
+  return updated;
+};
 ```

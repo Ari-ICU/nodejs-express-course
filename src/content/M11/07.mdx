@@ -1,24 +1,47 @@
 export const meta = {
   id: "M11-07",
   number: "07",
-  title: "Fields & BSON Data Types",
-  khmerTitle: "ការកំណត់ Fields និងប្រភេទ BSON Data Types",
-  type: "concept",
+  title: "Production POST Endpoints",
+  khmerTitle: "ការអនុវត្ត Production POST Endpoint និង Location Header",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "BSON គាំទ្រប្រភេទ Data Types សម្បូរបែបជាង JSON ធម្មតា៖\n\n* **String**៖ អត្ថបទ UTF-8\n* **NumberInt / NumberLong / Double**៖ លេខគត់ 32-bit, 64-bit, ឬ Floating point (តម្លៃ Price)\n* **Boolean**៖ `true` ឬ `false`\n* **Date**៖ 64-bit integer timestamp គិតជា milliseconds\n* **ObjectId**៖ 12-byte Unique Identifier របស់ MongoDB\n* **Array**៖ បញ្ជី Array នៃតម្លៃ ឬ Sub-documents\n* **Null**៖ តម្លៃទទេ",
-  codeSnippet: "// Demonstrating varied BSON types in a Course Document\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"), // ObjectId\n  \"title\": \"Node.js & MongoDB Essentials\",      // String\n  \"enrollmentCount\": NumberInt(250),             // 32-bit Integer\n  \"price\": 49.99,                                // Double\n  \"isFeatured\": true,                            // Boolean\n  \"prerequisites\": [\"HTML\", \"JavaScript\"],       // Array of Strings\n  \"publishedAt\": ISODate(\"2026-10-14T00:00:00Z\"),// Date\n  \"discountPrice\": null                          // Null\n}",
+  summary: "Production POST Endpoint ត្រូវអនុវត្តតាមលក្ខខណ្ឌវិជ្ជាជីវៈ៖\n\n1. **Validation**៖ ពិនិត្យភាពត្រឹមត្រូវនៃ Payload\n2. **Duplicate Prevention**៖ ពិនិត្យថាតើ Course Title នេះមានរួចហើយឬនៅ\n3. **HTTP 201 Created**៖ ឆ្លើយតប Status 201\n4. **Location Header**៖ កំណត់ Header `Location: /api/v1/courses/:id` ដែលចង្អុលបង្ហាញផ្លូវទៅកាន់ Resource ដែលទើបនឹងបង្កើតថ្មី",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nconst courses = [{ id: 1, title: \"Node.js Fundamentals\" }];\n\napp.post(\"/api/v1/courses\", (req, res) => {\n  const { title, price } = req.body;\n\n  // Step 1: Validation\n  if (!title || typeof title !== \"string\") {\n    return res.status(400).json({ success: false, error: \"Title is required\" });\n  }\n\n  // Step 2: Prevent duplicates\n  const exists = courses.some(c => c.title.toLowerCase() === title.toLowerCase());\n  if (exists) {\n    return res.status(409).json({ success: false, error: \"A course with this title already exists\" });\n  }\n\n  // Step 3: Create course entity\n  const newCourse = { id: courses.length + 1, title, price: Number(price) || 0 };\n  courses.push(newCourse);\n\n  // Step 4: Set Location header & respond with 201 Created\n  const resourceUrl = `/api/v1/courses/${newCourse.id}`;\n  res.setHeader(\"Location\", resourceUrl);\n\n  return res.status(201).json({\n    success: true,\n    data: newCourse,\n    location: resourceUrl\n  });\n});",
 };
 
 ```javascript
-// Demonstrating varied BSON types in a Course Document
-{
-  "_id": ObjectId("6648e58319f3a9e224e78891"), // ObjectId
-  "title": "Node.js & MongoDB Essentials",      // String
-  "enrollmentCount": NumberInt(250),             // 32-bit Integer
-  "price": 49.99,                                // Double
-  "isFeatured": true,                            // Boolean
-  "prerequisites": ["HTML", "JavaScript"],       // Array of Strings
-  "publishedAt": ISODate("2026-10-14T00:00:00Z"),// Date
-  "discountPrice": null                          // Null
-}
+import express from "express";
+const app = express();
+app.use(express.json());
+
+const courses = [{ id: 1, title: "Node.js Fundamentals" }];
+
+app.post("/api/v1/courses", (req, res) => {
+  const { title, price } = req.body;
+
+  // Step 1: Validation
+  if (!title || typeof title !== "string") {
+    return res.status(400).json({ success: false, error: "Title is required" });
+  }
+
+  // Step 2: Prevent duplicates
+  const exists = courses.some(c => c.title.toLowerCase() === title.toLowerCase());
+  if (exists) {
+    return res.status(409).json({ success: false, error: "A course with this title already exists" });
+  }
+
+  // Step 3: Create course entity
+  const newCourse = { id: courses.length + 1, title, price: Number(price) || 0 };
+  courses.push(newCourse);
+
+  // Step 4: Set Location header & respond with 201 Created
+  const resourceUrl = `/api/v1/courses/${newCourse.id}`;
+  res.setHeader("Location", resourceUrl);
+
+  return res.status(201).json({
+    success: true,
+    data: newCourse,
+    location: resourceUrl
+  });
+});
 ```

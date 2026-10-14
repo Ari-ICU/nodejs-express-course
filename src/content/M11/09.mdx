@@ -1,29 +1,38 @@
 export const meta = {
   id: "M11-09",
   number: "09",
-  title: "Embedded Documents (Denormalization)",
-  khmerTitle: "ការបង្កប់ឯកសារ (Embedding / Denormalization)",
-  type: "concept",
+  title: "Production PATCH Endpoints",
+  khmerTitle: "ការអនុវត្ត Production PATCH Endpoint (Partial Updates)",
+  type: "lab",
   codeLanguage: "javascript",
-  summary: "នៅក្នុង MongoDB មានយុទ្ធសាស្ត្ររៀបចំទំនាក់ទំនង ២ បែប។ ទីមួយគឺ **Embedding (Denormalization)** ដែលជាការដាក់ Sub-documents នៅក្នុង Document មេតែមួយ។\n\nពេលណាគួរប្រើ Embedding សម្រាប់ Course API៖\n* ទំនាក់ទំនង **1-to-Few** (ឧ. Course មួយមាន Course Requirements ចំនួន ៣-៥ ចំណុច ឬ Syllabus Summary)\n* ទិន្នន័យដែលតែងតែអានជាមួយគ្នាជានិច្ចក្នុង Request តែមួយ\n* ផ្តល់ល្បឿនអានលឿនបំផុតព្រោះមិនបាច់ធ្វើ JOIN ឬ $lookup",
-  codeSnippet: "// Embedded Document Pattern: Course with embedded Instructor Profile\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Mastering Node.js & Express\",\n  \"price\": 49.99,\n  // 💡 Embedded sub-document: Always loaded together in 1 fast query!\n  \"instructor\": {\n    \"name\": \"Ratha\",\n    \"bio\": \"Senior Backend Architect\",\n    \"avatar\": \"https://cdn.example.com/ratha.jpg\"\n  },\n  \"modules\": [\n    { \"order\": 1, \"title\": \"Express Basics\" },\n    { \"order\": 2, \"title\": \"MongoDB Mastery\" }\n  ]\n}",
+  summary: "ការអនុវត្ត **PATCH Endpoint** ប្រកបដោយប្រសិទ្ធភាពខ្ពស់៖\n\n1. អាន `req.body`\n2. ច្រោះយកតែ **Allowed Update Fields** (ជៀសវាង Mass Assignment Vulnerability កុំឱ្យ Client កែប្រែ `id` ឬ `createdAt`)\n3. កែប្រែតែ Properties ដែលបានផ្តល់មក\n4. រក្សាទុក `updatedAt` timestamp ថ្មី",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [{ id: 1, title: \"Original Title\", price: 29.99, published: false }];\n\napp.patch(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  // 🔒 Security: Only allow modifications on specific permitted fields (Whitelist)\n  const allowedUpdates = [\"title\", \"price\", \"published\"];\n  for (const key of Object.keys(req.body)) {\n    if (allowedUpdates.includes(key)) {\n      course[key] = req.body[key];\n    }\n  }\n\n  course.updatedAt = new Date().toISOString();\n  return res.status(200).json({ success: true, data: course });\n});",
 };
 
 ```javascript
-// Embedded Document Pattern: Course with embedded Instructor Profile
-{
-  "_id": ObjectId("6648e58319f3a9e224e78891"),
-  "title": "Mastering Node.js & Express",
-  "price": 49.99,
-  // 💡 Embedded sub-document: Always loaded together in 1 fast query!
-  "instructor": {
-    "name": "Ratha",
-    "bio": "Senior Backend Architect",
-    "avatar": "https://cdn.example.com/ratha.jpg"
-  },
-  "modules": [
-    { "order": 1, "title": "Express Basics" },
-    { "order": 2, "title": "MongoDB Mastery" }
-  ]
-}
+import express from "express";
+const app = express();
+app.use(express.json());
+
+let courses = [{ id: 1, title: "Original Title", price: 29.99, published: false }];
+
+app.patch("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId);
+
+  if (!course) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  // 🔒 Security: Only allow modifications on specific permitted fields (Whitelist)
+  const allowedUpdates = ["title", "price", "published"];
+  for (const key of Object.keys(req.body)) {
+    if (allowedUpdates.includes(key)) {
+      course[key] = req.body[key];
+    }
+  }
+
+  course.updatedAt = new Date().toISOString();
+  return res.status(200).json({ success: true, data: course });
+});
 ```

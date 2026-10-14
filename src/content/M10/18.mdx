@@ -1,0 +1,33 @@
+export const meta = {
+  id: "M10-18",
+  number: "18",
+  title: "Mongoose Methods (Instance & Static)",
+  khmerTitle: "ការបង្កើត Instance Methods និង Static Methods",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "Mongoose អនុញ្ញាតឱ្យយើងសរសេរ Custom Domain Methods លើ Model ដោយផ្ទាល់៖\n\n* **Instance Methods (`methods`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. `course.publishCourse()`)\n* **Static Methods (`statics`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. `Course.findTopRated()`)",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: String,\n  published: { type: Boolean, default: false },\n  rating: { type: Number, default: 0 }\n});\n\n// Step 1: Instance Method (operates on 1 document)\ncourseSchema.methods.publish = async function() {\n  this.published = true;\n  return await this.save();\n};\n\n// Step 2: Static Method (operates on the Model collection)\ncourseSchema.statics.findTopRated = function(minRating = 4.5) {\n  return this.find({ rating: { $gte: minRating } });\n};\n\nexport const Course = model(\"Course\", courseSchema);",
+};
+
+```javascript
+import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: String,
+  published: { type: Boolean, default: false },
+  rating: { type: Number, default: 0 }
+});
+
+// Step 1: Instance Method (operates on 1 document)
+courseSchema.methods.publish = async function() {
+  this.published = true;
+  return await this.save();
+};
+
+// Step 2: Static Method (operates on the Model collection)
+courseSchema.statics.findTopRated = function(minRating = 4.5) {
+  return this.find({ rating: { $gte: minRating } });
+};
+
+export const Course = model("Course", courseSchema);
+```

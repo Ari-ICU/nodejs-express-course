@@ -1,0 +1,29 @@
+export const meta = {
+  id: "M10-15",
+  number: "15",
+  title: "Query Filter Operators ($gte, $lte, $in)",
+  khmerTitle: "ការប្រើប្រាស់ Query Filter Operators ក្នុង Mongoose",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "MongoDB Filter Operators ដ៏មានឥទ្ធិពល៖\n\n* **Comparison**៖ `$gt` (>), `$gte` (>=), `$lt` (<), `$lte` (<=), `$ne` (!=)\n* **Inclusion**៖ `$in: [...]` (ផ្គូផ្គងតម្លៃណាមួយក្នុង Array)\n* **Logical**៖ `$or: [...]`, `$and: [...]`",
+  codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Filter: Price between $20 and $60, and level is beginner or intermediate\nconst filteredCourses = await Course.find({\n  price: { $gte: 20, $lte: 60 },\n  level: { $in: [\"beginner\", \"intermediate\"] },\n  published: true\n});\n\n// Logical OR Query: Free courses OR Special promo courses\nconst promoCourses = await Course.find({\n  $or: [\n    { price: 0 },\n    { isPromo: true }\n  ]\n});",
+};
+
+```javascript
+import { Course } from "./models/course.model.js";
+
+// Filter: Price between $20 and $60, and level is beginner or intermediate
+const filteredCourses = await Course.find({
+  price: { $gte: 20, $lte: 60 },
+  level: { $in: ["beginner", "intermediate"] },
+  published: true
+});
+
+// Logical OR Query: Free courses OR Special promo courses
+const promoCourses = await Course.find({
+  $or: [
+    { price: 0 },
+    { isPromo: true }
+  ]
+});
+```

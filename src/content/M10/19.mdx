@@ -1,0 +1,32 @@
+export const meta = {
+  id: "M10-19",
+  number: "19",
+  title: "Mongoose Middleware (Pre & Post Hooks)",
+  khmerTitle: "ការប្រើប្រាស់ Mongoose Pre & Post Hooks",
+  type: "lab",
+  codeLanguage: "javascript",
+  summary: "**Mongoose Middleware (Hooks)** អនុញ្ញាតឱ្យយើងស្ទាក់ចាប់ (Intercept) Document មុន ឬក្រោយពេល Save, Validate, ឬ Remove។\n\nករណីប្រើប្រាស់ជាក់ស្តែងសម្រាប់ Course API៖\n* **`pre('save')`**៖ បង្កើត SEO URL Slug ស្វ័យប្រវត្តិចេញពី `title`\n* **`pre('save')`**៖ ធ្វើ Password Hashing មុននឹង Save User Document\n* **`post('save')`**៖ កត់ត្រា Audit Log ឬផ្ញើ Notification បន្ទាប់ពី Save ជោគជ័យ",
+  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  slug: String\n});\n\n// Step 1: Pre-save hook to generate URL Slug automatically!\ncourseSchema.pre(\"save\", function(next) {\n  if (this.isModified(\"title\")) {\n    this.slug = this.title\n      .toLowerCase()\n      .replace(/[^a-z0-9]+/g, \"-\")\n      .replace(/(^-|-$)+/g, \"\");\n  }\n  next();\n});\n\nexport const Course = model(\"Course\", courseSchema);",
+};
+
+```javascript
+import { Schema, model } from "mongoose";
+
+const courseSchema = new Schema({
+  title: { type: String, required: true },
+  slug: String
+});
+
+// Step 1: Pre-save hook to generate URL Slug automatically!
+courseSchema.pre("save", function(next) {
+  if (this.isModified("title")) {
+    this.slug = this.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+  }
+  next();
+});
+
+export const Course = model("Course", courseSchema);
+```

@@ -1,36 +1,29 @@
 export const meta = {
   id: "M10-08",
   number: "08",
-  title: "Error Handling in Service Layer (AppError)",
-  khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Service Layer តាមរយៈ AppError Class",
+  title: "Required Fields & Custom Messages",
+  khmerTitle: "ការកំណត់ Required Fields និង Custom Error Messages",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "នៅក្នុង Service Layer នៅពេលមានកំហុសផ្នែក Business Logic (ដូចជា រក Course មិនឃើញ ឬ Course ពេញ) យើងមិនត្រូវហៅ `res.status(404).json()` ឡើយ។\n\n**ដំណោះស្រាយស្តង់ដារ**៖ បង្កើត Custom **`AppError`** Class ដែលពង្រីកពី `Error` ដើមរបស់ JavaScript ដោយបន្ថែម `statusCode` និង `isOperational` flag។\n\nបន្ទាប់មក Service គ្រាន់តែ `throw new AppError(\"Course not found\", 404)` ហើយ Centralized Error Middleware នឹងចាប់យកទៅចាត់ចែងដោយស្វ័យប្រវត្តិ។",
-  codeSnippet: "// Step 1: Enterprise Custom Application Error Class\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true; // Expected operational error\n    Error.captureStackTrace(this, this.constructor);\n  }\n}\n\n// Step 2: In Service Layer - Throw domain error cleanly!\nexport const getCourseById = (id, courses) => {\n  const course = courses.find(c => c.id === id);\n  if (!course) {\n    throw new AppError(`Course with ID ${id} does not exist`, 404);\n  }\n  return course;\n};\n\n// Step 3: Controller simply passes error forward with asyncHandler!\n// const course = getCourseById(req.params.id, courses);\n// res.json({ success: true, data: course });",
+  summary: "ការកំណត់ Required Field ក្នុង Mongoose អាចសរសេរបាន ២ របៀប៖\n\n* សាមញ្ញ៖ `required: true` (បង្ហាញ Error Message លំនាំដើមរបស់ Mongoose)\n* **វិជ្ជាជីវៈ (អនុសាសន៍)**៖ ផ្តល់នូវ Custom Error Message តាមរយៈ Array៖\n  `required: [true, \"Custom error message here\"]`\n\nវិធីនេះជួយឱ្យ Error Response របស់ API មានភាពរួសរាយ និងងាយយល់សម្រាប់ Client។",
+  codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: [true, \"A course must have an official title\"]\n  },\n  slug: {\n    type: String,\n    required: [true, \"URL slug is strictly required for SEO\"]\n  },\n  instructor: {\n    type: String,\n    required: [true, \"Course must be assigned to an instructor\"]\n  }\n});",
 };
 
 ```javascript
-// Step 1: Enterprise Custom Application Error Class
-export class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
-    this.isOperational = true; // Expected operational error
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
+import { Schema } from "mongoose";
 
-// Step 2: In Service Layer - Throw domain error cleanly!
-export const getCourseById = (id, courses) => {
-  const course = courses.find(c => c.id === id);
-  if (!course) {
-    throw new AppError(`Course with ID ${id} does not exist`, 404);
+export const courseSchema = new Schema({
+  title: {
+    type: String,
+    required: [true, "A course must have an official title"]
+  },
+  slug: {
+    type: String,
+    required: [true, "URL slug is strictly required for SEO"]
+  },
+  instructor: {
+    type: String,
+    required: [true, "Course must be assigned to an instructor"]
   }
-  return course;
-};
-
-// Step 3: Controller simply passes error forward with asyncHandler!
-// const course = getCourseById(req.params.id, courses);
-// res.json({ success: true, data: course });
+});
 ```

@@ -1,33 +1,30 @@
 export const meta = {
   id: "M12-18",
   number: "18",
-  title: "Mongoose Methods (Instance & Static)",
-  khmerTitle: "ការបង្កើត Instance Methods និង Static Methods",
+  title: "Course & Lesson Relationships",
+  khmerTitle: "ការគ្រប់គ្រងទំនាក់ទំនងរវាង Course និង Lessons ក្នុង Database",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Mongoose អនុញ្ញាតឱ្យយើងសរសេរ Custom Domain Methods លើ Model ដោយផ្ទាល់៖\n\n* **Instance Methods (`methods`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. `course.publishCourse()`)\n* **Static Methods (`statics`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. `Course.findTopRated()`)",
-  codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: String,\n  published: { type: Boolean, default: false },\n  rating: { type: Number, default: 0 }\n});\n\n// Step 1: Instance Method (operates on 1 document)\ncourseSchema.methods.publish = async function() {\n  this.published = true;\n  return await this.save();\n};\n\n// Step 2: Static Method (operates on the Model collection)\ncourseSchema.statics.findTopRated = function(minRating = 4.5) {\n  return this.find({ rating: { $gte: minRating } });\n};\n\nexport const Course = model(\"Course\", courseSchema);",
+  summary: "ការភ្ជាប់ទំនាក់ទំនង Parent-Child រវាង Course Collection និង Lesson Collection ក្នុង MongoDB៖\n\nរចនាសម្ព័ន្ធ៖\n* Course Document ផ្ទុកព័ត៌មានទូទៅនៃ Course\n* Lesson Document ផ្ទុក `courseId: { type: Schema.Types.ObjectId, ref: \"Course\" }`\n* សរសេរ Endpoint `GET /api/v1/courses/:courseId/lessons` ដោយ Query តាម `{ courseId }`",
+  codeSnippet: "// src/services/course.service.js\nimport { Lesson } from \"../models/lesson.model.js\";\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\n// GET /api/v1/courses/:courseId/lessons\nexport const getLessonsForCourse = async (courseId) => {\n  // 1. Verify parent course exists\n  const courseExists = await Course.exists({ _id: courseId });\n  if (!courseExists) {\n    throw new AppError(\"Course not found\", 404);\n  }\n\n  // 2. Fetch all child lessons belonging to this course\n  const lessons = await Lesson.find({ courseId }).sort(\"orderIndex\");\n  return lessons;\n};",
 };
 
 ```javascript
-import { Schema, model } from "mongoose";
+// src/services/course.service.js
+import { Lesson } from "../models/lesson.model.js";
+import { Course } from "../models/course.model.js";
+import { AppError } from "../errors/AppError.js";
 
-const courseSchema = new Schema({
-  title: String,
-  published: { type: Boolean, default: false },
-  rating: { type: Number, default: 0 }
-});
+// GET /api/v1/courses/:courseId/lessons
+export const getLessonsForCourse = async (courseId) => {
+  // 1. Verify parent course exists
+  const courseExists = await Course.exists({ _id: courseId });
+  if (!courseExists) {
+    throw new AppError("Course not found", 404);
+  }
 
-// Step 1: Instance Method (operates on 1 document)
-courseSchema.methods.publish = async function() {
-  this.published = true;
-  return await this.save();
+  // 2. Fetch all child lessons belonging to this course
+  const lessons = await Lesson.find({ courseId }).sort("orderIndex");
+  return lessons;
 };
-
-// Step 2: Static Method (operates on the Model collection)
-courseSchema.statics.findTopRated = function(minRating = 4.5) {
-  return this.find({ rating: { $gte: minRating } });
-};
-
-export const Course = model("Course", courseSchema);
 ```

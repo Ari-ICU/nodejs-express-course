@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការភ្ជាប់ Express Application ជាមួយ MongoDB ឱ្យដំណើរការស្របគ្នា៖\n\nលំដាប់លំដោយនៃការ Boot Server ត្រឹមត្រូវ៖\n1. ហៅ `await connectDB()` ជាមុនសិន\n2. នៅពេល MongoDB តភ្ជាប់ជោគជ័យ ទើបហៅ `app.listen(PORT)`\n\nវិធីនេះធានាថា គ្មាន Request របស់ Client ណាមួយមកដល់ Server នៅពេលដែល Database មិនទាន់ Ready ឡើយ។",
-  tip: "ប្រសិនបើ Database តភ្ជាប់មិនជោគជ័យ ចូរបញ្ឈប់ Process ភ្លាមៗ (`process.exit(1)`) ជៀសវាង Server ដំណើរការក្នុងស្ថានភាព Zombie State។",
-  objective: "ចេះភ្ជាប់ Express Server Startup ជាមួយ MongoDB Connection Readiness។",
-  expectedOutcome: "Server ចាប់ផ្តើមប្រកបដោយស្ថេរភាពខ្ពស់ និងផ្ទៀងផ្ទាត់ Database Connectivity ជាមុន។",
   codeSnippet: "// src/server.js\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/db.js\";\n\nconst PORT = process.env.PORT || 5000;\n\n// Step 1: Connect to MongoDB first!\nawait connectDB();\n\n// Step 2: Start Express HTTP listener after DB is connected\napp.listen(PORT, () => {\n  console.log(`🚀 Course Catalog Server running on http://localhost:${PORT}`);\n});",
 };
 

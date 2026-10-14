@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅក្នុង MongoDB មានយុទ្ធសាស្ត្ររៀបចំទំនាក់ទំនង ២ បែប។ ទីមួយគឺ **Embedding (Denormalization)** ដែលជាការដាក់ Sub-documents នៅក្នុង Document មេតែមួយ។\n\nពេលណាគួរប្រើ Embedding សម្រាប់ Course API៖\n* ទំនាក់ទំនង **1-to-Few** (ឧ. Course មួយមាន Course Requirements ចំនួន ៣-៥ ចំណុច ឬ Syllabus Summary)\n* ទិន្នន័យដែលតែងតែអានជាមួយគ្នាជានិច្ចក្នុង Request តែមួយ\n* ផ្តល់ល្បឿនអានលឿនបំផុតព្រោះមិនបាច់ធ្វើ JOIN ឬ $lookup",
-  tip: "ច្បាប់ណែនាំ៖ ប្រសិនបើទិន្នន័យកើនឡើងគ្មានដែនកំណត់ (Unbounded Growth ដូចជា Course Reviews រាប់សែន) កុំប្រើ Embedding ត្រូវប្រើ References ជំនួសវិញ។",
-  objective: "ចេះរចនា Embedded Documents សម្រាប់ទិន្នន័យដែលអានជាមួយគ្នាញឹកញាប់។",
-  expectedOutcome: "សមត្ថភាពបង្កើន Performance នៃការអានទិន្នន័យដោយកាត់បន្ថយ Multi-collection queries។",
   codeSnippet: "// Embedded Document Pattern: Course with embedded Instructor Profile\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Mastering Node.js & Express\",\n  \"price\": 49.99,\n  // 💡 Embedded sub-document: Always loaded together in 1 fast query!\n  \"instructor\": {\n    \"name\": \"Ratha\",\n    \"bio\": \"Senior Backend Architect\",\n    \"avatar\": \"https://cdn.example.com/ratha.jpg\"\n  },\n  \"modules\": [\n    { \"order\": 1, \"title\": \"Express Basics\" },\n    { \"order\": 2, \"title\": \"MongoDB Mastery\" }\n  ]\n}",
 };
 

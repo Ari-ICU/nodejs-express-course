@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "MongoDB Filter Operators ដ៏មានឥទ្ធិពល៖\n\n* **Comparison**៖ `$gt` (>), `$gte` (>=), `$lt` (<), `$lte` (<=), `$ne` (!=)\n* **Inclusion**៖ `$in: [...]` (ផ្គូផ្គងតម្លៃណាមួយក្នុង Array)\n* **Logical**៖ `$or: [...]`, `$and: [...]`",
-  tip: "សញ្ញា Dollar Sign (`$`) នៅពីមុខពាក្យ គឺជាអនុសញ្ញារបស់ MongoDB សម្រាប់សម្គាល់ Operators។",
-  objective: "ចេះប្រើប្រាស់ Comparison និង Logical Operators ក្នុង Mongoose Queries។",
-  expectedOutcome: "សមត្ថភាពសរសេរ Complex Queries សម្រាប់ Filtering Course Catalog។",
   codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Filter: Price between $20 and $60, and level is beginner or intermediate\nconst filteredCourses = await Course.find({\n  price: { $gte: 20, $lte: 60 },\n  level: { $in: [\"beginner\", \"intermediate\"] },\n  published: true\n});\n\n// Logical OR Query: Free courses OR Special promo courses\nconst promoCourses = await Course.find({\n  $or: [\n    { price: 0 },\n    { isPromo: true }\n  ]\n});",
 };
 

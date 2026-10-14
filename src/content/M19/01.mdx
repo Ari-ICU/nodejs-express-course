@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Uploading files requires handling binary streaming data rather than standard JSON payloads. HTTP transfers binary files using the `multipart/form-data` encoding format. Because `express.json()` only decodes application/json, specialized streaming parsers like `multer` are required to intercept, chunk, validate, and buffer binary byte streams into memory or disk.",
-  tip: "Never parse file uploads entirely in memory on production servers handling high concurrent traffic — large files can exhaust available Node.js RAM and trigger OOM crashes.",
-  objective: "Understand binary streams, MIME types, and multipart form encoding in HTTP file uploads.",
-  expectedOutcome: "Clear grasp of file upload life cycles from browser dispatch to server storage.",
   codeSnippet: "// HTTP Request Header for File Uploads:\n// POST /api/v1/uploads\n// Content-Type: multipart/form-data; boundary=---------------------------974767299852498929531610575\n//\n// ---------------------------974767299852498929531610575\n// Content-Disposition: form-data; name=\"avatar\"; filename=\"profile.png\"\n// Content-Type: image/png\n//\n// <Binary byte data here...>\n// ---------------------------974767299852498929531610575--",
 };
 

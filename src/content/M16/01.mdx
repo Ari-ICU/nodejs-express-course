@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Authentication (AuthN) answers 'Who are you?' by verifying identity through credentials like email/password or tokens. Authorization (AuthZ) answers 'What are you allowed to do?' by evaluating privileges, roles, and permissions against resources. In standard backend flows, Authentication must always succeed before Authorization evaluation begins.",
-  tip: "Remember: 401 Unauthorized strictly means unauthenticated (missing or invalid token). 403 Forbidden means authenticated, but lacking sufficient permissions for that resource.",
-  objective: "Distinguish between identity verification (AuthN) and access entitlement (AuthZ) in backend system design.",
-  expectedOutcome: "Accurate architectural separation and correct HTTP status code usage (401 vs 403).",
   codeSnippet: "// Concept breakdown in Express middleware flow:\n// 1. Authentication (Who are you?) -> returns 401 if unauthenticated\napp.use(\"/api/admin/*\", verifyAuthToken);\n\n// 2. Authorization (What can you do?) -> returns 403 if unauthorized\napp.delete(\"/api/admin/users/:id\", (req, res) => {\n  if (req.user.role !== \"superadmin\") {\n    return res.status(403).json({\n      status: \"fail\",\n      message: \"Forbidden: Only superadmins can delete user accounts\"\n    });\n  }\n  // Proceed with deletion...\n});",
 };
 

@@ -19,9 +19,6 @@ export const M10 = [
 * **ពិបាក Maintain**៖ ឯកសារមួយមានកូដរាប់ពាន់ជួរ ងាយនឹងបង្កើត Bugs
 
 **ដំណោះស្រាយ**៖ បែងចែកជា ៣ ស្រទាប់ (3-Tier Architecture)៖ **Routes ➔ Controllers ➔ Services**។`,
-    tip: "ច្បាប់មាសនៃ Clean Architecture៖ Controller គួរតែ 'ស្គម' (Slim Controller) ហើយ Service គួរតែ 'សម្បូរបែប' (Rich Service)។",
-    objective: "យល់ដឹងពីគុណវិបត្តិនៃ Fat Controllers និងគុណសម្បត្តិនៃ 3-Tier Architecture។",
-    expectedOutcome: "មានផ្នត់គំនិតស្ថាបត្យកម្មច្បាស់លាស់ក្នុងការបំបែកកូដឱ្យមានរបៀបរៀបរយ។",
     codeSnippet: `// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)
 app.post("/api/v1/courses/:id/enroll", async (req, res) => {
   // 1. Validation mixed in
@@ -56,9 +53,6 @@ app.post("/api/v1/courses/:id/enroll", async (req, res) => {
 3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (\`200\`, \`201\`)
 
 Controller មិនត្រូវមាន Business Logic, MongoDB Queries ដោយផ្ទាល់ ឬ Payment Code ឡើយ!`,
-    tip: "ប្រសិនបើអ្នកឃើញ Controller របស់អ្នកមានកូដច្រើនជាង ១៥-២០ ជួរ នោះមានន័យថាអ្នកកំពុងដាក់ Business Logic ខុសកន្លែងហើយ — ត្រូវរើវាទៅកាន់ Service វិញ។",
-    objective: "ចេះសរសេរ Slim Controller ដែលផ្តោតតែលើ HTTP Orchestration។",
-    expectedOutcome: "Controller មានភាពសាមញ្ញ ងាយស្រួលអាន និងស្អាត។",
     codeSnippet: `// src/controllers/course.controller.js
 import * as courseService from "../services/course.service.js";
 
@@ -96,9 +90,6 @@ export const getAllCourses = async (req, res, next) => {
 * **គ្មានការពាក់ព័ន្ធនឹង HTTP**៖ មិនដែលឃើញពាក្យ \`req\` ឬ \`res\` ក្នុង Service ឡើយ
 * **Throw Custom Domain Errors**៖ បោះកំហុស \`AppError\` នៅពេលខុសលក្ខខណ្ឌ Business Rule
 * **100% Testable**៖ អាចសរសេរ Unit Test បានយ៉ាងងាយស្រួលដោយមិនបាច់ប្រើ Express ឬ Supertest!`,
-    tip: "ច្បាប់តឹងរ៉ឹង៖ កុំ Import `express` ឬ Pass `req` ឬ `res` ចូលទៅក្នុង Service Layer ឱ្យសោះ!",
-    objective: "ចេះបង្កើត Service Layer ដែលឯករាជ្យពី HTTP Framework។",
-    expectedOutcome: "Business Logic មានភាពស្អាត អាចសាកល្បងដោយ Unit Tests បានយ៉ាងងាយស្រួល។",
     codeSnippet: `// src/services/course.service.js
 
 // Simulated database data store
@@ -155,9 +146,6 @@ router.get("/:id", authGuard, courseController.getCourseById);
 \`\`\`
 
 រចនាសម្ព័ន្ធបែបនេះជួយឱ្យអ្នកណាក៏ដោយដែលបើកមើលឯកសារ Routes អាចយល់បានភ្លាមៗក្នុងរយៈពេល ៥ វិនាទីពី Endpoints ទាំងអស់នៃ Module។`,
-    tip: "រក្សាឯកសារ Route ឱ្យខ្លី និងស្អាត។ វាមិនគួរមាន Callback Function លើសពី ៣ ជួរឡើយ។",
-    objective: "ចេះរៀបចំ Route File ឱ្យមានលក្ខណៈ Declarative និងច្បាស់លាស់។",
-    expectedOutcome: "Routes ដើរតួជាផែនទីបង្ហាញផ្លូវដ៏ស្អាតនៃ Application API។",
     codeSnippet: `// src/routes/course.routes.js
 import express from "express";
 import * as courseController from "../controllers/course.controller.js";
@@ -195,9 +183,6 @@ export default router;`,
 3. **Service Layer (\`services/\`)**៖
    * ផ្ទុក Business Logic, Calculations, Security Rules
    * ទំនាក់ទំនងជាមួយ MongoDB Database (Mongoose Models)`,
-    tip: "ប្រសិនបើថ្ងៃក្រោយអ្នកចង់ប្តូរពី Express ទៅ Fastify ឬ Nest.js អ្នកគ្រាន់តែកែ Controller ប៉ុណ្ណោះ ចំណែក Service Layer ទាំងមូលនៅតែអាចប្រើប្រាស់បានដដែល ១០០%!",
-    objective: "យល់ច្បាស់ពីលំហូរការងារ និងព្រំដែនទំនួលខុសត្រូវនៃស្រទាប់នីមួយៗ។",
-    expectedOutcome: "សមត្ថភាពរចនា Codebase តាមស្តង់ដារស្ថាបត្យកម្មកម្រិតខ្ពស់។",
     codeSnippet: `/*
   ==============================================================
   DATA FLOW IN 3-TIER ARCHITECTURE (Node + Express + MongoDB):
@@ -239,9 +224,6 @@ export default router;`,
    * គណនាតម្លៃបញ្ចុះតម្លៃ (Discount)
    * បញ្ចូលឈ្មោះ Student ទៅក្នុងបញ្ជី
 4. **Controller**៖ ទទួលលទ្ធផលជោគជ័យ រួចឆ្លើយតប \`200 OK\` ជាមួយ Enrollment Receipt`,
-    tip: "ការបំបែកបែបនេះធ្វើឱ្យកូដងាយស្រួលពន្យល់សិស្សជាជំហានៗ៖ ជំហានទី ១ (HTTP), ជំហានទី ២ (Logic), ជំហានទី ៣ (Result)។",
-    objective: "ចេះសរសេរ Integration ពេញលេញរវាង Controller និង Service លើ Real-world Feature។",
-    expectedOutcome: "បង្កើត Feature ដែលមានស្ថាបត្យកម្មស្អាត និងងាយស្រួលពង្រីក។",
     codeSnippet: `// 1. IN SERVICE (src/services/enrollment.service.js):
 export const enrollStudentInCourse = async (courseId, student) => {
   // Business Rule 1: Validate course exists
@@ -287,9 +269,6 @@ export const handleEnrollment = async (req, res, next) => {
 1. **Express HTTP Controller** (ពេល Admin ចុចមើលរបាយការណ៍លើ Dashboard)
 2. **Scheduled Cron Job** (ផ្ញើ Email សង្ខេបរបាយការណ៍រៀងរាល់យប់ម៉ោង ១២)
 3. **CLI Script / Seed Command** (ពេល Developer ដំណើរការតាម Terminal)`,
-    tip: "ប្រសិនបើ Logic នោះស្ថិតនៅក្នុង Controller នោះ Cron Job ឬ CLI Tool នឹងមិនអាចហៅវាប្រើបានឡើយ ព្រោះគ្មាន `req` និង `res`!",
-    objective: "យល់ច្បាស់ពីមូលហេតុដែល Service Logic ត្រូវតែឯករាជ្យពី HTTP Layer។",
-    expectedOutcome: "ចេះបង្កើត Service Functions ដែលអាចហៅប្រើបានពីច្រើន Contexts (API, CLI, Cron)។",
     codeSnippet: `// src/services/course.service.js
 export const calculateCourseMetrics = (courses) => {
   const totalRevenue = courses.reduce((sum, c) => sum + (c.price * (c.enrolledCount || 0)), 0);
@@ -321,9 +300,6 @@ export const calculateCourseMetrics = (courses) => {
 **ដំណោះស្រាយស្តង់ដារ**៖ បង្កើត Custom **\`AppError\`** Class ដែលពង្រីកពី \`Error\` ដើមរបស់ JavaScript ដោយបន្ថែម \`statusCode\` និង \`isOperational\` flag។
 
 បន្ទាប់មក Service គ្រាន់តែ \`throw new AppError("Course not found", 404)\` ហើយ Centralized Error Middleware នឹងចាប់យកទៅចាត់ចែងដោយស្វ័យប្រវត្តិ។`,
-    tip: "`isOperational: true` បញ្ជាក់ថានេះជាកំហុសដែលយើងបានដឹងមុន (Expected Error ដូចជា Input ខុស ឬ NotFound) មិនមែនជា Bug បច្ចេកទេសដែលធ្វើឱ្យ Server Crash ឡើយ។",
-    objective: "ចេះបង្កើត Custom AppError Class និង Throw ចេញពី Service Layer។",
-    expectedOutcome: "ប្រព័ន្ធ Error Handling មានភាពស្អាត គ្មាន Try/Catch ស្ទួនៗក្នុងគ្រប់ Controller។",
     codeSnippet: `// Step 1: Enterprise Custom Application Error Class
 export class AppError extends Error {
   constructor(message, statusCode) {
@@ -362,9 +338,6 @@ export const getCourseById = (id, courses) => {
 * **src/services/**៖ ផ្ទុក Pure Business Logic
 * **src/errors/**៖ ផ្ទុក \`AppError\` classes
 * **src/middlewares/**៖ ផ្ទុក Auth, Validation, Logger, និង Central Error Handler`,
-    tip: "អនុវត្តការដាក់ឈ្មោះឯកសារឱ្យស៊ីសង្វាក់គ្នា (Naming Consistency) ដូចជា `course.routes.js`, `course.controller.js`, និង `course.service.js` ដើម្បីងាយស្រួលស្វែងរក។",
-    objective: "ចេះរៀបចំ Folder Structure សម្រាប់គម្រោងកម្រិត Enterprise។",
-    expectedOutcome: "រចនាសម្ព័ន្ធឯកសារមានរបៀបរៀបរយ ស្របតាមឧស្សាហកម្ម Software Engineering។",
     codeSnippet: `course-catalog-api/
 ├── package.json
 ├── src/
@@ -401,9 +374,6 @@ export const getCourseById = (id, courses) => {
 3. **Never Expose Sensitive Details**៖ លាក់ Stack Trace នៅលើ Production Environment
 4. **Environment Isolation**៖ មិន Hardcode Secrets ឬ Ports (ប្រើប្រាស់ \`.env\`)
 5. **Deterministic Testing**៖ សរសេរ Unit Tests លើ Service Layer និង Integration Tests (Supertest) លើ Endpoints`,
-    tip: "នៅពេលដែលកូដក្នុងឯកសារមួយលើសពី ២០០-៣០០ ជួរ នោះជាសញ្ញាបញ្ជាក់ថាដល់ពេលត្រូវ Refactor និងបំបែកជា Services ឬ Utilities ហើយ។",
-    objective: "ស្វែងយល់ពី Best Practices សំខាន់ៗសម្រាប់ការសរសេរ Backend ប្រកបដោយនិរន្តរភាព។",
-    expectedOutcome: "មានសមត្ថភាពអភិវឌ្ឍ និងថែទាំ Enterprise Node.js/Express Backend ប្រកបដោយទំនុកចិត្ត។",
     codeSnippet: `/*
   ==============================================================
   ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:

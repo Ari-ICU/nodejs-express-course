@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការសរសេរ Course Controller ដែលភ្ជាប់ទៅកាន់ MongoDB Service Layer៖\n\nលក្ខណៈស្តង់ដារ៖\n* រុំដោយ `asyncHandler` ដើម្បីកាត់បន្ថយ `try/catch` boilerplate\n* ទទួល `req.body` ឬ `req.query` រួចហៅ Service\n* បញ្ជូន Standard JSON Envelope ត្រឡប់ទៅ Client",
-  tip: "រក្សា Controller ឱ្យស្គម (Slim Controller) ដោយមិនសរសេរ Mongoose Query ដោយផ្ទាល់ក្នុង Controller ឡើយ។",
-  objective: "ចេះសរសេរ Controller ដែល Handle Database Queries តាមស្ថាបត្យកម្មស្អាត។",
-  expectedOutcome: "Controller មានរបៀបរៀបរយ និងបញ្ជូន Errors ទៅ Error Middleware ដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "// src/controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\nimport { asyncHandler } from \"../utils/asyncHandler.js\";\n\n// GET /api/v1/courses\nexport const getCourses = asyncHandler(async (req, res) => {\n  const courses = await courseService.getAllCourses(req.query);\n  res.status(200).json({ success: true, count: courses.length, data: courses });\n});\n\n// POST /api/v1/courses\nexport const createCourse = asyncHandler(async (req, res) => {\n  const newCourse = await courseService.createCourse(req.body);\n  res.status(201).json({ success: true, data: newCourse });\n});",
 };
 

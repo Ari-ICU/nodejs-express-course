@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Collection** គឺជាបណ្តុំនៃ Documents ដែលប្រៀបដូចជា Table ក្នុង SQL ដែរ។\n\nលក្ខណៈពិសេស៖\n* Collections មិនបង្ខំ Strict Schema នៅកម្រិត Database Engine ឡើយ\n* អនុសញ្ញាដាក់ឈ្មោះ៖ ប្រើ **Lowercase Plural Nouns** ជានិច្ច (ដូចជា `courses`, `lessons`, `users`)\n* Collections ចម្បងក្នុង Course API របស់យើង៖ `courses`, `lessons`, និង `users`",
-  tip: "ជៀសវាងដាក់ឈ្មោះ Collection ជាឯកវចនៈ (ដូចជា `course`) ព្រោះស្តង់ដារ REST និង MongoDB អនុវត្តតាម Plural (`courses`)។",
-  objective: "ចេះបង្កើត ពិនិត្យមើល និងគ្រប់គ្រង Collections ក្នុង MongoDB។",
-  expectedOutcome: "បង្កើត Collections សម្រាប់ Course Catalog API បានត្រឹមត្រូវ។",
   codeSnippet: "// In mongosh:\n// Step 1: Explicitly create collection\ndb.createCollection(\"courses\");\ndb.createCollection(\"lessons\");\n\n// Step 2: List all collections in current database\nshow collections;\n// Output: courses, lessons\n\n// Step 3: Drop collection if needed\n// db.courses.drop();",
 };
 

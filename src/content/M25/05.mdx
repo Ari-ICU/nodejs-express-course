@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Without indexes, MongoDB must perform a Collection Scan (`COLLSCAN`), inspecting every single document in the collection to satisfy a query. Indexes create ordered B-tree data structures that locate matching documents in milliseconds (`IXSCAN`). Single-field, compound, and text indexes are essential for scalable databases.",
-  tip: "Use `explain('executionStats')` on your queries to verify they use `IXSCAN` (index scan) instead of `COLLSCAN` (table scan).",
-  objective: "Design efficient single-field and compound indexes supporting common query patterns.",
-  expectedOutcome: "Transformation of slow collection scans into high-speed index lookups.",
   codeSnippet: "const courseSchema = new mongoose.Schema({\n  title: { type: String, required: true },\n  category: { type: String, index: true }, // Single-field index\n  price: Number,\n  createdAt: Date,\n});\n\n// Compound index for queries that filter by category and sort by price:\n// db.courses.find({ category: \"Web Development\" }).sort({ price: -1 })\ncourseSchema.index({ category: 1, price: -1 });\n\n// Verify query execution in MongoDB:\n// await Course.find({ category: \"Web Development\" }).explain(\"executionStats\");",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Production GET Endpoint មិនគួរត្រឡប់ត្រឹមតែ Raw Array ឡើយ។ វាត្រូវត្រឡប់ Standard JSON Envelope ដែលមាន Metadata ច្បាស់លាស់៖\n\n* `success: true` (Status indicator)\n* `count` (ចំនួន Items ក្នុង Response)\n* `data` (Array នៃ Resources)\n* `timestamp` (ពេលវេលា Response ត្រូវបានបង្កើត)",
-  tip: "ការរុំ Array ក្នុង Object (`{ success: true, data: [...] }`) ក៏ជួយការពារពី JSON Hijacking Vulnerability ក្នុង Web Browsers ចាស់ៗផងដែរ។",
-  objective: "ចេះសរសេរ Production GET Endpoint ជាមួយ Standard Response Envelope។",
-  expectedOutcome: "ឆ្លើយតប Data ដែលមានរចនាសម្ព័ន្ធច្បាស់លាស់ ងាយស្រួល Consume ដោយ Frontend។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"Node.js Fundamentals\", price: 29.99, level: \"beginner\" },\n  { id: 2, title: \"Express.js Architecture\", price: 49.99, level: \"advanced\" }\n];\n\n// Production GET Endpoint\napp.get(\"/api/v1/courses\", (req, res) => {\n  // Step 1: Query data from store\n  const results = courses;\n\n  // Step 2: Return standardized envelope with metadata\n  return res.status(200).json({\n    success: true,\n    count: results.length,\n    data: results,\n    meta: {\n      timestamp: new Date().toISOString(),\n      apiVersion: \"1.0.0\"\n    }\n  });\n});",
 };
 

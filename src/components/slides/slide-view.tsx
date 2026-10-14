@@ -6,8 +6,6 @@ import { useSearchParams } from "next/navigation";
 import {
   ChevronLeft,
   ChevronRight,
-  Sparkles,
-  Play,
   CheckCircle2,
   Bookmark,
   FileText,
@@ -335,53 +333,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
                 <MdxContent content={mdxMeta?.summary ?? activeTopic.summary ?? ""} />
               </div>
 
-              {/* Guidance Cards: Pro Insight, Objective, Expected Outcome */}
-              <div className="mt-5 space-y-3">
-                {/* Pro Insight (Tip) */}
-                {(mdxMeta?.tip || activeTopic.tip) && (
-                  <div className="rounded-xl p-3.5 sm:p-4 bg-gradient-to-br from-amber-50/90 to-amber-100/40 border border-amber-200/90 shadow-2xs">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-800">
-                        គន្លឹះសំខាន់ · PRO INSIGHT
-                      </span>
-                    </div>
-                    <div className="text-xs sm:text-sm font-medium text-amber-950 leading-relaxed pl-6">
-                      <MdxContent content={mdxMeta?.tip || activeTopic.tip || ""} />
-                    </div>
-                  </div>
-                )}
 
-                {/* Objective */}
-                {(mdxMeta?.objective || activeTopic.objective) && (
-                  <div className="rounded-xl p-3.5 sm:p-4 bg-gradient-to-br from-slate-50 to-slate-100/60 border border-slate-200 shadow-2xs">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Play className="w-4 h-4 text-emerald-600 shrink-0 fill-emerald-600/20" />
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700">
-                        គោលបំណងរៀនសូត្រ · LEARNING OBJECTIVE
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed pl-6">
-                      {mdxMeta?.objective || activeTopic.objective}
-                    </p>
-                  </div>
-                )}
-
-                {/* Expected Outcome */}
-                {(mdxMeta?.expectedOutcome || activeTopic.expectedOutcome) && (
-                  <div className="rounded-xl p-3.5 sm:p-4 bg-gradient-to-br from-emerald-50/80 to-emerald-100/30 border border-emerald-200 shadow-2xs">
-                    <div className="flex items-center gap-2 mb-1">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-800">
-                        លទ្ធផលរំពឹងទុក · EXPECTED OUTCOME
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm font-semibold text-emerald-950 leading-relaxed pl-6">
-                      {mdxMeta?.expectedOutcome || activeTopic.expectedOutcome}
-                    </p>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Unrestricted file size limits allow malicious actors to flood server storage and cause memory exhaustion. Multer accepts a `limits` object where `fileSize` specifies the maximum byte threshold. When a file exceeds the limit, Multer aborts and raises a `LIMIT_FILE_SIZE` error code, which must be converted into a friendly 400 response.",
-  tip: "Catch `multer.MulterError` in your global Express error middleware to deliver clean, custom error messages instead of raw crash traces.",
-  objective: "Enforce strict byte limits on uploads and handle MulterError exceptions gracefully.",
-  expectedOutcome: "Predictable, user-friendly 400 Bad Request responses upon file size violations.",
   codeSnippet: "// 1. Configure limit\nconst upload = multer({\n  limits: {\n    fileSize: 2 * 1024 * 1024, // 2MB in bytes\n    files: 5, // Maximum 5 files per request\n  },\n});\n\n// 2. Catch MulterError in global error middleware:\nexport const handleMulterError = (err, req, res, next) => {\n  if (err instanceof multer.MulterError) {\n    if (err.code === \"LIMIT_FILE_SIZE\") {\n      return res.status(400).json({\n        status: \"fail\",\n        message: \"File too large. Maximum allowed size is 2MB.\",\n      });\n    }\n    return res.status(400).json({ status: \"fail\", message: err.message });\n  }\n  next(err);\n};",
 };
 

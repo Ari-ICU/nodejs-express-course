@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ជំនួសឱ្យការប្រើ Regex យឺត MongoDB ផ្តល់នូវ **Full-Text Search Indexes** ដ៏មានអានុភាព៖\n\n1. បង្កើត Text Index លើ Schema៖\n   `courseSchema.index({ title: \"text\", description: \"text\" })`\n2. ធ្វើការ Search ដោយប្រើ `$text` Operator៖\n   `Course.find({ $text: { $search: \"express node\" } })`\n3. គាំទ្រ Word Stemming, Case-insensitivity, និង Relevance Scoring!",
-  tip: "MongoDB Text Search ដំណើរការលឿនជាង Regex រាប់រយដង ព្រោះវាប្រើប្រាស់ Inverted Index Architecture។",
-  objective: "ចេះបង្កើត Text Indexes និង Query ដោយប្រើ $text operator ក្នុង MongoDB។",
-  expectedOutcome: "ប្រព័ន្ធ Search រហ័ស និងមានសមត្ថភាពខ្ពស់លើ Course Catalog។",
   codeSnippet: "// src/models/course.model.js (Text Indexes)\n// courseSchema.index({ title: \"text\", description: \"text\" });\n\nimport { Course } from \"../models/course.model.js\";\n\n// Step 2: Full-text Search service function\nexport const searchCoursesService = async (searchTerm) => {\n  // Query using MongoDB $text operator\n  const courses = await Course.find(\n    { $text: { $search: searchTerm } },\n    { score: { $meta: \"textScore\" } } // Calculate search relevance score\n  ).sort({ score: { $meta: \"textScore\" } }); // Sort by most relevant!\n\n  return courses;\n};",
 };
 

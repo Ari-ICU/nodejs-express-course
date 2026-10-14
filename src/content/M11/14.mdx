@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "ច្បាប់មាសនៃ **MongoDB Data Modeling** សម្រាប់ High Performance APIs៖\n\n1. **Model for Application Access Patterns**៖ រចនាទិន្នន័យផ្អែកលើរបៀបដែល Application ត្រូវអានទិន្នន័យ (Read-heavy vs Write-heavy)\n2. **Favor Embedding unless there's a compelling reason**៖ បង្កប់ទិន្នន័យប្រសិនបើវាត្រូវបានអានជាមួយគ្នាជានិច្ច\n3. **Avoid Unbounded Arrays**៖ កុំឱ្យ Array ក្នុង Document កើនឡើងគ្មានទីបញ្ចប់ (ហានិភ័យលើសទំហំ 16MB)\n4. **Use References for Many-to-Many Relationships**៖ ប្រើ ObjectId References សម្រាប់ទំនាក់ទំនងធំៗ",
-  tip: "នៅក្នុង NoSQL Data Modeling មិនមែនដូច SQL ទេ៖ ការ Duplicate ទិន្នន័យតិចតួច (Denormalization) ដើម្បីឱ្យ Query លឿន គឺជាការអនុវត្តទូទៅ និងត្រូវបានលើកទឹកចិត្ត។",
-  objective: "យល់ដឹងពីយុទ្ធសាស្ត្ររចនា Schema NoSQL ប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
-  expectedOutcome: "រចនា Database Schema សម្រាប់ Course Catalog API ដែលដំណើរការលឿន និង Scalable។",
   codeSnippet: "/* SUMMARY OF DATA MODELING PATTERNS:\n   -------------------------------------------------------------\n   1. 1-to-Few (Course -> Requirements)\n      ➔ Embed as an Array of Strings: [\"JavaScript Basics\", \"Git\"]\n\n   2. 1-to-Many (Course -> Lessons)\n      ➔ Reference: Lessons store parent courseId: ObjectId(\"...\")\n\n   3. Many-to-Many (Users <-> Courses Enrollments)\n      ➔ Separate Collection \"enrollments\" referencing both userId and courseId\n   -------------------------------------------------------------\n*/",
 };
 

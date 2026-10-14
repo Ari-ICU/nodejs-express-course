@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Build a production-grade Course Media & Catalog API with multi-file uploads (course thumbnails and lesson PDF worksheets) to Cloudflare R2 / S3, category management, text search with MongoDB $text indexes, compound indexes for fast query execution, price range filtering, Redis response caching on public endpoints, and RBAC instructor/admin guards for write operations.",
-  tip: "Apply the Redis cache-aside pattern on GET /courses with a 60-second TTL, and invalidate the cache on every create/update/delete operation.",
-  objective: "Build a complete course media & catalog API with search, filtering, thumbnail uploads, and Redis caching.",
-  expectedOutcome: "High-performance course API with sub-10ms cached responses and instructor RBAC.",
   codeSnippet: "export const getCourses = catchAsync(async (req, res) => {\n  const cacheKey = `courses:${JSON.stringify(req.query)}`;\n  const cached = await redis.get(cacheKey);\n  if (cached) return res.json(JSON.parse(cached));\n\n  const courses = await Course.find(filter)\n    .sort(sort || \"-createdAt\")\n    .skip((page - 1) * limit).limit(Number(limit))\n    .populate(\"instructor\", \"name email\");\n\n  const body = { success: true, count: courses.length, data: courses };\n  await redis.set(cacheKey, JSON.stringify(body), \"EX\", 60);\n  res.json(body);\n});",
 };
 

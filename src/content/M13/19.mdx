@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**MongoDB Multi-Document Transactions** ផ្តល់នូវការធានា **ACID** ពេញលេញនៅពេលដែលអ្នកត្រូវកែប្រែ Documents ច្រើនក្នុងពេលតែមួយ។\n\nឧទាហរណ៍ជាក់ស្តែង៖ Course Enrollment Workflow\n1. បង្កើត Enrollment Record\n2. បន្ថែម Student Count លើ Course (`$inc: { studentsCount: 1 }`)\n3. កាត់កង Balance / Create Invoice\n4. ប្រសិនបើមានជំហានណាមួយបរាជ័យ (Fail) នោះ **Rollback** ការផ្លាស់ប្តូរទាំងអស់ត្រឡប់មកវិញដោយស្វ័យប្រវត្តិ (All-or-Nothing)!",
-  tip: "Transactions តម្រូវឱ្យ MongoDB ដំណើរការលើ Replica Set (Atlas គាំទ្រដោយស្វ័យប្រវត្តិ)។ ប្រើប្រាស់ `mongoose.startSession()`។",
-  objective: "ចេះប្រើប្រាស់ MongoDB Transactions ដើម្បីការពារ Data Inconsistency។",
-  expectedOutcome: "បង្កើត Atomic Business Transactions ដែលមានភាពជឿជាក់ខ្ពស់បំផុត។",
   codeSnippet: "// src/services/enrollment.service.js\nimport mongoose from \"mongoose\";\nimport { Course } from \"../models/course.model.js\";\nimport { Enrollment } from \"../models/enrollment.model.js\";\n\nexport const enrollStudentTransaction = async (courseId, studentId) => {\n  // Step 1: Start Mongoose Client Session\n  const session = await mongoose.startSession();\n  session.startTransaction();\n\n  try {\n    // Step 2: Create Enrollment Document inside session\n    const [enrollment] = await Enrollment.create(\n      [{ courseId, studentId, enrolledAt: new Date() }],\n      { session }\n    );\n\n    // Step 3: Increment course student counter inside session\n    await Course.findByIdAndUpdate(\n      courseId,\n      { $inc: { studentsCount: 1 } },\n      { session }\n    );\n\n    // Step 4: Commit Transaction permanently to database\n    await session.commitTransaction();\n    return enrollment;\n  } catch (error) {\n    // ⚠️ On error: Abort transaction and rollback all database writes!\n    await session.abortTransaction();\n    throw error;\n  } finally {\n    session.endSession(); // Always end session!\n  }\n};",
 };
 

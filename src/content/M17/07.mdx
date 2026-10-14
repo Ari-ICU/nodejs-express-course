@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Resource ownership ensures that instructors can only edit or delete courses they authored, and students can only view or cancel their own enrollments. An instructor might have permission to update courses, but only courses where `course.instructor.toString() === req.user._id.toString()`. Administrators typically bypass ownership checks via admin privilege logic.",
-  tip: "Always convert MongoDB ObjectIds to strings with `.toString()` when comparing `doc.instructor.toString() === req.user._id.toString()`, because two distinct ObjectId instances never match with `===`.",
-  objective: "Implement resource ownership checks ensuring instructors can only mutate their own courses.",
-  expectedOutcome: "Bulletproof data protection preventing Horizontal Privilege Escalation (IDOR).",
   codeSnippet: "// controllers/course.controller.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const updateCourse = async (req, res, next) => {\n  try {\n    const course = await Course.findById(req.params.id);\n    if (!course) throw new AppError(\"Course not found\", 404);\n\n    // Check ownership: Must be course instructor OR an administrator\n    const isOwner = course.instructor.toString() === req.user._id.toString();\n    const isAdmin = req.user.role === \"admin\";\n\n    if (!isOwner && !isAdmin) {\n      throw new AppError(\"You do not have permission to edit this course\", 403);\n    }\n\n    // Apply updates...\n    course.title = req.body.title || course.title;\n    course.description = req.body.description || course.description;\n    await course.save();\n\n    res.json({ status: \"success\", data: { course } });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

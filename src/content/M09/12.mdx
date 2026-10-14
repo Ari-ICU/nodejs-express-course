@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Standard JSON Envelope** គឺជាការរចនា Response Object ដែលមានភាពស៊ីសង្វាក់គ្នា (Consistent) លើគ្រប់ Endpoints ទាំងអស់នៃប្រព័ន្ធ។\n\nរចនាសម្ព័ន្ធស្តង់ដារ៖\n```json\n{\n  \"success\": true,\n  \"count\": 2,\n  \"data\": [...],\n  \"meta\": {\n    \"page\": 1,\n    \"limit\": 10,\n    \"total\": 42\n  }\n}\n```",
-  tip: "ភាពស៊ីសង្វាក់គ្នានៃ JSON Envelope ជួយឱ្យ Frontend Team អាចសរសេរ TypeScript Interface តែមួយ (`ApiResponse<T>`) សម្រាប់ប្រើទូទាំង Frontend App។",
-  objective: "ចេះរចនា និងអនុវត្ត JSON Response Envelope តាមស្តង់ដារឧស្សាហកម្ម។",
-  expectedOutcome: "Frontend ទទួលបាន Response ដែលមានទម្រង់ Predictable និងងាយស្រួលបង្កើត UI State។",
   codeSnippet: "// Reusable Response Helper Utility\nexport const sendSuccess = (res, statusCode, data, meta = {}) => {\n  return res.status(statusCode).json({\n    success: true,\n    count: Array.isArray(data) ? data.length : undefined,\n    data,\n    meta: {\n      timestamp: new Date().toISOString(),\n      ...meta\n    }\n  });\n};\n\n// Usage in Route:\n// sendSuccess(res, 200, courses, { page: 1, total: 42 });",
 };
 

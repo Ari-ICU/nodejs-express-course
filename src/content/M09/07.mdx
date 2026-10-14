@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Production POST Endpoint ត្រូវអនុវត្តតាមលក្ខខណ្ឌវិជ្ជាជីវៈ៖\n\n1. **Validation**៖ ពិនិត្យភាពត្រឹមត្រូវនៃ Payload\n2. **Duplicate Prevention**៖ ពិនិត្យថាតើ Course Title នេះមានរួចហើយឬនៅ\n3. **HTTP 201 Created**៖ ឆ្លើយតប Status 201\n4. **Location Header**៖ កំណត់ Header `Location: /api/v1/courses/:id` ដែលចង្អុលបង្ហាញផ្លូវទៅកាន់ Resource ដែលទើបនឹងបង្កើតថ្មី",
-  tip: "Header `Location` គឺជា REST Standard ដែលជួយឱ្យ Client ដឹងភ្លាមៗពី URL នៃ Resource ថ្មីដោយមិនបាច់ទាយ។",
-  objective: "ចេះបង្កើត Production-grade POST Endpoint ជាមួយ Location Header។",
-  expectedOutcome: "Endpoint បង្កើតទិន្នន័យប្រកបដោយសុវត្ថិភាព និងអនុលោមតាម HTTP Specifications។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nconst courses = [{ id: 1, title: \"Node.js Fundamentals\" }];\n\napp.post(\"/api/v1/courses\", (req, res) => {\n  const { title, price } = req.body;\n\n  // Step 1: Validation\n  if (!title || typeof title !== \"string\") {\n    return res.status(400).json({ success: false, error: \"Title is required\" });\n  }\n\n  // Step 2: Prevent duplicates\n  const exists = courses.some(c => c.title.toLowerCase() === title.toLowerCase());\n  if (exists) {\n    return res.status(409).json({ success: false, error: \"A course with this title already exists\" });\n  }\n\n  // Step 3: Create course entity\n  const newCourse = { id: courses.length + 1, title, price: Number(price) || 0 };\n  courses.push(newCourse);\n\n  // Step 4: Set Location header & respond with 201 Created\n  const resourceUrl = `/api/v1/courses/${newCourse.id}`;\n  res.setHeader(\"Location\", resourceUrl);\n\n  return res.status(201).json({\n    success: true,\n    data: newCourse,\n    location: resourceUrl\n  });\n});",
 };
 

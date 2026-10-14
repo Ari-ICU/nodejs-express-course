@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅពេល Client បញ្ជូន ID មិនត្រូវតាមទម្រង់ 24 Hex Characters នៃ MongoDB ObjectId (ឧ. `/api/v1/courses/invalid-id-123`) Mongoose នឹងបោះកំហុស **`CastError`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.name === \"CastError\")`\n* បំប្លែងទៅជា Human-readable 400 Bad Request៖ ``new AppError(`Invalid ${err.path}: ${err.value}`, 400)``",
-  tip: "ការដោះស្រាយ CastError ការពារកុំឱ្យ Error នេះធ្លាយចេញជា 500 Internal Server Error ដ៏អាក្រក់មើល។",
-  objective: "ចេះដោះស្រាយ CastError នៃ MongoDB ObjectId ឱ្យក្លាយជា 400 Bad Request។",
-  expectedOutcome: "API ឆ្លើយតបសារកំហុសសមរម្យនៅពេល Client វាយ ID ខុសទម្រង់។",
   codeSnippet: "import { AppError } from \"../errors/AppError.js\";\n\n// Helper: Handle Invalid MongoDB ObjectId CastError\nexport const handleMongooseCastError = (err) => {\n  const message = `Invalid ${err.path}: '${err.value}' is not a valid MongoDB ObjectId`;\n  return new AppError(message, 400);\n};\n\n// In global error handler:\n// if (err.name === \"CastError\") err = handleMongooseCastError(err);",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Background jobs are asynchronous tasks that execute outside the critical request-response cycle of an HTTP server. Heavy computations (video transcoding, large CSV generation, external API syncs, batch emails) that take seconds or minutes to complete are moved out of HTTP handlers so users receive instant HTTP responses.",
-  tip: "If a task takes longer than 200ms to complete, offload it to a background job instead of holding the HTTP connection open.",
-  objective: "Understand why long-running computational tasks must run asynchronously in the background.",
-  expectedOutcome: "Clear criteria for identifying tasks that should be offloaded from HTTP threads.",
   codeSnippet: "// Synchronous (Bad UX - 5s delay):\n// POST /checkout -> [Charge Card] -> [Generate PDF Invoice (4s)] -> [Send Email (1s)] -> 200 OK (5.2s total!)\n\n// Asynchronous Background Jobs (Great UX - 50ms):\n// POST /checkout -> [Charge Card] -> [Enqueue Job: invoice + email] -> 200 OK (50ms!)\n// [Background Worker] consumes job in background and emails PDF without blocking user.",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅពេលដែល Client បញ្ជូនទិន្នន័យពី HTML Form ស្តង់ដារ (Header `Content-Type: application/x-www-form-urlencoded`) យើងត្រូវប្រើ **`express.urlencoded()`**។\n\nភាពខុសគ្នារវាង Options៖\n* **`extended: false`**៖ ប្រើ `querystring` library ដើមរបស់ Node (មិនគាំទ្រ Nested Objects ឡើយ)\n* **`extended: true`**៖ ប្រើ `qs` library ដែលគាំទ្រ Complex / Nested Objects ដូចជា `course[instructor][name]=Ratha`",
-  tip: "ជ្រើសរើស `{ extended: true }` ជានិច្ច ដើម្បីឱ្យ Server អាច Parse Nested Form Data បានពេញលេញ។",
-  objective: "យល់ដឹងពីភាពខុសគ្នារវាង extended: true និង false ក្នុង Form Parsing។",
-  expectedOutcome: "ចេះ Parse HTML Form submissions និងទាញយក Nested Properties។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Enable urlencoded with extended: true for nested objects\napp.use(express.urlencoded({ extended: true }));\n\n// Step 2: Handle Form submission\n// Simulated form submission: title=Node+Course&instructor[name]=Ratha\napp.post(\"/submit-course-form\", (req, res) => {\n  console.log(\"Form Body:\", req.body);\n  // req.body.instructor.name is parsed into an object!\n  res.status(200).json({\n    success: true,\n    received: req.body\n  });\n});",
 };
 

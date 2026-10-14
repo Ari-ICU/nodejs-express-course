@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Mongoose ផ្តល់នូវ **SchemaTypes** ស្តង់ដារជាច្រើន៖\n\n* **`String`**៖ អត្ថបទ (គាំទ្រ `trim`, `lowercase`, `uppercase`, `minlength`, `maxlength`)\n* **`Number`**៖ លេខ (គាំទ្រ `min`, `max`)\n* **`Boolean`**៖ តម្លៃពិត ឬមិនពិត\n* **`Date`**៖ កាលបរិច្ឆេទ\n* **`Buffer`**៖ ទិន្នន័យ Binary\n* **`Schema.Types.ObjectId`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង\n* **`Array`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents",
-  tip: "ប្រើប្រាស់ `trim: true` លើ String fields ជានិច្ច ដើម្បីលុប White Space ខាងដើម និងខាងចុងដែល User ច្រឡំវាយបញ្ចូល។",
-  objective: "ចេះប្រើប្រាស់ SchemaTypes សមស្របតាមប្រភេទ Fields នៃ Course API។",
-  expectedOutcome: "Schema មានភាពរឹងមាំ និងមានការកំណត់ Types ត្រឹមត្រូវតាមស្ដង់ដារ។",
   codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseDetailsSchema = new Schema({\n  title: { type: String, trim: true, required: true },\n  durationHours: { type: Number, min: 1 },\n  isCertificateIncluded: { type: Boolean, default: true },\n  releaseDate: { type: Date, default: Date.now },\n  tags: [{ type: String, lowercase: true }], // Array of lowercase strings\n  instructorId: { type: Schema.Types.ObjectId, ref: \"User\" } // Reference to User Model!\n});\n\nexport const CourseDetails = model(\"CourseDetails\", courseDetailsSchema);",
 };
 

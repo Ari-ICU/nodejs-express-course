@@ -18,9 +18,6 @@ Routing អនុញ្ញាតឱ្យយើងបែងចែក Endpoint �
 * \`POST /api/v1/courses\` សម្រាប់បង្កើត Course ថ្មី
 
 កូដខាងក្រោមបង្កើត In-memory Courses Data Store គំរូសម្រាប់ប្រើប្រាស់បន្តពេញមួយ Module នេះ។`,
-    tip: "ការប្រើប្រាស់ In-memory Data Store (JavaScript Array) ក្នុងដំណាក់កាលរៀន Routing ជួយឱ្យអ្នកផ្តោតលើ Express Logic ដោយមិនទាន់មានភាពស្មុគស្មាញនៃ Database នៅឡើយ។",
-    objective: "យល់ច្បាស់ពីរចនាសម្ព័ន្ធ Basic Route ក្នុង Express។",
-    expectedOutcome: "ចេះរៀបចំ In-memory dataset និងបង្កើត Basic Endpoints ដំបូង។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -50,9 +47,6 @@ app.listen(5000, () => console.log("🚀 Server running on port 5000"));`,
 មាន ២ ទម្រង់សំខាន់៖
 1. **GET Collection** (\`/api/v1/courses\`)៖ ទាញយកបញ្ជី Course ទាំងអស់
 2. **GET Single Resource** (\`/api/v1/courses/:id\`)៖ ទាញយក Course ជាក់លាក់មួយតាមរយៈ ID`,
-    tip: "ចងចាំ៖ ប្រសិនបើរករក Course តាម ID មិនឃើញ ត្រូវត្រឡប់ 404 Not Found ជានិច្ច មិនមែន 200 OK ជាមួយទិន្នន័យទទេឡើយ។",
-    objective: "ចេះសរសេរ GET Endpoints ទាំងការទាញយក Collection និង Resource តែមួយ។",
-    expectedOutcome: "យល់ច្បាស់ពីការ Check វត្តមានទិន្នន័យ និងការឆ្លើយតប 200 OK ឬ 404 Not Found។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -101,9 +95,6 @@ app.get("/api/v1/courses/:id", (req, res) => {
 2. ផ្ទៀងផ្ទាត់ (Validate) ថាតើមានទិន្នន័យចាំបាច់ដែរឬទេ (\`title\`, \`price\`)
 3. បង្កើត Course Object ថ្មីជាមួយ Unique ID
 4. បញ្ចូលទៅក្នុង Data Store និងត្រឡប់ Status Code \`201 Created\``,
-    tip: "ត្រូវប្រាកដថាបានដាក់ `app.use(express.json())` មុននឹងប្រើ `req.body` បើមិនដូច្នោះទេ `req.body` នឹងមានតម្លៃ `undefined`។",
-    objective: "ចេះបង្កើត POST Endpoint ជាមួយ Request Validation និងឆ្លើយតប 201 Created។",
-    expectedOutcome: "អាចទទួល JSON Payload និងរក្សាទុក Resource ថ្មីដោយជោគជ័យ។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json()); // Essential body parser!
@@ -150,9 +141,6 @@ app.post("/api/v1/courses", (req, res) => {
 * Client ត្រូវតែផ្ញើ Properties ទាំងអស់នៃ Resource មក
 * រាល់ Fields ណាដែលមិនបានផ្ញើមក នឹងត្រូវលុបចោល ឬជំនួសដោយ Default Values
 * ប្រសិនបើ Course ID មិនមានក្នុង Data Store អាចត្រឡប់ \`404 Not Found\` (ឬបង្កើតថ្មីតាម REST convention)`,
-    tip: "ប្រសិនបើអ្នកចង់កែប្រែតែ Field មួយ (ដូចជា price) សូមកុំប្រើ PUT ត្រូវប្រើ PATCH ជំនួសវិញ។",
-    objective: "ចេះបង្កើត PUT Endpoint សម្រាប់ជំនួសទិន្នន័យ Course ទាំងស្រុង។",
-    expectedOutcome: "យល់ច្បាស់ពីភាពខុសគ្នារវាង Full Replacement (PUT) និង Partial Update (PATCH)។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -200,9 +188,6 @@ app.put("/api/v1/courses/:id", (req, res) => {
 Client បញ្ជូនតែ Properties ណាដែលខ្លួនចង់កែប្រែប៉ុណ្ណោះ (ឧទាហរណ៍៖ កែប្រែតែ \`price\` ឬប្តូរ \`published: true\`) ដោយរក្សាទុក Fields ផ្សេងទៀតដដែល។
 
 លំនាំនេះជាអ្វីដែលត្រូវបានប្រើប្រាស់ញឹកញាប់បំផុតក្នុង Production APIs។`,
-    tip: "ប្រើប្រាស់ Object Spread syntax (`{ ...courses[index], ...req.body }`) ដើម្បី Merge ទិន្នន័យថ្មីចូលទិន្នន័យចាស់យ៉ាងងាយស្រួល។",
-    objective: "ចេះអនុវត្ត PATCH Endpoint សម្រាប់កែប្រែ Course Properties ដោយបត់បែន។",
-    expectedOutcome: "ចេះ Update តែ Properties ដែលបញ្ជូនមកដោយមិនបាត់បង់ Properties ដើម។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -242,9 +227,6 @@ app.patch("/api/v1/courses/:id", (req, res) => {
 ស្តង់ដារ Response សម្រាប់ DELETE៖
 * **\`204 No Content\`**៖ ប្រសិនបើ Server មិនបញ្ជូន Response Body មកវិញ (Standard REST)
 * **\`200 OK\`**៖ ប្រសិនបើ Server ចង់បញ្ជូន Message បញ្ជាក់ ឬបញ្ជូន Deleted Resource មកវិញ`,
-    tip: "នៅក្នុង Enterprise Applications គេច្រើនប្រើ **Soft Delete** (កំណត់ `deletedAt = new Date()`) ជំនួសឱ្យការ Hard Delete ចេញពី Database ទាំងស្រុង។",
-    objective: "ចេះបង្កើត DELETE Endpoint និងកំណត់ Status Code ត្រឹមត្រូវ (200 ឬ 204)។",
-    expectedOutcome: "ចេះស្វែងរក និងលុបទិន្នន័យតាម Index ដោយសុវត្ថិភាព។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -287,9 +269,6 @@ app.delete("/api/v1/courses/:id", (req, res) => {
 * តម្លៃក្នុង \`req.params\` គឺជា **String** ជានិច្ច (ទោះជា URL ជាលេខ \`/courses/123\` ក៏ដោយ)
 * ត្រូវប្រើ \`Number(req.params.id)\` ដើម្បីបំប្លែងទៅជា Number មុននឹងស្វែងរកក្នុង Array ឬ Database
 * ពិនិត្យ \`isNaN(id)\` ដើម្បីជៀសវាង Invalid Query`,
-    tip: "⚠️ កំហុសញឹកញាប់៖ ការប្រៀបធៀប `course.id === req.params.id` (1 === \"1\") នឹងចេញ false ដោយសារ Type mismatch! ត្រូវ cast ជា `Number()` ជានិច្ច។",
-    objective: "យល់ដឹងពីយន្តការ Route Parameters និង Type Casting។",
-    expectedOutcome: "ចេះទាញយក params ច្រើនក្នុង URL តែមួយ និង Validate Input Type។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -329,9 +308,6 @@ Query Parameters ត្រូវបានប្រើប្រាស់សម្
 * **Pagination** (\`?page=1&limit=10\`)
 
 Express ធ្វើការ Parse ពួកវាចូលទៅក្នុង \`req.query\` Object ដោយស្វ័យប្រវត្តិ។`,
-    tip: "Route Parameters (`:id`) ប្រើសម្រាប់ចង្អុលបង្ហាញ Resource ជាក់លាក់មួយ រីឯ Query Parameters (`?key=val`) ប្រើសម្រាប់ Filter ឬកែប្រែទិន្នន័យក្នុង Collection។",
-    objective: "ចេះទាញយក Query Parameters និងសរសេរ Logic ច្រោះទិន្នន័យ (Filtering)។",
-    expectedOutcome: "ចេះបង្កើត Endpoint ដែលគាំទ្រ Filtering តាមលក្ខខណ្ឌច្រើនក្នុងពេលតែមួយ។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -378,9 +354,6 @@ app.route("/api/v1/courses")
   .get(getCourses)
   .post(createCourse);
 \`\`\``,
-    tip: "ការប្រើប្រាស់ `app.route()` ជួយការពារកំហុស Typing Path ខុស និងធ្វើឱ្យកូដស្របតាមគោលការណ៍ DRY (Don't Repeat Yourself)។",
-    objective: "ចេះប្រើប្រាស់ Route Chaining ដើម្បីកាត់បន្ថយការសរសេរ Path ស្ទួនៗ។",
-    expectedOutcome: "កូដមានរចនាសម្ព័ន្ធបង្រួមស្អាត និងងាយស្រួល Maintain។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -417,9 +390,6 @@ app.route("/api/v1/courses/:id")
 * បំបែក Routes តាម Resource ទៅក្នុង Files ដាច់ដោយឡែកពីគ្នា (ឧ. \`course.routes.js\`, \`user.routes.js\`)
 * ងាយស្រួល Mount ចូលទៅកាន់ Base App ជាមួយ Path Prefix
 * ជួយកាត់បន្ថយទំហំឯកសារ \`app.js\` មិនឱ្យក្លាយជា Spaghetti Code`,
-    tip: "ចាត់ទុក `express.Router()` ដូចជា Mini-app ដែលអាចយកទៅ Plug-in ចូលទៅក្នុង Main app ត្រង់ Prefix ណាមួយក៏បាន។",
-    objective: "ចេះបង្កើត និង Export Router ពីឯកសារដាច់ដោយឡែក។",
-    expectedOutcome: "កូដត្រូវបានបែងចែកជា Modularity តាមស្តង់ដារ Clean Architecture។",
     codeSnippet: `// src/routes/course.routes.js
 import express from "express";
 
@@ -456,9 +426,6 @@ export default router;`,
 * \`app.use("/api/v1/users", userRouter)\`
 
 រាល់ Route ទាំងអស់នៅក្នុង \`courseRouter\` នឹងទទួលបាន Prefix \`/api/v1/courses\` ដោយស្វ័យប្រវត្តិ។`,
-    tip: "ការដាក់ `/api/v1` ជា Prefix គឺជា Best Practice សម្រាប់ API Versioning ដែលអនុញ្ញាតឱ្យយើងបន្ថែម `/api/v2` នៅពេលអនាគតដោយមិនប៉ះពាល់ Clients ចាស់។",
-    objective: "ចេះ Mount Routers ច្រើនចូលទៅក្នុង Application Instance តែមួយ។",
-    expectedOutcome: "Application ដែលមានរចនាសម្ព័ន្ធ Route Grouping ច្បាស់លាស់ និងមានសុវត្ថិភាព។",
     codeSnippet: `// src/app.js
 import express from "express";
 import courseRouter from "./routes/course.routes.js";
@@ -491,9 +458,6 @@ export default app;`,
 \`GET /api/v1/courses/:courseId/lessons\`
 
 ដើម្បីឱ្យ Child Router (\`lessonRouter\`) អាចអាន Route Parameter របស់ Parent (\`:courseId\`) បាន យើងត្រូវកំណត់ **\`{ mergeParams: true }\`** ពេលបង្កើត Router!`,
-    tip: "⚠️ ប្រសិនបើអ្នកភ្លេចដាក់ `{ mergeParams: true }` នោះ `req.params.courseId` នៅក្នុង `lessonRouter` នឹងចេញ `undefined`!",
-    objective: "ចេះបង្កើត Nested Router ជាមួយ Option { mergeParams: true }។",
-    expectedOutcome: "យល់ច្បាស់ពីរបៀប Map Parent-Child REST API Relationships ក្នុង Express។",
     codeSnippet: `// src/routes/lesson.routes.js
 import express from "express";
 
@@ -531,9 +495,6 @@ export default lessonRouter;`,
     summary: `នៅពេលដែល Project រីកធំឡើង និងមាន Routers រាប់សិប (Courses, Lessons, Users, Orders, Reviews) យើងគួរបង្កើត **Central Route Aggregator** មួយនៅ \`src/routes/index.js\`។
 
 ឯកសារ \`index.js\` នេះនឹង Import Routers ទាំងអស់ រួច Mount ពួកវាតាម Category ឬ Version បន្ទាប់មក Export Router តែមួយគត់ទៅកាន់ \`app.js\`។`,
-    tip: "លំនាំ Central Route Aggregator ជួយឱ្យ `app.js` នៅតែមានកូដខ្លី និងមិនបាច់ Import Routers រាប់សិបនៅក្នុង Root File ឡើយ។",
-    objective: "ចេះរៀបចំ Centralized Route Router សម្រាប់ Scalable Backend។",
-    expectedOutcome: "រចនាសម្ព័ន្ធ Routes ស្អាត មានរបៀបរៀបរយ និងងាយស្រួលពង្រីក។",
     codeSnippet: `// src/routes/index.js
 import express from "express";
 import courseRouter from "./course.routes.js";
@@ -572,9 +533,6 @@ export default rootRouter;
 | **PATCH** | \`/api/v1/courses/:id\` | កែប្រែ Fields មួយចំនួន | 200 OK |
 | **DELETE** | \`/api/v1/courses/:id\` | លុប Course ចេញ | 204 No Content |
 | **GET** | \`/api/v1/courses/:id/lessons\` | ទាញយក Lessons របស់ Course | 200 OK |`,
-    tip: "ច្បាប់មាសនៃ RESTful Routing៖ ប្រើប្រាស់តែ Plural Nouns (នាមពហុវចនៈ ដូចជា /courses) និងជៀសវាងដាច់ខាតនូវការប្រើកិរិយាសព្ទក្នុង URL (ដូចជា /getAllCourses ឬ /deleteCourse)។",
-    objective: "ចងចាំ និងអនុវត្តតាមស្តង់ដារ Canonical RESTful URLs ក្នុងគ្រប់ Projects។",
-    expectedOutcome: "ការរចនា API ដែលមានលក្ខណៈ Predictable, Standard, និងងាយស្រួលប្រើសម្រាប់ Frontend Developers។",
     codeSnippet: `/* 
   CANONICAL RESTFUL DESIGN SUMMARY:
   -------------------------------------------------------------

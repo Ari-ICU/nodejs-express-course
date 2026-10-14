@@ -19,9 +19,6 @@ Express ដើរតួជា Abstraction Layer ដ៏មានឥទ្ធិ�
 * **Streamlined HTTP Helpers**៖ មុខងារជំនួយដូចជា \`res.json()\`, \`req.body\`, និង \`res.status()\`
 
 នៅក្នុង Course នេះ យើងនឹងអភិវឌ្ឍ **Course Catalog API** មួយដែលចាប់ផ្តើមពី Server ដំបូង រហូតដល់ Enterprise Architecture។`,
-    tip: "Express មិនបង្ខំរចនាសម្ព័ន្ធ Folder ឬ Database ជាក់លាក់ណាមួយឡើយ (Unopinionated)។ ដូច្នេះ ការរៀបចំស្ថាបត្យកម្មស្អាត (Clean Architecture) គឺសំខាន់បំផុតសម្រាប់ Scalability។",
-    objective: "ស្វែងយល់ពីតួនាទីរបស់ Express.js ក្នុងការ Simplify ការសរសេរ Backend លើ Node.js។",
-    expectedOutcome: "យល់ច្បាស់ពីរបៀបបង្កើត HTTP Server ដំបូងបង្អស់ជាមួយ Express។",
     codeSnippet: `// Step 1: Import Express framework
 import express from "express";
 
@@ -57,9 +54,6 @@ app.listen(PORT, () => {
 * **Express.js**៖ កាត់បន្ថយ Boilerplate ទាំងស្រុងត្រឹម ២-៣ ជួរខ្លី និងផ្តល់ Ecosystem នៃ Middlewares ធំទូលាយ (CORS, Morgan, Helmet)។
 
 Express គឺជាមូលដ្ឋានគ្រឹះ (De facto Standard) នៃ Node.js Backend អស់រយៈពេលជាងមួយទសវត្សរ៍។`,
-    tip: "ការយល់ដឹងពីរបៀបដែល Native HTTP ដំណើរការជួយឱ្យអ្នកយល់ច្បាស់ពី Abstraction និង Performance trade-offs របស់ Express។",
-    objective: "ប្រៀបធៀបភាពខុសគ្នារវាងការប្រើប្រាស់ Native HTTP Server និង Express.js។",
-    expectedOutcome: "មើលឃើញយ៉ាងច្បាស់ពីអត្ថប្រយោជន៍ និងភាពងាយស្រួលនៃ Express ក្នុងការកាត់បន្ថយ Boilerplate Code។",
     codeSnippet: `// ❌ NATIVE NODE.JS HTTP (Lots of boilerplate)
 // let body = "";
 // req.on("data", chunk => body += chunk);
@@ -95,9 +89,6 @@ app.post("/api/v1/courses", (req, res) => {
 2. **Install Express**៖ ដំឡើងកញ្ចប់ \`express\`
 3. **Configure ESM**៖ បន្ថែម \`"type": "module"\` ក្នុង \`package.json\`
 4. **Dev Script**៖ ប្រើ \`node --watch\` ដើម្បី Auto-restart Server រាល់ពេលកែប្រែកូដ`,
-    tip: "ចាប់តាំងពី Node.js v18 មក អ្នកអាចប្រើ `node --watch` បានដោយផ្ទាល់ដោយមិនចាំបាច់ដំឡើង nodemon បន្ថែមឡើយ។",
-    objective: "ចេះរៀបចំ Project Environment និងដំឡើង Express ដោយជោគជ័យ។",
-    expectedOutcome: "ទទួលបាន Node.js Project ដំណើរការជាមួយ ES Modules និង Ready សម្រាប់សរសេរ Express API។",
     codeSnippet: `# Step 1: Initialize project
 mkdir course-catalog-api && cd course-catalog-api
 npm init -y
@@ -125,9 +116,6 @@ npm run dev`,
 * **src/server.js**៖ Import \`app\` និងដំណើរការ \`app.listen(PORT)\`។
 
 ការបំបែកបែបនេះអនុញ្ញាតឱ្យយើងសរសេរ **Automated Integration Tests (Supertest)** ដោយមិនចាំបាច់កាន់កាប់ Network Port ពិតប្រាកដ។`,
-    tip: "បិទ Header `x-powered-by` ជានិច្ច (`app.disable('x-powered-by')`) ដើម្បីកុំឱ្យ Attackers ដឹងថាអ្នកកំពុងប្រើប្រាស់ Express។",
-    objective: "យល់ដឹងពីការបំបែក Application Instance ចេញពី Network Listener សម្រាប់ Testing និង Modularity។",
-    expectedOutcome: "ចេះបង្កើតឯកសារ src/app.js តាមស្តង់ដារ Clean Architecture។",
     codeSnippet: `// src/app.js
 import express from "express";
 
@@ -160,9 +148,6 @@ export default app;`,
 1. **Port Binding**៖ អាន Port ពី \`process.env.PORT\` ជាមួយ Fallback \`5000\`
 2. **Listener Activation**៖ ហៅ \`app.listen()\`
 3. **Graceful Shutdown**៖ ចាប់សញ្ញា \`SIGTERM\` និង \`SIGINT\` ដើម្បីបិទ Connections ដោយសុវត្ថិភាពនៅពេល Deploy លើ Docker/Kubernetes`,
-    tip: "កុំ Hardcode Port `5000` ដោយគ្មាន `process.env.PORT` ព្រោះ Cloud Platforms (Render, AWS, Railway) នឹងចាត់ចែង Dynamic Port ពេល Deploy។",
-    objective: "ចេះ Start HTTP Server និងរៀបចំ Graceful Shutdown សម្រាប់ Production។",
-    expectedOutcome: "Server ដែលមានស្ថេរភាពខ្ពស់ អាចបិទ និង Re-deploy ដោយមិនបាត់បង់ទិន្នន័យ In-flight Requests។",
     codeSnippet: `// src/server.js
 import app from "./app.js";
 
@@ -200,9 +185,6 @@ process.on("SIGINT", () => shutdown("SIGINT"));`,
 3. **\`req.body\`**៖ JSON Payload ដែល Client ផ្ញើមកក្នុង POST/PUT/PATCH
 4. **\`req.headers\`** / **\`req.get('Header-Name')\`**៖ HTTP Request Headers
 5. **\`req.ip\`**៖ IP Address របស់ Client`,
-    tip: "ប្រើប្រាស់ `req.get('authorization')` ជានិច្ចសម្រាប់ការអាន Headers ព្រោះវា Case-insensitive។",
-    objective: "យល់ច្បាស់ពីរបៀបទាញយកទិន្នន័យពីគ្រប់ផ្នែកនៃ HTTP Request។",
-    expectedOutcome: "ចេះទាញយក params, query, body, និង headers បានយ៉ាងស្ទាត់ជំនាញ។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -239,9 +221,6 @@ Methods សំខាន់ៗដែលត្រូវប្រើជាប្រ
 * **\`res.send(data)\`**៖ ផ្ញើ Text, HTML, ឬ Buffer
 * **\`res.set(header, value)\`**៖ កំណត់ Custom Response Header
 * **\`res.sendStatus(code)\`**៖ ផ្ញើតែ Status Code ជាមួយ Status Text ស្តង់ដារ`,
-    tip: "⚠️ កំហុសញឹកញាប់៖ ការហៅ `res.json()` ឬ `res.send()` លើសពីម្តងក្នុង Handler តែមួយ នឹងបង្កឱ្យកើតមានកំហុស `ERR_HTTP_HEADERS_SENT`។ ត្រូវប្រើ `return res.json(...)`។",
-    objective: "ចេះប្រើប្រាស់ Response helper methods ឱ្យបានត្រឹមត្រូវ និងជៀសវាង Headers Already Sent error។",
-    expectedOutcome: "ចេះរៀបចំ HTTP Response តាមស្តង់ដារវិជ្ជាជីវៈ។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -279,9 +258,6 @@ Middleware នីមួយៗទទួលបាន Parameters ចំនួន �
 * វាអាចពិនិត្យ ឬកែប្រែ \`req\` និង \`res\`
 * វាអាចបញ្ចប់ Request ភ្លាមៗ (ឧ. បើ Unauthorized)
 * ឬហៅ \`next()\` ដើម្បីបញ្ជូនបន្តទៅកាន់ Middleware បន្ទាប់ក្នុង Pipeline`,
-    tip: "⚠️ Pitfall: ប្រសិនបើ Middleware មិនបានបញ្ជូន Response (`res.json()`) ហើយមិនបានហៅ `next()` នោះ Request នឹងព្យួរគាំងរហូតដល់ Client Timeout!",
-    objective: "ស្វែងយល់ពីលំហូរការងារ (Pipeline Flow) នៃ Middleware ក្នុង Express។",
-    expectedOutcome: "ចេះបង្កើត Middleware សាមញ្ញសម្រាប់វាស់ស្ទង់ពេលវេលា Request (Request Timer)។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -322,9 +298,6 @@ app.get("/api/v1/ping", (req, res) => {
 * \`app.get("/api/v1/courses", handler)\` សម្រាប់ទាញយកទិន្នន័យ
 * \`app.post("/api/v1/courses", handler)\` សម្រាប់បង្កើតទិន្នន័យថ្មី
 * \`app.delete("/api/v1/courses/:id", handler)\` សម្រាប់លុបទិន្នន័យ`,
-    tip: "Express ធ្វើការផ្គូផ្គង Routes តាមលំដាប់លំដោយពីលើចុះក្រោម (Top to Bottom)។ ត្រូវដាក់ Specific Routes មុន Generic Routes ជានិច្ច។",
-    objective: "យល់ដឹងពីរបៀបផ្គូផ្គង HTTP Verbs និង URL Paths។",
-    expectedOutcome: "បង្កើត Basic Routes សម្រាប់ Course Catalog API បានត្រឹមត្រូវ។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -359,9 +332,6 @@ app.post("/api/v1/courses", (req, res) => {
 លំនាំនេះមានសារៈសំខាន់ខ្លាំងក្នុងការបំបែកកូដ៖
 1. **Handler ទី ១ (Validator)**៖ ផ្ទៀងផ្ទាត់ទិន្នន័យបញ្ចូល
 2. **Handler ទី ២ (Business Logic)**៖ អនុវត្តការងារ និងបញ្ជូន Response ត្រឡប់ទៅវិញ`,
-    tip: "ការប្រើប្រាស់ Callback Chains គឺជាជំហានដំបូងនៃការរៀនសរសេរ Middleware Guards មុនឈានដល់ Auth Controllers។",
-    objective: "ចេះប្រើប្រាស់ Callback functions ច្រើនក្នុង Route តែមួយដើម្បីបែងចែកទំនួលខុសត្រូវ។",
-    expectedOutcome: "កូដមានភាពស្អាត មិនច្របល់រវាង Validation Logic និង Save Logic។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -402,9 +372,6 @@ app.post("/api/v1/courses", validateCoursePayload, createCourseHandler);`,
 * **PUT**៖ ជំនួស Resource ចាស់ទាំងស្រុង (Full Replace)
 * **PATCH**៖ កែប្រែតែ Properties មួយចំនួន (Partial Update)
 * **DELETE**៖ លុប Resource ចេញ`,
-    tip: "ចងចាំ៖ PUT តម្រូវឱ្យផ្ញើ Object ទាំងមូល រីឯ PATCH ផ្ញើតែ Fields ណាដែលចង់កែប្រែប៉ុណ្ណោះ។",
-    objective: "យល់ច្បាស់ពីអត្ថន័យ និងការជ្រើសរើស HTTP Methods ឱ្យត្រូវតាមស្តង់ដារ RESTful។",
-    expectedOutcome: "ចេះផ្គូផ្គង HTTP Verbs ទាំង ៥ ទៅកាន់ CRUD Endpoints នៃ Course API។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -430,9 +397,6 @@ app.delete("/api/v1/courses/:id", (req, res) => res.status(204).send());`,
 1. កំណត់ Header \`Content-Type: application/json; charset=utf-8\`
 2. បំប្លែង JavaScript Object/Array ទៅជា JSON String ដោយ \`JSON.stringify()\`
 3. គាំទ្រការផ្ញើ \`null\`, \`boolean\`, \`number\`, ឬ \`object\``,
-    tip: "តែងតែរុំទិន្នន័យ Response ក្នុង Standard Envelope (ដូចជា `{ success: true, data: [...] }`) ដើម្បីឱ្យ Frontend ងាយស្រួល Parse។",
-    objective: "ចេះរៀបចំទម្រង់ Response ជា JSON ឱ្យបានត្រឹមត្រូវ។",
-    expectedOutcome: "ទទួលបាន JSON Response ដែលស្របតាមស្តង់ដារឧស្សាហកម្ម។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -467,9 +431,6 @@ app.get("/api/v1/courses/catalog", (req, res) => {
 * **400 Bad Request**៖ Client បញ្ជូនទិន្នន័យខុសទម្រង់
 * **404 Not Found**៖ រកមិនឃើញ Resource ដែលស្នើសុំ
 * **500 Internal Server Error**៖ កំហុសបច្ចេកទេសលើ Server`,
-    tip: "កុំត្រឡប់ 200 OK ជាមួយ error message ឱ្យសោះ! ត្រូវប្រើ Status Code ដែលត្រូវនឹងបញ្ហាពិតប្រាកដ (400, 404, 500)។",
-    objective: "ចេះជ្រើសរើស និងកំណត់ Status Code ត្រឹមត្រូវតាមកាលៈទេសៈនីមួយៗ។",
-    expectedOutcome: "សរសេរ Endpoint ដែលឆ្លើយតប Status Code ច្បាស់លាស់ និងត្រឹមត្រូវតាម RFC standards។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -509,9 +470,6 @@ app.get("/api/v1/courses/:id", (req, res) => {
 * **src/services/**៖ Business Logic & Database queries
 * **src/middlewares/**៖ Custom Middlewares (Auth, Error, Logger)
 * **src/config/**៖ Environment Configurations`,
-    tip: "រចនាសម្ព័ន្ធនេះជាគ្រឹះដែលយើងនឹងសាងសង់នៅក្នុង Modules 07, 08, 09, និង 10។",
-    objective: "ស្វែងយល់ពីរចនាសម្ព័ន្ធ Folder និងឯកសារដែលប្រើប្រាស់ក្នុងគម្រោងធំៗ។",
-    expectedOutcome: "មានផែនទីគំនិតច្បាស់លាស់សម្រាប់ការរៀបចំកូដគម្រោង Backend។",
     codeSnippet: `# Standard Enterprise Express Project Layout
 course-catalog-api/
 ├── package.json

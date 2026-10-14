@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការទាញយក Course Documents ពី MongoDB តាមរយៈ Mongoose Queries៖\n\n* ពិនិត្យវត្តមាន Course តាម `_id` ជាមួយ `Course.findById(id)`\n* ប្រសិនបើរករកមិនឃើញ Throw Domain Error ភ្លាមៗ (កុំឱ្យ Controller ត្រូវ Check `if (!course)` ច្រើនដង)",
-  tip: "ការបោះ Custom AppError ចេញពី Service ជួយឱ្យកូដ Controller មានភាពខ្លី និងស្អាត។",
-  objective: "ចេះទាញយកទិន្នន័យពី MongoDB និង Handle ករណី NotFound។",
-  expectedOutcome: "សរសេរ Query Service Functions ដែលមានសុវត្ថិភាព និងច្បាស់លាស់។",
   codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../errors/AppError.js\";\n\nexport const getCourseByIdService = async (courseId) => {\n  // Step 1: Query MongoDB collection by ObjectId\n  const course = await Course.findById(courseId);\n\n  // ⚠️ If not found in MongoDB -> Throw 404 AppError\n  if (!course) {\n    throw new AppError(`Course with ID ${courseId} not found in database`, 404);\n  }\n\n  return course;\n};",
 };
 

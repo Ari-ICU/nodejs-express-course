@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Node.js ផ្តល់ `setTimeout`, `setInterval`, និង `setImmediate`។ ខណៈពេលដែល `setTimeout(fn, 0)` ត្រូវបានធីកក្នុងដំណាក់កាលកម្មវិធីកំណត់ពេលវេលា `setImmediate(fn)` ដំណើរការក្នុងដំណាក់កាលពិនិត្យភ្លាមៗបន្ទាប់ពីការបោះឆ្នោត I/O ។",
-  tip: "នៅខាងក្នុង I/O callback (ឧ. `fs.readFile`), `setImmediate()` តែងតែត្រូវបានធានាដើម្បីប្រតិបត្តិមុន `setTimeout(fn, 0)`។",
-  objective: "ជ្រើសរើស API កម្មវិធីកំណត់ពេលវេលាដែលសមរម្យសម្រាប់ការកំណត់ពេលពន្យារពេល ឬការងារផ្ទៃខាងក្រោយភ្លាមៗ។",
-  expectedOutcome: "ការត្រួតពិនិត្យត្រឹមត្រូវលើការប្រតិបត្តិកិច្ចការដែលបានកំណត់ពេល និងពន្យាពេល។",
   codeSnippet: "import fs from \"node:fs\";\n\nfs.readFile(\"package.json\", () => {\n  // Inside I/O cycle: setImmediate ALWAYS fires first!\n  setTimeout(() => console.log(\"Timer phase: setTimeout\"), 0);\n  setImmediate(() => console.log(\"Check phase: setImmediate\"));\n});",
 };
 

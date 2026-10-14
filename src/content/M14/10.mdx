@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅពេលដែល Validation បរាជ័យ Zod នឹង Throw `ZodError` ដែលផ្ទុកនូវ Array នៃ Issues។\n\nយើងត្រូវបំប្លែង Zod Issues ទាំងនោះឱ្យក្លាយជា **Standard Error Envelope** ដ៏ស្អាត៖\n```json\n{\n  \"success\": false,\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"Validation failed for course creation\",\n    \"details\": [\n      { \"field\": \"price\", \"message\": \"Price cannot be negative\" }\n    ]\n  }\n}\n```",
-  tip: "ការផ្តល់ព័ត៌មានលម្អិតតាម `details` ជួយឱ្យ Frontend Developers អាច Map Error Message ទៅដាក់ក្រោម Input Field នីមួយៗលើ Form ដោយស្វ័យប្រវត្តិ។",
-  objective: "ចេះ Format ZodError ឱ្យក្លាយជាស្ដង់ដារ Error Response Envelope។",
-  expectedOutcome: "Frontend ទទួលបានបញ្ជីកំហុសច្បាស់លាស់ ងាយស្រួលបង្ហាញជូន User។",
   codeSnippet: "import { ZodError } from \"zod\";\n\n// Helper to format Zod errors into a clean array\nexport const formatZodErrors = (zodError) => {\n  return zodError.issues.map(issue => ({\n    field: issue.path.join(\".\"),\n    message: issue.message\n  }));\n};\n\n// Example in centralized error handler:\n// if (err instanceof ZodError) {\n//   return res.status(400).json({\n//     success: false,\n//     error: {\n//       code: \"VALIDATION_ERROR\",\n//       message: \"Invalid request payload\",\n//       details: formatZodErrors(err)\n//     }\n//   });\n// }",
 };
 

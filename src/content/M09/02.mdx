@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "API មួយត្រូវបានចាត់ទុកថាជា **RESTful** លុះត្រាតែវាគោរពតាមគោលការណ៍គ្រឹះទាំង ៦៖\n\n1. **Client-Server Architecture**៖ បំបែក User Interface (React/Next.js) ចេញពី Data Storage (Express/MongoDB)\n2. **Stateless**៖ Server មិនរក្សាទុក Client Context រវាង Requests ឡើយ\n3. **Cacheable**៖ Response ត្រូវតែបញ្ជាក់ថាអាច Cache បានឬអត់តាមរយៈ HTTP Headers\n4. **Uniform Interface**៖ រចនាសម្ព័ន្ធ URL និង HTTP Methods ដូចគ្នាទូទាំងប្រព័ន្ធ\n5. **Layered System**៖ Client មិនបាច់ដឹងថាខ្លួនកំពុងតភ្ជាប់ផ្ទាល់ជាមួយ App Server, Proxy, ឬ Load Balancer ឡើយ\n6. **Code on Demand (Optional)**៖ អាចបញ្ជូន Script ទៅ Execute លើ Client (កម្រប្រើក្នុង REST APIs)",
-  tip: "Statelessness គឺជាកត្តាសំខាន់បំផុតដែលអនុញ្ញាតឱ្យ Express APIs អាច Scale លើ Multi-server Clusters ឬ Docker Containers បានយ៉ាងងាយស្រួល។",
-  objective: "ចងចាំ និងយល់ច្បាស់ពីលក្ខខណ្ឌគ្រឹះទាំង ៦ នៃ REST Architecture។",
-  expectedOutcome: "សមត្ថភាពវាយតម្លៃ និងរចនា API ដែលស្របតាម REST Constraints។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// 💡 Teaching Note: Demonstrating Cache-Control header (Cacheable Constraint)\napp.get(\"/api/v1/courses\", (req, res) => {\n  // Instruct clients and CDNs to cache this public course catalog for 1 hour (3600s)\n  res.setHeader(\"Cache-Control\", \"public, max-age=3600\");\n\n  res.json({\n    success: true,\n    data: [{ id: 1, title: \"Modern JavaScript\" }]\n  });\n});",
 };
 

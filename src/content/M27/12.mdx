@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "Structuring tests into `unit/` (testing pure services and utilities in memory) and `integration/` (testing full HTTP routes with Supertest and MongoDB Memory Server) ensures quick test execution during development and comprehensive test coverage before production deployments.",
-  tip: "Keep unit tests fast (<1s total) so developers run them continuously on every file save.",
-  objective: "Structure scalable test directories separating fast unit tests from comprehensive integration suites.",
-  expectedOutcome: "Organized test suites matching the backend folder architecture.",
   codeSnippet: "tests/\n├── setup.js            # Vitest global setup (in-memory MongoDB)\n├── helpers/            # getAuthToken(), createTestUser()\n├── unit/               # Fast, mocked tests\n│   ├── services/       # course.service.test.js\n│   └── utils/\n└── integration/        # Route & HTTP tests\n    ├── auth.test.js\n    └── courses.test.js",
 };
 

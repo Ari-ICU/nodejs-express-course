@@ -19,9 +19,6 @@ export const M11 = [
 * ផ្តល់នូវ High Scalability តាមរយៈ Horizontal Sharding និង Automatic Failover Replicas
 
 នៅក្នុង Course នេះ យើងនឹងភ្ជាប់ **Course Catalog API** ពី Modules 06-10 ទៅកាន់ MongoDB Database ពិតប្រាកដ។`,
-    tip: "MongoDB គឺជា Database ស្នូលតែមួយគត់ដែលយើងប្រើប្រាស់នៅក្នុងវគ្គសិក្សានេះ ពីព្រោះ JSON/BSON Document ផ្សារភ្ជាប់គ្នាយ៉ាងល្អឥតខ្ចោះជាមួយ JavaScript និង Express APIs។",
-    objective: "យល់ដឹងពីទស្សនទាន Document Database របស់ MongoDB សម្រាប់ Node.js APIs។",
-    expectedOutcome: "ចេះរៀបចំទិន្នន័យ Course Catalog ជាទម្រង់ MongoDB Document។",
     codeSnippet: `// A MongoDB document looks and feels just like a native JavaScript object!
 {
   "_id": "6648e58319f3a9e224e78891",
@@ -47,9 +44,6 @@ export const M11 = [
 * **Document NoSQL Database (MongoDB)**៖ រក្សាទុកទិន្នន័យជាឯកសារ BSON Documents (JSON-like) ដែលមានភាពបត់បែនខ្ពស់ (Polymorphic) ងាយស្រួល Scale តាមបែប Horizontal Sharding និងមានល្បឿន Query លឿនបំផុតជាមួយ Node.js & Express។
 
 នៅក្នុង Course នេះ យើងប្រើប្រាស់ **MongoDB** ជា Database ស្នូលជាមួយ Express តាមរយៈ **Mongoose ODM**។`,
-    tip: "MongoDB គឺជាជម្រើសលេខមួយសម្រាប់ Node.js/Express Developer ព្រោះ BSON Documents មានរចនាសម្ព័ន្ធដូចជា Native JavaScript Objects ១០០% ធ្វើឱ្យការអភិវឌ្ឍ API មានភាពរហ័សរហួន។",
-    objective: "យល់ដឹងពីគុណសម្បត្តិនៃការប្រើប្រាស់ MongoDB លើ Node.js Backend។",
-    expectedOutcome: "ដឹងពីមូលហេតុច្បាស់លាស់ក្នុងការជ្រើសរើស MongoDB សម្រាប់ Course Catalog API។",
     codeSnippet: `/* SQL vs NoSQL Conceptual Comparison:
    Relational SQL:              NoSQL (MongoDB - Used in this Course):
    -----------------------      -------------------------------------
@@ -72,9 +66,6 @@ export const M11 = [
 
 1. **Replica Sets (High Availability)**៖ ប្រព័ន្ធ cluster ដែលមានយ៉ាងហោចណាស់ ៣ Nodes (Primary ១ និង Secondary ២)។ Primary ទទួលខុសត្រូវលើ Writes ទាំងអស់ ហើយធ្វើ Replicate ទិន្នន័យទៅ Secondaries ដោយស្វ័យប្រវត្តិតាមរយៈ Oplog។
 2. **Sharding (Horizontal Scalability)**៖ ការបំបែកទិន្នន័យជាចំណែកៗ (Partitions) ឆ្លងកាត់ Servers ច្រើននៅពេលទិន្នន័យកើនដល់រាប់លាន Records។`,
-    tip: "នៅលើ Production តែងតែ Deploy MongoDB ជាមួយ Replica Set (យ៉ាងហោច ៣ Nodes) ដើម្បីឱ្យមាន Automatic Failover ដោយគ្មាន Downtime។",
-    objective: "យល់ដឹងពីស្ថាបត្យកម្ម Replica Set និង Sharding របស់ MongoDB។",
-    expectedOutcome: "មានចំណេះដឹងពីរបៀបដែល MongoDB ធានាសុវត្ថិភាពទិន្នន័យ និង High Availability។",
     codeSnippet: `/* MongoDB Replica Set Architecture for Course Catalog:
    [Express API Client (Node.js)]
               │
@@ -101,9 +92,6 @@ export const M11 = [
 * Database នឹងត្រូវបង្កើតឡើងដោយស្វ័យប្រវត្តិ នៅពេលដែលអ្នកបញ្ចូល Document ដំបូងបង្អស់ចូលទៅកាន់ Collection ណាមួយ
 * Server មួយអាចផ្ទុក Databases ច្រើនដាច់ដោយឡែកពីគ្នា
 * សម្រាប់ Course របស់យើង យើងនឹងប្រើប្រាស់ Database ឈ្មោះ **\`course_catalog_db\`**`,
-    tip: "នៅក្នុង MongoDB Shell (`mongosh`) ពាក្យបញ្ជា `use course_catalog_db` នឹងប្តូរទៅកាន់ Database នោះភ្លាម ទោះបីជាវាមិនទាន់ត្រូវបានរក្សាទុកលើ Disk ក៏ដោយ។",
-    objective: "ចេះ Switch និងបង្កើត Database ក្នុង MongoDB Shell (mongosh)។",
-    expectedOutcome: "គ្រប់គ្រង Database namespace សម្រាប់គម្រោង Course API បានត្រឹមត្រូវ។",
     codeSnippet: `# Step 1: Open MongoDB Shell
 mongosh
 
@@ -127,9 +115,6 @@ db.getName()
 * Collections មិនបង្ខំ Strict Schema នៅកម្រិត Database Engine ឡើយ
 * អនុសញ្ញាដាក់ឈ្មោះ៖ ប្រើ **Lowercase Plural Nouns** ជានិច្ច (ដូចជា \`courses\`, \`lessons\`, \`users\`)
 * Collections ចម្បងក្នុង Course API របស់យើង៖ \`courses\`, \`lessons\`, និង \`users\``,
-    tip: "ជៀសវាងដាក់ឈ្មោះ Collection ជាឯកវចនៈ (ដូចជា `course`) ព្រោះស្តង់ដារ REST និង MongoDB អនុវត្តតាម Plural (`courses`)។",
-    objective: "ចេះបង្កើត ពិនិត្យមើល និងគ្រប់គ្រង Collections ក្នុង MongoDB។",
-    expectedOutcome: "បង្កើត Collections សម្រាប់ Course Catalog API បានត្រឹមត្រូវ។",
     codeSnippet: `// In mongosh:
 // Step 1: Explicitly create collection
 db.createCollection("courses");
@@ -155,9 +140,6 @@ show collections;
 * ផ្ទុកជា Field-and-Value pairs (ឧ. \`"title": "Node.js Basics"\`)
 * ទំហំអតិបរមានៃ Document មួយគឺ **16 MB**
 * Document នីមួយៗមាន Unique Primary Key ឈ្មោះ **\`_id\`** ដោយស្វ័យប្រវត្តិ`,
-    tip: "ទំហំកំណត់ 16 MB គឺធំធេងណាស់សម្រាប់ Text Data ធម្មតា។ ប្រសិនបើអ្នកត្រូវការផ្ទុក Files ធំៗលើសពី 16 MB ត្រូវប្រើ GridFS ឬ Cloud Object Storage (S3 / R2)។",
-    objective: "យល់ដឹងពីរចនាសម្ព័ន្ធ BSON និងដែនកំណត់ទំហំនៃ Document។",
-    expectedOutcome: "រចនា Document ដែលស្របតាមដែនកំណត់ និងប្រសិទ្ធភាពរបស់ MongoDB។",
     codeSnippet: `// Sample Course Document in BSON representation
 {
   "_id": ObjectId("6648e58319f3a9e224e78891"),
@@ -189,9 +171,6 @@ show collections;
 * **ObjectId**៖ 12-byte Unique Identifier របស់ MongoDB
 * **Array**៖ បញ្ជី Array នៃតម្លៃ ឬ Sub-documents
 * **Null**៖ តម្លៃទទេ`,
-    tip: "នៅក្នុង JSON ធម្មតា គ្មានប្រភេទ Date ពិតប្រាកដទេ (វាគ្រាន់តែជា String) ប៉ុន្តែក្នុង MongoDB BSON `Date` គឺជា Type សុទ្ធសាធដែលគាំទ្រ Timezone និង Date Calculations។",
-    objective: "ស្គាល់ និងជ្រើសរើស BSON Data Types ឱ្យបានត្រឹមត្រូវសម្រាប់ Fields នីមួយៗ។",
-    expectedOutcome: "កំណត់ Data Types ត្រឹមត្រូវសម្រាប់ Course Model Properties។",
     codeSnippet: `// Demonstrating varied BSON types in a Course Document
 {
   "_id": ObjectId("6648e58319f3a9e224e78891"), // ObjectId
@@ -219,9 +198,6 @@ show collections;
 * **3 Bytes**៖ Incrementing Counter (រាប់ចំនួនកើនឡើងជាបន្តបន្ទាប់)
 
 ដោយសារតែ ៤ Bytes ដំបូងជា Timestamp យើងអាចទាញយកពេលវេលាបង្កើតចេញពី \`_id\` បានដោយមិនបាច់បង្កើត Field ដាច់ដោយឡែកឡើយ!`,
-    tip: "អ្នកអាចទាញយកពេលវេលាបង្កើតពី ObjectId តាមរយៈ `objectId.getTimestamp()` ក្នុង mongosh ឬ JavaScript។",
-    objective: "យល់ច្បាស់ពីសមាសធាតុផ្សំនៃ 12-byte ObjectId របស់ MongoDB។",
-    expectedOutcome: "ដឹងពីរបៀបដែល MongoDB បង្កើត Unique Primary Keys ដោយមិនចាំបាច់មាន Central Auto-increment Lock។",
     codeSnippet: `// ObjectId Decomposition (24 hex characters):
 // "6648e583 19f3a9e224 e78891"
 //  └─Time─┘ └──Random──┘ └Counter┘
@@ -244,9 +220,6 @@ console.log("Created at:", courseId.getTimestamp());
 * ទំនាក់ទំនង **1-to-Few** (ឧ. Course មួយមាន Course Requirements ចំនួន ៣-៥ ចំណុច ឬ Syllabus Summary)
 * ទិន្នន័យដែលតែងតែអានជាមួយគ្នាជានិច្ចក្នុង Request តែមួយ
 * ផ្តល់ល្បឿនអានលឿនបំផុតព្រោះមិនបាច់ធ្វើ JOIN ឬ $lookup`,
-    tip: "ច្បាប់ណែនាំ៖ ប្រសិនបើទិន្នន័យកើនឡើងគ្មានដែនកំណត់ (Unbounded Growth ដូចជា Course Reviews រាប់សែន) កុំប្រើ Embedding ត្រូវប្រើ References ជំនួសវិញ។",
-    objective: "ចេះរចនា Embedded Documents សម្រាប់ទិន្នន័យដែលអានជាមួយគ្នាញឹកញាប់។",
-    expectedOutcome: "សមត្ថភាពបង្កើន Performance នៃការអានទិន្នន័យដោយកាត់បន្ថយ Multi-collection queries។",
     codeSnippet: `// Embedded Document Pattern: Course with embedded Instructor Profile
 {
   "_id": ObjectId("6648e58319f3a9e224e78891"),
@@ -277,9 +250,6 @@ console.log("Created at:", courseId.getTimestamp());
 * ទំនាក់ទំនង **1-to-Many** ធំៗ (ឧ. Course មួយមាន Lessons រាប់សិប)
 * ទំនាក់ទំនង **Many-to-Many** (ឧ. សិស្សរាប់ពាន់នាក់ចុះឈ្មោះក្នុង Courses ច្រើន)
 * ទិន្នន័យដែលត្រូវ Update ញឹកញាប់ដោយឯករាជ្យ (ជៀសវាងការ Update ច្រើនកន្លែង)`,
-    tip: "ប្រើប្រាស់ References នៅពេលដែល Collection ទាំងពីរមានទំហំធំ ឬចាំបាច់ត្រូវ Query ដោយឡែកពីគ្នា។",
-    objective: "ចេះភ្ជាប់ទំនាក់ទំនងរវាង Collections តាមរយៈ ObjectId References។",
-    expectedOutcome: "រចនាសម្ព័ន្ធទិន្នន័យ Normalized ដែលមានតុល្យភាពរវាង Storage និង Query Flexibility។",
     codeSnippet: `// 1. Course Document (in "courses" collection)
 {
   "_id": ObjectId("6648e58319f3a9e224e78891"),
@@ -310,9 +280,6 @@ console.log("Created at:", courseId.getTimestamp());
 3. បង្កើត Database User (Username & Secure Password)
 4. Configure Network Access៖ Allow IP Address (\`0.0.0.0/0\` សម្រាប់ Development)
 5. ចម្លង **Connection String URI** សម្រាប់ដាក់ក្នុង \`.env\``,
-    tip: "កុំដាក់ Password ពិតប្រាកដក្នុង Git Repository! តែងតែរក្សាទុក Connection String ក្នុង `.env` និងបញ្ចូល `.env` ក្នុង `.gitignore`។",
-    objective: "ចេះ Setup Cloud MongoDB Atlas Cluster និងទាញយក Connection String។",
-    expectedOutcome: "ទទួលបាន Production-ready Cloud MongoDB Cluster សម្រាប់ភ្ជាប់ជាមួយ Express Backend។",
     codeSnippet: `# Standard MongoDB Atlas Connection String URI Format:
 # mongodb+srv://<username>:<password>@<cluster-domain>/<database-name>?retryWrites=true&w=majority
 
@@ -333,9 +300,6 @@ Basic CRUD Commands សម្រាប់ Course Catalog៖
 * **Read**៖ \`db.courses.find({ price: { $lte: 50 } })\`
 * **Update**៖ \`db.courses.updateOne({ _id }, { $set: { published: true } })\`
 * **Delete**៖ \`db.courses.deleteOne({ _id })\``,
-    tip: "ប្រើប្រាស់ `.pretty()` ក្នុង shell ចាស់ៗ ឬ mongosh ទំនើបនឹង Format JSON ឱ្យស្អាតដោយស្វ័យប្រវត្តិ។",
-    objective: "ស្ទាត់ជំនាញប្រើប្រាស់ mongosh CLI សម្រាប់បង្កើត និងអានទិន្នន័យ។",
-    expectedOutcome: "សមត្ថភាព Debug និងត្រួតពិនិត្យទិន្នន័យផ្ទាល់ក្នុង Database Shell។",
     codeSnippet: `// Step 1: Insert sample course in mongosh
 db.courses.insertOne({
   title: "Docker for Node Developers",
@@ -369,9 +333,6 @@ db.courses.countDocuments();`,
 * **Query Bar & Filters**៖ សាកល្បង Query Filters ដូចជា \`{ price: { $gte: 30 } }\`
 * **Performance Index Analyzer**៖ ពិនិត្យមើល Performance នៃ Queries និងបង្កើត Indexes
 * **Schema Tab**៖ វិភាគ Types និងទម្រង់នៃ Fields ទាំងអស់ក្នុង Collection`,
-    tip: "Compass អនុញ្ញាតឱ្យអ្នក Export Queries ទៅជា JavaScript (Node.js) Code ដោយផ្ទាល់តាមរយៈប៊ូតុង 'Export to Language'!",
-    objective: "ចេះប្រើប្រាស់ MongoDB Compass GUI ដើម្បីពិនិត្យ និង Optimize ទិន្នន័យ។",
-    expectedOutcome: "មានឧបករណ៍ Visual Tool ងាយស្រួលត្រួតពិនិត្យ Database ពេលសរសេរ Express APIs។",
     codeSnippet: `# Connect Compass to Local or Atlas Cluster:
 # 1. Open MongoDB Compass
 # 2. Paste connection string:
@@ -393,9 +354,6 @@ mongodb+srv://course_admin:password@cluster0.net/course_catalog_db
 2. **Favor Embedding unless there's a compelling reason**៖ បង្កប់ទិន្នន័យប្រសិនបើវាត្រូវបានអានជាមួយគ្នាជានិច្ច
 3. **Avoid Unbounded Arrays**៖ កុំឱ្យ Array ក្នុង Document កើនឡើងគ្មានទីបញ្ចប់ (ហានិភ័យលើសទំហំ 16MB)
 4. **Use References for Many-to-Many Relationships**៖ ប្រើ ObjectId References សម្រាប់ទំនាក់ទំនងធំៗ`,
-    tip: "នៅក្នុង NoSQL Data Modeling មិនមែនដូច SQL ទេ៖ ការ Duplicate ទិន្នន័យតិចតួច (Denormalization) ដើម្បីឱ្យ Query លឿន គឺជាការអនុវត្តទូទៅ និងត្រូវបានលើកទឹកចិត្ត។",
-    objective: "យល់ដឹងពីយុទ្ធសាស្ត្ររចនា Schema NoSQL ប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
-    expectedOutcome: "រចនា Database Schema សម្រាប់ Course Catalog API ដែលដំណើរការលឿន និង Scalable។",
     codeSnippet: `/* SUMMARY OF DATA MODELING PATTERNS:
    -------------------------------------------------------------
    1. 1-to-Few (Course -> Requirements)

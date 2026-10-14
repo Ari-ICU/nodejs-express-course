@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Response Object (`res`)** គ្រប់គ្រងការបញ្ជូនទិន្នន័យត្រឡប់ទៅកាន់ Client វិញ។\n\nMethods សំខាន់ៗដែលត្រូវប្រើជាប្រចាំ៖\n* **`res.status(code)`**៖ កំណត់ HTTP Status Code (អាចសរសេរ Chaining បាន)\n* **`res.json(data)`**៖ បំប្លែងទិន្នន័យទៅជា JSON String និងកំណត់ Content-Type ដោយស្វ័យប្រវត្តិ\n* **`res.send(data)`**៖ ផ្ញើ Text, HTML, ឬ Buffer\n* **`res.set(header, value)`**៖ កំណត់ Custom Response Header\n* **`res.sendStatus(code)`**៖ ផ្ញើតែ Status Code ជាមួយ Status Text ស្តង់ដារ",
-  tip: "⚠️ កំហុសញឹកញាប់៖ ការហៅ `res.json()` ឬ `res.send()` លើសពីម្តងក្នុង Handler តែមួយ នឹងបង្កឱ្យកើតមានកំហុស `ERR_HTTP_HEADERS_SENT`។ ត្រូវប្រើ `return res.json(...)`។",
-  objective: "ចេះប្រើប្រាស់ Response helper methods ឱ្យបានត្រឹមត្រូវ និងជៀសវាង Headers Already Sent error។",
-  expectedOutcome: "ចេះរៀបចំ HTTP Response តាមស្តង់ដារវិជ្ជាជីវៈ។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\napp.get(\"/api/v1/courses/latest\", (req, res) => {\n  // Step 1: Set Custom Response Headers\n  res.set(\"X-API-Version\", \"1.0.0\");\n  res.set(\"Cache-Control\", \"public, max-age=3600\");\n\n  // Step 2: Return formatted Course data\n  const sampleCourse = {\n    id: \"c-101\",\n    title: \"Mastering Node.js & Express\",\n    price: 49.99,\n    published: true\n  };\n\n  // 💡 Teaching Note: Method Chaining res.status().json()\n  // ⚠️ Always return if followed by other logic!\n  return res.status(200).json({\n    success: true,\n    data: sampleCourse\n  });\n});",
 };
 

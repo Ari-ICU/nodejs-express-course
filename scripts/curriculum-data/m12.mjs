@@ -18,9 +18,6 @@ Mongoose ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ �
 2. **Built-in Validation**៖ ត្រួតពិនិត្យប្រភេទទិន្នន័យមុនពេល Save ទៅកាន់ Database
 3. **Middleware Hooks**៖ ដំណើរការកូដស្វ័យប្រវត្តិកំឡុង Lifecycle (\`pre('save')\`, \`post('save')\`)
 4. **Population ($lookup replacement)**៖ ភ្ជាប់ទំនាក់ទំនងឯកសាររវាង Collections យ៉ាងងាយស្រួល`,
-    tip: "Mongoose ដើរតួដូចជាស្ពានតភ្ជាប់រវាង Express Controllers/Services និង MongoDB ដោយបំប្លែង BSON Documents ទៅជា JavaScript Objects ដ៏សំបូរបែប។",
-    objective: "យល់ដឹងពីតួនាទីរបស់ Mongoose ODM ក្នុងការគ្រប់គ្រង Database លើ Node.js។",
-    expectedOutcome: "ដឹងពីរបៀបដែល Mongoose ជួយធានានូវ Data Integrity និង Type Safety។",
     codeSnippet: `import mongoose, { Schema } from "mongoose";
 
 // Step 1: Define Course Schema with Mongoose ODM
@@ -43,9 +40,6 @@ export const Course = mongoose.model("Course", courseSchema);`,
 
 * ដំឡើងជំនាន់ចុងក្រោយ (\`mongoose@latest\`)
 * Mongoose ជំនាន់ v8+ គាំទ្រ ES Modules (\`import/export\`) និង Native JavaScript Promises ដោយមិនបាច់ប្រើ Callbacks ទៀតឡើយ`,
-    tip: "កុំដំឡើងកញ្ចប់ `mongodb` driver ដាច់ដោយឡែកប្រសិនបើអ្នកប្រើ `mongoose` រួចហើយ ពីព្រោះ Mongoose បានភ្ជាប់ Driver ផ្លូវការរបស់ MongoDB មកស្រាប់។",
-    objective: "ចេះដំឡើងកញ្ចប់ Mongoose ក្នុង Project ដោយជោគជ័យ។",
-    expectedOutcome: "Project ទទួលបាន Mongoose Library ត្រៀមខ្លួនសម្រាប់ Database Connectivity។",
     codeSnippet: `# Install Mongoose into the course-catalog-api project
 npm install mongoose
 
@@ -65,9 +59,6 @@ cat package.json | grep mongoose`,
 * អាន Connection URI ពី \`process.env.DATABASE_URL\`
 * ប្រើប្រាស់ \`try/catch\` ដើម្បីចាប់កំហុសនៅពេល Database មិនអាចតភ្ជាប់បាន
 * ត្រួតពិនិត្យ Connection Events (\`connected\`, \`error\`, \`disconnected\`)`,
-    tip: "តែងតែហៅ `await connectDB()` មុនពេល `app.listen(PORT)` ដំណើរការ ដើម្បីធានាថា Server មិនទទួល Requests មុនពេល Database ភ្ជាប់រួចរាល់ឡើយ។",
-    objective: "ចេះបង្កើត Persistent Connection Pool ទៅកាន់ MongoDB។",
-    expectedOutcome: "Server តភ្ជាប់ទៅកាន់ MongoDB Atlas ដោយរលូន និងមាន Event Listeners។",
     codeSnippet: `// src/config/db.js
 import mongoose from "mongoose";
 
@@ -100,9 +91,6 @@ mongoose.connection.on("reconnected", () => console.log("🔄 MongoDB reconnecte
 * \`price\` (Number)
 * \`level\` (String)
 * \`published\` (Boolean)`,
-    tip: "Schema កំណត់តែរចនាសម្ព័ន្ធប៉ុណ្ណោះ។ ដើម្បីធ្វើប្រតិបត្តិការ CRUD បាន អ្នកត្រូវយក Schema ទៅ Compile ឱ្យក្លាយជា **Model** ជាមុនសិន។",
-    objective: "ចេះកំណត់ Mongoose Schema សម្រាប់ Resource។",
-    expectedOutcome: "មាន Blueprint ច្បាស់លាស់សម្រាប់គ្រប់គ្រងទិន្នន័យ Course។",
     codeSnippet: `// src/models/course.schema.js
 import { Schema } from "mongoose";
 
@@ -145,9 +133,6 @@ export const courseSchema = new Schema({
 របៀបដែល Mongoose បង្កើត Collection Name ដោយស្វ័យប្រវត្តិ៖
 * នៅពេលអ្នកប្រកាស \`mongoose.model("Course", courseSchema)\`
 * Mongoose នឹងយកឈ្មោះ \`"Course"\` ទៅធ្វើជា **Lowercase Plural** ដោយស្វ័យប្រវត្តិ គឺ **\`"courses"\`**!`,
-    tip: "ច្បាប់ Mongoose Naming Convention៖ ឈ្មោះ Model ត្រូវសរសេរជា Singular Capitalized (ដូចជា 'Course', 'Lesson', 'User') ហើយ Mongoose នឹងបង្កើត Collection ឈ្មោះ 'courses', 'lessons', 'users' ដោយស្វ័យប្រវត្តិ។",
-    objective: "ចេះបង្កើត Mongoose Model ចេញពី Schema។",
-    expectedOutcome: "ទទួលបាន Constructor Model (`Course`) ដែលមាន Methods សម្រាប់ Query Database។",
     codeSnippet: `// src/models/course.model.js
 import mongoose, { Schema } from "mongoose";
 
@@ -176,9 +161,6 @@ export const Course = mongoose.model("Course", courseSchema);`,
 * **\`Buffer\`**៖ ទិន្នន័យ Binary
 * **\`Schema.Types.ObjectId\`**៖ សោ Foreign Reference ទៅកាន់ Document ផ្សេង
 * **\`Array\`**៖ បញ្ជីទិន្នន័យ ឬ Sub-documents`,
-    tip: "ប្រើប្រាស់ `trim: true` លើ String fields ជានិច្ច ដើម្បីលុប White Space ខាងដើម និងខាងចុងដែល User ច្រឡំវាយបញ្ចូល។",
-    objective: "ចេះប្រើប្រាស់ SchemaTypes សមស្របតាមប្រភេទ Fields នៃ Course API។",
-    expectedOutcome: "Schema មានភាពរឹងមាំ និងមានការកំណត់ Types ត្រឹមត្រូវតាមស្ដង់ដារ។",
     codeSnippet: `import { Schema, model } from "mongoose";
 
 const courseDetailsSchema = new Schema({
@@ -206,9 +188,6 @@ Built-in Validators សំខាន់ៗ៖
 * **\`minlength\` និង \`maxlength\`** សម្រាប់ Strings
 * **\`enum\`** សម្រាប់កំណត់តម្លៃជម្រើសថេរ (Fixed Choices)
 * **\`match\`** សម្រាប់ត្រួតពិនិត្យ Regular Expression (Regex)`,
-    tip: "Validation របស់ Mongoose ដំណើរការលើ `save()` និង `create()` ប៉ុន្តែត្រូវកំណត់ `{ runValidators: true }` ពេលប្រើ `findByIdAndUpdate()`។",
-    objective: "ចេះប្រើប្រាស់ Built-in Validators ដើម្បីការពារទិន្នន័យមិនត្រឹមត្រូវ។",
-    expectedOutcome: "ទិន្នន័យ Course ត្រូវបាន Validate ត្រឹមត្រូវតាម Business Rules។",
     codeSnippet: `import { Schema } from "mongoose";
 
 export const courseSchema = new Schema({
@@ -247,9 +226,6 @@ export const courseSchema = new Schema({
   \`required: [true, "Custom error message here"]\`
 
 វិធីនេះជួយឱ្យ Error Response របស់ API មានភាពរួសរាយ និងងាយយល់សម្រាប់ Client។`,
-    tip: "តែងតែផ្តល់ Custom Error Message លើគ្រប់ Required Field ទាំងអស់ ដើម្បីងាយស្រួលបង្ហាញលើ Frontend Forms។",
-    objective: "ចេះកំណត់ Required Validator ជាមួយ Custom Error Messages។",
-    expectedOutcome: "API បញ្ចេញ Error Messages ច្បាស់លាស់នៅពេលខ្វះទិន្នន័យ។",
     codeSnippet: `import { Schema } from "mongoose";
 
 export const courseSchema = new Schema({
@@ -279,9 +255,6 @@ export const courseSchema = new Schema({
 អាចជា៖
 * តម្លៃថេរ (Static value)៖ \`default: false\`, \`default: "beginner"\`
 * អនុគមន៍ (Dynamic function)៖ \`default: Date.now\``,
-    tip: "កុំសរសេរ `default: Date.now()` (មានវង់ក្រចក) ព្រោះវានឹង Execute តែម្តងគត់ពេល Server Start! ត្រូវសរសេរ `default: Date.now` (គ្មានវង់ក្រចក)។",
-    objective: "ចេះកំណត់ Static និង Dynamic Default Values ក្នុង Schema។",
-    expectedOutcome: "កាត់បន្ថយការសរសេរ Default Checks ដោយដៃក្នុង Controller/Service។",
     codeSnippet: `import { Schema } from "mongoose";
 
 export const courseSchema = new Schema({
@@ -304,9 +277,6 @@ export const courseSchema = new Schema({
 មុខងារស្វ័យប្រវត្តិ៖
 * បន្ថែម \`createdAt\` កាលបរិច្ឆេទដែល Document ត្រូវបានបង្កើតដំបូង
 * បន្ថែម និងកែប្រែ \`updatedAt\` ដោយស្វ័យប្រវត្តិកំឡុងពេល \`save()\` ឬ \`findByIdAndUpdate()\` នីមួយៗ`,
-    tip: "ស្ទើរតែគ្រប់ Enterprise Collections ទាំងអស់គួរតែបើក `{ timestamps: true }` ជានិច្ចសម្រាប់ Audit Trail និង Sorting។",
-    objective: "ចេះបើកដំណើរការ Automated Timestamps លើ Mongoose Schemas។",
-    expectedOutcome: "គ្រប់ Document ទាំងអស់កត់ត្រាពេលវេលាបង្កើត និងកែប្រែដោយស្វ័យប្រវត្តិ។",
     codeSnippet: `import { Schema, model } from "mongoose";
 
 // Step 1: Pass { timestamps: true } as the second argument to Schema
@@ -332,9 +302,6 @@ export const Course = model("Course", courseSchema);`,
 * គណនាតម្លៃបញ្ចុះតម្លៃ \`discountedPrice\`
 * គណនា \`durationHours\` ចេញពី \`durationMinutes\`
 * ត្រូវកំណត់ \`{ virtuals: true }\` ក្នុង \`toJSON\` Option ដើម្បីឱ្យវាបង្ហាញពេលផ្ញើ Response ទៅកាន់ Client`,
-    tip: "Virtuals ល្អបំផុតសម្រាប់ Calculated Fields ជៀសវាងការខាតបង់ទំហំ Storage លើ Database សម្រាប់ទិន្នន័យដែលអាចគណនាបាន។",
-    objective: "ចេះបង្កើត Virtual Getters សម្រាប់ Computed Properties ក្នុង Mongoose។",
-    expectedOutcome: "ផ្តល់ជូន Fields បន្ថែមដល់ Client ដោយមិនបាច់រក្សាទុកក្នុង Database។",
     codeSnippet: `import { Schema, model } from "mongoose";
 
 const courseSchema = new Schema({
@@ -369,9 +336,6 @@ export const Course = model("Course", courseSchema);`,
 * **Delete**៖ \`Model.findByIdAndDelete()\`, \`Model.deleteOne()\`
 
 Methods ទាំងអស់នេះ Return **Mongoose Query Promises** ដែលគាំទ្រ Async/Await យ៉ាងរលូន។`,
-    tip: "Mongoose Queries មិនមែនជា Native Promises ទេ (វាជា Thenable Query Objects)។ អ្នកអាចសរសេរ `await Model.find()` បាន ឬប្រើ `.exec()` ដើម្បីទទួលបាន Real Promise។",
-    objective: "ស្គាល់ និងយល់ច្បាស់ពី Core CRUD API របស់ Mongoose។",
-    expectedOutcome: "មានផែនទីបង្ហាញផ្លូវសម្រាប់ការសរសេរ Data Operations ក្នុង Service Layer។",
     codeSnippet: `/* MONGOOSE CRUD CHEATSHEET FOR COURSE API:
    -------------------------------------------------------------
    CREATE:  const newCourse = await Course.create(req.body);
@@ -393,9 +357,6 @@ Methods ទាំងអស់នេះ Return **Mongoose Query Promises** ដែ
 
 1. **\`Course.create(data)\` (ពេញនិយមបំផុត)**៖ ខ្លី រហ័ស និងធ្វើ Validation រួច Save ទៅកាន់ MongoDB ក្នុងមួយជំហាន
 2. **\`new Course(data)\` + \`course.save()\`**៖ ផ្តល់ភាពបត់បែននៅពេលអ្នកចង់កែប្រែ Properties ខ្លះសិនមុននឹង Save`,
-    tip: "ប្រើប្រាស់ `Course.create()` នៅក្នុង Controllers និង Services ដើម្បីឱ្យកូដខ្លី និងស្អាត។",
-    objective: "ចេះបង្កើត Document ថ្មីក្នុង MongoDB តាមរយៈ Mongoose។",
-    expectedOutcome: "Document ថ្មីត្រូវបាន Persist ចូលក្នុង Collection ជាមួយ Generated _id។",
     codeSnippet: `import { Course } from "./models/course.model.js";
 
 // Method 1: Direct Course.create() (Recommended for Services)
@@ -430,9 +391,6 @@ export const addCourseWithCustomLogic = async (courseData) => {
 1. **\`Course.find(filter)\`**៖ ត្រឡប់ Array នៃ Documents (ត្រឡប់ \`[]\` បើគ្មាន)
 2. **\`Course.findById(id)\`**៖ ស្វែងរកតាម \`_id\` ដោយផ្ទាល់ (ត្រឡប់ \`null\` បើគ្មាន)
 3. **\`Course.findOne(filter)\`**៖ ស្វែងរក Document ដំបូងបង្អស់ដែលត្រូវនឹងលក្ខខណ្ឌ`,
-    tip: "ចងចាំ៖ `find()` ត្រឡប់ Array ជានិច្ច ទោះបីជាត្រូវតែ ១ Document ក៏ដោយ រីឯ `findById()` និង `findOne()` ត្រឡប់ Single Document ឬ `null`។",
-    objective: "ចេះជ្រើសរើស Method ស្វែងរកឱ្យបានត្រឹមត្រូវតាមតម្រូវការ។",
-    expectedOutcome: "ទាញយកទិន្នន័យពី MongoDB បានត្រឹមត្រូវ និងដោះស្រាយករណី NotFound។",
     codeSnippet: `import { Course } from "./models/course.model.js";
 
 // 1. Fetch all published courses
@@ -459,9 +417,6 @@ const uniqueCourse = await Course.findOne({ slug: "mastering-express" });`,
 * **Comparison**៖ \`$gt\` (>), \`$gte\` (>=), \`$lt\` (<), \`$lte\` (<=), \`$ne\` (!=)
 * **Inclusion**៖ \`$in: [...]\` (ផ្គូផ្គងតម្លៃណាមួយក្នុង Array)
 * **Logical**៖ \`$or: [...]\`, \`$and: [...]\``,
-    tip: "សញ្ញា Dollar Sign (`$`) នៅពីមុខពាក្យ គឺជាអនុសញ្ញារបស់ MongoDB សម្រាប់សម្គាល់ Operators។",
-    objective: "ចេះប្រើប្រាស់ Comparison និង Logical Operators ក្នុង Mongoose Queries។",
-    expectedOutcome: "សមត្ថភាពសរសេរ Complex Queries សម្រាប់ Filtering Course Catalog។",
     codeSnippet: `import { Course } from "./models/course.model.js";
 
 // Filter: Price between $20 and $60, and level is beginner or intermediate
@@ -491,9 +446,6 @@ const promoCourses = await Course.find({
 Options ដ៏សំខាន់ដែលមិនអាចខ្វះបាន៖
 * **\`new: true\`**៖ ត្រឡប់ Document ថ្មីដែលបានកែប្រែរួច (តាមលំនាំដើម Mongoose ត្រឡប់ Document ចាស់មុនកែប្រែ)
 * **\`runValidators: true\`**៖ បង្ខំឱ្យ Mongoose ដំណើរការ Schema Validation ឡើងវិញលើ Fields ថ្មី!`,
-    tip: "⚠️ កំហុសញឹកញាប់៖ បើអ្នកមិនដាក់ `{ runValidators: true }` ទេ User អាច Update តម្លៃ `price: -100` បានដោយមិនជាប់ Error ឡើយ!",
-    objective: "ចេះប្រើប្រាស់ findByIdAndUpdate ជាមួយ options { new: true, runValidators: true }។",
-    expectedOutcome: "កែប្រែទិន្នន័យប្រកបដោយសុវត្ថិភាព និងអនុលោមតាម Schema Rules។",
     codeSnippet: `import { Course } from "./models/course.model.js";
 
 export const updateCourseService = async (courseId, updateData) => {
@@ -521,9 +473,6 @@ export const updateCourseService = async (courseId, updateData) => {
 
 1. **Hard Delete**៖ \`Course.findByIdAndDelete(courseId)\`
 2. **Soft Delete (អនុសាសន៍ Production)**៖ \`Course.findByIdAndUpdate(courseId, { isDeleted: true, deletedAt: new Date() })\``,
-    tip: "ការប្រើ Soft Delete ជួយការពារការបាត់បង់ទិន្នន័យជាយថាហេតុ និងរក្សាបាននូវ Parent-Child integrity ជាមួយ Lessons និង Enrollments។",
-    objective: "ចេះលុបទិន្នន័យទាំង Hard Delete និង Soft Delete តាមរយៈ Mongoose។",
-    expectedOutcome: "សមត្ថភាពគ្រប់គ្រងការលុបទិន្នន័យប្រកបដោយទំនួលខុសត្រូវខ្ពស់។",
     codeSnippet: `import { Course } from "./models/course.model.js";
 
 // Hard Delete: Permanently purged from MongoDB
@@ -551,9 +500,6 @@ export const softDeleteCourse = async (id) => {
 
 * **Instance Methods (\`methods\`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. \`course.publishCourse()\`)
 * **Static Methods (\`statics\`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. \`Course.findTopRated()\`)`,
-    tip: "កុំប្រើ Arrow Function (`() => {}`) ពេលបង្កើត Methods លើ Schema ពីព្រោះ Arrow Function មិនមាន Binding លើ `this` context ឡើយ! ត្រូវប្រើ `function() {}` ធម្មតា។",
-    objective: "ចេះបន្ថែម Instance Methods និង Static Methods លើ Mongoose Model។",
-    expectedOutcome: "កូដ Domain Logic ត្រូវបានរៀបចំយ៉ាងស្អាតក្នុង Model Layer។",
     codeSnippet: `import { Schema, model } from "mongoose";
 
 const courseSchema = new Schema({
@@ -588,9 +534,6 @@ export const Course = model("Course", courseSchema);`,
 * **\`pre('save')\`**៖ បង្កើត SEO URL Slug ស្វ័យប្រវត្តិចេញពី \`title\`
 * **\`pre('save')\`**៖ ធ្វើ Password Hashing មុននឹង Save User Document
 * **\`post('save')\`**៖ កត់ត្រា Audit Log ឬផ្ញើ Notification បន្ទាប់ពី Save ជោគជ័យ`,
-    tip: "នៅក្នុង Mongoose v8+ អ្នកអាច return Promise ឬប្រើ `async/await` ក្នុង hook ដោយមិនបាច់ហៅ `next()` ឡើយ។",
-    objective: "ចេះបង្កើត Automated Lifecycle Hooks ក្នុង Mongoose Schemas។",
-    expectedOutcome: "ស្វ័យប្រវត្តិកម្មលើ Slug Generation និង Security Hashing ក្នុង Database Layer។",
     codeSnippet: `import { Schema, model } from "mongoose";
 
 const courseSchema = new Schema({
@@ -623,9 +566,6 @@ export const Course = model("Course", courseSchema);`,
 ដំណើរការការងារ៖
 * Lesson Document រក្សាទុកតែ \`courseId: ObjectId("...")\` ប៉ុណ្ណោះ
 * នៅពេលហៅ \`.populate("courseId")\` Mongoose នឹង Query ទៅកាន់ \`courses\` Collection ដោយស្វ័យប្រវត្តិតាមរយៈ \`$lookup\` ហើយជំនួស \`courseId\` ដោយ Course Document ពេញលេញ!`,
-    tip: "ប្រើប្រាស់ Field Selection ក្នុង populate (`.populate('courseId', 'title price')`) ដើម្បីទាញយកតែ Fields ដែលត្រូវការ ជួយសន្សំសំចៃ Memory និង Network Bandwidth។",
-    objective: "ចេះប្រើប្រាស់ .populate() ដើម្បី Hydrate Relational References ក្នុង MongoDB។",
-    expectedOutcome: "ជំនាញដោះស្រាយ Parent-Child Relationships ក្នុង REST API Responses។",
     codeSnippet: `import { Lesson } from "./models/lesson.model.js";
 
 // Fetch lesson and automatically populate parent Course data

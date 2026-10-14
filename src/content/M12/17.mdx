@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការលុប Document ជាមួយ Mongoose៖\n\n1. **Hard Delete**៖ `Course.findByIdAndDelete(courseId)`\n2. **Soft Delete (អនុសាសន៍ Production)**៖ `Course.findByIdAndUpdate(courseId, { isDeleted: true, deletedAt: new Date() })`",
-  tip: "ការប្រើ Soft Delete ជួយការពារការបាត់បង់ទិន្នន័យជាយថាហេតុ និងរក្សាបាននូវ Parent-Child integrity ជាមួយ Lessons និង Enrollments។",
-  objective: "ចេះលុបទិន្នន័យទាំង Hard Delete និង Soft Delete តាមរយៈ Mongoose។",
-  expectedOutcome: "សមត្ថភាពគ្រប់គ្រងការលុបទិន្នន័យប្រកបដោយទំនួលខុសត្រូវខ្ពស់។",
   codeSnippet: "import { Course } from \"./models/course.model.js\";\n\n// Hard Delete: Permanently purged from MongoDB\nexport const purgeCourse = async (id) => {\n  return await Course.findByIdAndDelete(id);\n};\n\n// Soft Delete: Preserves record for audit/recovery\nexport const softDeleteCourse = async (id) => {\n  return await Course.findByIdAndUpdate(\n    id,\n    { isDeleted: true, deletedAt: new Date() },\n    { new: true }\n  );\n};",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "Role-based Access Control (RBAC) regulates user operations based on roles assigned to individuals within an organization. Instead of assigning granular permissions directly to every user, permissions are grouped into roles, and users are assigned those roles. RBAC simplifies authorization audits, scales seamlessly, and aligns with enterprise compliance requirements.",
-  tip: "Keep role hierarchies flat and clear initially. Introduce permission matrices only when role definitions begin to blur across departments.",
-  objective: "Understand how RBAC decouples user identities from system permissions.",
-  expectedOutcome: "Comprehensive understanding of RBAC models and permission inheritance.",
   codeSnippet: "// RBAC Conceptual Model:\n// User -> Has Role -> Has Permissions -> Can Access Resource\n//\n// Alice (Student)     -> [Role: \"student\"]    -> Read courses, enroll in course, view progress\n// Bob (Instructor)    -> [Role: \"instructor\"] -> Create course, manage own lessons, grade assignments\n// Carol (Superadmin)  -> [Role: \"admin\"]      -> Delete courses, manage user roles, view platform metrics\n//\n// In middleware:\n// if (!roles.includes(req.user.role)) return 403 Forbidden",
 };
 

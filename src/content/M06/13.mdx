@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "HTTP Status Codes ប្រាប់ Client ពីលទ្ធផលនៃ Request៖\n\n* **200 OK**៖ សំណើជោគជ័យ\n* **201 Created**៖ Resource ថ្មីត្រូវបានបង្កើតដោយជោគជ័យ\n* **204 No Content**៖ សកម្មភាពជោគជ័យតែគ្មានទិន្នន័យត្រឡប់ទៅវិញ (DELETE)\n* **400 Bad Request**៖ Client បញ្ជូនទិន្នន័យខុសទម្រង់\n* **404 Not Found**៖ រកមិនឃើញ Resource ដែលស្នើសុំ\n* **500 Internal Server Error**៖ កំហុសបច្ចេកទេសលើ Server",
-  tip: "កុំត្រឡប់ 200 OK ជាមួយ error message ឱ្យសោះ! ត្រូវប្រើ Status Code ដែលត្រូវនឹងបញ្ហាពិតប្រាកដ (400, 404, 500)។",
-  objective: "ចេះជ្រើសរើស និងកំណត់ Status Code ត្រឹមត្រូវតាមកាលៈទេសៈនីមួយៗ។",
-  expectedOutcome: "សរសេរ Endpoint ដែលឆ្លើយតប Status Code ច្បាស់លាស់ និងត្រឹមត្រូវតាម RFC standards។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nconst courses = [{ id: 1, title: \"Docker for Node Devs\" }];\n\n// GET single course with 200 or 404\napp.get(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId);\n\n  // ⚠️ If course not found -> Return 404 Not Found\n  if (!course) {\n    return res.status(404).json({\n      success: false,\n      error: `Course with ID ${courseId} not found`\n    });\n  }\n\n  // ✅ Found -> Return 200 OK\n  return res.status(200).json({ success: true, data: course });\n});",
 };
 

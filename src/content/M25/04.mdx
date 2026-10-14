@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "By default, Mongoose wraps query results in full Mongoose Document instances complete with change tracking, getters, and schema methods. For read-heavy endpoints, appending `.lean()` skips document instantiation and returns plain JavaScript objects, reducing memory allocation and improving query execution speeds by up to 400%.",
-  tip: "Always append `.lean()` to GET queries where you do not need to call `.save()` on the returned documents.",
-  objective: "Apply query optimizations including .lean(), field projections (.select()), and limit clauses.",
-  expectedOutcome: "Substantially reduced memory footprint and faster JSON serialization.",
   codeSnippet: "// High Performance Course Query:\n// 1. .select() only fetches necessary fields (reduces network transfer)\n// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)\n// 3. .limit() restricts total document count\nconst courses = await Course.find({ published: true })\n  .select(\"title price thumbnailUrl level category\") // Field projection\n  .limit(20)\n  .lean(); // 3-4x faster than default find()!",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "When static roles become insufficient for complex applications, fine-grained permission systems map actions to resources using verbs like `courses:create`, `courses:publish`, or `users:ban`. An access matrix evaluates whether a user's assigned role or direct permission set contains the required resource action before proceeding.",
-  tip: "Use colon notation for granular permissions: `<resource>:<action>` (e.g. `courses:publish`, `lessons:create`).",
-  objective: "Model granular resource-action permission strings and role permission mappings.",
-  expectedOutcome: "Scalable permission matrix capable of fine-grained access control beyond simple roles.",
   codeSnippet: "// config/permissions.js\nexport const ROLE_PERMISSIONS = {\n  student: [\"courses:read\", \"enrollments:create\", \"enrollments:read_own\"],\n  instructor: [\n    \"courses:read\", \"courses:create\", \"courses:update_own\", \"courses:delete_own\",\n    \"lessons:create\", \"lessons:update_own\", \"lessons:delete_own\"\n  ],\n  admin: [\n    \"courses:read\", \"courses:create\", \"courses:update_all\", \"courses:delete_all\",\n    \"users:manage\", \"analytics:read\"\n  ]\n};\n\nexport const hasPermission = (userRole, requiredPermission) => {\n  const permissions = ROLE_PERMISSIONS[userRole] || [];\n  return permissions.includes(requiredPermission);\n};",
 };
 

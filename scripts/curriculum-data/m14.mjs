@@ -17,9 +17,6 @@ export const M14 = [
 * ការពារប្រព័ន្ធពី Invalid Data ដែលអាចធ្វើឱ្យ Application Crash
 * ការពារការវាយប្រហារ (Security Attacks) ដូចជា NoSQL Injection, XSS, និង Malformed Payloads
 * ផ្តល់នូវ Feedback ច្បាស់លាស់ដល់អ្នកប្រើប្រាស់នៅពេលបំពេញ Form មិនត្រឹមត្រូវ`,
-    tip: "ច្បាប់មាសនៃសន្តិសុខ Backend៖ 'Never trust user input' — ទោះបីជា Frontend បាន Validate រួចហើយក៏ដោយ Server ត្រូវតែ Validate ឡើងវិញ ១០០% ជានិច្ច។",
-    objective: "យល់ដឹងពីសារៈសំខាន់នៃ Data Validation ក្នុងការធានា Data Integrity និង API Security។",
-    expectedOutcome: "មានផ្នត់គំនិតការពារប្រព័ន្ធពីទិន្នន័យមិនត្រឹមត្រូវ។",
     codeSnippet: `// Concept: Request passes through Validation Guard before hitting Controller!
 // Incoming Request ➔ [ Validation Middleware ] ➔ [ Controller ] ➔ [ Service ]
 //                           │ (Invalid input?)
@@ -41,9 +38,6 @@ export const M14 = [
 * **Server-Side Validation (Backend)**៖
   * ផ្តោតលើ **Security & Data Integrity**
   * ជារនាំងការពារចុងក្រោយដែលមិនអាច Bypass បានឡើយ`,
-    tip: "កុំពឹងផ្អែកលើ Frontend Validation ឱ្យសោះ។ ត្រូវសរសេរ Server-side Validation ឱ្យរឹងមាំជានិច្ច។",
-    objective: "បែងចែកតួនាទីរវាង Client និង Server Validation។",
-    expectedOutcome: "ដឹងពីមូលហេតុដែល Server Validation ជាតម្រូវការចាំបាច់មិនអាចខ្វះបាន។",
     codeSnippet: `/* Comparison Summary:
    -------------------------------------------------------------
    Client-Side Validation (React / Next.js)  ➔ For Instant UX
@@ -64,9 +58,6 @@ export const M14 = [
 * កំណត់ច្បាប់ទិន្នន័យទាំងអស់ជា Declarative Schema តែមួយ
 * បំបែក Logic នៃការត្រួតពិនិត្យទៅជា Reusable Middleware
 * Auto-generate Error Messages ដែលមានរចនាសម្ព័ន្ធច្បាស់លាស់`,
-    tip: "Schema-based Validation ជួយឱ្យកូដ Controller នៅតែខ្លី និងផ្តោតលើការងារស្នូល។",
-    objective: "យល់ដឹងពីគុណសម្បត្តិនៃការប្រើ Schema Validator ជំនួស Manual Checks។",
-    expectedOutcome: "កូដ Validation មានភាពស្អាត ស៊ីសង្វាក់គ្នា និងងាយស្រួល Maintain។",
     codeSnippet: `// ❌ Manual If/Else checks (Messy & error-prone):
 // if (!req.body.title) return res.status(400).send("Title required");
 // if (typeof req.body.price !== "number") return res.status(400).send("Invalid price");
@@ -88,9 +79,6 @@ export const M14 = [
 * **Type Inference** ដ៏អស្ចារ្យ (អាចទាញយក Types ចេញពី Schema ដោយស្វ័យប្រវត្តិ)
 * **Composable & Chainable** API (ងាយស្រួលសរសេរ \`z.string().min(5).max(100)\`)
 * គាំទ្រទាំង Node.js, Express, React, និង Next.js`,
-    tip: "Zod បានក្លាយជាស្តង់ដារលេខមួយក្នុង Modern JavaScript Ecosystem ជំនួស Joi និង Yup ដោយសារតែភាពងាយស្រួល និង Type-safety។",
-    objective: "ស្គាល់ និងយល់ពីអត្ថប្រយោជន៍នៃ Zod ក្នុង Node.js Backend។",
-    expectedOutcome: "ចេះដំឡើង និងចាប់ផ្តើមប្រើប្រាស់ Zod ក្នុង Express API។",
     codeSnippet: `# Install Zod library
 npm install zod`,
   },
@@ -108,9 +96,6 @@ npm install zod`,
 * \`price\`៖ Number វិជ្ជមាន (\`z.number().min(0)\`)
 * \`level\`៖ Enum (\`"beginner"\`, \`"intermediate"\`, \`"advanced"\`)
 * \`published\`៖ Boolean (Optional)`,
-    tip: "ប្រើប្រាស់ `.trim()` ក្នុង Zod String Schema ដើម្បី Strip Whitespace ដោយស្វ័យប្រវត្តិកំឡុងពេល Parsing។",
-    objective: "ចេះបង្កើត Zod Validation Schema សម្រាប់ Course Resource។",
-    expectedOutcome: "មាន Schema រឹងមាំដែល Validate គ្រប់ Properties នៃ Course Creation Payload។",
     codeSnippet: `// src/validations/course.validation.js
 import { z } from "zod";
 
@@ -147,9 +132,6 @@ export const createCourseSchema = z.object({
 
 1. **\`schema.parse(data)\`**៖ ប្រសិនបើទិន្នន័យត្រឹមត្រូវ ត្រឡប់ Parsed Data; ប្រសិនបើខុស នឹង **Throw ZodError** ភ្លាមៗ
 2. **\`schema.safeParse(data)\`**៖ មិន Throw Error ទេ ប៉ុន្តែត្រឡប់ Object \`{ success: true, data }\` ឬ \`{ success: false, error }\``,
-    tip: "ប្រើប្រាស់ `safeParse()` នៅក្នុង Express Middlewares ដើម្បីឱ្យយើងអាចចាប់កំហុស និង Format Error Envelope បានយ៉ាងរលូនដោយមិនបាច់ប្រើ try/catch។",
-    objective: "ចេះប្រើប្រាស់ parse() និង safeParse() ដើម្បី Validate Request Payloads។",
-    expectedOutcome: "ដឹងពីរបៀបស្ទាក់ចាប់កំហុស Validation មុនពេលទៅដល់ Route Handler។",
     codeSnippet: `import { createCourseSchema } from "./validations/course.validation.js";
 
 // Test parsing with safeParse
@@ -179,9 +161,6 @@ if (!result.success) {
 
 យើងអាច Validate \`req.params.id\` ជាមុនដោយប្រើ Zod Regex ផ្ទៀងផ្ទាត់ **24 Hexadecimal Characters** នៃ MongoDB ObjectId៖
 \`z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ObjectId")\``,
-    tip: "ការ Validate ID នៅកម្រិត Route Params ការពារកុំឱ្យ Invalid Requests ទៅរំខានដល់ Database Driver។",
-    objective: "ចេះ Validate MongoDB ObjectId ក្នុង Route Parameters តាមរយៈ Zod Regex។",
-    expectedOutcome: "Endpoint បដិសេធ Invalid ObjectIds ភ្លាមៗជាមួយ 400 Bad Request។",
     codeSnippet: `import { z } from "zod";
 
 // Step 1: Define MongoDB ObjectId Validator Schema
@@ -208,9 +187,6 @@ console.log("Is valid ObjectId?", check.success); // true`,
 Zod អនុញ្ញាតឱ្យយើងធ្វើទាំង **Type Coercion (បំប្លែង String ទៅជា Number)** និង **Validation** ក្នុងពេលតែមួយ៖
 * \`z.coerce.number().min(1).default(1)\` សម្រាប់ \`page\`
 * \`z.coerce.number().min(1).max(50).default(10)\` សម្រាប់ \`limit\``,
-    tip: "ប្រើប្រាស់ `z.coerce.number()` ជានិច្ចសម្រាប់ Query Parameters ដើម្បីឱ្យ Zod បំប្លែង String '10' ទៅជា Number 10 ដោយស្វ័យប្រវត្តិ។",
-    objective: "ចេះ Validate និង Coerce Query Parameters ដោយប្រើ Zod Coercion។",
-    expectedOutcome: "Query Parameters ត្រូវបាន Convert និង Validate ប្រកបដោយសុវត្ថិភាព។",
     codeSnippet: `import { z } from "zod";
 
 export const courseQuerySchema = z.object({
@@ -235,9 +211,6 @@ export const courseQuerySchema = z.object({
 router.post("/", validate({ body: createCourseSchema }), createCourse);
 router.get("/:id", validate({ params: mongoIdParamSchema }), getCourseById);
 \`\`\``,
-    tip: "នេះគឺជា Middleware Pattern ដែលប្រើប្រាស់ច្រើនបំផុតក្នុង Production Node.js APIs ព្រោះវា Reusable ១០០% លើគ្រប់ Routes ទាំងអស់។",
-    objective: "ចេះបង្កើត Higher-Order Validation Middleware សម្រាប់ Express។",
-    expectedOutcome: "មាន Reusable Middleware មួយគត់សម្រាប់ Validate គ្រប់ផ្នែកនៃ HTTP Request។",
     codeSnippet: `// src/middlewares/validate.middleware.js
 export const validate = (schemas) => (req, res, next) => {
   try {
@@ -282,9 +255,6 @@ export const validate = (schemas) => (req, res, next) => {
   }
 }
 \`\`\``,
-    tip: "ការផ្តល់ព័ត៌មានលម្អិតតាម `details` ជួយឱ្យ Frontend Developers អាច Map Error Message ទៅដាក់ក្រោម Input Field នីមួយៗលើ Form ដោយស្វ័យប្រវត្តិ។",
-    objective: "ចេះ Format ZodError ឱ្យក្លាយជាស្ដង់ដារ Error Response Envelope។",
-    expectedOutcome: "Frontend ទទួលបានបញ្ជីកំហុសច្បាស់លាស់ ងាយស្រួលបង្ហាញជូន User។",
     codeSnippet: `import { ZodError } from "zod";
 
 // Helper to format Zod errors into a clean array
@@ -320,9 +290,6 @@ export const formatZodErrors = (zodError) => {
 1. **Stripping Unknown Keys**៖ Zod ធ្វើការ Strip រាល់ Fields ដែលមិនមានចែងក្នុង Schema ដោយស្វ័យប្រវត្តិកំឡុងពេល \`parse()\` (ការពារ Mass Assignment Attack)
 2. **String Trimming**៖ លុប Blank Spaces ខាងដើម និងខាងចុង
 3. **Escaping HTML/Scripts**៖ ការពារ Stored XSS Attacks មុនពេលរក្សាទុកទៅក្នុង MongoDB`,
-    tip: "តាមលំនាំដើម `z.object()` នឹងច្រោះចោលរាល់ Fields ដែលមិនស្គាល់ (Strip mode) ដូច្នេះទោះបីជា Attacker ព្យាយាមផ្ញើ `role: 'admin'` មក ក៏ Zod មិនអនុញ្ញាតឱ្យឆ្លងផុតឡើយ!",
-    objective: "យល់ដឹងពីយន្តការ Data Sanitization និងការការពារ Mass Assignment ជាមួយ Zod។",
-    expectedOutcome: "ទិន្នន័យត្រូវបានសម្អាតយ៉ាងស្អាតមុនពេលចូលដល់ Database។",
     codeSnippet: `import { z } from "zod";
 
 const courseSchema = z.object({

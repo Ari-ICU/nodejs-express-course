@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "បញ្ជីត្រួតពិនិត្យ (Best Practices Checklist) សម្រាប់ Express Middleware៖\n\n1. **Always call next() or send response**៖ កុំទុកឱ្យ Request ព្យួរចោល\n2. **Catch Async Errors (asyncHandler)**៖ Express 4 មិនទាន់ចាប់ Unhandled Promise Rejections ក្នុង async functions ដោយស្វ័យប្រវត្តិទេ (ត្រូវរុំដោយ Helper ឬ Try/Catch)\n3. **Avoid mutating global state**៖ តុបតែងតែលើ `req` object\n4. **Single Responsibility**៖ Middleware មួយ ធ្វើការងារមួយច្បាស់លាស់",
-  tip: "ការប្រើប្រាស់ `asyncHandler` helper function ជួយឱ្យអ្នកមិនបាច់សរសេរ `try/catch` ដដែលៗនៅក្នុងរាល់ Controller ឡើយ។",
-  objective: "ចេះសរសេរ asyncHandler utility ដើម្បីកាត់បន្ថយ try/catch boilerplate។",
-  expectedOutcome: "កូដ Middleware និង Controllers មានសុវត្ថិភាពខ្ពស់ មិនប្រឈមនឹង Unhandled Rejections។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Enterprise asyncHandler Wrapper Utility\n// Catches any rejected Promise and forwards error to next(err) automatically\nexport const asyncHandler = (fn) => (req, res, next) => {\n  Promise.resolve(fn(req, res, next)).catch(next);\n};\n\n// Step 2: Use asyncHandler without repetitive try/catch blocks!\napp.get(\"/api/v1/courses/stats\", asyncHandler(async (req, res) => {\n  // Simulating async database call\n  const stats = await Promise.resolve({ totalCourses: 42, activeEnrollments: 1250 });\n  res.json({ success: true, data: stats });\n}));\n\n// Step 3: Centralized Error Handler catches any thrown errors\napp.use((err, req, res, next) => {\n  res.status(500).json({ success: false, error: err.message });\n});",
 };
 

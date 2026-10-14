@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "⚠️ **បញ្ហាប្រឈមធំបំផុតក្នុង Express v4**៖ Express មិនអាចចាប់កំហុសដែលកើតឡើងក្នុង `async/await` functions ដោយស្វ័យប្រវត្តិឡើយ! ប្រសិនបើមាន Promise Rejection ហើយគ្មាន `try/catch` នោះ Server នឹងគាំង ឬកើតមាន UnhandledPromiseRejectionWarning។\n\n**ដំណោះស្រាយស្តង់ដារឧស្សាហកម្ម**៖ ប្រើប្រាស់ **`asyncHandler` Utility** ដើម្បីរុំ Async Controllers ដោយស្វ័យប្រវត្តិ៖\n`const asyncHandler = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);` ",
-  tip: "ការប្រើប្រាស់ `asyncHandler` ជួយសន្សំពេលវេលា និងលុបបំបាត់ `try/catch` ចេញពីរាល់ Controller រាប់សិបក្នុងគម្រោងរបស់អ្នក។",
-  objective: "ចេះសរសេរ និងប្រើប្រាស់ asyncHandler wrapper សម្រាប់គ្រប់ Async Controllers។",
-  expectedOutcome: "គ្រប់ Asynchronous Database Errors ទាំងអស់ត្រូវបានបញ្ជូនទៅ Centralized Handler ដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "// src/utils/asyncHandler.js\nexport const asyncHandler = (fn) => (req, res, next) => {\n  // 💡 Teaching Note: Guarantees that any rejected Promise is routed to next(err)!\n  Promise.resolve(fn(req, res, next)).catch(next);\n};\n\n// Usage in Course Controller (No try/catch needed!):\n// export const getCourse = asyncHandler(async (req, res) => {\n//   const course = await Course.findById(req.params.id);\n//   res.json({ success: true, data: course });\n// });",
 };
 

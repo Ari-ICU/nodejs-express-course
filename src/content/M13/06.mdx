@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការចងភ្ជាប់ Routes ក្នុង `src/routes/course.routes.js` ជាមួយ Controller Handlers តាមរយៈ `express.Router()`៖\n\nរចនាសម្ព័ន្ធកូដស្អាតតាមរយៈ `router.route()`:\n* `router.route(\"/\").get(getCourses).post(createCourse)`\n* `router.route(\"/:id\").get(getCourseById).patch(updateCourse).delete(deleteCourse)`",
-  tip: "ការប្រើប្រាស់ `router.route()` ជួយឱ្យងាយស្រួល Add Middlewares (ដូចជា Validation ឬ Auth Guards) លើ Method នីមួយៗ។",
-  objective: "ចេះរៀបចំ Course Routes សម្រាប់ Full Database CRUD API។",
-  expectedOutcome: "Routes ត្រូវបានរៀបចំតាមស្តង់ដារ RESTful Routing និងភ្ជាប់ជាមួយ Controllers។",
   codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
 };
 

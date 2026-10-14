@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅក្នុងពិភពពិត Resources ច្រើនតែមានទំនាក់ទំនង **Parent-Child (Hierarchical Relationship)** ជាមួយគ្នា។ ឧទាហរណ៍៖ Course មួយមាន Lessons ជាច្រើន៖\n`GET /api/v1/courses/:courseId/lessons`\n\nដើម្បីឱ្យ Child Router (`lessonRouter`) អាចអាន Route Parameter របស់ Parent (`:courseId`) បាន យើងត្រូវកំណត់ **`{ mergeParams: true }`** ពេលបង្កើត Router!",
-  tip: "⚠️ ប្រសិនបើអ្នកភ្លេចដាក់ `{ mergeParams: true }` នោះ `req.params.courseId` នៅក្នុង `lessonRouter` នឹងចេញ `undefined`!",
-  objective: "ចេះបង្កើត Nested Router ជាមួយ Option { mergeParams: true }។",
-  expectedOutcome: "យល់ច្បាស់ពីរបៀប Map Parent-Child REST API Relationships ក្នុង Express។",
   codeSnippet: "// src/routes/lesson.routes.js\nimport express from \"express\";\n\n// Step 1: Enable mergeParams to inherit parent route parameters (:courseId)\nconst lessonRouter = express.Router({ mergeParams: true });\n\nconst lessons = [\n  { id: 101, courseId: 1, title: \"Introduction to Node.js\" },\n  { id: 102, courseId: 1, title: \"Express Routing Deep Dive\" }\n];\n\n// Step 2: GET all lessons belonging to a specific course\nlessonRouter.get(\"/\", (req, res) => {\n  // 💡 Teaching Note: Accessing :courseId from parent route!\n  const courseId = Number(req.params.courseId);\n  const courseLessons = lessons.filter(l => l.courseId === courseId);\n\n  res.status(200).json({\n    success: true,\n    courseId,\n    count: courseLessons.length,\n    data: courseLessons\n  });\n});\n\nexport default lessonRouter;",
 };
 

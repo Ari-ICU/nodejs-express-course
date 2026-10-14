@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "ការយល់ដឹងពីភាពខុសគ្នារវាងកំហុសទាំងពីរប្រភេទគឺសំខាន់បំផុតសម្រាប់ Backend Stability៖\n\n1. **Operational Errors (កំហុសអាជីវកម្មដែលរំពឹងទុក)**៖\n   * User បញ្ចូល Password ខុស, រក Course ID មិនឃើញ, Network Timeout\n   * ដោះស្រាយដោយបញ្ជូន Message រួសរាយទៅកាន់ Client (Status 4xx)\n2. **Programming Errors (Bugs ក្នុងកូដ)**៖\n   * អាន Property លើ `undefined`, Syntax Error, Memory Leak\n   * ត្រូវលាក់ព័ត៌មានពី Client (បញ្ជូនទូទៅ 500) និងកត់ត្រា Stack Trace សម្រាប់ Developer កែប្រែ!",
-  tip: "នៅលើ Production កុំបញ្ចេញព័ត៌មានលម្អិតនៃ Programming Errors ទៅកាន់ Client ឱ្យសោះ ព្រោះ Attackers អាចយក Stack Trace ទៅធ្វើការវាយប្រហារ។",
-  objective: "បែងចែកឱ្យដាច់រវាង Operational Errors និង Programming Bugs។",
-  expectedOutcome: "ដឹងពីរបៀបការពារទិន្នន័យសម្ងាត់របស់ Server កំឡុងពេលមានកំហុសបច្ចេកទេស។",
   codeSnippet: "/* ERROR CLASSIFICATION COMPARISON:\n   -------------------------------------------------------------\n   Operational Error:    AppError(\"Course not found\", 404)\n                         ➔ isOperational: true ➔ Safe to show client!\n\n   Programming Error:    TypeError: Cannot read property 'map' of undefined\n                         ➔ isOperational: false ➔ Hide details on Prod!\n   -------------------------------------------------------------\n*/",
 };
 

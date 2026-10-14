@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "ការរៀបចំ Data Models សម្រាប់ Course Catalog API ដោយមាន **Indexes** សម្រាប់បង្កើនល្បឿន Query៖\n\n* **Single Field Index**៖ `title: { type: String, index: true }`\n* **Compound Index**៖ `courseSchema.index({ level: 1, price: -1 })` សម្រាប់បង្កើនល្បឿន Query ដែលច្រោះតាម Level និងតម្រៀបតាម Price ដំណាលគ្នា",
-  tip: "Compound Index ជួយកាត់បន្ថយពេលវេលា Query ពី O(N) មកត្រឹម O(log N) លើ Database ដែលមានទិន្នន័យរាប់សែន Records។",
-  objective: "ចេះបង្កើត Data Models ជាមួយ Single និង Compound Indexes។",
-  expectedOutcome: "Schema ដែលមាន Indexing ត្រៀមខ្លួនសម្រាប់ Production CRUD Queries។",
   codeSnippet: "// src/models/course.model.js\nimport { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true, trim: true, index: true },\n  slug: { type: String, required: true, unique: true },\n  instructor: { type: String, required: true },\n  price: { type: Number, required: true, min: 0 },\n  level: { type: String, enum: [\"beginner\", \"intermediate\", \"advanced\"], default: \"beginner\" },\n  published: { type: Boolean, default: false }\n}, { timestamps: true });\n\n// 💡 Teaching Note: Compound index for filtering by level and sorting by price!\ncourseSchema.index({ level: 1, price: -1 });\n\nexport const Course = model(\"Course\", courseSchema);",
 };
 

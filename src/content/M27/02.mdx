@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "The Routes layer defines the API's public URL surface and maps incoming HTTP verbs and paths to corresponding controller handlers. Route files should remain lean: they declare paths, mount validation and auth middleware, and delegate immediately to controllers without executing business logic.",
-  tip: "Group related endpoints using `router.route('/path').get(...).post(...)` for clean, readable endpoint declarations.",
-  objective: "Structure declarative Express routers free of embedded business logic.",
-  expectedOutcome: "Clean, readable route definitions acting purely as HTTP routing maps.",
   codeSnippet: "// routes/course.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createCourseSchema } from \"../validators/course.validator.js\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(protect, restrictTo(\"instructor\", \"admin\"), validate(createCourseSchema), courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(protect, restrictTo(\"instructor\", \"admin\"), courseController.updateCourse)\n  .delete(protect, restrictTo(\"instructor\", \"admin\"), courseController.deleteCourse);\n\nexport default router;",
 };
 

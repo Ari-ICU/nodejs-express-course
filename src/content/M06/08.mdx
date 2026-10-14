@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Middleware** គឺជាអនុគមន៍ដែលអង្គុយនៅចន្លោះ Incoming Request និង Route Handler ចុងក្រោយ។\n\nMiddleware នីមួយៗទទួលបាន Parameters ចំនួន ៣៖ `(req, res, next)`\n* វាអាចពិនិត្យ ឬកែប្រែ `req` និង `res`\n* វាអាចបញ្ចប់ Request ភ្លាមៗ (ឧ. បើ Unauthorized)\n* ឬហៅ `next()` ដើម្បីបញ្ជូនបន្តទៅកាន់ Middleware បន្ទាប់ក្នុង Pipeline",
-  tip: "⚠️ Pitfall: ប្រសិនបើ Middleware មិនបានបញ្ជូន Response (`res.json()`) ហើយមិនបានហៅ `next()` នោះ Request នឹងព្យួរគាំងរហូតដល់ Client Timeout!",
-  objective: "ស្វែងយល់ពីលំហូរការងារ (Pipeline Flow) នៃ Middleware ក្នុង Express។",
-  expectedOutcome: "ចេះបង្កើត Middleware សាមញ្ញសម្រាប់វាស់ស្ទង់ពេលវេលា Request (Request Timer)។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Define a Request Timer Middleware\nconst requestTimer = (req, res, next) => {\n  const startTime = Date.now();\n\n  // 💡 Teaching Note: Attach custom property to req object\n  req.receivedAt = new Date().toISOString();\n\n  // Listen to response finish event to calculate elapsed time\n  res.on(\"finish\", () => {\n    const duration = Date.now() - startTime;\n    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);\n  });\n\n  // Step 2: Pass control to the next handler!\n  next();\n};\n\n// Step 3: Register middleware globally\napp.use(requestTimer);\n\napp.get(\"/api/v1/ping\", (req, res) => {\n  res.json({ message: \"pong\", receivedAt: req.receivedAt });\n});",
 };
 

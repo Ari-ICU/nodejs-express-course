@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Mongoose អនុញ្ញាតឱ្យយើងសរសេរ Custom Domain Methods លើ Model ដោយផ្ទាល់៖\n\n* **Instance Methods (`methods`)**៖ ដំណើរការលើ Document ជាក់លាក់មួយ (ឧ. `course.publishCourse()`)\n* **Static Methods (`statics`)**៖ ដំណើរការលើ Model Collection ទាំងមូល (ឧ. `Course.findTopRated()`)",
-  tip: "កុំប្រើ Arrow Function (`() => {}`) ពេលបង្កើត Methods លើ Schema ពីព្រោះ Arrow Function មិនមាន Binding លើ `this` context ឡើយ! ត្រូវប្រើ `function() {}` ធម្មតា។",
-  objective: "ចេះបន្ថែម Instance Methods និង Static Methods លើ Mongoose Model។",
-  expectedOutcome: "កូដ Domain Logic ត្រូវបានរៀបចំយ៉ាងស្អាតក្នុង Model Layer។",
   codeSnippet: "import { Schema, model } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: String,\n  published: { type: Boolean, default: false },\n  rating: { type: Number, default: 0 }\n});\n\n// Step 1: Instance Method (operates on 1 document)\ncourseSchema.methods.publish = async function() {\n  this.published = true;\n  return await this.save();\n};\n\n// Step 2: Static Method (operates on the Model collection)\ncourseSchema.statics.findTopRated = function(minRating = 4.5) {\n  return this.find({ rating: { $gte: minRating } });\n};\n\nexport const Course = model(\"Course\", courseSchema);",
 };
 

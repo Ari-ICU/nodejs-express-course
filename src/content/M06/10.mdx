@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Route មួយក្នុង Express អាចទទួល Handlers ឬ Callbacks ច្រើនបន្តបន្ទាប់គ្នា (Chained Callbacks)។\n\nលំនាំនេះមានសារៈសំខាន់ខ្លាំងក្នុងការបំបែកកូដ៖\n1. **Handler ទី ១ (Validator)**៖ ផ្ទៀងផ្ទាត់ទិន្នន័យបញ្ចូល\n2. **Handler ទី ២ (Business Logic)**៖ អនុវត្តការងារ និងបញ្ជូន Response ត្រឡប់ទៅវិញ",
-  tip: "ការប្រើប្រាស់ Callback Chains គឺជាជំហានដំបូងនៃការរៀនសរសេរ Middleware Guards មុនឈានដល់ Auth Controllers។",
-  objective: "ចេះប្រើប្រាស់ Callback functions ច្រើនក្នុង Route តែមួយដើម្បីបែងចែកទំនួលខុសត្រូវ។",
-  expectedOutcome: "កូដមានភាពស្អាត មិនច្របល់រវាង Validation Logic និង Save Logic។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// Step 1: Middleware Callback for validation\nconst validateCoursePayload = (req, res, next) => {\n  const { title, price } = req.body;\n  if (!title || typeof price !== \"number\") {\n    // ⚠️ Validation failed -> Stop request immediately!\n    return res.status(400).json({\n      success: false,\n      error: \"Title (string) and Price (number) are required\"\n    });\n  }\n  next(); // Payload valid -> Proceed!\n};\n\n// Step 2: Main Route Handler Callback\nconst createCourseHandler = (req, res) => {\n  const created = { id: Date.now(), ...req.body };\n  res.status(201).json({ success: true, data: created });\n};\n\n// Step 3: Chain callbacks together on the route\napp.post(\"/api/v1/courses\", validateCoursePayload, createCourseHandler);",
 };
 

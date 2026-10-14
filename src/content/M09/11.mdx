@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "សៀវភៅណែនាំ Status Codes សម្រាប់ REST API Development៖\n\n* **2xx Success**៖\n  * `200 OK`៖ សំណើជោគជ័យ (GET, PUT, PATCH)\n  * `201 Created`៖ បង្កើត Resource ថ្មីបានសម្រេច (POST)\n  * `204 No Content`៖ ជោគជ័យតែគ្មាន Content ត្រឡប់មកវិញ (DELETE)\n* **4xx Client Errors**៖\n  * `400 Bad Request`៖ ទិន្នន័យមិនត្រឹមត្រូវតាម Schema\n  * `401 Unauthorized`៖ មិនទាន់ Login / គ្មាន Token\n  * `403 Forbidden`៖ បាន Login ហើយ តែគ្មានសិទ្ធិ\n  * `404 Not Found`៖ រក Resource មិនឃើញ\n  * `409 Conflict`៖ ទិន្នន័យជាន់គ្នា (ដូចជា Duplicate Email ឬ Slug)\n* **5xx Server Errors**៖\n  * `500 Internal Server Error`៖ Bug ក្នុង Server Code\n  * `503 Service Unavailable`៖ Database គាំង ឬ Server កំពុង Maintenance",
-  tip: "ច្បាប់មាស៖ កុំត្រឡប់ 200 OK នៅពេលមានបញ្ហាឱ្យសោះ។ ការប្រើ Status Code ត្រឹមត្រូវជួយឱ្យ Frontend Developers អាច Handle Error Interceptors (Axios / TanStack Query) បានស្វ័យប្រវត្តិ។",
-  objective: "ស្ទាត់ជំនាញក្នុងការផ្គូផ្គង HTTP Status Code ទៅនឹងស្ថានភាពនីមួយៗ។",
-  expectedOutcome: "API មានភាពច្បាស់លាស់ ងាយស្រួល Debug និង Integration។",
   codeSnippet: "// Status Code Reference Helper\nexport const HTTP_STATUS = {\n  OK: 200,\n  CREATED: 201,\n  NO_CONTENT: 204,\n  BAD_REQUEST: 400,\n  UNAUTHORIZED: 401,\n  FORBIDDEN: 403,\n  NOT_FOUND: 404,\n  CONFLICT: 409,\n  INTERNAL_SERVER_ERROR: 500,\n  SERVICE_UNAVAILABLE: 503\n};",
 };
 

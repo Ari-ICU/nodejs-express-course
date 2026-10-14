@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "ច្បាប់មាសសម្រាប់ការរចនា **RESTful URIs**៖\n\n* **ប្រើ Nouns មិនប្រើ Verbs**៖ `/courses` (✅) មិនមែន `/getCourses` (❌)\n* **ប្រើ Plural Nouns (ពហុវចនៈ)**៖ `/courses`, `/lessons`, `/users`\n* **ប្រើ Lowercase និង Hyphens**៖ `/course-reviews` មិនមែន `/course_reviews` ឬ `/courseReviews`\n* **បង្ហាញ Hierarchy ដោយ Nested Paths**៖ `/courses/:id/lessons`\n* **ប្រើ Query Parameters សម្រាប់ Actions បន្ថែម**៖ `?sort=price&filter=published`",
-  tip: "ជៀសវាងការដាក់ Actions ក្នុង URL ដូចជា `/courses/123/delete` ព្រោះ HTTP Verb `DELETE /courses/123` បានបញ្ជាក់សកម្មភាពនោះរួចរាល់ហើយ។",
-  objective: "ចេះរៀបចំ Name និង Hierarchy នៃ API Endpoints តាមស្តង់ដារវិជ្ជាជីវៈ។",
-  expectedOutcome: "រចនា URIs ដែលមានភាពស៊ីសង្វាក់គ្នា (Consistent) និងងាយយល់។",
   codeSnippet: "/*\n  ==============================================================\n  PROFESSIONAL RESTFUL URL CONVENTIONS:\n  ==============================================================\n  ✅ GET    /api/v1/courses               (Fetch course collection)\n  ✅ POST   /api/v1/courses               (Create new course)\n  ✅ GET    /api/v1/courses/42            (Fetch specific course)\n  ✅ PATCH  /api/v1/courses/42            (Update fields)\n  ✅ DELETE /api/v1/courses/42            (Remove course)\n  ✅ GET    /api/v1/courses/42/lessons    (Fetch lessons for course 42)\n\n  ❌ BAD URL CONVENTIONS (Avoid at all costs):\n  ❌ /api/v1/getAllCourses\n  ❌ /api/v1/createNewCourse\n  ❌ /api/v1/course/42/delete\n  ❌ /api/v1/course_reviews_by_user\n*/",
 };
 

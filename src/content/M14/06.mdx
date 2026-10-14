@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Zod ផ្តល់នូវ Methods ពីរសម្រាប់ធ្វើ Validation៖\n\n1. **`schema.parse(data)`**៖ ប្រសិនបើទិន្នន័យត្រឹមត្រូវ ត្រឡប់ Parsed Data; ប្រសិនបើខុស នឹង **Throw ZodError** ភ្លាមៗ\n2. **`schema.safeParse(data)`**៖ មិន Throw Error ទេ ប៉ុន្តែត្រឡប់ Object `{ success: true, data }` ឬ `{ success: false, error }`",
-  tip: "ប្រើប្រាស់ `safeParse()` នៅក្នុង Express Middlewares ដើម្បីឱ្យយើងអាចចាប់កំហុស និង Format Error Envelope បានយ៉ាងរលូនដោយមិនបាច់ប្រើ try/catch។",
-  objective: "ចេះប្រើប្រាស់ parse() និង safeParse() ដើម្បី Validate Request Payloads។",
-  expectedOutcome: "ដឹងពីរបៀបស្ទាក់ចាប់កំហុស Validation មុនពេលទៅដល់ Route Handler។",
   codeSnippet: "import { createCourseSchema } from \"./validations/course.validation.js\";\n\n// Test parsing with safeParse\nconst testPayload = {\n  title: \"Node API\",\n  instructor: \"Ratha\",\n  price: -10 // Invalid price!\n};\n\nconst result = createCourseSchema.safeParse(testPayload);\n\nif (!result.success) {\n  console.log(\"❌ Validation failed with issues:\");\n  console.log(result.error.issues);\n} else {\n  console.log(\"✅ Valid data:\", result.data);\n}",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Password hashing transforms a plaintext password into an irreversible, fixed-length alphanumeric string using a one-way cryptographic mathematical function. Unlike encryption which is two-way and reversible with a secret key, secure hashing is permanently irreversible. Storing passwords in plaintext or using fast algorithms like MD5/SHA-1 exposes users to instant credential theft during database leaks.",
-  tip: "Never use encryption (AES/DES) or fast hash algorithms (MD5/SHA256) for passwords. Fast hashes allow attackers to calculate billions of guesses per second via GPU brute-forcing.",
-  objective: "Understand why one-way slow cryptographic hash functions are mandatory for credential storage.",
-  expectedOutcome: "Solid grasp of cryptographic hashing vs encryption and resistance to brute-force attacks.",
   codeSnippet: "// Plaintext vs Irreversible One-Way Hash:\n// Plaintext: \"SecretP@ss123\" -> stored directly (FATAL SECURITY FLAW)\n// MD5/SHA256: \"SecretP@ss123\" -> fast hash (VULNERABLE to GPU rainbow tables)\n// bcrypt:    \"SecretP@ss123\" -> $2a$12$e8YkZ... (SLOW, SALTED, INDUSTRY STANDARD)\n\n// One-way verification principle:\n// We NEVER decrypt: Decrypt(hash) -> Impossible!\n// Instead we re-hash: bcrypt.compare(incomingCandidate, storedHash);",
 };
 

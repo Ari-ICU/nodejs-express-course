@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**Population** គឺជាជម្រើសជំនួស SQL JOINs ក្នុង Mongoose។\n\nដំណើរការការងារ៖\n* Lesson Document រក្សាទុកតែ `courseId: ObjectId(\"...\")` ប៉ុណ្ណោះ\n* នៅពេលហៅ `.populate(\"courseId\")` Mongoose នឹង Query ទៅកាន់ `courses` Collection ដោយស្វ័យប្រវត្តិតាមរយៈ `$lookup` ហើយជំនួស `courseId` ដោយ Course Document ពេញលេញ!",
-  tip: "ប្រើប្រាស់ Field Selection ក្នុង populate (`.populate('courseId', 'title price')`) ដើម្បីទាញយកតែ Fields ដែលត្រូវការ ជួយសន្សំសំចៃ Memory និង Network Bandwidth។",
-  objective: "ចេះប្រើប្រាស់ .populate() ដើម្បី Hydrate Relational References ក្នុង MongoDB។",
-  expectedOutcome: "ជំនាញដោះស្រាយ Parent-Child Relationships ក្នុង REST API Responses។",
   codeSnippet: "import { Lesson } from \"./models/lesson.model.js\";\n\n// Fetch lesson and automatically populate parent Course data\nexport const getLessonWithCourse = async (lessonId) => {\n  // 💡 Teaching Note: Replaces courseId ObjectId with full Course Document!\n  const lesson = await Lesson.findById(lessonId)\n    .populate(\"courseId\", \"title instructor price level\");\n\n  return lesson;\n};",
 };
 

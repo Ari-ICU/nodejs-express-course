@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Document** គឺជា Record នីមួយៗដែលស្ថិតក្នុង Collection។ វាត្រូវបានរក្សាទុកជាទម្រង់ **BSON (Binary JSON)**។\n\nលក្ខណៈសម្បត្តិនៃ Document៖\n* ផ្ទុកជា Field-and-Value pairs (ឧ. `\"title\": \"Node.js Basics\"`)\n* ទំហំអតិបរមានៃ Document មួយគឺ **16 MB**\n* Document នីមួយៗមាន Unique Primary Key ឈ្មោះ **`_id`** ដោយស្វ័យប្រវត្តិ",
-  tip: "ទំហំកំណត់ 16 MB គឺធំធេងណាស់សម្រាប់ Text Data ធម្មតា។ ប្រសិនបើអ្នកត្រូវការផ្ទុក Files ធំៗលើសពី 16 MB ត្រូវប្រើ GridFS ឬ Cloud Object Storage (S3 / R2)។",
-  objective: "យល់ដឹងពីរចនាសម្ព័ន្ធ BSON និងដែនកំណត់ទំហំនៃ Document។",
-  expectedOutcome: "រចនា Document ដែលស្របតាមដែនកំណត់ និងប្រសិទ្ធភាពរបស់ MongoDB។",
   codeSnippet: "// Sample Course Document in BSON representation\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Mastering Express.js Routing\",\n  \"price\": 39.99,\n  \"level\": \"intermediate\",\n  \"tags\": [\"backend\", \"express\", \"javascript\"],\n  \"instructor\": {\n    \"name\": \"Ratha\",\n    \"email\": \"ratha@example.com\"\n  },\n  \"isPublished\": true,\n  \"createdAt\": ISODate(\"2026-10-14T08:00:00Z\")\n}",
 };
 

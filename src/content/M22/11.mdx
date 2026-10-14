@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Testing protected routes requires simulating authenticated sessions. Tests can either execute a live login request before protected calls to obtain a real token, or generate a signed test JWT directly using test secret keys and attach it via `.set('Authorization', 'Bearer ' + token)`.",
-  tip: "Create a test helper `getAuthToken(user)` to sign test JWTs quickly without making repetitive HTTP login calls in every test.",
-  objective: "Test route access control, valid token acceptance, and rejection of unauthorized calls.",
-  expectedOutcome: "Automated verification of authentication and role guards.",
   codeSnippet: "import { generateAccessToken } from \"../utils/jwt.js\";\n\ndescribe(\"Protected Routes Auth Testing\", () => {\n  it(\"should reject requests without a Bearer token with 401\", async () => {\n    const res = await request(app)\n      .get(\"/api/v1/users/me\")\n      .expect(401);\n\n    expect(res.body.message).toMatch(/not logged in/i);\n  });\n\n  it(\"should permit access when a valid JWT token is provided\", async () => {\n    const testToken = generateAccessToken(\"test_user_id_123\", \"user\");\n\n    const res = await request(app)\n      .get(\"/api/v1/users/me\")\n      .set(\"Authorization\", `Bearer ${testToken}`)\n      .expect(200);\n\n    expect(res.body.data.user).toBeDefined();\n  });\n});",
 };
 

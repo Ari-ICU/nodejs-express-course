@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Express ភ្ជាប់មកជាមួយ Built-in Middlewares សំខាន់ៗចំនួន ៣៖\n\n1. **`express.json()`**៖ Parse incoming requests ដែលមាន JSON payloads (Content-Type: application/json)\n2. **`express.urlencoded()`**៖ Parse incoming requests ដែលមាន URL-encoded payloads ពី HTML Forms\n3. **`express.static()`**៖ បម្រើ Static Assets ដូចជា Images, CSS, ឬ Uploaded PDFs ចេញពី Directory ជាក់លាក់",
-  tip: "នៅក្នុង Express v4 ជំនាន់ដំបូង អ្នកត្រូវដំឡើង `body-parser` ដោយឡែក ប៉ុន្តែចាប់តាំងពី v4.16 មក ពួកវាត្រូវបាន Built-in ក្នុង `express` តែម្តង។",
-  objective: "យល់ច្បាស់ពី Built-in Middlewares ទាំង ៣ របស់ Express។",
-  expectedOutcome: "ចេះ Configure Body Parsers និង Static Asset Server យ៉ាងត្រឹមត្រូវ។",
   codeSnippet: "import express from \"express\";\nimport path from \"node:path\";\nconst app = express();\n\n// Step 1: Built-in JSON Body Parser\napp.use(express.json());\n\n// Step 2: Built-in URL-encoded Form Parser\napp.use(express.urlencoded({ extended: true }));\n\n// Step 3: Built-in Static File Server (e.g. for course certificate PDFs / images)\napp.use(\"/public\", express.static(\"public\"));\n\napp.post(\"/test-payload\", (req, res) => {\n  res.json({ receivedBody: req.body });\n});",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ជំនួសឱ្យការបង្កើត Fields `createdAt` និង `updatedAt` ដោយដៃ Mongoose ផ្តល់ Option **`{ timestamps: true }`** ដែលជាដំណោះស្រាយដ៏ឆ្លាតវៃ។\n\nមុខងារស្វ័យប្រវត្តិ៖\n* បន្ថែម `createdAt` កាលបរិច្ឆេទដែល Document ត្រូវបានបង្កើតដំបូង\n* បន្ថែម និងកែប្រែ `updatedAt` ដោយស្វ័យប្រវត្តិកំឡុងពេល `save()` ឬ `findByIdAndUpdate()` នីមួយៗ",
-  tip: "ស្ទើរតែគ្រប់ Enterprise Collections ទាំងអស់គួរតែបើក `{ timestamps: true }` ជានិច្ចសម្រាប់ Audit Trail និង Sorting។",
-  objective: "ចេះបើកដំណើរការ Automated Timestamps លើ Mongoose Schemas។",
-  expectedOutcome: "គ្រប់ Document ទាំងអស់កត់ត្រាពេលវេលាបង្កើត និងកែប្រែដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "import { Schema, model } from \"mongoose\";\n\n// Step 1: Pass { timestamps: true } as the second argument to Schema\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true }\n}, {\n  timestamps: true // Automatically manages createdAt and updatedAt!\n});\n\nexport const Course = model(\"Course\", courseSchema);",
 };
 

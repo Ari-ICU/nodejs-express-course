@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅក្នុង Production ការកត់ត្រា (Logging) រាល់ HTTP Requests គឺចាំបាច់បំផុតសម្រាប់ **Debugging**, **Audit Trails**, និង **Performance Monitoring**។\n\nយើងអាចបង្កើត Custom Structured Logger មួយដែលកត់ត្រា៖\n* HTTP Method & URL Path\n* HTTP Status Code នៃ Response\n* រយៈពេលដំណើរការ (Duration in ms)\n* Timestamp នៃ Request",
-  tip: "សម្រាប់គម្រោងធំៗ អ្នកអាចប្រើ Library ពេញនិយមដូចជា `morgan` សម្រាប់ Dev Logging ឬ `pino-http` សម្រាប់ High-performance JSON Logging។",
-  objective: "ចេះបង្កើត HTTP Request Logging Middleware ដើម្បី Monitor Server Health។",
-  expectedOutcome: "Console បង្ហាញព័ត៌មានលម្អិតនៃគ្រប់ Request យ៉ាងច្បាស់លាស់។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Build Custom Structured HTTP Logger\nconst httpLogger = (req, res, next) => {\n  const start = process.hrtime(); // High-resolution timer\n\n  // Listen for the moment headers & payload are finalized\n  res.on(\"finish\", () => {\n    const [seconds, nanoseconds] = process.hrtime(start);\n    const durationMs = (seconds * 1000 + nanoseconds / 1e6).toFixed(2);\n\n    const logEntry = {\n      timestamp: new Date().toISOString(),\n      method: req.method,\n      path: req.originalUrl,\n      status: res.statusCode,\n      duration: `${durationMs}ms`,\n      ip: req.ip\n    };\n\n    console.log(`[${logEntry.timestamp}] ${logEntry.method} ${logEntry.path} -> ${logEntry.status} (${logEntry.duration})`);\n  });\n\n  next();\n};\n\napp.use(httpLogger);\napp.get(\"/api/v1/courses\", (req, res) => res.json({ courses: [] }));",
 };
 

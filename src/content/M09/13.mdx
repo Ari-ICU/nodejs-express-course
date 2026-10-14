@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅពេលមានបញ្ហា Server ត្រូវតែឆ្លើយតបតាម **Standardized Error Envelope** ជានិច្ច ដើម្បីឱ្យ Frontend អាច Parse និងបង្ហាញ Error Message ដល់ User បានច្បាស់លាស់។\n\nរចនាសម្ព័ន្ធស្តង់ដារ៖\n* `success: false`\n* `error.message`៖ ការពន្យល់ខ្លី និងងាយយល់\n* `error.code`៖ Unique Machine-readable Error Code (ឧ. `COURSE_NOT_FOUND`)\n* `error.details`៖ Array នៃ Validation Errors (បើមាន)",
-  tip: "កុំបញ្ចេញ Raw Database Error Message (ដូចជា `E11000 duplicate key error...`) ទៅកាន់ Client ឱ្យសោះ ព្រោះវាជាហានិភ័យសន្តិសុខ (Information Leakage)។ ត្រូវបំប្លែងទៅជា Human-readable Message។",
-  objective: "ចេះរៀបចំទម្រង់ Error Response Envelope តាមស្តង់ដារ Production។",
-  expectedOutcome: "ផ្តល់ Error Messages ដែលមានសុវត្ថិភាព និងច្បាស់លាស់ដល់អ្នកប្រើប្រាស់។",
   codeSnippet: "// Reusable Error Helper Utility\nexport const sendError = (res, statusCode, message, errorCode = \"BAD_REQUEST\", details = null) => {\n  return res.status(statusCode).json({\n    success: false,\n    error: {\n      code: errorCode,\n      message,\n      statusCode,\n      details,\n      timestamp: new Date().toISOString()\n    }\n  });\n};\n\n// Example Error Response sent by server:\n/*\n{\n  \"success\": false,\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"Validation failed for course creation\",\n    \"statusCode\": 400,\n    \"details\": [\n      { \"field\": \"price\", \"message\": \"Price must be greater than 0\" }\n    ],\n    \"timestamp\": \"2026-10-14T10:00:00.000Z\"\n  }\n}\n*/",
 };
 

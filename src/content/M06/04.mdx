@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅក្នុង Professional Software Engineering យើងមិនគួរបញ្ចូល Server Port Binding និង Route Configuration ក្នុងឯកសារតែមួយឡើយ។\n\n* **src/app.js**៖ បង្កើត `express()` instance, កំណត់ Global Middlewares, Bind Routes, និង Export `app`។\n* **src/server.js**៖ Import `app` និងដំណើរការ `app.listen(PORT)`។\n\nការបំបែកបែបនេះអនុញ្ញាតឱ្យយើងសរសេរ **Automated Integration Tests (Supertest)** ដោយមិនចាំបាច់កាន់កាប់ Network Port ពិតប្រាកដ។",
-  tip: "បិទ Header `x-powered-by` ជានិច្ច (`app.disable('x-powered-by')`) ដើម្បីកុំឱ្យ Attackers ដឹងថាអ្នកកំពុងប្រើប្រាស់ Express។",
-  objective: "យល់ដឹងពីការបំបែក Application Instance ចេញពី Network Listener សម្រាប់ Testing និង Modularity។",
-  expectedOutcome: "ចេះបង្កើតឯកសារ src/app.js តាមស្តង់ដារ Clean Architecture។",
   codeSnippet: "// src/app.js\nimport express from \"express\";\n\n// Step 1: Instantiate Express application\nconst app = express();\n\n// Step 2: Security & Configuration\napp.disable(\"x-powered-by\"); // 💡 Teaching Note: Security best practice\n\n// Step 3: Register global middleware\napp.use(express.json());\n\n// Step 4: Base Health-check Route\napp.get(\"/api/health\", (req, res) => {\n  res.status(200).json({ status: \"UP\", timestamp: new Date().toISOString() });\n});\n\n// Step 5: Export app (ready for server.js & unit tests)\nexport default app;",
 };
 

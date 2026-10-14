@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Data Validation** គឺជាដំណើរការត្រួតពិនិត្យ និងធានាថាទិន្នន័យដែល Client បញ្ជូនមក Server (Request Body, Query, ឬ Params) មានទម្រង់ត្រឹមត្រូវ ស្របតាមក្បួនច្បាប់ (Rules) និងមានសុវត្ថិភាព មុនពេលទៅដល់ Controller ឬ Database។\n\nអត្ថប្រយោជន៍ចម្បងៗ៖\n* ការពារប្រព័ន្ធពី Invalid Data ដែលអាចធ្វើឱ្យ Application Crash\n* ការពារការវាយប្រហារ (Security Attacks) ដូចជា NoSQL Injection, XSS, និង Malformed Payloads\n* ផ្តល់នូវ Feedback ច្បាស់លាស់ដល់អ្នកប្រើប្រាស់នៅពេលបំពេញ Form មិនត្រឹមត្រូវ",
-  tip: "ច្បាប់មាសនៃសន្តិសុខ Backend៖ 'Never trust user input' — ទោះបីជា Frontend បាន Validate រួចហើយក៏ដោយ Server ត្រូវតែ Validate ឡើងវិញ ១០០% ជានិច្ច។",
-  objective: "យល់ដឹងពីសារៈសំខាន់នៃ Data Validation ក្នុងការធានា Data Integrity និង API Security។",
-  expectedOutcome: "មានផ្នត់គំនិតការពារប្រព័ន្ធពីទិន្នន័យមិនត្រឹមត្រូវ។",
   codeSnippet: "// Concept: Request passes through Validation Guard before hitting Controller!\n// Incoming Request ➔ [ Validation Middleware ] ➔ [ Controller ] ➔ [ Service ]\n//                           │ (Invalid input?)\n//                           ▼\n//                  400 Bad Request Envelope!",
 };
 

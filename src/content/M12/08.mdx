@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការកំណត់ Required Field ក្នុង Mongoose អាចសរសេរបាន ២ របៀប៖\n\n* សាមញ្ញ៖ `required: true` (បង្ហាញ Error Message លំនាំដើមរបស់ Mongoose)\n* **វិជ្ជាជីវៈ (អនុសាសន៍)**៖ ផ្តល់នូវ Custom Error Message តាមរយៈ Array៖\n  `required: [true, \"Custom error message here\"]`\n\nវិធីនេះជួយឱ្យ Error Response របស់ API មានភាពរួសរាយ និងងាយយល់សម្រាប់ Client។",
-  tip: "តែងតែផ្តល់ Custom Error Message លើគ្រប់ Required Field ទាំងអស់ ដើម្បីងាយស្រួលបង្ហាញលើ Frontend Forms។",
-  objective: "ចេះកំណត់ Required Validator ជាមួយ Custom Error Messages។",
-  expectedOutcome: "API បញ្ចេញ Error Messages ច្បាស់លាស់នៅពេលខ្វះទិន្នន័យ។",
   codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: [true, \"A course must have an official title\"]\n  },\n  slug: {\n    type: String,\n    required: [true, \"URL slug is strictly required for SEO\"]\n  },\n  instructor: {\n    type: String,\n    required: [true, \"Course must be assigned to an instructor\"]\n  }\n});",
 };
 

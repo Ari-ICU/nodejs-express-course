@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Mongoose** គឺជា **Object Data Modeling (ODM)** Library ដ៏មានឥទ្ធិពលបំផុតសម្រាប់ MongoDB និង Node.js។\n\nMongoose ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៤៖\n1. **Schema Definition**៖ កំណត់រចនាសម្ព័ន្ធទិន្នន័យច្បាស់លាស់ ជួយការពារទិន្នន័យមិនឱ្យរញ៉េរញ៉ៃ\n2. **Built-in Validation**៖ ត្រួតពិនិត្យប្រភេទទិន្នន័យមុនពេល Save ទៅកាន់ Database\n3. **Middleware Hooks**៖ ដំណើរការកូដស្វ័យប្រវត្តិកំឡុង Lifecycle (`pre('save')`, `post('save')`)\n4. **Population ($lookup replacement)**៖ ភ្ជាប់ទំនាក់ទំនងឯកសាររវាង Collections យ៉ាងងាយស្រួល",
-  tip: "Mongoose ដើរតួដូចជាស្ពានតភ្ជាប់រវាង Express Controllers/Services និង MongoDB ដោយបំប្លែង BSON Documents ទៅជា JavaScript Objects ដ៏សំបូរបែប។",
-  objective: "យល់ដឹងពីតួនាទីរបស់ Mongoose ODM ក្នុងការគ្រប់គ្រង Database លើ Node.js។",
-  expectedOutcome: "ដឹងពីរបៀបដែល Mongoose ជួយធានានូវ Data Integrity និង Type Safety។",
   codeSnippet: "import mongoose, { Schema } from \"mongoose\";\n\n// Step 1: Define Course Schema with Mongoose ODM\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true, min: 0 }\n});\n\n// Step 2: Compile Model\nexport const Course = mongoose.model(\"Course\", courseSchema);",
 };
 

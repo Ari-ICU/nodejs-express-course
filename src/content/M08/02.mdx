@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Application-Level Middleware** ត្រូវបានចងភ្ជាប់ទៅនឹង Instance នៃ `app` តាមរយៈ `app.use()` ឬ `app.METHOD()`។\n\nលក្ខណៈពិសេស៖\n* វាដំណើរការលើ **គ្រប់ Request ទាំងអស់** ដែលចូលមកកាន់ Server (បើដាក់ដោយគ្មាន Path Filter)\n* ឬដំណើរការលើ Path Prefix ជាក់លាក់ (ឧ. `app.use(\"/api/v1\", ...)`)\n* ប្រើសម្រាប់ Cross-Cutting Concerns ដូចជា Security Headers, CORS, Body Parsing, និង Request Tracking",
-  tip: "ដាក់ Application-Level Middlewares នៅខាងលើគេបំផុតនៃ `app.js` ជានិច្ច មុននឹង Mount Routes ណាមួយ។",
-  objective: "ចេះចុះបញ្ជី Global Middlewares លើ Express Application Instance។",
-  expectedOutcome: "ដឹងពីរបៀបដំណើរការ Cross-cutting logic លើគ្រប់ API Requests។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Global Application Middleware (Runs on EVERY request)\napp.use((req, res, next) => {\n  // Add custom response header identifying our backend\n  res.setHeader(\"X-API-Powered-By\", \"Course-Engine-PRO\");\n  next();\n});\n\n// Step 2: Path-scoped Application Middleware (Runs only on /api/*)\napp.use(\"/api\", (req, res, next) => {\n  console.log(\"🔒 Accessing API namespace\");\n  next();\n});\n\napp.get(\"/api/v1/courses\", (req, res) => {\n  res.json({ success: true, data: [] });\n});",
 };
 

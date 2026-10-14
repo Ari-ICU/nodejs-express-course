@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Global Error Middleware គឺជា Middleware ចុងក្រោយគេបង្អស់ក្នុង `app.js` ដែលមាន Parameters ទាំង ៤៖ **`(err, req, res, next)`**។\n\nតួនាទីស្នូល៖\n* ទទួលកំហុសទាំងអស់ដែលបញ្ជូនតាមរយៈ `next(err)`\n* កំណត់ Status Code (Default: `500 Internal Server Error`)\n* កសាង Standard Error Response Envelope",
-  tip: "កុំភ្លេច Parameter ទាំង ៤ (err, req, res, next)! ប្រសិនបើអ្នកសរសេរត្រឹម ៣ Express នឹងមិនចាត់ទុកវាជា Error Middleware ឡើយ។",
-  objective: "ចេះបង្កើត Centralized Error Middleware និងដោះស្រាយកំហុសទាំងអស់នៅកន្លែងតែមួយ។",
-  expectedOutcome: "API ឆ្លើយតប Error Envelope ស្របតាមទម្រង់ស្តង់ដារឧស្សាហកម្មជានិច្ច។",
   codeSnippet: "// src/middlewares/error.middleware.js\nexport const globalErrorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const status = err.status || \"error\";\n\n  console.error(\"💥 ERROR CAUGHT BY GLOBAL HANDLER:\", err);\n\n  res.status(statusCode).json({\n    success: false,\n    status,\n    error: {\n      message: err.message || \"Something went wrong on the server\",\n      statusCode,\n      timestamp: new Date().toISOString()\n    }\n  });\n};",
 };
 

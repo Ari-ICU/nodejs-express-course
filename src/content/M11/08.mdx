@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**ObjectId** គឺជា Primary Key លំនាំដើមរបស់ MongoDB។ វាមានទំហំ **12 Bytes (24 Hexadecimal Characters)**៖\n\nរចនាសម្ព័ន្ធខាងក្នុងនៃ 12 Bytes៖\n* **4 Bytes**៖ Timestamp (វិនាទីដែល Document ត្រូវបានបង្កើតឡើង)\n* **5 Bytes**៖ Random Value (ម៉ាស៊ីន និង Process Identifier)\n* **3 Bytes**៖ Incrementing Counter (រាប់ចំនួនកើនឡើងជាបន្តបន្ទាប់)\n\nដោយសារតែ ៤ Bytes ដំបូងជា Timestamp យើងអាចទាញយកពេលវេលាបង្កើតចេញពី `_id` បានដោយមិនបាច់បង្កើត Field ដាច់ដោយឡែកឡើយ!",
-  tip: "អ្នកអាចទាញយកពេលវេលាបង្កើតពី ObjectId តាមរយៈ `objectId.getTimestamp()` ក្នុង mongosh ឬ JavaScript។",
-  objective: "យល់ច្បាស់ពីសមាសធាតុផ្សំនៃ 12-byte ObjectId របស់ MongoDB។",
-  expectedOutcome: "ដឹងពីរបៀបដែល MongoDB បង្កើត Unique Primary Keys ដោយមិនចាំបាច់មាន Central Auto-increment Lock។",
   codeSnippet: "// ObjectId Decomposition (24 hex characters):\n// \"6648e583 19f3a9e224 e78891\"\n//  └─Time─┘ └──Random──┘ └Counter┘\n\n// In mongosh:\nconst courseId = ObjectId(\"6648e58319f3a9e224e78891\");\nconsole.log(\"Created at:\", courseId.getTimestamp());\n// Output: 2024-05-18T17:35:31.000Z",
 };
 

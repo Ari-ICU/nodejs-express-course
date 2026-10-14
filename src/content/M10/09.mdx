@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "bash",
   summary: "រចនាសម្ព័ន្ធ Folder ស្តង់ដារ Enterprise សម្រាប់ **Course Catalog API** បន្ទាប់ពី Refactoring ជាមួយ Controllers និង Services៖\n\n* **src/routes/**៖ ផ្ទុកតែ Route Definitions\n* **src/controllers/**៖ ផ្ទុក Controllers ដែលសម្របសម្រួល HTTP\n* **src/services/**៖ ផ្ទុក Pure Business Logic\n* **src/errors/**៖ ផ្ទុក `AppError` classes\n* **src/middlewares/**៖ ផ្ទុក Auth, Validation, Logger, និង Central Error Handler",
-  tip: "អនុវត្តការដាក់ឈ្មោះឯកសារឱ្យស៊ីសង្វាក់គ្នា (Naming Consistency) ដូចជា `course.routes.js`, `course.controller.js`, និង `course.service.js` ដើម្បីងាយស្រួលស្វែងរក។",
-  objective: "ចេះរៀបចំ Folder Structure សម្រាប់គម្រោងកម្រិត Enterprise។",
-  expectedOutcome: "រចនាសម្ព័ន្ធឯកសារមានរបៀបរៀបរយ ស្របតាមឧស្សាហកម្ម Software Engineering។",
   codeSnippet: "course-catalog-api/\n├── package.json\n├── src/\n│   ├── app.js                          # Express app configuration & middleware pipeline\n│   ├── server.js                       # Server entry point (app.listen & shutdown)\n│   ├── routes/\n│   │   ├── index.js                    # Central API aggregator (/api/v1)\n│   │   ├── course.routes.js            # Course endpoints mapping\n│   │   └── lesson.routes.js            # Lesson endpoints mapping\n│   ├── controllers/\n│   │   ├── course.controller.js        # Slim HTTP controllers\n│   │   └── lesson.controller.js\n│   ├── services/\n│   │   ├── course.service.js           # Reusable pure business logic\n│   │   └── lesson.service.js\n│   ├── errors/\n│   │   └── AppError.js                 # Central domain error class\n│   └── middlewares/\n│       ├── auth.middleware.js          # requireAuth & restrictTo guards\n│       ├── validate.middleware.js      # Input validators\n│       └── error.middleware.js         # 4-parameter error handler",
 };
 

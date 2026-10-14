@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "json",
   summary: "Postman environments allow you to define key-value variables that adapt dynamically across different hosting stages. By parameterizing URLs as `{{base_url}}/courses` and tokens as `{{auth_token}}`, switching between Local (`http://localhost:5000`), Staging, and Production requires a single dropdown click.",
-  tip: "Always reference `{{base_url}}` instead of hardcoding `http://localhost:5000` in individual requests.",
-  objective: "Configure dynamic environment variables to switch between development and staging environments.",
-  expectedOutcome: "Flexible Postman requests parameterizing domains, ports, and tokens.",
   codeSnippet: "// In Postman URL Bar:\n// {{base_url}}/api/v1/courses/{{course_id}}\n//\n// Environment: \"Local Development\"\n// base_url   -> http://localhost:5000\n// auth_token -> eyJhbGciOiJIUzI1Ni...\n//\n// Environment: \"Production\"\n// base_url   -> https://api.myenterprise.com\n// auth_token -> eyJhbGciOiJIUzI1Ni...",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "Building production-grade secure APIs requires Defense in Depth — stacking multiple layers of protection so that if one layer fails, others stop the breach. This encompasses input validation, rate limiting, helmet security headers, sanitized database queries, least privilege roles, audit logging, and automated dependency vulnerability scanning via `npm audit`.",
-  tip: "Integrate `npm audit --audit-level=high` into your CI/CD pipeline to catch known vulnerable dependencies before deploying to production.",
-  objective: "Synthesize all security layers into an enterprise-grade Express middleware pipeline.",
-  expectedOutcome: "Hardened Express server setup incorporating comprehensive security defenses.",
   codeSnippet: "// app.js - Enterprise Security Middleware Pipeline:\nimport express from \"express\";\nimport helmet from \"helmet\";\nimport cors from \"cors\";\nimport mongoSanitize from \"express-mongo-sanitize\";\nimport { globalLimiter } from \"./middleware/rateLimit.js\";\nimport { errorHandler } from \"./middleware/errorHandler.js\";\n\nconst app = express();\n\n// 1. HTTP Security Headers\napp.use(helmet());\n\n// 2. CORS Policy\napp.use(cors({ origin: process.env.ALLOWED_ORIGINS.split(\",\"), credentials: true }));\n\n// 3. Rate Limiting\napp.use(\"/api\", globalLimiter);\n\n// 4. Body Parser with Size Limits (Prevents payload DoS)\napp.use(express.json({ limit: \"10kb\" }));\n\n// 5. Data Sanitization against NoSQL Injection\napp.use(mongoSanitize());\n\n// 6. Central Error Handling (Never leaks stack traces in production)\napp.use(errorHandler);\n\nexport default app;",
 };
 

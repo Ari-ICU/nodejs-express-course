@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "bash",
   summary: "ការចាប់ផ្តើមគម្រោង Express ថ្មីដោយប្រើប្រាស់ **ES Modules** (`import/export`) ទំនើប៖\n\n1. **Initialize Project**៖ បង្កើត `package.json` តាមរយៈ `npm init -y`\n2. **Install Express**៖ ដំឡើងកញ្ចប់ `express`\n3. **Configure ESM**៖ បន្ថែម `\"type\": \"module\"` ក្នុង `package.json`\n4. **Dev Script**៖ ប្រើ `node --watch` ដើម្បី Auto-restart Server រាល់ពេលកែប្រែកូដ",
-  tip: "ចាប់តាំងពី Node.js v18 មក អ្នកអាចប្រើ `node --watch` បានដោយផ្ទាល់ដោយមិនចាំបាច់ដំឡើង nodemon បន្ថែមឡើយ។",
-  objective: "ចេះរៀបចំ Project Environment និងដំឡើង Express ដោយជោគជ័យ។",
-  expectedOutcome: "ទទួលបាន Node.js Project ដំណើរការជាមួយ ES Modules និង Ready សម្រាប់សរសេរ Express API។",
   codeSnippet: "# Step 1: Initialize project\nmkdir course-catalog-api && cd course-catalog-api\nnpm init -y\n\n# Step 2: Install Express package\nnpm install express\n\n# Step 3: Configure package.json for ES Modules\nnpm pkg set type=\"module\"\nnpm pkg set scripts.dev=\"node --watch src/server.js\"\n\n# Step 4: Run the development server\nnpm run dev",
 };
 

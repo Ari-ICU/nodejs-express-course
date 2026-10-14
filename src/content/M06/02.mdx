@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "ការប្រៀបធៀបរវាង **Native node:http** និង **Express.js**៖\n\n* **Native node:http**៖ តម្រូវឱ្យសរសេរ Boilerplate Code រាប់សិបជួរ — ត្រូវ Parse URL ដោយដៃ, Buffer Body chunks ដោយដៃ, Check Methods ដោយ `if/else`, និងកំណត់ Headers ដោយផ្ទាល់។\n* **Express.js**៖ កាត់បន្ថយ Boilerplate ទាំងស្រុងត្រឹម ២-៣ ជួរខ្លី និងផ្តល់ Ecosystem នៃ Middlewares ធំទូលាយ (CORS, Morgan, Helmet)។\n\nExpress គឺជាមូលដ្ឋានគ្រឹះ (De facto Standard) នៃ Node.js Backend អស់រយៈពេលជាងមួយទសវត្សរ៍។",
-  tip: "ការយល់ដឹងពីរបៀបដែល Native HTTP ដំណើរការជួយឱ្យអ្នកយល់ច្បាស់ពី Abstraction និង Performance trade-offs របស់ Express។",
-  objective: "ប្រៀបធៀបភាពខុសគ្នារវាងការប្រើប្រាស់ Native HTTP Server និង Express.js។",
-  expectedOutcome: "មើលឃើញយ៉ាងច្បាស់ពីអត្ថប្រយោជន៍ និងភាពងាយស្រួលនៃ Express ក្នុងការកាត់បន្ថយ Boilerplate Code។",
   codeSnippet: "// ❌ NATIVE NODE.JS HTTP (Lots of boilerplate)\n// let body = \"\";\n// req.on(\"data\", chunk => body += chunk);\n// req.on(\"end\", () => {\n//   const parsed = JSON.parse(body);\n//   res.writeHead(201, { \"Content-Type\": \"application/json\" });\n//   res.end(JSON.stringify(parsed));\n// });\n\n// ✅ EXPRESS.JS (Clean, declarative, and easy to explain!)\nimport express from \"express\";\nconst app = express();\n\n// Step 1: Enable built-in JSON body parser\napp.use(express.json());\n\n// Step 2: Directly access parsed body via req.body\napp.post(\"/api/v1/courses\", (req, res) => {\n  // 💡 Teaching Note: req.body is already a JavaScript object ready to use!\n  res.status(201).json({ success: true, course: req.body });\n});",
 };
 

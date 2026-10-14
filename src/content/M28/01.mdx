@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Development environments prioritize developer velocity: hot-reloading (nodemon/tsx), detailed error stack traces, mock SMTP inboxes, and verbose console logs. Production environments prioritize security, uptime, performance, and fault tolerance: optimized minified builds, structured JSON logging, strict CORS, HTTPS encryption, and sanitized error envelopes.",
-  tip: "Set `NODE_ENV=production` on production servers — Express and many packages automatically enable performance caching and suppress leaking internal stack traces when this flag is set.",
-  objective: "Contrast operational requirements between development and production environments.",
-  expectedOutcome: "Clear strategy for environment-dependent performance and security behaviors.",
   codeSnippet: "// Key Differences:\n// Setting                | Development            | Production\n// -----------------------+------------------------+--------------------------\n// NODE_ENV               | \"development\"          | \"production\"\n// Error Responses        | Full stack trace       | Generic \"Something went wrong\"\n// Server Process         | nodemon / tsx watch    | PM2 cluster / Docker container\n// Logging                | Pretty console output  | Structured JSON (Winston/Pino)\n// HTTPS                  | Disabled (http://)     | Enforced (SSL/TLS certificate)",
 };
 

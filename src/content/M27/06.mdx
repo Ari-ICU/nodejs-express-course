@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "Middleware functions execute during the lifecycle of an HTTP request before the controller is reached. They handle cross-cutting concerns: authenticating tokens, verifying role permissions, logging requests, parsing body limits, and catching uncaught exceptions in global error handlers.",
-  tip: "Keep middleware focused on a single responsibility. Create separate middleware for authentication (`protect`) and role checking (`restrictTo`) rather than combining them.",
-  objective: "Organize reusable Express middleware for security, logging, and access control.",
-  expectedOutcome: "Modular middleware pipeline intercepting and validating requests cleanly.",
   codeSnippet: "// middleware/logger.middleware.js\nexport const requestLogger = (req, res, next) => {\n  const start = Date.now();\n  res.on(\"finish\", () => {\n    const duration = Date.now() - start;\n    console.log(`[${req.method}] ${req.originalUrl} ${res.statusCode} - ${duration}ms`);\n  });\n  next();\n};",
 };
 

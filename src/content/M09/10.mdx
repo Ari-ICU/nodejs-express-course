@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅក្នុង Production Applications មានយុទ្ធសាស្ត្រលុប ២ បែប៖\n\n1. **Hard Delete**៖ លុប Record ចេញពី Database ទាំងស្រុង (`courses.splice()`)\n2. **Soft Delete (អនុសាសន៍)**៖ មិនលុបទិន្នន័យចោលទេ គ្រាន់តែសម្គាល់ `isDeleted: true` និង `deletedAt = new Date()`។ វិធីនេះអនុញ្ញាតឱ្យយើង Restore ទិន្នន័យមកវិញបាន និងរក្សាប្រវត្តិ Transactions",
-  tip: "ប្រើប្រាស់ Status Code `200 OK` ប្រសិនបើអ្នកបញ្ជូន Deleted Entity ត្រឡប់មកវិញ ឬប្រើ `204 No Content` ប្រសិនបើអ្នកមិនបញ្ជូន Body ត្រឡប់ទៅវិញ។",
-  objective: "ចេះសរសេរ DELETE Endpoint ទាំងទម្រង់ Hard Delete និង Soft Delete។",
-  expectedOutcome: "យល់ច្បាស់ពីការគ្រប់គ្រងទិន្នន័យដែលបានលុបក្នុង Enterprise Architecture។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\nlet courses = [\n  { id: 1, title: \"Node.js Basics\", isDeleted: false, deletedAt: null }\n];\n\n// Soft Delete Implementation (Recommended for Enterprise)\napp.delete(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId && !c.isDeleted);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found or already deleted\" });\n  }\n\n  // Perform soft delete\n  course.isDeleted = true;\n  course.deletedAt = new Date().toISOString();\n\n  return res.status(200).json({\n    success: true,\n    message: \"Course has been soft-deleted successfully\",\n    data: { id: course.id, deletedAt: course.deletedAt }\n  });\n});",
 };
 

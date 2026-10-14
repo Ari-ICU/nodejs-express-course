@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**Router-Level Middleware** ត្រូវបានចងភ្ជាប់ទៅនឹង Instance នៃ `express.Router()` តាមរយៈ `router.use()`។\n\nភាពខុសគ្នាពី Application-Level Middleware៖\n* វាមិនប៉ះពាល់ដល់ Routes ដទៃក្រៅពី Router របស់វាឡើយ\n* ស័ក្តិសមបំផុតសម្រាប់ដាក់ Logic ជាក់លាក់លើ Resource មួយ ដូចជា ការផ្ទៀងផ្ទាត់សិទ្ធិលើ Course Management (`/courses`)",
-  tip: "ប្រើប្រាស់ Router-Level Middleware នៅពេលអ្នកចង់ការពារ Routes ទាំងអស់ក្នុង Router ជាក់លាក់មួយដោយមិនបាច់សរសេរ Guard លើគ្រប់ Endpoint ដោយដៃ។",
-  objective: "ចេះ Scope Middleware ឱ្យដំណើរការតែក្នុង Router មួយជាក់លាក់។",
-  expectedOutcome: "ការពារ Routes ក្នុង Resource Group បានយ៉ាងមានប្រសិទ្ធភាព។",
   codeSnippet: "import express from \"express\";\nconst app = express();\nconst courseRouter = express.Router();\n\n// Step 1: Router-Level Middleware (Runs ONLY on courseRouter)\ncourseRouter.use((req, res, next) => {\n  console.log(\"🎯 Course Router Guard: Inspecting request...\");\n  // 💡 Teaching Note: We can check headers or permissions specifically for courses\n  req.resourceScope = \"courses\";\n  next();\n});\n\n// Step 2: Route endpoints inside the router\ncourseRouter.get(\"/\", (req, res) => {\n  res.json({ message: \"Courses list\", scope: req.resourceScope });\n});\n\ncourseRouter.post(\"/\", (req, res) => {\n  res.status(201).json({ message: \"Course created\", scope: req.resourceScope });\n});\n\n// Step 3: Mount router in main app\napp.use(\"/api/v1/courses\", courseRouter);",
 };
 

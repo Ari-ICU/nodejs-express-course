@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Routing** គឺជាយន្តការកំណត់ថាតើ Application ត្រូវឆ្លើយតបយ៉ាងដូចម្តេចចំពោះ Client Request ទៅកាន់ Endpoint ជាក់លាក់មួយ (URI Path + HTTP Method)។\n\nទម្រង់ទូទៅ៖ `app.METHOD(PATH, HANDLER)`\n* `app.get(\"/api/v1/courses\", handler)` សម្រាប់ទាញយកទិន្នន័យ\n* `app.post(\"/api/v1/courses\", handler)` សម្រាប់បង្កើតទិន្នន័យថ្មី\n* `app.delete(\"/api/v1/courses/:id\", handler)` សម្រាប់លុបទិន្នន័យ",
-  tip: "Express ធ្វើការផ្គូផ្គង Routes តាមលំដាប់លំដោយពីលើចុះក្រោម (Top to Bottom)។ ត្រូវដាក់ Specific Routes មុន Generic Routes ជានិច្ច។",
-  objective: "យល់ដឹងពីរបៀបផ្គូផ្គង HTTP Verbs និង URL Paths។",
-  expectedOutcome: "បង្កើត Basic Routes សម្រាប់ Course Catalog API បានត្រឹមត្រូវ។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// In-memory data store for teaching\nconst courses = [\n  { id: 1, title: \"Node.js Basics\", price: 29 },\n  { id: 2, title: \"Express Deep Dive\", price: 39 }\n];\n\n// Step 1: GET all courses\napp.get(\"/api/v1/courses\", (req, res) => {\n  res.status(200).json({ success: true, count: courses.length, data: courses });\n});\n\n// Step 2: POST a new course\napp.post(\"/api/v1/courses\", (req, res) => {\n  const newCourse = { id: courses.length + 1, ...req.body };\n  courses.push(newCourse);\n  res.status(201).json({ success: true, data: newCourse });\n});",
 };
 

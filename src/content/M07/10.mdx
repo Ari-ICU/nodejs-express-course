@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**`express.Router()`** គឺជា Mini-Express Application ឯករាជ្យមួយដែលមានសមត្ថភាពគ្រប់គ្រង Middlewares និង Routing ផ្ទាល់ខ្លួន។\n\nអត្ថប្រយោជន៍ចម្បង៖\n* បំបែក Routes តាម Resource ទៅក្នុង Files ដាច់ដោយឡែកពីគ្នា (ឧ. `course.routes.js`, `user.routes.js`)\n* ងាយស្រួល Mount ចូលទៅកាន់ Base App ជាមួយ Path Prefix\n* ជួយកាត់បន្ថយទំហំឯកសារ `app.js` មិនឱ្យក្លាយជា Spaghetti Code",
-  tip: "ចាត់ទុក `express.Router()` ដូចជា Mini-app ដែលអាចយកទៅ Plug-in ចូលទៅក្នុង Main app ត្រង់ Prefix ណាមួយក៏បាន។",
-  objective: "ចេះបង្កើត និង Export Router ពីឯកសារដាច់ដោយឡែក។",
-  expectedOutcome: "កូដត្រូវបានបែងចែកជា Modularity តាមស្តង់ដារ Clean Architecture។",
   codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\n\n// Step 1: Create isolated router instance\nconst router = express.Router();\n\nconst courses = [{ id: 1, title: \"Enterprise Express Architecture\" }];\n\n// Step 2: Define routes relative to the mount point\nrouter.get(\"/\", (req, res) => {\n  res.json({ success: true, data: courses });\n});\n\nrouter.get(\"/:id\", (req, res) => {\n  const course = courses.find(c => c.id === Number(req.params.id));\n  if (!course) return res.status(404).json({ success: false, error: \"Course not found\" });\n  res.json({ success: true, data: course });\n});\n\n// Step 3: Export router\nexport default router;",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "MongoDB សម្រេចបាននូវ High Availability និង Scalability តាមរយៈយន្តការពីរ៖\n\n1. **Replica Sets (High Availability)**៖ ប្រព័ន្ធ cluster ដែលមានយ៉ាងហោចណាស់ ៣ Nodes (Primary ១ និង Secondary ២)។ Primary ទទួលខុសត្រូវលើ Writes ទាំងអស់ ហើយធ្វើ Replicate ទិន្នន័យទៅ Secondaries ដោយស្វ័យប្រវត្តិតាមរយៈ Oplog។\n2. **Sharding (Horizontal Scalability)**៖ ការបំបែកទិន្នន័យជាចំណែកៗ (Partitions) ឆ្លងកាត់ Servers ច្រើននៅពេលទិន្នន័យកើនដល់រាប់លាន Records។",
-  tip: "នៅលើ Production តែងតែ Deploy MongoDB ជាមួយ Replica Set (យ៉ាងហោច ៣ Nodes) ដើម្បីឱ្យមាន Automatic Failover ដោយគ្មាន Downtime។",
-  objective: "យល់ដឹងពីស្ថាបត្យកម្ម Replica Set និង Sharding របស់ MongoDB។",
-  expectedOutcome: "មានចំណេះដឹងពីរបៀបដែល MongoDB ធានាសុវត្ថិភាពទិន្នន័យ និង High Availability។",
   codeSnippet: "/* MongoDB Replica Set Architecture for Course Catalog:\n   [Express API Client (Node.js)]\n              │\n              ▼\n   ┌───────────────────────┐\n   │    PRIMARY NODE       │ (Handles Writes & Primary Reads)\n   └──────────┬────────────┘\n              │ (Asynchronous Replication via Oplog)\n        ┌─────┴─────┐\n        ▼           ▼\n   [SECONDARY] [SECONDARY] (Auto Failover & Read Scalability)\n*/",
 };
 

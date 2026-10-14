@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "yaml",
   summary: "OpenAPI schemas define the shape, types, and constraints of data models used across endpoints. Centralizing data models inside `components.schemas` promotes reuse and avoids duplicating object definitions across multiple route annotations.",
-  tip: "Reference reusable schemas using the `$ref` pointer (e.g. `'$ref': '#/components/schemas/User'`) to keep route docs DRY and maintainable.",
-  objective: "Define reusable data schemas with typed properties and validation rules in OpenAPI.",
-  expectedOutcome: "Consistent, reusable component schemas reflecting database and DTO models.",
   codeSnippet: "/**\n * @openapi\n * components:\n *   schemas:\n *     Course:\n *       type: object\n *       required:\n *         - title\n *         - price\n *         - level\n *       properties:\n *         id:\n *           type: string\n *           example: \"64f1a2b3c4d5e6f7a8b9c0d1\"\n *         title:\n *           type: string\n *           example: \"Complete Node.js & Express Bootcamp\"\n *         price:\n *           type: number\n *           example: 49.99\n *         level:\n *           type: string\n *           enum: [beginner, intermediate, advanced]\n *           example: \"beginner\"\n *         category:\n *           type: string\n *           example: \"Web Development\"\n */",
 };
 

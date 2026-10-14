@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការអនុវត្ត **PATCH Endpoint** ប្រកបដោយប្រសិទ្ធភាពខ្ពស់៖\n\n1. អាន `req.body`\n2. ច្រោះយកតែ **Allowed Update Fields** (ជៀសវាង Mass Assignment Vulnerability កុំឱ្យ Client កែប្រែ `id` ឬ `createdAt`)\n3. កែប្រែតែ Properties ដែលបានផ្តល់មក\n4. រក្សាទុក `updatedAt` timestamp ថ្មី",
-  tip: "🔒 សុវត្ថិភាពខ្ពស់៖ កុំយក `req.body` ទាំងមូលទៅ Merge ដោយគ្មានការ Whitelist ឱ្យសោះ ព្រោះ User អាចលួចប្តូរ `role: 'admin'` ឬ `id` បាន (Mass Assignment Attack)!",
-  objective: "ចេះអនុវត្ត PATCH Endpoint ដោយមាន Field Whitelisting ការពារ Mass Assignment។",
-  expectedOutcome: "Endpoint កែប្រែទិន្នន័យមានសុវត្ថិភាពខ្ពស់ និងស្របតាមស្តង់ដារវិជ្ជាជីវៈ។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [{ id: 1, title: \"Original Title\", price: 29.99, published: false }];\n\napp.patch(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  // 🔒 Security: Only allow modifications on specific permitted fields (Whitelist)\n  const allowedUpdates = [\"title\", \"price\", \"published\"];\n  for (const key of Object.keys(req.body)) {\n    if (allowedUpdates.includes(key)) {\n      course[key] = req.body[key];\n    }\n  }\n\n  course.updatedAt = new Date().toISOString();\n  return res.status(200).json({ success: true, data: course });\n});",
 };
 

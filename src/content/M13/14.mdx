@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**Field Projection (`.select()`)** អនុញ្ញាតឱ្យ Client ជ្រើសរើសយកតែ Fields ណាដែលខ្លួនចង់បាន (ឧ. `?fields=title,price`)៖\n\nអត្ថប្រយោជន៍ធំៗ៖\n* កាត់បន្ថយ Network Bandwidth រវាង MongoDB និង Node.js\n* ជៀសវាងការបញ្ជូន Sensitive Fields ទៅកាន់ Client (ដូចជា `password` ឬ Internal Notes)\n* សញ្ញាដក (`-`) នៅពីមុខ Field មានន័យថាដក Field នោះចេញ (`.select(\"-__v\")`)",
-  tip: "តែងតែដក `__v` (Mongoose version key) ចេញពី API Responses (`.select('-__v')`) ដើម្បីឱ្យ JSON Response ស្អាត។",
-  objective: "ចេះប្រើប្រាស់ .select() ដើម្បីជ្រើសរើស ឬដក Fields ជាក់លាក់។",
-  expectedOutcome: "កាត់បន្ថយទំហំ Payload និងបង្កើនល្បឿន Network Response។",
   codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\n// Include only title, price, and level (exclude __v)\nexport const getCourseSummaries = async () => {\n  return await Course.find()\n    .select(\"title price level -__v\");\n};\n\n// Dynamic Projection from URL: ?fields=title,price\nexport const getCoursesWithFields = async (fieldsQuery) => {\n  let query = Course.find();\n  if (fieldsQuery) {\n    const fields = fieldsQuery.split(\",\").join(\" \");\n    query = query.select(fields);\n  } else {\n    query = query.select(\"-__v\");\n  }\n  return await query;\n};",
 };
 

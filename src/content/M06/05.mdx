@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ឯកសារ **src/server.js** ទទួលខុសត្រូវលើ Network Layer៖\n\n1. **Port Binding**៖ អាន Port ពី `process.env.PORT` ជាមួយ Fallback `5000`\n2. **Listener Activation**៖ ហៅ `app.listen()`\n3. **Graceful Shutdown**៖ ចាប់សញ្ញា `SIGTERM` និង `SIGINT` ដើម្បីបិទ Connections ដោយសុវត្ថិភាពនៅពេល Deploy លើ Docker/Kubernetes",
-  tip: "កុំ Hardcode Port `5000` ដោយគ្មាន `process.env.PORT` ព្រោះ Cloud Platforms (Render, AWS, Railway) នឹងចាត់ចែង Dynamic Port ពេល Deploy។",
-  objective: "ចេះ Start HTTP Server និងរៀបចំ Graceful Shutdown សម្រាប់ Production។",
-  expectedOutcome: "Server ដែលមានស្ថេរភាពខ្ពស់ អាចបិទ និង Re-deploy ដោយមិនបាត់បង់ទិន្នន័យ In-flight Requests។",
   codeSnippet: "// src/server.js\nimport app from \"./app.js\";\n\n// Step 1: Environment-driven port configuration\nconst PORT = process.env.PORT || 5000;\n\n// Step 2: Start listening for incoming connections\nconst server = app.listen(PORT, () => {\n  console.log(`🚀 Course API Server listening on http://localhost:${PORT}`);\n});\n\n// Step 3: Graceful Shutdown handling (Production Grade)\nconst shutdown = (signal) => {\n  console.log(`Received ${signal}. Closing HTTP server gracefully...`);\n  server.close(() => {\n    console.log(\"HTTP server closed. Exiting process.\");\n    process.exit(0);\n  });\n};\n\nprocess.on(\"SIGTERM\", () => shutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => shutdown(\"SIGINT\"));",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**POST Routes** ទទួល JSON Payload ពី Client តាមរយៈ `req.body` ដើម្បីបង្កើត Resource ថ្មី។\n\nលំដាប់លំដោយនៃការងារ (Workflow)៖\n1. អាន `req.body`\n2. ផ្ទៀងផ្ទាត់ (Validate) ថាតើមានទិន្នន័យចាំបាច់ដែរឬទេ (`title`, `price`)\n3. បង្កើត Course Object ថ្មីជាមួយ Unique ID\n4. បញ្ចូលទៅក្នុង Data Store និងត្រឡប់ Status Code `201 Created`",
-  tip: "ត្រូវប្រាកដថាបានដាក់ `app.use(express.json())` មុននឹងប្រើ `req.body` បើមិនដូច្នោះទេ `req.body` នឹងមានតម្លៃ `undefined`។",
-  objective: "ចេះបង្កើត POST Endpoint ជាមួយ Request Validation និងឆ្លើយតប 201 Created។",
-  expectedOutcome: "អាចទទួល JSON Payload និងរក្សាទុក Resource ថ្មីដោយជោគជ័យ។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json()); // Essential body parser!\n\nconst courses = [{ id: 1, title: \"JavaScript Mastery\", price: 29.99 }];\n\n// Step 1: POST Endpoint to create a new Course\napp.post(\"/api/v1/courses\", (req, res) => {\n  const { title, instructor, price } = req.body;\n\n  // Step 2: Validate required fields\n  if (!title || price === undefined) {\n    return res.status(400).json({\n      success: false,\n      error: \"Both 'title' and 'price' are required fields\"\n    });\n  }\n\n  // Step 3: Instantiate new Course with unique ID\n  const newCourse = {\n    id: courses.length + 1,\n    title,\n    instructor: instructor || \"Unknown\",\n    price: Number(price),\n    published: false,\n    createdAt: new Date().toISOString()\n  };\n\n  // Step 4: Persist and respond with 201 Created\n  courses.push(newCourse);\n  return res.status(201).json({ success: true, data: newCourse });\n});",
 };
 

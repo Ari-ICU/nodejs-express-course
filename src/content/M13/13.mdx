@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការបំប្លែង REST API Query Parameters ទៅជា **MongoDB Query Filter** ដោយស្វ័យប្រវត្តិ៖\n\nបំប្លែង Parameter ពី URL ដូចជា `price[gte]=20` ទៅជា MongoDB Filter `{ price: { $gte: 20 } }`៖\n1. ចម្លង `req.query`\n2. ជំនួស `gte`, `gt`, `lte`, `lt` ដោយបន្ថែមសញ្ញា `$` នៅខាងមុខតាមរយៈ Regex",
-  tip: "រូបមន្ត Regex: `queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => `${match}`)` គឺជាស្តង់ដារឧស្សាហកម្មសម្រាប់ REST APIs។",
-  objective: "ចេះបំប្លែង URL query parameters ទៅជា MongoDB query operators ដោយស្វ័យប្រវត្តិ។",
-  expectedOutcome: "API គាំទ្រការ Filter តម្លៃ កាលបរិច្ឆេទ និង Ratings យ៉ាងបត់បែន។",
   codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\nexport const filterCoursesService = async (queryString) => {\n  // Step 1: Copy query and exclude pagination/sort reserved keys\n  const queryObj = { ...queryString };\n  const excludedFields = [\"page\", \"sort\", \"limit\", \"fields\"];\n  excludedFields.forEach(el => delete queryObj[el]);\n\n  // Step 2: Advanced Filtering: Convert gte, gt, lte, lt to $gte, $gt, etc.\n  let queryStr = JSON.stringify(queryObj);\n  queryStr = queryStr.replace(/\\b(gte|gt|lte|lt)\\b/g, match => `$${match}`);\n\n  // Step 3: Execute filtered MongoDB query\n  const courses = await Course.find(JSON.parse(queryStr));\n  return courses;\n};",
 };
 

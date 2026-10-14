@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "bash",
   summary: "A scalable backend codebase enforces strict Separation of Concerns (SoC). Organizing code into discrete layers (`config`, `routes`, `controllers`, `services`, `models`, `middleware`, `validators`, `utils`) prevents messy monolithic files and ensures code remains testable and maintainable as the project grows.",
-  tip: "Keep business logic strictly inside `services/` and HTTP protocol logic inside `controllers/`. This makes swapping Express for Fastify or writing unit tests trivial.",
-  objective: "Organize a modular, production-ready directory structure for Node.js Express projects.",
-  expectedOutcome: "Standardized enterprise project layout adopted across all features.",
   codeSnippet: "src/\n├── config/         # Environment vars, database connections, logger\n├── controllers/    # Request/response handling, HTTP status codes\n├── services/       # Core business logic, data calculations, 3rd party APIs\n├── models/         # Mongoose schemas and database models\n├── routes/         # Express router endpoint definitions\n├── middleware/     # Auth, error handling, rate limiters, upload guards\n├── validators/     # Zod/Joi request validation schemas\n├── utils/          # AppError class, formatters, helpers\n├── jobs/           # BullMQ queue producers and workers\n└── app.js          # Express app assembly (no listen())",
 };
 

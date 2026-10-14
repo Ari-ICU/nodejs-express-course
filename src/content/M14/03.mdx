@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "ការសរសេរ `if/else` ដោយដៃដើម្បី Validate រាល់ Properties ក្នុង Controller គឺជា Anti-Pattern (ពិបាកអាន ងាយនឹងភ្លេច Check និងស្ទួនកូដច្រើនកន្លែង)។\n\n**Schema-Based Validation** ផ្តល់នូវដំណោះស្រាយដ៏អស្ចារ្យ៖\n* កំណត់ច្បាប់ទិន្នន័យទាំងអស់ជា Declarative Schema តែមួយ\n* បំបែក Logic នៃការត្រួតពិនិត្យទៅជា Reusable Middleware\n* Auto-generate Error Messages ដែលមានរចនាសម្ព័ន្ធច្បាស់លាស់",
-  tip: "Schema-based Validation ជួយឱ្យកូដ Controller នៅតែខ្លី និងផ្តោតលើការងារស្នូល។",
-  objective: "យល់ដឹងពីគុណសម្បត្តិនៃការប្រើ Schema Validator ជំនួស Manual Checks។",
-  expectedOutcome: "កូដ Validation មានភាពស្អាត ស៊ីសង្វាក់គ្នា និងងាយស្រួល Maintain។",
   codeSnippet: "// ❌ Manual If/Else checks (Messy & error-prone):\n// if (!req.body.title) return res.status(400).send(\"Title required\");\n// if (typeof req.body.price !== \"number\") return res.status(400).send(\"Invalid price\");\n\n// ✅ Declarative Schema Validation:\n// courseValidationSchema.parse(req.body); // One clean line does it all!",
 };
 

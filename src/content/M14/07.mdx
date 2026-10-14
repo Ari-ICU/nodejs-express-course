@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅពេល Client ហៅ Endpoint ដូចជា `/api/v1/courses/:id` ប្រសិនបើ Client បញ្ជូន ID មិនត្រឹមត្រូវ (ដូចជា `/courses/abc`) MongoDB នឹងបោះកំហុស **CastError**។\n\nយើងអាច Validate `req.params.id` ជាមុនដោយប្រើ Zod Regex ផ្ទៀងផ្ទាត់ **24 Hexadecimal Characters** នៃ MongoDB ObjectId៖\n`z.string().regex(/^[0-9a-fA-F]{24}$/, \"Invalid MongoDB ObjectId\")`",
-  tip: "ការ Validate ID នៅកម្រិត Route Params ការពារកុំឱ្យ Invalid Requests ទៅរំខានដល់ Database Driver។",
-  objective: "ចេះ Validate MongoDB ObjectId ក្នុង Route Parameters តាមរយៈ Zod Regex។",
-  expectedOutcome: "Endpoint បដិសេធ Invalid ObjectIds ភ្លាមៗជាមួយ 400 Bad Request។",
   codeSnippet: "import { z } from \"zod\";\n\n// Step 1: Define MongoDB ObjectId Validator Schema\nexport const mongoIdParamSchema = z.object({\n  id: z\n    .string()\n    .regex(/^[0-9a-fA-F]{24}$/, \"Invalid MongoDB ObjectId parameter format\")\n});\n\n// Step 2: Test validation\nconst testParam = { id: \"6648e58319f3a9e224e78891\" }; // Valid 24 hex chars\nconst check = mongoIdParamSchema.safeParse(testParam);\nconsole.log(\"Is valid ObjectId?\", check.success); // true",
 };
 

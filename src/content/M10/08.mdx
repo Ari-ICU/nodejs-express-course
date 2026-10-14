@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅក្នុង Service Layer នៅពេលមានកំហុសផ្នែក Business Logic (ដូចជា រក Course មិនឃើញ ឬ Course ពេញ) យើងមិនត្រូវហៅ `res.status(404).json()` ឡើយ។\n\n**ដំណោះស្រាយស្តង់ដារ**៖ បង្កើត Custom **`AppError`** Class ដែលពង្រីកពី `Error` ដើមរបស់ JavaScript ដោយបន្ថែម `statusCode` និង `isOperational` flag។\n\nបន្ទាប់មក Service គ្រាន់តែ `throw new AppError(\"Course not found\", 404)` ហើយ Centralized Error Middleware នឹងចាប់យកទៅចាត់ចែងដោយស្វ័យប្រវត្តិ។",
-  tip: "`isOperational: true` បញ្ជាក់ថានេះជាកំហុសដែលយើងបានដឹងមុន (Expected Error ដូចជា Input ខុស ឬ NotFound) មិនមែនជា Bug បច្ចេកទេសដែលធ្វើឱ្យ Server Crash ឡើយ។",
-  objective: "ចេះបង្កើត Custom AppError Class និង Throw ចេញពី Service Layer។",
-  expectedOutcome: "ប្រព័ន្ធ Error Handling មានភាពស្អាត គ្មាន Try/Catch ស្ទួនៗក្នុងគ្រប់ Controller។",
   codeSnippet: "// Step 1: Enterprise Custom Application Error Class\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true; // Expected operational error\n    Error.captureStackTrace(this, this.constructor);\n  }\n}\n\n// Step 2: In Service Layer - Throw domain error cleanly!\nexport const getCourseById = (id, courses) => {\n  const course = courses.find(c => c.id === id);\n  if (!course) {\n    throw new AppError(`Course with ID ${id} does not exist`, 404);\n  }\n  return course;\n};\n\n// Step 3: Controller simply passes error forward with asyncHandler!\n// const course = getCourseById(req.params.id, courses);\n// res.json({ success: true, data: course });",
 };
 

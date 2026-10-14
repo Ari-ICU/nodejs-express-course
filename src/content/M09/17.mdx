@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**Sorting** អនុញ្ញាតឱ្យ Client តម្រៀបទិន្នន័យតាមលំដាប់លំដោយជាក់លាក់ (ឧ. `?sort=price` សម្រាប់តម្លៃទាបទៅខ្ពស់ ឬ `?sort=-price` សម្រាប់តម្លៃខ្ពស់មកទាប)។\n\nអនុសញ្ញា RESTful Sorting៖\n* សញ្ញាដក (`-`) នៅពីមុខ Field តំណាងឱ្យ **Descending Order** (`sort=-price`)\n* គ្មានសញ្ញាដក តំណាងឱ្យ **Ascending Order** (`sort=price`)\n* អាចគាំទ្រ Multi-field Sorting ដូចជា `?sort=-price,title`",
-  tip: "ចងចាំ៖ `-price` (ពីថ្លៃមកថោក) និង `price` (ពីថោកទៅថ្លៃ) គឺជាស្តង់ដារដែលប្រើប្រាស់ទាំងក្នុង Mongoose និង REST APIs ពិភពលោក។",
-  objective: "ចេះ Parse Sorting Query និងតម្រៀបទិន្នន័យតាមលំដាប់ឡើង ឬចុះ។",
-  expectedOutcome: "Endpoint អាច Sort តាម Properties ច្រើនប្រកបដោយភាពបត់បែន។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"Z - Advanced Microservices\", price: 99 },\n  { id: 2, title: \"A - Beginner JavaScript\", price: 19 },\n  { id: 3, title: \"M - Intermediate Express\", price: 49 }\n];\n\n// GET /api/v1/courses?sort=-price\napp.get(\"/api/v1/courses\", (req, res) => {\n  let result = [...courses];\n  const { sort } = req.query;\n\n  if (sort && typeof sort === \"string\") {\n    const isDescending = sort.startsWith(\"-\");\n    const field = isDescending ? sort.substring(1) : sort;\n\n    result.sort((a, b) => {\n      if (a[field] < b[field]) return isDescending ? 1 : -1;\n      if (a[field] > b[field]) return isDescending ? -1 : 1;\n      return 0;\n    });\n  }\n\n  res.json({ success: true, count: result.length, data: result });\n});",
 };
 

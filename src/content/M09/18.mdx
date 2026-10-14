@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅពេលដែល API ត្រូវមាន Breaking Changes (ការផ្លាស់ប្តូរដែលធ្វើឱ្យ Clients ចាស់ដំណើរការលែងកើត) យើងត្រូវធ្វើ **API Versioning**។\n\nយុទ្ធសាស្ត្រ Versioning ចម្បងៗ៖\n1. **URI Path Versioning (ពេញនិយមបំផុត)**៖ `/api/v1/courses` និង `/api/v2/courses`\n2. **Custom Header Versioning**៖ Header `X-API-Version: 2.0`\n3. **Accept Header (Content Negotiation)**៖ `Accept: application/vnd.company.v2+json`\n\nការប្រកាស Deprecation៖ ប្រើ Header `Sunset` និង `Deprecation` លើ v1 ដើម្បីជូនដំណឹងឱ្យ Client Update ទៅកាន់ v2។",
-  tip: "URI Path Versioning (`/v1`, `/v2`) គឺជាវិធីដែលងាយស្រួលយល់ និងងាយស្រួល Debug បំផុតនៅក្នុង Express។",
-  objective: "ចេះរៀបចំយុទ្ធសាស្ត្រ Versioning ដើម្បី Upgrade API ដោយមិនប៉ះពាល់ដល់អតិថិជនចាស់។",
-  expectedOutcome: "ស្ថាបត្យកម្ម API ដែលគាំទ្រការវិវត្តន៍យូរអង្វែង (Long-term Evolution)។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Version 1 Router (Legacy)\nconst v1Router = express.Router();\nv1Router.get(\"/courses\", (req, res) => {\n  // Inform clients that v1 is deprecated and will sunset\n  res.setHeader(\"Deprecation\", \"true\");\n  res.setHeader(\"Sunset\", \"Wed, 31 Dec 2026 23:59:59 GMT\");\n  res.json({ version: \"v1\", data: [\"Basic Course Title\"] });\n});\n\n// Version 2 Router (Modern with enriched response)\nconst v2Router = express.Router();\nv2Router.get(\"/courses\", (req, res) => {\n  res.json({ version: \"v2\", data: [{ id: 1, title: \"Modern Course\", price: 49 }] });\n});\n\n// Mount versions side-by-side\napp.use(\"/api/v1\", v1Router);\napp.use(\"/api/v2\", v2Router);",
 };
 

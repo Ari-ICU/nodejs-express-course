@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "User roles define categorical identities within an application (e.g. `user`, `moderator`, `admin`, `superadmin`). In Mongoose, roles are declared as an enumerated string with strict validation and a safe default (e.g. `user`). Restricting role escalation during self-registration ensures standard signups can never assign themselves administrative privileges.",
-  tip: "Never allow `req.body.role` to be saved directly on public registration routes! Always hardcode `role: 'user'` during self-signup.",
-  objective: "Define role schemas with Mongoose enums and enforce strict privilege defaults.",
-  expectedOutcome: "Type-safe role schema preventing unauthorized privilege escalation.",
   codeSnippet: "// models/user.model.js\nimport mongoose from \"mongoose\";\n\nconst userSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  email: { type: String, required: true, unique: true },\n  password: { type: String, required: true, select: false },\n  role: {\n    type: String,\n    enum: {\n      values: [\"user\", \"moderator\", \"admin\", \"superadmin\"],\n      message: \"{VALUE} is not a valid user role\"\n    },\n    default: \"user\", // Strict safe default\n  },\n  isActive: { type: Boolean, default: true }\n}, { timestamps: true });\n\nexport const User = mongoose.model(\"User\", userSchema);",
 };
 

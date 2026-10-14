@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Configuring authentication at the Collection root level allows all nested requests to inherit authentication credentials automatically (`Inherit auth from parent`). Upon successful login, a Postman script automatically captures the returned JWT token and writes it to `{{auth_token}}`.",
-  tip: "Set the Authorization type to `Bearer Token` with value `{{auth_token}}` at the collection folder level so you never have to configure tokens on individual routes.",
-  objective: "Automate token injection across all collection requests using Postman scripts.",
-  expectedOutcome: "Seamless authenticated testing across all protected endpoints without manual copy-pasting.",
   codeSnippet: "// Postman Tests Script on POST /login:\n// Save JWT token automatically to environment variables!\nconst response = pm.response.json();\n\nif (response.token) {\n  pm.environment.set(\"auth_token\", response.token);\n  console.log(\"Updated auth_token variable successfully!\");\n}\n\n// In Collection Root -> Authorization Tab:\n// Type: Bearer Token\n// Token: {{auth_token}}",
 };
 

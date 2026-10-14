@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការបង្កើត Schema សម្រាប់ **Course Creation** ក្នុង Course API របស់យើង៖\n\nច្បាប់កំណត់ (Rules)៖\n* `title`៖ String, ប្រវែងយ៉ាងតិច ៥ តួអក្សរ, អតិបរមា ១០០ តួអក្សរ\n* `price`៖ Number វិជ្ជមាន (`z.number().min(0)`)\n* `level`៖ Enum (`\"beginner\"`, `\"intermediate\"`, `\"advanced\"`)\n* `published`៖ Boolean (Optional)",
-  tip: "ប្រើប្រាស់ `.trim()` ក្នុង Zod String Schema ដើម្បី Strip Whitespace ដោយស្វ័យប្រវត្តិកំឡុងពេល Parsing។",
-  objective: "ចេះបង្កើត Zod Validation Schema សម្រាប់ Course Resource។",
-  expectedOutcome: "មាន Schema រឹងមាំដែល Validate គ្រប់ Properties នៃ Course Creation Payload។",
   codeSnippet: "// src/validations/course.validation.js\nimport { z } from \"zod\";\n\n// Step 1: Define Course Creation Validation Schema\nexport const createCourseSchema = z.object({\n  title: z\n    .string({ required_error: \"Course title is required\" })\n    .trim()\n    .min(5, \"Title must be at least 5 characters long\")\n    .max(100, \"Title cannot exceed 100 characters\"),\n  instructor: z\n    .string({ required_error: \"Instructor name is required\" })\n    .trim()\n    .min(2, \"Instructor name must be at least 2 characters\"),\n  price: z\n    .number({ required_error: \"Price is required\" })\n    .min(0, \"Price cannot be negative\"),\n  level: z\n    .enum([\"beginner\", \"intermediate\", \"advanced\"], {\n      errorMap: () => ({ message: \"Level must be beginner, intermediate, or advanced\" })\n    })\n    .default(\"beginner\"),\n  published: z.boolean().optional().default(false)\n});",
 };
 

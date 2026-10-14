@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការបង្កើត Connection Module ដាច់ដោយឡែកនៅ **`src/config/db.js`** ដើម្បីភ្ជាប់ទៅកាន់ MongoDB តាមរយៈ `mongoose.connect()`៖\n\nគោលការណ៍សំខាន់ៗ៖\n* អាន Connection URI ពី `process.env.DATABASE_URL`\n* ប្រើប្រាស់ `try/catch` ដើម្បីចាប់កំហុសនៅពេល Database មិនអាចតភ្ជាប់បាន\n* ត្រួតពិនិត្យ Connection Events (`connected`, `error`, `disconnected`)",
-  tip: "តែងតែហៅ `await connectDB()` មុនពេល `app.listen(PORT)` ដំណើរការ ដើម្បីធានាថា Server មិនទទួល Requests មុនពេល Database ភ្ជាប់រួចរាល់ឡើយ។",
-  objective: "ចេះបង្កើត Persistent Connection Pool ទៅកាន់ MongoDB។",
-  expectedOutcome: "Server តភ្ជាប់ទៅកាន់ MongoDB Atlas ដោយរលូន និងមាន Event Listeners។",
   codeSnippet: "// src/config/db.js\nimport mongoose from \"mongoose\";\n\nexport const connectDB = async () => {\n  try {\n    const conn = await mongoose.connect(process.env.DATABASE_URL);\n    console.log(`✅ MongoDB Connected: ${conn.connection.host} / ${conn.connection.name}`);\n  } catch (error) {\n    console.error(\"❌ MongoDB Connection Failed:\", error.message);\n    process.exit(1); // 💡 Teaching Note: Exit process on DB failure in production\n  }\n};\n\n// Event Listeners for connection lifecycle\nmongoose.connection.on(\"disconnected\", () => console.warn(\"⚠️ MongoDB disconnected!\"));\nmongoose.connection.on(\"reconnected\", () => console.log(\"🔄 MongoDB reconnected!\"));",
 };
 

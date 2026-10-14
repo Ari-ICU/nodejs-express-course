@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "នៅក្នុង Professional Architecture ទម្រង់ឆ្លើយតបនៃកំហុសត្រូវតែបែងចែកជា ២ ផ្អែកលើ **`process.env.NODE_ENV`**៖\n\n1. **Development Environment (`NODE_ENV=development`)**៖\n   * បង្ហាញ Stack Trace ពេញលេញ, Error Object ទាំងមូល, និង Original Message សម្រាប់ Developer ងាយស្រួល Debug\n2. **Production Environment (`NODE_ENV=production`)**៖\n   * លាក់ Stack Trace ទាំងស្រុង\n   * បង្ហាញតែ Sanitized Error Message សម្រាប់ Operational Errors\n   * ប្រសិនបើជា Programming Bug បញ្ជូនសារទូទៅ `\"Something went very wrong!\"`",
-  tip: "ច្បាប់សុវត្ថិភាព OWASP៖ ហាមបង្ហាញ Stack Trace នៅលើ Production ជាដាច់ខាត ព្រោះវាបង្ហាញ File Paths, Third-party Libraries, និង Database details។",
-  objective: "ចេះរៀបចំ Environment-driven Error Formatting សម្រាប់ Development និង Production។",
-  expectedOutcome: "ធានាបានទាំងភាពងាយស្រួលក្នុងការ Debug (Dev) និងសុវត្ថិភាពខ្ពស់បំផុត (Prod)។",
   codeSnippet: "// Send detailed error during Development\nconst sendErrorDev = (err, res) => {\n  res.status(err.statusCode || 500).json({\n    success: false,\n    status: err.status,\n    error: err,\n    message: err.message,\n    stack: err.stack // 💡 Stack trace exposed ONLY in development!\n  });\n};\n\n// Send safe, sanitized error in Production\nconst sendErrorProd = (err, res) => {\n  // Operational, trusted error: send message to client\n  if (err.isOperational) {\n    res.status(err.statusCode).json({\n      success: false,\n      error: { message: err.message }\n    });\n  } else {\n    // Programming bug or unknown leak: don't leak details!\n    console.error(\"ERROR 💥\", err);\n    res.status(500).json({\n      success: false,\n      error: { message: \"Internal server error. Please try again later.\" }\n    });\n  }\n};",
 };
 

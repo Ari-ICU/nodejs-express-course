@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការតម្រៀបទិន្នន័យក្នុង MongoDB តាមរយៈ **`.sort()`**៖\n\n* **Ascending (ពីតូចទៅធំ)**៖ `.sort(\"price\")` ឬ `.sort({ price: 1 })`\n* **Descending (ពីធំទៅតូច)**៖ `.sort(\"-price\")` ឬ `.sort({ price: -1 })`\n* **Multi-field Sorting**៖ `.sort(\"-price createdAt\")` (តម្រៀបតាមតម្លៃខ្ពស់មុន បើតម្លៃស្មើគ្នា តម្រៀបតាមថ្ងៃបង្កើតថ្មីបំផុត)",
-  tip: "ដើម្បីឱ្យ Sorting ដំណើរការលឿនលើ Dataset ធំៗ ត្រូវប្រាកដថា Field នោះមាន **Index** ក្នុង Schema។",
-  objective: "ចេះតម្រៀបទិន្នន័យតាម Field មួយ ឬច្រើនក្នុង MongoDB។",
-  expectedOutcome: "API គាំទ្រការតម្រៀបទិន្នន័យប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
   codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\n// Sort dynamically from query: ?sort=-price,title\nexport const getSortedCourses = async (sortQuery) => {\n  let query = Course.find();\n\n  if (sortQuery) {\n    const sortBy = sortQuery.split(\",\").join(\" \");\n    query = query.sort(sortBy);\n  } else {\n    query = query.sort(\"-createdAt\"); // Default: Newest first\n  }\n\n  return await query;\n};",
 };
 

@@ -17,9 +17,6 @@ export const M15 = [
 * ធានាថា Server នៅតែបន្តដំណើរការបានរលូនទោះបីជាមានកំហុសលើ Request ណាមួយក៏ដោយ
 * ឆ្លើយតបនូវ Standard Error Envelope ដ៏ច្បាស់លាស់ដល់ Client
 * កត់ត្រា (Log) កំហុសសម្រាប់ Developer ងាយស្រួល Debug`,
-    tip: "ច្បាប់លេខមួយនៃ Error Handling៖ កុំទុកឱ្យ Request ព្យួរចោលដោយគ្មាន Response ឬធ្វើឱ្យ Node.js Process ដួលរលំដោយសារ Unhandled Error។",
-    objective: "យល់ដឹងពីសារៈសំខាន់នៃ Centralized Error Handling ក្នុង Production APIs។",
-    expectedOutcome: "មានផែនការដោះស្រាយកំហុសគ្រប់ជ្រុងជ្រោយសម្រាប់ Course Catalog Backend។",
     codeSnippet: `// Unified Error Architecture Flow:
 // Controller/Service (throws error) ➔ next(err) ➔ [ Centralized Error Middleware ]
 //                                                           │
@@ -43,9 +40,6 @@ app.get("/sync-error", (req, res) => {
   throw new Error("Something broke synchronously!"); // Express catches this automatically!
 });
 \`\`\``,
-    tip: "ទោះបីជា Express ចាប់ Synchronous Errors ដោយស្វ័យប្រវត្តិក៏ដោយ នៅក្នុង Real-world Backend កូដស្ទើរតែទាំងអស់គឺជា Asynchronous (ទាញយកទិន្នន័យពី MongoDB)។",
-    objective: "យល់ដឹងពីរបៀបដែល Express ដោះស្រាយ Synchronous Errors។",
-    expectedOutcome: "ដឹងពីភាពខុសគ្នារវាង Synchronous និង Asynchronous Error Handling។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -69,9 +63,6 @@ app.get("/api/v1/courses/sync-check", (req, res) => {
 
 **ដំណោះស្រាយស្តង់ដារឧស្សាហកម្ម**៖ ប្រើប្រាស់ **\`asyncHandler\` Utility** ដើម្បីរុំ Async Controllers ដោយស្វ័យប្រវត្តិ៖
 \`const asyncHandler = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);\` `,
-    tip: "ការប្រើប្រាស់ `asyncHandler` ជួយសន្សំពេលវេលា និងលុបបំបាត់ `try/catch` ចេញពីរាល់ Controller រាប់សិបក្នុងគម្រោងរបស់អ្នក។",
-    objective: "ចេះសរសេរ និងប្រើប្រាស់ asyncHandler wrapper សម្រាប់គ្រប់ Async Controllers។",
-    expectedOutcome: "គ្រប់ Asynchronous Database Errors ទាំងអស់ត្រូវបានបញ្ជូនទៅ Centralized Handler ដោយស្វ័យប្រវត្តិ។",
     codeSnippet: `// src/utils/asyncHandler.js
 export const asyncHandler = (fn) => (req, res, next) => {
   // 💡 Teaching Note: Guarantees that any rejected Promise is routed to next(err)!
@@ -98,9 +89,6 @@ export const asyncHandler = (fn) => (req, res, next) => {
 * \`status\` (\`"fail"\` សម្រាប់ 4xx, \`"error"\` សម្រាប់ 5xx)
 * \`isOperational: true\` (បញ្ជាក់ថានេះជាកំហុសអាជីវកម្មដែលបានដឹងទុកជាមុន មិនមែនជា System Bug ឡើយ)
 * \`Error.captureStackTrace(this, this.constructor)\``,
-    tip: "ការកំណត់ `isOperational: true` ជួយឱ្យ Centralized Error Middleware ដឹងថាអាចផ្ញើ Error Message នេះទៅកាន់ Client ដោយសុវត្ថិភាព។",
-    objective: "ចេះបង្កើត Custom AppError Class តាមស្តង់ដារ OOP ក្នុង JavaScript។",
-    expectedOutcome: "មាន Custom Error Class សម្រាប់ប្រើទូទាំង Controller និង Service Layer។",
     codeSnippet: `// src/errors/AppError.js
 export class AppError extends Error {
   constructor(message, statusCode) {
@@ -129,9 +117,6 @@ export class AppError extends Error {
 * ទទួលកំហុសទាំងអស់ដែលបញ្ជូនតាមរយៈ \`next(err)\`
 * កំណត់ Status Code (Default: \`500 Internal Server Error\`)
 * កសាង Standard Error Response Envelope`,
-    tip: "កុំភ្លេច Parameter ទាំង ៤ (err, req, res, next)! ប្រសិនបើអ្នកសរសេរត្រឹម ៣ Express នឹងមិនចាត់ទុកវាជា Error Middleware ឡើយ។",
-    objective: "ចេះបង្កើត Centralized Error Middleware និងដោះស្រាយកំហុសទាំងអស់នៅកន្លែងតែមួយ។",
-    expectedOutcome: "API ឆ្លើយតប Error Envelope ស្របតាមទម្រង់ស្តង់ដារឧស្សាហកម្មជានិច្ច។",
     codeSnippet: `// src/middlewares/error.middleware.js
 export const globalErrorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || 500;
@@ -165,9 +150,6 @@ export const globalErrorHandler = (err, req, res, next) => {
 2. **Programming Errors (Bugs ក្នុងកូដ)**៖
    * អាន Property លើ \`undefined\`, Syntax Error, Memory Leak
    * ត្រូវលាក់ព័ត៌មានពី Client (បញ្ជូនទូទៅ 500) និងកត់ត្រា Stack Trace សម្រាប់ Developer កែប្រែ!`,
-    tip: "នៅលើ Production កុំបញ្ចេញព័ត៌មានលម្អិតនៃ Programming Errors ទៅកាន់ Client ឱ្យសោះ ព្រោះ Attackers អាចយក Stack Trace ទៅធ្វើការវាយប្រហារ។",
-    objective: "បែងចែកឱ្យដាច់រវាង Operational Errors និង Programming Bugs។",
-    expectedOutcome: "ដឹងពីរបៀបការពារទិន្នន័យសម្ងាត់របស់ Server កំឡុងពេលមានកំហុសបច្ចេកទេស។",
     codeSnippet: `/* ERROR CLASSIFICATION COMPARISON:
    -------------------------------------------------------------
    Operational Error:    AppError("Course not found", 404)
@@ -191,9 +173,6 @@ export const globalErrorHandler = (err, req, res, next) => {
 * ដាក់ Catch-all Middleware នៅខាងក្រោម Route ទាំងអស់
 * បង្កើត \`new AppError(\`Cannot find \${req.originalUrl} on this server!\`, 404)\`
 * បញ្ជូនទៅកាន់ \`next(err)\``,
-    tip: "Catch-all 404 Handler ត្រូវតែដាក់នៅពីក្រោម Route Definitions ទាំងអស់ និងនៅពីលើ Centralized Error Middleware ជានិច្ច។",
-    objective: "ចេះបង្កើត Catch-all 404 JSON Handler សម្រាប់ REST API។",
-    expectedOutcome: "រាល់ Invalid Endpoints ទាំងអស់ឆ្លើយតបជា JSON Error Envelope ត្រឹមត្រូវ។",
     codeSnippet: `import { AppError } from "./errors/AppError.js";
 
 // Step 1: Place AFTER all valid routes in app.js
@@ -214,9 +193,6 @@ app.all("*", (req, res, next) => {
 យើងត្រូវបង្កើត Handler ពិសេសមួយដើម្បីបំប្លែងវាឱ្យក្លាយជា **400 Bad Request** ដ៏ស្អាត៖
 * ស្រង់យក Messages ចេញពី \`Object.values(err.errors)\`
 * បង្កើត \`new AppError(message, 400)\``,
-    tip: "ការបំប្លែង Mongoose ValidationError ទៅជា AppError ជួយឱ្យ Status Code ប្តូរពី 500 (Server Bug) មកជា 400 (Client Input Error) វិញ។",
-    objective: "ចេះស្ទាក់ចាប់ និងបំប្លែង Mongoose ValidationError ទៅជា 400 Bad Request Envelope។",
-    expectedOutcome: "Client ទទួលបានបញ្ជី Validation Errors ច្បាស់លាស់ពី Mongoose Schema។",
     codeSnippet: `import { AppError } from "../errors/AppError.js";
 
 // Helper: Handle Mongoose Schema Validation Errors
@@ -243,9 +219,6 @@ export const handleMongooseValidationError = (err) => {
 * ពិនិត្យ \`if (err.name === "CastError")\`
 * បំប្លែងទៅជា Human-readable 400 Bad Request៖
   \`new AppError(\`Invalid \${err.path}: \${err.value}\`, 400)\``,
-    tip: "ការដោះស្រាយ CastError ការពារកុំឱ្យ Error នេះធ្លាយចេញជា 500 Internal Server Error ដ៏អាក្រក់មើល។",
-    objective: "ចេះដោះស្រាយ CastError នៃ MongoDB ObjectId ឱ្យក្លាយជា 400 Bad Request។",
-    expectedOutcome: "API ឆ្លើយតបសារកំហុសសមរម្យនៅពេល Client វាយ ID ខុសទម្រង់។",
     codeSnippet: `import { AppError } from "../errors/AppError.js";
 
 // Helper: Handle Invalid MongoDB ObjectId CastError
@@ -271,9 +244,6 @@ export const handleMongooseCastError = (err) => {
 * ស្រង់ឈ្មោះ Field ដែលស្ទួនចេញពី Error
 * បញ្ជូន **\`409 Conflict\`** ត្រឡប់ទៅ Client៖
   \`new AppError(\`Duplicate field value: '\${value}'. Please use another value!\`, 409)\``,
-    tip: "ប្រើប្រាស់ Status Code 409 Conflict សម្រាប់ Duplicate Data ព្រោះវាជា HTTP Standard សមស្របបំផុត។",
-    objective: "ចេះចាប់ និងបំប្លែង MongoDB Error 11000 ទៅជា 409 Conflict Response។",
-    expectedOutcome: "ការពារការស្ទួនទិន្នន័យ និងជូនដំណឹងដល់ User យ៉ាងច្បាស់លាស់។",
     codeSnippet: `import { AppError } from "../errors/AppError.js";
 
 // Helper: Handle MongoDB Duplicate Unique Field (Error code 11000)
@@ -303,9 +273,6 @@ export const handleMongoDuplicateKeyError = (err) => {
    * លាក់ Stack Trace ទាំងស្រុង
    * បង្ហាញតែ Sanitized Error Message សម្រាប់ Operational Errors
    * ប្រសិនបើជា Programming Bug បញ្ជូនសារទូទៅ \`"Something went very wrong!"\``,
-    tip: "ច្បាប់សុវត្ថិភាព OWASP៖ ហាមបង្ហាញ Stack Trace នៅលើ Production ជាដាច់ខាត ព្រោះវាបង្ហាញ File Paths, Third-party Libraries, និង Database details។",
-    objective: "ចេះរៀបចំ Environment-driven Error Formatting សម្រាប់ Development និង Production។",
-    expectedOutcome: "ធានាបានទាំងភាពងាយស្រួលក្នុងការ Debug (Dev) និងសុវត្ថិភាពខ្ពស់បំផុត (Prod)។",
     codeSnippet: `// Send detailed error during Development
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode || 500).json({
@@ -347,9 +314,6 @@ const sendErrorProd = (err, res) => {
 1. **\`uncaughtException\`**៖ ចាប់កំហុស Sync Bugs ដែលកើតឡើងក្រៅ Express Handlers
 2. **\`unhandledRejection\`**៖ ចាប់ Async Promises ដែល Reject ហើយគ្មាន \`.catch()\` (ដូចជា MongoDB Connection ធ្លាក់)
 3. **Graceful Exit**៖ នៅពេលមាន Exception ធ្ងន់ធ្ងរ ត្រូវបិទ HTTP Server (\`server.close()\`) រួច \`process.exit(1)\` ដើម្បីឱ្យ Process Manager (PM2 / Docker / Kubernetes) Restart Container ថ្មីដែលស្អាត!`,
-    tip: "កុំបណ្តោយឱ្យ Server បន្តដំណើរការក្រោយពេលមាន `uncaughtException` ព្រោះ Memory State របស់ Node.js អាចខូចខាត (Corrupted)។ ត្រូវ Restart ជានិច្ច។",
-    objective: "ចេះដោះស្រាយ Unhandled Rejections និង Uncaught Exceptions តាមរយៈ Graceful Process Termination។",
-    expectedOutcome: "Server មានប្រព័ន្ធការពារកម្រិត Enterprise ធានាសុវត្ថិភាពប្រព័ន្ធទាំងមូល។",
     codeSnippet: `// In src/server.js:
 // 1. Safety net for unhandled Promise rejections (e.g. DB connection dropped)
 process.on("unhandledRejection", (err) => {

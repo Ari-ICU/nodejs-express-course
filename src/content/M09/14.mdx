@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ប្រសិនបើ Database មាន Courses ចំនួន ១០,០០០ យើងមិនអាចទាញយកទាំងអស់ក្នុង Request តែមួយបានឡើយ។ យើងត្រូវប្រើ **Pagination**។\n\nរូបមន្តគណនា **Limit & Skip**៖\n* `page` (ទំព័របច្ចុប្បន្ន ឧ. 1, 2, 3...)\n* `limit` (ចំនួន Items ក្នុងមួយទំព័រ ឧ. 10)\n* `skip = (page - 1) * limit`\n\nResponse ត្រូវត្រឡប់នូវ Pagination Metadata ដូចជា `totalPages`, `currentPage`, និង `totalItems`។",
-  tip: "កំណត់ Default Limit (ឧ. 10) និង Maximum Limit (ឧ. 100) ជានិច្ច ដើម្បីការពារ Client ពីការស្នើសុំ `?limit=1000000` ដែលអាចធ្វើឱ្យ Server អស់ Memory (OOM)។",
-  objective: "ចេះសរសេរ Logic គណនា Pagination និងផ្តល់ Navigation Metadata។",
-  expectedOutcome: "Endpoints អាចទាញយកទិន្នន័យជាទំព័រៗប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Mock store with 25 courses\nconst allCourses = Array.from({ length: 25 }, (_, i) => ({\n  id: i + 1,\n  title: `Mastering Express Module ${i + 1}`,\n  price: 29 + i\n}));\n\n// GET /api/v1/courses?page=2&limit=5\napp.get(\"/api/v1/courses\", (req, res) => {\n  // Step 1: Parse and sanitize page & limit\n  const page = Math.max(1, parseInt(req.query.page, 10) || 1);\n  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 5)); // Max 50 items\n\n  // Step 2: Calculate skip offset\n  const skip = (page - 1) * limit;\n\n  // Step 3: Slice data and calculate total pages\n  const paginatedCourses = allCourses.slice(skip, skip + limit);\n  const totalItems = allCourses.length;\n  const totalPages = Math.ceil(totalItems / limit);\n\n  return res.status(200).json({\n    success: true,\n    count: paginatedCourses.length,\n    data: paginatedCourses,\n    pagination: {\n      currentPage: page,\n      limit,\n      totalItems,\n      totalPages,\n      hasNextPage: page < totalPages,\n      hasPrevPage: page > 1\n    }\n  });\n});",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Traditional HTTP is a unidirectional request-response protocol: the client must initiate every interaction, and the server cannot push data proactively. While short-polling or long-polling periodically checks for updates, they create massive HTTP overhead. True real-time applications (chat, live tracking, financial tickers, collaborative editing) require persistent, bidirectional communication channels.",
-  tip: "Don't use HTTP short-polling for real-time features! Polling every 2 seconds consumes massive bandwidth and wastes server CPU.",
-  objective: "Understand the differences between HTTP Polling, Server-Sent Events (SSE), and WebSockets.",
-  expectedOutcome: "Clear criteria for choosing between HTTP, SSE, and full-duplex WebSockets.",
   codeSnippet: "// Comparison:\n// 1. Short Polling:   Client asks every 2s: \"New data? New data? New data?\" (High overhead)\n// 2. Long Polling:    Client asks; server holds connection open until data arrives (Moderate)\n// 3. SSE:             Unidirectional server-to-client streaming over HTTP (Great for tickers)\n// 4. WebSocket:       Bi-directional, persistent TCP connection with sub-millisecond frames (Ideal for chat/gaming)",
 };
 

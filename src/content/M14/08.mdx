@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Query Parameters ក្នុង `req.query` គឺតែងតែជា **Strings**។\n\nZod អនុញ្ញាតឱ្យយើងធ្វើទាំង **Type Coercion (បំប្លែង String ទៅជា Number)** និង **Validation** ក្នុងពេលតែមួយ៖\n* `z.coerce.number().min(1).default(1)` សម្រាប់ `page`\n* `z.coerce.number().min(1).max(50).default(10)` សម្រាប់ `limit`",
-  tip: "ប្រើប្រាស់ `z.coerce.number()` ជានិច្ចសម្រាប់ Query Parameters ដើម្បីឱ្យ Zod បំប្លែង String '10' ទៅជា Number 10 ដោយស្វ័យប្រវត្តិ។",
-  objective: "ចេះ Validate និង Coerce Query Parameters ដោយប្រើ Zod Coercion។",
-  expectedOutcome: "Query Parameters ត្រូវបាន Convert និង Validate ប្រកបដោយសុវត្ថិភាព។",
   codeSnippet: "import { z } from \"zod\";\n\nexport const courseQuerySchema = z.object({\n  // 💡 z.coerce converts incoming URL String \"?page=2\" into Number 2!\n  page: z.coerce.number().min(1).default(1),\n  limit: z.coerce.number().min(1).max(50).default(10),\n  level: z.enum([\"beginner\", \"intermediate\", \"advanced\"]).optional(),\n  sort: z.string().optional()\n});",
 };
 

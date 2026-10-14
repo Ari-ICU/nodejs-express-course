@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "bash",
   summary: "រចនាសម្ព័ន្ធ Project ស្អាត និង Scalable សម្រាប់ Enterprise Node.js Backend៖\n\n* **src/server.js**៖ Entry Point សម្រាប់ Listen Port\n* **src/app.js**៖ Express App Configuration & Middlewares\n* **src/routes/**៖ Route Definitions (URL mapping)\n* **src/controllers/**៖ Request/Response Handlers\n* **src/services/**៖ Business Logic & Database queries\n* **src/middlewares/**៖ Custom Middlewares (Auth, Error, Logger)\n* **src/config/**៖ Environment Configurations",
-  tip: "រចនាសម្ព័ន្ធនេះជាគ្រឹះដែលយើងនឹងសាងសង់នៅក្នុង Modules 07, 08, 09, និង 10។",
-  objective: "ស្វែងយល់ពីរចនាសម្ព័ន្ធ Folder និងឯកសារដែលប្រើប្រាស់ក្នុងគម្រោងធំៗ។",
-  expectedOutcome: "មានផែនទីគំនិតច្បាស់លាស់សម្រាប់ការរៀបចំកូដគម្រោង Backend។",
   codeSnippet: "# Standard Enterprise Express Project Layout\ncourse-catalog-api/\n├── package.json\n├── .env.example\n├── src/\n│   ├── app.js               # Express application instance & middlewares\n│   ├── server.js            # Server entry point (app.listen)\n│   ├── routes/              # Route mapping definitions\n│   │   ├── index.js\n│   │   └── course.routes.js\n│   ├── controllers/         # Request handling & HTTP orchestration\n│   │   └── course.controller.js\n│   ├── services/            # Pure business logic & database queries\n│   │   └── course.service.js\n│   └── middlewares/         # Auth, validation, & error handling\n│       ├── auth.middleware.js\n│       └── error.middleware.js",
 };
 

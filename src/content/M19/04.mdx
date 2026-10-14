@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Image upload routes often accept either a single image (e.g. user avatar) or a collection of images (e.g. product gallery). Using `upload.single('avatar')` handles one file, while `upload.array('photos', 5)` accepts up to 5 images under the same field name. `upload.fields()` allows handling mixed fields like one cover image and several gallery photos.",
-  tip: "Use `upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])` for e-commerce product endpoints.",
-  objective: "Handle single, array, and mixed multi-field image uploads in Express.",
-  expectedOutcome: "Versatile image upload routes supporting complex multi-image forms.",
   codeSnippet: "// routes/course.routes.js\nimport express from \"express\";\nimport multer from \"multer\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport { restrictTo } from \"../middleware/role.middleware.js\";\n\nconst router = express.Router();\nconst upload = multer({ dest: \"uploads/temp\" });\n\n// Handling course uploads: 1 thumbnail image + up to 5 course material attachments\nconst courseUploads = upload.fields([\n  { name: \"thumbnail\", maxCount: 1 },\n  { name: \"materials\", maxCount: 5 },\n]);\n\nrouter.post(\"/courses\", protect, restrictTo(\"instructor\", \"admin\"), courseUploads, (req, res) => {\n  const thumbnail = req.files[\"thumbnail\"]?.[0];\n  const materials = req.files[\"materials\"] || [];\n\n  res.status(201).json({\n    status: \"success\",\n    thumbnailFilename: thumbnail?.filename,\n    materialsCount: materials.length,\n  });\n});",
 };
 

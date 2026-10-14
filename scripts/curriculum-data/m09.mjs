@@ -17,9 +17,6 @@ export const M09 = [
 * **Resources**៖ អ្វីៗគ្រប់យ៉ាងត្រូវបានចាត់ទុកជា Resource (ដូចជា \`courses\`, \`lessons\`, \`users\`)
 * **Representations**៖ Client ទទួលបាន Representation នៃ Resource ជាទម្រង់ JSON
 * **Statelessness**៖ Request នីមួយៗផ្ទុកនូវព័ត៌មានគ្រប់គ្រាន់ដើម្បីដំណើរការដោយខ្លួនឯង ដោយមិនពឹងផ្អែកលើ Session ក្នុង Memory របស់ Server ឡើយ`,
-    tip: "REST មិនមែនជា Library ឬ Framework ទេ ប៉ុន្តែជា Architectural Style និងគោលការណ៍ណែនាំ (Guidelines) សម្រាប់ការរចនា Web APIs។",
-    objective: "យល់ដឹងពីទស្សនវិជ្ជារបស់ REST Architecture។",
-    expectedOutcome: "ដឹងពីរបៀបកំណត់ Resources និងរចនា APIs តាមបែបស្តង់ដារអន្តរជាតិ។",
     codeSnippet: `// Representation of Course Resource in REST (JSON)
 // GET /api/v1/courses/101
 {
@@ -51,9 +48,6 @@ export const M09 = [
 4. **Uniform Interface**៖ រចនាសម្ព័ន្ធ URL និង HTTP Methods ដូចគ្នាទូទាំងប្រព័ន្ធ
 5. **Layered System**៖ Client មិនបាច់ដឹងថាខ្លួនកំពុងតភ្ជាប់ផ្ទាល់ជាមួយ App Server, Proxy, ឬ Load Balancer ឡើយ
 6. **Code on Demand (Optional)**៖ អាចបញ្ជូន Script ទៅ Execute លើ Client (កម្រប្រើក្នុង REST APIs)`,
-    tip: "Statelessness គឺជាកត្តាសំខាន់បំផុតដែលអនុញ្ញាតឱ្យ Express APIs អាច Scale លើ Multi-server Clusters ឬ Docker Containers បានយ៉ាងងាយស្រួល។",
-    objective: "ចងចាំ និងយល់ច្បាស់ពីលក្ខខណ្ឌគ្រឹះទាំង ៦ នៃ REST Architecture។",
-    expectedOutcome: "សមត្ថភាពវាយតម្លៃ និងរចនា API ដែលស្របតាម REST Constraints។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -82,9 +76,6 @@ app.get("/api/v1/courses", (req, res) => {
 * **ប្រើ Lowercase និង Hyphens**៖ \`/course-reviews\` មិនមែន \`/course_reviews\` ឬ \`/courseReviews\`
 * **បង្ហាញ Hierarchy ដោយ Nested Paths**៖ \`/courses/:id/lessons\`
 * **ប្រើ Query Parameters សម្រាប់ Actions បន្ថែម**៖ \`?sort=price&filter=published\``,
-    tip: "ជៀសវាងការដាក់ Actions ក្នុង URL ដូចជា `/courses/123/delete` ព្រោះ HTTP Verb `DELETE /courses/123` បានបញ្ជាក់សកម្មភាពនោះរួចរាល់ហើយ។",
-    objective: "ចេះរៀបចំ Name និង Hierarchy នៃ API Endpoints តាមស្តង់ដារវិជ្ជាជីវៈ។",
-    expectedOutcome: "រចនា URIs ដែលមានភាពស៊ីសង្វាក់គ្នា (Consistent) និងងាយយល់។",
     codeSnippet: `/*
   ==============================================================
   PROFESSIONAL RESTFUL URL CONVENTIONS:
@@ -117,9 +108,6 @@ app.get("/api/v1/courses", (req, res) => {
 3. **Categories (Independent Resource)**៖ \`/api/v1/categories\`
 
 ការរៀបចំ Resource Modeling ច្បាស់លាស់ជួយឱ្យ Schema Database និង API Routing មានភាពស៊ីសង្វាក់គ្នា។`,
-    tip: "កុំធ្វើឱ្យ Nested Routes ជ្រៅលើសពី ២ កម្រិត (ឧ. `/authors/1/books/2/chapters/3/paragraphs` គឺជ្រៅពេក)។ ត្រូវបំប្លែងទៅជា `/chapters/3/paragraphs` វិញ។",
-    objective: "ចេះកំណត់កម្រិត Hierarchy នៃ Resources ក្នុងប្រព័ន្ធ។",
-    expectedOutcome: "រចនាសម្ព័ន្ធ Resource Models ងាយស្រួល Maintain និងមិនស្មុគស្មាញជ្រុល។",
     codeSnippet: `// Resource Schemas in Course Catalog Domain
 export const CourseSchema = {
   id: "number",
@@ -159,9 +147,6 @@ export const LessonSchema = {
 | **Update (Full)** | \`PUT\` | \`/api/v1/courses/:id\` | \`Course.findOneAndReplace({ _id: id }, payload)\` |
 | **Update (Partial)** | \`PATCH\` | \`/api/v1/courses/:id\` | \`Course.findByIdAndUpdate(id, { $set: payload }, { new: true })\` |
 | **Delete** | \`DELETE\` | \`/api/v1/courses/:id\` | \`Course.findByIdAndDelete(id)\` |`,
-    tip: "សិស្សភាគច្រើនតែងច្រឡំរវាង PUT និង PATCH៖ PUT ជំនួសទាំងស្រុង ចំណែក PATCH កែប្រែតែ Field ណាដែលផ្ញើមកប៉ុណ្ណោះ។",
-    objective: "យល់ច្បាស់ពីការផ្គូផ្គងប្រតិបត្តិការ CRUD ទៅកាន់ HTTP Methods ក្នុង Express។",
-    expectedOutcome: "សមត្ថភាពអនុវត្ត CRUD API ពេញលេញដោយគ្មានការភាន់ច្រឡំ។",
     codeSnippet: `import express from "express";
 const router = express.Router();
 
@@ -191,9 +176,6 @@ export default router;`,
 * \`count\` (ចំនួន Items ក្នុង Response)
 * \`data\` (Array នៃ Resources)
 * \`timestamp\` (ពេលវេលា Response ត្រូវបានបង្កើត)`,
-    tip: "ការរុំ Array ក្នុង Object (`{ success: true, data: [...] }`) ក៏ជួយការពារពី JSON Hijacking Vulnerability ក្នុង Web Browsers ចាស់ៗផងដែរ។",
-    objective: "ចេះសរសេរ Production GET Endpoint ជាមួយ Standard Response Envelope។",
-    expectedOutcome: "ឆ្លើយតប Data ដែលមានរចនាសម្ព័ន្ធច្បាស់លាស់ ងាយស្រួល Consume ដោយ Frontend។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -232,9 +214,6 @@ app.get("/api/v1/courses", (req, res) => {
 2. **Duplicate Prevention**៖ ពិនិត្យថាតើ Course Title នេះមានរួចហើយឬនៅ
 3. **HTTP 201 Created**៖ ឆ្លើយតប Status 201
 4. **Location Header**៖ កំណត់ Header \`Location: /api/v1/courses/:id\` ដែលចង្អុលបង្ហាញផ្លូវទៅកាន់ Resource ដែលទើបនឹងបង្កើតថ្មី`,
-    tip: "Header `Location` គឺជា REST Standard ដែលជួយឱ្យ Client ដឹងភ្លាមៗពី URL នៃ Resource ថ្មីដោយមិនបាច់ទាយ។",
-    objective: "ចេះបង្កើត Production-grade POST Endpoint ជាមួយ Location Header។",
-    expectedOutcome: "Endpoint បង្កើតទិន្នន័យប្រកបដោយសុវត្ថិភាព និងអនុលោមតាម HTTP Specifications។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -282,9 +261,6 @@ app.post("/api/v1/courses", (req, res) => {
 * ត្រូវពិនិត្យវត្តមាន Resource ជាមុនសិន (\`404 Not Found\` បើគ្មាន)
 * ត្រូវទាមទារ (Enforce) នូវរាល់ Required Fields ទាំងអស់នៃ Resource
 * ជំនួស Object ទាំងមូលក្នុង Data Store ដោយមិនបន្សល់ទុក Fields ចាស់ដែល Client មិនបានផ្ញើមកឡើយ`,
-    tip: "ចងចាំ៖ PUT គឺជាការសរសេរជាន់លើទាំងស្រុង (Overwrite Entire Entity)។",
-    objective: "ចេះបង្កើត PUT Handler ដែលគោរពតាមគោលការណ៍ Full Replacement។",
-    expectedOutcome: "ជំនួស Resource ដោយជោគជ័យ និងឆ្លើយតប 200 OK ជាមួយ Updated Record។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -329,9 +305,6 @@ app.put("/api/v1/courses/:id", (req, res) => {
 2. ច្រោះយកតែ **Allowed Update Fields** (ជៀសវាង Mass Assignment Vulnerability កុំឱ្យ Client កែប្រែ \`id\` ឬ \`createdAt\`)
 3. កែប្រែតែ Properties ដែលបានផ្តល់មក
 4. រក្សាទុក \`updatedAt\` timestamp ថ្មី`,
-    tip: "🔒 សុវត្ថិភាពខ្ពស់៖ កុំយក `req.body` ទាំងមូលទៅ Merge ដោយគ្មានការ Whitelist ឱ្យសោះ ព្រោះ User អាចលួចប្តូរ `role: 'admin'` ឬ `id` បាន (Mass Assignment Attack)!",
-    objective: "ចេះអនុវត្ត PATCH Endpoint ដោយមាន Field Whitelisting ការពារ Mass Assignment។",
-    expectedOutcome: "Endpoint កែប្រែទិន្នន័យមានសុវត្ថិភាពខ្ពស់ និងស្របតាមស្តង់ដារវិជ្ជាជីវៈ។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -369,9 +342,6 @@ app.patch("/api/v1/courses/:id", (req, res) => {
 
 1. **Hard Delete**៖ លុប Record ចេញពី Database ទាំងស្រុង (\`courses.splice()\`)
 2. **Soft Delete (អនុសាសន៍)**៖ មិនលុបទិន្នន័យចោលទេ គ្រាន់តែសម្គាល់ \`isDeleted: true\` និង \`deletedAt = new Date()\`។ វិធីនេះអនុញ្ញាតឱ្យយើង Restore ទិន្នន័យមកវិញបាន និងរក្សាប្រវត្តិ Transactions`,
-    tip: "ប្រើប្រាស់ Status Code `200 OK` ប្រសិនបើអ្នកបញ្ជូន Deleted Entity ត្រឡប់មកវិញ ឬប្រើ `204 No Content` ប្រសិនបើអ្នកមិនបញ្ជូន Body ត្រឡប់ទៅវិញ។",
-    objective: "ចេះសរសេរ DELETE Endpoint ទាំងទម្រង់ Hard Delete និង Soft Delete។",
-    expectedOutcome: "យល់ច្បាស់ពីការគ្រប់គ្រងទិន្នន័យដែលបានលុបក្នុង Enterprise Architecture។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -421,9 +391,6 @@ app.delete("/api/v1/courses/:id", (req, res) => {
 * **5xx Server Errors**៖
   * \`500 Internal Server Error\`៖ Bug ក្នុង Server Code
   * \`503 Service Unavailable\`៖ Database គាំង ឬ Server កំពុង Maintenance`,
-    tip: "ច្បាប់មាស៖ កុំត្រឡប់ 200 OK នៅពេលមានបញ្ហាឱ្យសោះ។ ការប្រើ Status Code ត្រឹមត្រូវជួយឱ្យ Frontend Developers អាច Handle Error Interceptors (Axios / TanStack Query) បានស្វ័យប្រវត្តិ។",
-    objective: "ស្ទាត់ជំនាញក្នុងការផ្គូផ្គង HTTP Status Code ទៅនឹងស្ថានភាពនីមួយៗ។",
-    expectedOutcome: "API មានភាពច្បាស់លាស់ ងាយស្រួល Debug និង Integration។",
     codeSnippet: `// Status Code Reference Helper
 export const HTTP_STATUS = {
   OK: 200,
@@ -460,9 +427,6 @@ export const HTTP_STATUS = {
   }
 }
 \`\`\``,
-    tip: "ភាពស៊ីសង្វាក់គ្នានៃ JSON Envelope ជួយឱ្យ Frontend Team អាចសរសេរ TypeScript Interface តែមួយ (`ApiResponse<T>`) សម្រាប់ប្រើទូទាំង Frontend App។",
-    objective: "ចេះរចនា និងអនុវត្ត JSON Response Envelope តាមស្តង់ដារឧស្សាហកម្ម។",
-    expectedOutcome: "Frontend ទទួលបាន Response ដែលមានទម្រង់ Predictable និងងាយស្រួលបង្កើត UI State។",
     codeSnippet: `// Reusable Response Helper Utility
 export const sendSuccess = (res, statusCode, data, meta = {}) => {
   return res.status(statusCode).json({
@@ -493,9 +457,6 @@ export const sendSuccess = (res, statusCode, data, meta = {}) => {
 * \`error.message\`៖ ការពន្យល់ខ្លី និងងាយយល់
 * \`error.code\`៖ Unique Machine-readable Error Code (ឧ. \`COURSE_NOT_FOUND\`)
 * \`error.details\`៖ Array នៃ Validation Errors (បើមាន)`,
-    tip: "កុំបញ្ចេញ Raw Database Error Message (ដូចជា `E11000 duplicate key error...`) ទៅកាន់ Client ឱ្យសោះ ព្រោះវាជាហានិភ័យសន្តិសុខ (Information Leakage)។ ត្រូវបំប្លែងទៅជា Human-readable Message។",
-    objective: "ចេះរៀបចំទម្រង់ Error Response Envelope តាមស្តង់ដារ Production។",
-    expectedOutcome: "ផ្តល់ Error Messages ដែលមានសុវត្ថិភាព និងច្បាស់លាស់ដល់អ្នកប្រើប្រាស់។",
     codeSnippet: `// Reusable Error Helper Utility
 export const sendError = (res, statusCode, message, errorCode = "BAD_REQUEST", details = null) => {
   return res.status(statusCode).json({
@@ -541,9 +502,6 @@ export const sendError = (res, statusCode, message, errorCode = "BAD_REQUEST", d
 * \`skip = (page - 1) * limit\`
 
 Response ត្រូវត្រឡប់នូវ Pagination Metadata ដូចជា \`totalPages\`, \`currentPage\`, និង \`totalItems\`។`,
-    tip: "កំណត់ Default Limit (ឧ. 10) និង Maximum Limit (ឧ. 100) ជានិច្ច ដើម្បីការពារ Client ពីការស្នើសុំ `?limit=1000000` ដែលអាចធ្វើឱ្យ Server អស់ Memory (OOM)។",
-    objective: "ចេះសរសេរ Logic គណនា Pagination និងផ្តល់ Navigation Metadata។",
-    expectedOutcome: "Endpoints អាចទាញយកទិន្នន័យជាទំព័រៗប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -596,9 +554,6 @@ app.get("/api/v1/courses", (req, res) => {
 1. ចម្លង \`req.query\`
 2. ដកចេញនូវ Reserved Query Keys (ដូចជា \`page\`, \`limit\`, \`sort\`, \`fields\`)
 3. ផ្គូផ្គង Keys ដែលនៅសល់ជាមួយនឹង Properties នៃ Course`,
-    tip: "បំប្លែង String Parameters ទៅជា Types ត្រឹមត្រូវ (ឧ. `published === 'true'` ទៅជា boolean, `price` ទៅជា number) មុននឹងប្រៀបធៀប។",
-    objective: "ចេះបង្កើត Dynamic Filtering ដែលអាចគាំទ្រលក្ខខណ្ឌច្រើនក្នុងពេលតែមួយ។",
-    expectedOutcome: "Client អាចស្វែងរកទិន្នន័យតាម Categories, Level, និង Price បានយ៉ាងរលូន។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -643,9 +598,6 @@ app.get("/api/v1/courses", (req, res) => {
 ⚠️ **ការព្រមានសុវត្ថិភាព ReDoS (Regular Expression Denial of Service)**៖
 * ប្រសិនបើ Client បញ្ជូន Regex Pattern ពិសេសដូចជា \`?q=(a+)+$\` ចូលទៅកាន់ \`new RegExp(req.query.q)\` ដោយផ្ទាល់ វានឹងបង្កឱ្យមាន **Catastrophic Backtracking** ដែលធ្វើឱ្យ Event Loop របស់ Node.js គាំងទាំងស្រុង!
 * **ដំណោះស្រាយ**៖ ត្រូវតែ Escape តួអក្សរពិសេសនៃ Regex ជាមុនសិន។`,
-    tip: "អនុវត្តមុខងារ Helper `escapeRegex()` ជានិច្ចមុននឹងបង្កើត `new RegExp()` ចេញពី User Input។",
-    objective: "ចេះបង្កើត Search Endpoint ដែលមានសុវត្ថិភាពខ្ពស់ និងការពារ ReDoS Attacks។",
-    expectedOutcome: "ស្វែងរកទិន្នន័យលើ Multiple Fields ដោយមិនប៉ះពាល់ដល់ Performance ឬ Server Security។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -694,9 +646,6 @@ app.get("/api/v1/courses/search", (req, res) => {
 * សញ្ញាដក (\`-\`) នៅពីមុខ Field តំណាងឱ្យ **Descending Order** (\`sort=-price\`)
 * គ្មានសញ្ញាដក តំណាងឱ្យ **Ascending Order** (\`sort=price\`)
 * អាចគាំទ្រ Multi-field Sorting ដូចជា \`?sort=-price,title\``,
-    tip: "ចងចាំ៖ `-price` (ពីថ្លៃមកថោក) និង `price` (ពីថោកទៅថ្លៃ) គឺជាស្តង់ដារដែលប្រើប្រាស់ទាំងក្នុង Mongoose និង REST APIs ពិភពលោក។",
-    objective: "ចេះ Parse Sorting Query និងតម្រៀបទិន្នន័យតាមលំដាប់ឡើង ឬចុះ។",
-    expectedOutcome: "Endpoint អាច Sort តាម Properties ច្រើនប្រកបដោយភាពបត់បែន។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -740,9 +689,6 @@ app.get("/api/v1/courses", (req, res) => {
 3. **Accept Header (Content Negotiation)**៖ \`Accept: application/vnd.company.v2+json\`
 
 ការប្រកាស Deprecation៖ ប្រើ Header \`Sunset\` និង \`Deprecation\` លើ v1 ដើម្បីជូនដំណឹងឱ្យ Client Update ទៅកាន់ v2។`,
-    tip: "URI Path Versioning (`/v1`, `/v2`) គឺជាវិធីដែលងាយស្រួលយល់ និងងាយស្រួល Debug បំផុតនៅក្នុង Express។",
-    objective: "ចេះរៀបចំយុទ្ធសាស្ត្រ Versioning ដើម្បី Upgrade API ដោយមិនប៉ះពាល់ដល់អតិថិជនចាស់។",
-    expectedOutcome: "ស្ថាបត្យកម្ម API ដែលគាំទ្រការវិវត្តន៍យូរអង្វែង (Long-term Evolution)។",
     codeSnippet: `import express from "express";
 const app = express();
 

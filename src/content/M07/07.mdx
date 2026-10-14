@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Route Parameters** គឺជា Named URL Segments ដែលចាប់ផ្តើមដោយសញ្ញាចុចពីរ `:` ដូចជា `/courses/:id` ឬ `/courses/:courseId/reviews/:reviewId`។\n\nចំនុចសំខាន់ៗដែលត្រូវដឹង៖\n* តម្លៃក្នុង `req.params` គឺជា **String** ជានិច្ច (ទោះជា URL ជាលេខ `/courses/123` ក៏ដោយ)\n* ត្រូវប្រើ `Number(req.params.id)` ដើម្បីបំប្លែងទៅជា Number មុននឹងស្វែងរកក្នុង Array ឬ Database\n* ពិនិត្យ `isNaN(id)` ដើម្បីជៀសវាង Invalid Query",
-  tip: "⚠️ កំហុសញឹកញាប់៖ ការប្រៀបធៀប `course.id === req.params.id` (1 === \"1\") នឹងចេញ false ដោយសារ Type mismatch! ត្រូវ cast ជា `Number()` ជានិច្ច។",
-  objective: "យល់ដឹងពីយន្តការ Route Parameters និង Type Casting។",
-  expectedOutcome: "ចេះទាញយក params ច្រើនក្នុង URL តែមួយ និង Validate Input Type។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Route with Multiple Dynamic Parameters\napp.get(\"/api/v1/courses/:courseId/instructors/:instructorName\", (req, res) => {\n  // 💡 Teaching Note: Everything in req.params is a String!\n  const courseId = Number(req.params.courseId);\n  const instructorName = req.params.instructorName;\n\n  // Step 2: Validate ID is a legitimate number\n  if (isNaN(courseId)) {\n    return res.status(400).json({\n      success: false,\n      error: \"Invalid Course ID parameter: must be a valid number\"\n    });\n  }\n\n  return res.status(200).json({\n    success: true,\n    requestedCourseId: courseId,\n    requestedInstructor: instructorName\n  });\n});",
 };
 

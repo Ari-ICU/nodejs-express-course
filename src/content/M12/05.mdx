@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Model** គឺជា Wrapper ដែលចងភ្ជាប់ Schema ទៅនឹង MongoDB Collection ជាក់ស្តែង។\n\nរបៀបដែល Mongoose បង្កើត Collection Name ដោយស្វ័យប្រវត្តិ៖\n* នៅពេលអ្នកប្រកាស `mongoose.model(\"Course\", courseSchema)`\n* Mongoose នឹងយកឈ្មោះ `\"Course\"` ទៅធ្វើជា **Lowercase Plural** ដោយស្វ័យប្រវត្តិ គឺ **`\"courses\"`**!",
-  tip: "ច្បាប់ Mongoose Naming Convention៖ ឈ្មោះ Model ត្រូវសរសេរជា Singular Capitalized (ដូចជា 'Course', 'Lesson', 'User') ហើយ Mongoose នឹងបង្កើត Collection ឈ្មោះ 'courses', 'lessons', 'users' ដោយស្វ័យប្រវត្តិ។",
-  objective: "ចេះបង្កើត Mongoose Model ចេញពី Schema។",
-  expectedOutcome: "ទទួលបាន Constructor Model (`Course`) ដែលមាន Methods សម្រាប់ Query Database។",
   codeSnippet: "// src/models/course.model.js\nimport mongoose, { Schema } from \"mongoose\";\n\nconst courseSchema = new Schema({\n  title: { type: String, required: true },\n  price: { type: Number, required: true }\n});\n\n// Step 1: Compile Schema into Model\n// 💡 Teaching Note: \"Course\" compiles to collection name \"courses\"\nexport const Course = mongoose.model(\"Course\", courseSchema);",
 };
 

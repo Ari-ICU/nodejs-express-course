@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "នៅពេលដែល Project រីកធំឡើង និងមាន Routers រាប់សិប (Courses, Lessons, Users, Orders, Reviews) យើងគួរបង្កើត **Central Route Aggregator** មួយនៅ `src/routes/index.js`។\n\nឯកសារ `index.js` នេះនឹង Import Routers ទាំងអស់ រួច Mount ពួកវាតាម Category ឬ Version បន្ទាប់មក Export Router តែមួយគត់ទៅកាន់ `app.js`។",
-  tip: "លំនាំ Central Route Aggregator ជួយឱ្យ `app.js` នៅតែមានកូដខ្លី និងមិនបាច់ Import Routers រាប់សិបនៅក្នុង Root File ឡើយ។",
-  objective: "ចេះរៀបចំ Centralized Route Router សម្រាប់ Scalable Backend។",
-  expectedOutcome: "រចនាសម្ព័ន្ធ Routes ស្អាត មានរបៀបរៀបរយ និងងាយស្រួលពង្រីក។",
   codeSnippet: "// src/routes/index.js\nimport express from \"express\";\nimport courseRouter from \"./course.routes.js\";\nimport lessonRouter from \"./lesson.routes.js\";\n\nconst rootRouter = express.Router();\n\n// Step 1: Register Course routes\nrootRouter.use(\"/courses\", courseRouter);\n\n// Step 2: Register Nested Lesson routes under courses\n// e.g., /api/v1/courses/:courseId/lessons\ncourseRouter.use(\"/:courseId/lessons\", lessonRouter);\n\n// Step 3: Export the central aggregator router\nexport default rootRouter;\n\n// 💡 Teaching Note: In src/app.js, you only need one clean line:\n// app.use(\"/api/v1\", rootRouter);",
 };
 

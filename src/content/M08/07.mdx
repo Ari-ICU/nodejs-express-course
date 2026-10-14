@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការសរសេរ **Custom Middleware** អនុញ្ញាតឱ្យយើងស្រង់ចេញ (Extract) នូវ Reusable Logic ពី Route Handlers។\n\nឧទាហរណ៍៖ ការបង្កើត `validateCoursePayload` Middleware៖\n* ពិនិត្យវត្តមាន `req.body.title` (មិនទទេ)\n* ពិនិត្យ `req.body.price` (ជាលេខវិជ្ជមាន)\n* ប្រសិនបើមិនត្រឹមត្រូវ ត្រឡប់ `400 Bad Request` ភ្លាមៗ\n* ប្រសិនបើត្រឹមត្រូវ ហៅ `next()` ឱ្យទៅមុខបន្ត",
-  tip: "ការដាក់ Validation ក្នុង Middleware ជួយឱ្យ Controller ផ្តោតតែលើ Business Logic សុទ្ធសាធ (Single Responsibility Principle)។",
-  objective: "ចេះបង្កើត Reusable Validation Middleware ដោយខ្លួនឯង។",
-  expectedOutcome: "សរសេរ Middleware Guard ដែលការពារ Route ពីទិន្នន័យមិនត្រឹមត្រូវ។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// Step 1: Build Custom Course Validation Middleware\nexport const validateCoursePayload = (req, res, next) => {\n  const { title, price } = req.body;\n\n  // Check required title\n  if (!title || typeof title !== \"string\" || title.trim() === \"\") {\n    return res.status(400).json({\n      success: false,\n      error: \"Validation Error: 'title' must be a non-empty string\"\n    });\n  }\n\n  // Check price is positive number\n  if (typeof price !== \"number\" || price < 0) {\n    return res.status(400).json({\n      success: false,\n      error: \"Validation Error: 'price' must be a positive number\"\n    });\n  }\n\n  // Step 2: Sanitize input and proceed\n  req.body.title = title.trim();\n  next(); // All valid! Move forward.\n};\n\n// Step 3: Plug middleware into POST route\napp.post(\"/api/v1/courses\", validateCoursePayload, (req, res) => {\n  res.status(201).json({ success: true, course: req.body });\n});",
 };
 

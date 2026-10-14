@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Method ពេញនិយមបំផុតសម្រាប់កែប្រែ Document គឺ **`Course.findByIdAndUpdate(id, update, options)`**។\n\nOptions ដ៏សំខាន់ដែលមិនអាចខ្វះបាន៖\n* **`new: true`**៖ ត្រឡប់ Document ថ្មីដែលបានកែប្រែរួច (តាមលំនាំដើម Mongoose ត្រឡប់ Document ចាស់មុនកែប្រែ)\n* **`runValidators: true`**៖ បង្ខំឱ្យ Mongoose ដំណើរការ Schema Validation ឡើងវិញលើ Fields ថ្មី!",
-  tip: "⚠️ កំហុសញឹកញាប់៖ បើអ្នកមិនដាក់ `{ runValidators: true }` ទេ User អាច Update តម្លៃ `price: -100` បានដោយមិនជាប់ Error ឡើយ!",
-  objective: "ចេះប្រើប្រាស់ findByIdAndUpdate ជាមួយ options { new: true, runValidators: true }។",
-  expectedOutcome: "កែប្រែទិន្នន័យប្រកបដោយសុវត្ថិភាព និងអនុលោមតាម Schema Rules។",
   codeSnippet: "import { Course } from \"./models/course.model.js\";\n\nexport const updateCourseService = async (courseId, updateData) => {\n  // Step 1: Update with critical options enabled\n  const updatedCourse = await Course.findByIdAndUpdate(\n    courseId,\n    { $set: updateData },\n    {\n      new: true,           // 💡 Return the modified document!\n      runValidators: true  // 💡 Crucial: Enforce schema validation rules on updates!\n    }\n  );\n\n  return updatedCourse;\n};",
 };
 

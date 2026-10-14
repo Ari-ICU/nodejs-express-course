@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "បញ្ជីត្រួតពិនិត្យស្ថាបត្យកម្ម (Architecture Review Checklist) សម្រាប់ Backend Engineers៖\n\n1. **Separation of Concerns (SoC)**៖ Routes (HTTP mapping) ➔ Controllers (Orchestration) ➔ Services (Business Logic) ➔ Models (Data Access)\n2. **Fail Fast & Validate Early**៖ ត្រួតពិនិត្យទិន្នន័យបញ្ចូលតាម Middleware មុនពេលទៅដល់ Controller\n3. **Never Expose Sensitive Details**៖ លាក់ Stack Trace នៅលើ Production Environment\n4. **Environment Isolation**៖ មិន Hardcode Secrets ឬ Ports (ប្រើប្រាស់ `.env`)\n5. **Deterministic Testing**៖ សរសេរ Unit Tests លើ Service Layer និង Integration Tests (Supertest) លើ Endpoints",
-  tip: "នៅពេលដែលកូដក្នុងឯកសារមួយលើសពី ២០០-៣០០ ជួរ នោះជាសញ្ញាបញ្ជាក់ថាដល់ពេលត្រូវ Refactor និងបំបែកជា Services ឬ Utilities ហើយ។",
-  objective: "ស្វែងយល់ពី Best Practices សំខាន់ៗសម្រាប់ការសរសេរ Backend ប្រកបដោយនិរន្តរភាព។",
-  expectedOutcome: "មានសមត្ថភាពអភិវឌ្ឍ និងថែទាំ Enterprise Node.js/Express Backend ប្រកបដោយទំនុកចិត្ត។",
   codeSnippet: "/*\n  ==============================================================\n  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:\n  ==============================================================\n  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)\n  [x] 2. Centralized Error Handling (Single 4-arg error middleware)\n  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })\n  [x] 4. Defensive ReDoS Protection (Sanitized regex search)\n  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)\n  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)\n  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)\n  [x] 8. Automated Integration Tests (Supertest test runner)\n  ==============================================================\n*/",
 };
 

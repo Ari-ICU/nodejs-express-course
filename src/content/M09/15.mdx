@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "**Filtering** អនុញ្ញាតឱ្យ Client ច្រោះយកតែ Resources ណាដែលត្រូវនឹងលក្ខខណ្ឌជាក់លាក់ (ឧ. `/api/v1/courses?level=beginner&published=true`)។\n\nដំណាក់កាលអនុវត្ត Filtering៖\n1. ចម្លង `req.query`\n2. ដកចេញនូវ Reserved Query Keys (ដូចជា `page`, `limit`, `sort`, `fields`)\n3. ផ្គូផ្គង Keys ដែលនៅសល់ជាមួយនឹង Properties នៃ Course",
-  tip: "បំប្លែង String Parameters ទៅជា Types ត្រឹមត្រូវ (ឧ. `published === 'true'` ទៅជា boolean, `price` ទៅជា number) មុននឹងប្រៀបធៀប។",
-  objective: "ចេះបង្កើត Dynamic Filtering ដែលអាចគាំទ្រលក្ខខណ្ឌច្រើនក្នុងពេលតែមួយ។",
-  expectedOutcome: "Client អាចស្វែងរកទិន្នន័យតាម Categories, Level, និង Price បានយ៉ាងរលូន។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"Node.js Basics\", level: \"beginner\", published: true, price: 29 },\n  { id: 2, title: \"Express Architecture\", level: \"advanced\", published: true, price: 49 },\n  { id: 3, title: \"Draft Course\", level: \"beginner\", published: false, price: 19 }\n];\n\napp.get(\"/api/v1/courses\", (req, res) => {\n  let filtered = [...courses];\n  const { level, published, maxPrice } = req.query;\n\n  // Filter 1: By Difficulty Level\n  if (level) {\n    filtered = filtered.filter(c => c.level.toLowerCase() === level.toLowerCase());\n  }\n\n  // Filter 2: By Published status (boolean conversion)\n  if (published !== undefined) {\n    const isPublished = published === \"true\";\n    filtered = filtered.filter(c => c.published === isPublished);\n  }\n\n  // Filter 3: By Maximum Price\n  if (maxPrice) {\n    filtered = filtered.filter(c => c.price <= Number(maxPrice));\n  }\n\n  res.json({ success: true, count: filtered.length, data: filtered });\n});",
 };
 

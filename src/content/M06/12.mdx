@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ក្នុង RESTful API ទំនើប ទម្រង់ឆ្លើយតបស្តង់ដារគឺ **JSON (JavaScript Object Notation)**។\n\n`res.json()` ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៣៖\n1. កំណត់ Header `Content-Type: application/json; charset=utf-8`\n2. បំប្លែង JavaScript Object/Array ទៅជា JSON String ដោយ `JSON.stringify()`\n3. គាំទ្រការផ្ញើ `null`, `boolean`, `number`, ឬ `object`",
-  tip: "តែងតែរុំទិន្នន័យ Response ក្នុង Standard Envelope (ដូចជា `{ success: true, data: [...] }`) ដើម្បីឱ្យ Frontend ងាយស្រួល Parse។",
-  objective: "ចេះរៀបចំទម្រង់ Response ជា JSON ឱ្យបានត្រឹមត្រូវ។",
-  expectedOutcome: "ទទួលបាន JSON Response ដែលស្របតាមស្តង់ដារឧស្សាហកម្ម។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\napp.get(\"/api/v1/courses/catalog\", (req, res) => {\n  // Step 1: Prepare data payload\n  const catalog = [\n    { id: 1, title: \"Modern JavaScript\", instructor: \"Ratha\", students: 120 },\n    { id: 2, title: \"Backend Architecture\", instructor: \"Dara\", students: 85 }\n  ];\n\n  // Step 2: Send structured JSON envelope\n  res.status(200).json({\n    success: true,\n    count: catalog.length,\n    data: catalog,\n    timestamp: new Date().toISOString()\n  });\n});",
 };
 

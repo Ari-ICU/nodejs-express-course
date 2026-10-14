@@ -18,9 +18,6 @@ Middleware នីមួយៗមាន Signature បីយ៉ាង៖ \`(req, r
 2. **Mutate Objects**៖ បន្ថែម Properties ថ្មីលើ \`req\` (ដូចជា \`req.user\` ឬ \`req.requestTime\`)
 3. **End Cycle**៖ បញ្ចប់ Request ដោយបញ្ជូន Response (\`res.status(401).json(...)\`)
 4. **Call next()**៖ ហៅ \`next()\` ដើម្បីបញ្ជូនបន្តទៅកាន់ Middleware បន្ទាប់ក្នុង Pipeline`,
-    tip: "ចងចាំ៖ Middleware ត្រូវតែធ្វើរឿងមួយក្នុងចំណោមពីរ៖ (១) ហៅ `next()` ដើម្បីបន្តទៅមុខ ឬ (២) ផ្ញើ Response (`res.json()`) ដើម្បីបញ្ចប់ Request។ កុំឱ្យខកខានទាំងពីរឱ្យសោះ!",
-    objective: "យល់ដឹងពីយន្តការ Request Pipeline និងតួនាទីរបស់ next()។",
-    expectedOutcome: "ចេះបង្កើត Middleware ដំបូង និងដឹងពីរបៀបតុបតែង (Decorate) Request Object។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -57,9 +54,6 @@ app.get("/api/v1/courses", (req, res) => {
 * វាដំណើរការលើ **គ្រប់ Request ទាំងអស់** ដែលចូលមកកាន់ Server (បើដាក់ដោយគ្មាន Path Filter)
 * ឬដំណើរការលើ Path Prefix ជាក់លាក់ (ឧ. \`app.use("/api/v1", ...)\`)
 * ប្រើសម្រាប់ Cross-Cutting Concerns ដូចជា Security Headers, CORS, Body Parsing, និង Request Tracking`,
-    tip: "ដាក់ Application-Level Middlewares នៅខាងលើគេបំផុតនៃ `app.js` ជានិច្ច មុននឹង Mount Routes ណាមួយ។",
-    objective: "ចេះចុះបញ្ជី Global Middlewares លើ Express Application Instance។",
-    expectedOutcome: "ដឹងពីរបៀបដំណើរការ Cross-cutting logic លើគ្រប់ API Requests។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -92,9 +86,6 @@ app.get("/api/v1/courses", (req, res) => {
 ភាពខុសគ្នាពី Application-Level Middleware៖
 * វាមិនប៉ះពាល់ដល់ Routes ដទៃក្រៅពី Router របស់វាឡើយ
 * ស័ក្តិសមបំផុតសម្រាប់ដាក់ Logic ជាក់លាក់លើ Resource មួយ ដូចជា ការផ្ទៀងផ្ទាត់សិទ្ធិលើ Course Management (\`/courses\`)`,
-    tip: "ប្រើប្រាស់ Router-Level Middleware នៅពេលអ្នកចង់ការពារ Routes ទាំងអស់ក្នុង Router ជាក់លាក់មួយដោយមិនបាច់សរសេរ Guard លើគ្រប់ Endpoint ដោយដៃ។",
-    objective: "ចេះ Scope Middleware ឱ្យដំណើរការតែក្នុង Router មួយជាក់លាក់។",
-    expectedOutcome: "ការពារ Routes ក្នុង Resource Group បានយ៉ាងមានប្រសិទ្ធភាព។",
     codeSnippet: `import express from "express";
 const app = express();
 const courseRouter = express.Router();
@@ -131,9 +122,6 @@ app.use("/api/v1/courses", courseRouter);`,
 1. **\`express.json()\`**៖ Parse incoming requests ដែលមាន JSON payloads (Content-Type: application/json)
 2. **\`express.urlencoded()\`**៖ Parse incoming requests ដែលមាន URL-encoded payloads ពី HTML Forms
 3. **\`express.static()\`**៖ បម្រើ Static Assets ដូចជា Images, CSS, ឬ Uploaded PDFs ចេញពី Directory ជាក់លាក់`,
-    tip: "នៅក្នុង Express v4 ជំនាន់ដំបូង អ្នកត្រូវដំឡើង `body-parser` ដោយឡែក ប៉ុន្តែចាប់តាំងពី v4.16 មក ពួកវាត្រូវបាន Built-in ក្នុង `express` តែម្តង។",
-    objective: "យល់ច្បាស់ពី Built-in Middlewares ទាំង ៣ របស់ Express។",
-    expectedOutcome: "ចេះ Configure Body Parsers និង Static Asset Server យ៉ាងត្រឹមត្រូវ។",
     codeSnippet: `import express from "express";
 import path from "node:path";
 const app = express();
@@ -163,9 +151,6 @@ app.post("/test-payload", (req, res) => {
 ការកំណត់ជម្រើសសុវត្ថិភាពសម្រាប់ \`express.json()\`៖
 * **\`limit: "10kb"\`**៖ កំណត់ទំហំអតិបរមានៃ Body
 * **Handle Syntax Errors**៖ ចាប់ Syntax Error នៅពេល Client ផ្ញើ Malformed JSON មិនត្រឹមត្រូវ`,
-    tip: "ច្បាប់សុវត្ថិភាព Production៖ កំណត់ limit ត្រឹម `10kb` ឬ `100kb` សម្រាប់ JSON API ធម្មតា លើកលែងតែ Upload Endpoints។",
-    objective: "ចេះកំណត់ Security Limits លើ express.json() និងការពារ DoS attacks។",
-    expectedOutcome: "Server មានភាពធន់នឹង Invalid JSON និង Oversized Payload attacks។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -200,9 +185,6 @@ app.use((err, req, res, next) => {
 ភាពខុសគ្នារវាង Options៖
 * **\`extended: false\`**៖ ប្រើ \`querystring\` library ដើមរបស់ Node (មិនគាំទ្រ Nested Objects ឡើយ)
 * **\`extended: true\`**៖ ប្រើ \`qs\` library ដែលគាំទ្រ Complex / Nested Objects ដូចជា \`course[instructor][name]=Ratha\``,
-    tip: "ជ្រើសរើស `{ extended: true }` ជានិច្ច ដើម្បីឱ្យ Server អាច Parse Nested Form Data បានពេញលេញ។",
-    objective: "យល់ដឹងពីភាពខុសគ្នារវាង extended: true និង false ក្នុង Form Parsing។",
-    expectedOutcome: "ចេះ Parse HTML Form submissions និងទាញយក Nested Properties។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -234,9 +216,6 @@ app.post("/submit-course-form", (req, res) => {
 * ពិនិត្យ \`req.body.price\` (ជាលេខវិជ្ជមាន)
 * ប្រសិនបើមិនត្រឹមត្រូវ ត្រឡប់ \`400 Bad Request\` ភ្លាមៗ
 * ប្រសិនបើត្រឹមត្រូវ ហៅ \`next()\` ឱ្យទៅមុខបន្ត`,
-    tip: "ការដាក់ Validation ក្នុង Middleware ជួយឱ្យ Controller ផ្តោតតែលើ Business Logic សុទ្ធសាធ (Single Responsibility Principle)។",
-    objective: "ចេះបង្កើត Reusable Validation Middleware ដោយខ្លួនឯង។",
-    expectedOutcome: "សរសេរ Middleware Guard ដែលការពារ Route ពីទិន្នន័យមិនត្រឹមត្រូវ។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -284,9 +263,6 @@ app.post("/api/v1/courses", validateCoursePayload, (req, res) => {
 2. ពិនិត្យវត្តមាន និង Format នៃ Token (បើគ្មាន ត្រឡប់ \`401 Unauthorized\`)
 3. ផ្ទៀងផ្ទាត់ Token (ឬ API Key)
 4. ប្រសិនបើត្រឹមត្រូវ Attach ព័ត៌មាន User ទៅក្នុង \`req.user\` រួចហៅ \`next()\``,
-    tip: "Header `Authorization` តែងតែចាប់ផ្តើមដោយពាក្យ `Bearer ` (មាន Space មួយ)។ ប្រើ `authHeader.split(' ')[1]` ដើម្បីដកយក Token សុទ្ធ។",
-    objective: "ចេះបង្កើត Authentication Guard សម្រាប់ការពារ Private Endpoints។",
-    expectedOutcome: "មានសមត្ថភាពការពារ Route ដោយផ្ទៀងផ្ទាត់ Token និង Pass req.user ទៅកាន់ Handlers។",
     codeSnippet: `import express from "express";
 const app = express();
 app.use(express.json());
@@ -338,9 +314,6 @@ app.post("/api/v1/courses", requireAuth, (req, res) => {
 **Role-Based Access Control (RBAC)** Middleware ត្រូវបានបង្កើតឡើងជា Higher-Order Function (\`restrictTo(...allowedRoles)\`) ដែលពិនិត្យ \`req.user.role\`៖
 * ប្រសិនបើ Role មិនស្ថិតក្នុង Allowed Roles ត្រឡប់ \`403 Forbidden\`
 * ប្រសិនបើត្រូវ ហៅ \`next()\``,
-    tip: "ភាពខុសគ្នារវាង 401 និង 403៖ 401 Unauthorized (មិនទាន់ Login / គ្មាន Token) ចំណែក 403 Forbidden (បាន Login រួចរាល់ហើយ តែគ្មានសិទ្ធិគ្រប់គ្រាន់)។",
-    objective: "ចេះបង្កើត Role-based authorization middleware ជាមួយ Higher-order function។",
-    expectedOutcome: "ការពារ Admin/Instructor endpoints ពីការចូលប្រើប្រាស់ដោយសិស្សទូទៅ (Students)។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -383,9 +356,6 @@ app.delete("/api/v1/courses/:id", mockAuth, restrictTo("admin"), (req, res) => {
 * HTTP Status Code នៃ Response
 * រយៈពេលដំណើរការ (Duration in ms)
 * Timestamp នៃ Request`,
-    tip: "សម្រាប់គម្រោងធំៗ អ្នកអាចប្រើ Library ពេញនិយមដូចជា `morgan` សម្រាប់ Dev Logging ឬ `pino-http` សម្រាប់ High-performance JSON Logging។",
-    objective: "ចេះបង្កើត HTTP Request Logging Middleware ដើម្បី Monitor Server Health។",
-    expectedOutcome: "Console បង្ហាញព័ត៌មានលម្អិតនៃគ្រប់ Request យ៉ាងច្បាស់លាស់។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -430,9 +400,6 @@ app.get("/api/v1/courses", (req, res) => res.json({ courses: [] }));`,
 * បង្កើត Standardized Error Envelope (\`{ success: false, error: ... }\`)
 * លាក់ Stack Trace នៅលើ **Production Environment** ដើម្បីសុវត្ថិភាព
 * បង្ហាញ Stack Trace នៅលើ **Development Environment** សម្រាប់ងាយស្រួល Debug`,
-    tip: "⚠️ សំខាន់បំផុត៖ Error Middleware ត្រូវតែមាន Parameter ទាំង ៤ គត់ (err, req, res, next) បើអ្នកសរសេរត្រឹម ៣ Express នឹងចាត់ទុកវាជា Middleware ធម្មតា!",
-    objective: "ចេះបង្កើត Centralized Error Handling Middleware ស្តង់ដារ Production។",
-    expectedOutcome: "ដោះស្រាយកំហុសបានស្អាត ដោយមិនធ្វើឱ្យ Server Crash ឬបែកធ្លាយ Stack Trace ទៅកាន់ Attackers។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -475,9 +442,6 @@ app.use((err, req, res, next) => {
 3. **Application Routes** (\`app.use("/api/v1/courses", courseRouter)\`)
 4. **404 Not Found Handler** (ចាប់ URL ដែលគ្មាន Route ត្រូវ)
 5. **Centralized Error Middleware** (\`(err, req, res, next)\` នៅក្រោមគេបង្អស់!)`,
-    tip: "ប្រសិនបើអ្នកដាក់ Error Middleware នៅពីលើ Routes នោះវានឹងមិនអាចចាប់ Errors របស់ Routes ទាំងនោះបានឡើយ!",
-    objective: "យល់ច្បាស់ពីលំដាប់លំដោយនៃការដាក់ Middlewares ក្នុង Express Application។",
-    expectedOutcome: "រៀបចំ Middleware Pipeline តាមលំដាប់លំដោយត្រឹមត្រូវ ជៀសវាង Bugs អាថ៌កំបាំង។",
     codeSnippet: `import express from "express";
 const app = express();
 
@@ -520,9 +484,6 @@ app.use((err, req, res, next) => {
 2. **Catch Async Errors (asyncHandler)**៖ Express 4 មិនទាន់ចាប់ Unhandled Promise Rejections ក្នុង async functions ដោយស្វ័យប្រវត្តិទេ (ត្រូវរុំដោយ Helper ឬ Try/Catch)
 3. **Avoid mutating global state**៖ តុបតែងតែលើ \`req\` object
 4. **Single Responsibility**៖ Middleware មួយ ធ្វើការងារមួយច្បាស់លាស់`,
-    tip: "ការប្រើប្រាស់ `asyncHandler` helper function ជួយឱ្យអ្នកមិនបាច់សរសេរ `try/catch` ដដែលៗនៅក្នុងរាល់ Controller ឡើយ។",
-    objective: "ចេះសរសេរ asyncHandler utility ដើម្បីកាត់បន្ថយ try/catch boilerplate។",
-    expectedOutcome: "កូដ Middleware និង Controllers មានសុវត្ថិភាពខ្ពស់ មិនប្រឈមនឹង Unhandled Rejections។",
     codeSnippet: `import express from "express";
 const app = express();
 

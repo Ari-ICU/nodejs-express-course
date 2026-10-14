@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Testing controllers verifies that request parameters, body payloads, and query filters are processed correctly and appropriate status codes and JSON envelopes are returned. Mocking underlying service methods allows testing controller edge cases like validation errors and custom exceptions.",
-  tip: "Export your Express `app` from `app.js` without calling `listen()`, and create a separate `server.js` for startup. This allows tests to import `app` cleanly.",
-  objective: "Write targeted tests validating controller responses, status codes, and JSON bodies.",
-  expectedOutcome: "Verified controllers handling both valid inputs and error conditions.",
   codeSnippet: "describe(\"POST /api/v1/courses\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidCourse = { price: 49.99, level: \"beginner\" };\n\n    const res = await request(app)\n      .post(\"/api/v1/courses\")\n      .send(invalidCourse)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});",
 };
 

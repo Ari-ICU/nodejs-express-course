@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Negative testing deliberately sends malformed bodies, missing headers, or invalid IDs to confirm that the API returns appropriate 4xx status codes and descriptive error messages rather than unhandled 500 internal server crashes.",
-  tip: "Always create dedicated negative test requests in your collection (e.g. 'Create Product - Missing Title -> 400').",
-  objective: "Validate edge cases and error handling paths using Postman assertions.",
-  expectedOutcome: "Resilient APIs validated against invalid and adversarial payloads.",
   codeSnippet: "// Postman Tests Tab for 400 Bad Request:\npm.test(\"Status code is 400 Bad Request\", () => {\n  pm.response.to.have.status(400);\n});\n\npm.test(\"Error response contains fail status\", () => {\n  const jsonData = pm.response.json();\n  pm.expect(jsonData.status).to.eql(\"fail\");\n  pm.expect(jsonData.message).to.be.a(\"string\");\n});",
 };
 

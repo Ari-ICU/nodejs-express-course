@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការបង្កើត **Generic Validation Middleware Factory (`validate`)** ដែលអាច Validate ទាំង `body`, `params`, និង `query` ក្នុង Middleware តែមួយ៖\n\nរបៀបប្រើប្រាស់៖\n```javascript\nrouter.post(\"/\", validate({ body: createCourseSchema }), createCourse);\nrouter.get(\"/:id\", validate({ params: mongoIdParamSchema }), getCourseById);\n```",
-  tip: "នេះគឺជា Middleware Pattern ដែលប្រើប្រាស់ច្រើនបំផុតក្នុង Production Node.js APIs ព្រោះវា Reusable ១០០% លើគ្រប់ Routes ទាំងអស់។",
-  objective: "ចេះបង្កើត Higher-Order Validation Middleware សម្រាប់ Express។",
-  expectedOutcome: "មាន Reusable Middleware មួយគត់សម្រាប់ Validate គ្រប់ផ្នែកនៃ HTTP Request។",
   codeSnippet: "// src/middlewares/validate.middleware.js\nexport const validate = (schemas) => (req, res, next) => {\n  try {\n    // 1. Validate Body if schema provided\n    if (schemas.body) {\n      req.body = schemas.body.parse(req.body);\n    }\n    // 2. Validate Params if schema provided\n    if (schemas.params) {\n      req.params = schemas.params.parse(req.params);\n    }\n    // 3. Validate Query if schema provided\n    if (schemas.query) {\n      req.query = schemas.query.parse(req.query);\n    }\n    next(); // All valid!\n  } catch (error) {\n    // Pass ZodError to next(err) -> handled by centralized error middleware!\n    next(error);\n  }\n};",
 };
 

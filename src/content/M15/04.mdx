@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "កំហុស `Error` ដើមរបស់ JavaScript គ្មាន `statusCode` ឡើយ។ ដូច្នេះ យើងត្រូវបង្កើត Custom **`AppError`** Class ដែលស្នងមរតក (Extends) ពី `Error`៖\n\nលក្ខណៈសម្បត្តិបន្ថែម៖\n* `statusCode` (ឧ. `400`, `401`, `404`, `409`)\n* `status` (`\"fail\"` សម្រាប់ 4xx, `\"error\"` សម្រាប់ 5xx)\n* `isOperational: true` (បញ្ជាក់ថានេះជាកំហុសអាជីវកម្មដែលបានដឹងទុកជាមុន មិនមែនជា System Bug ឡើយ)\n* `Error.captureStackTrace(this, this.constructor)`",
-  tip: "ការកំណត់ `isOperational: true` ជួយឱ្យ Centralized Error Middleware ដឹងថាអាចផ្ញើ Error Message នេះទៅកាន់ Client ដោយសុវត្ថិភាព។",
-  objective: "ចេះបង្កើត Custom AppError Class តាមស្តង់ដារ OOP ក្នុង JavaScript។",
-  expectedOutcome: "មាន Custom Error Class សម្រាប់ប្រើទូទាំង Controller និង Service Layer។",
   codeSnippet: "// src/errors/AppError.js\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true; // 💡 Differentiates business errors from bugs!\n\n    Error.captureStackTrace(this, this.constructor);\n  }\n}\n\n// Example usage in Service:\n// if (!course) throw new AppError(\"Course not found in database\", 404);",
 };
 

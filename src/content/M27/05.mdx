@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "The Models layer defines the database schema, data validation rules, indexes, virtuals, and lifecycle hooks (pre/post middleware). Models represent the single source of truth for database structure and data integrity.",
-  tip: "Encapsulate instance-specific helper logic (like password hashing or token verification) as Mongoose instance methods directly on the model.",
-  objective: "Design cohesive Mongoose schemas with validation, indexes, and virtual fields.",
-  expectedOutcome: "Robust data models enforcing schema integrity at the database layer.",
   codeSnippet: "// models/enrollment.model.js\nimport mongoose from \"mongoose\";\n\nconst enrollmentSchema = new mongoose.Schema({\n  student: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  course: { type: mongoose.Schema.Types.ObjectId, ref: \"Course\", required: true },\n  enrolledPrice: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"active\", \"completed\", \"cancelled\"],\n    default: \"active\",\n  },\n  progress: { type: Number, min: 0, max: 100, default: 0 },\n}, { timestamps: true });\n\nenrollmentSchema.index({ student: 1, course: 1 }, { unique: true });\n\nexport const Enrollment = mongoose.model(\"Enrollment\", enrollmentSchema);",
 };
 

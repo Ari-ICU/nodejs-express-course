@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "ការផ្សារភ្ជាប់រវាង **CRUD (Database Operations)** និង **HTTP Verbs (Web Protocols)** ជាមួយ **MongoDB & Mongoose**៖\n\n| CRUD Operation | HTTP Method | Endpoint | សកម្មភាពលើ MongoDB (Mongoose Model) |\n|---|---|---|---|\n| **Create** | `POST` | `/api/v1/courses` | `Course.create(req.body)` |\n| **Read (All)** | `GET` | `/api/v1/courses` | `Course.find(filter)` |\n| **Read (One)** | `GET` | `/api/v1/courses/:id` | `Course.findById(id)` |\n| **Update (Full)** | `PUT` | `/api/v1/courses/:id` | `Course.findOneAndReplace({ _id: id }, payload)` |\n| **Update (Partial)** | `PATCH` | `/api/v1/courses/:id` | `Course.findByIdAndUpdate(id, { $set: payload }, { new: true })` |\n| **Delete** | `DELETE` | `/api/v1/courses/:id` | `Course.findByIdAndDelete(id)` |",
-  tip: "សិស្សភាគច្រើនតែងច្រឡំរវាង PUT និង PATCH៖ PUT ជំនួសទាំងស្រុង ចំណែក PATCH កែប្រែតែ Field ណាដែលផ្ញើមកប៉ុណ្ណោះ។",
-  objective: "យល់ច្បាស់ពីការផ្គូផ្គងប្រតិបត្តិការ CRUD ទៅកាន់ HTTP Methods ក្នុង Express។",
-  expectedOutcome: "សមត្ថភាពអនុវត្ត CRUD API ពេញលេញដោយគ្មានការភាន់ច្រឡំ។",
   codeSnippet: "import express from \"express\";\nconst router = express.Router();\n\n// 💡 Teaching Note: Clean CRUD Mapping declaration\nrouter.route(\"/\")\n  .get((req, res) => res.json({ op: \"READ_ALL_COURSES\" }))\n  .post((req, res) => res.status(201).json({ op: \"CREATE_COURSE\" }));\n\nrouter.route(\"/:id\")\n  .get((req, res) => res.json({ op: \"READ_ONE_COURSE\", id: req.params.id }))\n  .put((req, res) => res.json({ op: \"REPLACE_COURSE\", id: req.params.id }))\n  .patch((req, res) => res.json({ op: \"PARTIAL_UPDATE_COURSE\", id: req.params.id }))\n  .delete((req, res) => res.status(204).send());\n\nexport default router;",
 };
 

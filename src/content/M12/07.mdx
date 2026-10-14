@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Mongoose អនុវត្ត **Validation** នៅកម្រិត Application មុនពេល Document ត្រូវបានបញ្ជូនទៅ Save ក្នុង MongoDB។\n\nBuilt-in Validators សំខាន់ៗ៖\n* **`min` និង `max`** សម្រាប់ Numbers\n* **`minlength` និង `maxlength`** សម្រាប់ Strings\n* **`enum`** សម្រាប់កំណត់តម្លៃជម្រើសថេរ (Fixed Choices)\n* **`match`** សម្រាប់ត្រួតពិនិត្យ Regular Expression (Regex)",
-  tip: "Validation របស់ Mongoose ដំណើរការលើ `save()` និង `create()` ប៉ុន្តែត្រូវកំណត់ `{ runValidators: true }` ពេលប្រើ `findByIdAndUpdate()`។",
-  objective: "ចេះប្រើប្រាស់ Built-in Validators ដើម្បីការពារទិន្នន័យមិនត្រឹមត្រូវ។",
-  expectedOutcome: "ទិន្នន័យ Course ត្រូវបាន Validate ត្រឹមត្រូវតាម Business Rules។",
   codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: true,\n    minlength: [5, \"Title must be at least 5 characters long\"],\n    maxlength: [100, \"Title cannot exceed 100 characters\"]\n  },\n  price: {\n    type: Number,\n    required: true,\n    min: [0, \"Course price cannot be negative\"],\n    max: [999, \"Course price cannot exceed $999\"]\n  },\n  level: {\n    type: String,\n    enum: {\n      values: [\"beginner\", \"intermediate\", \"advanced\"],\n      message: \"{VALUE} is not a valid course level\"\n    }\n  }\n});",
 };
 

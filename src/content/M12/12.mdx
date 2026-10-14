@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "Mongoose ផ្តល់ជូននូវ Methods សម្បូរបែបសម្រាប់ប្រតិបត្តិការ CRUD លើ MongoDB៖\n\n* **Create**៖ `Model.create()`, `new Model()` + `save()`\n* **Read**៖ `Model.find()`, `Model.findById()`, `Model.findOne()`\n* **Update**៖ `Model.findByIdAndUpdate()`, `Model.updateOne()`\n* **Delete**៖ `Model.findByIdAndDelete()`, `Model.deleteOne()`\n\nMethods ទាំងអស់នេះ Return **Mongoose Query Promises** ដែលគាំទ្រ Async/Await យ៉ាងរលូន។",
-  tip: "Mongoose Queries មិនមែនជា Native Promises ទេ (វាជា Thenable Query Objects)។ អ្នកអាចសរសេរ `await Model.find()` បាន ឬប្រើ `.exec()` ដើម្បីទទួលបាន Real Promise។",
-  objective: "ស្គាល់ និងយល់ច្បាស់ពី Core CRUD API របស់ Mongoose។",
-  expectedOutcome: "មានផែនទីបង្ហាញផ្លូវសម្រាប់ការសរសេរ Data Operations ក្នុង Service Layer។",
   codeSnippet: "/* MONGOOSE CRUD CHEATSHEET FOR COURSE API:\n   -------------------------------------------------------------\n   CREATE:  const newCourse = await Course.create(req.body);\n   READ:    const courses   = await Course.find({ published: true });\n   READ 1:  const course    = await Course.findById(id);\n   UPDATE:  const updated   = await Course.findByIdAndUpdate(id, req.body, { new: true });\n   DELETE:  await Course.findByIdAndDelete(id);\n   -------------------------------------------------------------\n*/",
 };
 

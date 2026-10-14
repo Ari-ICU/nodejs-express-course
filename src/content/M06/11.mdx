@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "HTTP Methods កំណត់នូវសកម្មភាព (Intent) របស់ Client លើ Resource៖\n\n* **GET**៖ អានទិន្នន័យ (Safe & Idempotent)\n* **POST**៖ បង្កើត Resource ថ្មី\n* **PUT**៖ ជំនួស Resource ចាស់ទាំងស្រុង (Full Replace)\n* **PATCH**៖ កែប្រែតែ Properties មួយចំនួន (Partial Update)\n* **DELETE**៖ លុប Resource ចេញ",
-  tip: "ចងចាំ៖ PUT តម្រូវឱ្យផ្ញើ Object ទាំងមូល រីឯ PATCH ផ្ញើតែ Fields ណាដែលចង់កែប្រែប៉ុណ្ណោះ។",
-  objective: "យល់ច្បាស់ពីអត្ថន័យ និងការជ្រើសរើស HTTP Methods ឱ្យត្រូវតាមស្តង់ដារ RESTful។",
-  expectedOutcome: "ចេះផ្គូផ្គង HTTP Verbs ទាំង ៥ ទៅកាន់ CRUD Endpoints នៃ Course API។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// 💡 Teaching Note: Complete CRUD mapping on Course Resource\napp.get(\"/api/v1/courses\", (req, res) => res.json({ action: \"GET all courses\" }));\napp.get(\"/api/v1/courses/:id\", (req, res) => res.json({ action: `GET course ${req.params.id}` }));\napp.post(\"/api/v1/courses\", (req, res) => res.status(201).json({ action: \"CREATE course\" }));\napp.put(\"/api/v1/courses/:id\", (req, res) => res.json({ action: `REPLACE course ${req.params.id}` }));\napp.patch(\"/api/v1/courses/:id\", (req, res) => res.json({ action: `UPDATE course ${req.params.id}` }));\napp.delete(\"/api/v1/courses/:id\", (req, res) => res.status(204).send());",
 };
 

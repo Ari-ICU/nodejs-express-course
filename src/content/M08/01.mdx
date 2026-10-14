@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Middleware** គឺជាអនុគមន៍ស្នូលនៃ Express Architecture។ វាអង្គុយនៅចន្លោះ Incoming Request និង Route Handler ចុងក្រោយ។\n\nMiddleware នីមួយៗមាន Signature បីយ៉ាង៖ `(req, res, next)`\n1. **Execute Code**៖ អនុវត្ត Logic ណាមួយក៏បាន (logging, authentication, timing)\n2. **Mutate Objects**៖ បន្ថែម Properties ថ្មីលើ `req` (ដូចជា `req.user` ឬ `req.requestTime`)\n3. **End Cycle**៖ បញ្ចប់ Request ដោយបញ្ជូន Response (`res.status(401).json(...)`)\n4. **Call next()**៖ ហៅ `next()` ដើម្បីបញ្ជូនបន្តទៅកាន់ Middleware បន្ទាប់ក្នុង Pipeline",
-  tip: "ចងចាំ៖ Middleware ត្រូវតែធ្វើរឿងមួយក្នុងចំណោមពីរ៖ (១) ហៅ `next()` ដើម្បីបន្តទៅមុខ ឬ (២) ផ្ញើ Response (`res.json()`) ដើម្បីបញ្ចប់ Request។ កុំឱ្យខកខានទាំងពីរឱ្យសោះ!",
-  objective: "យល់ដឹងពីយន្តការ Request Pipeline និងតួនាទីរបស់ next()។",
-  expectedOutcome: "ចេះបង្កើត Middleware ដំបូង និងដឹងពីរបៀបតុបតែង (Decorate) Request Object។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Define custom Request Timestamp Middleware\nconst addTimestamp = (req, res, next) => {\n  // 💡 Teaching Note: Mutating req to share data across handlers\n  req.requestTime = new Date().toISOString();\n  console.log(`➡️ Incoming [${req.method}] to ${req.url} at ${req.requestTime}`);\n\n  // Step 2: Pass control to the next middleware in pipeline!\n  next();\n};\n\n// Step 3: Mount middleware globally\napp.use(addTimestamp);\n\napp.get(\"/api/v1/courses\", (req, res) => {\n  res.json({\n    message: \"Course catalog fetched\",\n    serverTime: req.requestTime // Accessible here!\n  });\n});",
 };
 

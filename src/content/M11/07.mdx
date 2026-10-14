@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "BSON គាំទ្រប្រភេទ Data Types សម្បូរបែបជាង JSON ធម្មតា៖\n\n* **String**៖ អត្ថបទ UTF-8\n* **NumberInt / NumberLong / Double**៖ លេខគត់ 32-bit, 64-bit, ឬ Floating point (តម្លៃ Price)\n* **Boolean**៖ `true` ឬ `false`\n* **Date**៖ 64-bit integer timestamp គិតជា milliseconds\n* **ObjectId**៖ 12-byte Unique Identifier របស់ MongoDB\n* **Array**៖ បញ្ជី Array នៃតម្លៃ ឬ Sub-documents\n* **Null**៖ តម្លៃទទេ",
-  tip: "នៅក្នុង JSON ធម្មតា គ្មានប្រភេទ Date ពិតប្រាកដទេ (វាគ្រាន់តែជា String) ប៉ុន្តែក្នុង MongoDB BSON `Date` គឺជា Type សុទ្ធសាធដែលគាំទ្រ Timezone និង Date Calculations។",
-  objective: "ស្គាល់ និងជ្រើសរើស BSON Data Types ឱ្យបានត្រឹមត្រូវសម្រាប់ Fields នីមួយៗ។",
-  expectedOutcome: "កំណត់ Data Types ត្រឹមត្រូវសម្រាប់ Course Model Properties។",
   codeSnippet: "// Demonstrating varied BSON types in a Course Document\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"), // ObjectId\n  \"title\": \"Node.js & MongoDB Essentials\",      // String\n  \"enrollmentCount\": NumberInt(250),             // 32-bit Integer\n  \"price\": 49.99,                                // Double\n  \"isFeatured\": true,                            // Boolean\n  \"prerequisites\": [\"HTML\", \"JavaScript\"],       // Array of Strings\n  \"publishedAt\": ISODate(\"2026-10-14T00:00:00Z\"),// Date\n  \"discountPrice\": null                          // Null\n}",
 };
 

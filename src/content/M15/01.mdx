@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Error Handling** គឺជាយន្តការស្ទាក់ចាប់ ដោះស្រាយ និងឆ្លើយតបចំពោះកំហុសបច្ចេកទេសទាំងអស់ដែលកើតឡើងក្នុង Application ដោយមិនធ្វើឱ្យ Server Crash ឬបែកធ្លាយព័ត៌មានរសើប។\n\nគោលបំណងសំខាន់ៗ៖\n* ធានាថា Server នៅតែបន្តដំណើរការបានរលូនទោះបីជាមានកំហុសលើ Request ណាមួយក៏ដោយ\n* ឆ្លើយតបនូវ Standard Error Envelope ដ៏ច្បាស់លាស់ដល់ Client\n* កត់ត្រា (Log) កំហុសសម្រាប់ Developer ងាយស្រួល Debug",
-  tip: "ច្បាប់លេខមួយនៃ Error Handling៖ កុំទុកឱ្យ Request ព្យួរចោលដោយគ្មាន Response ឬធ្វើឱ្យ Node.js Process ដួលរលំដោយសារ Unhandled Error។",
-  objective: "យល់ដឹងពីសារៈសំខាន់នៃ Centralized Error Handling ក្នុង Production APIs។",
-  expectedOutcome: "មានផែនការដោះស្រាយកំហុសគ្រប់ជ្រុងជ្រោយសម្រាប់ Course Catalog Backend។",
   codeSnippet: "// Unified Error Architecture Flow:\n// Controller/Service (throws error) ➔ next(err) ➔ [ Centralized Error Middleware ]\n//                                                           │\n//                                     ┌─────────────────────┴─────────────────────┐\n//                                     ▼                                           ▼\n//                          [ Development Mode ]                         [ Production Mode ]\n//                          (Full Stack Trace)                           (Sanitized Envelope)",
 };
 

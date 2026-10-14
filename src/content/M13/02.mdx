@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "ការកំណត់ Connection Options ស្តង់ដារសម្រាប់ Production MongoDB Deployment៖\n\n* **`maxPoolSize: 50`**៖ រក្សាទុក Socket Connections រហូតដល់ ៥០ សម្រាប់ដំណើរការ Concurrent Requests\n* **`serverSelectionTimeoutMS: 5000`**៖ កំណត់រយៈពេល ៥ វិនាទីដើម្បីស្វែងរក Node ក្នុង Replica Set មុននឹង Timeout\n* **`socketTimeoutMS: 45000`**៖ បិទ Socket ដែលអសកម្មក្រោយ ៤៥ វិនាទី",
-  tip: "ការកំណត់ `maxPoolSize` ត្រឹមត្រូវជួយការពារកុំឱ្យ Node.js បង្កើត Socket Connections ច្រើនជ្រុលហួសកម្រិត RAM របស់ Database Server។",
-  objective: "ចេះកំណត់ Mongoose Connection Pool Options សម្រាប់ High-traffic Production។",
-  expectedOutcome: "Database Driver ដំណើរការប្រកបដោយប្រសិទ្ធភាពខ្ពស់ និងធន់នឹង Traffic Spikes។",
   codeSnippet: "// src/config/db.js\nimport mongoose from \"mongoose\";\n\nconst mongooseOptions = {\n  maxPoolSize: 50,                // 💡 Up to 50 concurrent socket connections\n  serverSelectionTimeoutMS: 5000, // Fail fast after 5 seconds if DB is down\n  socketTimeoutMS: 45000,         // Close inactive sockets\n};\n\nexport const connectDB = async () => {\n  await mongoose.connect(process.env.DATABASE_URL, mongooseOptions);\n};",
 };
 

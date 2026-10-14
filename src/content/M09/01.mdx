@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**REST (Representational State Transfer)** គឺជាស្ថាបត្យកម្មរចនា API បែបស្តង់ដារដែលបង្កើតឡើងដោយ Roy Fielding ក្នុងឆ្នាំ ២០០០។\n\nគោលគំនិតស្នូលនៃ REST ក្នុង Course Catalog API៖\n* **Resources**៖ អ្វីៗគ្រប់យ៉ាងត្រូវបានចាត់ទុកជា Resource (ដូចជា `courses`, `lessons`, `users`)\n* **Representations**៖ Client ទទួលបាន Representation នៃ Resource ជាទម្រង់ JSON\n* **Statelessness**៖ Request នីមួយៗផ្ទុកនូវព័ត៌មានគ្រប់គ្រាន់ដើម្បីដំណើរការដោយខ្លួនឯង ដោយមិនពឹងផ្អែកលើ Session ក្នុង Memory របស់ Server ឡើយ",
-  tip: "REST មិនមែនជា Library ឬ Framework ទេ ប៉ុន្តែជា Architectural Style និងគោលការណ៍ណែនាំ (Guidelines) សម្រាប់ការរចនា Web APIs។",
-  objective: "យល់ដឹងពីទស្សនវិជ្ជារបស់ REST Architecture។",
-  expectedOutcome: "ដឹងពីរបៀបកំណត់ Resources និងរចនា APIs តាមបែបស្តង់ដារអន្តរជាតិ។",
   codeSnippet: "// Representation of Course Resource in REST (JSON)\n// GET /api/v1/courses/101\n{\n  \"id\": 101,\n  \"title\": \"Full-Stack Node.js & Express Architecture\",\n  \"instructor\": \"Ratha\",\n  \"price\": 49.99,\n  \"level\": \"intermediate\",\n  \"published\": true,\n  \"links\": {\n    \"self\": \"/api/v1/courses/101\",\n    \"lessons\": \"/api/v1/courses/101/lessons\",\n    \"reviews\": \"/api/v1/courses/101/reviews\"\n  }\n}",
 };
 

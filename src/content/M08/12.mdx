@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅក្នុង Express **លំដាប់លំដោយនៃការចុះបញ្ជី (Execution Order) គឺសំខាន់បំផុត!** Express ដំណើរការ Middlewares ពីលើចុះក្រោមតាមលំដាប់ដែលបានហៅ `app.use()`។\n\nលំដាប់លំដោយស្តង់ដារ (Golden Order)៖\n1. **Global Loggers & Security** (Morgan, Helmet, CORS)\n2. **Body Parsers** (`express.json()`)\n3. **Application Routes** (`app.use(\"/api/v1/courses\", courseRouter)`)\n4. **404 Not Found Handler** (ចាប់ URL ដែលគ្មាន Route ត្រូវ)\n5. **Centralized Error Middleware** (`(err, req, res, next)` នៅក្រោមគេបង្អស់!)",
-  tip: "ប្រសិនបើអ្នកដាក់ Error Middleware នៅពីលើ Routes នោះវានឹងមិនអាចចាប់ Errors របស់ Routes ទាំងនោះបានឡើយ!",
-  objective: "យល់ច្បាស់ពីលំដាប់លំដោយនៃការដាក់ Middlewares ក្នុង Express Application។",
-  expectedOutcome: "រៀបចំ Middleware Pipeline តាមលំដាប់លំដោយត្រឹមត្រូវ ជៀសវាង Bugs អាថ៌កំបាំង។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// 1. First: Body parsers & Logger\napp.use(express.json());\napp.use((req, res, next) => {\n  console.log(\"1. Logger Executed\");\n  next();\n});\n\n// 2. Second: Routes\napp.get(\"/api/v1/courses\", (req, res) => {\n  console.log(\"2. Route Handler Executed\");\n  res.json({ success: true, data: [] });\n});\n\n// 3. Third: Catch-all 404 Handler (For non-existent routes)\napp.use((req, res, next) => {\n  const err = new Error(`Route ${req.originalUrl} not found`);\n  err.statusCode = 404;\n  next(err);\n});\n\n// 4. Fourth (LAST): Centralized Error Handler\napp.use((err, req, res, next) => {\n  console.log(\"3. Error Handler Executed\");\n  res.status(err.statusCode || 500).json({ success: false, error: err.message });\n});",
 };
 

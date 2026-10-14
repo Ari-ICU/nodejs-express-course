@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Query Parameters** គឺជា Key-Value pairs ដែលស្ថិតនៅខាងក្រោយសញ្ញាសួរ `?` ក្នុង URL (ឧ. `/api/v1/courses?level=beginner&limit=2`)។\n\nQuery Parameters ត្រូវបានប្រើប្រាស់សម្រាប់៖\n* **Filtering** (`?level=beginner`)\n* **Sorting** (`?sort=price`)\n* **Pagination** (`?page=1&limit=10`)\n\nExpress ធ្វើការ Parse ពួកវាចូលទៅក្នុង `req.query` Object ដោយស្វ័យប្រវត្តិ។",
-  tip: "Route Parameters (`:id`) ប្រើសម្រាប់ចង្អុលបង្ហាញ Resource ជាក់លាក់មួយ រីឯ Query Parameters (`?key=val`) ប្រើសម្រាប់ Filter ឬកែប្រែទិន្នន័យក្នុង Collection។",
-  objective: "ចេះទាញយក Query Parameters និងសរសេរ Logic ច្រោះទិន្នន័យ (Filtering)។",
-  expectedOutcome: "ចេះបង្កើត Endpoint ដែលគាំទ្រ Filtering តាមលក្ខខណ្ឌច្រើនក្នុងពេលតែមួយ។",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"Node.js Basics\", level: \"beginner\", price: 29 },\n  { id: 2, title: \"Express Pro\", level: \"advanced\", price: 59 },\n  { id: 3, title: \"Docker Containerization\", level: \"beginner\", price: 39 }\n];\n\n// Step 1: Endpoint supporting ?level=... and ?maxPrice=...\napp.get(\"/api/v1/courses\", (req, res) => {\n  let result = [...courses];\n  const { level, maxPrice } = req.query;\n\n  // Step 2: Apply filter by level\n  if (level) {\n    result = result.filter(c => c.level.toLowerCase() === level.toLowerCase());\n  }\n\n  // Step 3: Apply filter by maximum price\n  if (maxPrice) {\n    result = result.filter(c => c.price <= Number(maxPrice));\n  }\n\n  return res.status(200).json({\n    success: true,\n    count: result.length,\n    data: result\n  });\n});",
 };
 

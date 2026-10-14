@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Tracking user presence (online, away, offline) requires managing connected state across socket lifecycles. Maintaining a connected user registry in memory or a Redis Set allows broadcasting presence updates to all clients whenever a user connects or disconnects.",
-  tip: "Use Redis Sets (`SADD online_users userId` / `SREM online_users userId`) for presence tracking in multi-server architectures so all cluster nodes share the active user list.",
-  objective: "Implement online presence tracking with connection registries and disconnect event hooks.",
-  expectedOutcome: "Live user presence system updating contact online/offline indicators in real time.",
   codeSnippet: "// In-memory or Redis presence tracking:\nconst onlineUsers = new Map(); // userId -> Set of socketIds\n\nio.on(\"connection\", (socket) => {\n  const userId = socket.user?.id;\n  if (userId) {\n    if (!onlineUsers.has(userId)) onlineUsers.set(userId, new Set());\n    onlineUsers.get(userId).add(socket.id);\n\n    // Broadcast user is online\n    io.emit(\"user_status_change\", { userId, status: \"online\" });\n  }\n\n  socket.on(\"disconnect\", () => {\n    if (userId && onlineUsers.has(userId)) {\n      const userSockets = onlineUsers.get(userId);\n      userSockets.delete(socket.id);\n      if (userSockets.size === 0) {\n        onlineUsers.delete(userId);\n        io.emit(\"user_status_change\", { userId, status: \"offline\" });\n      }\n    }\n  });\n});",
 };
 

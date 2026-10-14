@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Services encapsulate core business logic independent of Express request and response objects. Because service functions accept plain JavaScript parameters and return data, testing them requires no HTTP overhead, resulting in blistering test execution speeds.",
-  tip: "Keep business logic in services rather than controllers — this makes testing business logic 10x faster because you don't need HTTP request simulation.",
-  objective: "Write isolated unit tests for business logic methods inside the service layer.",
-  expectedOutcome: "High test coverage over core business algorithms and data transformations.",
   codeSnippet: "import { describe, it, expect } from \"vitest\";\nimport { CourseService } from \"../services/course.service.js\";\n\ndescribe(\"CourseService.calculateDiscount\", () => {\n  it(\"should calculate promotional price with discount percentage\", () => {\n    const originalPrice = 100;\n    const discountPercent = 20;\n\n    const promoPrice = CourseService.calculateDiscount(originalPrice, discountPercent);\n\n    expect(promoPrice).toBe(80);\n  });\n});",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "ប្រសិនបើ Client មិនបានបញ្ជូន Field ណាមួយមកទេ Mongoose នឹងបំពេញ **Default Value** ដោយស្វ័យប្រវត្តិតាមការកំណត់របស់យើងក្នុង Schema។\n\nអាចជា៖\n* តម្លៃថេរ (Static value)៖ `default: false`, `default: \"beginner\"`\n* អនុគមន៍ (Dynamic function)៖ `default: Date.now`",
-  tip: "កុំសរសេរ `default: Date.now()` (មានវង់ក្រចក) ព្រោះវានឹង Execute តែម្តងគត់ពេល Server Start! ត្រូវសរសេរ `default: Date.now` (គ្មានវង់ក្រចក)។",
-  objective: "ចេះកំណត់ Static និង Dynamic Default Values ក្នុង Schema។",
-  expectedOutcome: "កាត់បន្ថយការសរសេរ Default Checks ដោយដៃក្នុង Controller/Service។",
   codeSnippet: "import { Schema } from \"mongoose\";\n\nexport const courseSchema = new Schema({\n  title: { type: String, required: true },\n  published: { type: Boolean, default: false }, // Default unpublished\n  level: { type: String, default: \"beginner\" },\n  viewsCount: { type: Number, default: 0 },\n  createdAt: { type: Date, default: Date.now } // Dynamic timestamp function\n});",
 };
 

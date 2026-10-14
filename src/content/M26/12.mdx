@@ -6,9 +6,6 @@ export const meta = {
   type: "architecture",
   codeLanguage: "javascript",
   summary: "An enterprise email queue architecture combines an Express producer, a Redis buffer, and dedicated Nodemailer workers. By segregating queues into high-priority transactional streams (password resets) and lower-priority batch streams (marketing campaigns), mission-critical emails are never delayed by bulk marketing broadcasts.",
-  tip: "Create two separate queues: `email:critical` (concurrency 10) and `email:bulk` (concurrency 2 with rate limits) to guarantee zero latency on password resets.",
-  objective: "Architect a production-grade multi-tier email processing queue.",
-  expectedOutcome: "Decoupled, fault-tolerant email dispatch system with zero impact on HTTP latency.",
   codeSnippet: "// Complete Architecture Blueprint:\n//\n// Express Route: POST /auth/forgot-password\n//      │\n//      ↓ (Enqueues job in 2ms)\n// [Redis Queue: \"email-critical\"]\n//      │\n//      ↓ (Worker pulls job)\n// [Email Worker Process]\n//      ├── Formats HTML template\n//      ├── Contacts SMTP Relay (Brevo/SES)\n//      └── If SMTP fails: Retries automatically in 3s (Exponential backoff)",
 };
 

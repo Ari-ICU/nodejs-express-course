@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Mongoose គាំទ្រការសរសេរ Method Chaining ដ៏មានឥទ្ធិពលសម្រាប់ Query Optimization៖\n\n* **Filtering**៖ `.find({ published: true })`\n* **Sorting**៖ `.sort(\"-price\")`\n* **Selecting Specific Fields**៖ `.select(\"title price\")`\n* **Pagination**៖ `.skip(10).limit(5)`\n* **Execution**៖ `.exec()` ដើម្បីទទួលបាន Real Promise",
-  tip: "Method Chaining ក្នុង Mongoose មិនទាន់ Query ទៅកាន់ Database ភ្លាមៗទេ រហូតដល់អ្នកហៅ `await` ឬ `.exec()` (Lazy Execution)។",
-  objective: "ចេះប្រើប្រាស់ Query Chaining ក្នុង Mongoose ដើម្បីបង្កើត Custom Query Pipelines។",
-  expectedOutcome: "សរសេរ Queries ដែលមានល្បឿនលឿន និងទាញយកតែទិន្នន័យចាំបាច់។",
   codeSnippet: "// src/services/course.service.js\nimport { Course } from \"../models/course.model.js\";\n\n// Advanced Chained Query\nexport const getFeaturedCourses = async () => {\n  return await Course.find({ published: true })\n    .select(\"title price level instructor\") // Field projection\n    .sort(\"-price\")                         // Sort descending by price\n    .limit(10)                              // Top 10 only\n    .lean();                                // 💡 Teaching Note: .lean() returns plain JS object for 3x faster speed!\n};",
 };
 

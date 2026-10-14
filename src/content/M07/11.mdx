@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "បន្ទាប់ពីបានបង្កើត Router តាម Modules រួចហើយ ជំហានបន្ទាប់គឺ **Mounting** ពួកវាចូលទៅកាន់ `app.js` ដោយប្រើប្រាស់ `app.use(prefix, router)`។\n\nឧទាហរណ៍៖\n* `app.use(\"/api/v1/courses\", courseRouter)`\n* `app.use(\"/api/v1/users\", userRouter)`\n\nរាល់ Route ទាំងអស់នៅក្នុង `courseRouter` នឹងទទួលបាន Prefix `/api/v1/courses` ដោយស្វ័យប្រវត្តិ។",
-  tip: "ការដាក់ `/api/v1` ជា Prefix គឺជា Best Practice សម្រាប់ API Versioning ដែលអនុញ្ញាតឱ្យយើងបន្ថែម `/api/v2` នៅពេលអនាគតដោយមិនប៉ះពាល់ Clients ចាស់។",
-  objective: "ចេះ Mount Routers ច្រើនចូលទៅក្នុង Application Instance តែមួយ។",
-  expectedOutcome: "Application ដែលមានរចនាសម្ព័ន្ធ Route Grouping ច្បាស់លាស់ និងមានសុវត្ថិភាព។",
   codeSnippet: "// src/app.js\nimport express from \"express\";\nimport courseRouter from \"./routes/course.routes.js\";\n\nconst app = express();\napp.use(express.json());\n\n// Step 1: Mount Route Groups with clean API prefixes\n// 💡 Teaching Note: All routes in courseRouter become prefixed with /api/v1/courses\napp.use(\"/api/v1/courses\", courseRouter);\n\n// Step 2: Catch-all 404 Route Handler for undefined endpoints\napp.use((req, res) => {\n  res.status(404).json({\n    success: false,\n    error: `Endpoint ${req.method} ${req.originalUrl} does not exist`\n  });\n});\n\nexport default app;",
 };
 

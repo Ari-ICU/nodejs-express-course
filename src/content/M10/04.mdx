@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅក្នុង 3-Tier Architecture ឯកសារ **Routes** គ្រាន់តែជាកន្លែង **Wiring (ភ្ជាប់ខ្សែរវាង URL, Middleware, និង Controller)** ប៉ុណ្ណោះ។\n\nវាមិនផ្ទុក Logic ណាមួយឡើយ ក្រៅពីការប្រកាសយ៉ាងច្បាស់លាស់ (Declarative Syntax)៖\n```javascript\nrouter.get(\"/:id\", authGuard, courseController.getCourseById);\n```\n\nរចនាសម្ព័ន្ធបែបនេះជួយឱ្យអ្នកណាក៏ដោយដែលបើកមើលឯកសារ Routes អាចយល់បានភ្លាមៗក្នុងរយៈពេល ៥ វិនាទីពី Endpoints ទាំងអស់នៃ Module។",
-  tip: "រក្សាឯកសារ Route ឱ្យខ្លី និងស្អាត។ វាមិនគួរមាន Callback Function លើសពី ៣ ជួរឡើយ។",
-  objective: "ចេះរៀបចំ Route File ឱ្យមានលក្ខណៈ Declarative និងច្បាស់លាស់។",
-  expectedOutcome: "Routes ដើរតួជាផែនទីបង្ហាញផ្លូវដ៏ស្អាតនៃ Application API។",
   codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\n// Step 1: Wire endpoints directly to controller methods\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .put(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
 };
 

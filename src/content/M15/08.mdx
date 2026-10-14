@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "នៅពេលដែលទិន្នន័យមិនត្រូវតាម Schema Rules Mongoose នឹងបោះកំហុសឈ្មោះ **`ValidationError`** (Status Code 500 ជាលំនាំដើម)។\n\nយើងត្រូវបង្កើត Handler ពិសេសមួយដើម្បីបំប្លែងវាឱ្យក្លាយជា **400 Bad Request** ដ៏ស្អាត៖\n* ស្រង់យក Messages ចេញពី `Object.values(err.errors)`\n* បង្កើត `new AppError(message, 400)`",
-  tip: "ការបំប្លែង Mongoose ValidationError ទៅជា AppError ជួយឱ្យ Status Code ប្តូរពី 500 (Server Bug) មកជា 400 (Client Input Error) វិញ។",
-  objective: "ចេះស្ទាក់ចាប់ និងបំប្លែង Mongoose ValidationError ទៅជា 400 Bad Request Envelope។",
-  expectedOutcome: "Client ទទួលបានបញ្ជី Validation Errors ច្បាស់លាស់ពី Mongoose Schema។",
   codeSnippet: "import { AppError } from \"../errors/AppError.js\";\n\n// Helper: Handle Mongoose Schema Validation Errors\nexport const handleMongooseValidationError = (err) => {\n  // Extract all validation failure messages\n  const errorMessages = Object.values(err.errors).map(el => el.message);\n  const message = `Invalid input data: ${errorMessages.join(\". \")}`;\n  return new AppError(message, 400);\n};\n\n// In global error handler:\n// if (err.name === \"ValidationError\") err = handleMongooseValidationError(err);",
 };
 

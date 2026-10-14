@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "ការរួមបញ្ចូលគ្រប់ស្រទាប់ (Routes -> Controllers -> Services -> MongoDB Model) ឱ្យក្លាយជា **Full Production CRUD API** ពេញលេញ៖\n\n* **POST /courses** ➔ បង្កើត Course ក្នុង MongoDB\n* **GET /courses** ➔ ទាញយកបញ្ជី Courses ពី MongoDB\n* **GET /courses/:id** ➔ ទាញយក Course តាម ID\n* **PATCH /courses/:id** ➔ កែប្រែទិន្នន័យ Course ក្នុង MongoDB\n* **DELETE /courses/:id** ➔ លុប Course ចេញពី MongoDB",
-  tip: "នេះគឺជាចំណុចកំពូលនៃការរួមបញ្ចូលគ្នារវាង Express Architecture (Modules 06-10) និង MongoDB (Modules 11-12)។",
-  objective: "ចេះសរសេរ End-to-End CRUD API ជាមួយ MongoDB និង Mongoose។",
-  expectedOutcome: "ប្រព័ន្ធ CRUD API ដំណើរការពេញលេញលើ Cloud MongoDB Database។",
   codeSnippet: "// Service Layer (src/services/course.service.js)\nimport { Course } from \"../models/course.model.js\";\n\nexport const getAllCourses = async (query) => await Course.find(query);\nexport const getCourseById = async (id) => await Course.findById(id);\nexport const createCourse = async (data) => await Course.create(data);\nexport const updateCourse = async (id, data) => {\n  return await Course.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true });\n};\nexport const deleteCourse = async (id) => await Course.findByIdAndDelete(id);",
 };
 

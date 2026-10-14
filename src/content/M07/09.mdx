@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅពេលដែល Route Path មួយគាំទ្រ HTTP Methods ច្រើន (ឧ. `/api/v1/courses` គាំទ្រទាំង GET និង POST) ការសរសេរ `app.get()` និង `app.post()` ដោយសរសេរ Path ដដែលៗអាចធ្វើឱ្យកូដមិនសូវស្អាត។\n\nExpress ផ្តល់ជូន **`app.route(path)`** ដែលអនុញ្ញាតឱ្យយើង Chain Methods ចូលគ្នាបាន៖\n```javascript\napp.route(\"/api/v1/courses\")\n  .get(getCourses)\n  .post(createCourse);\n```",
-  tip: "ការប្រើប្រាស់ `app.route()` ជួយការពារកំហុស Typing Path ខុស និងធ្វើឱ្យកូដស្របតាមគោលការណ៍ DRY (Don't Repeat Yourself)។",
-  objective: "ចេះប្រើប្រាស់ Route Chaining ដើម្បីកាត់បន្ថយការសរសេរ Path ស្ទួនៗ។",
-  expectedOutcome: "កូដមានរចនាសម្ព័ន្ធបង្រួមស្អាត និងងាយស្រួល Maintain។",
   codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nconst courses = [{ id: 1, title: \"Express API Mastery\" }];\n\n// Step 1: Chain collection routes on /api/v1/courses\napp.route(\"/api/v1/courses\")\n  .get((req, res) => {\n    res.json({ success: true, count: courses.length, data: courses });\n  })\n  .post((req, res) => {\n    const newCourse = { id: courses.length + 1, ...req.body };\n    courses.push(newCourse);\n    res.status(201).json({ success: true, data: newCourse });\n  });\n\n// Step 2: Chain item routes on /api/v1/courses/:id\napp.route(\"/api/v1/courses/:id\")\n  .get((req, res) => res.json({ action: `Get course ${req.params.id}` }))\n  .patch((req, res) => res.json({ action: `Update course ${req.params.id}` }))\n  .delete((req, res) => res.status(204).send());",
 };
 

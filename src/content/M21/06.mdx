@@ -6,9 +6,6 @@ export const meta = {
   type: "lab",
   codeLanguage: "javascript",
   summary: "Documenting API requests requires detailing URL path parameters (e.g. `:id`), query parameters (e.g. `?page=1&limit=10`), and JSON request bodies with required attributes, data types, and realistic mock examples.",
-  tip: "Always provide realistic `example` values in your annotations — Swagger UI uses these to prepopulate the 'Try it out' request body automatically.",
-  objective: "Annotate route parameters, query filters, and JSON request bodies using JSDoc.",
-  expectedOutcome: "Crystal-clear documentation instructing consumers on how to formulate requests.",
   codeSnippet: "/**\n * @openapi\n * /api/v1/courses/{id}:\n *   put:\n *     summary: Update an existing course\n *     tags: [Courses]\n *     parameters:\n *       - in: path\n *         name: id\n *         required: true\n *         schema:\n *           type: string\n *         description: MongoDB ObjectId of the course\n *     requestBody:\n *       required: true\n *       content:\n *         application/json:\n *           schema:\n *             $ref: '#/components/schemas/UpdateCourseDTO'\n */",
 };
 

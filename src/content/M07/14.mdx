@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "តារាងស្តង់ដារ Canonical RESTful Routes សម្រាប់ **Course Catalog API**៖\n\n| HTTP Verb | URL Pattern | សកម្មភាព (Action) | Status Code |\n|---|---|---|---|\n| **GET** | `/api/v1/courses` | ទាញយកបញ្ជី Course ទាំងអស់ | 200 OK |\n| **GET** | `/api/v1/courses/:id` | ទាញយក Course ជាក់លាក់មួយ | 200 / 404 |\n| **POST** | `/api/v1/courses` | បង្កើត Course ថ្មី | 201 Created |\n| **PUT** | `/api/v1/courses/:id` | ជំនួស Course ចាស់ទាំងស្រុង | 200 OK |\n| **PATCH** | `/api/v1/courses/:id` | កែប្រែ Fields មួយចំនួន | 200 OK |\n| **DELETE** | `/api/v1/courses/:id` | លុប Course ចេញ | 204 No Content |\n| **GET** | `/api/v1/courses/:id/lessons` | ទាញយក Lessons របស់ Course | 200 OK |",
-  tip: "ច្បាប់មាសនៃ RESTful Routing៖ ប្រើប្រាស់តែ Plural Nouns (នាមពហុវចនៈ ដូចជា /courses) និងជៀសវាងដាច់ខាតនូវការប្រើកិរិយាសព្ទក្នុង URL (ដូចជា /getAllCourses ឬ /deleteCourse)។",
-  objective: "ចងចាំ និងអនុវត្តតាមស្តង់ដារ Canonical RESTful URLs ក្នុងគ្រប់ Projects។",
-  expectedOutcome: "ការរចនា API ដែលមានលក្ខណៈ Predictable, Standard, និងងាយស្រួលប្រើសម្រាប់ Frontend Developers។",
   codeSnippet: "/* \n  CANONICAL RESTFUL DESIGN SUMMARY:\n  -------------------------------------------------------------\n  ✅ GET    /api/v1/courses             -> Read course catalog\n  ✅ GET    /api/v1/courses/:id         -> Read single course\n  ✅ POST   /api/v1/courses             -> Create new course\n  ✅ PUT    /api/v1/courses/:id         -> Full replace course\n  ✅ PATCH  /api/v1/courses/:id         -> Partial update course\n  ✅ DELETE /api/v1/courses/:id         -> Delete course\n  ✅ GET    /api/v1/courses/:id/lessons -> Nested child collection\n\n  ❌ ANTI-PATTERNS (Avoid these):\n  ❌ GET    /api/v1/getAllCourses\n  ❌ POST   /api/v1/courses/delete/:id\n  ❌ POST   /api/v1/courses/updatePrice\n*/",
 };
 

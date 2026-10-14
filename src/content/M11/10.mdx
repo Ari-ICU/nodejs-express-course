@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "យុទ្ធសាស្ត្រទីពីរគឺ **Document References (Normalization)** ដែលរក្សាទុកឯកសារក្នុង Collections ដាច់ដោយឡែកពីគ្នា ហើយភ្ជាប់គ្នាដោយ **ObjectId**។\n\nពេលណាគួរប្រើ References សម្រាប់ Course API៖\n* ទំនាក់ទំនង **1-to-Many** ធំៗ (ឧ. Course មួយមាន Lessons រាប់សិប)\n* ទំនាក់ទំនង **Many-to-Many** (ឧ. សិស្សរាប់ពាន់នាក់ចុះឈ្មោះក្នុង Courses ច្រើន)\n* ទិន្នន័យដែលត្រូវ Update ញឹកញាប់ដោយឯករាជ្យ (ជៀសវាងការ Update ច្រើនកន្លែង)",
-  tip: "ប្រើប្រាស់ References នៅពេលដែល Collection ទាំងពីរមានទំហំធំ ឬចាំបាច់ត្រូវ Query ដោយឡែកពីគ្នា។",
-  objective: "ចេះភ្ជាប់ទំនាក់ទំនងរវាង Collections តាមរយៈ ObjectId References។",
-  expectedOutcome: "រចនាសម្ព័ន្ធទិន្នន័យ Normalized ដែលមានតុល្យភាពរវាង Storage និង Query Flexibility។",
   codeSnippet: "// 1. Course Document (in \"courses\" collection)\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78891\"),\n  \"title\": \"Enterprise Node.js Architecture\",\n  \"instructorId\": ObjectId(\"507f191e810c19729de860ea\") // Reference to Users collection\n}\n\n// 2. Lesson Document (in \"lessons\" collection referencing parent course)\n{\n  \"_id\": ObjectId(\"6648e58319f3a9e224e78999\"),\n  \"courseId\": ObjectId(\"6648e58319f3a9e224e78891\"), // 💡 Foreign reference to Course\n  \"title\": \"Introduction to Controller-Service Pattern\",\n  \"durationMinutes\": 15\n}",
 };
 

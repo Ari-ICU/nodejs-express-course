@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Schema** គឺជាប្លង់មេ (Blueprint) ដែលកំណត់ថាតើ Document នីមួយៗក្នុង Collection ត្រូវមាន Fields អ្វីខ្លះ ប្រភេទ Data Type ណា និងលក្ខខណ្ឌ Validation យ៉ាងដូចម្តេច។\n\nការរៀបចំ `courseSchema` សម្រាប់ Course API របស់យើង៖\n* `title` (String)\n* `instructor` (String)\n* `price` (Number)\n* `level` (String)\n* `published` (Boolean)",
-  tip: "Schema កំណត់តែរចនាសម្ព័ន្ធប៉ុណ្ណោះ។ ដើម្បីធ្វើប្រតិបត្តិការ CRUD បាន អ្នកត្រូវយក Schema ទៅ Compile ឱ្យក្លាយជា **Model** ជាមុនសិន។",
-  objective: "ចេះកំណត់ Mongoose Schema សម្រាប់ Resource។",
-  expectedOutcome: "មាន Blueprint ច្បាស់លាស់សម្រាប់គ្រប់គ្រងទិន្នន័យ Course។",
   codeSnippet: "// src/models/course.schema.js\nimport { Schema } from \"mongoose\";\n\n// Step 1: Define Schema Blueprint\nexport const courseSchema = new Schema({\n  title: {\n    type: String,\n    required: [true, \"Course title is required\"],\n    trim: true\n  },\n  instructor: {\n    type: String,\n    required: [true, \"Instructor name is required\"]\n  },\n  price: {\n    type: Number,\n    required: [true, \"Price is required\"],\n    min: [0, \"Price cannot be negative\"]\n  },\n  level: {\n    type: String,\n    enum: [\"beginner\", \"intermediate\", \"advanced\"],\n    default: \"beginner\"\n  },\n  published: {\n    type: Boolean,\n    default: false\n  }\n});",
 };
 

@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "នៅក្នុងគម្រោងដំបូងៗ អ្នកបង្កើតកម្មវិធីច្រើនតែសរសេរអ្វីៗទាំងអស់ (Validation, Database Queries, Email Sending, Payment Calculations) បញ្ចូលគ្នាក្នុង Route Callback តែមួយ — នេះហៅថា **\"Fat Controller\"** ឬ **Spaghetti Code**។\n\nផលប៉ះពាល់អវិជ្ជមាននៃ Fat Controller៖\n* **ពិបាក Test (Untestable)**៖ អ្នកត្រូវ Mock ទាំង `req` និង `res` ទើបអាច Test Logic បាន\n* **មិនអាចប្រើឡើងវិញបាន (Non-reusable)**៖ មិនអាចហៅ Logic ដដែលនោះពី Background Job ឬ CLI Tool បានឡើយ\n* **ពិបាក Maintain**៖ ឯកសារមួយមានកូដរាប់ពាន់ជួរ ងាយនឹងបង្កើត Bugs\n\n**ដំណោះស្រាយ**៖ បែងចែកជា ៣ ស្រទាប់ (3-Tier Architecture)៖ **Routes ➔ Controllers ➔ Services**។",
-  tip: "ច្បាប់មាសនៃ Clean Architecture៖ Controller គួរតែ 'ស្គម' (Slim Controller) ហើយ Service គួរតែ 'សម្បូរបែប' (Rich Service)។",
-  objective: "យល់ដឹងពីគុណវិបត្តិនៃ Fat Controllers និងគុណសម្បត្តិនៃ 3-Tier Architecture។",
-  expectedOutcome: "មានផ្នត់គំនិតស្ថាបត្យកម្មច្បាស់លាស់ក្នុងការបំបែកកូដឱ្យមានរបៀបរៀបរយ។",
   codeSnippet: "// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)\napp.post(\"/api/v1/courses/:id/enroll\", async (req, res) => {\n  // 1. Validation mixed in\n  if (!req.body.studentId) return res.status(400).send();\n  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)\n  const course = await Course.findById(req.params.id);\n  // 3. Discount calculation mixed in\n  const price = course.price * 0.9;\n  // 4. Payment processing mixed in\n  await stripe.charges.create({ amount: price });\n  // 5. Email receipt mixed in\n  await mailer.sendReceipt();\n  // 6. Response sending\n  res.json({ enrolled: true });\n});\n\n// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)\n",
 };
 

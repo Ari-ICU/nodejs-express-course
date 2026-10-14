@@ -6,9 +6,6 @@ export const meta = {
   type: "concept",
   codeLanguage: "javascript",
   summary: "**Data Sanitization** គឺជាការសម្អាតទិន្នន័យចូល ដើម្បីលុបបំបាត់ Code ឬ Fields ដែលមិនគួរមាន៖\n\nលក្ខណៈសំខាន់ៗ៖\n1. **Stripping Unknown Keys**៖ Zod ធ្វើការ Strip រាល់ Fields ដែលមិនមានចែងក្នុង Schema ដោយស្វ័យប្រវត្តិកំឡុងពេល `parse()` (ការពារ Mass Assignment Attack)\n2. **String Trimming**៖ លុប Blank Spaces ខាងដើម និងខាងចុង\n3. **Escaping HTML/Scripts**៖ ការពារ Stored XSS Attacks មុនពេលរក្សាទុកទៅក្នុង MongoDB",
-  tip: "តាមលំនាំដើម `z.object()` នឹងច្រោះចោលរាល់ Fields ដែលមិនស្គាល់ (Strip mode) ដូច្នេះទោះបីជា Attacker ព្យាយាមផ្ញើ `role: 'admin'` មក ក៏ Zod មិនអនុញ្ញាតឱ្យឆ្លងផុតឡើយ!",
-  objective: "យល់ដឹងពីយន្តការ Data Sanitization និងការការពារ Mass Assignment ជាមួយ Zod។",
-  expectedOutcome: "ទិន្នន័យត្រូវបានសម្អាតយ៉ាងស្អាតមុនពេលចូលដល់ Database។",
   codeSnippet: "import { z } from \"zod\";\n\nconst courseSchema = z.object({\n  title: z.string().trim(),\n  price: z.number().min(0)\n}); // By default in \"strip\" mode!\n\n// Attacker tries to inject extra fields:\nconst maliciousPayload = {\n  title: \"  Mastering Express Security  \",\n  price: 49.99,\n  isAdmin: true, // ⚠️ Injected unauthorized property!\n  role: \"superadmin\"\n};\n\nconst cleanData = courseSchema.parse(maliciousPayload);\n\nconsole.log(\"Sanitized & Stripped Output:\", cleanData);\n// Output: { title: \"Mastering Express Security\", price: 49.99 }\n// (Injected fields are completely stripped out!)",
 };
 

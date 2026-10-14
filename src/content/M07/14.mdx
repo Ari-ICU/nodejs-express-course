@@ -1,24 +1,32 @@
 export const meta = {
   id: "M07-14",
   number: "14",
-  title: "RESTful Routes",
-  khmerTitle: "គោលការណ៍ស្តង់ដារ RESTful Routes",
+  title: "RESTful Routing Standards",
+  khmerTitle: "តារាងសង្ខេបគោលការណ៍ស្តង់ដារ RESTful Routing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `RESTful routing ប្រើយ៉ាងតឹងរ៉ឹងនូវនាម (មិនមែនកិរិយាសព្ទ) នៅក្នុងផ្លូវ URL, pluralizes ឈ្មោះធនធាន និងប្រើប្រាស់ HTTP Verbs ដើម្បីទាក់ទងសកម្មភាពដែលត្រូវអនុវត្ត។`,
-  tip: "កុំប្រើសកម្មភាពនៅក្នុង URLs ដូចជា `/api/getUsers` ឬ `/api/deleteUser/1`; ប្រើ `GET /api/users` និង `DELETE /api/users/1` ។",
-  objective: "រចនាតាមស្តង់ដារឧស្សាហកម្ម ផ្លូវចុង REST ដែលអាចព្យាករណ៍បាន។",
-  expectedOutcome: "API Contract RESTful API ស្តង់ដារបន្ទាប់ពីអនុសញ្ញាសកល។",
-  codeSnippet: "/* Standard REST Resource URLs:\n   ✅ GET    /api/v1/products         (Get all products)\n   ✅ POST   /api/v1/products         (Create product)\n   ✅ GET    /api/v1/products/:id     (Get product details)\n   ✅ PATCH  /api/v1/products/:id     (Update product)\n   ✅ DELETE /api/v1/products/:id     (Delete product)\n   ❌ GET    /api/v1/getAllProducts   (Anti-pattern: Verb in URL)\n*/",
+  summary: "តារាងស្តង់ដារ Canonical RESTful Routes សម្រាប់ **Course Catalog API**៖\n\n| HTTP Verb | URL Pattern | សកម្មភាព (Action) | Status Code |\n|---|---|---|---|\n| **GET** | `/api/v1/courses` | ទាញយកបញ្ជី Course ទាំងអស់ | 200 OK |\n| **GET** | `/api/v1/courses/:id` | ទាញយក Course ជាក់លាក់មួយ | 200 / 404 |\n| **POST** | `/api/v1/courses` | បង្កើត Course ថ្មី | 201 Created |\n| **PUT** | `/api/v1/courses/:id` | ជំនួស Course ចាស់ទាំងស្រុង | 200 OK |\n| **PATCH** | `/api/v1/courses/:id` | កែប្រែ Fields មួយចំនួន | 200 OK |\n| **DELETE** | `/api/v1/courses/:id` | លុប Course ចេញ | 204 No Content |\n| **GET** | `/api/v1/courses/:id/lessons` | ទាញយក Lessons របស់ Course | 200 OK |",
+  tip: "ច្បាប់មាសនៃ RESTful Routing៖ ប្រើប្រាស់តែ Plural Nouns (នាមពហុវចនៈ ដូចជា /courses) និងជៀសវាងដាច់ខាតនូវការប្រើកិរិយាសព្ទក្នុង URL (ដូចជា /getAllCourses ឬ /deleteCourse)។",
+  objective: "ចងចាំ និងអនុវត្តតាមស្តង់ដារ Canonical RESTful URLs ក្នុងគ្រប់ Projects។",
+  expectedOutcome: "ការរចនា API ដែលមានលក្ខណៈ Predictable, Standard, និងងាយស្រួលប្រើសម្រាប់ Frontend Developers។",
+  codeSnippet: "/* \n  CANONICAL RESTFUL DESIGN SUMMARY:\n  -------------------------------------------------------------\n  ✅ GET    /api/v1/courses             -> Read course catalog\n  ✅ GET    /api/v1/courses/:id         -> Read single course\n  ✅ POST   /api/v1/courses             -> Create new course\n  ✅ PUT    /api/v1/courses/:id         -> Full replace course\n  ✅ PATCH  /api/v1/courses/:id         -> Partial update course\n  ✅ DELETE /api/v1/courses/:id         -> Delete course\n  ✅ GET    /api/v1/courses/:id/lessons -> Nested child collection\n\n  ❌ ANTI-PATTERNS (Avoid these):\n  ❌ GET    /api/v1/getAllCourses\n  ❌ POST   /api/v1/courses/delete/:id\n  ❌ POST   /api/v1/courses/updatePrice\n*/",
 };
 
 ```javascript
-/* Standard REST Resource URLs:
-   ✅ GET    /api/v1/products         (Get all products)
-   ✅ POST   /api/v1/products         (Create product)
-   ✅ GET    /api/v1/products/:id     (Get product details)
-   ✅ PATCH  /api/v1/products/:id     (Update product)
-   ✅ DELETE /api/v1/products/:id     (Delete product)
-   ❌ GET    /api/v1/getAllProducts   (Anti-pattern: Verb in URL)
+/* 
+  CANONICAL RESTFUL DESIGN SUMMARY:
+  -------------------------------------------------------------
+  ✅ GET    /api/v1/courses             -> Read course catalog
+  ✅ GET    /api/v1/courses/:id         -> Read single course
+  ✅ POST   /api/v1/courses             -> Create new course
+  ✅ PUT    /api/v1/courses/:id         -> Full replace course
+  ✅ PATCH  /api/v1/courses/:id         -> Partial update course
+  ✅ DELETE /api/v1/courses/:id         -> Delete course
+  ✅ GET    /api/v1/courses/:id/lessons -> Nested child collection
+
+  ❌ ANTI-PATTERNS (Avoid these):
+  ❌ GET    /api/v1/getAllCourses
+  ❌ POST   /api/v1/courses/delete/:id
+  ❌ POST   /api/v1/courses/updatePrice
 */
 ```

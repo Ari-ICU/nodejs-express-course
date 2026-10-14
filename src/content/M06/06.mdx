@@ -1,24 +1,36 @@
 export const meta = {
   id: "M06-06",
   number: "06",
-  title: "Request Object",
-  khmerTitle: "ការស្វែងយល់ពី Request Object (req)",
+  title: "Request Object (req)",
+  khmerTitle: "ការស្វែងយល់ពី Request Object (req) និង Properties សំខាន់ៗ",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `វត្ថុ \`req\` តំណាងឱ្យសំណើ HTTP និងមានលក្ខណៈសម្បត្តិសម្រាប់Query Stringសំណើ Params តួអត្ថបទ Headers HTTP Cookies និងអាសយដ្ឋាន IP ។ Express តុបតែង \`http.IncomingMessage\` ដើមរបស់ Node ជាមួយនឹងជំនួយការវិចារណញាណ។`,
-  tip: "ប្រើ `req.get('Header-Name')` ដើម្បីទាញយក Headers ក្នុងលក្ខណៈមិនប្រកាន់អក្សរតូចធំ។",
-  objective: "ចូលប្រើទិន្នន័យមេតារបស់ Client ចូលទាំងអស់តាមរយៈ Request Object (req) ។",
-  expectedOutcome: "ជំនាញនៃ `req.body`, `req.params`, `req.query`, និង `req.headers`។",
-  codeSnippet: "app.post(\"/api/items/:id\", (req, res) => {\n  console.log(\"Route param ID:\", req.params.id);\n  console.log(\"Query search:\", req.query.search);\n  console.log(\"Request payload:\", req.body);\n  console.log(\"Client IP:\", req.ip);\n  console.log(\"Auth header:\", req.get(\"Authorization\"));\n  res.sendStatus(200);\n});",
+  summary: "**Request Object (`req`)** តំណាងឱ្យ HTTP Request ដែល Client បញ្ជូនមក Server។ Express បានពង្រីក Native Node Request ដោយផ្តល់នូវ Properties សំខាន់ៗចំនួន ៥៖\n\n1. **`req.params`**៖ Dynamic URL segments (ឧ. `/courses/:id`)\n2. **`req.query`**៖ Query String Parameters (ឧ. `?level=beginner&limit=10`)\n3. **`req.body`**៖ JSON Payload ដែល Client ផ្ញើមកក្នុង POST/PUT/PATCH\n4. **`req.headers`** / **`req.get('Header-Name')`**៖ HTTP Request Headers\n5. **`req.ip`**៖ IP Address របស់ Client",
+  tip: "ប្រើប្រាស់ `req.get('authorization')` ជានិច្ចសម្រាប់ការអាន Headers ព្រោះវា Case-insensitive។",
+  objective: "យល់ច្បាស់ពីរបៀបទាញយកទិន្នន័យពីគ្រប់ផ្នែកនៃ HTTP Request។",
+  expectedOutcome: "ចេះទាញយក params, query, body, និង headers បានយ៉ាងស្ទាត់ជំនាញ។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// Step 1: Inspect all parts of an incoming Course Request\napp.post(\"/api/v1/courses/:id\", (req, res) => {\n  // 💡 Teaching Note: Walk students through each req property\n  console.log(\"1. Route Parameter (id):\", req.params.id);\n  console.log(\"2. Query Parameter (filter):\", req.query.includeReviews);\n  console.log(\"3. Request Body (payload):\", req.body);\n  console.log(\"4. Authorization Header:\", req.get(\"Authorization\"));\n  console.log(\"5. Client IP Address:\", req.ip);\n\n  // Step 2: Send acknowledgement response\n  res.status(200).json({\n    success: true,\n    message: \"Request analyzed successfully\",\n    receivedId: req.params.id\n  });\n});",
 };
 
 ```javascript
-app.post("/api/items/:id", (req, res) => {
-  console.log("Route param ID:", req.params.id);
-  console.log("Query search:", req.query.search);
-  console.log("Request payload:", req.body);
-  console.log("Client IP:", req.ip);
-  console.log("Auth header:", req.get("Authorization"));
-  res.sendStatus(200);
+import express from "express";
+const app = express();
+app.use(express.json());
+
+// Step 1: Inspect all parts of an incoming Course Request
+app.post("/api/v1/courses/:id", (req, res) => {
+  // 💡 Teaching Note: Walk students through each req property
+  console.log("1. Route Parameter (id):", req.params.id);
+  console.log("2. Query Parameter (filter):", req.query.includeReviews);
+  console.log("3. Request Body (payload):", req.body);
+  console.log("4. Authorization Header:", req.get("Authorization"));
+  console.log("5. Client IP Address:", req.ip);
+
+  // Step 2: Send acknowledgement response
+  res.status(200).json({
+    success: true,
+    message: "Request analyzed successfully",
+    receivedId: req.params.id
+  });
 });
 ```

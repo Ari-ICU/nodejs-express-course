@@ -1,134 +1,43 @@
 export const meta = {
   id: "M09-17",
   number: "17",
-  title: "Sorting",
+  title: "Sorting (Ascending & Descending)",
   khmerTitle: "ការរៀបចំលំដាប់លំដោយ Sorting (Ascending & Descending)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `**Sorting** អនុញ្ញាតឱ្យ Client ស្នើសុំធនធានប្រមូលតាមលំដាប់លំដោយមួយ ឬច្រើនក្នុងលំដាប់ឡើង ឬចុះ។
-
-### 1. វាក្យសម្ព័ន្ធតម្រៀបស្តង់ដារឧស្សាហកម្ម
-* **អនុសញ្ញាដកបុព្វបទ** (ស្តង់ដារឆ្នូត និងម៉ុងហ្គោស) ៖
-  * \`/products?sort=price\` (Ascending: low to high)
-  * \`/products?sort=-price\` (Descending: high to low)
-* **Multi-Field Sorting**:
-  * \`/products?sort=-createdAt,price\` (Newest first, then cheapest)
-* **Alternative Style**: \`/products?sortBy=price&order=desc\`
-
-### 2. Guarding Database Performance with Field Whitelisting
-Never let clients sort by un-indexed or arbitrary database columns! Sorting by un-indexed fields causes database disk swaps and query timeouts. Always validate requested sort fields against an allowed whitelist.`,
-  tip: "អនុវត្ត​លំដាប់​តម្រៀប​លំនាំដើម​លើ​ចំណុច​បញ្ចប់​បណ្តុំ​របស់​អ្នក​ជានិច្ច (ឧ. `-createdAt` ឬ `id`) ។ បើគ្មានលំដាប់តម្រៀបច្បាស់លាស់ទេ Database ដែលទាក់ទងគ្នានឹងត្រឡប់ជួរដេកតាមលំដាប់លំដោយ ដែលបណ្តាលឱ្យធាតុ paginated ផ្លាស់ប្តូរដែលមិនអាចទាយទុកជាមុនបានរវាង Request ទំព័រ។",
-  objective: "បង្កើតយន្ត Sorting ពហុវាលនៅក្នុង Express ដែលញែកបុព្វបទឡើង/ចុះក្រោម និងធ្វើឱ្យវាលមាន Validation ប្រឆាំងនឹងបញ្ជីសសុវត្ថិភាពដ៏តឹងរឹង។",
-  expectedOutcome: "មុខងារតម្រៀបដែលអាចទស្សន៍ទាយបាន កំណត់ដែលធានានូវលេខទំព័រជាប់គ្នា និងការពារសន្ទស្សន៍ Database ។",
-  codeSnippet: `const express = require("express");
-const app = express();
-
-const products = [
-  { id: 1, name: "Desk Mat", price: 19.99, rating: 4.8, createdAt: "2024-01-10" },
-  { id: 2, name: "Mechanical Keyboard", price: 89.99, rating: 4.9, createdAt: "2024-03-01" },
-  { id: 3, name: "USB-C Cable", price: 9.99, rating: 4.2, createdAt: "2024-02-15" },
-  { id: 4, name: "Ergonomic Mouse", price: 49.99, rating: 4.7, createdAt: "2024-01-20" },
-];
-
-/**
- * GET /api/v1/products?sort=-price
- * Supports comma-separated multi-field sorting: ?sort=-rating,price
- */
-app.get("/api/v1/products", (req, res) => {
-  // Permitted sortable attributes
-  const allowedSortFields = ["price", "rating", "createdAt", "name"];
-  const sortQuery = req.query.sort || "-createdAt"; // Default sort
-  
-  let results = [...products];
-
-  // Parse comma-separated sort criteria
-  const sortCriteria = sortQuery.split(",").map((token) => {
-    token = token.trim();
-    const isDescending = token.startsWith("-");
-    const field = isDescending ? token.substring(1) : token;
-    return { field, order: isDescending ? -1 : 1 };
-  });
-
-  // Check that all requested fields are whitelisted
-  const invalidField = sortCriteria.find((c) => !allowedSortFields.includes(c.field));
-  if (invalidField) {
-    return res.status(400).json({
-      success: false,
-      error: \`Invalid sort field '\${invalidField.field}'. Allowed: [\${allowedSortFields.join(", ")}]\`,
-    });
-  }
-
-  // Apply sorting algorithm
-  results.sort((a, b) => {
-    for (const { field, order } of sortCriteria) {
-      if (a[field] < b[field]) return -1 * order;
-      if (a[field] > b[field]) return 1 * order;
-    }
-    return 0;
-  });
-
-  res.json({
-    success: true,
-    appliedSort: sortQuery,
-    count: results.length,
-    data: results,
-  });
-});`,
+  summary: "**Sorting** អនុញ្ញាតឱ្យ Client តម្រៀបទិន្នន័យតាមលំដាប់លំដោយជាក់លាក់ (ឧ. `?sort=price` សម្រាប់តម្លៃទាបទៅខ្ពស់ ឬ `?sort=-price` សម្រាប់តម្លៃខ្ពស់មកទាប)។\n\nអនុសញ្ញា RESTful Sorting៖\n* សញ្ញាដក (`-`) នៅពីមុខ Field តំណាងឱ្យ **Descending Order** (`sort=-price`)\n* គ្មានសញ្ញាដក តំណាងឱ្យ **Ascending Order** (`sort=price`)\n* អាចគាំទ្រ Multi-field Sorting ដូចជា `?sort=-price,title`",
+  tip: "ចងចាំ៖ `-price` (ពីថ្លៃមកថោក) និង `price` (ពីថោកទៅថ្លៃ) គឺជាស្តង់ដារដែលប្រើប្រាស់ទាំងក្នុង Mongoose និង REST APIs ពិភពលោក។",
+  objective: "ចេះ Parse Sorting Query និងតម្រៀបទិន្នន័យតាមលំដាប់ឡើង ឬចុះ។",
+  expectedOutcome: "Endpoint អាច Sort តាម Properties ច្រើនប្រកបដោយភាពបត់បែន។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"Z - Advanced Microservices\", price: 99 },\n  { id: 2, title: \"A - Beginner JavaScript\", price: 19 },\n  { id: 3, title: \"M - Intermediate Express\", price: 49 }\n];\n\n// GET /api/v1/courses?sort=-price\napp.get(\"/api/v1/courses\", (req, res) => {\n  let result = [...courses];\n  const { sort } = req.query;\n\n  if (sort && typeof sort === \"string\") {\n    const isDescending = sort.startsWith(\"-\");\n    const field = isDescending ? sort.substring(1) : sort;\n\n    result.sort((a, b) => {\n      if (a[field] < b[field]) return isDescending ? 1 : -1;\n      if (a[field] > b[field]) return isDescending ? -1 : 1;\n      return 0;\n    });\n  }\n\n  res.json({ success: true, count: result.length, data: result });\n});",
 };
 
 ```javascript
-const express = require("express");
+import express from "express";
 const app = express();
 
-const products = [
-  { id: 1, name: "Desk Mat", price: 19.99, rating: 4.8, createdAt: "2024-01-10" },
-  { id: 2, name: "Mechanical Keyboard", price: 89.99, rating: 4.9, createdAt: "2024-03-01" },
-  { id: 3, name: "USB-C Cable", price: 9.99, rating: 4.2, createdAt: "2024-02-15" },
-  { id: 4, name: "Ergonomic Mouse", price: 49.99, rating: 4.7, createdAt: "2024-01-20" },
+const courses = [
+  { id: 1, title: "Z - Advanced Microservices", price: 99 },
+  { id: 2, title: "A - Beginner JavaScript", price: 19 },
+  { id: 3, title: "M - Intermediate Express", price: 49 }
 ];
 
-/**
- * GET /api/v1/products?sort=-price
- * Supports comma-separated multi-field sorting: ?sort=-rating,price
- */
-app.get("/api/v1/products", (req, res) => {
-  // Permitted sortable attributes
-  const allowedSortFields = ["price", "rating", "createdAt", "name"];
-  const sortQuery = req.query.sort || "-createdAt"; // Default sort
-  
-  let results = [...products];
+// GET /api/v1/courses?sort=-price
+app.get("/api/v1/courses", (req, res) => {
+  let result = [...courses];
+  const { sort } = req.query;
 
-  // Parse comma-separated sort criteria
-  const sortCriteria = sortQuery.split(",").map((token) => {
-    token = token.trim();
-    const isDescending = token.startsWith("-");
-    const field = isDescending ? token.substring(1) : token;
-    return { field, order: isDescending ? -1 : 1 };
-  });
+  if (sort && typeof sort === "string") {
+    const isDescending = sort.startsWith("-");
+    const field = isDescending ? sort.substring(1) : sort;
 
-  // Check that all requested fields are whitelisted
-  const invalidField = sortCriteria.find((c) => !allowedSortFields.includes(c.field));
-  if (invalidField) {
-    return res.status(400).json({
-      success: false,
-      error: `Invalid sort field '${invalidField.field}'. Allowed: [${allowedSortFields.join(", ")}]`,
+    result.sort((a, b) => {
+      if (a[field] < b[field]) return isDescending ? 1 : -1;
+      if (a[field] > b[field]) return isDescending ? -1 : 1;
+      return 0;
     });
   }
 
-  // Apply sorting algorithm
-  results.sort((a, b) => {
-    for (const { field, order } of sortCriteria) {
-      if (a[field] < b[field]) return -1 * order;
-      if (a[field] > b[field]) return 1 * order;
-    }
-    return 0;
-  });
-
-  res.json({
-    success: true,
-    appliedSort: sortQuery,
-    count: results.length,
-    data: results,
-  });
+  res.json({ success: true, count: result.length, data: result });
 });
 ```

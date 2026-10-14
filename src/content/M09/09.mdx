@@ -1,137 +1,41 @@
 export const meta = {
   id: "M09-09",
   number: "09",
-  title: "PATCH",
-  khmerTitle: "ការអនុវត្ត PATCH Endpoint ស្តង់ដារ",
+  title: "Production PATCH Endpoints",
+  khmerTitle: "ការអនុវត្ត Production PATCH Endpoint (Partial Updates)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `HTTP Methods **PATCH** អនុវត្តការ **កែសម្រួលទិន្នន័យផ្នែកខ្លះ (Partial Modification)** ទៅលើ Resource ។ ខុសប្លែកពី PUT, Client គ្រាន់តែបញ្ជូន Field ជាក់លាក់ណាដែលចង់ផ្លាស់ប្តូរប៉ុណ្ណោះ ចំណែកឯ Field ផ្សេងៗដែលមិនបានបញ្ជាក់ នឹងនៅរក្សាតម្លៃដដែលទាំងស្រុង។
-
-### ១. គោលការណ៍វិស្វកម្មសំខាន់ៗនៃ PATCH
-* **Differential Updates**៖ Server ធ្វើការបញ្ចូល (Merge) ទិន្នន័យថ្មីទៅលើ Representation ដែលមានស្រាប់។
-* **Mass Assignment Protection**៖ ដាច់ខាតកុំចម្លង \`req.body\` ទាំងងងឹតងងុល (ដូចជា \`Object.assign(item, req.body)\`) ពីព្រោះ Hacker អាចឆ្លៀតឱកាសកែប្រែ Field សំខាន់ៗដូចជា \`role: "admin"\`, \`id\`, ឬ \`balance\`។ ត្រូវប្រើប្រាស់ Whitelist ដើម្បីអនុញ្ញាតតែ Field សុវត្ថិភាព។
-* **Dynamic Validation**៖ ត្រួតពិនិត្យភាពត្រឹមត្រូវតែលើ Field ណាដែលមានវត្តមានក្នុង Request Body ប៉ុណ្ណោះ។
-* **Status Codes**៖ ឆ្លើយតប **200 OK** ជាមួយទិន្នន័យដែលបានកែប្រែរួច ឬ **404 Not Found** ប្រសិនបើមិនមានទិន្នន័យត្រូវនឹង ID។`,
-  tip: "ជានិច្ចកាលត្រូវការពារប្រព័ន្ធពីបញ្ហា Prototype Pollution និង Mass Assignment នៅពេលសរសេរ PATCH Route ។ ត្រូវកំណត់Arrayនៃ Field ដែលអនុញ្ញាតឱ្យកែប្រែយ៉ាងច្បាស់លាស់៖ `const allowed = ['name', 'price', 'inStock'];`។",
-  objective: "សរសេរ Express PATCH Endpoint ដែលអនុវត្តការកែសម្រួលទិន្នន័យផ្នែកខ្លះប្រកបដោយសុវត្ថិភាពខ្ពស់ ដោយប្រើប្រាស់ Field Whitelisting និង Dynamic Validation ។",
-  expectedOutcome: "ទទួលបាន Route កែប្រែទិន្នន័យដែលផ្លាស់ប្តូរតែ Attributes ត្រឹមត្រូវ និងការពាររាល់ System Properties មិនឱ្យរងការវាយប្រហារ។",
-  codeSnippet: `const express = require("express");
-const app = express();
-app.use(express.json());
-
-let products = [
-  { id: "p1", name: "Mechanical Keyboard", price: 89.99, inStock: true, roleRequired: "user" },
-];
-
-/**
- * PATCH /api/v1/products/:id
- * Partial update with strict field whitelisting
- */
-app.patch("/api/v1/products/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((p) => p.id === id);
-
-  if (!product) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: \`Product with ID '\${id}' not found\` },
-    });
-  }
-
-  // 1. Whitelist permitted updatable keys (Prevent Mass Assignment)
-  const allowedFields = ["name", "price", "inStock"];
-  const updates = Object.keys(req.body);
-  const isValidOperation = updates.every((field) => allowedFields.includes(field));
-
-  if (!isValidOperation || updates.length === 0) {
-    return res.status(400).json({
-      success: false,
-      error: {
-        code: "INVALID_UPDATE_FIELDS",
-        message: \`Only fields [\${allowedFields.join(", ")}] can be patched.\`,
-      },
-    });
-  }
-
-  // 2. Validate individual supplied fields
-  if (req.body.price !== undefined && (typeof req.body.price !== "number" || req.body.price < 0)) {
-    return res.status(400).json({
-      success: false,
-      error: { message: "Field 'price' must be a non-negative number." },
-    });
-  }
-
-  // 3. Apply partial updates safely
-  updates.forEach((key) => {
-    product[key] = req.body[key];
-  });
-  product.updatedAt = new Date().toISOString();
-
-  // 4. Return updated entity
-  res.status(200).json({
-    success: true,
-    data: product,
-  });
-});`,
+  summary: "ការអនុវត្ត **PATCH Endpoint** ប្រកបដោយប្រសិទ្ធភាពខ្ពស់៖\n\n1. អាន `req.body`\n2. ច្រោះយកតែ **Allowed Update Fields** (ជៀសវាង Mass Assignment Vulnerability កុំឱ្យ Client កែប្រែ `id` ឬ `createdAt`)\n3. កែប្រែតែ Properties ដែលបានផ្តល់មក\n4. រក្សាទុក `updatedAt` timestamp ថ្មី",
+  tip: "🔒 សុវត្ថិភាពខ្ពស់៖ កុំយក `req.body` ទាំងមូលទៅ Merge ដោយគ្មានការ Whitelist ឱ្យសោះ ព្រោះ User អាចលួចប្តូរ `role: 'admin'` ឬ `id` បាន (Mass Assignment Attack)!",
+  objective: "ចេះអនុវត្ត PATCH Endpoint ដោយមាន Field Whitelisting ការពារ Mass Assignment។",
+  expectedOutcome: "Endpoint កែប្រែទិន្នន័យមានសុវត្ថិភាពខ្ពស់ និងស្របតាមស្តង់ដារវិជ្ជាជីវៈ។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [{ id: 1, title: \"Original Title\", price: 29.99, published: false }];\n\napp.patch(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  // 🔒 Security: Only allow modifications on specific permitted fields (Whitelist)\n  const allowedUpdates = [\"title\", \"price\", \"published\"];\n  for (const key of Object.keys(req.body)) {\n    if (allowedUpdates.includes(key)) {\n      course[key] = req.body[key];\n    }\n  }\n\n  course.updatedAt = new Date().toISOString();\n  return res.status(200).json({ success: true, data: course });\n});",
 };
 
 ```javascript
-const express = require("express");
+import express from "express";
 const app = express();
 app.use(express.json());
 
-let products = [
-  { id: "p1", name: "Mechanical Keyboard", price: 89.99, inStock: true, roleRequired: "user" },
-];
+let courses = [{ id: 1, title: "Original Title", price: 29.99, published: false }];
 
-/**
- * PATCH /api/v1/products/:id
- * Partial update with strict field whitelisting
- */
-app.patch("/api/v1/products/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((p) => p.id === id);
+app.patch("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId);
 
-  if (!product) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: `Product with ID '${id}' not found` },
-    });
+  if (!course) {
+    return res.status(404).json({ success: false, error: "Course not found" });
   }
 
-  // 1. Whitelist permitted updatable keys (Prevent Mass Assignment)
-  const allowedFields = ["name", "price", "inStock"];
-  const updates = Object.keys(req.body);
-  const isValidOperation = updates.every((field) => allowedFields.includes(field));
-
-  if (!isValidOperation || updates.length === 0) {
-    return res.status(400).json({
-      success: false,
-      error: {
-        code: "INVALID_UPDATE_FIELDS",
-        message: `Only fields [${allowedFields.join(", ")}] can be patched.`,
-      },
-    });
+  // 🔒 Security: Only allow modifications on specific permitted fields (Whitelist)
+  const allowedUpdates = ["title", "price", "published"];
+  for (const key of Object.keys(req.body)) {
+    if (allowedUpdates.includes(key)) {
+      course[key] = req.body[key];
+    }
   }
 
-  // 2. Validate individual supplied fields
-  if (req.body.price !== undefined && (typeof req.body.price !== "number" || req.body.price < 0)) {
-    return res.status(400).json({
-      success: false,
-      error: { message: "Field 'price' must be a non-negative number." },
-    });
-  }
-
-  // 3. Apply partial updates safely
-  updates.forEach((key) => {
-    product[key] = req.body[key];
-  });
-  product.updatedAt = new Date().toISOString();
-
-  // 4. Return updated entity
-  res.status(200).json({
-    success: true,
-    data: product,
-  });
+  course.updatedAt = new Date().toISOString();
+  return res.status(200).json({ success: true, data: course });
 });
 ```

@@ -1,30 +1,41 @@
 export const meta = {
   id: "M06-10",
   number: "10",
-  title: "Route Handlers",
+  title: "Route Handlers & Callback Chains",
   khmerTitle: "ការសរសេរ Route Handlers ជាមួយ Callbacks ច្រើន",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `អ្នកដោះស្រាយផ្លូវអាចយកទម្រង់នៃអនុគមន៍ Array of functions ឬបន្សំទាំងពីរ។ នេះអនុញ្ញាតឱ្យ GuardsAuthentication Chaining និងការត្រួតពិនិត្យ Validation ដោយផ្ទាល់មុនពេលមុខងារ Controllers ចុងក្រោយ។`,
-  tip: "បញ្ជូនមុខងារ Middleware ជាច្រើនទៅកាន់ការកំណត់ផ្លូវមួយ ដើម្បីពង្រឹង Authentication និង Validation យ៉ាងស្អាត។",
-  objective: "Chaining functionsកណ្តាល និងControllers នៅលើផ្លូវតែមួយ។",
-  expectedOutcome: "និយមន័យផ្លូវម៉ូឌុលជាមួយឧបករណ៍ការពារកណ្តាលដែលអាចប្រើឡើងវិញបាន។",
-  codeSnippet: "const requireAuth = (req, res, next) => {\n  if (!req.headers.authorization) return res.status(401).json({ error: \"Unauthorized\" });\n  next();\n};\n\nconst validateBody = (req, res, next) => {\n  if (!req.body.title) return res.status(400).json({ error: \"Title required\" });\n  next();\n};\n\n// Chaining middleware directly on route\napp.post(\"/api/posts\", requireAuth, validateBody, (req, res) => {\n  res.status(201).json({ id: 1, title: req.body.title });\n});",
+  summary: "Route មួយក្នុង Express អាចទទួល Handlers ឬ Callbacks ច្រើនបន្តបន្ទាប់គ្នា (Chained Callbacks)។\n\nលំនាំនេះមានសារៈសំខាន់ខ្លាំងក្នុងការបំបែកកូដ៖\n1. **Handler ទី ១ (Validator)**៖ ផ្ទៀងផ្ទាត់ទិន្នន័យបញ្ចូល\n2. **Handler ទី ២ (Business Logic)**៖ អនុវត្តការងារ និងបញ្ជូន Response ត្រឡប់ទៅវិញ",
+  tip: "ការប្រើប្រាស់ Callback Chains គឺជាជំហានដំបូងនៃការរៀនសរសេរ Middleware Guards មុនឈានដល់ Auth Controllers។",
+  objective: "ចេះប្រើប្រាស់ Callback functions ច្រើនក្នុង Route តែមួយដើម្បីបែងចែកទំនួលខុសត្រូវ។",
+  expectedOutcome: "កូដមានភាពស្អាត មិនច្របល់រវាង Validation Logic និង Save Logic។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// Step 1: Middleware Callback for validation\nconst validateCoursePayload = (req, res, next) => {\n  const { title, price } = req.body;\n  if (!title || typeof price !== \"number\") {\n    // ⚠️ Validation failed -> Stop request immediately!\n    return res.status(400).json({\n      success: false,\n      error: \"Title (string) and Price (number) are required\"\n    });\n  }\n  next(); // Payload valid -> Proceed!\n};\n\n// Step 2: Main Route Handler Callback\nconst createCourseHandler = (req, res) => {\n  const created = { id: Date.now(), ...req.body };\n  res.status(201).json({ success: true, data: created });\n};\n\n// Step 3: Chain callbacks together on the route\napp.post(\"/api/v1/courses\", validateCoursePayload, createCourseHandler);",
 };
 
 ```javascript
-const requireAuth = (req, res, next) => {
-  if (!req.headers.authorization) return res.status(401).json({ error: "Unauthorized" });
-  next();
+import express from "express";
+const app = express();
+app.use(express.json());
+
+// Step 1: Middleware Callback for validation
+const validateCoursePayload = (req, res, next) => {
+  const { title, price } = req.body;
+  if (!title || typeof price !== "number") {
+    // ⚠️ Validation failed -> Stop request immediately!
+    return res.status(400).json({
+      success: false,
+      error: "Title (string) and Price (number) are required"
+    });
+  }
+  next(); // Payload valid -> Proceed!
 };
 
-const validateBody = (req, res, next) => {
-  if (!req.body.title) return res.status(400).json({ error: "Title required" });
-  next();
+// Step 2: Main Route Handler Callback
+const createCourseHandler = (req, res) => {
+  const created = { id: Date.now(), ...req.body };
+  res.status(201).json({ success: true, data: created });
 };
 
-// Chaining middleware directly on route
-app.post("/api/posts", requireAuth, validateBody, (req, res) => {
-  res.status(201).json({ id: 1, title: req.body.title });
-});
+// Step 3: Chain callbacks together on the route
+app.post("/api/v1/courses", validateCoursePayload, createCourseHandler);
 ```

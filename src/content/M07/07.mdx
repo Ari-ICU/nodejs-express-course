@@ -1,20 +1,39 @@
 export const meta = {
   id: "M07-07",
   number: "07",
-  title: "Route Parameters",
-  khmerTitle: "ការទាញយក Route Parameters ពី URL (:id)",
+  title: "Route Parameters (:id)",
+  khmerTitle: "ការទាញយក និង Validate Route Parameters ពី URL",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Params ផ្លូវត្រូវបានដាក់ឈ្មោះផ្នែក URL ដែលត្រូវបានប្រើដើម្បីចាប់យកតម្លៃដែលបានបញ្ជាក់នៅទីតាំងរបស់ពួកគេនៅក្នុង URL ។ តម្លៃដែលចាប់យកត្រូវបានបញ្ចូលក្នុងវត្ថុ \`req.params\` ។`,
-  tip: "តែងតែធ្វើឱ្យ Params ផ្លូវត្រូវគ្នានឹងទម្រង់ដែលរំពឹងទុក (ឧ. MongoDB ObjectId ឬលេខសម្គាល់Integer) ដើម្បីការពារកំហុសក្នុងការបញ្ជូនទិន្នន័យ។",
-  objective: "ស្រង់ចេញ Params ផ្លូវថាមវន្តពី URL Incoming Request ។",
-  expectedOutcome: "ការទាញយក Params ច្បាស់លាស់សម្រាប់ប្រតិបត្តិការធនធានតែមួយ។",
-  codeSnippet: "app.get(\"/api/v1/courses/:courseId/modules/:moduleId\", (req, res) => {\n  const { courseId, moduleId } = req.params;\n  res.json({ courseId, moduleId });\n});",
+  summary: "**Route Parameters** គឺជា Named URL Segments ដែលចាប់ផ្តើមដោយសញ្ញាចុចពីរ `:` ដូចជា `/courses/:id` ឬ `/courses/:courseId/reviews/:reviewId`។\n\nចំនុចសំខាន់ៗដែលត្រូវដឹង៖\n* តម្លៃក្នុង `req.params` គឺជា **String** ជានិច្ច (ទោះជា URL ជាលេខ `/courses/123` ក៏ដោយ)\n* ត្រូវប្រើ `Number(req.params.id)` ដើម្បីបំប្លែងទៅជា Number មុននឹងស្វែងរកក្នុង Array ឬ Database\n* ពិនិត្យ `isNaN(id)` ដើម្បីជៀសវាង Invalid Query",
+  tip: "⚠️ កំហុសញឹកញាប់៖ ការប្រៀបធៀប `course.id === req.params.id` (1 === \"1\") នឹងចេញ false ដោយសារ Type mismatch! ត្រូវ cast ជា `Number()` ជានិច្ច។",
+  objective: "យល់ដឹងពីយន្តការ Route Parameters និង Type Casting។",
+  expectedOutcome: "ចេះទាញយក params ច្រើនក្នុង URL តែមួយ និង Validate Input Type។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Route with Multiple Dynamic Parameters\napp.get(\"/api/v1/courses/:courseId/instructors/:instructorName\", (req, res) => {\n  // 💡 Teaching Note: Everything in req.params is a String!\n  const courseId = Number(req.params.courseId);\n  const instructorName = req.params.instructorName;\n\n  // Step 2: Validate ID is a legitimate number\n  if (isNaN(courseId)) {\n    return res.status(400).json({\n      success: false,\n      error: \"Invalid Course ID parameter: must be a valid number\"\n    });\n  }\n\n  return res.status(200).json({\n    success: true,\n    requestedCourseId: courseId,\n    requestedInstructor: instructorName\n  });\n});",
 };
 
 ```javascript
-app.get("/api/v1/courses/:courseId/modules/:moduleId", (req, res) => {
-  const { courseId, moduleId } = req.params;
-  res.json({ courseId, moduleId });
+import express from "express";
+const app = express();
+
+// Step 1: Route with Multiple Dynamic Parameters
+app.get("/api/v1/courses/:courseId/instructors/:instructorName", (req, res) => {
+  // 💡 Teaching Note: Everything in req.params is a String!
+  const courseId = Number(req.params.courseId);
+  const instructorName = req.params.instructorName;
+
+  // Step 2: Validate ID is a legitimate number
+  if (isNaN(courseId)) {
+    return res.status(400).json({
+      success: false,
+      error: "Invalid Course ID parameter: must be a valid number"
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    requestedCourseId: courseId,
+    requestedInstructor: instructorName
+  });
 });
 ```

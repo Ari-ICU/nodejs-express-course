@@ -2,27 +2,36 @@ export const meta = {
   id: "M06-01",
   number: "01",
   title: "What is Express.js?",
-  khmerTitle: "អ្វីជា Express.js និងហេតុអ្វីត្រូវប្រើវា?",
+  khmerTitle: "អ្វីជា Express.js និងមូលដ្ឋានគ្រឹះ Web Framework",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Express.js គឺជាក្របខ័ណ្ឌកម្មវិធីបណ្តាញស្តង់ដារជាក់ស្តែងសម្រាប់ Node.js ។ រចនាឡើងជាស្រទាប់អរូបី ដែលអាចបត់បែនបាន និងគ្មានការយល់ឃើញនៅលើដើម `node:http` វាផ្តល់នូវម៉ាស៊ីននាំផ្លូវដ៏មានអានុភាព ស្ថាបត្យកម្មMiddleware pipeline និងឧបករណ៍ជំនួយការស្នើសុំ/ឆ្លើយតប HTTP ដ៏ទូលំទូលាយ។",
-  tip: "Express មិនអនុវត្តរចនាសម្ព័ន្ធថតតឹងរឹង ឬអនុសញ្ញា Database ទេ។ ការទទួលយកព្រំដែនស្ថាបត្យកម្មស្អាត (Controllers និង Services) គឺចាំបាច់ដើម្បីជៀសវាងកូដ spaghetti ។",
-  objective: "ស្វែងយល់ពីរបៀបដែល Express abstracts មេកានិច HTTP ដើមចូលទៅក្នុង API វិចារណញាណ។",
-  expectedOutcome: "គំរូផ្លូវចិត្តដ៏ទូលំទូលាយនៃ Express ជាបំពង់បង្ហូរប្រេងកណ្តាល។",
-  codeSnippet: "import express from \"express\";\n\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\napp.get(\"/\", (req, res) => {\n  res.json({ message: \"Welcome to Express.js API!\" });\n});\n\napp.listen(PORT, () => {\n  console.log(`Server running on http://localhost:${PORT}`);\n});",
+  summary: "**Express.js** គឺជា Fast, Unopinionated, និង Minimalist Web Framework ស្តង់ដារសម្រាប់ Node.js។\n\nExpress ដើរតួជា Abstraction Layer ដ៏មានឥទ្ធិពលលើ Native `node:http` module ដោយផ្តល់ជូននូវ៖\n* **Robust Routing System**៖ ងាយស្រួល Map HTTP Methods (GET, POST, etc.) ទៅកាន់ URL Endpoints\n* **Middleware Pipeline Architecture**៖ ស្ទាក់ចាប់ និងដំណើរការ Requests ជាដំណាក់កាលៗ\n* **Streamlined HTTP Helpers**៖ មុខងារជំនួយដូចជា `res.json()`, `req.body`, និង `res.status()`\n\nនៅក្នុង Course នេះ យើងនឹងអភិវឌ្ឍ **Course Catalog API** មួយដែលចាប់ផ្តើមពី Server ដំបូង រហូតដល់ Enterprise Architecture។",
+  tip: "Express មិនបង្ខំរចនាសម្ព័ន្ធ Folder ឬ Database ជាក់លាក់ណាមួយឡើយ (Unopinionated)។ ដូច្នេះ ការរៀបចំស្ថាបត្យកម្មស្អាត (Clean Architecture) គឺសំខាន់បំផុតសម្រាប់ Scalability។",
+  objective: "ស្វែងយល់ពីតួនាទីរបស់ Express.js ក្នុងការ Simplify ការសរសេរ Backend លើ Node.js។",
+  expectedOutcome: "យល់ច្បាស់ពីរបៀបបង្កើត HTTP Server ដំបូងបង្អស់ជាមួយ Express។",
+  codeSnippet: "// Step 1: Import Express framework\nimport express from \"express\";\n\n// Step 2: Initialize Express application instance\nconst app = express();\nconst PORT = process.env.PORT || 5000;\n\n// Step 3: Define Root Route for Course Catalog API\napp.get(\"/\", (req, res) => {\n  // 💡 Teaching Note: res.json() automatically sets Content-Type: application/json\n  res.json({\n    message: \"Welcome to Course Catalog API!\",\n    version: \"1.0.0\",\n    status: \"healthy\"\n  });\n});\n\n// Step 4: Start the HTTP server listener\napp.listen(PORT, () => {\n  console.log(`🚀 Server is running on http://localhost:${PORT}`);\n});",
 };
 
 ```javascript
+// Step 1: Import Express framework
 import express from "express";
 
+// Step 2: Initialize Express application instance
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Step 3: Define Root Route for Course Catalog API
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Express.js API!" });
+  // 💡 Teaching Note: res.json() automatically sets Content-Type: application/json
+  res.json({
+    message: "Welcome to Course Catalog API!",
+    version: "1.0.0",
+    status: "healthy"
+  });
 });
 
+// Step 4: Start the HTTP server listener
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
 ```

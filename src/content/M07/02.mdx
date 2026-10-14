@@ -2,19 +2,48 @@ export const meta = {
   id: "M07-02",
   number: "02",
   title: "GET Routes",
-  khmerTitle: "ការបង្កើត GET Routes សម្រាប់ទាញយកទិន្នន័យ",
+  khmerTitle: "ការបង្កើត GET Routes សម្រាប់ទាញយកទិន្នន័យ (All & By ID)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ទទួលបានផ្លូវទៅយកធនធានដោយមិនផ្លាស់ប្តូរស្ថានភាព Database ។ ពួកគេគាំទ្រការត្រង និងការដាក់ទំព័រតាមរយៈ Params សំណួរ។`,
-  tip: "Request GET មិនត្រូវកែប្រែស្ថានភាព Server ឬផ្លាស់ប្តូរកំណត់ត្រា Database ឡើយ។",
-  objective: "អនុវត្តការអាន Endpoint ដែលគាំទ្រ Collections និងការទាញយកធនធានតែមួយ។",
-  expectedOutcome: "Ideempotent, cache-friendly data ទាញយក Endpoints ។",
-  codeSnippet: "app.get(\"/api/v1/articles\", async (req, res) => {\n  const articles = await articleService.getAllArticles(req.query);\n  res.json({ success: true, count: articles.length, data: articles });\n});",
+  summary: "**GET Routes** ប្រើសម្រាប់អាន (Retrieve) ទិន្នន័យដោយមិនកែប្រែស្ថានភាព Server ឬ Database (Safe & Idempotent)។\n\nមាន ២ ទម្រង់សំខាន់៖\n1. **GET Collection** (`/api/v1/courses`)៖ ទាញយកបញ្ជី Course ទាំងអស់\n2. **GET Single Resource** (`/api/v1/courses/:id`)៖ ទាញយក Course ជាក់លាក់មួយតាមរយៈ ID",
+  tip: "ចងចាំ៖ ប្រសិនបើរករក Course តាម ID មិនឃើញ ត្រូវត្រឡប់ 404 Not Found ជានិច្ច មិនមែន 200 OK ជាមួយទិន្នន័យទទេឡើយ។",
+  objective: "ចេះសរសេរ GET Endpoints ទាំងការទាញយក Collection និង Resource តែមួយ។",
+  expectedOutcome: "យល់ច្បាស់ពីការ Check វត្តមានទិន្នន័យ និងការឆ្លើយតប 200 OK ឬ 404 Not Found។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"JavaScript Mastery\", price: 29.99 },\n  { id: 2, title: \"Full-Stack Express API\", price: 49.99 }\n];\n\n// Step 1: GET All Courses (Collection)\napp.get(\"/api/v1/courses\", (req, res) => {\n  return res.status(200).json({\n    success: true,\n    count: courses.length,\n    data: courses\n  });\n});\n\n// Step 2: GET Single Course by ID\napp.get(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId);\n\n  // ⚠️ If course not found -> Return 404\n  if (!course) {\n    return res.status(404).json({\n      success: false,\n      error: `Course with ID ${courseId} not found`\n    });\n  }\n\n  // ✅ Found -> Return 200\n  return res.status(200).json({ success: true, data: course });\n});",
 };
 
 ```javascript
-app.get("/api/v1/articles", async (req, res) => {
-  const articles = await articleService.getAllArticles(req.query);
-  res.json({ success: true, count: articles.length, data: articles });
+import express from "express";
+const app = express();
+
+const courses = [
+  { id: 1, title: "JavaScript Mastery", price: 29.99 },
+  { id: 2, title: "Full-Stack Express API", price: 49.99 }
+];
+
+// Step 1: GET All Courses (Collection)
+app.get("/api/v1/courses", (req, res) => {
+  return res.status(200).json({
+    success: true,
+    count: courses.length,
+    data: courses
+  });
+});
+
+// Step 2: GET Single Course by ID
+app.get("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId);
+
+  // ⚠️ If course not found -> Return 404
+  if (!course) {
+    return res.status(404).json({
+      success: false,
+      error: `Course with ID ${courseId} not found`
+    });
+  }
+
+  // ✅ Found -> Return 200
+  return res.status(200).json({ success: true, data: course });
 });
 ```

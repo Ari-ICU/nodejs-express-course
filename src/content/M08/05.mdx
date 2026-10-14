@@ -1,22 +1,37 @@
 export const meta = {
   id: "M08-05",
   number: "05",
-  title: "express.json()",
-  khmerTitle: "ការប្រើប្រាស់ express.json() សម្រាប់ Body Parsing",
+  title: "express.json() Deep Dive",
+  khmerTitle: "ការស្វែងយល់ស៊ីជម្រៅពី express.json() និង Payload Limits",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `\`express.json()\` គឺជាMiddlewareដែលភ្ជាប់មកជាមួយដោយផ្អែកលើ \`body-parser\`។ វាញែកសំណើចូលជាមួយបន្ទុក JSON និងបញ្ចូល \`req.body\` ជាមួយនឹងវត្ថុ JavaScript លទ្ធផល។`,
-  tip: "តែងតែកំណត់ទំហំ Payload សមរម្យ (`{ limit: '10kb' }`) ដើម្បីការពារ Server របស់អ្នកពីការវាយប្រហារលើសចំណុះ។",
-  objective: "កំណត់រចនាសម្ព័ន្ធការញែក JSON Body ជាមួយនឹងដែនកំណត់ទំហំ Payload ។",
-  expectedOutcome: "Population ដោយស្វ័យប្រវត្តិនៃ `req.body` ជាមួយនឹងមួកទំហំសុវត្ថិភាព។",
-  codeSnippet: "// Restrict JSON payload size to 100kb for security\napp.use(express.json({ limit: \"100kb\" }));\n\napp.post(\"/api/echo\", (req, res) => {\n  res.json({ received: req.body });\n});",
+  summary: "តាមលំនាំដើម ប្រសិនបើ Client បញ្ជូន JSON Payload ធំខុសប្រក្រតី (ឧ. 50MB) វានឹងធ្វើឱ្យ Server ចំណាយ Memory និង CPU ខ្លាំងដើម្បី Parse (បង្កហានិភ័យ **DoS Attack**)។\n\nការកំណត់ជម្រើសសុវត្ថិភាពសម្រាប់ `express.json()`៖\n* **`limit: \"10kb\"`**៖ កំណត់ទំហំអតិបរមានៃ Body\n* **Handle Syntax Errors**៖ ចាប់ Syntax Error នៅពេល Client ផ្ញើ Malformed JSON មិនត្រឹមត្រូវ",
+  tip: "ច្បាប់សុវត្ថិភាព Production៖ កំណត់ limit ត្រឹម `10kb` ឬ `100kb` សម្រាប់ JSON API ធម្មតា លើកលែងតែ Upload Endpoints។",
+  objective: "ចេះកំណត់ Security Limits លើ express.json() និងការពារ DoS attacks។",
+  expectedOutcome: "Server មានភាពធន់នឹង Invalid JSON និង Oversized Payload attacks។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Configure express.json with strict size limit\napp.use(express.json({ limit: \"10kb\" }));\n\n// Step 2: Test Endpoint\napp.post(\"/api/v1/courses\", (req, res) => {\n  res.status(201).json({ success: true, course: req.body });\n});\n\n// Step 3: Catch JSON Syntax Errors (e.g., malformed JSON sent by client)\napp.use((err, req, res, next) => {\n  if (err instanceof SyntaxError && err.status === 400 && \"body\" in err) {\n    return res.status(400).json({\n      success: false,\n      error: \"Malformed JSON payload. Please verify syntax.\"\n    });\n  }\n  next(err);\n});",
 };
 
 ```javascript
-// Restrict JSON payload size to 100kb for security
-app.use(express.json({ limit: "100kb" }));
+import express from "express";
+const app = express();
 
-app.post("/api/echo", (req, res) => {
-  res.json({ received: req.body });
+// Step 1: Configure express.json with strict size limit
+app.use(express.json({ limit: "10kb" }));
+
+// Step 2: Test Endpoint
+app.post("/api/v1/courses", (req, res) => {
+  res.status(201).json({ success: true, course: req.body });
+});
+
+// Step 3: Catch JSON Syntax Errors (e.g., malformed JSON sent by client)
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    return res.status(400).json({
+      success: false,
+      error: "Malformed JSON payload. Please verify syntax."
+    });
+  }
+  next(err);
 });
 ```

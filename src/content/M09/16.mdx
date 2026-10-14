@@ -1,109 +1,50 @@
 export const meta = {
   id: "M09-16",
   number: "16",
-  title: "Searching",
-  khmerTitle: "ការស្វែងរកទិន្នន័យ (Regex & Text Index Search)",
+  title: "Searching with ReDoS Protection",
+  khmerTitle: "ការស្វែងរកទិន្នន័យ (Search) និងការការពារពីការវាយប្រហារ ReDoS",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ខណៈពេលដែល Filtering ផ្តោតលើ Field ដែលមានរចនាសម្ព័ន្ធជាក់លាក់ (ដូចជា Status, Category), **Search** អនុញ្ញាតឱ្យ Client ធ្វើការ Query អត្ថបទភាសាធម្មជាតិ (Free-form text) ទៅលើ Properties ច្រើនក្នុងពេលដំណាលគ្នា (ដូចជា \`title\`, \`description\`, និង \`tags\`)។
-
-### ១. អនុសញ្ញា REST Query Parameters សម្រាប់ Search
-* **Standard Parameter**៖ ជាទូទៅគេប្រើ \`GET /api/v1/articles?q=nodejs\` ឬ \`?search=express\`។
-* **Multi-Field Scanning**៖ ការ Search ច្រើនតែត្រូវ Match ទាំងចំណងជើង (Title) និងខ្លឹមសារ (Body/Description)។
-
-### ២. យុទ្ធសាស្ត្រ Search និង Performance
-* **In-Memory / Regex Search**៖ ស័ក្តិសមសម្រាប់ Dataset តូចៗ។ តែងតែត្រូវ Sanitize និង Escape តួអក្សរពិសេសក្នុង Regex ដើម្បីការពារការវាយប្រហារ **ReDoS (Regular Expression Denial of Service)**!
-* **Full-Text Indexes (Database Level)**៖ សម្រាប់ Production Database (ដូចជា MongoDB \`$text\` index ឬ PostgreSQL \`to_tsvector\`), ត្រូវបង្កើត Full-Text Search Indexes ដែលមានសមត្ថភាព Stemming, Stop-word elimination និង Relevance scoring។`,
-  tip: "កុំបញ្ជូន Query String របស់អ្នកប្រើដែលមិនទាន់ Sanitize ទៅកាន់ `new RegExp(req.query.q)` ដោយផ្ទាល់ឱ្យសោះ! ប្រសិនបើអ្នកប្រើបញ្ចូល Regex pattern មិនត្រឹមត្រូវដូចជា `(a+)+$` វានឹងបង្កឱ្យកើតមាន Catastrophic Backtracking ដែលធ្វើឱ្យ Event Loop របស់ Node.js គាំងទាំងស្រុង (ReDoS attack)។ ដូច្នេះ ត្រូវ Escape Regex Special Characters ជានិច្ចមុននឹងយកទៅប្រើប្រាស់។",
-  objective: "បង្កើត Search Endpoint ប្រកបដោយសុវត្ថិភាពខ្ពស់ក្នុង Express ដោយអនុវត្ត Regex Escaping ត្រឹមត្រូវ និងការពារពីការវាយប្រហារ ReDoS។",
-  expectedOutcome: "បង្កើត Search Handler ដែលមានប្រសិទ្ធភាព អាចស្វែងរកទិន្នន័យឆ្លងកាត់ Fields ច្រើនដោយមិនប៉ះពាល់ដល់ Performance របស់ Server។",
-  codeSnippet: `const express = require("express");
-const app = express();
-
-const articles = [
-  { id: 1, title: "Building Scalable Node.js APIs", summary: "ស្វែងយល់ពី Architecture Patterns សម្រាប់ Express.js" },
-  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "ការរចនា NoSQL Schema និងការ Optimize Indexes" },
-  { id: 3, title: "Full-Stack React & Express", summary: "ការបង្កើត Web Applications ជាមួយ Node.js និង React" },
-  { id: 4, title: "Dockerizing Node Services", summary: "ការរៀបចំ Microservices Container សម្រាប់ Production Cluster" },
-];
-
-// Helper: Escape regex special characters to prevent ReDoS attacks
-function escapeRegex(text) {
-  return text.replace(/[.*+?^$\{\}()|[\\]\\\\]/g, "\\\\$&");
-}
-
-/**
- * GET /api/v1/search?q=node
- */
-app.get("/api/v1/search", (req, res) => {
-  const query = req.query.q || req.query.search;
-
-  if (!query || typeof query !== "string" || query.trim().length === 0) {
-    return res.status(400).json({
-      success: false,
-      error: "Search parameter 'q' or 'search' must be provided",
-    });
-  }
-
-  const sanitizedQuery = escapeRegex(query.trim());
-  const searchRegex = new RegExp(sanitizedQuery, "i"); // Case-insensitive
-
-  // Multi-field search match
-  const matches = articles.filter((article) => {
-    return searchRegex.test(article.title) || searchRegex.test(article.summary);
-  });
-
-  res.json({
-    success: true,
-    query: query.trim(),
-    matchCount: matches.length,
-    data: matches,
-  });
-});`,
+  summary: "**Search** អនុញ្ញាតឱ្យ Client វាយពាក្យស្វែងរកសេរី (`?q=express`) ដើម្បីស្វែងរកលើ Fields ច្រើនដំណាលគ្នា (ដូចជា `title` និង `description`)។\n\n⚠️ **ការព្រមានសុវត្ថិភាព ReDoS (Regular Expression Denial of Service)**៖\n* ប្រសិនបើ Client បញ្ជូន Regex Pattern ពិសេសដូចជា `?q=(a+)+$` ចូលទៅកាន់ `new RegExp(req.query.q)` ដោយផ្ទាល់ វានឹងបង្កឱ្យមាន **Catastrophic Backtracking** ដែលធ្វើឱ្យ Event Loop របស់ Node.js គាំងទាំងស្រុង!\n* **ដំណោះស្រាយ**៖ ត្រូវតែ Escape តួអក្សរពិសេសនៃ Regex ជាមុនសិន។",
+  tip: "អនុវត្តមុខងារ Helper `escapeRegex()` ជានិច្ចមុននឹងបង្កើត `new RegExp()` ចេញពី User Input។",
+  objective: "ចេះបង្កើត Search Endpoint ដែលមានសុវត្ថិភាពខ្ពស់ និងការពារ ReDoS Attacks។",
+  expectedOutcome: "ស្វែងរកទិន្នន័យលើ Multiple Fields ដោយមិនប៉ះពាល់ដល់ Performance ឬ Server Security។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\nconst courses = [\n  { id: 1, title: \"Building Scalable APIs with Express.js\", desc: \"Enterprise architecture patterns\" },\n  { id: 2, title: \"Full-Stack Node.js & React\", desc: \"Complete web app guide\" },\n  { id: 3, title: \"Dockerizing Microservices\", desc: \"Container deployment pipelines\" }\n];\n\n// 🔒 Helper: Escape regex special characters to prevent ReDoS attacks!\nconst escapeRegex = (text) => text.replace(/[.*+?^$${}()|[\\]\\\\]/g, \"\\\\$&\");\n\n// GET /api/v1/courses/search?q=express\napp.get(\"/api/v1/courses/search\", (req, res) => {\n  const query = req.query.q;\n\n  if (!query || typeof query !== \"string\") {\n    return res.status(400).json({ success: false, error: \"Query parameter 'q' is required\" });\n  }\n\n  // Step 1: Escape untrusted user input safely\n  const safePattern = escapeRegex(query.trim());\n  const regex = new RegExp(safePattern, \"i\"); // \"i\" = case insensitive\n\n  // Step 2: Search across multiple fields (title and desc)\n  const matches = courses.filter(c => regex.test(c.title) || regex.test(c.desc));\n\n  return res.status(200).json({\n    success: true,\n    searchTerm: query,\n    count: matches.length,\n    data: matches\n  });\n});",
 };
 
 ```javascript
-const express = require("express");
+import express from "express";
 const app = express();
 
-const articles = [
-  { id: 1, title: "Building Scalable Node.js APIs", summary: "ស្វែងយល់ពី Architecture Patterns សម្រាប់ Express.js" },
-  { id: 2, title: "Mastering MongoDB & Mongoose", summary: "ការរចនា NoSQL Schema និងការ Optimize Indexes" },
-  { id: 3, title: "Full-Stack React & Express", summary: "ការបង្កើត Web Applications ជាមួយ Node.js និង React" },
-  { id: 4, title: "Dockerizing Node Services", summary: "ការរៀបចំ Microservices Container សម្រាប់ Production Cluster" },
+const courses = [
+  { id: 1, title: "Building Scalable APIs with Express.js", desc: "Enterprise architecture patterns" },
+  { id: 2, title: "Full-Stack Node.js & React", desc: "Complete web app guide" },
+  { id: 3, title: "Dockerizing Microservices", desc: "Container deployment pipelines" }
 ];
 
-// Helper: Escape regex special characters to prevent ReDoS attacks
-function escapeRegex(text) {
-  return text.replace(/[.*+?^$\{\}()|[\\]\\\\]/g, "\\$&");
-}
+// 🔒 Helper: Escape regex special characters to prevent ReDoS attacks!
+const escapeRegex = (text) => text.replace(/[.*+?^$${}()|[\]\\]/g, "\\$&");
 
-/**
- * GET /api/v1/search?q=node
- */
-app.get("/api/v1/search", (req, res) => {
-  const query = req.query.q || req.query.search;
+// GET /api/v1/courses/search?q=express
+app.get("/api/v1/courses/search", (req, res) => {
+  const query = req.query.q;
 
-  if (!query || typeof query !== "string" || query.trim().length === 0) {
-    return res.status(400).json({
-      success: false,
-      error: "Search parameter 'q' or 'search' must be provided",
-    });
+  if (!query || typeof query !== "string") {
+    return res.status(400).json({ success: false, error: "Query parameter 'q' is required" });
   }
 
-  const sanitizedQuery = escapeRegex(query.trim());
-  const searchRegex = new RegExp(sanitizedQuery, "i"); // Case-insensitive
+  // Step 1: Escape untrusted user input safely
+  const safePattern = escapeRegex(query.trim());
+  const regex = new RegExp(safePattern, "i"); // "i" = case insensitive
 
-  // Multi-field search match
-  const matches = articles.filter((article) => {
-    return searchRegex.test(article.title) || searchRegex.test(article.summary);
-  });
+  // Step 2: Search across multiple fields (title and desc)
+  const matches = courses.filter(c => regex.test(c.title) || regex.test(c.desc));
 
-  res.json({
+  return res.status(200).json({
     success: true,
-    query: query.trim(),
-    matchCount: matches.length,
-    data: matches,
+    searchTerm: query,
+    count: matches.length,
+    data: matches
   });
 });
 ```

@@ -2,18 +2,31 @@ export const meta = {
   id: "M07-01",
   number: "01",
   title: "Basic Routes",
-  khmerTitle: "ការបង្កើត Basic Routes",
+  khmerTitle: "ការបង្កើត Basic Routes និងរៀបចំ Data Store",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការកំណត់ផ្លូវមូលដ្ឋានត្រូវគ្នានឹងផ្លូវ URI និង HTTP Methods ទៅកាន់អ្នកដោះស្រាយ Callbacks មកវិញជាក់លាក់ដែលត្រឡប់ទិន្នន័យ ឬប្រតិបត្តិ Business Logic ។`,
-  tip: "រក្សា​ការ​កំណត់​ផ្លូវ​ដែល​ត្រូវ​បាន​ប្រកាស និង​ប្រគល់​Business Logic​អ្នក​ដោះស្រាយ​ចំពោះ​មុខងារ​របស់​ឧបករណ៍​បញ្ជា​ជាក់លាក់។",
-  objective: "កំណត់ផ្លូវ GET និង POST ឋិតិវន្តជាមូលដ្ឋាននៅក្នុងកម្មវិធី Express ។",
-  expectedOutcome: "ដំណើរការ Endpoint ឋិតិវន្តដែលឆ្លើយតបទៅនឹង Request HTTP ។",
-  codeSnippet: "app.get(\"/api/health\", (req, res) => {\n  res.json({ status: \"healthy\", timestamp: new Date() });\n});",
+  summary: "នៅក្នុង Module 07 យើងបន្តអភិវឌ្ឍ **Course Catalog API** ដោយបង្កើតប្រព័ន្ធ Routing ពេញលេញ។\n\nRouting អនុញ្ញាតឱ្យយើងបែងចែក Endpoint នីមួយៗតាម HTTP Method និង Path៖\n* `GET /api/v1/courses` សម្រាប់ទាញយក Course ទាំងអស់\n* `POST /api/v1/courses` សម្រាប់បង្កើត Course ថ្មី\n\nកូដខាងក្រោមបង្កើត In-memory Courses Data Store គំរូសម្រាប់ប្រើប្រាស់បន្តពេញមួយ Module នេះ។",
+  tip: "ការប្រើប្រាស់ In-memory Data Store (JavaScript Array) ក្នុងដំណាក់កាលរៀន Routing ជួយឱ្យអ្នកផ្តោតលើ Express Logic ដោយមិនទាន់មានភាពស្មុគស្មាញនៃ Database នៅឡើយ។",
+  objective: "យល់ច្បាស់ពីរចនាសម្ព័ន្ធ Basic Route ក្នុង Express។",
+  expectedOutcome: "ចេះរៀបចំ In-memory dataset និងបង្កើត Basic Endpoints ដំបូង។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// Step 1: In-memory Courses Data Store (Unified Domain)\nconst courses = [\n  { id: 1, title: \"JavaScript Mastery\", instructor: \"Ratha\", price: 29.99, published: true },\n  { id: 2, title: \"Full-Stack Express API\", instructor: \"Dara\", price: 49.99, published: true }\n];\n\n// Step 2: Basic Root and Courses Endpoints\napp.get(\"/api/v1/courses\", (req, res) => {\n  res.status(200).json({ success: true, count: courses.length, data: courses });\n});\n\napp.listen(5000, () => console.log(\"🚀 Server running on port 5000\"));",
 };
 
 ```javascript
-app.get("/api/health", (req, res) => {
-  res.json({ status: "healthy", timestamp: new Date() });
+import express from "express";
+const app = express();
+app.use(express.json());
+
+// Step 1: In-memory Courses Data Store (Unified Domain)
+const courses = [
+  { id: 1, title: "JavaScript Mastery", instructor: "Ratha", price: 29.99, published: true },
+  { id: 2, title: "Full-Stack Express API", instructor: "Dara", price: 49.99, published: true }
+];
+
+// Step 2: Basic Root and Courses Endpoints
+app.get("/api/v1/courses", (req, res) => {
+  res.status(200).json({ success: true, count: courses.length, data: courses });
 });
+
+app.listen(5000, () => console.log("🚀 Server running on port 5000"));
 ```

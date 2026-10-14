@@ -2,21 +2,33 @@ export const meta = {
   id: "M06-12",
   number: "12",
   title: "JSON Responses",
-  khmerTitle: "ការបញ្ជូនទិន្នន័យ JSON ជាមួយ res.json()",
+  khmerTitle: "ការបញ្ជូនទិន្នន័យ JSON តាមរយៈ res.json()",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `\`res.json()\` ផ្ញើការឆ្លើយតប JSON ។ វាបំប្លែងParamsទៅជាJSON String ដោយប្រើ \`JSON.stringify()\` កំណត់Headers \`Content-Type\` ដោយស្វ័យប្រវត្តិទៅជា \`application/json; charset=utf-8\` ហើយធ្វើទ្រង់ទ្រាយតម្លៃទទេ ឬមិនបានកំណត់ដោយសុវត្ថិភាព។`,
-  tip: "តែងតែចូលចិត្ត `res.json()` លើសពី `res.send()` នៅពេលបង្កើត REST APIs សម្រាប់ទម្រង់ច្បាស់លាស់។",
-  objective: "ផ្ញើរចនាសម្ព័ន្ធទិន្នន័យ JSON ដែលបានធ្វើទ្រង់ទ្រាយទៅ Client ។",
-  expectedOutcome: "Serialization JSON ស្របជាមួយនឹង Headers តួអក្សរត្រឹមត្រូវ។",
-  codeSnippet: "app.get(\"/api/profile\", (req, res) => {\n  res.json({\n    success: true,\n    user: { id: 101, name: \"Dara\", verified: true }\n  });\n});",
+  summary: "ក្នុង RESTful API ទំនើប ទម្រង់ឆ្លើយតបស្តង់ដារគឺ **JSON (JavaScript Object Notation)**។\n\n`res.json()` ផ្តល់នូវអត្ថប្រយោជន៍ធំៗ ៣៖\n1. កំណត់ Header `Content-Type: application/json; charset=utf-8`\n2. បំប្លែង JavaScript Object/Array ទៅជា JSON String ដោយ `JSON.stringify()`\n3. គាំទ្រការផ្ញើ `null`, `boolean`, `number`, ឬ `object`",
+  tip: "តែងតែរុំទិន្នន័យ Response ក្នុង Standard Envelope (ដូចជា `{ success: true, data: [...] }`) ដើម្បីឱ្យ Frontend ងាយស្រួល Parse។",
+  objective: "ចេះរៀបចំទម្រង់ Response ជា JSON ឱ្យបានត្រឹមត្រូវ។",
+  expectedOutcome: "ទទួលបាន JSON Response ដែលស្របតាមស្តង់ដារឧស្សាហកម្ម។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\napp.get(\"/api/v1/courses/catalog\", (req, res) => {\n  // Step 1: Prepare data payload\n  const catalog = [\n    { id: 1, title: \"Modern JavaScript\", instructor: \"Ratha\", students: 120 },\n    { id: 2, title: \"Backend Architecture\", instructor: \"Dara\", students: 85 }\n  ];\n\n  // Step 2: Send structured JSON envelope\n  res.status(200).json({\n    success: true,\n    count: catalog.length,\n    data: catalog,\n    timestamp: new Date().toISOString()\n  });\n});",
 };
 
 ```javascript
-app.get("/api/profile", (req, res) => {
-  res.json({
+import express from "express";
+const app = express();
+
+app.get("/api/v1/courses/catalog", (req, res) => {
+  // Step 1: Prepare data payload
+  const catalog = [
+    { id: 1, title: "Modern JavaScript", instructor: "Ratha", students: 120 },
+    { id: 2, title: "Backend Architecture", instructor: "Dara", students: 85 }
+  ];
+
+  // Step 2: Send structured JSON envelope
+  res.status(200).json({
     success: true,
-    user: { id: 101, name: "Dara", verified: true }
+    count: catalog.length,
+    data: catalog,
+    timestamp: new Date().toISOString()
   });
 });
 ```

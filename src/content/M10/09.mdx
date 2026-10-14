@@ -1,26 +1,37 @@
 export const meta = {
   id: "M10-09",
   number: "09",
-  title: "Project Organization",
-  khmerTitle: "ការរៀបចំ Directory និងឯកសារ Controller-Service",
+  title: "Enterprise Project Organization",
+  khmerTitle: "ការរៀបចំ Directory និងឯកសារ Controller-Service ក្នុងគម្រោងធំ",
   type: "architecture",
   codeLanguage: "bash",
-  summary: `ការរៀបចំឯកសារតាមលក្ខណៈ ឬស្រទាប់បច្ចេកទេសដែលមានអនុសញ្ញាដាក់ឈ្មោះស្រប (\`product.controller.js\`, \`product.service.js\`, \`product.routes.js\`) ។`,
-  tip: "រក្សា Controllers Services និងឯកសារផ្លូវដែលទាក់ទងឱ្យនៅជិត ឬដាក់ឈ្មោះផ្គូផ្គងយ៉ាងច្បាស់។",
-  objective: "បង្កើតស្តង់ដារកំណត់ឈ្មោះ និងរចនាសម្ព័ន្ធឯកសារស្របគ្នា។",
-  expectedOutcome: "ការរកឃើញឯកសារវិចារណញាណនៅទូទាំងមូលដ្ឋានកូដក្រុមធំ។",
-  codeSnippet: "src/\n├── controllers/\n│   ├── auth.controller.js\n│   └── product.controller.js\n├── services/\n│   ├── auth.service.js\n│   └── product.service.js\n└── routes/\n    ├── auth.routes.js\n    └── product.routes.js",
+  summary: "រចនាសម្ព័ន្ធ Folder ស្តង់ដារ Enterprise សម្រាប់ **Course Catalog API** បន្ទាប់ពី Refactoring ជាមួយ Controllers និង Services៖\n\n* **src/routes/**៖ ផ្ទុកតែ Route Definitions\n* **src/controllers/**៖ ផ្ទុក Controllers ដែលសម្របសម្រួល HTTP\n* **src/services/**៖ ផ្ទុក Pure Business Logic\n* **src/errors/**៖ ផ្ទុក `AppError` classes\n* **src/middlewares/**៖ ផ្ទុក Auth, Validation, Logger, និង Central Error Handler",
+  tip: "អនុវត្តការដាក់ឈ្មោះឯកសារឱ្យស៊ីសង្វាក់គ្នា (Naming Consistency) ដូចជា `course.routes.js`, `course.controller.js`, និង `course.service.js` ដើម្បីងាយស្រួលស្វែងរក។",
+  objective: "ចេះរៀបចំ Folder Structure សម្រាប់គម្រោងកម្រិត Enterprise។",
+  expectedOutcome: "រចនាសម្ព័ន្ធឯកសារមានរបៀបរៀបរយ ស្របតាមឧស្សាហកម្ម Software Engineering។",
+  codeSnippet: "course-catalog-api/\n├── package.json\n├── src/\n│   ├── app.js                          # Express app configuration & middleware pipeline\n│   ├── server.js                       # Server entry point (app.listen & shutdown)\n│   ├── routes/\n│   │   ├── index.js                    # Central API aggregator (/api/v1)\n│   │   ├── course.routes.js            # Course endpoints mapping\n│   │   └── lesson.routes.js            # Lesson endpoints mapping\n│   ├── controllers/\n│   │   ├── course.controller.js        # Slim HTTP controllers\n│   │   └── lesson.controller.js\n│   ├── services/\n│   │   ├── course.service.js           # Reusable pure business logic\n│   │   └── lesson.service.js\n│   ├── errors/\n│   │   └── AppError.js                 # Central domain error class\n│   └── middlewares/\n│       ├── auth.middleware.js          # requireAuth & restrictTo guards\n│       ├── validate.middleware.js      # Input validators\n│       └── error.middleware.js         # 4-parameter error handler",
 };
 
 ```bash
-src/
-├── controllers/
-│   ├── auth.controller.js
-│   └── product.controller.js
-├── services/
-│   ├── auth.service.js
-│   └── product.service.js
-└── routes/
-    ├── auth.routes.js
-    └── product.routes.js
+course-catalog-api/
+├── package.json
+├── src/
+│   ├── app.js                          # Express app configuration & middleware pipeline
+│   ├── server.js                       # Server entry point (app.listen & shutdown)
+│   ├── routes/
+│   │   ├── index.js                    # Central API aggregator (/api/v1)
+│   │   ├── course.routes.js            # Course endpoints mapping
+│   │   └── lesson.routes.js            # Lesson endpoints mapping
+│   ├── controllers/
+│   │   ├── course.controller.js        # Slim HTTP controllers
+│   │   └── lesson.controller.js
+│   ├── services/
+│   │   ├── course.service.js           # Reusable pure business logic
+│   │   └── lesson.service.js
+│   ├── errors/
+│   │   └── AppError.js                 # Central domain error class
+│   └── middlewares/
+│       ├── auth.middleware.js          # requireAuth & restrictTo guards
+│       ├── validate.middleware.js      # Input validators
+│       └── error.middleware.js         # 4-parameter error handler
 ```

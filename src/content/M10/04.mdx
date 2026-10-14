@@ -1,26 +1,33 @@
 export const meta = {
   id: "M10-04",
   number: "04",
-  title: "Routes",
-  khmerTitle: "តួនាទីនៃ Route Definitions",
+  title: "Routes (Declarative Route Mapping)",
+  khmerTitle: "តួនាទីនៃ Route Definitions (Declarative Wiring)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Routes បម្រើសុទ្ធសាធជាRouting tableដែលគូសផែនទី HTTP ផ្លូវ និងHTTP Methodsទៅកាន់ Guards កណ្តាល និងអ្នកដោះស្រាយ Controllers ។`,
-  tip: "ឯកសារផ្លូវគួរតែមាន Business Logic សូន្យ - មានតែការកំណត់ផ្លូវ URL និងការចងMiddlewareប៉ុណ្ណោះ។",
-  objective: "រក្សា​ទុក​ឯកសារ​និយមន័យ​ផ្លូវ​ដែល​គ្មាន​ខ្លាញ់​និង​ការ​ប្រកាស។",
-  expectedOutcome: "សម្អាត​ការ​ប្រកាស​ផ្លូវ​ដែល​អាន​ដូច​តារាង​មាតិកា API ។",
-  codeSnippet: "import { Router } from \"express\";\nimport * as productController from \"../controllers/product.controller.js\";\nimport { authenticate } from \"../middleware/auth.js\";\n\nconst router = Router();\n\nrouter.get(\"/\", productController.getAllProducts);\nrouter.post(\"/\", authenticate, productController.createProduct);\n\nexport default router;",
+  summary: "នៅក្នុង 3-Tier Architecture ឯកសារ **Routes** គ្រាន់តែជាកន្លែង **Wiring (ភ្ជាប់ខ្សែរវាង URL, Middleware, និង Controller)** ប៉ុណ្ណោះ។\n\nវាមិនផ្ទុក Logic ណាមួយឡើយ ក្រៅពីការប្រកាសយ៉ាងច្បាស់លាស់ (Declarative Syntax)៖\n```javascript\nrouter.get(\"/:id\", authGuard, courseController.getCourseById);\n```\n\nរចនាសម្ព័ន្ធបែបនេះជួយឱ្យអ្នកណាក៏ដោយដែលបើកមើលឯកសារ Routes អាចយល់បានភ្លាមៗក្នុងរយៈពេល ៥ វិនាទីពី Endpoints ទាំងអស់នៃ Module។",
+  tip: "រក្សាឯកសារ Route ឱ្យខ្លី និងស្អាត។ វាមិនគួរមាន Callback Function លើសពី ៣ ជួរឡើយ។",
+  objective: "ចេះរៀបចំ Route File ឱ្យមានលក្ខណៈ Declarative និងច្បាស់លាស់។",
+  expectedOutcome: "Routes ដើរតួជាផែនទីបង្ហាញផ្លូវដ៏ស្អាតនៃ Application API។",
+  codeSnippet: "// src/routes/course.routes.js\nimport express from \"express\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\n// Step 1: Wire endpoints directly to controller methods\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .put(courseController.updateCourse)\n  .delete(courseController.deleteCourse);\n\nexport default router;",
 };
 
 ```javascript
-import { Router } from "express";
-import * as productController from "../controllers/product.controller.js";
-import { authenticate } from "../middleware/auth.js";
+// src/routes/course.routes.js
+import express from "express";
+import * as courseController from "../controllers/course.controller.js";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/", productController.getAllProducts);
-router.post("/", authenticate, productController.createProduct);
+// Step 1: Wire endpoints directly to controller methods
+router.route("/")
+  .get(courseController.getAllCourses)
+  .post(courseController.createCourse);
+
+router.route("/:id")
+  .get(courseController.getCourseById)
+  .put(courseController.updateCourse)
+  .delete(courseController.deleteCourse);
 
 export default router;
 ```

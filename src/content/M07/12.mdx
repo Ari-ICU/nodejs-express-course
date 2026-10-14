@@ -1,30 +1,42 @@
 export const meta = {
   id: "M07-12",
   number: "12",
-  title: "Nested Routes",
-  khmerTitle: "ការបង្កើត Nested Routes (Parent-Child Relationships)",
+  title: "Nested Routes (mergeParams)",
+  khmerTitle: "ការបង្កើត Nested Routes សម្រាប់ Parent-Child Relationships",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ផ្លូវ​ដែល​បាន​បង្កប់​តំណាង​ឱ្យ​ទំនាក់ទំនង​តាម​ឋានានុក្រម (ឧ. \`/tours/:tourId/reviews\`)។ Express គាំទ្រការបញ្ចូលParamsមេទៅក្នុងរ៉ោតទ័រកូនដោយប្រើ \`{ mergeParams: true }\` ។`,
-  tip: "ឆ្លងកាត់ `{ mergeParams: true }` ទៅកាន់ `Router()` ជានិច្ច នៅពេលដំឡើងរ៉ោតទ័រកុមារដែលភ្ជាប់មកជាមួយ ដូច្នេះអ្នកដោះស្រាយកុមារអាចចូលប្រើ Params ផ្លូវមេ (ដូចជា `:tourId`) ។",
-  objective: "បង្កើតផ្លូវ REST ឋានានុក្រមសម្រាប់គំរូទិន្នន័យមាតាបិតា និងកូន។",
-  expectedOutcome: "ការធ្វើគំរូត្រឹមត្រូវនៃធនធានទំនាក់ទំនងនៅក្នុង RESTful endpoints ។",
-  codeSnippet: "// routes/review.routes.js\nimport { Router } from \"express\";\n\n// mergeParams: true allows access to :tourId from parent route!\nconst router = Router({ mergeParams: true });\n\nrouter.route(\"/\")\n  .get(getReviews)\n  .post(createReview);\n\nexport default router;\n\n// routes/tour.routes.js:\n// router.use(\"/:tourId/reviews\", reviewRouter);",
+  summary: "នៅក្នុងពិភពពិត Resources ច្រើនតែមានទំនាក់ទំនង **Parent-Child (Hierarchical Relationship)** ជាមួយគ្នា។ ឧទាហរណ៍៖ Course មួយមាន Lessons ជាច្រើន៖\n`GET /api/v1/courses/:courseId/lessons`\n\nដើម្បីឱ្យ Child Router (`lessonRouter`) អាចអាន Route Parameter របស់ Parent (`:courseId`) បាន យើងត្រូវកំណត់ **`{ mergeParams: true }`** ពេលបង្កើត Router!",
+  tip: "⚠️ ប្រសិនបើអ្នកភ្លេចដាក់ `{ mergeParams: true }` នោះ `req.params.courseId` នៅក្នុង `lessonRouter` នឹងចេញ `undefined`!",
+  objective: "ចេះបង្កើត Nested Router ជាមួយ Option { mergeParams: true }។",
+  expectedOutcome: "យល់ច្បាស់ពីរបៀប Map Parent-Child REST API Relationships ក្នុង Express។",
+  codeSnippet: "// src/routes/lesson.routes.js\nimport express from \"express\";\n\n// Step 1: Enable mergeParams to inherit parent route parameters (:courseId)\nconst lessonRouter = express.Router({ mergeParams: true });\n\nconst lessons = [\n  { id: 101, courseId: 1, title: \"Introduction to Node.js\" },\n  { id: 102, courseId: 1, title: \"Express Routing Deep Dive\" }\n];\n\n// Step 2: GET all lessons belonging to a specific course\nlessonRouter.get(\"/\", (req, res) => {\n  // 💡 Teaching Note: Accessing :courseId from parent route!\n  const courseId = Number(req.params.courseId);\n  const courseLessons = lessons.filter(l => l.courseId === courseId);\n\n  res.status(200).json({\n    success: true,\n    courseId,\n    count: courseLessons.length,\n    data: courseLessons\n  });\n});\n\nexport default lessonRouter;",
 };
 
 ```javascript
-// routes/review.routes.js
-import { Router } from "express";
+// src/routes/lesson.routes.js
+import express from "express";
 
-// mergeParams: true allows access to :tourId from parent route!
-const router = Router({ mergeParams: true });
+// Step 1: Enable mergeParams to inherit parent route parameters (:courseId)
+const lessonRouter = express.Router({ mergeParams: true });
 
-router.route("/")
-  .get(getReviews)
-  .post(createReview);
+const lessons = [
+  { id: 101, courseId: 1, title: "Introduction to Node.js" },
+  { id: 102, courseId: 1, title: "Express Routing Deep Dive" }
+];
 
-export default router;
+// Step 2: GET all lessons belonging to a specific course
+lessonRouter.get("/", (req, res) => {
+  // 💡 Teaching Note: Accessing :courseId from parent route!
+  const courseId = Number(req.params.courseId);
+  const courseLessons = lessons.filter(l => l.courseId === courseId);
 
-// routes/tour.routes.js:
-// router.use("/:tourId/reviews", reviewRouter);
+  res.status(200).json({
+    success: true,
+    courseId,
+    count: courseLessons.length,
+    data: courseLessons
+  });
+});
+
+export default lessonRouter;
 ```

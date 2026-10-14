@@ -1,30 +1,43 @@
 export const meta = {
   id: "M08-09",
   number: "09",
-  title: "Authorization Middleware",
-  khmerTitle: "ការបង្កើត Authorization Middleware តាម Role",
+  title: "Authorization Middleware (RBAC)",
+  khmerTitle: "ការបង្កើត Authorization Middleware ផ្ទៀងផ្ទាត់សិទ្ធិ Role",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `MiddlewareAuthorization ត្រួតពិនិត្យតួនាទីរបស់អ្នកប្រើដែលបានផ្ទៀងផ្ទាត់ (ឧ. \`admin\`, \`moderator\`) និងផ្ទៀងផ្ទាត់ថាតើពួកគេមានAuthorizationដើម្បីចូលប្រើធនធានដែលបានស្នើសុំដែរឬទេ។`,
-  tip: "ត្រឡប់ `403 Forbidden` នៅពេលដែលអ្នកប្រើប្រាស់ត្រូវបានផ្ទៀងផ្ទាត់ ប៉ុន្តែខ្វះ Authorization ដែលត្រូវការ។",
-  objective: "អនុវត្តការត្រួតពិនិត្យការចូលដំណើរការដោយផ្អែកលើតួនាទី (RBAC) នៅលើផ្លូវ។",
-  expectedOutcome: "Authorization ដែលមានលក្ខណៈល្អិតល្អន់ឆ្លងកាត់ Endpoint ផ្នែករដ្ឋបាល។",
-  codeSnippet: "export const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return res.status(403).json({\n        success: false,\n        error: \"Forbidden: Insufficient privileges\"\n      });\n    }\n    next();\n  };\n};\n\n// Usage on route:\n// router.delete(\"/users/:id\", authenticate, restrictTo(\"admin\"), deleteUser);",
+  summary: "បន្ទាប់ពី Authentication ដឹងថា **\"អ្នកជានរណា\"** ជំហានបន្ទាប់គឺ **Authorization** ដែលកំណត់ថា **\"តើអ្នកមានសិទ្ធិធ្វើសកម្មភាពនេះដែរឬទេ\"**។\n\n**Role-Based Access Control (RBAC)** Middleware ត្រូវបានបង្កើតឡើងជា Higher-Order Function (`restrictTo(...allowedRoles)`) ដែលពិនិត្យ `req.user.role`៖\n* ប្រសិនបើ Role មិនស្ថិតក្នុង Allowed Roles ត្រឡប់ `403 Forbidden`\n* ប្រសិនបើត្រូវ ហៅ `next()`",
+  tip: "ភាពខុសគ្នារវាង 401 និង 403៖ 401 Unauthorized (មិនទាន់ Login / គ្មាន Token) ចំណែក 403 Forbidden (បាន Login រួចរាល់ហើយ តែគ្មានសិទ្ធិគ្រប់គ្រាន់)។",
+  objective: "ចេះបង្កើត Role-based authorization middleware ជាមួយ Higher-order function។",
+  expectedOutcome: "ការពារ Admin/Instructor endpoints ពីការចូលប្រើប្រាស់ដោយសិស្សទូទៅ (Students)។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Mock requireAuth that sets req.user\nconst mockAuth = (req, res, next) => {\n  req.user = { id: 1, role: \"student\" }; // Change to \"admin\" to test!\n  next();\n};\n\n// Step 1: Role Authorization Higher-Order Middleware Factory\nexport const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    // 💡 Teaching Note: req.user is guaranteed by requireAuth\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return res.status(403).json({\n        success: false,\n        error: `Forbidden: Role '${req.user?.role}' does not have permission for this action`\n      });\n    }\n    next();\n  };\n};\n\n// Step 2: Restrict Course deletion to \"admin\" only\napp.delete(\"/api/v1/courses/:id\", mockAuth, restrictTo(\"admin\"), (req, res) => {\n  res.status(200).json({ success: true, message: \"Course deleted by Admin\" });\n});",
 };
 
 ```javascript
+import express from "express";
+const app = express();
+
+// Mock requireAuth that sets req.user
+const mockAuth = (req, res, next) => {
+  req.user = { id: 1, role: "student" }; // Change to "admin" to test!
+  next();
+};
+
+// Step 1: Role Authorization Higher-Order Middleware Factory
 export const restrictTo = (...allowedRoles) => {
   return (req, res, next) => {
+    // 💡 Teaching Note: req.user is guaranteed by requireAuth
     if (!req.user || !allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
-        error: "Forbidden: Insufficient privileges"
+        error: `Forbidden: Role '${req.user?.role}' does not have permission for this action`
       });
     }
     next();
   };
 };
 
-// Usage on route:
-// router.delete("/users/:id", authenticate, restrictTo("admin"), deleteUser);
+// Step 2: Restrict Course deletion to "admin" only
+app.delete("/api/v1/courses/:id", mockAuth, restrictTo("admin"), (req, res) => {
+  res.status(200).json({ success: true, message: "Course deleted by Admin" });
+});
 ```

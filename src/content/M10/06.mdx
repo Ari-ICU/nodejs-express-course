@@ -1,47 +1,47 @@
 export const meta = {
   id: "M10-06",
   number: "06",
-  title: "Controller-Service Architecture",
-  khmerTitle: "ស្ថាបត្យកម្ម Controller-Service",
+  title: "Controller-Service Integration",
+  khmerTitle: "ការរួមបញ្ចូល Controller និង Service ក្នុង Course Enrollment Workflow",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `គំរូ Services គ្រប់គ្រងគឺជាស្តង់ដារមាសសម្រាប់ backend Express របស់សហគ្រាស។ វាបង្កើតលំហូរទិន្នន័យ unidirectional ពីការដឹកជញ្ជូន HTTP ចុះទៅក្នុង domain logic និង persistence layers ។`,
-  tip: "អ្នកគ្រប់គ្រងគ្រប់គ្រង 'អ្វីដែលត្រូវផ្ញើទៅអ្នកប្រើប្រាស់វិញ' ខណៈពេលដែល Services គ្រប់គ្រង 'របៀបដែលអាជីវកម្មដំណើរការ' ។",
-  objective: "បង្កើតមុខងារពេញលេញដោយប្រើគំរូ Controllers-Services ។",
-  expectedOutcome: "ការបំបែកថ្នាក់ផលិតកម្មនៃការដឹកជញ្ជូន និង Business Logic ។",
-  codeSnippet: "// controller (handles HTTP transport & status):\nexport const register = async (req, res, next) => {\n  try {\n    const user = await userService.registerUser(req.body);\n    res.status(201).json({ success: true, data: user });\n  } catch (err) {\n    next(err);\n  }\n};\n\n// service (handles pure business logic & data operations):\nconst users = [];\n\nexport const registerUser = async (userData) => {\n  const existing = users.find((u) => u.email === userData.email);\n  if (existing) {\n    const error = new Error(\"Email already registered\");\n    error.statusCode = 409;\n    throw error;\n  }\n\n  const newUser = {\n    id: String(Date.now()),\n    email: userData.email,\n    name: userData.name,\n    createdAt: new Date().toISOString(),\n  };\n\n  users.push(newUser);\n  return newUser;\n};",
+  summary: "អនុវត្តជាក់ស្តែងនូវ **Complete Course Enrollment Workflow** ដោយរួមបញ្ចូលគ្នារវាង Controller និង Service៖\n\n1. **Student ស្នើសុំចុះឈ្មោះចូលរៀន** (`POST /courses/:id/enroll`)\n2. **Controller**៖ ដកស្រង់ `courseId` និង `studentId` ពី Request រួចបញ្ជូនទៅកាន់ Service\n3. **Service**៖\n   * ពិនិត្យថាតើ Course មានពិតមែនឬអត់\n   * ពិនិត្យថាតើ Course ពេញហើយឬនៅ\n   * គណនាតម្លៃបញ្ចុះតម្លៃ (Discount)\n   * បញ្ចូលឈ្មោះ Student ទៅក្នុងបញ្ជី\n4. **Controller**៖ ទទួលលទ្ធផលជោគជ័យ រួចឆ្លើយតប `200 OK` ជាមួយ Enrollment Receipt",
+  tip: "ការបំបែកបែបនេះធ្វើឱ្យកូដងាយស្រួលពន្យល់សិស្សជាជំហានៗ៖ ជំហានទី ១ (HTTP), ជំហានទី ២ (Logic), ជំហានទី ៣ (Result)។",
+  objective: "ចេះសរសេរ Integration ពេញលេញរវាង Controller និង Service លើ Real-world Feature។",
+  expectedOutcome: "បង្កើត Feature ដែលមានស្ថាបត្យកម្មស្អាត និងងាយស្រួលពង្រីក។",
+  codeSnippet: "// 1. IN SERVICE (src/services/enrollment.service.js):\nexport const enrollStudentInCourse = async (courseId, student) => {\n  // Business Rule 1: Validate course exists\n  const course = await getCourseById(courseId);\n  if (!course) throw new Error(\"Course not found\");\n\n  // Business Rule 2: Calculate pricing with student discount\n  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;\n\n  // Business Rule 3: Record enrollment\n  const enrollment = {\n    id: Date.now(),\n    courseId,\n    studentId: student.id,\n    amountPaid: finalPrice,\n    enrolledAt: new Date().toISOString()\n  };\n\n  return enrollment;\n};\n\n// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):\nexport const handleEnrollment = async (req, res, next) => {\n  try {\n    const courseId = Number(req.params.id);\n    const enrollment = await enrollStudentInCourse(courseId, req.user);\n    res.status(201).json({ success: true, data: enrollment });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 
 ```javascript
-// controller (handles HTTP transport & status):
-export const register = async (req, res, next) => {
+// 1. IN SERVICE (src/services/enrollment.service.js):
+export const enrollStudentInCourse = async (courseId, student) => {
+  // Business Rule 1: Validate course exists
+  const course = await getCourseById(courseId);
+  if (!course) throw new Error("Course not found");
+
+  // Business Rule 2: Calculate pricing with student discount
+  const finalPrice = student.isScholarship ? course.price * 0.5 : course.price;
+
+  // Business Rule 3: Record enrollment
+  const enrollment = {
+    id: Date.now(),
+    courseId,
+    studentId: student.id,
+    amountPaid: finalPrice,
+    enrolledAt: new Date().toISOString()
+  };
+
+  return enrollment;
+};
+
+// 2. IN CONTROLLER (src/controllers/enrollment.controller.js):
+export const handleEnrollment = async (req, res, next) => {
   try {
-    const user = await userService.registerUser(req.body);
-    res.status(201).json({ success: true, data: user });
+    const courseId = Number(req.params.id);
+    const enrollment = await enrollStudentInCourse(courseId, req.user);
+    res.status(201).json({ success: true, data: enrollment });
   } catch (err) {
     next(err);
   }
-};
-
-// service (handles pure business logic & data operations):
-const users = [];
-
-export const registerUser = async (userData) => {
-  const existing = users.find((u) => u.email === userData.email);
-  if (existing) {
-    const error = new Error("Email already registered");
-    error.statusCode = 409;
-    throw error;
-  }
-
-  const newUser = {
-    id: String(Date.now()),
-    email: userData.email,
-    name: userData.name,
-    createdAt: new Date().toISOString(),
-  };
-
-  users.push(newUser);
-  return newUser;
 };
 ```

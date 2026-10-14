@@ -1,20 +1,38 @@
 export const meta = {
   id: "M07-09",
   number: "09",
-  title: "Multiple Routes",
-  khmerTitle: "ការគ្រប់គ្រង Routes ច្រើនក្នុងកម្មវិធី",
+  title: "Route Chaining with app.route()",
+  khmerTitle: "ការរៀបចំកូដកុំឱ្យស្ទួនតាមរយៈ app.route()",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "ការ​គ្រប់​គ្រង​ផ្លូវ​ច្រើន​យ៉ាង​ស្អាត​តម្រូវ​ឱ្យ​មាន​ការ​ដាក់​ជា​ក្រុម​ឡូជីខល ដូច្នេះ​ផ្លូវ URL នៅ​តែ​មាន​លក្ខណៈ​វិចារណញាណ អាច​ទស្សន៍ទាយ​បាន និង​អាច​រក្សា​បាន​តាម​មាត្រដ្ឋាន​កម្មវិធី។",
-  tip: "កំណត់បុព្វបទកំណែ API ស្រប (ឧ. `/api/v1`) ឆ្លងកាត់ផ្លូវទាំងអស់។",
-  objective: "រៀបចំ Collections ផ្លូវយ៉ាងទូលំទូលាយដោយមិនដាក់ឈ្មោះការប៉ះទង្គិច។",
-  expectedOutcome: "សម្អាត​ចន្លោះ​ឈ្មោះ​ផ្លូវ API ដែល​ស្រប​គ្នា​នៅ​ទូទាំង​គម្រោង​ទាំងមូល។",
-  codeSnippet: "// Mounting domain routers under versioned namespaces\napp.use(\"/api/v1/users\", userRouter);\napp.use(\"/api/v1/products\", productRouter);\napp.use(\"/api/v1/orders\", orderRouter);",
+  summary: "នៅពេលដែល Route Path មួយគាំទ្រ HTTP Methods ច្រើន (ឧ. `/api/v1/courses` គាំទ្រទាំង GET និង POST) ការសរសេរ `app.get()` និង `app.post()` ដោយសរសេរ Path ដដែលៗអាចធ្វើឱ្យកូដមិនសូវស្អាត។\n\nExpress ផ្តល់ជូន **`app.route(path)`** ដែលអនុញ្ញាតឱ្យយើង Chain Methods ចូលគ្នាបាន៖\n```javascript\napp.route(\"/api/v1/courses\")\n  .get(getCourses)\n  .post(createCourse);\n```",
+  tip: "ការប្រើប្រាស់ `app.route()` ជួយការពារកំហុស Typing Path ខុស និងធ្វើឱ្យកូដស្របតាមគោលការណ៍ DRY (Don't Repeat Yourself)។",
+  objective: "ចេះប្រើប្រាស់ Route Chaining ដើម្បីកាត់បន្ថយការសរសេរ Path ស្ទួនៗ។",
+  expectedOutcome: "កូដមានរចនាសម្ព័ន្ធបង្រួមស្អាត និងងាយស្រួល Maintain។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nconst courses = [{ id: 1, title: \"Express API Mastery\" }];\n\n// Step 1: Chain collection routes on /api/v1/courses\napp.route(\"/api/v1/courses\")\n  .get((req, res) => {\n    res.json({ success: true, count: courses.length, data: courses });\n  })\n  .post((req, res) => {\n    const newCourse = { id: courses.length + 1, ...req.body };\n    courses.push(newCourse);\n    res.status(201).json({ success: true, data: newCourse });\n  });\n\n// Step 2: Chain item routes on /api/v1/courses/:id\napp.route(\"/api/v1/courses/:id\")\n  .get((req, res) => res.json({ action: `Get course ${req.params.id}` }))\n  .patch((req, res) => res.json({ action: `Update course ${req.params.id}` }))\n  .delete((req, res) => res.status(204).send());",
 };
 
 ```javascript
-// Mounting domain routers under versioned namespaces
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/products", productRouter);
-app.use("/api/v1/orders", orderRouter);
+import express from "express";
+const app = express();
+app.use(express.json());
+
+const courses = [{ id: 1, title: "Express API Mastery" }];
+
+// Step 1: Chain collection routes on /api/v1/courses
+app.route("/api/v1/courses")
+  .get((req, res) => {
+    res.json({ success: true, count: courses.length, data: courses });
+  })
+  .post((req, res) => {
+    const newCourse = { id: courses.length + 1, ...req.body };
+    courses.push(newCourse);
+    res.status(201).json({ success: true, data: newCourse });
+  });
+
+// Step 2: Chain item routes on /api/v1/courses/:id
+app.route("/api/v1/courses/:id")
+  .get((req, res) => res.json({ action: `Get course ${req.params.id}` }))
+  .patch((req, res) => res.json({ action: `Update course ${req.params.id}` }))
+  .delete((req, res) => res.status(204).send());
 ```

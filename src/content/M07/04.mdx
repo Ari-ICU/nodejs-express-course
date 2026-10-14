@@ -2,19 +2,49 @@ export const meta = {
   id: "M07-04",
   number: "04",
   title: "PUT Routes",
-  khmerTitle: "ការបង្កើត PUT Routes សម្រាប់ជំនួសទិន្នន័យចាស់ទាំងស្រុង",
+  khmerTitle: "ការបង្កើត PUT Routes សម្រាប់ជំនួស Course ចាស់ទាំងស្រុង",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ផ្លូវ PUT ជំនួសធនធានទាំងមូលជាមួយនឹង Payload ដែលបានផ្តល់។ វាលដែលមានស្រាប់ណាមួយដែលបានលុបចេញពី Request Body ត្រូវបានសរសេរជាន់ពីលើ ឬកំណត់ឡើងវិញទៅលំនាំដើម។`,
-  tip: "ប្រើ PUT សម្រាប់ការជំនួសពេញលេញ និង PATCH សម្រាប់ការអាប់ដេតផ្នែកផ្នែក។",
-  objective: "អនុវត្ត​ផ្លូវ​ធ្វើ​បច្ចុប្បន្នភាព​ជំនួស​ពេញលេញ​ដែល​គ្មាន​សមត្ថភាព។",
-  expectedOutcome: "ការជំនួសធនធានស្តង់ដារ។",
-  codeSnippet: "app.put(\"/api/v1/users/:id\", async (req, res) => {\n  const updatedUser = await userService.replaceUser(req.params.id, req.body);\n  res.json({ success: true, data: updatedUser });\n});",
+  summary: "**PUT Route** ត្រូវបានប្រើសម្រាប់ **Full Replacement** នៃ Resource ដែលមានស្រាប់។\n\nគោលការណ៍ PUT៖\n* Client ត្រូវតែផ្ញើ Properties ទាំងអស់នៃ Resource មក\n* រាល់ Fields ណាដែលមិនបានផ្ញើមក នឹងត្រូវលុបចោល ឬជំនួសដោយ Default Values\n* ប្រសិនបើ Course ID មិនមានក្នុង Data Store អាចត្រឡប់ `404 Not Found` (ឬបង្កើតថ្មីតាម REST convention)",
+  tip: "ប្រសិនបើអ្នកចង់កែប្រែតែ Field មួយ (ដូចជា price) សូមកុំប្រើ PUT ត្រូវប្រើ PATCH ជំនួសវិញ។",
+  objective: "ចេះបង្កើត PUT Endpoint សម្រាប់ជំនួសទិន្នន័យ Course ទាំងស្រុង។",
+  expectedOutcome: "យល់ច្បាស់ពីភាពខុសគ្នារវាង Full Replacement (PUT) និង Partial Update (PATCH)។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [\n  { id: 1, title: \"JavaScript Mastery\", instructor: \"Ratha\", price: 29.99, published: true }\n];\n\n// Step 1: PUT Endpoint to fully replace Course entity\napp.put(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const index = courses.findIndex(c => c.id === courseId);\n\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  const { title, instructor, price, published } = req.body;\n  if (!title || price === undefined) {\n    return res.status(400).json({ success: false, error: \"Missing required fields for PUT\" });\n  }\n\n  // Step 2: Completely replace existing course object\n  const replacedCourse = {\n    id: courseId,\n    title,\n    instructor: instructor || \"Unknown\",\n    price: Number(price),\n    published: Boolean(published)\n  };\n\n  courses[index] = replacedCourse;\n  return res.status(200).json({ success: true, data: replacedCourse });\n});",
 };
 
 ```javascript
-app.put("/api/v1/users/:id", async (req, res) => {
-  const updatedUser = await userService.replaceUser(req.params.id, req.body);
-  res.json({ success: true, data: updatedUser });
+import express from "express";
+const app = express();
+app.use(express.json());
+
+let courses = [
+  { id: 1, title: "JavaScript Mastery", instructor: "Ratha", price: 29.99, published: true }
+];
+
+// Step 1: PUT Endpoint to fully replace Course entity
+app.put("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const index = courses.findIndex(c => c.id === courseId);
+
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  const { title, instructor, price, published } = req.body;
+  if (!title || price === undefined) {
+    return res.status(400).json({ success: false, error: "Missing required fields for PUT" });
+  }
+
+  // Step 2: Completely replace existing course object
+  const replacedCourse = {
+    id: courseId,
+    title,
+    instructor: instructor || "Unknown",
+    price: Number(price),
+    published: Boolean(published)
+  };
+
+  courses[index] = replacedCourse;
+  return res.status(200).json({ success: true, data: replacedCourse });
 });
 ```

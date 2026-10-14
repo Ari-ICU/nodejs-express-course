@@ -2,82 +2,30 @@ export const meta = {
   id: "M09-01",
   number: "01",
   title: "What is REST?",
-  khmerTitle: "អ្វីជាស្ថាបត្យកម្ម REST?",
+  khmerTitle: "អ្វីជាស្ថាបត្យកម្ម REST និង Uniform Interface?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `**Representational State Transfer (REST)** គឺជាទម្រង់ស្ថាបត្យកម្ម (Architectural Style) សម្រាប់រៀបចំ និងរចនាប្រព័ន្ធកម្មវិធីតាមបណ្តាញអ៊ីនធឺណិត (Distributed Hypermedia Systems) ដែលត្រូវបានបង្កើតឡើងក្នុងឆ្នាំ ២០០០ ដោយលោក Roy Fielding ក្នុងសារណាថ្នាក់បណ្ឌិតរបស់គាត់។
-
-### ១. ទស្សនវិជ្ជាគ្រឹះនៃ REST
-ខុសប្លែកពីប្រព័ន្ធ RPC (Remote Procedure Call) ឬ SOAP ដែលផ្តោតលើការហៅអនុគមន៍ពីចម្ងាយ (Remote Methods), ស្ថាបត្យកម្ម REST ចាត់ទុកប្រព័ន្ធទាំងមូលជា Cluster នៃ **Resources** (ធនធានទិន្នន័យ) ដែលត្រូវបានកំណត់អាសយដ្ឋានយ៉ាងជាក់លាក់ដោយ URIs (ឧទាហរណ៍៖ \`/api/v1/orders/102\`)។ Client ធ្វើការទំនាក់ទំនង និងផ្លាស់ប្តូរទិន្នន័យ (Representation) តាមរយៈទម្រង់ JSON ដោយប្រើប្រាស់ប្រតិបត្តិការស្តង់ដារនៃពិធីការ HTTP។
-
-### ២. គោលការណ៍ស្នូលទាំង ៣ នៃ REST
-* **Resource-Centric**៖ រាល់ Entity សំខាន់ៗ (Users, Products, Orders) សុទ្ធតែមាន URI ផ្ទាល់ខ្លួនច្បាស់លាស់។
-* **ប្រើប្រាស់ HTTP ជា Application Protocol**៖ ប្រើប្រាស់ HTTP Verbs ដើម (\`GET\`, \`POST\`, \`PUT\`, \`PATCH\`, \`DELETE\`) ជាជាងការបង្កើត Action Verbs ក្នុង URL។
-* **Decoupled Architecture**៖ Client មិនចាំបាច់ដឹងពីរចនាសម្ព័ន្ធ Database ឬភាសាកូដដែល Server កំពុងប្រើប្រាស់នោះឡើយ។`,
-  tip: "REST គឺជាទម្រង់ស្ថាបត្យកម្ម (Design Pattern) មិនមែនជា Library ឬ Framework នោះទេ។ ភាពស៊ីសង្វាក់គ្នានៃការដាក់ឈ្មោះ URI, ការជ្រើសរើស HTTP Status Codes, និងទម្រង់ឆ្លើយតប JSON គឺជាអ្វីដែលកំណត់ថាតើ API មួយជា RESTful ពិតប្រាកដ ឬអត់។",
-  objective: "ស្វែងយល់ និងក្តាប់ឱ្យបានច្បាស់ពីទស្សនវិជ្ជាស្ថាបត្យកម្ម REST និងចេះបែងចែកភាពខុសគ្នារវាង Resource-Oriented Design ជាមួយ RPC និង SOAP ។",
-  expectedOutcome: "យល់ដឹងពីរបៀបដែល REST ប្រើប្រាស់ HTTP Verbs និង URIs ដើម្បីបំបែកឯករាជ្យភាពរវាង Client និង Server Storage ។",
-  codeSnippet: `/**
- * REST vs RPC / Traditional Web Comparison
- *
- * REST (Resource-Oriented, HTTP Semantics):
- * - GET    /api/v1/users        -> Fetch user list (Safe & Idempotent)
- * - POST   /api/v1/users        -> Create user
- * - GET    /api/v1/users/:id    -> Fetch single user
- * - PUT    /api/v1/users/:id    -> Replace entire user entity
- * - PATCH  /api/v1/users/:id    -> Partially update user
- * - DELETE /api/v1/users/:id    -> Remove user
- *
- * RPC / Procedural (Action in URL - Anti-pattern in REST):
- * - POST   /api/getUserList
- * - POST   /api/createNewUser
- * - POST   /api/updateUserEmail
- * - POST   /api/deleteUserById
- */
-
-const express = require("express");
-const app = express();
-
-// Express demonstrates clean REST routing:
-app.route("/api/v1/users")
-  .get((req, res) => res.json({ success: true, message: "Fetch all users" }))
-  .post((req, res) => res.status(201).json({ success: true, message: "User created" }));
-
-app.route("/api/v1/users/:id")
-  .get((req, res) => res.json({ success: true, message: \`Fetch user \${req.params.id}\` }))
-  .put((req, res) => res.json({ success: true, message: \`Replace user \${req.params.id}\` }))
-  .delete((req, res) => res.status(204).send());`,
+  summary: "**REST (Representational State Transfer)** គឺជាស្ថាបត្យកម្មរចនា API បែបស្តង់ដារដែលបង្កើតឡើងដោយ Roy Fielding ក្នុងឆ្នាំ ២០០០។\n\nគោលគំនិតស្នូលនៃ REST ក្នុង Course Catalog API៖\n* **Resources**៖ អ្វីៗគ្រប់យ៉ាងត្រូវបានចាត់ទុកជា Resource (ដូចជា `courses`, `lessons`, `users`)\n* **Representations**៖ Client ទទួលបាន Representation នៃ Resource ជាទម្រង់ JSON\n* **Statelessness**៖ Request នីមួយៗផ្ទុកនូវព័ត៌មានគ្រប់គ្រាន់ដើម្បីដំណើរការដោយខ្លួនឯង ដោយមិនពឹងផ្អែកលើ Session ក្នុង Memory របស់ Server ឡើយ",
+  tip: "REST មិនមែនជា Library ឬ Framework ទេ ប៉ុន្តែជា Architectural Style និងគោលការណ៍ណែនាំ (Guidelines) សម្រាប់ការរចនា Web APIs។",
+  objective: "យល់ដឹងពីទស្សនវិជ្ជារបស់ REST Architecture។",
+  expectedOutcome: "ដឹងពីរបៀបកំណត់ Resources និងរចនា APIs តាមបែបស្តង់ដារអន្តរជាតិ។",
+  codeSnippet: "// Representation of Course Resource in REST (JSON)\n// GET /api/v1/courses/101\n{\n  \"id\": 101,\n  \"title\": \"Full-Stack Node.js & Express Architecture\",\n  \"instructor\": \"Ratha\",\n  \"price\": 49.99,\n  \"level\": \"intermediate\",\n  \"published\": true,\n  \"links\": {\n    \"self\": \"/api/v1/courses/101\",\n    \"lessons\": \"/api/v1/courses/101/lessons\",\n    \"reviews\": \"/api/v1/courses/101/reviews\"\n  }\n}",
 };
 
 ```javascript
-/**
- * REST vs RPC / Traditional Web Comparison
- *
- * REST (Resource-Oriented, HTTP Semantics):
- * - GET    /api/v1/users        -> Fetch user list (Safe & Idempotent)
- * - POST   /api/v1/users        -> Create user
- * - GET    /api/v1/users/:id    -> Fetch single user
- * - PUT    /api/v1/users/:id    -> Replace entire user entity
- * - PATCH  /api/v1/users/:id    -> Partially update user
- * - DELETE /api/v1/users/:id    -> Remove user
- *
- * RPC / Procedural (Action in URL - Anti-pattern in REST):
- * - POST   /api/getUserList
- * - POST   /api/createNewUser
- * - POST   /api/updateUserEmail
- * - POST   /api/deleteUserById
- */
-
-const express = require("express");
-const app = express();
-
-// Express demonstrates clean REST routing:
-app.route("/api/v1/users")
-  .get((req, res) => res.json({ success: true, message: "Fetch all users" }))
-  .post((req, res) => res.status(201).json({ success: true, message: "User created" }));
-
-app.route("/api/v1/users/:id")
-  .get((req, res) => res.json({ success: true, message: `Fetch user ${req.params.id}` }))
-  .put((req, res) => res.json({ success: true, message: `Replace user ${req.params.id}` }))
-  .delete((req, res) => res.status(204).send());
+// Representation of Course Resource in REST (JSON)
+// GET /api/v1/courses/101
+{
+  "id": 101,
+  "title": "Full-Stack Node.js & Express Architecture",
+  "instructor": "Ratha",
+  "price": 49.99,
+  "level": "intermediate",
+  "published": true,
+  "links": {
+    "self": "/api/v1/courses/101",
+    "lessons": "/api/v1/courses/101/lessons",
+    "reviews": "/api/v1/courses/101/reviews"
+  }
+}
 ```

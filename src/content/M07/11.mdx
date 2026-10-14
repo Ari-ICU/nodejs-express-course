@@ -1,21 +1,36 @@
 export const meta = {
   id: "M07-11",
   number: "11",
-  title: "Route Groups",
-  khmerTitle: "ការរៀបចំ Route Groups ជាមួយ Common Prefixes",
+  title: "Route Groups & Mounting",
+  khmerTitle: "ការរៀបចំ Route Groups និងការ Mount ក្នុង app.js",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការភ្ជាប់រ៉ោតទ័រនៅក្រោមបុព្វបទផ្លូវទូទៅ (ឧ. `/api/v1/auth`) លុបបំបាត់ការវាយបញ្ចូលផ្លូវដដែលៗនៅក្នុងការកំណត់ផ្លូវនីមួយៗ។",
-  tip: "Middleware ទាំងអស់ដែលបានអនុវត្តចំពោះរ៉ោតទ័រដែលបានម៉ោន ប្រតិបត្តិសម្រាប់រាល់ផ្លូវរងនៅក្នុងក្រុមនោះ។",
-  objective: "Endpoint ដែលទាក់ទងជាក្រុមក្រោមបុព្វបទទូទៅ និងឧបករណ៍ការពារកណ្តាលដែលបានចែករំលែក។",
-  expectedOutcome: "ការប្រកាសផ្លូវ DRY ជាមួយនឹងការការពារ Middleware ដែលមានវិសាលភាព។",
-  codeSnippet: "// Mount admin router with shared admin authentication guard\nimport adminRouter from \"./routes/admin.routes.js\";\nimport { verifyAdmin } from \"./middleware/auth.js\";\n\napp.use(\"/api/v1/admin\", verifyAdmin, adminRouter);",
+  summary: "បន្ទាប់ពីបានបង្កើត Router តាម Modules រួចហើយ ជំហានបន្ទាប់គឺ **Mounting** ពួកវាចូលទៅកាន់ `app.js` ដោយប្រើប្រាស់ `app.use(prefix, router)`។\n\nឧទាហរណ៍៖\n* `app.use(\"/api/v1/courses\", courseRouter)`\n* `app.use(\"/api/v1/users\", userRouter)`\n\nរាល់ Route ទាំងអស់នៅក្នុង `courseRouter` នឹងទទួលបាន Prefix `/api/v1/courses` ដោយស្វ័យប្រវត្តិ។",
+  tip: "ការដាក់ `/api/v1` ជា Prefix គឺជា Best Practice សម្រាប់ API Versioning ដែលអនុញ្ញាតឱ្យយើងបន្ថែម `/api/v2` នៅពេលអនាគតដោយមិនប៉ះពាល់ Clients ចាស់។",
+  objective: "ចេះ Mount Routers ច្រើនចូលទៅក្នុង Application Instance តែមួយ។",
+  expectedOutcome: "Application ដែលមានរចនាសម្ព័ន្ធ Route Grouping ច្បាស់លាស់ និងមានសុវត្ថិភាព។",
+  codeSnippet: "// src/app.js\nimport express from \"express\";\nimport courseRouter from \"./routes/course.routes.js\";\n\nconst app = express();\napp.use(express.json());\n\n// Step 1: Mount Route Groups with clean API prefixes\n// 💡 Teaching Note: All routes in courseRouter become prefixed with /api/v1/courses\napp.use(\"/api/v1/courses\", courseRouter);\n\n// Step 2: Catch-all 404 Route Handler for undefined endpoints\napp.use((req, res) => {\n  res.status(404).json({\n    success: false,\n    error: `Endpoint ${req.method} ${req.originalUrl} does not exist`\n  });\n});\n\nexport default app;",
 };
 
 ```javascript
-// Mount admin router with shared admin authentication guard
-import adminRouter from "./routes/admin.routes.js";
-import { verifyAdmin } from "./middleware/auth.js";
+// src/app.js
+import express from "express";
+import courseRouter from "./routes/course.routes.js";
 
-app.use("/api/v1/admin", verifyAdmin, adminRouter);
+const app = express();
+app.use(express.json());
+
+// Step 1: Mount Route Groups with clean API prefixes
+// 💡 Teaching Note: All routes in courseRouter become prefixed with /api/v1/courses
+app.use("/api/v1/courses", courseRouter);
+
+// Step 2: Catch-all 404 Route Handler for undefined endpoints
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: `Endpoint ${req.method} ${req.originalUrl} does not exist`
+  });
+});
+
+export default app;
 ```

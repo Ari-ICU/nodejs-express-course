@@ -1,112 +1,54 @@
 export const meta = {
   id: "M09-14",
   number: "14",
-  title: "Pagination",
-  khmerTitle: "ការរៀបចំ Pagination (Limit & Skip)",
+  title: "Pagination (Limit & Offset/Skip)",
+  khmerTitle: "ការរៀបចំ Pagination ជាមួយ Page, Limit និង Skip",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការទាញយក Database Collections ទាំងមូលដោយគ្មាន limit បណ្តាលឱ្យ Database CPU usage ឡើងខ្ពស់, network payload ធំពេក, និងធ្វើឱ្យ Node.js process គាំងដោយសារ Out of Memory (OOM) crash។ **Pagination** ជួយបែងចែក dataset ធំៗឱ្យមកជា chunks តូចៗដែលអាច manage បានយ៉ាងរលូន។
-
-### 1. Offset-Based Pagination Formula
-Client បញ្ជូន URL Query Parameters ចំនួនពីរ៖
-* **\`page\`**: លេខ page ដែលចង់បាន (1-indexed)។
-* **\`limit\`**: ចំនួន items ដែលត្រូវ return ក្នុងមួយ page។
-* **Skip Calculation**: \`skip = (page - 1) * limit\`។
-* In MongoDB: \`collection.find().skip(skip).limit(limit)\`។
-* In SQL: \`SELECT * FROM items LIMIT ? OFFSET ?\`។
-
-### 2. Defense Against Denial of Service (DoS)
-កុំទុកចិត្ត query parameters ដែល user បញ្ជូនមកដោយគ្មានការត្រួតពិនិត្យ! Malicious users អាច request \`?limit=10000000\` ដែលធ្វើឱ្យ server memory ត្រូវខូចខាត។ ត្រូវតែ enforce maximum limit ceiling ជានិច្ច៖ \`const safeLimit = Math.min(parseInt(req.query.limit) || 10, 100)\`។`,
-  tip: "ត្រូវកំណត់ maximum boundary លើ `limit` parameter ជានិច្ច (ឧ. `Math.min(limit, 100)`)។ សម្រាប់ infinite scroll feeds ដែលមាន data រាប់លាន rows គួរពិចារណាប្រើ Cursor-based pagination (`?after=cursor_id`) ជំនួស Offset-based pagination ដើម្បីជៀសវាង performance drop លើ SQL deep OFFSET queries។",
-  objective: "Implement Offset-based pagination ប្រកបដោយសុវត្ថិភាព ដោយមាន Input Sanitization, Max Limit Clamping, និង Complete Pagination Metadata Envelope។",
-  expectedOutcome: "ទទួលបាន Paginated API Route ដែលមាន performance ខ្ពស់ ព្រមទាំងផ្តល់ pagination calculations, total count, និង navigation metadata យ៉ាងពេញលេញ។",
-  codeSnippet: `const express = require("express");
-const app = express();
-
-// Mock 50 product items
-const allProducts = Array.from({ length: 50 }, (_, i) => ({
-  id: \`prod_\${i + 1}\`,
-  name: \`Product Item \${i + 1}\`,
-  price: Math.floor(Math.random() * 100) + 10,
-}));
-
-/**
- * GET /api/v1/products?page=2&limit=5
- */
-app.get("/api/v1/products", (req, res) => {
-  // 1. Sanitize & parse query parameters with sensible defaults
-  const page = Math.max(1, parseInt(req.query.page) || 1);
-  const rawLimit = parseInt(req.query.limit) || 10;
-  
-  // 2. Safety Clamp: Cap maximum items to 50 per request
-  const limit = Math.min(Math.max(1, rawLimit), 50);
-
-  // 3. Calculate offset and slice dataset
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedData = allProducts.slice(startIndex, endIndex);
-
-  // 4. Calculate pagination metadata
-  const totalItems = allProducts.length;
-  const totalPages = Math.ceil(totalItems / limit);
-
-  res.status(200).json({
-    success: true,
-    data: paginatedData,
-    pagination: {
-      currentPage: page,
-      perPage: limit,
-      totalItems,
-      totalPages,
-      hasNextPage: page < totalPages,
-      hasPrevPage: page > 1,
-    },
-  });
-});`,
+  summary: "ប្រសិនបើ Database មាន Courses ចំនួន ១០,០០០ យើងមិនអាចទាញយកទាំងអស់ក្នុង Request តែមួយបានឡើយ។ យើងត្រូវប្រើ **Pagination**។\n\nរូបមន្តគណនា **Limit & Skip**៖\n* `page` (ទំព័របច្ចុប្បន្ន ឧ. 1, 2, 3...)\n* `limit` (ចំនួន Items ក្នុងមួយទំព័រ ឧ. 10)\n* `skip = (page - 1) * limit`\n\nResponse ត្រូវត្រឡប់នូវ Pagination Metadata ដូចជា `totalPages`, `currentPage`, និង `totalItems`។",
+  tip: "កំណត់ Default Limit (ឧ. 10) និង Maximum Limit (ឧ. 100) ជានិច្ច ដើម្បីការពារ Client ពីការស្នើសុំ `?limit=1000000` ដែលអាចធ្វើឱ្យ Server អស់ Memory (OOM)។",
+  objective: "ចេះសរសេរ Logic គណនា Pagination និងផ្តល់ Navigation Metadata។",
+  expectedOutcome: "Endpoints អាចទាញយកទិន្នន័យជាទំព័រៗប្រកបដោយប្រសិទ្ធភាពខ្ពស់។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Mock store with 25 courses\nconst allCourses = Array.from({ length: 25 }, (_, i) => ({\n  id: i + 1,\n  title: `Mastering Express Module ${i + 1}`,\n  price: 29 + i\n}));\n\n// GET /api/v1/courses?page=2&limit=5\napp.get(\"/api/v1/courses\", (req, res) => {\n  // Step 1: Parse and sanitize page & limit\n  const page = Math.max(1, parseInt(req.query.page, 10) || 1);\n  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 5)); // Max 50 items\n\n  // Step 2: Calculate skip offset\n  const skip = (page - 1) * limit;\n\n  // Step 3: Slice data and calculate total pages\n  const paginatedCourses = allCourses.slice(skip, skip + limit);\n  const totalItems = allCourses.length;\n  const totalPages = Math.ceil(totalItems / limit);\n\n  return res.status(200).json({\n    success: true,\n    count: paginatedCourses.length,\n    data: paginatedCourses,\n    pagination: {\n      currentPage: page,\n      limit,\n      totalItems,\n      totalPages,\n      hasNextPage: page < totalPages,\n      hasPrevPage: page > 1\n    }\n  });\n});",
 };
 
 ```javascript
-const express = require("express");
+import express from "express";
 const app = express();
 
-// Mock 50 product items
-const allProducts = Array.from({ length: 50 }, (_, i) => ({
-  id: `prod_${i + 1}`,
-  name: `Product Item ${i + 1}`,
-  price: Math.floor(Math.random() * 100) + 10,
+// Mock store with 25 courses
+const allCourses = Array.from({ length: 25 }, (_, i) => ({
+  id: i + 1,
+  title: `Mastering Express Module ${i + 1}`,
+  price: 29 + i
 }));
 
-/**
- * GET /api/v1/products?page=2&limit=5
- */
-app.get("/api/v1/products", (req, res) => {
-  // 1. Sanitize & parse query parameters with sensible defaults
-  const page = Math.max(1, parseInt(req.query.page) || 1);
-  const rawLimit = parseInt(req.query.limit) || 10;
-  
-  // 2. Safety Clamp: Cap maximum items to 50 per request
-  const limit = Math.min(Math.max(1, rawLimit), 50);
+// GET /api/v1/courses?page=2&limit=5
+app.get("/api/v1/courses", (req, res) => {
+  // Step 1: Parse and sanitize page & limit
+  const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+  const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 5)); // Max 50 items
 
-  // 3. Calculate offset and slice dataset
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-  const paginatedData = allProducts.slice(startIndex, endIndex);
+  // Step 2: Calculate skip offset
+  const skip = (page - 1) * limit;
 
-  // 4. Calculate pagination metadata
-  const totalItems = allProducts.length;
+  // Step 3: Slice data and calculate total pages
+  const paginatedCourses = allCourses.slice(skip, skip + limit);
+  const totalItems = allCourses.length;
   const totalPages = Math.ceil(totalItems / limit);
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
-    data: paginatedData,
+    count: paginatedCourses.length,
+    data: paginatedCourses,
     pagination: {
       currentPage: page,
-      perPage: limit,
+      limit,
       totalItems,
       totalPages,
       hasNextPage: page < totalPages,
-      hasPrevPage: page > 1,
-    },
+      hasPrevPage: page > 1
+    }
   });
 });
 ```

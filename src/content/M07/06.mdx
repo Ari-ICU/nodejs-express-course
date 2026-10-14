@@ -2,19 +2,43 @@ export const meta = {
   id: "M07-06",
   number: "06",
   title: "DELETE Routes",
-  khmerTitle: "ការបង្កើត DELETE Routes សម្រាប់លុបទិន្នន័យ",
+  khmerTitle: "ការបង្កើត DELETE Routes សម្រាប់លុប Course ចេញពីប្រព័ន្ធ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "លុបផ្លូវ លុបធនធានចេញពីកន្លែងផ្ទុក។ ជាធម្មតាពួកវាត្រឡប់ `204 No Content` ឬ `200 OK` ជាមួយនឹងទិន្នន័យមេតានៃការបញ្ជាក់។",
-  tip: "ពិចារណាអនុវត្តការលុបទន់ (`deletedAt: Date`) នៅក្នុងការផលិត ដើម្បីការពារផ្លូវសវនកម្ម និងការពារការបាត់បង់ទិន្នន័យមហន្តរាយ។",
-  objective: "អនុវត្ត Endpoint នៃការលុបធនធានជាមួយនឹង HTTP Status Codes ត្រឹមត្រូវ។",
-  expectedOutcome: "ការដកធនធានដែលអាចទុកចិត្តបានជាមួយនឹង HTTP Response 204 ឬ 200 ។",
-  codeSnippet: "app.delete(\"/api/v1/articles/:id\", async (req, res) => {\n  await articleService.deleteArticle(req.params.id);\n  res.status(204).send(); // 204 No Content\n});",
+  summary: "**DELETE Routes** ទទួលខុសត្រូវលើការលុប Resource ចេញពីប្រព័ន្ធ។\n\nស្តង់ដារ Response សម្រាប់ DELETE៖\n* **`204 No Content`**៖ ប្រសិនបើ Server មិនបញ្ជូន Response Body មកវិញ (Standard REST)\n* **`200 OK`**៖ ប្រសិនបើ Server ចង់បញ្ជូន Message បញ្ជាក់ ឬបញ្ជូន Deleted Resource មកវិញ",
+  tip: "នៅក្នុង Enterprise Applications គេច្រើនប្រើ **Soft Delete** (កំណត់ `deletedAt = new Date()`) ជំនួសឱ្យការ Hard Delete ចេញពី Database ទាំងស្រុង។",
+  objective: "ចេះបង្កើត DELETE Endpoint និងកំណត់ Status Code ត្រឹមត្រូវ (200 ឬ 204)។",
+  expectedOutcome: "ចេះស្វែងរក និងលុបទិន្នន័យតាម Index ដោយសុវត្ថិភាព។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\nlet courses = [\n  { id: 1, title: \"JavaScript Mastery\", price: 29.99 },\n  { id: 2, title: \"Full-Stack Express API\", price: 49.99 }\n];\n\n// Step 1: DELETE Endpoint by ID\napp.delete(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const index = courses.findIndex(c => c.id === courseId);\n\n  // ⚠️ If course does not exist -> Return 404\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  // Step 2: Remove from array using splice\n  const [deletedCourse] = courses.splice(index, 1);\n\n  // Step 3: Respond with 200 OK + confirmation\n  return res.status(200).json({\n    success: true,\n    message: \"Course deleted successfully\",\n    data: deletedCourse\n  });\n});",
 };
 
 ```javascript
-app.delete("/api/v1/articles/:id", async (req, res) => {
-  await articleService.deleteArticle(req.params.id);
-  res.status(204).send(); // 204 No Content
+import express from "express";
+const app = express();
+
+let courses = [
+  { id: 1, title: "JavaScript Mastery", price: 29.99 },
+  { id: 2, title: "Full-Stack Express API", price: 49.99 }
+];
+
+// Step 1: DELETE Endpoint by ID
+app.delete("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const index = courses.findIndex(c => c.id === courseId);
+
+  // ⚠️ If course does not exist -> Return 404
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  // Step 2: Remove from array using splice
+  const [deletedCourse] = courses.splice(index, 1);
+
+  // Step 3: Respond with 200 OK + confirmation
+  return res.status(200).json({
+    success: true,
+    message: "Course deleted successfully",
+    data: deletedCourse
+  });
 });
 ```

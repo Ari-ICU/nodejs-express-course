@@ -2,105 +2,32 @@ export const meta = {
   id: "M09-03",
   number: "03",
   title: "RESTful API Design",
-  khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ",
+  khmerTitle: "ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ (URL Conventions)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `ការរចនា REST APIs ប្រកបដោយវិជ្ជាជីវៈ និងវិចារណញាណតម្រូវឱ្យមានភាពស៊ីសង្វាក់គ្នាយ៉ាងតឹងរឹងនៅទូទាំង URI កាយវិភាគសាស្ត្រ Schema ដាក់ឈ្មោះ និងការដាក់ធនធាន។ API ដែលត្រូវបានរចនាយ៉ាងល្អ គឺជាការពន្យល់ដោយខ្លួនឯង ដែលអាចទស្សន៍ទាយបាន និងរីករាយសម្រាប់អ្នកអភិវឌ្ឍន៍ Client ប្រើប្រាស់។
-
-### 1. ច្បាប់ដាក់ឈ្មោះធនធាន
-* **ប្រើនាមពហុវចនៈ**៖ តែងតែដាក់ឈ្មោះ Collections ធនធានជាមួយនាមពហុវចនៈអក្សរតូច (ឧ. `/users`, `/articles`, `/orders`)។ កុំប្រើHTTP Methodsក្នុង path ដូចជា `/getUsers` ឬ `/createOrder`។
-* **Kebab-case in URIs**: Use lowercase with hyphens for multi-word paths (\`/payment-methods\`, \`/shipping-addresses\`), never camelCase or snake_case.
-* **Hierarchical Nesting for Relations**: Express parent-child relationships through natural URL paths: \`/users/15/orders/302\`. Limit nesting to a maximum of **2 levels deep** to prevent unwieldy URLs; flatten subsequent lookups to root endpoints.
-
-### 2. Standard URI Matrix
-| Operation | HTTP Verb | URI Pattern | Status Code |
-| :--- | :--- | :--- | :--- |
-| List Collection | \`GET\` | \`/api/v1/courses\` | 200 OK |
-| Create Resource | \`POST\` | \`/api/v1/courses\` | 201 Created |
-| Single Resource | \`GET\` | \`/api/v1/courses/:id\` | 200 OK / 404 |
-| Replace Resource | \`PUT\` | \`/api/v1/courses/:id\` | 200 OK / 204 |
-| Patch Resource | \`PATCH\` | \`/api/v1/courses/:id\` | 200 OK |
-| Delete Resource | \`DELETE\` | \`/api/v1/courses/:id\` | 204 No Content |`,
-  tip: "ជៀសវាងផ្លូវដែលបង្កប់យ៉ាងជ្រៅដូចជា `/departments/5/teams/2/members/12/tasks/9`។ ជំនួសមកវិញ នៅពេលដែល Entity មួយមានឧបករណ៍កំណត់អត្តសញ្ញាណតែមួយគត់ សូមបង្ហាញវាដោយផ្ទាល់៖ `/api/v1/tasks/9` ឬ `/api/v1/members/12/tasks` ។",
-  objective: "អនុសញ្ញាការដាក់ឈ្មោះ URI ស្តង់ដារឧស្សាហកម្ម ដែនកំណត់ទំនាក់ទំនង និងផែនទីផ្លូវធនធាន។",
-  expectedOutcome: "សមត្ថភាពក្នុងការរៀបចំ Architectureស្អាត ដែលអាចទាយទុកជាមុនបាន និង Endpoint RESTful ដែលងាយស្រួលសម្រាប់អ្នកអភិវឌ្ឍន៍ ដែលប្រកាន់ខ្ជាប់យ៉ាងតឹងរឹងទៅនឹងស្តង់ដារ RFC អន្តរជាតិ។",
-  codeSnippet: `/**
- * Professional REST Route Design in Express
- * Clean separation between collections and parent-child resources
- */
-
-const express = require("express");
-const app = express();
-app.use(express.json());
-
-// 1. Root Collection: Plural noun, kebab-case
-// GET /api/v1/order-items
-app.get("/api/v1/order-items", (req, res) => {
-  res.json({ success: true, data: [] });
-});
-
-// 2. Nested Parent-Child Resource (Max 2 levels deep)
-// GET /api/v1/customers/:customerId/orders
-app.get("/api/v1/customers/:customerId/orders", (req, res) => {
-  const { customerId } = req.params;
-  res.json({
-    success: true,
-    customerId,
-    data: [
-      { orderId: "ord_101", amount: 150.00, status: "completed" },
-      { orderId: "ord_102", amount: 89.50, status: "shipped" },
-    ],
-  });
-});
-
-// 3. Direct Sub-resource Access (Flattened for deep entities)
-// GET /api/v1/orders/:orderId
-app.get("/api/v1/orders/:orderId", (req, res) => {
-  const { orderId } = req.params;
-  res.json({
-    success: true,
-    data: { orderId, customerId: "cust_42", amount: 150.00 },
-  });
-});`,
+  summary: "ច្បាប់មាសសម្រាប់ការរចនា **RESTful URIs**៖\n\n* **ប្រើ Nouns មិនប្រើ Verbs**៖ `/courses` (✅) មិនមែន `/getCourses` (❌)\n* **ប្រើ Plural Nouns (ពហុវចនៈ)**៖ `/courses`, `/lessons`, `/users`\n* **ប្រើ Lowercase និង Hyphens**៖ `/course-reviews` មិនមែន `/course_reviews` ឬ `/courseReviews`\n* **បង្ហាញ Hierarchy ដោយ Nested Paths**៖ `/courses/:id/lessons`\n* **ប្រើ Query Parameters សម្រាប់ Actions បន្ថែម**៖ `?sort=price&filter=published`",
+  tip: "ជៀសវាងការដាក់ Actions ក្នុង URL ដូចជា `/courses/123/delete` ព្រោះ HTTP Verb `DELETE /courses/123` បានបញ្ជាក់សកម្មភាពនោះរួចរាល់ហើយ។",
+  objective: "ចេះរៀបចំ Name និង Hierarchy នៃ API Endpoints តាមស្តង់ដារវិជ្ជាជីវៈ។",
+  expectedOutcome: "រចនា URIs ដែលមានភាពស៊ីសង្វាក់គ្នា (Consistent) និងងាយយល់។",
+  codeSnippet: "/*\n  ==============================================================\n  PROFESSIONAL RESTFUL URL CONVENTIONS:\n  ==============================================================\n  ✅ GET    /api/v1/courses               (Fetch course collection)\n  ✅ POST   /api/v1/courses               (Create new course)\n  ✅ GET    /api/v1/courses/42            (Fetch specific course)\n  ✅ PATCH  /api/v1/courses/42            (Update fields)\n  ✅ DELETE /api/v1/courses/42            (Remove course)\n  ✅ GET    /api/v1/courses/42/lessons    (Fetch lessons for course 42)\n\n  ❌ BAD URL CONVENTIONS (Avoid at all costs):\n  ❌ /api/v1/getAllCourses\n  ❌ /api/v1/createNewCourse\n  ❌ /api/v1/course/42/delete\n  ❌ /api/v1/course_reviews_by_user\n*/",
 };
 
 ```javascript
-/**
- * Professional REST Route Design in Express
- * Clean separation between collections and parent-child resources
- */
+/*
+  ==============================================================
+  PROFESSIONAL RESTFUL URL CONVENTIONS:
+  ==============================================================
+  ✅ GET    /api/v1/courses               (Fetch course collection)
+  ✅ POST   /api/v1/courses               (Create new course)
+  ✅ GET    /api/v1/courses/42            (Fetch specific course)
+  ✅ PATCH  /api/v1/courses/42            (Update fields)
+  ✅ DELETE /api/v1/courses/42            (Remove course)
+  ✅ GET    /api/v1/courses/42/lessons    (Fetch lessons for course 42)
 
-const express = require("express");
-const app = express();
-app.use(express.json());
-
-// 1. Root Collection: Plural noun, kebab-case
-// GET /api/v1/order-items
-app.get("/api/v1/order-items", (req, res) => {
-  res.json({ success: true, data: [] });
-});
-
-// 2. Nested Parent-Child Resource (Max 2 levels deep)
-// GET /api/v1/customers/:customerId/orders
-app.get("/api/v1/customers/:customerId/orders", (req, res) => {
-  const { customerId } = req.params;
-  res.json({
-    success: true,
-    customerId,
-    data: [
-      { orderId: "ord_101", amount: 150.00, status: "completed" },
-      { orderId: "ord_102", amount: 89.50, status: "shipped" },
-    ],
-  });
-});
-
-// 3. Direct Sub-resource Access (Flattened for deep entities)
-// GET /api/v1/orders/:orderId
-app.get("/api/v1/orders/:orderId", (req, res) => {
-  const { orderId } = req.params;
-  res.json({
-    success: true,
-    data: { orderId, customerId: "cust_42", amount: 150.00 },
-  });
-});
+  ❌ BAD URL CONVENTIONS (Avoid at all costs):
+  ❌ /api/v1/getAllCourses
+  ❌ /api/v1/createNewCourse
+  ❌ /api/v1/course/42/delete
+  ❌ /api/v1/course_reviews_by_user
+*/
 ```

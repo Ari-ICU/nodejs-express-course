@@ -1,29 +1,42 @@
 export const meta = {
   id: "M08-11",
   number: "11",
-  title: "Error Middleware",
-  khmerTitle: "ការបង្កើត Centralized Error Handling Middleware",
+  title: "Centralized Error Middleware",
+  khmerTitle: "ការបង្កើត Centralized Error Handling Middleware (4 Parameters)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "មុខងារ​ឧបករណ៍​កណ្តាល​ដោះស្រាយ​បញ្ហា​មាន​អាគុយម៉ង់​ចំនួន​បួន៖ `(err, req, res, next)`។ Express កំណត់អត្តសញ្ញាណ error middleware ដោយ arity (ទទួលយក 4 arguments) ហើយរំលងរាល់ middleware ដែលមិនមែនជា error នៅពេលដែល `next(err)` ត្រូវបានហៅ។",
-  tip: "កុំធ្លាយRaw stack trace (`err.stack`) ទៅកាន់ Client នៅក្នុងProduction environment ដើម្បីជៀសវាងការបង្ហាញពីភាពងាយរងគ្រោះផ្នែកសុវត្ថិភាព។",
-  objective: "ការដោះស្រាយកំហុសកម្មវិធីជាកណ្តាលទៅក្នុង Middleware ដែលមាន Params បួន។",
-  expectedOutcome: "Response កំហុស JSON ដែលមានរចនាសម្ព័ន្ធជាប់លាប់នៅទូទាំងករណីបរាជ័យទាំងអស់។",
-  codeSnippet: "// Centralized Error Handling Middleware (MUST have 4 arguments!)\nexport const errorHandler = (err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const message = err.message || \"Internal Server Error\";\n\n  console.error(`[${req.method}] ${req.url} Error:`, err);\n\n  res.status(statusCode).json({\n    success: false,\n    error: message,\n    ...(process.env.NODE_ENV === \"development\" && { stack: err.stack })\n  });\n};",
+  summary: "Express កំណត់អត្តសញ្ញាណ **Error Handling Middleware** តាមរយៈការមាន Parameters ចំនួន ៤៖ **`(err, req, res, next)`**។\n\nអត្ថប្រយោជន៍នៃ Centralized Error Handling៖\n* ប្រមូលផ្តុំកំហុសទាំងអស់មកដោះស្រាយនៅកន្លែងតែមួយ\n* បង្កើត Standardized Error Envelope (`{ success: false, error: ... }`)\n* លាក់ Stack Trace នៅលើ **Production Environment** ដើម្បីសុវត្ថិភាព\n* បង្ហាញ Stack Trace នៅលើ **Development Environment** សម្រាប់ងាយស្រួល Debug",
+  tip: "⚠️ សំខាន់បំផុត៖ Error Middleware ត្រូវតែមាន Parameter ទាំង ៤ គត់ (err, req, res, next) បើអ្នកសរសេរត្រឹម ៣ Express នឹងចាត់ទុកវាជា Middleware ធម្មតា!",
+  objective: "ចេះបង្កើត Centralized Error Handling Middleware ស្តង់ដារ Production។",
+  expectedOutcome: "ដោះស្រាយកំហុសបានស្អាត ដោយមិនធ្វើឱ្យ Server Crash ឬបែកធ្លាយ Stack Trace ទៅកាន់ Attackers។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Route that deliberately throws an error\napp.get(\"/api/v1/crash-test\", (req, res, next) => {\n  const err = new Error(\"Database connection timed out\");\n  err.statusCode = 503;\n  next(err); // 💡 Teaching Note: Pass error to centralized handler via next(err)!\n});\n\n// Step 1: Centralized Error-Handling Middleware (MUST HAVE 4 PARAMETERS)\napp.use((err, req, res, next) => {\n  const statusCode = err.statusCode || 500;\n  const isProduction = process.env.NODE_ENV === \"production\";\n\n  // Step 2: Build Standardized Error Envelope\n  res.status(statusCode).json({\n    success: false,\n    error: {\n      message: err.message || \"Internal Server Error\",\n      statusCode,\n      // 🔒 Hide stack trace in production environment!\n      ...(isProduction ? {} : { stack: err.stack })\n    }\n  });\n});",
 };
 
 ```javascript
-// Centralized Error Handling Middleware (MUST have 4 arguments!)
-export const errorHandler = (err, req, res, next) => {
+import express from "express";
+const app = express();
+
+// Route that deliberately throws an error
+app.get("/api/v1/crash-test", (req, res, next) => {
+  const err = new Error("Database connection timed out");
+  err.statusCode = 503;
+  next(err); // 💡 Teaching Note: Pass error to centralized handler via next(err)!
+});
+
+// Step 1: Centralized Error-Handling Middleware (MUST HAVE 4 PARAMETERS)
+app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
+  const isProduction = process.env.NODE_ENV === "production";
 
-  console.error(`[${req.method}] ${req.url} Error:`, err);
-
+  // Step 2: Build Standardized Error Envelope
   res.status(statusCode).json({
     success: false,
-    error: message,
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack })
+    error: {
+      message: err.message || "Internal Server Error",
+      statusCode,
+      // 🔒 Hide stack trace in production environment!
+      ...(isProduction ? {} : { stack: err.stack })
+    }
   });
-};
+});
 ```

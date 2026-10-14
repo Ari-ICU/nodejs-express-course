@@ -2,24 +2,32 @@ export const meta = {
   id: "M06-14",
   number: "14",
   title: "Express Project Structure",
-  khmerTitle: "រចនាសម្ព័ន្ធគម្រោង Express.js កម្រិតមូលដ្ឋាន",
+  khmerTitle: "រចនាសម្ព័ន្ធ Project Express.js កម្រិត Enterprise",
   type: "architecture",
   codeLanguage: "bash",
-  summary: `គម្រោង Express idiomatic បំបែកការកំណត់រចនាសម្ព័ន្ធកម្មវិធី Express (\`app.js\`) ពី server network listener (\`server.js\`) ។ វាធ្វើឱ្យម៉ូឌុល codebase ស្អាត និងត្រៀមខ្លួនជាស្រេចសម្រាប់ម៉ូឌុលកំណត់ផ្លូវនាពេលអនាគត។`,
-  tip: "ការនាំចេញ `app` ពី `app.js` ដោយមិនចាំបាច់ហៅភ្លាមៗ `.listen()` ក្នុងឯកសារតែមួយរក្សាម៉ូឌុលកម្មវិធី និងងាយស្រួលសាកល្បង។",
-  objective: "រៀបចំគម្រោង Express ទៅជាកម្មវិធីស្អាត ផ្ដាច់ និងឯកសារ Server ។",
-  expectedOutcome: "សម្អាតប្លង់គម្រោងដោយបំបែកការដំឡើងកម្មវិធីចេញពីឧបករណ៍ស្តាប់ច្រកបណ្តាញ។",
-  codeSnippet: "my-express-app/\n├── public/           # Static assets (images, stylesheets, html)\n├── src/\n│   ├── app.js        # Express app configuration & middleware setup\n│   └── server.js     # Entrypoint: listens on PORT & boots the server\n├── .env              # Environment variables (e.g. PORT=5000)\n├── .gitignore        # Excludes node_modules & sensitive files\n├── package.json      # Express dependency & npm start/dev scripts\n└── README.md         # Project instructions",
+  summary: "រចនាសម្ព័ន្ធ Project ស្អាត និង Scalable សម្រាប់ Enterprise Node.js Backend៖\n\n* **src/server.js**៖ Entry Point សម្រាប់ Listen Port\n* **src/app.js**៖ Express App Configuration & Middlewares\n* **src/routes/**៖ Route Definitions (URL mapping)\n* **src/controllers/**៖ Request/Response Handlers\n* **src/services/**៖ Business Logic & Database queries\n* **src/middlewares/**៖ Custom Middlewares (Auth, Error, Logger)\n* **src/config/**៖ Environment Configurations",
+  tip: "រចនាសម្ព័ន្ធនេះជាគ្រឹះដែលយើងនឹងសាងសង់នៅក្នុង Modules 07, 08, 09, និង 10។",
+  objective: "ស្វែងយល់ពីរចនាសម្ព័ន្ធ Folder និងឯកសារដែលប្រើប្រាស់ក្នុងគម្រោងធំៗ។",
+  expectedOutcome: "មានផែនទីគំនិតច្បាស់លាស់សម្រាប់ការរៀបចំកូដគម្រោង Backend។",
+  codeSnippet: "# Standard Enterprise Express Project Layout\ncourse-catalog-api/\n├── package.json\n├── .env.example\n├── src/\n│   ├── app.js               # Express application instance & middlewares\n│   ├── server.js            # Server entry point (app.listen)\n│   ├── routes/              # Route mapping definitions\n│   │   ├── index.js\n│   │   └── course.routes.js\n│   ├── controllers/         # Request handling & HTTP orchestration\n│   │   └── course.controller.js\n│   ├── services/            # Pure business logic & database queries\n│   │   └── course.service.js\n│   └── middlewares/         # Auth, validation, & error handling\n│       ├── auth.middleware.js\n│       └── error.middleware.js",
 };
 
 ```bash
-my-express-app/
-├── public/           # Static assets (images, stylesheets, html)
+# Standard Enterprise Express Project Layout
+course-catalog-api/
+├── package.json
+├── .env.example
 ├── src/
-│   ├── app.js        # Express app configuration & middleware setup
-│   └── server.js     # Entrypoint: listens on PORT & boots the server
-├── .env              # Environment variables (e.g. PORT=5000)
-├── .gitignore        # Excludes node_modules & sensitive files
-├── package.json      # Express dependency & npm start/dev scripts
-└── README.md         # Project instructions
+│   ├── app.js               # Express application instance & middlewares
+│   ├── server.js            # Server entry point (app.listen)
+│   ├── routes/              # Route mapping definitions
+│   │   ├── index.js
+│   │   └── course.routes.js
+│   ├── controllers/         # Request handling & HTTP orchestration
+│   │   └── course.controller.js
+│   ├── services/            # Pure business logic & database queries
+│   │   └── course.service.js
+│   └── middlewares/         # Auth, validation, & error handling
+│       ├── auth.middleware.js
+│       └── error.middleware.js
 ```

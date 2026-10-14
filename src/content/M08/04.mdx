@@ -2,21 +2,31 @@ export const meta = {
   id: "M08-04",
   number: "04",
   title: "Built-in Middleware",
-  khmerTitle: "Middleware ដែលភ្ជាប់មកស្រាប់ជាមួយ Express",
+  khmerTitle: "Middleware ដែលភ្ជាប់មកស្រាប់ជាមួយ Express (json, urlencoded, static)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Modern Express រួមបញ្ចូលមុខងារMiddlewareសំខាន់ៗដែលមានស្រាប់៖ \`express.json()\` (ញែកJSON Body), \`express.urlencoded()\` (ញែកទិន្នន័យទម្រង់) និង \`express.static()\` (បម្រើឯកសារឋិតិវន្តដូចជារូបភាព និង CSS)។`,
-  tip: "ប្រើ `express.static('public')` ដើម្បីបម្រើឯកសារដែលបានផ្ទុកឡើងដោយឋិតិវន្តដោយមិនចាំបាច់សរសេរផ្លូវបម្រើឯកសារដោយដៃ។",
-  objective: "ប្រើប្រាស់ Middleware Express ដែលមានស្រាប់សម្រាប់ការញែក និងការចែកចាយទ្រព្យសកម្មឋិតិវន្ត។",
-  expectedOutcome: "ការគ្រប់គ្រងប្រកបដោយប្រសិទ្ធភាពនៃ Payload ចូល និងទ្រព្យសម្បត្តិឋិតិវន្ត ដោយគ្មានបណ្ណាល័យខាងក្រៅ។",
-  codeSnippet: "// Serve static files from \"public\" directory\napp.use(express.static(\"public\"));\n\n// Parse incoming payloads\napp.use(express.json({ limit: \"10mb\" }));\napp.use(express.urlencoded({ extended: true, limit: \"10mb\" }));",
+  summary: "Express ភ្ជាប់មកជាមួយ Built-in Middlewares សំខាន់ៗចំនួន ៣៖\n\n1. **`express.json()`**៖ Parse incoming requests ដែលមាន JSON payloads (Content-Type: application/json)\n2. **`express.urlencoded()`**៖ Parse incoming requests ដែលមាន URL-encoded payloads ពី HTML Forms\n3. **`express.static()`**៖ បម្រើ Static Assets ដូចជា Images, CSS, ឬ Uploaded PDFs ចេញពី Directory ជាក់លាក់",
+  tip: "នៅក្នុង Express v4 ជំនាន់ដំបូង អ្នកត្រូវដំឡើង `body-parser` ដោយឡែក ប៉ុន្តែចាប់តាំងពី v4.16 មក ពួកវាត្រូវបាន Built-in ក្នុង `express` តែម្តង។",
+  objective: "យល់ច្បាស់ពី Built-in Middlewares ទាំង ៣ របស់ Express។",
+  expectedOutcome: "ចេះ Configure Body Parsers និង Static Asset Server យ៉ាងត្រឹមត្រូវ។",
+  codeSnippet: "import express from \"express\";\nimport path from \"node:path\";\nconst app = express();\n\n// Step 1: Built-in JSON Body Parser\napp.use(express.json());\n\n// Step 2: Built-in URL-encoded Form Parser\napp.use(express.urlencoded({ extended: true }));\n\n// Step 3: Built-in Static File Server (e.g. for course certificate PDFs / images)\napp.use(\"/public\", express.static(\"public\"));\n\napp.post(\"/test-payload\", (req, res) => {\n  res.json({ receivedBody: req.body });\n});",
 };
 
 ```javascript
-// Serve static files from "public" directory
-app.use(express.static("public"));
+import express from "express";
+import path from "node:path";
+const app = express();
 
-// Parse incoming payloads
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+// Step 1: Built-in JSON Body Parser
+app.use(express.json());
+
+// Step 2: Built-in URL-encoded Form Parser
+app.use(express.urlencoded({ extended: true }));
+
+// Step 3: Built-in Static File Server (e.g. for course certificate PDFs / images)
+app.use("/public", express.static("public"));
+
+app.post("/test-payload", (req, res) => {
+  res.json({ receivedBody: req.body });
+});
 ```

@@ -2,22 +2,29 @@ export const meta = {
   id: "M10-10",
   number: "10",
   title: "Backend Architecture Best Practices",
-  khmerTitle: "ការអនុវត្តស្ថាបត្យកម្មល្អបំផុតសម្រាប់ Backend",
+  khmerTitle: "ការអនុវត្តស្ថាបត្យកម្មល្អបំផុតសម្រាប់ Enterprise Node.js Backend",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `គោលការណ៍សហគ្រាសសម្រាប់ការអភិវឌ្ឍ Backend ដែលអាចធ្វើមាត្រដ្ឋានបាន៖ ការចាក់ដោយភាពអាស្រ័យ ទំនួលខុសត្រូវតែមួយ ភាពឯកោEnvironment ការភ្ជាប់ Database និងការធ្វើតេស្តដោយស្វ័យប្រវត្តិជាបន្តបន្ទាប់។`,
-  tip: "នៅពេលដែលឯកសារកូដកើនឡើងលើសពី 250 បន្ទាត់ វាជាធម្មតាដល់ពេលដើម្បីទាញយកមុខងារជំនួយ ឬបំបែក Services ។",
-  objective: "ទទួលយកការអនុវត្តល្អបំផុតនៃស្ថាបត្យកម្មស្តង់ដារឧស្សាហកម្មសម្រាប់ការថែរក្សា។",
-  expectedOutcome: "អាចរក្សាបាន អាចសាកល្បងបាន និងអាចធ្វើមាត្រដ្ឋានបាន មូលដ្ឋានកូដខាងក្រោយរបស់សហគ្រាស។",
-  codeSnippet: "/* Enterprise Backend Architecture Checklist:\n   ✅ Separation of Concerns (Routes -> Controllers -> Services -> Models)\n   ✅ Centralized Error Handling (Single error middleware)\n   ✅ Environment-driven Configuration (Never hardcode secrets)\n   ✅ Input Validation (Zod schemas before controllers)\n   ✅ Automated Integration Tests (Vitest + Supertest)\n*/",
+  summary: "បញ្ជីត្រួតពិនិត្យស្ថាបត្យកម្ម (Architecture Review Checklist) សម្រាប់ Backend Engineers៖\n\n1. **Separation of Concerns (SoC)**៖ Routes (HTTP mapping) ➔ Controllers (Orchestration) ➔ Services (Business Logic) ➔ Models (Data Access)\n2. **Fail Fast & Validate Early**៖ ត្រួតពិនិត្យទិន្នន័យបញ្ចូលតាម Middleware មុនពេលទៅដល់ Controller\n3. **Never Expose Sensitive Details**៖ លាក់ Stack Trace នៅលើ Production Environment\n4. **Environment Isolation**៖ មិន Hardcode Secrets ឬ Ports (ប្រើប្រាស់ `.env`)\n5. **Deterministic Testing**៖ សរសេរ Unit Tests លើ Service Layer និង Integration Tests (Supertest) លើ Endpoints",
+  tip: "នៅពេលដែលកូដក្នុងឯកសារមួយលើសពី ២០០-៣០០ ជួរ នោះជាសញ្ញាបញ្ជាក់ថាដល់ពេលត្រូវ Refactor និងបំបែកជា Services ឬ Utilities ហើយ។",
+  objective: "ស្វែងយល់ពី Best Practices សំខាន់ៗសម្រាប់ការសរសេរ Backend ប្រកបដោយនិរន្តរភាព។",
+  expectedOutcome: "មានសមត្ថភាពអភិវឌ្ឍ និងថែទាំ Enterprise Node.js/Express Backend ប្រកបដោយទំនុកចិត្ត។",
+  codeSnippet: "/*\n  ==============================================================\n  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:\n  ==============================================================\n  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)\n  [x] 2. Centralized Error Handling (Single 4-arg error middleware)\n  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })\n  [x] 4. Defensive ReDoS Protection (Sanitized regex search)\n  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)\n  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)\n  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)\n  [x] 8. Automated Integration Tests (Supertest test runner)\n  ==============================================================\n*/",
 };
 
 ```javascript
-/* Enterprise Backend Architecture Checklist:
-   ✅ Separation of Concerns (Routes -> Controllers -> Services -> Models)
-   ✅ Centralized Error Handling (Single error middleware)
-   ✅ Environment-driven Configuration (Never hardcode secrets)
-   ✅ Input Validation (Zod schemas before controllers)
-   ✅ Automated Integration Tests (Vitest + Supertest)
+/*
+  ==============================================================
+  ENTERPRISE NODE.JS ARCHITECTURE CHECKLIST:
+  ==============================================================
+  [x] 1. Layered Separation (Route -> Controller -> Service -> Model)
+  [x] 2. Centralized Error Handling (Single 4-arg error middleware)
+  [x] 3. Standard JSON Envelopes ({ success: true, data: ... })
+  [x] 4. Defensive ReDoS Protection (Sanitized regex search)
+  [x] 5. Safe Pagination (Bounded limits: default 10, max 50)
+  [x] 6. Graceful Shutdown (SIGTERM/SIGINT server draining)
+  [x] 7. Stateless Token Auth (Bearer JWT & RBAC guards)
+  [x] 8. Automated Integration Tests (Supertest test runner)
+  ==============================================================
 */
 ```

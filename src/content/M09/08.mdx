@@ -1,132 +1,46 @@
 export const meta = {
   id: "M09-08",
   number: "08",
-  title: "PUT",
-  khmerTitle: "ការអនុវត្ត PUT Endpoint ស្តង់ដារ",
+  title: "Production PUT Endpoints",
+  khmerTitle: "ការអនុវត្ត Production PUT Endpoint (Full Replacement)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `HTTP Methods **PUT** តំណាងឱ្យការ **ជំនួសទិន្នន័យចាស់ទាំងស្រុង (Complete Replacement)** នៃ Resource ដែលមានស្រាប់។ នៅពេលដែល Client បញ្ជូន Request ប្រភេទ PUT មកកាន់ Server, Payload ថ្មីត្រូវតែផ្ទុកនូវគ្រប់ Field ទាំងអស់នៃ Resource នោះ។
-
-### ១. គោលការណ៍បច្ចេកទេសនៃ PUT
-* **Complete Replacement**៖ រាល់ Field ណាដែលត្រូវបានលុបចោល ឬមិនបានបញ្ជូនមកក្នុង PUT Request នឹងត្រូវកំណត់ទៅជាតម្លៃដើម (Default) ឬ \`null\` ដោយមិនរក្សាទុកតម្លៃចាស់ឡើយ។ វាមិនមែនជាការកែសម្រួលផ្នែកខ្លះ (Partial Update) នោះទេ។
-* **Idempotence**៖ ការផ្ញើ PUT Request ដដែលៗច្រើនដង នឹងរក្សាស្ថានភាព Server ឱ្យនៅដដែល ដូចការផ្ញើតែម្តងគត់។
-* **Validation តឹងរ៉ឹង**៖ ដោយសារ PUT ជំនួសទិន្នន័យទាំងស្រុង ដូច្នេះរាល់ Field ចាំបាច់ទាំងអស់ត្រូវតែឆ្លងកាត់ការពិនិត្យ Validation ដូចទៅនឹង POST ដែរ។
-* **Status Codes ត្រឹមត្រូវ**៖
-  * **200 OK**៖ នៅពេល Server ធ្វើបច្ចុប្បន្នភាពជោគជ័យ និងបញ្ជូន Representation ថ្មីត្រឡប់ទៅ Client។
-  * **204 No Content**៖ នៅពេល Update ជោគជ័យ ប៉ុន្តែ Server មិនចង់បញ្ជូន Body ត្រឡប់ទៅវិញ។
-  * **404 Not Found**៖ នៅពេលរកមិនឃើញ Resource តាមរយៈ \`:id\`។`,
-  tip: "កំហុសទូទៅរបស់អ្នកចាប់ផ្តើមដំបូងគឺការប្រើប្រាស់ PUT សម្រាប់ការកែសម្រួលទិន្នន័យផ្នែកខ្លះ (ដូចជាការប្តូរតែលេខសម្ងាត់) ។ ប្រសិនបើអ្នកចង់កែប្រែតែ Field មួយចំនួនដោយមិនប៉ះពាល់ Field ផ្សេងទៀតទេ ត្រូវប្រើប្រាស់ HTTP `PATCH` ជំនួសវិញ។",
-  objective: "អនុវត្តការបង្កើត Express PUT Endpoint ស្របតាមបទដ្ឋានអន្តរជាតិ ដែលអនុវត្តការជំនួសទិន្នន័យពេញលេញ និងរក្សាគោលការណ៍ Idempotency ។",
-  expectedOutcome: "យល់ដឹងច្បាស់ពីភាពខុសគ្នារវាង PUT និង PATCH ព្រមទាំងចេះសរសេរ Route ជំនួសទិន្នន័យប្រកបដោយសុវត្ថិភាព។",
-  codeSnippet: `const express = require("express");
-const app = express();
-app.use(express.json());
-
-let products = [
-  { id: "p1", name: "Mechanical Keyboard", category: "electronics", price: 89.99, inStock: true },
-];
-
-/**
- * PUT /api/v1/products/:id
- * Full replacement of the target resource
- */
-app.put("/api/v1/products/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, category, price, inStock } = req.body;
-
-  // 1. Locate existing resource
-  const productIndex = products.findIndex((p) => p.id === id);
-  if (productIndex === -1) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: \`Product '\${id}' does not exist.\` },
-    });
-  }
-
-  // 2. Validate COMPLETE representation (all mandatory fields required)
-  if (!name || !category || price === undefined) {
-    return res.status(400).json({
-      success: false,
-      error: {
-        code: "INCOMPLETE_REPRESENTATION",
-        message: "PUT requires all mandatory fields: name, category, price.",
-      },
-    });
-  }
-
-  // 3. Complete Replacement (preserving original ID and updating timestamps)
-  const replacedProduct = {
-    id, // Immutable ID
-    name: String(name).trim(),
-    category: String(category).trim().toLowerCase(),
-    price: Number(price),
-    inStock: Boolean(inStock),
-    updatedAt: new Date().toISOString(),
-  };
-
-  products[productIndex] = replacedProduct;
-
-  // 4. Return 200 OK with the new representation
-  res.status(200).json({
-    success: true,
-    data: replacedProduct,
-  });
-});`,
+  summary: "ការអនុវត្ត **PUT Endpoint** តាមស្តង់ដារ RESTful៖\n\n* ត្រូវពិនិត្យវត្តមាន Resource ជាមុនសិន (`404 Not Found` បើគ្មាន)\n* ត្រូវទាមទារ (Enforce) នូវរាល់ Required Fields ទាំងអស់នៃ Resource\n* ជំនួស Object ទាំងមូលក្នុង Data Store ដោយមិនបន្សល់ទុក Fields ចាស់ដែល Client មិនបានផ្ញើមកឡើយ",
+  tip: "ចងចាំ៖ PUT គឺជាការសរសេរជាន់លើទាំងស្រុង (Overwrite Entire Entity)។",
+  objective: "ចេះបង្កើត PUT Handler ដែលគោរពតាមគោលការណ៍ Full Replacement។",
+  expectedOutcome: "ជំនួស Resource ដោយជោគជ័យ និងឆ្លើយតប 200 OK ជាមួយ Updated Record។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [\n  { id: 1, title: \"Old Title\", instructor: \"Old Teacher\", price: 10, published: false }\n];\n\napp.put(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const index = courses.findIndex(c => c.id === courseId);\n\n  if (index === -1) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  const { title, instructor, price, published } = req.body;\n\n  // Validation: PUT requires ALL core properties\n  if (!title || !instructor || price === undefined || published === undefined) {\n    return res.status(400).json({\n      success: false,\n      error: \"PUT requires full entity payload: title, instructor, price, and published status\"\n    });\n  }\n\n  // Overwrite completely\n  courses[index] = { id: courseId, title, instructor, price: Number(price), published: Boolean(published) };\n  return res.status(200).json({ success: true, data: courses[index] });\n});",
 };
 
 ```javascript
-const express = require("express");
+import express from "express";
 const app = express();
 app.use(express.json());
 
-let products = [
-  { id: "p1", name: "Mechanical Keyboard", category: "electronics", price: 89.99, inStock: true },
+let courses = [
+  { id: 1, title: "Old Title", instructor: "Old Teacher", price: 10, published: false }
 ];
 
-/**
- * PUT /api/v1/products/:id
- * Full replacement of the target resource
- */
-app.put("/api/v1/products/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, category, price, inStock } = req.body;
+app.put("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const index = courses.findIndex(c => c.id === courseId);
 
-  // 1. Locate existing resource
-  const productIndex = products.findIndex((p) => p.id === id);
-  if (productIndex === -1) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: `Product '${id}' does not exist.` },
-    });
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: "Course not found" });
   }
 
-  // 2. Validate COMPLETE representation (all mandatory fields required)
-  if (!name || !category || price === undefined) {
+  const { title, instructor, price, published } = req.body;
+
+  // Validation: PUT requires ALL core properties
+  if (!title || !instructor || price === undefined || published === undefined) {
     return res.status(400).json({
       success: false,
-      error: {
-        code: "INCOMPLETE_REPRESENTATION",
-        message: "PUT requires all mandatory fields: name, category, price.",
-      },
+      error: "PUT requires full entity payload: title, instructor, price, and published status"
     });
   }
 
-  // 3. Complete Replacement (preserving original ID and updating timestamps)
-  const replacedProduct = {
-    id, // Immutable ID
-    name: String(name).trim(),
-    category: String(category).trim().toLowerCase(),
-    price: Number(price),
-    inStock: Boolean(inStock),
-    updatedAt: new Date().toISOString(),
-  };
-
-  products[productIndex] = replacedProduct;
-
-  // 4. Return 200 OK with the new representation
-  res.status(200).json({
-    success: true,
-    data: replacedProduct,
-  });
+  // Overwrite completely
+  courses[index] = { id: courseId, title, instructor, price: Number(price), published: Boolean(published) };
+  return res.status(200).json({ success: true, data: courses[index] });
 });
 ```

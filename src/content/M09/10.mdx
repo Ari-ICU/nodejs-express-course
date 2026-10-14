@@ -1,135 +1,42 @@
 export const meta = {
   id: "M09-10",
   number: "10",
-  title: "DELETE",
-  khmerTitle: "ការអនុវត្ត DELETE Endpoint ស្តង់ដារ",
+  title: "Production DELETE Endpoints",
+  khmerTitle: "ការអនុវត្ត Production DELETE Endpoint (Soft Delete vs Hard Delete)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `HTTP Methods **DELETE** ណែនាំ Server ឱ្យលុប ឬដកចេញនូវ Resource ជាក់លាក់ដែលចង្អុលបង្ហាញដោយ URI ។ នៅពេលដែលទិន្នន័យត្រូវបានលុបរួចរាល់ រាល់ GET Requests បន្ទាប់ទៅកាន់ URI នោះ នឹងទទួលបាន **404 Not Found** (ឬ 410 Gone) ។
-
-### ១. និយាមនៃ Status Codes សម្រាប់ DELETE
-* **204 No Content**៖ ជាស្តង់ដារឧស្សាហកម្មទូទៅបំផុត នៅពេលការលុបទិន្នន័យទទួលបានជោគជ័យ ហើយ Server មិនចាំបាច់បញ្ជូន Response Body ត្រឡប់មកវិញឡើយ (\`res.status(204).send()\`)។
-* **200 OK**៖ ប្រើប្រាស់នៅពេល Server ចង់បញ្ជូន Message បញ្ជាក់ ឬទិន្នន័យដែលទើបលុបត្រឡប់ទៅ Client វិញ៖ \`{ success: true, message: "Resource deleted" }\`។
-* **202 Accepted**៖ ប្រើប្រាស់នៅពេលប្រតិបត្តិការលុបជាប្រភេទ Asynchronous ឬត្រូវរង់ចាំដំណើរការក្នុង Queue (ដូចជាការលុប File ធំៗពី AWS S3)។
-* **404 Not Found**៖ ឆ្លើយតបនៅពេលដែល ID របស់ទិន្នន័យដែលចង់លុប មិនមានវត្តមានក្នុង Database។
-
-### ២. ភាពខុសគ្នារវាង Hard Delete និង Soft Delete
-* **Hard Delete**៖ លុបទិន្នន័យចេញពី Database ជាអចិន្ត្រៃយ៍ (\`DELETE FROM products WHERE id = ?\`)។
-* **Soft Delete**៖ រក្សាទុកប្រវត្តិទិន្នន័យសម្រាប់ Audit Trail ដោយគ្រាន់តែកំណត់ទង់សម្គាល់កាលបរិច្ឆេទ (\`deletedAt = new Date()\`) និងច្រោះចេញពីការ Query ធម្មតា។`,
-  tip: "នៅពេលឆ្លើយតប `204 No Content`, ត្រូវបញ្ចប់ Route Handler ដោយ `res.status(204).send()` ឬ `res.status(204).end()`។ ដាច់ខាតកុំប្រើ `res.status(204).json({...})` ពីព្រោះស្តង់ដារពិធីការ HTTP ហាមឃាត់មិនឱ្យមាន Response Body សម្រាប់ Status 204 ឡើយ។",
-  objective: "សរសេរ Express DELETE Endpoints ដែលអនុវត្តទាំងយុទ្ធសាស្ត្រ Hard Delete និង Soft Delete ជាមួយ Status Code 204 និង 404 ត្រឹមត្រូវ។",
-  expectedOutcome: "ទទួលបាន DELETE Route កម្រិត Production ដែលមានការត្រួតពិនិត្យសិទ្ធិ (Authorization), ការគ្រប់គ្រងទិន្នន័យចងសម្ព័ន្ធ (Cascade), និង Response ស្របតាមស្តង់ដារ HTTP ។",
-  codeSnippet: `const express = require("express");
-const app = express();
-
-let products = [
-  { id: "p1", name: "Wireless Mouse", isDeleted: false, deletedAt: null },
-  { id: "p2", name: "Mechanical Keyboard", isDeleted: false, deletedAt: null },
-];
-
-/**
- * 1. Hard Delete Route (204 No Content)
- * DELETE /api/v1/products/:id/permanent
- */
-app.delete("/api/v1/products/:id/permanent", (req, res) => {
-  const { id } = req.params;
-  const index = products.findIndex((p) => p.id === id);
-
-  if (index === -1) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: \`Product '\${id}' not found\` },
-    });
-  }
-
-  // Remove completely from collection
-  products.splice(index, 1);
-
-  // Return standard 204 No Content (No response body)
-  res.status(204).send();
-});
-
-/**
- * 2. Soft Delete Route (Preserves record for audit/recovery)
- * DELETE /api/v1/products/:id
- */
-app.delete("/api/v1/products/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((p) => p.id === id && !p.isDeleted);
-
-  if (!product) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: \`Active product '\${id}' not found\` },
-    });
-  }
-
-  // Soft delete state transition
-  product.isDeleted = true;
-  product.deletedAt = new Date().toISOString();
-
-  res.status(200).json({
-    success: true,
-    message: "Product soft-deleted successfully",
-    data: { id: product.id, deletedAt: product.deletedAt },
-  });
-});`,
+  summary: "នៅក្នុង Production Applications មានយុទ្ធសាស្ត្រលុប ២ បែប៖\n\n1. **Hard Delete**៖ លុប Record ចេញពី Database ទាំងស្រុង (`courses.splice()`)\n2. **Soft Delete (អនុសាសន៍)**៖ មិនលុបទិន្នន័យចោលទេ គ្រាន់តែសម្គាល់ `isDeleted: true` និង `deletedAt = new Date()`។ វិធីនេះអនុញ្ញាតឱ្យយើង Restore ទិន្នន័យមកវិញបាន និងរក្សាប្រវត្តិ Transactions",
+  tip: "ប្រើប្រាស់ Status Code `200 OK` ប្រសិនបើអ្នកបញ្ជូន Deleted Entity ត្រឡប់មកវិញ ឬប្រើ `204 No Content` ប្រសិនបើអ្នកមិនបញ្ជូន Body ត្រឡប់ទៅវិញ។",
+  objective: "ចេះសរសេរ DELETE Endpoint ទាំងទម្រង់ Hard Delete និង Soft Delete។",
+  expectedOutcome: "យល់ច្បាស់ពីការគ្រប់គ្រងទិន្នន័យដែលបានលុបក្នុង Enterprise Architecture។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\nlet courses = [\n  { id: 1, title: \"Node.js Basics\", isDeleted: false, deletedAt: null }\n];\n\n// Soft Delete Implementation (Recommended for Enterprise)\napp.delete(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId && !c.isDeleted);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found or already deleted\" });\n  }\n\n  // Perform soft delete\n  course.isDeleted = true;\n  course.deletedAt = new Date().toISOString();\n\n  return res.status(200).json({\n    success: true,\n    message: \"Course has been soft-deleted successfully\",\n    data: { id: course.id, deletedAt: course.deletedAt }\n  });\n});",
 };
 
 ```javascript
-const express = require("express");
+import express from "express";
 const app = express();
 
-let products = [
-  { id: "p1", name: "Wireless Mouse", isDeleted: false, deletedAt: null },
-  { id: "p2", name: "Mechanical Keyboard", isDeleted: false, deletedAt: null },
+let courses = [
+  { id: 1, title: "Node.js Basics", isDeleted: false, deletedAt: null }
 ];
 
-/**
- * 1. Hard Delete Route (204 No Content)
- * DELETE /api/v1/products/:id/permanent
- */
-app.delete("/api/v1/products/:id/permanent", (req, res) => {
-  const { id } = req.params;
-  const index = products.findIndex((p) => p.id === id);
+// Soft Delete Implementation (Recommended for Enterprise)
+app.delete("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId && !c.isDeleted);
 
-  if (index === -1) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: `Product '${id}' not found` },
-    });
+  if (!course) {
+    return res.status(404).json({ success: false, error: "Course not found or already deleted" });
   }
 
-  // Remove completely from collection
-  products.splice(index, 1);
+  // Perform soft delete
+  course.isDeleted = true;
+  course.deletedAt = new Date().toISOString();
 
-  // Return standard 204 No Content (No response body)
-  res.status(204).send();
-});
-
-/**
- * 2. Soft Delete Route (Preserves record for audit/recovery)
- * DELETE /api/v1/products/:id
- */
-app.delete("/api/v1/products/:id", (req, res) => {
-  const { id } = req.params;
-  const product = products.find((p) => p.id === id && !p.isDeleted);
-
-  if (!product) {
-    return res.status(404).json({
-      success: false,
-      error: { code: "NOT_FOUND", message: `Active product '${id}' not found` },
-    });
-  }
-
-  // Soft delete state transition
-  product.isDeleted = true;
-  product.deletedAt = new Date().toISOString();
-
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
-    message: "Product soft-deleted successfully",
-    data: { id: product.id, deletedAt: product.deletedAt },
+    message: "Course has been soft-deleted successfully",
+    data: { id: course.id, deletedAt: course.deletedAt }
   });
 });
 ```

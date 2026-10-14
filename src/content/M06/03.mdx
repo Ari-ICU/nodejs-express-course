@@ -2,21 +2,28 @@ export const meta = {
   id: "M06-03",
   number: "03",
   title: "Installing Express",
-  khmerTitle: "ការដំឡើងកញ្ចប់ Express ក្នុងគម្រោង",
+  khmerTitle: "ការបង្កើត Project និងដំឡើង Express ជាមួយ ES Modules",
   type: "lab",
   codeLanguage: "bash",
-  summary: "ការដំឡើង Express តាមរយៈ npm និងកំណត់រចនាសម្ព័ន្ធគម្រោងសម្រាប់ ES Modules ដោយប្រកាស `\"type\": \"module\"` in `package.json`.",
-  tip: "ដំឡើងការចេញផ្សាយ Express ចុងក្រោយបំផុត (`npm install express@latest`) ហើយរក្សាទុកវាទៅភាពអាស្រ័យដោយផ្ទាល់។",
-  objective: "ដំឡើង និងផ្ទៀងផ្ទាត់កញ្ចប់ Express នៅក្នុងគម្រោង Node.js ។",
-  expectedOutcome: "ការដំឡើង Working Express រួចរាល់សម្រាប់ការអភិវឌ្ឍ Server ។",
-  codeSnippet: "# Initialize project and install Express\nnpm init -y\nnpm install express\n\n# Verify package.json contains express\ncat package.json",
+  summary: "ការចាប់ផ្តើមគម្រោង Express ថ្មីដោយប្រើប្រាស់ **ES Modules** (`import/export`) ទំនើប៖\n\n1. **Initialize Project**៖ បង្កើត `package.json` តាមរយៈ `npm init -y`\n2. **Install Express**៖ ដំឡើងកញ្ចប់ `express`\n3. **Configure ESM**៖ បន្ថែម `\"type\": \"module\"` ក្នុង `package.json`\n4. **Dev Script**៖ ប្រើ `node --watch` ដើម្បី Auto-restart Server រាល់ពេលកែប្រែកូដ",
+  tip: "ចាប់តាំងពី Node.js v18 មក អ្នកអាចប្រើ `node --watch` បានដោយផ្ទាល់ដោយមិនចាំបាច់ដំឡើង nodemon បន្ថែមឡើយ។",
+  objective: "ចេះរៀបចំ Project Environment និងដំឡើង Express ដោយជោគជ័យ។",
+  expectedOutcome: "ទទួលបាន Node.js Project ដំណើរការជាមួយ ES Modules និង Ready សម្រាប់សរសេរ Express API។",
+  codeSnippet: "# Step 1: Initialize project\nmkdir course-catalog-api && cd course-catalog-api\nnpm init -y\n\n# Step 2: Install Express package\nnpm install express\n\n# Step 3: Configure package.json for ES Modules\nnpm pkg set type=\"module\"\nnpm pkg set scripts.dev=\"node --watch src/server.js\"\n\n# Step 4: Run the development server\nnpm run dev",
 };
 
 ```bash
-# Initialize project and install Express
+# Step 1: Initialize project
+mkdir course-catalog-api && cd course-catalog-api
 npm init -y
+
+# Step 2: Install Express package
 npm install express
 
-# Verify package.json contains express
-cat package.json
+# Step 3: Configure package.json for ES Modules
+npm pkg set type="module"
+npm pkg set scripts.dev="node --watch src/server.js"
+
+# Step 4: Run the development server
+npm run dev
 ```

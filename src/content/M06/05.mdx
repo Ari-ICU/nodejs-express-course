@@ -2,23 +2,37 @@ export const meta = {
   id: "M06-05",
   number: "05",
   title: "Starting a Server",
-  khmerTitle: "ការចាប់ផ្តើម Server ជាមួយ app.listen()",
+  khmerTitle: "ការដំណើរការ Server ក្នុង src/server.js និង Graceful Shutdown",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការចងកម្មវិធី Express ទៅច្រក TCP ដោយប្រើ \`app.listen()\` អនុញ្ញាតឱ្យ Server ទទួលយកការភ្ជាប់បណ្តាញចូល។`,
-  tip: "ភ្ជាប់ច្រកពី `process.env.PORT` ជានិច្ចជាមួយនឹងជម្រើសត្រឡប់ ដើម្បីអនុញ្ញាតឱ្យមានការដាក់ពង្រាយគ្មានថ្នេរទៅនឹងវេទិកាកុងតឺន័រដូចជា Docker, AWS ឬ Render ។",
-  objective: "ចាប់ផ្តើមកម្មវិធីស្តាប់ HTTP និងផ្ទៀងផ្ទាត់ភាពអាចរកបាននៃការតភ្ជាប់។",
-  expectedOutcome: "កំពុងដំណើរការ Server គេហទំព័រដែលអាចចូលប្រើបានតាមរយៈច្រកបណ្តាញមូលដ្ឋាន។",
-  codeSnippet: "// src/server.js\nimport app from \"./app.js\";\n\nconst PORT = process.env.PORT || 5000;\n\nconst server = app.listen(PORT, () => {\n  console.log(`🚀 Server running in ${process.env.NODE_ENV || \"dev\"} on port ${PORT}`);\n});",
+  summary: "ឯកសារ **src/server.js** ទទួលខុសត្រូវលើ Network Layer៖\n\n1. **Port Binding**៖ អាន Port ពី `process.env.PORT` ជាមួយ Fallback `5000`\n2. **Listener Activation**៖ ហៅ `app.listen()`\n3. **Graceful Shutdown**៖ ចាប់សញ្ញា `SIGTERM` និង `SIGINT` ដើម្បីបិទ Connections ដោយសុវត្ថិភាពនៅពេល Deploy លើ Docker/Kubernetes",
+  tip: "កុំ Hardcode Port `5000` ដោយគ្មាន `process.env.PORT` ព្រោះ Cloud Platforms (Render, AWS, Railway) នឹងចាត់ចែង Dynamic Port ពេល Deploy។",
+  objective: "ចេះ Start HTTP Server និងរៀបចំ Graceful Shutdown សម្រាប់ Production។",
+  expectedOutcome: "Server ដែលមានស្ថេរភាពខ្ពស់ អាចបិទ និង Re-deploy ដោយមិនបាត់បង់ទិន្នន័យ In-flight Requests។",
+  codeSnippet: "// src/server.js\nimport app from \"./app.js\";\n\n// Step 1: Environment-driven port configuration\nconst PORT = process.env.PORT || 5000;\n\n// Step 2: Start listening for incoming connections\nconst server = app.listen(PORT, () => {\n  console.log(`🚀 Course API Server listening on http://localhost:${PORT}`);\n});\n\n// Step 3: Graceful Shutdown handling (Production Grade)\nconst shutdown = (signal) => {\n  console.log(`Received ${signal}. Closing HTTP server gracefully...`);\n  server.close(() => {\n    console.log(\"HTTP server closed. Exiting process.\");\n    process.exit(0);\n  });\n};\n\nprocess.on(\"SIGTERM\", () => shutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => shutdown(\"SIGINT\"));",
 };
 
 ```javascript
 // src/server.js
 import app from "./app.js";
 
+// Step 1: Environment-driven port configuration
 const PORT = process.env.PORT || 5000;
 
+// Step 2: Start listening for incoming connections
 const server = app.listen(PORT, () => {
-  console.log(`🚀 Server running in ${process.env.NODE_ENV || "dev"} on port ${PORT}`);
+  console.log(`🚀 Course API Server listening on http://localhost:${PORT}`);
 });
+
+// Step 3: Graceful Shutdown handling (Production Grade)
+const shutdown = (signal) => {
+  console.log(`Received ${signal}. Closing HTTP server gracefully...`);
+  server.close(() => {
+    console.log("HTTP server closed. Exiting process.");
+    process.exit(0);
+  });
+};
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
 ```

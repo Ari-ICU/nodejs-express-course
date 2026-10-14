@@ -37,6 +37,7 @@ for (const [modId, topics] of Object.entries(ALL_MODULES)) {
       type: t.type,
       codeLanguage: t.codeLanguage || "javascript",
     };
+    if (t.imageUrl) item.imageUrl = t.imageUrl;
     moduleTopicsLines.push(`    ${JSON.stringify(item)},`);
   }
   moduleTopicsLines.push(`  ],`);
@@ -66,6 +67,7 @@ export interface LessonTopic {
   tip?: string;
   objective?: string;
   expectedOutcome?: string;
+  imageUrl?: string;
 }
 
 export interface CourseModule {

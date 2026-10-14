@@ -1,36 +1,53 @@
 export const meta = {
   id: "M10-03",
   number: "03",
-  title: "Services",
-  khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Services",
+  title: "Services (Pure Business Logic)",
+  khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Service Layer",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Services បង្កប់នូវ Business Logic សុទ្ធ Data persistence ការគណនា External API calls និងច្បាប់ដែន។ Services កុំប៉ះវត្ថុ \`req\` ឬ \`res\` ។`,
-  tip: "កុំ pass `req` ឬ `res` ទៅក្នុង MethodsServices ។ បញ្ជូនតែ argumentsទិន្នន័យជាក់លាក់ (ឧ. `id, productData`) ដើម្បីរក្សាការសាកល្បង។",
-  objective: "អនុវត្ត ServicesBusiness Logic ឯករាជ្យដឹកជញ្ជូន។",
-  expectedOutcome: "Services ដែលអាចត្រូវបានធ្វើ Unit Testដោយមិនបាច់ mock វត្ថុ Express HTTP ។",
-  codeSnippet: "// services/product.service.js\nconst products = [\n  { id: \"1\", name: \"Laptop\", price: 999 },\n];\n\nexport const getById = async (id) => {\n  return products.find((p) => p.id === id) || null;\n};\n\nexport const createProduct = async (productData) => {\n  // Pure business logic: compute tax, apply domain rules, persist\n  const priceWithTax = Number((productData.price * 1.1).toFixed(2));\n  const newProduct = {\n    id: String(Date.now()),\n    ...productData,\n    priceWithTax,\n  };\n  products.push(newProduct);\n  return newProduct;\n};",
+  summary: "**Service Layer** គឺជាបេះដូងនៃ Application ដែលផ្ទុកនូវ **Business Rules និង Domain Logic ទាំងអស់**។\n\nលក្ខណៈសម្បត្តិនៃ Service Function ល្អ៖\n* **Pure JavaScript Functions**៖ ទទួល Pure Input (Objects, Strings, Numbers) និង Return Pure Output\n* **គ្មានការពាក់ព័ន្ធនឹង HTTP**៖ មិនដែលឃើញពាក្យ `req` ឬ `res` ក្នុង Service ឡើយ\n* **Throw Custom Domain Errors**៖ បោះកំហុស `AppError` នៅពេលខុសលក្ខខណ្ឌ Business Rule\n* **100% Testable**៖ អាចសរសេរ Unit Test បានយ៉ាងងាយស្រួលដោយមិនបាច់ប្រើ Express ឬ Supertest!",
+  tip: "ច្បាប់តឹងរ៉ឹង៖ កុំ Import `express` ឬ Pass `req` ឬ `res` ចូលទៅក្នុង Service Layer ឱ្យសោះ!",
+  objective: "ចេះបង្កើត Service Layer ដែលឯករាជ្យពី HTTP Framework។",
+  expectedOutcome: "Business Logic មានភាពស្អាត អាចសាកល្បងដោយ Unit Tests បានយ៉ាងងាយស្រួល។",
+  codeSnippet: "// src/services/course.service.js\n\n// Simulated database data store\nconst courses = [\n  { id: 1, title: \"Modern JavaScript\", price: 29.99, level: \"beginner\" },\n  { id: 2, title: \"Full-Stack Express\", price: 49.99, level: \"advanced\" }\n];\n\n// Step 1: Pure Business Logic Service function (No req, no res!)\nexport const findAllCourses = async (filters = {}) => {\n  let result = [...courses];\n\n  if (filters.level) {\n    result = result.filter(c => c.level === filters.level);\n  }\n  if (filters.maxPrice) {\n    result = result.filter(c => c.price <= Number(filters.maxPrice));\n  }\n\n  return result;\n};\n\n// Step 2: Create Course Service with business validation\nexport const createCourse = async (courseData) => {\n  if (courseData.price < 0) {\n    throw new Error(\"Course price cannot be negative\");\n  }\n\n  const newCourse = {\n    id: courses.length + 1,\n    ...courseData,\n    createdAt: new Date().toISOString()\n  };\n\n  courses.push(newCourse);\n  return newCourse;\n};",
 };
 
 ```javascript
-// services/product.service.js
-const products = [
-  { id: "1", name: "Laptop", price: 999 },
+// src/services/course.service.js
+
+// Simulated database data store
+const courses = [
+  { id: 1, title: "Modern JavaScript", price: 29.99, level: "beginner" },
+  { id: 2, title: "Full-Stack Express", price: 49.99, level: "advanced" }
 ];
 
-export const getById = async (id) => {
-  return products.find((p) => p.id === id) || null;
+// Step 1: Pure Business Logic Service function (No req, no res!)
+export const findAllCourses = async (filters = {}) => {
+  let result = [...courses];
+
+  if (filters.level) {
+    result = result.filter(c => c.level === filters.level);
+  }
+  if (filters.maxPrice) {
+    result = result.filter(c => c.price <= Number(filters.maxPrice));
+  }
+
+  return result;
 };
 
-export const createProduct = async (productData) => {
-  // Pure business logic: compute tax, apply domain rules, persist
-  const priceWithTax = Number((productData.price * 1.1).toFixed(2));
-  const newProduct = {
-    id: String(Date.now()),
-    ...productData,
-    priceWithTax,
+// Step 2: Create Course Service with business validation
+export const createCourse = async (courseData) => {
+  if (courseData.price < 0) {
+    throw new Error("Course price cannot be negative");
+  }
+
+  const newCourse = {
+    id: courses.length + 1,
+    ...courseData,
+    createdAt: new Date().toISOString()
   };
-  products.push(newProduct);
-  return newProduct;
+
+  courses.push(newCourse);
+  return newCourse;
 };
 ```

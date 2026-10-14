@@ -1,99 +1,37 @@
 export const meta = {
   id: "M09-04",
   number: "04",
-  title: "Resources",
-  khmerTitle: "ការកំណត់ និងគ្រប់គ្រង Resources",
+  title: "Resource Modeling",
+  khmerTitle: "ការកំណត់ និងគ្រប់គ្រង Resources (Courses, Lessons, Categories)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `នៅក្នុង REST **ធនធាន** គឺជាគោលគំនិត Entity ឬវត្ថុមូលដ្ឋានណាមួយដែលអាចត្រូវបានដាក់ឈ្មោះ អាសយដ្ឋាន និងរៀបចំនៅលើបណ្តាញ។ ធនធានមិនមែនជាតារាង Database ខ្លួនវាទេ ប៉ុន្តែជាតំណាងអរូបីដែលលាតត្រដាងឆ្លងកាត់ព្រំដែន HTTP ។
-
-* **Document Resource**: វត្ថុទិន្នន័យតែមួយ (ឧ. `/users/usr_101`)។
-* **Collection Resource**: A server-managed directory of resources (e.g., \`/users\`, \`/articles\`).
-* **Store Resource**: A client-managed resource repository where the client determines the URI on creation (e.g., \`PUT /files/document.pdf\`).
-* **Controller Resource**: An executable procedure or workflow that doesn't map directly to CRUD (e.g., \`POST /auth/login\`, \`POST /cart/checkout\`).
-
-### 2. Resources vs Representations
-Clients never directly touch the physical database row; instead, they receive a **Representation** of that resource (usually serialised JSON). The server may omit internal fields like \`password_hash\`, format dates into ISO-8601 strings, and compute dynamic fields like \`fullName\` or \`discountedPrice\`.`,
-  tip: "នៅពេលបង្កើតគំរូធនធាន Controllers (សកម្មភាពដែលមិនសមស្របនឹងស្តង់ដារ CRUD ដូចជា 'ការបញ្ជូន Authentication អ៊ីមែលឡើងវិញ' ឬ 'លុបចោលការបញ្ជាទិញ') ធ្វើគំរូសកម្មភាពជាធនធានរង ឬការផ្លាស់ប្តូររដ្ឋ៖ `POST /orders/12/cancellation` ឬ `POST /auth/resend-verification` ។",
-  objective: "ស្វែងយល់ពីរបៀបកំណត់អត្តសញ្ញាណ ចាត់ថ្នាក់ និងតំណាងឱ្យ Entity ដែនជាធនធាន REST ដាច់ដោយឡែក។",
-  expectedOutcome: "ភាពស្ទាត់ជំនាញក្នុងការបំបែកដែនអាជីវកម្មដ៏ស្មុគស្មាញទៅជាគំរូឯកសារ Collections និងឧបករណ៍ត្រួតពិនិត្យច្បាស់លាស់។",
-  codeSnippet: `/**
- * Resource Representation Transformation
- * Internal DB Model -> Client-Facing Resource Representation
- */
-
-const express = require("express");
-const app = express();
-
-// Internal DB Entity (contains sensitive & internal metadata)
-const dbUser = {
-  id: "usr_883",
-  first_name: "Sophea",
-  last_name: "Keo",
-  email: "sophea.keo@example.com",
-  password_hash: "$2b$10$e8Z9yX7jP1b3...",
-  internal_notes: "High risk user",
-  created_at: 1695972000000,
-};
-
-// Transformer / Serializer: produces safe, client-facing Representation
-function toUserResource(user) {
-  return {
-    id: user.id,
-    fullName: \`\${user.first_name} \${user.last_name}\`,
-    email: user.email,
-    createdAt: new Date(user.created_at).toISOString(),
-    links: {
-      self: \`/api/v1/users/\${user.id}\`,
-      orders: \`/api/v1/users/\${user.id}/orders\`,
-    },
-  };
-}
-
-app.get("/api/v1/users/:id", (req, res) => {
-  // Never leak password_hash or internal_notes to the HTTP consumer
-  const resource = toUserResource(dbUser);
-  res.json({ success: true, data: resource });
-});`,
+  summary: "នៅក្នុង Course API គំរូទិន្នន័យ (Resources) ត្រូវបានបែងចែកជា៖\n\n1. **Courses (Top-level Resource)**៖ `/api/v1/courses`\n2. **Lessons (Sub-resource របស់ Course)**៖ `/api/v1/courses/:courseId/lessons`\n3. **Categories (Independent Resource)**៖ `/api/v1/categories`\n\nការរៀបចំ Resource Modeling ច្បាស់លាស់ជួយឱ្យ Schema Database និង API Routing មានភាពស៊ីសង្វាក់គ្នា។",
+  tip: "កុំធ្វើឱ្យ Nested Routes ជ្រៅលើសពី ២ កម្រិត (ឧ. `/authors/1/books/2/chapters/3/paragraphs` គឺជ្រៅពេក)។ ត្រូវបំប្លែងទៅជា `/chapters/3/paragraphs` វិញ។",
+  objective: "ចេះកំណត់កម្រិត Hierarchy នៃ Resources ក្នុងប្រព័ន្ធ។",
+  expectedOutcome: "រចនាសម្ព័ន្ធ Resource Models ងាយស្រួល Maintain និងមិនស្មុគស្មាញជ្រុល។",
+  codeSnippet: "// Resource Schemas in Course Catalog Domain\nexport const CourseSchema = {\n  id: \"number\",\n  title: \"string\",\n  slug: \"string\",           // e.g., \"mastering-express-architecture\"\n  instructor: \"string\",\n  price: \"number\",\n  level: \"beginner | intermediate | advanced\",\n  published: \"boolean\",\n  categoryId: \"number\",\n  createdAt: \"ISO8601 string\"\n};\n\nexport const LessonSchema = {\n  id: \"number\",\n  courseId: \"number\",       // Foreign key reference\n  title: \"string\",\n  durationMinutes: \"number\",\n  videoUrl: \"string\",\n  orderIndex: \"number\"\n};",
 };
 
 ```javascript
-/**
- * Resource Representation Transformation
- * Internal DB Model -> Client-Facing Resource Representation
- */
-
-const express = require("express");
-const app = express();
-
-// Internal DB Entity (contains sensitive & internal metadata)
-const dbUser = {
-  id: "usr_883",
-  first_name: "Sophea",
-  last_name: "Keo",
-  email: "sophea.keo@example.com",
-  password_hash: "$2b$10$e8Z9yX7jP1b3...",
-  internal_notes: "High risk user",
-  created_at: 1695972000000,
+// Resource Schemas in Course Catalog Domain
+export const CourseSchema = {
+  id: "number",
+  title: "string",
+  slug: "string",           // e.g., "mastering-express-architecture"
+  instructor: "string",
+  price: "number",
+  level: "beginner | intermediate | advanced",
+  published: "boolean",
+  categoryId: "number",
+  createdAt: "ISO8601 string"
 };
 
-// Transformer / Serializer: produces safe, client-facing Representation
-function toUserResource(user) {
-  return {
-    id: user.id,
-    fullName: `${user.first_name} ${user.last_name}`,
-    email: user.email,
-    createdAt: new Date(user.created_at).toISOString(),
-    links: {
-      self: `/api/v1/users/${user.id}`,
-      orders: `/api/v1/users/${user.id}/orders`,
-    },
-  };
-}
-
-app.get("/api/v1/users/:id", (req, res) => {
-  // Never leak password_hash or internal_notes to the HTTP consumer
-  const resource = toUserResource(dbUser);
-  res.json({ success: true, data: resource });
-});
+export const LessonSchema = {
+  id: "number",
+  courseId: "number",       // Foreign key reference
+  title: "string",
+  durationMinutes: "number",
+  videoUrl: "string",
+  orderIndex: "number"
+};
 ```

@@ -2,21 +2,41 @@ export const meta = {
   id: "M06-08",
   number: "08",
   title: "Middleware Concept",
-  khmerTitle: "ទស្សនទាន Middleware ក្នុង Express",
+  khmerTitle: "ទស្សនទាន Middleware ក្នុង Express និង Request Pipeline",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `អនុគមន៍ Middleware គឺជាមុខងារដែលមានសិទ្ធិចូលប្រើ Request Object (req) (\`req\`) Response Object (res) (\`res\`) និងអនុគមន៍ \`next\` Middleware នៅក្នុងវដ្តនៃResponseRequestរបស់កម្មវិធី។ ពួកគេអាចប្រតិបត្តិកូដ ធ្វើការផ្លាស់ប្តូរRequest/ឆ្លើយតប បញ្ចប់វដ្ត ឬហៅទៅ \`next()\` ។`,
-  tip: "ប្រសិនបើ Middleware មិនបញ្ចប់វដ្តនៃ ResponseRequest ជាមួយ `res.send()` ឬ `res.json()` វាត្រូវតែហៅទៅ `next()` បើមិនដូច្នេះទេ Request នឹងព្យួរជារៀងរហូត។",
-  objective: "ស្វែងយល់ពីរបៀបដែលបំពង់មេឌៀលំដាប់បន្តដំណើរការ Incoming Request ។",
-  expectedOutcome: "ការចាប់យករចនាសម្ព័ន្ធយ៉ាងជ្រៅនៃស្ថាបត្យកម្ម Onion/Pipeline នៅក្នុង Express ។",
-  codeSnippet: "// Middleware structure\nconst myMiddleware = (req, res, next) => {\n  console.log(\"Request received at:\", new Date().toISOString());\n  req.requestTime = Date.now(); // Mutate request\n  next(); // Pass control to next handler in chain!\n};",
+  summary: "**Middleware** គឺជាអនុគមន៍ដែលអង្គុយនៅចន្លោះ Incoming Request និង Route Handler ចុងក្រោយ។\n\nMiddleware នីមួយៗទទួលបាន Parameters ចំនួន ៣៖ `(req, res, next)`\n* វាអាចពិនិត្យ ឬកែប្រែ `req` និង `res`\n* វាអាចបញ្ចប់ Request ភ្លាមៗ (ឧ. បើ Unauthorized)\n* ឬហៅ `next()` ដើម្បីបញ្ជូនបន្តទៅកាន់ Middleware បន្ទាប់ក្នុង Pipeline",
+  tip: "⚠️ Pitfall: ប្រសិនបើ Middleware មិនបានបញ្ជូន Response (`res.json()`) ហើយមិនបានហៅ `next()` នោះ Request នឹងព្យួរគាំងរហូតដល់ Client Timeout!",
+  objective: "ស្វែងយល់ពីលំហូរការងារ (Pipeline Flow) នៃ Middleware ក្នុង Express។",
+  expectedOutcome: "ចេះបង្កើត Middleware សាមញ្ញសម្រាប់វាស់ស្ទង់ពេលវេលា Request (Request Timer)។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Define a Request Timer Middleware\nconst requestTimer = (req, res, next) => {\n  const startTime = Date.now();\n\n  // 💡 Teaching Note: Attach custom property to req object\n  req.receivedAt = new Date().toISOString();\n\n  // Listen to response finish event to calculate elapsed time\n  res.on(\"finish\", () => {\n    const duration = Date.now() - startTime;\n    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);\n  });\n\n  // Step 2: Pass control to the next handler!\n  next();\n};\n\n// Step 3: Register middleware globally\napp.use(requestTimer);\n\napp.get(\"/api/v1/ping\", (req, res) => {\n  res.json({ message: \"pong\", receivedAt: req.receivedAt });\n});",
 };
 
 ```javascript
-// Middleware structure
-const myMiddleware = (req, res, next) => {
-  console.log("Request received at:", new Date().toISOString());
-  req.requestTime = Date.now(); // Mutate request
-  next(); // Pass control to next handler in chain!
+import express from "express";
+const app = express();
+
+// Step 1: Define a Request Timer Middleware
+const requestTimer = (req, res, next) => {
+  const startTime = Date.now();
+
+  // 💡 Teaching Note: Attach custom property to req object
+  req.receivedAt = new Date().toISOString();
+
+  // Listen to response finish event to calculate elapsed time
+  res.on("finish", () => {
+    const duration = Date.now() - startTime;
+    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);
+  });
+
+  // Step 2: Pass control to the next handler!
+  next();
 };
+
+// Step 3: Register middleware globally
+app.use(requestTimer);
+
+app.get("/api/v1/ping", (req, res) => {
+  res.json({ message: "pong", receivedAt: req.receivedAt });
+});
 ```

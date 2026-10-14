@@ -1,119 +1,45 @@
 export const meta = {
   id: "M09-13",
   number: "13",
-  title: "API Error Structure",
-  khmerTitle: "រចនាសម្ព័ន្ធ API Error Envelope ស្តង់ដារ",
+  title: "API Error Structure (Error Envelope)",
+  khmerTitle: "ទម្រង់ឆ្លើយតបកំហុសស្តង់ដារ Error Envelope",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ដូចគ្នានឹង Success Response ដែរ រាល់ Error Responses ត្រូវតែរៀបចំតាមរចនាសម្ព័ន្ធ **Error Envelope** ដ៏ច្បាស់លាស់មួយ។ ការអនុវត្តតាម specification **RFC 7807 (Problem Details for HTTP APIs)** ធានាថាកម្មវិធី Client អាច handle errors តាមរយៈ Programmatic Codes និងបង្ហាញ error message ត្រឹមត្រូវដល់ User។
-
-### ១. សមាសធាតុចម្បងនៃ Enterprise Error Envelope
-* **\`success: false\`**៖ បញ្ជាក់យ៉ាងច្បាស់ថា request មិនជោគជ័យ។
-* **\`error.code\` (string)**៖ អក្សរធំតំណាងឱ្យ Machine-readable error code ដូចជា \`EMAIL_ALREADY_EXISTS\`, \`TOKEN_EXPIRED\`, ឬ \`PAYMENT_DECLINED\`។ ចំណុចនេះជួយឱ្យ Frontend អាច map ទៅ UI Error Message ជាភាសាខ្មែរបាន ដោយមិនចាំបាច់ parse message string ឡើយ។
-* **\`error.message\` (string)**៖ សេចក្តីសង្ខេប human-readable message អំពី error ដែលបានកើតឡើង។
-* **\`error.details\` (array, optional)**៖ List លម្អិតនៃ errors តាម field នីមួយៗនៅពេល validation fail។
-* **\`error.timestamp\` (ISO-8601)**៖ Timestamp សម្រាប់ debug និង verify ជាមួយ Error Logs លើ Server។
-
-### ២. Environment Security៖ ការលាក់ Stack Traces
-ដាច់ខាតកុំ expose Database Error Messages, SQL Queries, ឬ File System Paths (\`error.stack\`) ទៅកាន់ User ឬ Client នៅលើ Production environment ឱ្យសោះ ពីព្រោះ attackers អាចឆ្លៀតយកព័ត៌មានទាំងនេះមកវាយប្រហារ Server បាន។`,
-  tip: "ដាច់ខាតកុំ expose Error Object ដើម ឬ Stack Trace ទៅកាន់ Client ក្នុង Production environment (`NODE_ENV === 'production'`)។ ត្រូវកត់ត្រា Stack Trace ចូលក្នុង Internal Logs (ដូចជា Winston ឬ Datadog) ហើយ return ត្រឹមតែ sanitized Error Envelope ទៅកាន់ User ជំនួសវិញ។",
-  objective: "បង្កើត Error Envelopes ស្តង់ដារស្របតាម RFC 7807 ដើម្បីការពារ sensitive server data និងផ្តល់ format ច្បាស់លាស់ដល់ Client។",
-  expectedOutcome: "ទទួលបាន Centralized Error Handler Middleware ដែលជួយ Developer ពេល debug និងការពារ security ពេល deploy លើ Production។",
-  codeSnippet: `/**
- * Centralized REST Error Envelope Handler in Express
- */
-
-const express = require("express");
-const app = express();
-
-// Custom Application Error Class
-class AppError extends Error {
-  constructor(message, statusCode, errorCode, details = null) {
-    super(message);
-    this.statusCode = statusCode;
-    this.errorCode = errorCode;
-    this.details = details;
-    this.isOperational = true; // Distinguishes operational errors from code bugs
-  }
-}
-
-// Route triggering validation error
-app.get("/api/v1/orders/:id", (req, res, next) => {
-  if (req.params.id === "bad") {
-    return next(new AppError(
-      "Invalid order identifier format",
-      400,
-      "INVALID_ID_FORMAT",
-      [{ field: "id", issue: "ID must be a positive integer" }]
-    ));
-  }
-  res.json({ success: true, orderId: req.params.id });
-});
-
-// Centralized Error-Handling Middleware
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const isDev = process.env.NODE_ENV !== "production";
-
-  res.status(statusCode).json({
-    success: false,
-    error: {
-      code: err.errorCode || "INTERNAL_SERVER_ERROR",
-      message: err.message || "An unexpected error occurred.",
-      details: err.details || null,
-      timestamp: new Date().toISOString(),
-      ...(isDev && { stack: err.stack }), // Only include stack trace during development
-    },
-  });
-});`,
+  summary: "នៅពេលមានបញ្ហា Server ត្រូវតែឆ្លើយតបតាម **Standardized Error Envelope** ជានិច្ច ដើម្បីឱ្យ Frontend អាច Parse និងបង្ហាញ Error Message ដល់ User បានច្បាស់លាស់។\n\nរចនាសម្ព័ន្ធស្តង់ដារ៖\n* `success: false`\n* `error.message`៖ ការពន្យល់ខ្លី និងងាយយល់\n* `error.code`៖ Unique Machine-readable Error Code (ឧ. `COURSE_NOT_FOUND`)\n* `error.details`៖ Array នៃ Validation Errors (បើមាន)",
+  tip: "កុំបញ្ចេញ Raw Database Error Message (ដូចជា `E11000 duplicate key error...`) ទៅកាន់ Client ឱ្យសោះ ព្រោះវាជាហានិភ័យសន្តិសុខ (Information Leakage)។ ត្រូវបំប្លែងទៅជា Human-readable Message។",
+  objective: "ចេះរៀបចំទម្រង់ Error Response Envelope តាមស្តង់ដារ Production។",
+  expectedOutcome: "ផ្តល់ Error Messages ដែលមានសុវត្ថិភាព និងច្បាស់លាស់ដល់អ្នកប្រើប្រាស់។",
+  codeSnippet: "// Reusable Error Helper Utility\nexport const sendError = (res, statusCode, message, errorCode = \"BAD_REQUEST\", details = null) => {\n  return res.status(statusCode).json({\n    success: false,\n    error: {\n      code: errorCode,\n      message,\n      statusCode,\n      details,\n      timestamp: new Date().toISOString()\n    }\n  });\n};\n\n// Example Error Response sent by server:\n/*\n{\n  \"success\": false,\n  \"error\": {\n    \"code\": \"INVALID_INPUT\",\n    \"message\": \"Validation failed for course creation\",\n    \"statusCode\": 400,\n    \"details\": [\n      { \"field\": \"price\", \"message\": \"Price must be greater than 0\" }\n    ],\n    \"timestamp\": \"2026-10-14T10:00:00.000Z\"\n  }\n}\n*/",
 };
 
 ```javascript
-/**
- * Centralized REST Error Envelope Handler in Express
- */
-
-const express = require("express");
-const app = express();
-
-// Custom Application Error Class
-class AppError extends Error {
-  constructor(message, statusCode, errorCode, details = null) {
-    super(message);
-    this.statusCode = statusCode;
-    this.errorCode = errorCode;
-    this.details = details;
-    this.isOperational = true; // Distinguishes operational errors from code bugs
-  }
-}
-
-// Route triggering validation error
-app.get("/api/v1/orders/:id", (req, res, next) => {
-  if (req.params.id === "bad") {
-    return next(new AppError(
-      "Invalid order identifier format",
-      400,
-      "INVALID_ID_FORMAT",
-      [{ field: "id", issue: "ID must be a positive integer" }]
-    ));
-  }
-  res.json({ success: true, orderId: req.params.id });
-});
-
-// Centralized Error-Handling Middleware
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const isDev = process.env.NODE_ENV !== "production";
-
-  res.status(statusCode).json({
+// Reusable Error Helper Utility
+export const sendError = (res, statusCode, message, errorCode = "BAD_REQUEST", details = null) => {
+  return res.status(statusCode).json({
     success: false,
     error: {
-      code: err.errorCode || "INTERNAL_SERVER_ERROR",
-      message: err.message || "An unexpected error occurred.",
-      details: err.details || null,
-      timestamp: new Date().toISOString(),
-      ...(isDev && { stack: err.stack }), // Only include stack trace during development
-    },
+      code: errorCode,
+      message,
+      statusCode,
+      details,
+      timestamp: new Date().toISOString()
+    }
   });
-});
+};
+
+// Example Error Response sent by server:
+/*
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_INPUT",
+    "message": "Validation failed for course creation",
+    "statusCode": 400,
+    "details": [
+      { "field": "price", "message": "Price must be greater than 0" }
+    ],
+    "timestamp": "2026-10-14T10:00:00.000Z"
+  }
+}
+*/
 ```

@@ -5,23 +5,34 @@ export const meta = {
   khmerTitle: "អ្វីជា Middleware និងតួនាទីរបស់អនុគមន៍ next()",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `មុខងារ Middleware គឺជាបណ្តុំនៃកម្មវិធី Express ។ ពួកគេអង្គុយនៅចន្លោះ Incoming Request និងអ្នកដោះស្រាយផ្លូវចុងក្រោយ ពិនិត្យ Request កែប្រែ Headers ផ្ទៀងផ្ទាត់ Token ការញែកធាតុ និង Error Handling ។`,
-  tip: "ទូរស័ព្ទទៅ `next()` ជានិច្ច ឬផ្ញើ Response ជាមួយ `res.json()` ។ បើមិនដូច្នេះទេ ការភ្ជាប់ HTTP ព្យួរដោយគ្មានកំណត់។",
-  objective: "ស្វែងយល់ពីការដាក់Chaining និងលំដាប់ប្រតិបត្តិរបស់Middleware។",
-  expectedOutcome: "ជំនាញនៃបំពង់ស្ទាក់ចាប់ Request ។",
-  codeSnippet: "// Request Logger Middleware\nconst requestLogger = (req, res, next) => {\n  const start = Date.now();\n  res.on(\"finish\", () => {\n    const duration = Date.now() - start;\n    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);\n  });\n  next(); // Pass control to the next middleware!\n};\n\napp.use(requestLogger);",
+  summary: "**Middleware** គឺជាអនុគមន៍ស្នូលនៃ Express Architecture។ វាអង្គុយនៅចន្លោះ Incoming Request និង Route Handler ចុងក្រោយ។\n\nMiddleware នីមួយៗមាន Signature បីយ៉ាង៖ `(req, res, next)`\n1. **Execute Code**៖ អនុវត្ត Logic ណាមួយក៏បាន (logging, authentication, timing)\n2. **Mutate Objects**៖ បន្ថែម Properties ថ្មីលើ `req` (ដូចជា `req.user` ឬ `req.requestTime`)\n3. **End Cycle**៖ បញ្ចប់ Request ដោយបញ្ជូន Response (`res.status(401).json(...)`)\n4. **Call next()**៖ ហៅ `next()` ដើម្បីបញ្ជូនបន្តទៅកាន់ Middleware បន្ទាប់ក្នុង Pipeline",
+  tip: "ចងចាំ៖ Middleware ត្រូវតែធ្វើរឿងមួយក្នុងចំណោមពីរ៖ (១) ហៅ `next()` ដើម្បីបន្តទៅមុខ ឬ (២) ផ្ញើ Response (`res.json()`) ដើម្បីបញ្ចប់ Request។ កុំឱ្យខកខានទាំងពីរឱ្យសោះ!",
+  objective: "យល់ដឹងពីយន្តការ Request Pipeline និងតួនាទីរបស់ next()។",
+  expectedOutcome: "ចេះបង្កើត Middleware ដំបូង និងដឹងពីរបៀបតុបតែង (Decorate) Request Object។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Define custom Request Timestamp Middleware\nconst addTimestamp = (req, res, next) => {\n  // 💡 Teaching Note: Mutating req to share data across handlers\n  req.requestTime = new Date().toISOString();\n  console.log(`➡️ Incoming [${req.method}] to ${req.url} at ${req.requestTime}`);\n\n  // Step 2: Pass control to the next middleware in pipeline!\n  next();\n};\n\n// Step 3: Mount middleware globally\napp.use(addTimestamp);\n\napp.get(\"/api/v1/courses\", (req, res) => {\n  res.json({\n    message: \"Course catalog fetched\",\n    serverTime: req.requestTime // Accessible here!\n  });\n});",
 };
 
 ```javascript
-// Request Logger Middleware
-const requestLogger = (req, res, next) => {
-  const start = Date.now();
-  res.on("finish", () => {
-    const duration = Date.now() - start;
-    console.log(`[${req.method}] ${req.originalUrl} - ${res.statusCode} (${duration}ms)`);
-  });
-  next(); // Pass control to the next middleware!
+import express from "express";
+const app = express();
+
+// Step 1: Define custom Request Timestamp Middleware
+const addTimestamp = (req, res, next) => {
+  // 💡 Teaching Note: Mutating req to share data across handlers
+  req.requestTime = new Date().toISOString();
+  console.log(`➡️ Incoming [${req.method}] to ${req.url} at ${req.requestTime}`);
+
+  // Step 2: Pass control to the next middleware in pipeline!
+  next();
 };
 
-app.use(requestLogger);
+// Step 3: Mount middleware globally
+app.use(addTimestamp);
+
+app.get("/api/v1/courses", (req, res) => {
+  res.json({
+    message: "Course catalog fetched",
+    serverTime: req.requestTime // Accessible here!
+  });
+});
 ```

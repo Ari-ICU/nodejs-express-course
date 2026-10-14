@@ -1,29 +1,35 @@
 export const meta = {
   id: "M07-13",
   number: "13",
-  title: "Route Organization",
-  khmerTitle: "ការរៀបចំរចនាសម្ព័ន្ធ Routes ក្នុងគម្រោងធំ",
+  title: "Centralized Route Organization",
+  khmerTitle: "ការរៀបចំ Directory នៃ Routes តាមរយៈ index.js",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "នៅក្នុងកម្មវិធីសហគ្រាស អ្នកប្រមូលផ្តុំផ្លូវ `index.js` រួមបញ្ចូលគ្នានូវរ៉ោតទ័រដែនទាំងអស់ចូលទៅក្នុងម៉ូឌុលរ៉ោតទ័របង្រួបបង្រួមដែលត្រូវបានម៉ោននៅលើកម្មវិធី Express ចម្បង។",
-  tip: "ការរក្សាឯកសារផ្លូវដែលផ្តោតតែលើការកំណត់ផ្លូវ និងការភ្ជាប់ Middleware ធ្វើឱ្យការពិនិត្យមើលកូដលឿន និងតម្លាភាព។",
-  objective: "ប្រមូលផ្តុំរ៉ោតទ័រដែនជាច្រើនចូលទៅក្នុងបញ្ជីឈ្មោះរ៉ោតទ័រកណ្តាល។",
-  expectedOutcome: "ចំណុចភ្ជាប់ស្អាតតែមួយសម្រាប់ផ្លូវកម្មវិធីទាំងអស់។",
-  codeSnippet: "// routes/index.js\nimport { Router } from \"express\";\nimport authRoutes from \"./auth.routes.js\";\nimport userRoutes from \"./user.routes.js\";\nimport orderRoutes from \"./order.routes.js\";\n\nconst apiRouter = Router();\n\napiRouter.use(\"/auth\", authRoutes);\napiRouter.use(\"/users\", userRoutes);\napiRouter.use(\"/orders\", orderRoutes);\n\nexport default apiRouter;",
+  summary: "នៅពេលដែល Project រីកធំឡើង និងមាន Routers រាប់សិប (Courses, Lessons, Users, Orders, Reviews) យើងគួរបង្កើត **Central Route Aggregator** មួយនៅ `src/routes/index.js`។\n\nឯកសារ `index.js` នេះនឹង Import Routers ទាំងអស់ រួច Mount ពួកវាតាម Category ឬ Version បន្ទាប់មក Export Router តែមួយគត់ទៅកាន់ `app.js`។",
+  tip: "លំនាំ Central Route Aggregator ជួយឱ្យ `app.js` នៅតែមានកូដខ្លី និងមិនបាច់ Import Routers រាប់សិបនៅក្នុង Root File ឡើយ។",
+  objective: "ចេះរៀបចំ Centralized Route Router សម្រាប់ Scalable Backend។",
+  expectedOutcome: "រចនាសម្ព័ន្ធ Routes ស្អាត មានរបៀបរៀបរយ និងងាយស្រួលពង្រីក។",
+  codeSnippet: "// src/routes/index.js\nimport express from \"express\";\nimport courseRouter from \"./course.routes.js\";\nimport lessonRouter from \"./lesson.routes.js\";\n\nconst rootRouter = express.Router();\n\n// Step 1: Register Course routes\nrootRouter.use(\"/courses\", courseRouter);\n\n// Step 2: Register Nested Lesson routes under courses\n// e.g., /api/v1/courses/:courseId/lessons\ncourseRouter.use(\"/:courseId/lessons\", lessonRouter);\n\n// Step 3: Export the central aggregator router\nexport default rootRouter;\n\n// 💡 Teaching Note: In src/app.js, you only need one clean line:\n// app.use(\"/api/v1\", rootRouter);",
 };
 
 ```javascript
-// routes/index.js
-import { Router } from "express";
-import authRoutes from "./auth.routes.js";
-import userRoutes from "./user.routes.js";
-import orderRoutes from "./order.routes.js";
+// src/routes/index.js
+import express from "express";
+import courseRouter from "./course.routes.js";
+import lessonRouter from "./lesson.routes.js";
 
-const apiRouter = Router();
+const rootRouter = express.Router();
 
-apiRouter.use("/auth", authRoutes);
-apiRouter.use("/users", userRoutes);
-apiRouter.use("/orders", orderRoutes);
+// Step 1: Register Course routes
+rootRouter.use("/courses", courseRouter);
 
-export default apiRouter;
+// Step 2: Register Nested Lesson routes under courses
+// e.g., /api/v1/courses/:courseId/lessons
+courseRouter.use("/:courseId/lessons", lessonRouter);
+
+// Step 3: Export the central aggregator router
+export default rootRouter;
+
+// 💡 Teaching Note: In src/app.js, you only need one clean line:
+// app.use("/api/v1", rootRouter);
 ```

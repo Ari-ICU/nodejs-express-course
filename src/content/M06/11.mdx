@@ -1,21 +1,27 @@
 export const meta = {
   id: "M06-11",
   number: "11",
-  title: "HTTP Methods",
-  khmerTitle: "ការប្រើប្រាស់ HTTP Methods ក្នុង Express",
+  title: "HTTP Methods in Express",
+  khmerTitle: "ការប្រើប្រាស់ HTTP Methods (GET, POST, PUT, PATCH, DELETE)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `អ៊ិចប្រេសផ្ដល់នូវ Methods កំណត់ផ្លូវដែលត្រូវគ្នានឹង HTTP Verbs ស្តង់ដារទាំងអស់៖ \`app.get()\`, \`app.post()\`, \`app.put()\`, \`app.patch()\`, \`app.delete()\` ក៏ដូចជា \`app.all()\` ដើម្បីចាប់HTTP Verbs ទាំងអស់នៅលើផ្លូវមួយ។`,
-  tip: "ប្រើ `app.all('*', (req, res) => res.status(404).json(...))` ជាផ្លូវចុងក្រោយដើម្បីចាប់យក Endpoint ដែលមិនបានគ្រប់គ្រង។",
-  objective: "ផែនទីប្រតិបត្តិការ REST ទៅកាន់អ្នកជំនួយ Methods Express HTTP រៀងៗខ្លួន។",
-  expectedOutcome: "HTTP Verbs ត្រឹមត្រូវនៅគ្រប់ Endpoint ទាំងអស់។",
-  codeSnippet: "app.get(\"/users\", listUsers);\napp.post(\"/users\", createUser);\napp.put(\"/users/:id\", replaceUser);\napp.patch(\"/users/:id\", updateUserFields);\napp.delete(\"/users/:id\", deleteUser);",
+  summary: "HTTP Methods កំណត់នូវសកម្មភាព (Intent) របស់ Client លើ Resource៖\n\n* **GET**៖ អានទិន្នន័យ (Safe & Idempotent)\n* **POST**៖ បង្កើត Resource ថ្មី\n* **PUT**៖ ជំនួស Resource ចាស់ទាំងស្រុង (Full Replace)\n* **PATCH**៖ កែប្រែតែ Properties មួយចំនួន (Partial Update)\n* **DELETE**៖ លុប Resource ចេញ",
+  tip: "ចងចាំ៖ PUT តម្រូវឱ្យផ្ញើ Object ទាំងមូល រីឯ PATCH ផ្ញើតែ Fields ណាដែលចង់កែប្រែប៉ុណ្ណោះ។",
+  objective: "យល់ច្បាស់ពីអត្ថន័យ និងការជ្រើសរើស HTTP Methods ឱ្យត្រូវតាមស្តង់ដារ RESTful។",
+  expectedOutcome: "ចេះផ្គូផ្គង HTTP Verbs ទាំង ៥ ទៅកាន់ CRUD Endpoints នៃ Course API។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\n// 💡 Teaching Note: Complete CRUD mapping on Course Resource\napp.get(\"/api/v1/courses\", (req, res) => res.json({ action: \"GET all courses\" }));\napp.get(\"/api/v1/courses/:id\", (req, res) => res.json({ action: `GET course ${req.params.id}` }));\napp.post(\"/api/v1/courses\", (req, res) => res.status(201).json({ action: \"CREATE course\" }));\napp.put(\"/api/v1/courses/:id\", (req, res) => res.json({ action: `REPLACE course ${req.params.id}` }));\napp.patch(\"/api/v1/courses/:id\", (req, res) => res.json({ action: `UPDATE course ${req.params.id}` }));\napp.delete(\"/api/v1/courses/:id\", (req, res) => res.status(204).send());",
 };
 
 ```javascript
-app.get("/users", listUsers);
-app.post("/users", createUser);
-app.put("/users/:id", replaceUser);
-app.patch("/users/:id", updateUserFields);
-app.delete("/users/:id", deleteUser);
+import express from "express";
+const app = express();
+app.use(express.json());
+
+// 💡 Teaching Note: Complete CRUD mapping on Course Resource
+app.get("/api/v1/courses", (req, res) => res.json({ action: "GET all courses" }));
+app.get("/api/v1/courses/:id", (req, res) => res.json({ action: `GET course ${req.params.id}` }));
+app.post("/api/v1/courses", (req, res) => res.status(201).json({ action: "CREATE course" }));
+app.put("/api/v1/courses/:id", (req, res) => res.json({ action: `REPLACE course ${req.params.id}` }));
+app.patch("/api/v1/courses/:id", (req, res) => res.json({ action: `UPDATE course ${req.params.id}` }));
+app.delete("/api/v1/courses/:id", (req, res) => res.status(204).send());
 ```

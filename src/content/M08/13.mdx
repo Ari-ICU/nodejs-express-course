@@ -2,23 +2,35 @@ export const meta = {
   id: "M08-13",
   number: "13",
   title: "Middleware Best Practices",
-  khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ប្រព័ន្ធ Middleware",
+  khmerTitle: "ការអនុវត្តល្អបំផុតសម្រាប់ប្រព័ន្ធ Middleware និង Async Handlers",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `គោលការណ៍ណែនាំឧស្សាហកម្មសម្រាប់ Middleware ៖ រក្សាមុខងារផ្តោតលើទំនួលខុសត្រូវតែមួយ ដោះស្រាយកំហុសភ្លាមៗ មិនដែលផ្លាស់ប្តូរស្ថានភាពសកល និងបិទភ្ជាប់ Middleware ដែលអាចកំណត់រចនាសម្ព័ន្ធបាននៅខាងក្នុងមុខងាររបស់រោងចក្រ។`,
-  tip: "ប្រើមុខងាររបស់រោងចក្រមជ្ឈឹមវែរ (មុខងារដែលត្រឡប់ Middleware) ដើម្បីឆ្លងកាត់ជម្រើសនៃការកំណត់រចនាសម្ព័ន្ធជាលក្ខណៈថាមវន្ត។",
-  objective: "អនុវត្ត​គំរូ​សហគ្រាស​ចំពោះ​កញ្ចប់​ផ្នែក​កណ្តាល​ម៉ូឌុល​ដែល​ស្អាត និង​ជា​អ្នក​និពន្ធ។",
-  expectedOutcome: "អាចប្រើឡើងវិញបាន និងអាចកំណត់រចនាសម្ព័ន្ធបានខ្ពស់។",
-  codeSnippet: "// Middleware Factory Pattern:\nexport const rateLimiter = (options = { maxRequests: 100, windowMs: 60000 }) => {\n  const requests = new Map();\n  return (req, res, next) => {\n    // Custom rate limit logic using options\n    next();\n  };\n};",
+  summary: "បញ្ជីត្រួតពិនិត្យ (Best Practices Checklist) សម្រាប់ Express Middleware៖\n\n1. **Always call next() or send response**៖ កុំទុកឱ្យ Request ព្យួរចោល\n2. **Catch Async Errors (asyncHandler)**៖ Express 4 មិនទាន់ចាប់ Unhandled Promise Rejections ក្នុង async functions ដោយស្វ័យប្រវត្តិទេ (ត្រូវរុំដោយ Helper ឬ Try/Catch)\n3. **Avoid mutating global state**៖ តុបតែងតែលើ `req` object\n4. **Single Responsibility**៖ Middleware មួយ ធ្វើការងារមួយច្បាស់លាស់",
+  tip: "ការប្រើប្រាស់ `asyncHandler` helper function ជួយឱ្យអ្នកមិនបាច់សរសេរ `try/catch` ដដែលៗនៅក្នុងរាល់ Controller ឡើយ។",
+  objective: "ចេះសរសេរ asyncHandler utility ដើម្បីកាត់បន្ថយ try/catch boilerplate។",
+  expectedOutcome: "កូដ Middleware និង Controllers មានសុវត្ថិភាពខ្ពស់ មិនប្រឈមនឹង Unhandled Rejections។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Step 1: Enterprise asyncHandler Wrapper Utility\n// Catches any rejected Promise and forwards error to next(err) automatically\nexport const asyncHandler = (fn) => (req, res, next) => {\n  Promise.resolve(fn(req, res, next)).catch(next);\n};\n\n// Step 2: Use asyncHandler without repetitive try/catch blocks!\napp.get(\"/api/v1/courses/stats\", asyncHandler(async (req, res) => {\n  // Simulating async database call\n  const stats = await Promise.resolve({ totalCourses: 42, activeEnrollments: 1250 });\n  res.json({ success: true, data: stats });\n}));\n\n// Step 3: Centralized Error Handler catches any thrown errors\napp.use((err, req, res, next) => {\n  res.status(500).json({ success: false, error: err.message });\n});",
 };
 
 ```javascript
-// Middleware Factory Pattern:
-export const rateLimiter = (options = { maxRequests: 100, windowMs: 60000 }) => {
-  const requests = new Map();
-  return (req, res, next) => {
-    // Custom rate limit logic using options
-    next();
-  };
+import express from "express";
+const app = express();
+
+// Step 1: Enterprise asyncHandler Wrapper Utility
+// Catches any rejected Promise and forwards error to next(err) automatically
+export const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
 };
+
+// Step 2: Use asyncHandler without repetitive try/catch blocks!
+app.get("/api/v1/courses/stats", asyncHandler(async (req, res) => {
+  // Simulating async database call
+  const stats = await Promise.resolve({ totalCourses: 42, activeEnrollments: 1250 });
+  res.json({ success: true, data: stats });
+}));
+
+// Step 3: Centralized Error Handler catches any thrown errors
+app.use((err, req, res, next) => {
+  res.status(500).json({ success: false, error: err.message });
+});
 ```

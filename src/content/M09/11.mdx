@@ -1,127 +1,29 @@
 export const meta = {
   id: "M09-11",
   number: "11",
-  title: "HTTP Status Codes",
-  khmerTitle: "ការជ្រើសរើស Status Codes ត្រឹមត្រូវក្នុង REST APIs",
+  title: "HTTP Status Codes Taxonomy",
+  khmerTitle: "តារាងចំណាត់ថ្នាក់ និងការជ្រើសរើស HTTP Status Codes",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `HTTP Status Codes ផ្តល់នូវសញ្ញាបញ្ជាក់ស្តង់ដារអន្តរជាតិ (Machine-readable Signals) ដែលប្រាប់ទៅកាន់ Client ថាតើ Request ទទួលបានជោគជ័យ, បរាជ័យដោយសារកំហុសរបស់ Client (4xx), ឬជួបឧបសគ្គលើ Server (5xx) ។
-
-### ១. តារាង Status Codes ចាំបាច់ក្នុង RESTful API
-* **200 OK**៖ ប្រតិបត្តិការជោគជ័យទូទៅសម្រាប់ \`GET\`, \`PUT\`, និង \`PATCH\`។
-* **201 Created**៖ បង្កើត Resource ថ្មីជោគជ័យតាមរយៈ \`POST\`។
-* **204 No Content**៖ ប្រតិបត្តិការជោគជ័យ ប៉ុន្តែគ្មាន Response Body ត្រឡប់ទៅវិញឡើយ (\`DELETE\`)។
-* **304 Not Modified**៖ ប្រើប្រាស់ជាមួយ Caching Headers (\`ETag\`, \`If-None-Match\`) ដើម្បីបញ្ជាក់ថាទិន្នន័យលើ Browser នៅថ្មីដដែល។
-* **400 Bad Request**៖ Syntax នៃ JSON មិនត្រឹមត្រូវ ឬខ្វះ Data តាម Schema។
-* **401 Unauthorized**៖ មិនទាន់មានការផ្ទៀងផ្ទាត់អត្តសញ្ញាណ (User មិនទាន់បាន Login)។
-* **403 Forbidden**៖ បាន Login រួចហើយ ប៉ុន្តែគ្មានសិទ្ធិអនុញ្ញាត (User មិនមែនជា Admin)។
-* **404 Not Found**៖ រកមិនឃើញ Resource ឬ Endpoint URL។
-* **409 Conflict**៖ ទំនាស់ទិន្នន័យ (ដូចជា Email មានក្នុងប្រព័ន្ធរួចហើយ)។
-* **422 Unprocessable Entity**៖ ទម្រង់ JSON ត្រឹមត្រូវ ប៉ុន្តែខុសវិធានអាជីវកម្ម (Business Validation Rules)។
-* **429 Too Many Requests**៖ Client ស្នើសុំច្រើនហួសកម្រិតកំណត់ (Rate Limit Exceeded)។
-* **500 Internal Server Error**៖ កំហុសបច្ចេកទេស ឬ Exception ដែលមិនបានរំពឹងទុកនៅលើ Server។`,
-  tip: "ចូរចងចាំភាពខុសគ្នារវាង 401 និង 403 ឱ្យបានច្បាស់៖ 401 មានន័យថា 'តើអ្នកជានរណា? (សូម Login សិន)', ខណៈដែល 403 មានន័យថា 'ខ្ញុំដឹងថាអ្នកជានរណាហើយ ប៉ុន្តែអ្នកគ្មានសិទ្ធិអនុញ្ញាតចូលប្រើប្រាស់មុខងារនេះឡើយ'។",
-  objective: "យល់ដឹង និងចេះជ្រើសរើស HTTP Status Codes ត្រឹមត្រូវ សម្រាប់គ្រប់ដំណាក់កាលនៃ Request Lifecycle និងគ្រប់ស្ថានភាពកំហុស។",
-  expectedOutcome: "សមត្ថភាពក្នុងការជ្រើសរើស និងបញ្ជូន Status Codes ស្របតាមនិយាមអន្តរជាតិ ដោយជៀសវាងបញ្ហា Misleading 200 OK ។",
-  codeSnippet: `/**
- * Status Code Decision Helper in Express
- */
-
-const express = require("express");
-const app = express();
-app.use(express.json());
-
-// Simulation DB
-const users = [{ id: "usr_1", email: "alice@example.com", role: "member" }];
-
-app.post("/api/v1/users", (req, res) => {
-  const { email, password } = req.body;
-
-  // 400 Bad Request: Missing required fields
-  if (!email || !password) {
-    return res.status(400).json({ success: false, error: "Email and password required" });
-  }
-
-  // 409 Conflict: Resource already exists
-  const existing = users.find((u) => u.email === email);
-  if (existing) {
-    return res.status(409).json({ success: false, error: "Email is already registered" });
-  }
-
-  const newUser = { id: \`usr_\${users.length + 1}\`, email, role: "member" };
-  users.push(newUser);
-
-  // 201 Created: New resource persisted
-  res.status(201).json({ success: true, data: newUser });
-});
-
-// Guard: 401 vs 403 demonstration
-app.delete("/api/v1/system/purge", (req, res) => {
-  const token = req.headers.authorization;
-  // 401: Unauthenticated
-  if (!token) {
-    return res.status(401).json({ success: false, error: "Authentication token required" });
-  }
-
-  // 403: Authenticated, but unauthorized role
-  const userRole = "member";
-  if (userRole !== "admin") {
-    return res.status(403).json({ success: false, error: "Admin privileges required" });
-  }
-
-  // 204 No Content
-  res.status(204).send();
-});`,
+  summary: "សៀវភៅណែនាំ Status Codes សម្រាប់ REST API Development៖\n\n* **2xx Success**៖\n  * `200 OK`៖ សំណើជោគជ័យ (GET, PUT, PATCH)\n  * `201 Created`៖ បង្កើត Resource ថ្មីបានសម្រេច (POST)\n  * `204 No Content`៖ ជោគជ័យតែគ្មាន Content ត្រឡប់មកវិញ (DELETE)\n* **4xx Client Errors**៖\n  * `400 Bad Request`៖ ទិន្នន័យមិនត្រឹមត្រូវតាម Schema\n  * `401 Unauthorized`៖ មិនទាន់ Login / គ្មាន Token\n  * `403 Forbidden`៖ បាន Login ហើយ តែគ្មានសិទ្ធិ\n  * `404 Not Found`៖ រក Resource មិនឃើញ\n  * `409 Conflict`៖ ទិន្នន័យជាន់គ្នា (ដូចជា Duplicate Email ឬ Slug)\n* **5xx Server Errors**៖\n  * `500 Internal Server Error`៖ Bug ក្នុង Server Code\n  * `503 Service Unavailable`៖ Database គាំង ឬ Server កំពុង Maintenance",
+  tip: "ច្បាប់មាស៖ កុំត្រឡប់ 200 OK នៅពេលមានបញ្ហាឱ្យសោះ។ ការប្រើ Status Code ត្រឹមត្រូវជួយឱ្យ Frontend Developers អាច Handle Error Interceptors (Axios / TanStack Query) បានស្វ័យប្រវត្តិ។",
+  objective: "ស្ទាត់ជំនាញក្នុងការផ្គូផ្គង HTTP Status Code ទៅនឹងស្ថានភាពនីមួយៗ។",
+  expectedOutcome: "API មានភាពច្បាស់លាស់ ងាយស្រួល Debug និង Integration។",
+  codeSnippet: "// Status Code Reference Helper\nexport const HTTP_STATUS = {\n  OK: 200,\n  CREATED: 201,\n  NO_CONTENT: 204,\n  BAD_REQUEST: 400,\n  UNAUTHORIZED: 401,\n  FORBIDDEN: 403,\n  NOT_FOUND: 404,\n  CONFLICT: 409,\n  INTERNAL_SERVER_ERROR: 500,\n  SERVICE_UNAVAILABLE: 503\n};",
 };
 
 ```javascript
-/**
- * Status Code Decision Helper in Express
- */
-
-const express = require("express");
-const app = express();
-app.use(express.json());
-
-// Simulation DB
-const users = [{ id: "usr_1", email: "alice@example.com", role: "member" }];
-
-app.post("/api/v1/users", (req, res) => {
-  const { email, password } = req.body;
-
-  // 400 Bad Request: Missing required fields
-  if (!email || !password) {
-    return res.status(400).json({ success: false, error: "Email and password required" });
-  }
-
-  // 409 Conflict: Resource already exists
-  const existing = users.find((u) => u.email === email);
-  if (existing) {
-    return res.status(409).json({ success: false, error: "Email is already registered" });
-  }
-
-  const newUser = { id: `usr_${users.length + 1}`, email, role: "member" };
-  users.push(newUser);
-
-  // 201 Created: New resource persisted
-  res.status(201).json({ success: true, data: newUser });
-});
-
-// Guard: 401 vs 403 demonstration
-app.delete("/api/v1/system/purge", (req, res) => {
-  const token = req.headers.authorization;
-  // 401: Unauthenticated
-  if (!token) {
-    return res.status(401).json({ success: false, error: "Authentication token required" });
-  }
-
-  // 403: Authenticated, but unauthorized role
-  const userRole = "member";
-  if (userRole !== "admin") {
-    return res.status(403).json({ success: false, error: "Admin privileges required" });
-  }
-
-  // 204 No Content
-  res.status(204).send();
-});
+// Status Code Reference Helper
+export const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  CONFLICT: 409,
+  INTERNAL_SERVER_ERROR: 500,
+  SERVICE_UNAVAILABLE: 503
+};
 ```

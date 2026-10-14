@@ -60,8 +60,13 @@ ${code}
 
 let written = 0;
 let skipped = 0;
+const filterModules = process.argv.slice(2);
 
 for (const [moduleId, topics] of Object.entries(ALL_MODULES)) {
+  if (filterModules.length > 0 && !filterModules.includes(moduleId)) {
+    skipped += topics.length;
+    continue;
+  }
   const moduleDir = path.join(CONTENT_DIR, moduleId);
   await fs.mkdir(moduleDir, { recursive: true });
 

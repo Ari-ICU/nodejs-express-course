@@ -1,26 +1,34 @@
 export const meta = {
   id: "M10-07",
   number: "07",
-  title: "Reusable Business Logic",
-  khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបាន",
+  title: "Reusable Business Logic Across Contexts",
+  khmerTitle: "ការសរសេរ Business Logic ដែលអាចប្រើឡើងវិញបានគ្រប់ Contexts",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `តាមរយៈការបំបែក Business Logic នៅក្នុងមុខងារ Services លក្ខណៈពិសេសដូចជាការផ្ញើបង្កាន់ដៃ បង្កើតវិក្កយបត្រ ឬការគិតប្រាក់កាតឥណទានអាចត្រូវបានបង្កឡើងដោយ Request API ការងារ cron ឬស្គ្រីប CLI ។`,
-  tip: "Services គួរតែជាមុខងារអសមកាលសុទ្ធដែលយកវត្ថុ JavaScript ឆៅ និងត្រឡប់លទ្ធផលស្អាត។",
-  objective: "MethodsServices របស់អ្នកនិពន្ធអាចប្រើឡើងវិញបាននៅទូទាំងបរិបទកម្មវិធីជាច្រើន។",
-  expectedOutcome: "ប្រភពតែមួយនៃការពិតសម្រាប់ប្រតិបត្តិការអាជីវកម្ម។",
-  codeSnippet: "// Can be called by:\n// 1. POST /api/orders controller\n// 2. Scheduled Cron Job (auto-renewal)\n// 3. Admin CLI tool\nexport const processOrderInvoice = async (orderId) => {\n  const order = await Order.findById(orderId);\n  const pdfBuffer = await generateInvoicePdf(order);\n  await emailService.sendInvoice(order.customerEmail, pdfBuffer);\n  return { processed: true, orderId };\n};",
+  summary: "អត្ថប្រយោជន៍ដ៏អស្ចារ្យបំផុតនៃ Service Layer គឺ **Reusability (ការប្រើឡើងវិញ)**។\n\nអនុគមន៍ `generateCourseReport()` នៅក្នុង Service អាចត្រូវបានហៅប្រើប្រាស់ដោយ៖\n1. **Express HTTP Controller** (ពេល Admin ចុចមើលរបាយការណ៍លើ Dashboard)\n2. **Scheduled Cron Job** (ផ្ញើ Email សង្ខេបរបាយការណ៍រៀងរាល់យប់ម៉ោង ១២)\n3. **CLI Script / Seed Command** (ពេល Developer ដំណើរការតាម Terminal)",
+  tip: "ប្រសិនបើ Logic នោះស្ថិតនៅក្នុង Controller នោះ Cron Job ឬ CLI Tool នឹងមិនអាចហៅវាប្រើបានឡើយ ព្រោះគ្មាន `req` និង `res`!",
+  objective: "យល់ច្បាស់ពីមូលហេតុដែល Service Logic ត្រូវតែឯករាជ្យពី HTTP Layer។",
+  expectedOutcome: "ចេះបង្កើត Service Functions ដែលអាចហៅប្រើបានពីច្រើន Contexts (API, CLI, Cron)។",
+  codeSnippet: "// src/services/course.service.js\nexport const calculateCourseMetrics = (courses) => {\n  const totalRevenue = courses.reduce((sum, c) => sum + (c.price * (c.enrolledCount || 0)), 0);\n  const totalStudents = courses.reduce((sum, c) => sum + (c.enrolledCount || 0), 0);\n  return { totalRevenue, totalStudents, averagePrice: totalRevenue / (totalStudents || 1) };\n};\n\n// 💡 Teaching Note: Context 1: Express Controller\n// export const getMetricsController = (req, res) => {\n//   const metrics = calculateCourseMetrics(courses);\n//   res.json({ success: true, data: metrics });\n// };\n\n// 💡 Teaching Note: Context 2: Daily Scheduled Cron Job\n// cron.schedule(\"0 0 * * *\", () => {\n//   const metrics = calculateCourseMetrics(courses);\n//   sendDailyReportEmail(\"admin@school.com\", metrics);\n// });",
 };
 
 ```javascript
-// Can be called by:
-// 1. POST /api/orders controller
-// 2. Scheduled Cron Job (auto-renewal)
-// 3. Admin CLI tool
-export const processOrderInvoice = async (orderId) => {
-  const order = await Order.findById(orderId);
-  const pdfBuffer = await generateInvoicePdf(order);
-  await emailService.sendInvoice(order.customerEmail, pdfBuffer);
-  return { processed: true, orderId };
+// src/services/course.service.js
+export const calculateCourseMetrics = (courses) => {
+  const totalRevenue = courses.reduce((sum, c) => sum + (c.price * (c.enrolledCount || 0)), 0);
+  const totalStudents = courses.reduce((sum, c) => sum + (c.enrolledCount || 0), 0);
+  return { totalRevenue, totalStudents, averagePrice: totalRevenue / (totalStudents || 1) };
 };
+
+// 💡 Teaching Note: Context 1: Express Controller
+// export const getMetricsController = (req, res) => {
+//   const metrics = calculateCourseMetrics(courses);
+//   res.json({ success: true, data: metrics });
+// };
+
+// 💡 Teaching Note: Context 2: Daily Scheduled Cron Job
+// cron.schedule("0 0 * * *", () => {
+//   const metrics = calculateCourseMetrics(courses);
+//   sendDailyReportEmail("admin@school.com", metrics);
+// });
 ```

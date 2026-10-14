@@ -5,16 +5,38 @@ export const meta = {
   khmerTitle: "ការបង្កើត PATCH Routes សម្រាប់កែប្រែទិន្នន័យមួយផ្នែក",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ផ្លូវ PATCH ធ្វើបច្ចុប្បន្នភាពតែវាលជាក់លាក់ដែលបានផ្គត់ផ្គង់នៅក្នុង Request Body (ឧ. ធ្វើបច្ចុប្បន្នភាពអាសយដ្ឋានអ៊ីមែល ឬបិទបើកទង់ស្ថានភាព) ដោយមិនប៉ះពាល់ដល់វាលដែលមិនបានប៉ះ។`,
-  tip: "PATCH គឺជា HTTP Verbs ដែលពេញចិត្តសម្រាប់ការធ្វើបច្ចុប្បន្នភាពធនធានផ្នែកនៅក្នុង REST APIs ទំនើប។",
-  objective: "បង្កើត Endpoint នៃការអាប់ដេតដោយផ្នែកដែលកែប្រែតែវាលដែលបានបញ្ជាក់ប៉ុណ្ណោះ។",
-  expectedOutcome: "Endpoint នៃការផ្លាស់ប្តូរ Entity ប្រកបដោយប្រសិទ្ធភាពកាត់បន្ថយ Bandwidth និងទំហំ Payload ។",
-  codeSnippet: "app.patch(\"/api/v1/users/:id\", async (req, res) => {\n  const updatedUser = await userService.updateUserFields(req.params.id, req.body);\n  res.json({ success: true, data: updatedUser });\n});",
+  summary: "**PATCH Route** ប្រើសម្រាប់ **Partial Update** នៃ Resource។\n\nClient បញ្ជូនតែ Properties ណាដែលខ្លួនចង់កែប្រែប៉ុណ្ណោះ (ឧទាហរណ៍៖ កែប្រែតែ `price` ឬប្តូរ `published: true`) ដោយរក្សាទុក Fields ផ្សេងទៀតដដែល។\n\nលំនាំនេះជាអ្វីដែលត្រូវបានប្រើប្រាស់ញឹកញាប់បំផុតក្នុង Production APIs។",
+  tip: "ប្រើប្រាស់ Object Spread syntax (`{ ...courses[index], ...req.body }`) ដើម្បី Merge ទិន្នន័យថ្មីចូលទិន្នន័យចាស់យ៉ាងងាយស្រួល។",
+  objective: "ចេះអនុវត្ត PATCH Endpoint សម្រាប់កែប្រែ Course Properties ដោយបត់បែន។",
+  expectedOutcome: "ចេះ Update តែ Properties ដែលបញ្ជូនមកដោយមិនបាត់បង់ Properties ដើម។",
+  codeSnippet: "import express from \"express\";\nconst app = express();\napp.use(express.json());\n\nlet courses = [\n  { id: 1, title: \"JavaScript Mastery\", instructor: \"Ratha\", price: 29.99, published: false }\n];\n\n// Step 1: PATCH Endpoint for partial update\napp.patch(\"/api/v1/courses/:id\", (req, res) => {\n  const courseId = Number(req.params.id);\n  const course = courses.find(c => c.id === courseId);\n\n  if (!course) {\n    return res.status(404).json({ success: false, error: \"Course not found\" });\n  }\n\n  // Step 2: Partially update only provided fields\n  // 💡 Teaching Note: Keep original values for omitted fields!\n  if (req.body.title !== undefined) course.title = req.body.title;\n  if (req.body.price !== undefined) course.price = Number(req.body.price);\n  if (req.body.published !== undefined) course.published = Boolean(req.body.published);\n  course.updatedAt = new Date().toISOString();\n\n  return res.status(200).json({ success: true, data: course });\n});",
 };
 
 ```javascript
-app.patch("/api/v1/users/:id", async (req, res) => {
-  const updatedUser = await userService.updateUserFields(req.params.id, req.body);
-  res.json({ success: true, data: updatedUser });
+import express from "express";
+const app = express();
+app.use(express.json());
+
+let courses = [
+  { id: 1, title: "JavaScript Mastery", instructor: "Ratha", price: 29.99, published: false }
+];
+
+// Step 1: PATCH Endpoint for partial update
+app.patch("/api/v1/courses/:id", (req, res) => {
+  const courseId = Number(req.params.id);
+  const course = courses.find(c => c.id === courseId);
+
+  if (!course) {
+    return res.status(404).json({ success: false, error: "Course not found" });
+  }
+
+  // Step 2: Partially update only provided fields
+  // 💡 Teaching Note: Keep original values for omitted fields!
+  if (req.body.title !== undefined) course.title = req.body.title;
+  if (req.body.price !== undefined) course.price = Number(req.body.price);
+  if (req.body.published !== undefined) course.published = Boolean(req.body.published);
+  course.updatedAt = new Date().toISOString();
+
+  return res.status(200).json({ success: true, data: course });
 });
 ```

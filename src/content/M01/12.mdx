@@ -5,22 +5,19 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធ Folder គម្រោង Node.js",
   type: "architecture",
   codeLanguage: "bash",
-  summary: "A professional Node.js backend organizes source code into modular layers: controllers, services, routes, models, middleware, validators, configuration, and utilities, strictly separating transport protocols from business domain rules.",
-  codeSnippet: "my-backend-app/\n├── src/\n│   ├── config/       # Environment variables & DB connectors\n│   ├── controllers/  # HTTP request/response handlers\n│   ├── middleware/   # Auth, logging, rate limiting\n│   ├── models/       # Database schemas (Mongoose)\n│   ├── routes/       # Express route definitions\n│   ├── services/     # Pure business logic & database queries\n│   └── app.js        # Express app initialization\n├── tests/            # Automated Vitest / Supertest files\n├── .env.example      # Sample environment configuration\n├── package.json      # Dependencies and scripts\n└── server.js         # HTTP server entrypoint",
+  summary: "គម្រោង Node.js ស្អាតចាប់ផ្តើមជាមួយនឹងប្លង់ដែលអាចទាយទុកជាមុនបាន៖ រក្សាឯកសារប្រភពនៅខាងក្នុង `src/` ញែកចំណុចចូល (`index.js`) តាមដានភាពអាស្រ័យនៅក្នុង `package.json` និងឯកសារជំហានរៀបចំក្នុង `README.md` ។",
+  tip: "តែងតែរៀបចំ Source Code កម្មវិធីនៅក្នុងថត `src/` ដែលឧទ្ទិសជាជាងដាក់ស្គ្រីបរលុងជាច្រើននៅក្នុងថតឯកសារ។",
+  objective: "Bootstrap រចនាសម្ព័ន្ធថតស្អាត និងអាចរក្សាបានសម្រាប់គម្រោង Node.js ជាមូលដ្ឋាន។",
+  expectedOutcome: "ជម្រះគំរូផ្លូវចិត្តនៃឯកសារគម្រោងស្តង់ដារ និងថតឯកសារនៅក្នុងឃ្លាំង Node.js ។",
+  codeSnippet: "my-node-app/\n├── src/\n│   ├── index.js      # Main application script & entrypoint\n│   └── utils.js      # Helper functions & reusable utilities\n├── .gitignore        # Excludes node_modules and sensitive files\n├── README.md         # Project documentation and instructions\n└── package.json      # Project metadata, scripts, and dependencies",
 };
 
 ```bash
-my-backend-app/
+my-node-app/
 ├── src/
-│   ├── config/       # Environment variables & DB connectors
-│   ├── controllers/  # HTTP request/response handlers
-│   ├── middleware/   # Auth, logging, rate limiting
-│   ├── models/       # Database schemas (Mongoose)
-│   ├── routes/       # Express route definitions
-│   ├── services/     # Pure business logic & database queries
-│   └── app.js        # Express app initialization
-├── tests/            # Automated Vitest / Supertest files
-├── .env.example      # Sample environment configuration
-├── package.json      # Dependencies and scripts
-└── server.js         # HTTP server entrypoint
+│   ├── index.js      # Main application script & entrypoint
+│   └── utils.js      # Helper functions & reusable utilities
+├── .gitignore        # Excludes node_modules and sensitive files
+├── README.md         # Project documentation and instructions
+└── package.json      # Project metadata, scripts, and dependencies
 ```

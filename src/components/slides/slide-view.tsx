@@ -12,11 +12,9 @@ import {
   Bookmark,
   FileText,
   Layers,
-  Terminal,
   Maximize2,
   Minimize2,
   ArrowLeft,
-  Code2
 } from "lucide-react";
 import { COURSE_MODULES, CourseModule, LessonTopic } from "@/data/curriculum";
 import { CodeBlock } from "@/components/ui/code-block";

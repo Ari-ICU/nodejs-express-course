@@ -53,11 +53,33 @@ export const MdxContent: React.FC<MdxContentProps> = ({
               <span>{children}</span>
             </li>
           ),
-          code: ({ children }) => (
-            <code className="px-1.5 py-0.5 rounded-md bg-slate-100 text-emerald-700 font-mono text-[0.82em] border border-slate-200">
-              {children}
-            </code>
+          pre: ({ children }) => (
+            <div className="my-3 overflow-hidden rounded-xl border border-slate-800 bg-[#0d1117] shadow-sm">
+              <div className="flex items-center gap-1.5 px-3 py-2 border-b border-slate-800/80 bg-[#161b22]">
+                <div className="w-2 h-2 rounded-full bg-rose-500/70" />
+                <div className="w-2 h-2 rounded-full bg-amber-400/70" />
+                <div className="w-2 h-2 rounded-full bg-emerald-500/70" />
+              </div>
+              <pre className="p-3.5 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto leading-relaxed">
+                {children}
+              </pre>
+            </div>
           ),
+          code: ({ className, children, ...props }: any) => {
+            const isCodeBlock = className || (typeof children === "string" && children.includes("\n"));
+            if (isCodeBlock) {
+              return (
+                <code className="font-mono text-xs sm:text-sm text-emerald-300">
+                  {children}
+                </code>
+              );
+            }
+            return (
+              <code className="px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 font-mono text-[0.84em] border border-emerald-200/60 font-medium">
+                {children}
+              </code>
+            );
+          },
           a: ({ href, children }) => (
             <a
               href={href}

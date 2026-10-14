@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Synchronous Code",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "នៅក្នុង Synchronous Code (កូដដែលដំណើរការតាមលំដាប់លំដោយធម្មតា) Express នឹងស្ទាក់ចាប់កំហុសដែល `throw` ដោយស្វ័យប្រវត្តិ ហើយបញ្ជូនវាទៅកាន់ Error Middleware ភ្លាមៗ។\n\nឧទាហរណ៍៖\n```javascript\napp.get(\"/sync-error\", (req, res) => {\n  throw new Error(\"Something broke synchronously!\"); // Express catches this automatically!\n});\n```",
+  summary: "នៅក្នុង **Synchronous Code** (កូដដែលដំណើរការតាមលំដាប់លំដោយធម្មតា) Express នឹងស្ទាក់ចាប់កំហុសដែល `throw` ដោយស្វ័យប្រវត្តិ ហើយបញ្ជូនវាទៅកាន់ Error Middleware ភ្លាមៗ។\n\nចំណុចគន្លឹះសំខាន់ៗ៖\n* **Automatic Catching**: រាល់ Error ដែលត្រូវបាន `throw` ក្នុង synchronous route handler ត្រូវបាន Express ចាប់យកដោយស្វ័យប្រវត្តិ\n* **Direct Routing**: Express បញ្ជូន Error នោះទៅកាន់ Global Error Middleware `(err, req, res, next)` ភ្លាមៗ\n* **Safe Execution**: Process របស់ Node.js មិនដួលរលំ (Crash) ឡើយនៅពេលមាន Synchronous Error កើតឡើង",
   tip: "ទោះបីជា Express ចាប់ Synchronous Errors ដោយស្វ័យប្រវត្តិក៏ដោយ នៅក្នុង Real-world Backend កូដស្ទើរតែទាំងអស់គឺជា Asynchronous (ទាញយកទិន្នន័យពី MongoDB)។",
   objective: "យល់ដឹងពីរបៀបដែល Express ដោះស្រាយ Synchronous Errors។",
   expectedOutcome: "ដឹងពីភាពខុសគ្នារវាង Synchronous និង Asynchronous Error Handling។",

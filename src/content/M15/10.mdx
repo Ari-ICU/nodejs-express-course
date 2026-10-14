@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការដោះស្រាយកំហុស MongoDB Duplicate Key Error (Code 11000)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "នៅពេលដែល Client ព្យាយាមបង្កើត Course ដែលមាន Title ឬ Slug ជាន់គ្នាលើ Field ដែលមាន `unique: true` MongoDB Driver នឹងបោះកំហុសដែលមាន **`code: 11000`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.code === 11000)`\n* ស្រង់ឈ្មោះ Field ដែលស្ទួនចេញពី Error\n* បញ្ជូន **`409 Conflict`** ត្រឡប់ទៅ Client៖\n  `new AppError(`Duplicate field value: '${value}'. Please use another value!`, 409)`",
+  summary: "នៅពេលដែល Client ព្យាយាមបង្កើត Course ដែលមាន Title ឬ Slug ជាន់គ្នាលើ Field ដែលមាន `unique: true` MongoDB Driver នឹងបោះកំហុសដែលមាន **`code: 11000`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.code === 11000)`\n* ស្រង់ឈ្មោះ Field ដែលស្ទួនចេញពី Error\n* បញ្ជូន **`409 Conflict`** ត្រឡប់ទៅ Client៖ ``new AppError(`Duplicate field value: '${value}'`, 409)``",
   tip: "ប្រើប្រាស់ Status Code 409 Conflict សម្រាប់ Duplicate Data ព្រោះវាជា HTTP Standard សមស្របបំផុត។",
   objective: "ចេះចាប់ និងបំប្លែង MongoDB Error 11000 ទៅជា 409 Conflict Response។",
   expectedOutcome: "ការពារការស្ទួនទិន្នន័យ និងជូនដំណឹងដល់ User យ៉ាងច្បាស់លាស់។",

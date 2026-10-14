@@ -213,7 +213,15 @@ export const MODULES_16_20 = {
       "tip": "Keep role hierarchies flat and clear initially. Introduce permission matrices only when role definitions begin to blur across departments.",
       "objective": "Understand how RBAC decouples user identities from system permissions.",
       "expectedOutcome": "Comprehensive understanding of RBAC models and permission inheritance.",
-      "codeSnippet": "// RBAC Conceptual Model:\n// User -> Has Role -> Has Permissions -> Can Access Resource\n//\n// Alice (User)   -> [Role: \"user\"]      -> Read own profile, place order\n// Bob (Support)  -> [Role: \"moderator\"] -> View all orders, issue refunds\n// Carol (SysOps) -> [Role: \"admin\"]     -> Delete products, view metrics, ban users\n//\n// In middleware:\n// if (!roles.includes(req.user.role)) return 403 Forbidden"
+      "codeSnippet": `// RBAC Conceptual Model:
+// User -> Has Role -> Has Permissions -> Can Access Resource
+//
+// Alice (Student)     -> [Role: "student"]    -> Read courses, enroll in course, view progress
+// Bob (Instructor)    -> [Role: "instructor"] -> Create course, manage own lessons, grade assignments
+// Carol (Superadmin)  -> [Role: "admin"]      -> Delete courses, manage user roles, view platform metrics
+//
+// In middleware:
+// if (!roles.includes(req.user.role)) return 403 Forbidden`
     },
     {
       "id": "M17-03",
@@ -222,11 +230,27 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការគ្រប់គ្រងសិទ្ធិលម្អិត (Fine-grained Permissions)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "When static roles become insufficient for complex applications, fine-grained permission systems map actions to resources using verbs like `products:create`, `orders:refund`, or `users:ban`. An access matrix evaluates whether a user's assigned role or direct permission set contains the required resource action before proceeding.",
-      "tip": "Use colon notation for granular permissions: `<resource>:<action>` (e.g. `articles:publish`, `finance:export`).",
+      "summary": "When static roles become insufficient for complex applications, fine-grained permission systems map actions to resources using verbs like `courses:create`, `courses:publish`, or `users:ban`. An access matrix evaluates whether a user's assigned role or direct permission set contains the required resource action before proceeding.",
+      "tip": "Use colon notation for granular permissions: `<resource>:<action>` (e.g. `courses:publish`, `lessons:create`).",
       "objective": "Model granular resource-action permission strings and role permission mappings.",
       "expectedOutcome": "Scalable permission matrix capable of fine-grained access control beyond simple roles.",
-      "codeSnippet": "// config/permissions.js\nexport const ROLE_PERMISSIONS = {\n  user: [\"products:read\", \"orders:create\", \"orders:read_own\"],\n  moderator: [\"products:read\", \"reviews:moderate\", \"comments:delete\"],\n  admin: [\n    \"products:create\", \"products:update\", \"products:delete\",\n    \"orders:read_all\", \"orders:refund\", \"users:manage\"\n  ]\n};\n\nexport const hasPermission = (userRole, requiredPermission) => {\n  const permissions = ROLE_PERMISSIONS[userRole] || [];\n  return permissions.includes(requiredPermission);\n};"
+      "codeSnippet": `// config/permissions.js
+export const ROLE_PERMISSIONS = {
+  student: ["courses:read", "enrollments:create", "enrollments:read_own"],
+  instructor: [
+    "courses:read", "courses:create", "courses:update_own", "courses:delete_own",
+    "lessons:create", "lessons:update_own", "lessons:delete_own"
+  ],
+  admin: [
+    "courses:read", "courses:create", "courses:update_all", "courses:delete_all",
+    "users:manage", "analytics:read"
+  ]
+};
+
+export const hasPermission = (userRole, requiredPermission) => {
+  const permissions = ROLE_PERMISSIONS[userRole] || [];
+  return permissions.includes(requiredPermission);
+};`
     },
     {
       "id": "M17-04",
@@ -265,7 +289,26 @@ export const MODULES_16_20 = {
       "tip": "Always run `protect` BEFORE `restrictTo`. If `req.user` is undefined, `restrictTo` cannot evaluate roles.",
       "objective": "Build a reusable restrictTo middleware factory supporting multiple permitted roles.",
       "expectedOutcome": "Flexible, declarative role authorization middleware for Express routes.",
-      "codeSnippet": "// middleware/role.middleware.js\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    // req.user was populated by protect middleware\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return next(\n        new AppError(\n          `Forbidden: Role '${req.user?.role || \"anonymous\"}' does not have permission`,\n          403\n        )\n      );\n    }\n    next();\n  };\n};\n\n// Usage in routes:\n// router.delete(\"/products/:id\", protect, restrictTo(\"admin\"), deleteProduct);"
+      "codeSnippet": `// middleware/role.middleware.js
+import { AppError } from "../utils/AppError.js";
+
+export const restrictTo = (...allowedRoles) => {
+  return (req, res, next) => {
+    // req.user was populated by protect middleware
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return next(
+        new AppError(
+          `Forbidden: Role '${req.user?.role || "anonymous"}' does not have permission`,
+          403
+        )
+      );
+    }
+    next();
+  };
+};
+
+// Usage in course routes:
+// router.delete("/courses/:id", protect, restrictTo("instructor", "admin"), deleteCourse);`
     },
     {
       "id": "M17-07",
@@ -274,11 +317,37 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការផ្ទៀងផ្ទាត់កម្មសិទ្ធិនៃទិន្នន័យ (Resource Ownership Verification)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Resource ownership ensures that standard users can only edit or delete items they created (e.g. updating a blog post, canceling an order). A user might have permission to update articles, but only articles where `article.author.toString() === req.user._id.toString()`. Administrators typically bypass ownership checks via role bypass logic.",
-      "tip": "Always convert MongoDB ObjectIds to strings with `.toString()` when comparing `doc.owner.toString() === req.user._id.toString()`, because two distinct ObjectId instances never match with `===`.",
-      "objective": "Implement resource ownership checks ensuring users can only mutate their own records.",
+      "summary": "Resource ownership ensures that instructors can only edit or delete courses they authored, and students can only view or cancel their own enrollments. An instructor might have permission to update courses, but only courses where `course.instructor.toString() === req.user._id.toString()`. Administrators typically bypass ownership checks via admin privilege logic.",
+      "tip": "Always convert MongoDB ObjectIds to strings with `.toString()` when comparing `doc.instructor.toString() === req.user._id.toString()`, because two distinct ObjectId instances never match with `===`.",
+      "objective": "Implement resource ownership checks ensuring instructors can only mutate their own courses.",
       "expectedOutcome": "Bulletproof data protection preventing Horizontal Privilege Escalation (IDOR).",
-      "codeSnippet": "// controllers/post.controller.js\nexport const updatePost = async (req, res, next) => {\n  try {\n    const post = await Post.findById(req.params.id);\n    if (!post) throw new AppError(\"Post not found\", 404);\n\n    // Check ownership: Must be author OR an administrator\n    const isOwner = post.author.toString() === req.user._id.toString();\n    const isAdmin = req.user.role === \"admin\";\n\n    if (!isOwner && !isAdmin) {\n      throw new AppError(\"You do not have permission to edit this post\", 403);\n    }\n\n    // Apply updates...\n    post.title = req.body.title || post.title;\n    post.content = req.body.content || post.content;\n    await post.save();\n\n    res.json({ status: \"success\", data: { post } });\n  } catch (err) {\n    next(err);\n  }\n};"
+      "codeSnippet": `// controllers/course.controller.js
+import { Course } from "../models/course.model.js";
+import { AppError } from "../utils/AppError.js";
+
+export const updateCourse = async (req, res, next) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) throw new AppError("Course not found", 404);
+
+    // Check ownership: Must be course instructor OR an administrator
+    const isOwner = course.instructor.toString() === req.user._id.toString();
+    const isAdmin = req.user.role === "admin";
+
+    if (!isOwner && !isAdmin) {
+      throw new AppError("You do not have permission to edit this course", 403);
+    }
+
+    // Apply updates...
+    course.title = req.body.title || course.title;
+    course.description = req.body.description || course.description;
+    await course.save();
+
+    res.json({ status: "success", data: { course } });
+  } catch (err) {
+    next(err);
+  }
+};`
     },
     {
       "id": "M17-08",
@@ -287,11 +356,27 @@ export const MODULES_16_20 = {
       "khmerTitle": "ស្ថាបត្យកម្មរចនា API ប្រកបដោយសុវត្ថិភាពតាមតួនាទី",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Well-designed role-based APIs clearly separate public, authenticated, and privileged endpoints. Consistent route naming, standardized error responses, clear permission matrices, and automated permission tests prevent accidental exposure of privileged capabilities across the application lifecycle.",
+      "summary": "Well-designed role-based APIs clearly separate public, authenticated, and privileged endpoints. Consistent route naming, standardized error responses, clear permission matrices, and automated permission tests prevent accidental exposure of privileged capabilities across the course platform lifecycle.",
       "tip": "Document required permissions in your Swagger/OpenAPI annotations for every route to ensure frontend developers know authentication requirements upfront.",
       "objective": "Design scalable, secure API route architectures applying defense-in-depth authorization.",
       "expectedOutcome": "Clean, documented, and resilient API architecture enforcing role safety.",
-      "codeSnippet": "// Architectural Overview:\n//\n// 1. Public Tier (No Auth):\n//    GET  /api/v1/products\n//    POST /api/v1/auth/login\n//\n// 2. Authenticated Tier (protect):\n//    GET  /api/v1/users/me\n//    POST /api/v1/orders\n//\n// 3. Ownership Tier (protect + checkOwner):\n//    PATCH  /api/v1/posts/:id (author only)\n//    DELETE /api/v1/orders/:id (buyer only)\n//\n// 4. Privileged Admin Tier (protect + restrictTo('admin')):\n//    POST   /api/v1/admin/products\n//    PATCH  /api/v1/admin/users/:id/role"
+      "codeSnippet": `// Architectural Overview for Course Platform API:
+//
+// 1. Public Tier (No Auth):
+//    GET  /api/v1/courses (Browse published catalog)
+//    POST /api/v1/auth/login
+//
+// 2. Student Tier (protect):
+//    GET  /api/v1/users/me
+//    POST /api/v1/enrollments (Enroll in course)
+//
+// 3. Instructor Ownership Tier (protect + checkOwner):
+//    PATCH  /api/v1/courses/:id (Course instructor only)
+//    DELETE /api/v1/courses/:id (Course instructor only)
+//
+// 4. Privileged Admin Tier (protect + restrictTo('admin')):
+//    POST   /api/v1/admin/categories
+//    PATCH  /api/v1/admin/users/:id/role`
     }
   ],
   "M18": [
@@ -542,7 +627,31 @@ export const MODULES_16_20 = {
       "tip": "Use `upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])` for e-commerce product endpoints.",
       "objective": "Handle single, array, and mixed multi-field image uploads in Express.",
       "expectedOutcome": "Versatile image upload routes supporting complex multi-image forms.",
-      "codeSnippet": "// routes/product.routes.js\nimport multer from \"multer\";\nconst upload = multer({ dest: \"uploads/temp\" });\n\n// Handling mixed fields: 1 cover image + up to 5 gallery images\nconst productUploads = upload.fields([\n  { name: \"coverImage\", maxCount: 1 },\n  { name: \"gallery\", maxCount: 5 },\n]);\n\nrouter.post(\"/products\", productUploads, (req, res) => {\n  const cover = req.files[\"coverImage\"]?.[0];\n  const gallery = req.files[\"gallery\"] || [];\n\n  res.json({\n    status: \"success\",\n    coverFilename: cover?.filename,\n    galleryCount: gallery.length,\n  });\n});"
+      "codeSnippet": `// routes/course.routes.js
+import express from "express";
+import multer from "multer";
+import { protect } from "../middleware/auth.middleware.js";
+import { restrictTo } from "../middleware/role.middleware.js";
+
+const router = express.Router();
+const upload = multer({ dest: "uploads/temp" });
+
+// Handling course uploads: 1 thumbnail image + up to 5 course material attachments
+const courseUploads = upload.fields([
+  { name: "thumbnail", maxCount: 1 },
+  { name: "materials", maxCount: 5 },
+]);
+
+router.post("/courses", protect, restrictTo("instructor", "admin"), courseUploads, (req, res) => {
+  const thumbnail = req.files["thumbnail"]?.[0];
+  const materials = req.files["materials"] || [];
+
+  res.status(201).json({
+    status: "success",
+    thumbnailFilename: thumbnail?.filename,
+    materialsCount: materials.length,
+  });
+});`
     },
     {
       "id": "M19-05",

@@ -187,7 +187,26 @@ export const MODULES_26_29 = {
       "tip": "Group related endpoints using `router.route('/path').get(...).post(...)` for clean, readable endpoint declarations.",
       "objective": "Structure declarative Express routers free of embedded business logic.",
       "expectedOutcome": "Clean, readable route definitions acting purely as HTTP routing maps.",
-      "codeSnippet": "// routes/product.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createProductSchema } from \"../validators/product.validator.js\";\nimport * as productController from \"../controllers/product.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(productController.getAllProducts)\n  .post(protect, restrictTo(\"admin\"), validate(createProductSchema), productController.createProduct);\n\nrouter.route(\"/:id\")\n  .get(productController.getProductById)\n  .patch(protect, restrictTo(\"admin\"), productController.updateProduct)\n  .delete(protect, restrictTo(\"admin\"), productController.deleteProduct);\n\nexport default router;"
+      "codeSnippet": `// routes/course.routes.js
+import express from "express";
+import { protect } from "../middleware/auth.js";
+import { restrictTo } from "../middleware/role.js";
+import { validate } from "../middleware/validate.js";
+import { createCourseSchema } from "../validators/course.validator.js";
+import * as courseController from "../controllers/course.controller.js";
+
+const router = express.Router();
+
+router.route("/")
+  .get(courseController.getAllCourses)
+  .post(protect, restrictTo("instructor", "admin"), validate(createCourseSchema), courseController.createCourse);
+
+router.route("/:id")
+  .get(courseController.getCourseById)
+  .patch(protect, restrictTo("instructor", "admin"), courseController.updateCourse)
+  .delete(protect, restrictTo("instructor", "admin"), courseController.deleteCourse);
+
+export default router;`
     },
     {
       "id": "M27-03",
@@ -197,10 +216,24 @@ export const MODULES_26_29 = {
       "type": "architecture",
       "codeLanguage": "javascript",
       "summary": "Controllers handle the HTTP transport protocol. A controller extracts inputs from `req.body`, `req.query`, and `req.params`, invokes appropriate service layer methods to perform work, and formats the output into standard JSON envelopes with correct HTTP status codes (200, 201, 204).",
-      "tip": "Never write raw database queries (`Product.find()`) directly inside controllers — delegate queries to the service layer to keep controllers focused solely on HTTP.",
+      "tip": "Never write raw database queries (`Course.find()`) directly inside controllers — delegate queries to the service layer to keep controllers focused solely on HTTP.",
       "objective": "Implement clean controllers translating HTTP requests to service calls.",
       "expectedOutcome": "Lean controllers decoupled from database drivers and raw business logic.",
-      "codeSnippet": "// controllers/product.controller.js\nimport * as productService from \"../services/product.service.js\";\n\nexport const createProduct = async (req, res, next) => {\n  try {\n    const product = await productService.createProduct(req.body, req.user._id);\n\n    res.status(201).json({\n      status: \"success\",\n      data: { product },\n    });\n  } catch (err) {\n    next(err);\n  }\n};"
+      "codeSnippet": `// controllers/course.controller.js
+import * as courseService from "../services/course.service.js";
+
+export const createCourse = async (req, res, next) => {
+  try {
+    const course = await courseService.createCourse(req.body, req.user._id);
+
+    res.status(201).json({
+      status: "success",
+      data: { course },
+    });
+  } catch (err) {
+    next(err);
+  }
+};`
     },
     {
       "id": "M27-04",
@@ -213,7 +246,24 @@ export const MODULES_26_29 = {
       "tip": "Because services do not touch `req` or `res`, you can unit test them without needing Supertest or HTTP simulation.",
       "objective": "Encapsulate business operations inside transport-agnostic service functions.",
       "expectedOutcome": "Portable, testable business logic isolated from HTTP routing frameworks.",
-      "codeSnippet": "// services/product.service.js\nimport { Product } from \"../models/product.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const createProduct = async (productData, authorId) => {\n  // Business rule: Check duplicate title\n  const existing = await Product.findOne({ title: productData.title });\n  if (existing) {\n    throw new AppError(\"A product with this title already exists\", 409);\n  }\n\n  // Calculate pricing margin or business logic\n  const profitMargin = productData.price - (productData.costPrice || 0);\n\n  const product = await Product.create({\n    ...productData,\n    creator: authorId,\n    profitMargin,\n  });\n\n  return product;\n};"
+      "codeSnippet": `// services/course.service.js
+import { Course } from "../models/course.model.js";
+import { AppError } from "../utils/AppError.js";
+
+export const createCourse = async (courseData, instructorId) => {
+  // Business rule: Check duplicate title
+  const existing = await Course.findOne({ title: courseData.title });
+  if (existing) {
+    throw new AppError("A course with this title already exists", 409);
+  }
+
+  const course = await Course.create({
+    ...courseData,
+    instructor: instructorId,
+  });
+
+  return course;
+};`
     },
     {
       "id": "M27-05",
@@ -226,7 +276,24 @@ export const MODULES_26_29 = {
       "tip": "Encapsulate instance-specific helper logic (like password hashing or token verification) as Mongoose instance methods directly on the model.",
       "objective": "Design cohesive Mongoose schemas with validation, indexes, and virtual fields.",
       "expectedOutcome": "Robust data models enforcing schema integrity at the database layer.",
-      "codeSnippet": "// models/order.model.js\nimport mongoose from \"mongoose\";\n\nconst orderSchema = new mongoose.Schema({\n  user: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  items: [{\n    product: { type: mongoose.Schema.Types.ObjectId, ref: \"Product\" },\n    quantity: { type: Number, default: 1 },\n    price: Number,\n  }],\n  totalAmount: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"pending\", \"processing\", \"shipped\", \"delivered\", \"cancelled\"],\n    default: \"pending\",\n  },\n}, { timestamps: true });\n\norderSchema.index({ user: 1, createdAt: -1 });\n\nexport const Order = mongoose.model(\"Order\", orderSchema);"
+      "codeSnippet": `// models/enrollment.model.js
+import mongoose from "mongoose";
+
+const enrollmentSchema = new mongoose.Schema({
+  student: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  course: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
+  enrolledPrice: { type: Number, required: true },
+  status: {
+    type: String,
+    enum: ["active", "completed", "cancelled"],
+    default: "active",
+  },
+  progress: { type: Number, min: 0, max: 100, default: 0 },
+}, { timestamps: true });
+
+enrollmentSchema.index({ student: 1, course: 1 }, { unique: true });
+
+export const Enrollment = mongoose.model("Enrollment", enrollmentSchema);`
     },
     {
       "id": "M27-06",
@@ -249,10 +316,20 @@ export const MODULES_26_29 = {
       "type": "architecture",
       "codeLanguage": "javascript",
       "summary": "The Validators layer houses Zod or Joi schemas defining the contract for every incoming request body, query parameter, and route parameter. Grouping validation schemas into dedicated files keeps controllers clean and allows schemas to be reused across API endpoints and tests.",
-      "tip": "Name validation schemas descriptively: `createProductSchema`, `updateProductSchema`, `queryProductsSchema`.",
+      "tip": "Name validation schemas descriptively: `createCourseSchema`, `updateCourseSchema`, `queryCoursesSchema`.",
       "objective": "Define structured request validation schemas separate from route handlers.",
       "expectedOutcome": "Clear, declarative data contracts isolating validation logic.",
-      "codeSnippet": "// validators/product.validator.js\nimport { z } from \"zod\";\n\nexport const createProductSchema = z.object({\n  body: z.object({\n    title: z.string().min(3).max(100),\n    price: z.number().positive(),\n    category: z.string().min(1),\n    stock: z.number().int().nonnegative().default(0),\n  }),\n});"
+      "codeSnippet": `// validators/course.validator.js
+import { z } from "zod";
+
+export const createCourseSchema = z.object({
+  body: z.object({
+    title: z.string().min(3).max(100),
+    price: z.number().nonnegative(),
+    level: z.enum(["beginner", "intermediate", "advanced"]),
+    category: z.string().min(1),
+  }),
+});`
     },
     {
       "id": "M27-08",
@@ -317,7 +394,15 @@ export const MODULES_26_29 = {
       "tip": "Keep unit tests fast (<1s total) so developers run them continuously on every file save.",
       "objective": "Structure scalable test directories separating fast unit tests from comprehensive integration suites.",
       "expectedOutcome": "Organized test suites matching the backend folder architecture.",
-      "codeSnippet": "tests/\n├── setup.js            # Vitest global setup (in-memory MongoDB)\n├── helpers/            # getAuthToken(), createTestUser()\n├── unit/               # Fast, mocked tests\n│   ├── services/\n│   └── utils/\n└── integration/        # Route & HTTP tests\n    ├── auth.test.js\n    └── products.test.js"
+      "codeSnippet": `tests/
+├── setup.js            # Vitest global setup (in-memory MongoDB)
+├── helpers/            # getAuthToken(), createTestUser()
+├── unit/               # Fast, mocked tests
+│   ├── services/       # course.service.test.js
+│   └── utils/
+└── integration/        # Route & HTTP tests
+    ├── auth.test.js
+    └── courses.test.js`
     },
     {
       "id": "M27-13",
@@ -664,40 +749,78 @@ export const MODULES_26_29 = {
     {
       "id": "M29-04",
       "number": "04",
-      "title": "Project 04: Product Management API",
-      "khmerTitle": "គម្រោងទី ៤ ៖ E-Commerce Product Catalog API ជាមួយ Caching",
+      "title": "Project 04: Course Media & File Service",
+      "khmerTitle": "គម្រោងទី ៤ ៖ Course Media & File Upload Service ជាមួយ Redis Caching",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build a full-featured e-commerce product catalog API with multi-image upload to Cloudflare R2, category management, text search with MongoDB $text indexes, compound indexes for fast query execution, price range filtering, Redis response caching on public endpoints, and RBAC admin guards for write operations.",
-      "tip": "Apply the Redis cache-aside pattern on GET /products with a 60-second TTL, and invalidate the cache on every create/update/delete operation.",
-      "objective": "Build a complete product catalog API with search, filtering, image uploads, and Redis caching.",
-      "expectedOutcome": "High-performance product API with sub-10ms cached responses and admin RBAC.",
-      "codeSnippet": "export const getProducts = catchAsync(async (req, res) => {\n  const cacheKey = `products:${JSON.stringify(req.query)}`;\n  const cached = await redis.get(cacheKey);\n  if (cached) return res.json(JSON.parse(cached));\n\n  const products = await Product.find(filter)\n    .sort(sort || \"-createdAt\")\n    .skip((page - 1) * limit).limit(Number(limit))\n    .populate(\"category\", \"name slug\");\n\n  const body = { success: true, count: products.length, data: products };\n  await redis.set(cacheKey, JSON.stringify(body), \"EX\", 60);\n  res.json(body);\n});"
+      "summary": "Build a production-grade Course Media & Catalog API with multi-file uploads (course thumbnails and lesson PDF worksheets) to Cloudflare R2 / S3, category management, text search with MongoDB $text indexes, compound indexes for fast query execution, price range filtering, Redis response caching on public endpoints, and RBAC instructor/admin guards for write operations.",
+      "tip": "Apply the Redis cache-aside pattern on GET /courses with a 60-second TTL, and invalidate the cache on every create/update/delete operation.",
+      "objective": "Build a complete course media & catalog API with search, filtering, thumbnail uploads, and Redis caching.",
+      "expectedOutcome": "High-performance course API with sub-10ms cached responses and instructor RBAC.",
+      "codeSnippet": `export const getCourses = catchAsync(async (req, res) => {
+  const cacheKey = \`courses:\${JSON.stringify(req.query)}\`;
+  const cached = await redis.get(cacheKey);
+  if (cached) return res.json(JSON.parse(cached));
+
+  const courses = await Course.find(filter)
+    .sort(sort || "-createdAt")
+    .skip((page - 1) * limit).limit(Number(limit))
+    .populate("instructor", "name email");
+
+  const body = { success: true, count: courses.length, data: courses };
+  await redis.set(cacheKey, JSON.stringify(body), "EX", 60);
+  res.json(body);
+});`
     },
     {
       "id": "M29-05",
       "number": "05",
-      "title": "Project 05: E-Commerce Backend",
-      "khmerTitle": "គម្រោងទី ៥ ៖ Complete E-Commerce Backend Platform",
+      "title": "Project 05: Course Platform Enrollment & Payment Backend",
+      "khmerTitle": "គម្រោងទី ៥ ៖ Course Platform Enrollment & Payments ជាមួយ Transactions",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build an end-to-end e-commerce backend platform including user cart management, wishlist, checkout order creation, Stripe payment integration, background email receipts via BullMQ, role-based order management for administrators, and stock inventory decrement with database transactions.",
-      "tip": "Use MongoDB multi-document transactions (`session.withTransaction()`) during checkout to ensure stock decrement and order creation succeed or fail together atomically.",
-      "objective": "Build an enterprise e-commerce backend with payments, background jobs, and ACID transactions.",
-      "expectedOutcome": "Production-ready e-commerce platform orchestrating orders, payments, and background jobs.",
-      "codeSnippet": "// Checkout with MongoDB Transaction:\nexport const checkout = async (userId, items) => {\n  const session = await mongoose.startSession();\n  return session.withTransaction(async () => {\n    // 1. Decrement stock atomically\n    for (const item of items) {\n      const product = await Product.findOneAndUpdate(\n        { _id: item.productId, stock: { $gte: item.quantity } },\n        { $inc: { stock: -item.quantity } },\n        { session, new: true }\n      );\n      if (!product) throw new AppError(`Insufficient stock for ${item.title}`, 400);\n    }\n    // 2. Create order document & trigger email job\n    const order = await Order.create([{ user: userId, items }], { session });\n    await emailQueue.add(\"order-confirmation\", { orderId: order[0]._id });\n    return order[0];\n  });\n};"
+      "summary": "Build an end-to-end Course Platform payment and enrollment engine including student course checkout, Stripe payment intent creation, background email receipts via BullMQ, role-based enrollment management, and course seat capacity decrement with MongoDB ACID multi-document transactions.",
+      "tip": "Use MongoDB multi-document transactions (`session.withTransaction()`) during checkout to ensure seat capacity decrement and enrollment record creation succeed or fail together atomically.",
+      "objective": "Build an enterprise course enrollment backend with payments, background jobs, and ACID transactions.",
+      "expectedOutcome": "Production-ready course enrollment platform orchestrating payments, seats, and background jobs.",
+      "codeSnippet": `// Course Enrollment with MongoDB Transaction:
+export const enrollInCourse = async (studentId, courseId, price) => {
+  const session = await mongoose.startSession();
+  return session.withTransaction(async () => {
+    // 1. Check and decrement available course capacity atomically
+    const course = await Course.findOneAndUpdate(
+      { _id: courseId, published: true, seatsAvailable: { $gt: 0 } },
+      { $inc: { seatsAvailable: -1, enrollmentCount: 1 } },
+      { session, new: true }
+    );
+    if (!course) throw new AppError("Course is either full or not published", 400);
+
+    // 2. Create enrollment document & enqueue receipt email job
+    const enrollment = await Enrollment.create(
+      [{ student: studentId, course: courseId, enrolledPrice: price, status: "active" }],
+      { session }
+    );
+    await emailQueue.add("enrollment-receipt", {
+      studentId,
+      courseId,
+      enrollmentId: enrollment[0]._id
+    });
+
+    return enrollment[0];
+  });
+};`
     },
     {
       "id": "M29-06",
       "number": "06",
       "title": "Project 06: Final Project (Production REST API)",
-      "khmerTitle": "គម្រោងទី ៦ ៖ Final Production REST API Capstone",
+      "khmerTitle": "គម្រោងទី ៦ ៖ Final Production Course Platform REST API Capstone",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The capstone project integrates every concept from the entire course into a single production-grade application: Express REST API with authentication, RBAC, MongoDB + Mongoose, Redis caching, BullMQ background jobs, Socket.IO real-time features, file uploads, Swagger docs, Vitest integration tests, Docker containerization with Compose, Nginx reverse proxy, and GitHub Actions CI/CD.",
+      "summary": "The capstone project integrates every concept from the entire course into a single production-grade Course Platform application: Express REST API with authentication (students/instructors/admins), RBAC, MongoDB + Mongoose, Redis caching, BullMQ background jobs for video encoding & emails, Socket.IO real-time student Q&A, file uploads to R2, Swagger docs, Vitest integration tests, Docker containerization with Compose, Nginx reverse proxy, and GitHub Actions CI/CD.",
       "tip": "Before deploying, run through the production checklist: env validation, graceful shutdown handlers, connection pooling, rate limiting, Helmet security headers, structured logging, and health check endpoints.",
       "objective": "Ship a complete, production-grade Node.js API integrating all course technologies end-to-end.",
-      "expectedOutcome": "A portfolio-ready, full-featured backend deployed to production with CI/CD automation.",
+      "expectedOutcome": "A portfolio-ready, full-featured Course Platform backend deployed to production with CI/CD automation.",
       "codeSnippet": "// Production startup with graceful shutdown\nimport app from \"./app.js\";\nimport { connectDB } from \"./config/database.js\";\nimport { redis } from \"./config/redis.js\";\nimport { startWorkers, stopWorkers } from \"./queues/index.js\";\n\nconst server = app.listen(process.env.PORT || 5000, async () => {\n  await connectDB();\n  await redis.connect();\n  await startWorkers();\n  console.log(`Server running on port ${process.env.PORT || 5000} [${process.env.NODE_ENV}]`);\n});\n\nconst shutdown = async (signal) => {\n  console.log(`${signal}: shutting down gracefully...`);\n  server.close(async () => {\n    await stopWorkers();\n    await redis.quit();\n    process.exit(0);\n  });\n  setTimeout(() => process.exit(1), 10_000);\n};\n\nprocess.on(\"SIGTERM\", () => shutdown(\"SIGTERM\"));\nprocess.on(\"SIGINT\", () => shutdown(\"SIGINT\"));"
     }
   ]

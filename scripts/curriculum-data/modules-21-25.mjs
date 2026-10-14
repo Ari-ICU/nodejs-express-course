@@ -29,7 +29,23 @@ export const MODULES_21_25 = {
       "tip": "Use OpenAPI 3.0+ rather than legacy Swagger 2.0. OAS 3.0 offers better component reusability, multiple server URLs, and flexible request body definitions.",
       "objective": "Learn the core anatomy and schema structure of OpenAPI 3.0 specifications.",
       "expectedOutcome": "Ability to read and structure machine-readable OpenAPI contracts.",
-      "codeSnippet": "openapi: 3.0.3\ninfo:\n  title: E-Commerce REST API\n  version: 1.0.0\n  description: Enterprise backend API for products and orders\nservers:\n  - url: http://localhost:5000/api/v1\n    description: Development server\n  - url: https://api.myenterprise.com/v1\n    description: Production server\npaths:\n  /products:\n    get:\n      summary: Retrieve all products\n      responses:\n        '200':\n          description: A list of products"
+      "codeSnippet": `openapi: 3.0.3
+info:
+  title: Course Platform REST API
+  version: 1.0.0
+  description: Enterprise backend API for course catalog, lessons, and student enrollments
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Development server
+  - url: https://api.myenterprise.com/v1
+    description: Production server
+paths:
+  /courses:
+    get:
+      summary: Retrieve all published courses
+      responses:
+        '200':
+          description: A list of courses`
     },
     {
       "id": "M21-03",
@@ -68,7 +84,34 @@ export const MODULES_21_25 = {
       "tip": "Reference reusable schemas using the `$ref` pointer (e.g. `'$ref': '#/components/schemas/User'`) to keep route docs DRY and maintainable.",
       "objective": "Define reusable data schemas with typed properties and validation rules in OpenAPI.",
       "expectedOutcome": "Consistent, reusable component schemas reflecting database and DTO models.",
-      "codeSnippet": "/**\n * @openapi\n * components:\n *   schemas:\n *     Product:\n *       type: object\n *       required:\n *         - title\n *         - price\n *       properties:\n *         id:\n *           type: string\n *           example: \"64f1a2b3c4d5e6f7a8b9c0d1\"\n *         title:\n *           type: string\n *           example: \"Wireless Mechanical Keyboard\"\n *         price:\n *           type: number\n *           example: 89.99\n *         category:\n *           type: string\n *           enum: [Electronics, Furniture, Clothing]\n *           example: \"Electronics\"\n */"
+      "codeSnippet": `/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Course:
+ *       type: object
+ *       required:
+ *         - title
+ *         - price
+ *         - level
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "64f1a2b3c4d5e6f7a8b9c0d1"
+ *         title:
+ *           type: string
+ *           example: "Complete Node.js & Express Bootcamp"
+ *         price:
+ *           type: number
+ *           example: 49.99
+ *         level:
+ *           type: string
+ *           enum: [beginner, intermediate, advanced]
+ *           example: "beginner"
+ *         category:
+ *           type: string
+ *           example: "Web Development"
+ */`
     },
     {
       "id": "M21-06",
@@ -81,7 +124,26 @@ export const MODULES_21_25 = {
       "tip": "Always provide realistic `example` values in your annotations — Swagger UI uses these to prepopulate the 'Try it out' request body automatically.",
       "objective": "Annotate route parameters, query filters, and JSON request bodies using JSDoc.",
       "expectedOutcome": "Crystal-clear documentation instructing consumers on how to formulate requests.",
-      "codeSnippet": "/**\n * @openapi\n * /api/v1/products/{id}:\n *   put:\n *     summary: Update an existing product\n *     tags: [Products]\n *     parameters:\n *       - in: path\n *         name: id\n *         required: true\n *         schema:\n *           type: string\n *         description: MongoDB ObjectId of the product\n *     requestBody:\n *       required: true\n *       content:\n *         application/json:\n *           schema:\n *             $ref: '#/components/schemas/UpdateProductDTO'\n */"
+      "codeSnippet": `/**
+ * @openapi
+ * /api/v1/courses/{id}:
+ *   put:
+ *     summary: Update an existing course
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MongoDB ObjectId of the course
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateCourseDTO'
+ */`
     },
     {
       "id": "M21-07",
@@ -94,7 +156,28 @@ export const MODULES_21_25 = {
       "tip": "Document common error codes (400, 401, 403, 404) for every endpoint so frontend engineers can handle all branch conditions.",
       "objective": "Document standard success and failure HTTP responses with payload schemas.",
       "expectedOutcome": "Predictable API contracts defining both happy path and failure scenarios.",
-      "codeSnippet": "/**\n * @openapi\n * /api/v1/products:\n *   post:\n *     summary: Create a new product\n *     tags: [Products]\n *     responses:\n *       201:\n *         description: Product created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Product'\n *       400:\n *         description: Bad Request (Validation failure)\n */"
+      "codeSnippet": `/**
+ * @openapi
+ * /api/v1/courses:
+ *   post:
+ *     summary: Create a new course
+ *     tags: [Courses]
+ *     responses:
+ *       201:
+ *         description: Course created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 data:
+ *                   $ref: '#/components/schemas/Course'
+ *       400:
+ *         description: Bad Request (Validation failure)
+ */`
     },
     {
       "id": "M21-08",
@@ -239,7 +322,19 @@ export const MODULES_21_25 = {
       "tip": "Export your Express `app` from `app.js` without calling `listen()`, and create a separate `server.js` for startup. This allows tests to import `app` cleanly.",
       "objective": "Write targeted tests validating controller responses, status codes, and JSON bodies.",
       "expectedOutcome": "Verified controllers handling both valid inputs and error conditions.",
-      "codeSnippet": "describe(\"POST /api/v1/products\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidProduct = { price: 29.99 };\n\n    const res = await request(app)\n      .post(\"/api/v1/products\")\n      .send(invalidProduct)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});"
+      "codeSnippet": `describe("POST /api/v1/courses", () => {
+  it("should return 400 when title is missing", async () => {
+    const invalidCourse = { price: 49.99, level: "beginner" };
+
+    const res = await request(app)
+      .post("/api/v1/courses")
+      .send(invalidCourse)
+      .expect(400);
+
+    expect(res.body.status).toBe("fail");
+    expect(res.body.message).toMatch(/title is required/i);
+  });
+});`
     },
     {
       "id": "M22-09",
@@ -252,7 +347,19 @@ export const MODULES_21_25 = {
       "tip": "Keep business logic in services rather than controllers — this makes testing business logic 10x faster because you don't need HTTP request simulation.",
       "objective": "Write isolated unit tests for business logic methods inside the service layer.",
       "expectedOutcome": "High test coverage over core business algorithms and data transformations.",
-      "codeSnippet": "import { describe, it, expect } from \"vitest\";\nimport { OrderService } from \"../services/order.service.js\";\n\ndescribe(\"OrderService.calculateTotal\", () => {\n  it(\"should compute subtotal, tax, and shipping correctly\", () => {\n    const items = [\n      { price: 50, quantity: 2 },\n      { price: 100, quantity: 1 },\n    ];\n    const taxRate = 0.10; // 10%\n\n    const total = OrderService.calculateTotal(items, taxRate);\n\n    // Subtotal: 200, Tax: 20 -> Total: 220\n    expect(total).toBe(220);\n  });\n});"
+      "codeSnippet": `import { describe, it, expect } from "vitest";
+import { CourseService } from "../services/course.service.js";
+
+describe("CourseService.calculateDiscount", () => {
+  it("should calculate promotional price with discount percentage", () => {
+    const originalPrice = 100;
+    const discountPercent = 20;
+
+    const promoPrice = CourseService.calculateDiscount(originalPrice, discountPercent);
+
+    expect(promoPrice).toBe(80);
+  });
+});`
     },
     {
       "id": "M22-10",
@@ -265,7 +372,33 @@ export const MODULES_21_25 = {
       "tip": "Save the created resource's `_id` in a variable during the POST test and reuse it across GET by ID, PATCH, and DELETE tests.",
       "objective": "Construct an end-to-end CRUD test suite exercising all REST operations.",
       "expectedOutcome": "Comprehensive test suite guaranteeing functional integrity of CRUD endpoints.",
-      "codeSnippet": "describe(\"Products CRUD API\", () => {\n  let createdProductId = \"\";\n\n  it(\"POST /api/products -> 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/products\")\n      .send({ title: \"Gaming Mouse\", price: 49.99 })\n      .expect(201);\n\n    createdProductId = res.body.data.product._id;\n    expect(createdProductId).toBeDefined();\n  });\n\n  it(\"GET /api/products/:id -> 200 OK\", async () => {\n    const res = await request(app)\n      .get(`/api/products/${createdProductId}`)\n      .expect(200);\n\n    expect(res.body.data.product.title).toBe(\"Gaming Mouse\");\n  });\n\n  it(\"DELETE /api/products/:id -> 200 OK\", async () => {\n    await request(app)\n      .delete(`/api/products/${createdProductId}`)\n      .expect(200);\n  });\n});"
+      "codeSnippet": `describe("Courses CRUD API", () => {
+  let createdCourseId = "";
+
+  it("POST /api/v1/courses -> 201 Created", async () => {
+    const res = await request(app)
+      .post("/api/v1/courses")
+      .send({ title: "Mastering Node.js", price: 39.99, level: "intermediate" })
+      .expect(201);
+
+    createdCourseId = res.body.data.course._id;
+    expect(createdCourseId).toBeDefined();
+  });
+
+  it("GET /api/v1/courses/:id -> 200 OK", async () => {
+    const res = await request(app)
+      .get(\`/api/v1/courses/\${createdCourseId}\`)
+      .expect(200);
+
+    expect(res.body.data.course.title).toBe("Mastering Node.js");
+  });
+
+  it("DELETE /api/v1/courses/:id -> 200 OK", async () => {
+    await request(app)
+      .delete(\`/api/v1/courses/\${createdCourseId}\`)
+      .expect(200);
+  });
+});`
     },
     {
       "id": "M22-11",
@@ -332,7 +465,19 @@ export const MODULES_21_25 = {
       "tip": "Store your exported Postman collection JSON inside a `/docs/postman` folder in your project repo so all developers stay in sync.",
       "objective": "Structure and organize enterprise REST API requests into modular Postman collections.",
       "expectedOutcome": "Structured, shareable Postman collection mirroring your backend routing hierarchy.",
-      "codeSnippet": "// Postman Collection Structure:\n// 📁 My-Enterprise-API\n//   ├── 📁 01-Authentication\n//   │   ├── POST Register\n//   │   ├── POST Login\n//   │   └── POST Refresh Token\n//   ├── 📁 02-Products\n//   │   ├── GET All Products\n//   │   ├── POST Create Product\n//   │   └── DELETE Product\n//   └── 📁 03-Orders\n//       ├── POST Checkout\n//       └── GET My Orders"
+      "codeSnippet": `// Postman Collection Structure:
+// 📁 Course-Platform-API
+//   ├── 📁 01-Authentication
+//   │   ├── POST Register
+//   │   ├── POST Login
+//   │   └── POST Refresh Token
+//   ├── 📁 02-Courses
+//   │   ├── GET All Courses
+//   │   ├── POST Create Course
+//   │   └── DELETE Course
+//   └── 📁 03-Enrollments
+//       ├── POST Enroll in Course
+//       └── GET My Enrolled Courses`
     },
     {
       "id": "M23-03",
@@ -341,11 +486,20 @@ export const MODULES_21_25 = {
       "khmerTitle": "ការប្រើប្រាស់ Environment Variables ក្នុង Postman ({{base_url}})",
       "type": "lab",
       "codeLanguage": "json",
-      "summary": "Postman environments allow you to define key-value variables that adapt dynamically across different hosting stages. By parameterizing URLs as `{{base_url}}/products` and tokens as `{{auth_token}}`, switching between Local (`http://localhost:5000`), Staging, and Production requires a single dropdown click.",
+      "summary": "Postman environments allow you to define key-value variables that adapt dynamically across different hosting stages. By parameterizing URLs as `{{base_url}}/courses` and tokens as `{{auth_token}}`, switching between Local (`http://localhost:5000`), Staging, and Production requires a single dropdown click.",
       "tip": "Always reference `{{base_url}}` instead of hardcoding `http://localhost:5000` in individual requests.",
       "objective": "Configure dynamic environment variables to switch between development and staging environments.",
       "expectedOutcome": "Flexible Postman requests parameterizing domains, ports, and tokens.",
-      "codeSnippet": "// In Postman URL Bar:\n// {{base_url}}/api/v1/products/{{product_id}}\n//\n// Environment: \"Local Development\"\n// base_url   -> http://localhost:5000\n// auth_token -> eyJhbGciOiJIUzI1Ni...\n//\n// Environment: \"Production\"\n// base_url   -> https://api.myenterprise.com\n// auth_token -> eyJhbGciOiJIUzI1Ni..."
+      "codeSnippet": `// In Postman URL Bar:
+// {{base_url}}/api/v1/courses/{{course_id}}
+//
+// Environment: "Local Development"
+// base_url   -> http://localhost:5000
+// auth_token -> eyJhbGciOiJIUzI1Ni...
+//
+// Environment: "Production"
+// base_url   -> https://api.myenterprise.com
+// auth_token -> eyJhbGciOiJIUzI1Ni...`
     },
     {
       "id": "M23-04",
@@ -384,7 +538,16 @@ export const MODULES_21_25 = {
       "tip": "Use Postman Collection Runner to execute your entire CRUD workflow from start to finish with a single click.",
       "objective": "Chain CRUD operations together using dynamic Postman variables.",
       "expectedOutcome": "Automated end-to-end CRUD verification sequence.",
-      "codeSnippet": "// In POST /products Tests tab:\nconst jsonData = pm.response.json();\npm.test(\"Product created successfully\", () => {\n  pm.response.to.have.status(201);\n  // Store created ID for subsequent GET/PATCH/DELETE calls:\n  pm.environment.set(\"product_id\", jsonData.data.product._id);\n});\n\n// In next request:\n// GET {{base_url}}/api/v1/products/{{product_id}}"
+      "codeSnippet": `// In POST /courses Tests tab:
+const jsonData = pm.response.json();
+pm.test("Course created successfully", () => {
+  pm.response.to.have.status(201);
+  // Store created ID for subsequent GET/PATCH/DELETE calls:
+  pm.environment.set("course_id", jsonData.data.course._id);
+});
+
+// In next request:
+// GET {{base_url}}/api/v1/courses/{{course_id}}`
     },
     {
       "id": "M23-07",
@@ -622,7 +785,14 @@ export const MODULES_21_25 = {
       "tip": "Always append `.lean()` to GET queries where you do not need to call `.save()` on the returned documents.",
       "objective": "Apply query optimizations including .lean(), field projections (.select()), and limit clauses.",
       "expectedOutcome": "Substantially reduced memory footprint and faster JSON serialization.",
-      "codeSnippet": "// High Performance Query:\n// 1. .select() only fetches necessary fields (reduces network transfer)\n// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)\n// 3. .limit() restricts total document count\nconst products = await Product.find({ isPublished: true })\n  .select(\"title price thumbnail rating\") // Field projection\n  .limit(20)\n  .lean(); // 3-4x faster than default find()!"
+      "codeSnippet": `// High Performance Course Query:
+// 1. .select() only fetches necessary fields (reduces network transfer)
+// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)
+// 3. .limit() restricts total document count
+const courses = await Course.find({ published: true })
+  .select("title price thumbnailUrl level category") // Field projection
+  .limit(20)
+  .lean(); // 3-4x faster than default find()!`
     },
     {
       "id": "M25-05",
@@ -635,7 +805,19 @@ export const MODULES_21_25 = {
       "tip": "Use `explain('executionStats')` on your queries to verify they use `IXSCAN` (index scan) instead of `COLLSCAN` (table scan).",
       "objective": "Design efficient single-field and compound indexes supporting common query patterns.",
       "expectedOutcome": "Transformation of slow collection scans into high-speed index lookups.",
-      "codeSnippet": "const productSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  category: { type: String, index: true }, // Single-field index\n  price: Number,\n  createdAt: Date,\n});\n\n// Compound index for queries that filter by category and sort by price:\n// db.products.find({ category: \"Electronics\" }).sort({ price: -1 })\nproductSchema.index({ category: 1, price: -1 });\n\n// Verify query execution in MongoDB:\n// await Product.find({ category: \"Electronics\" }).explain(\"executionStats\");"
+      "codeSnippet": `const courseSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  category: { type: String, index: true }, // Single-field index
+  price: Number,
+  createdAt: Date,
+});
+
+// Compound index for queries that filter by category and sort by price:
+// db.courses.find({ category: "Web Development" }).sort({ price: -1 })
+courseSchema.index({ category: 1, price: -1 });
+
+// Verify query execution in MongoDB:
+// await Course.find({ category: "Web Development" }).explain("executionStats");`
     },
     {
       "id": "M25-06",
@@ -648,7 +830,21 @@ export const MODULES_21_25 = {
       "tip": "Use cursor-based pagination (keyset pagination) for infinite scroll feeds to achieve constant O(1) query time.",
       "objective": "Implement both offset and high-performance cursor-based pagination in Express APIs.",
       "expectedOutcome": "Scalable pagination strategies preventing memory saturation and slow deep queries.",
-      "codeSnippet": "// 1. Offset Pagination (Good for numbered page UI):\nconst page = Number(req.query.page) || 1;\nconst limit = Number(req.query.limit) || 20;\nconst skip = (page - 1) * limit;\nconst items = await Product.find().skip(skip).limit(limit).lean();\n\n// 2. Cursor Pagination (Optimal for Infinite Scroll & Massive Datasets):\n// Query: /api/products?cursor=64f1a2b3c4...&limit=20\nconst { cursor, limit = 20 } = req.query;\nconst query = cursor ? { _id: { $lt: cursor } } : {}; // uses indexed _id directly!\n\nconst products = await Product.find(query)\n  .sort({ _id: -1 })\n  .limit(Number(limit))\n  .lean();"
+      "codeSnippet": `// 1. Offset Pagination (Good for numbered page UI):
+const page = Number(req.query.page) || 1;
+const limit = Number(req.query.limit) || 20;
+const skip = (page - 1) * limit;
+const items = await Course.find().skip(skip).limit(limit).lean();
+
+// 2. Cursor Pagination (Optimal for Infinite Scroll & Massive Datasets):
+// Query: /api/courses?cursor=64f1a2b3c4...&limit=20
+const { cursor, limit = 20 } = req.query;
+const query = cursor ? { _id: { $lt: cursor } } : {}; // uses indexed _id directly!
+
+const courses = await Course.find(query)
+  .sort({ _id: -1 })
+  .limit(Number(limit))
+  .lean();`
     },
     {
       "id": "M25-07",
@@ -674,7 +870,12 @@ export const MODULES_21_25 = {
       "tip": "Run Redis locally in one command using Docker: `docker run -d -p 6379:6379 redis:alpine`.",
       "objective": "Understand Redis architecture, memory-first performance, and supported data structures.",
       "expectedOutcome": "Preparedness to integrate Redis as an application caching and state layer.",
-      "codeSnippet": "# Common Redis CLI commands:\nSET user:100:name \"Alice\" EX 3600  # Set key with 1-hour expiration (TTL)\nGET user:100:name                  # Retrieve value -> \"Alice\"\nDEL user:100:name                  # Delete key immediately\nKEYS product:*                     # Search keys (use SCAN in production!)\nTTL user:100:name                  # Check remaining seconds before expiry"
+      "codeSnippet": `# Common Redis CLI commands:
+SET user:100:name "Alice" EX 3600  # Set key with 1-hour expiration (TTL)
+GET user:100:name                  # Retrieve value -> "Alice"
+DEL user:100:name                  # Delete key immediately
+KEYS course:*                      # Search course cache keys
+TTL user:100:name                  # Check remaining seconds before expiry`
     },
     {
       "id": "M25-09",

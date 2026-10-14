@@ -6,9 +6,7 @@ import { useSearchParams } from "next/navigation";
 import {
   ChevronLeft,
   ChevronRight,
-  CheckCircle2,
   Bookmark,
-  FileText,
   Layers,
   Maximize2,
   Minimize2,
@@ -19,7 +17,6 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { MdxContent } from "@/components/ui/mdx-content";
 import { useMdxContent } from "@/hooks/useMdxContent";
 import { SlideNavOverlay } from "./slide-nav-overlay";
-import { FieldNotes } from "./field-notes";
 import { DeploymentAnim } from "./deployment-anim";
 import { getAssetUrl, resolveCodeFilename } from "@/lib/utils";
 import {
@@ -60,7 +57,6 @@ export const SlideView: React.FC<SlideViewProps> = ({
     }
   }, [queryModule, querySlide]);
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [progressData, setProgressData] = useState<CourseProgress>({
     completedTopics: [],
@@ -133,7 +129,7 @@ export const SlideView: React.FC<SlideViewProps> = ({
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isNavOpen || isNotesOpen) return;
+      if (isNavOpen) return;
       if (e.key === "ArrowLeft") {
         e.preventDefault();
         handlePrevSlide();
@@ -142,12 +138,11 @@ export const SlideView: React.FC<SlideViewProps> = ({
         handleNextSlide();
       } else if (e.key === "Escape") {
         setIsNavOpen(false);
-        setIsNotesOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handlePrevSlide, handleNextSlide, isNavOpen, isNotesOpen]);
+  }, [handlePrevSlide, handleNextSlide, isNavOpen]);
 
   // Bookmark Toggle
   const toggleBookmark = () => {
@@ -162,20 +157,6 @@ export const SlideView: React.FC<SlideViewProps> = ({
     saveProgress(updated);
   };
 
-  // Mark Completed
-  const toggleCompleted = () => {
-    const topicId = activeTopic.id;
-    const isDone = progressData.completedTopics.includes(topicId);
-    const newCompleted = isDone
-      ? progressData.completedTopics.filter((id) => id !== topicId)
-      : [...progressData.completedTopics, topicId];
-
-    const updated = { ...progressData, completedTopics: newCompleted };
-    setProgressData(updated);
-    saveProgress(updated);
-  };
-
-  const isCompleted = progressData.completedTopics.includes(activeTopic.id);
   const isBookmarked = progressData.bookmarks.includes(activeTopic.id);
 
   // Load the MDX metadata & code for the current slide
@@ -201,39 +182,44 @@ export const SlideView: React.FC<SlideViewProps> = ({
         <div className="absolute top-1/3 -right-32 w-[420px] h-[420px] bg-emerald-500/3 blur-3xl rounded-full" />
       </div>
 
-      {/* ── 68px Top Header with Frosted Glass ── */}
-      <header className="h-[68px] bg-white/90 backdrop-blur-xl border-b border-slate-200/90 sticky top-0 z-40 px-4 sm:px-8 flex items-center justify-between shadow-2xs">
-        <div className="flex items-center gap-3 sm:gap-4">
+      {/* ── Top Header with Responsive Frosted Glass ── */}
+      <header className="h-[60px] sm:h-[68px] bg-white/90 backdrop-blur-xl border-b border-slate-200/90 sticky top-0 z-40 px-3 sm:px-6 lg:px-8 flex items-center justify-between shadow-2xs gap-2 min-w-0">
+        {/* Left Side: Back Link & Chapter Selector */}
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
           <Link
             href="/modules"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/90 text-slate-700 hover:text-slate-900 text-xs font-mono transition-all shadow-2xs"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/90 text-slate-700 hover:text-slate-900 text-xs font-mono transition-all shadow-2xs flex-shrink-0"
+            title="ត្រឡប់ទៅមាតិកាវគ្គសិក្សា (Curriculum)"
           >
-            <ArrowLeft className="w-3.5 h-3.5 text-slate-500" />
-            <span className="hidden sm:inline font-medium font-sans">ត្រឡប់ទៅមាតិកាវគ្គសិក្សា (Curriculum)</span>
+            <ArrowLeft className="w-4 h-4 text-slate-500" />
+            <span className="hidden xl:inline font-medium font-sans">ត្រឡប់ទៅមាតិកា (Curriculum)</span>
+            <span className="hidden sm:inline xl:hidden font-medium font-sans">Curriculum</span>
           </Link>
 
-          {/* Chapter Selector Button with 'មេរៀនបច្ចុប្បន្ន' status */}
+          {/* Chapter Selector Button with adaptive title width */}
           <button
             onClick={() => setIsNavOpen(true)}
-            className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 cursor-pointer transition-all group shadow-2xs"
+            className="flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 cursor-pointer transition-all group shadow-2xs min-w-0"
+            title={`${activeModule.id} - ${activeModule.title}`}
           >
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <div className="text-left">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+            <div className="text-left min-w-0">
               <div className="flex items-center gap-1.5">
                 <span className="text-[10px] font-mono uppercase font-bold text-emerald-700 tracking-wider">
-                  {activeModule.id} · មេរៀនបច្ចុប្បន្ន
+                  <span className="hidden sm:inline">{activeModule.id} · មេរៀនបច្ចុប្បន្ន</span>
+                  <span className="sm:hidden">{activeModule.id}</span>
                 </span>
               </div>
-              <span className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors block truncate max-w-[220px] sm:max-w-[420px]">
+              <span className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 transition-colors block truncate max-w-[120px] xs:max-w-[160px] sm:max-w-[220px] md:max-w-[300px] lg:max-w-[360px]">
                 {activeModule.title}
               </span>
             </div>
-            <Layers className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 ml-1" />
+            <Layers className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 ml-0.5 sm:ml-1 flex-shrink-0" />
           </button>
         </div>
 
-        {/* Center Progress Indicators (Animated dots) */}
-        <div className="hidden lg:flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60 shadow-2xs">
+        {/* Center Progress Indicators (Animated dots) — visible on xl+ screens to prevent cramped tablet layout */}
+        <div className="hidden xl:flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60 shadow-2xs flex-shrink-0">
           {activeModule.topics.map((t, idx) => {
             const isActive = idx === safeSlideIndex;
             const isDone = progressData.completedTopics.includes(t.id);
@@ -255,22 +241,8 @@ export const SlideView: React.FC<SlideViewProps> = ({
           })}
         </div>
 
-        {/* Right Tools */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={toggleCompleted}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-all cursor-pointer shadow-2xs ${
-              isCompleted
-                ? "bg-emerald-50 text-emerald-700 border-emerald-300 font-bold"
-                : "bg-white border-slate-200/90 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-            }`}
-          >
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="hidden sm:inline font-sans">
-              {isCompleted ? "បានបញ្ចប់ (Completed)" : "សម្គាល់ថាបានរៀន (Mark Done)"}
-            </span>
-          </button>
-
+        {/* Right Tools: Adaptive Action Buttons */}
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           <button
             onClick={toggleBookmark}
             className={`p-2 rounded-xl border text-xs transition-all cursor-pointer shadow-2xs ${
@@ -283,13 +255,6 @@ export const SlideView: React.FC<SlideViewProps> = ({
             <Bookmark className="w-4 h-4" />
           </button>
 
-          <button
-            onClick={() => setIsNotesOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 text-slate-700 hover:text-slate-900 text-xs font-mono cursor-pointer transition-colors shadow-2xs"
-          >
-            <FileText className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="hidden sm:inline font-medium font-sans">កំណត់ចំណាំ (Field Notes)</span>
-          </button>
 
           <button
             onClick={toggleFullscreenMode}
@@ -433,15 +398,6 @@ export const SlideView: React.FC<SlideViewProps> = ({
           setCurrentSlideIndex(0);
         }}
         completedTopics={progressData.completedTopics}
-      />
-
-      {/* Persistent Field Notes Drawer */}
-      <FieldNotes
-        isOpen={isNotesOpen}
-        onClose={() => setIsNotesOpen(false)}
-        currentModuleId={currentModuleId}
-        currentSlideNumber={safeSlideIndex + 1}
-        topicTitle={activeTopic.title}
       />
     </div>
   );

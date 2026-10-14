@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "បញ្ហាសុវត្ថិភាពទូទៅក្នុង Web API (OWASP Top 10)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Modern APIs face pervasive threats classified by OWASP (Open Web Application Security Project). The most damaging vulnerabilities include Broken Object Level Authorization (BOLA/IDOR), Broken Authentication, Mass Assignment, Injection (SQL/NoSQL), Security Misconfiguration, and lack of Rate Limiting leading to denial of service.",
+  summary: "ការយល់ដឹងអំពីបញ្ហាសុវត្ថិភាពទូទៅក្នុង Web API ផ្អែកតាម OWASP API Security Top 10 (ដូចជា Broken Object Level Authorization, Broken Authentication, Mass Assignment, និង Injection) គឺជាមូលដ្ឋានគ្រឹះដ៏សំខាន់។ ការយល់ដឹងពី Vector នៃការវាយប្រហារជួយឱ្យ Developer អាចរចនាប្រព័ន្ធការពារទុកជាមុន (Defense-in-Depth) ចាប់តាំងពីដំណាក់កាលដំបូងនៃការសរសេរកូដ។",
   codeSnippet: "// OWASP API Top 10 Security Checklist:\n// 1. Broken Object Level Authorization (IDOR) -> Verify resource ownership\n// 2. Broken Authentication                    -> bcrypt + short-lived JWTs\n// 3. Broken Object Property Level (Mass Assign) -> Whitelist incoming fields\n// 4. Unrestricted Resource Consumption         -> express-rate-limit\n// 5. Broken Function Level Authorization      -> restrictTo() guards\n// 6. Server-Side Request Forgery (SSRF)       -> Validate outbound URLs\n// 7. Security Misconfiguration                -> Helmet headers + hide stack traces\n// 8. Lack of Protection from Automated Threats -> Captcha / IP throttling\n// 9. Improper Assets Management               -> Deprecate old API versions\n// 10. Unsafe Consumption of APIs              -> Validate 3rd party payloads",
 };
 

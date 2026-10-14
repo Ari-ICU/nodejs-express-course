@@ -1,6 +1,6 @@
 /**
  * modules-16-20.mjs
- * Detailed curriculum data for Modules 16 through 20 (60 topics total)
+ * Updated with Khmer summaries
  */
 
 export const MODULES_16_20 = {
@@ -12,7 +12,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ភាពខុសគ្នារវាង Authentication និង Authorization",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Authentication (AuthN) answers 'Who are you?' by verifying identity through credentials like email/password or tokens. Authorization (AuthZ) answers 'What are you allowed to do?' by evaluating privileges, roles, and permissions against resources. In standard backend flows, Authentication must always succeed before Authorization evaluation begins.",
+      "summary": "Authentication (AuthN) ឆ្លើយតបទៅនឹងសំណួរថា «តើអ្នកជានរណា?» (Who are you?) ដោយផ្ទៀងផ្ទាត់អត្តសញ្ញាណតាមរយៈ Credentials ដូចជា Email/Password ឬ Tokens។ ចំណែក Authorization (AuthZ) ឆ្លើយតបទៅនឹងសំណួរថា «តើអ្នកមានសិទ្ធិធ្វើអ្វីខ្លះ?» (What are you allowed to do?) ដោយវាយតម្លៃលើ Roles និង Permissions ធៀបនឹង Resources។ ក្នុងលំហូរការងារ Backend ស្តង់ដារ Authentication ត្រូវតែជោគជ័យជាមុនសិន ទើប Authorization អាចចាប់ផ្តើមបាន។",
       "tip": "Remember: 401 Unauthorized strictly means unauthenticated (missing or invalid token). 403 Forbidden means authenticated, but lacking sufficient permissions for that resource.",
       "objective": "Distinguish between identity verification (AuthN) and access entitlement (AuthZ) in backend system design.",
       "expectedOutcome": "Accurate architectural separation and correct HTTP status code usage (401 vs 403).",
@@ -25,7 +25,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ Password Hashing",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Password hashing transforms a plaintext password into an irreversible, fixed-length alphanumeric string using a one-way cryptographic mathematical function. Unlike encryption which is two-way and reversible with a secret key, secure hashing is permanently irreversible. Storing passwords in plaintext or using fast algorithms like MD5/SHA-1 exposes users to instant credential theft during database leaks.",
+      "summary": "Password Hashing គឺជាដំណើរការបំប្លែង Plaintext Password ទៅជា String ដែលមានប្រវែងថេរ និងមិនអាចត្រឡប់ក្រោយវិញបាន (Irreversible) ដោយប្រើប្រាស់ Cryptographic One-way Function។ ខុសពី Encryption ដែលជាដំណើរការ Two-way អាច Decrypt មកវិញបានដោយ Secret Key ការ Hash ពាក្យសម្ងាត់គឺមិនអាច Reversible បានជាដាច់ខាត។ ការរក្សាទុក Password ជា Plaintext ឬប្រើ Algorithms លឿនៗដូចជា MD5/SHA-1 នឹងធ្វើឱ្យប្រឈមហានិភ័យធ្ងន់ធ្ងរនៅពេល Database ត្រូវបែកធ្លាយ (Data Breach)។",
       "tip": "Never use encryption (AES/DES) or fast hash algorithms (MD5/SHA256) for passwords. Fast hashes allow attackers to calculate billions of guesses per second via GPU brute-forcing.",
       "objective": "Understand why one-way slow cryptographic hash functions are mandatory for credential storage.",
       "expectedOutcome": "Solid grasp of cryptographic hashing vs encryption and resistance to brute-force attacks.",
@@ -38,7 +38,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការប្រើប្រាស់បណ្ណាល័យ bcrypt",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "bcrypt is an adaptive cryptographic hashing algorithm designed by Niels Provos and David Mazières based on the Blowfish cipher. Its critical feature is the configurable 'work factor' (cost), which exponentially increases calculation time as computing hardware becomes faster. In Node.js, `bcryptjs` provides a pure JavaScript implementation or `bcrypt` for native C++ bindings.",
+      "summary": "bcrypt គឺជា Cryptographic Hashing Algorithm ដ៏រឹងមាំផ្អែកលើ Blowfish Cipher ដែលបង្កើតឡើងដោយ Niels Provos និង David Mazières។ ចំណុចពិសេសបំផុតរបស់វាគឺ Configurable Work Factor (Cost ឬ Salt Rounds) ដែលបង្កើនរយៈពេលគណនាជាលក្ខណៈ Exponential នៅពេល Hardware កាន់តែខ្លាំងឡើង។ នៅក្នុង Node.js យើងអាចប្រើប្រាស់ `bcryptjs` (Pure JavaScript) ឬ `bcrypt` (Native C++ Bindings) ដើម្បី Hash និងផ្ទៀងផ្ទាត់ Passwords។",
       "tip": "Use a cost factor (salt rounds) of 12 for modern production servers. It takes roughly 250-350ms per hash, protecting against offline brute-forcing while remaining responsive.",
       "objective": "Install and use bcrypt in Node.js to hash submitted passwords and compare login credentials.",
       "expectedOutcome": "Working credential hashing pipeline with optimal salt rounds configuration.",
@@ -51,7 +51,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការបង្កើត Salt និង Hashing ក្នុង bcrypt",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "A cryptographic salt is a random string of bits generated uniquely for every user before hashing. Salting ensures that two identical passwords (e.g. 'password123') produce completely different hash outputs, completely neutralizing precomputed Rainbow Table attacks. In bcrypt, the salt, algorithm identifier, cost factor, and hash are all concatenated into a single string formatted like `$2a$12$salt...hash...`.",
+      "summary": "Salt គឺជា Cryptographic Random String ដែលបង្កើតឡើងសម្រាប់ផ្គុំបន្ថែមជាមួយ Password មុនពេលធ្វើការ Hash ដើម្បីទប់ស្កាត់ការវាយប្រហារតាមរយៈ Rainbow Tables និង Dictionary Attacks។ bcrypt បង្កើត Salt ដោយស្វ័យប្រវត្តិតាម Salt Rounds (ស្តង់ដារ 12 Rounds ត្រូវការពេលប្រហែល 250-350ms) និងរក្សាទុក Salt រួមជាមួយ Hash ក្នុង String តែមួយ ($2a$12$...) ដែលធ្វើឱ្យការផ្ទៀងផ្ទាត់មានភាពងាយស្រួល និងមានសុវត្ថិភាពខ្ពស់។",
       "tip": "You never need a separate database column for the salt with bcrypt! The generated hash string already includes the salt and work factor in its header prefix.",
       "objective": "Understand how random cryptographic salts eliminate rainbow table and dictionary attacks.",
       "expectedOutcome": "Clear understanding of the anatomy of a bcrypt hash string ($2b$12$...).",
@@ -64,7 +64,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "លំហូរនៃការចុះឈ្មោះអ្នកប្រើប្រាស់ (Registration Flow)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The registration flow coordinates input validation, duplicate checking, password hashing, and persistence. A secure registration controller checks if the email already exists, validates password strength with Zod, applies bcrypt hashing inside a Mongoose pre-save middleware, persists the document, and responds with user metadata while strictly excluding the password hash.",
+      "summary": "លំហូរនៃការចុះឈ្មោះ (User Registration Flow) តម្រូវឱ្យអនុវត្តតាមជំហានសុវត្ថិភាពយ៉ាងហ្មត់ចត់៖ ទទួលទិន្នន័យ (Email, Password) ពី Request Body, ធ្វើការ Validate ទិន្នន័យតាម Schema, ពិនិត្យមើលវត្តមាន Email ស្ទួនក្នុង Database, ធ្វើការ Hash Password ដោយប្រើ bcrypt មុនពេលរក្សាទុក, និងបង្កើត User Document ថ្មីដោយមិនត្រឡប់ Password ទៅកាន់ Client វិញឡើយ (ប្រើ Mongoose select: false)។",
       "tip": "Use Mongoose pre-save middleware (`userSchema.pre('save')`) to automatically hash passwords, ensuring passwords are never stored in plaintext even during seed scripts or migrations.",
       "objective": "Build an enterprise registration endpoint with email normalization, password hashing, and clean response projection.",
       "expectedOutcome": "Secure sign-up endpoint that creates sanitized user records without leaking hashes.",
@@ -77,7 +77,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "លំហូរនៃការចូលប្រើប្រាស់ (Login Flow)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The login flow verifies submitted credentials against the stored record. It queries the user by normalized email (explicitly selecting the hidden password field), verifies the submitted password with `bcrypt.compare()`, and returns tokens upon match. Timing-attack prevention and generic error messages ('Invalid email or password') ensure attackers cannot enumerate valid user accounts.",
+      "summary": "លំហូរនៃការចូលប្រើប្រាស់ (User Login Flow) ចាប់ផ្តើមពីការទទួល Email និង Password ពី Client, ស្វែងរក User ក្នុង Database ជាមួយ Password Hash (`+password`), ផ្ទៀងផ្ទាត់ Password ដោយប្រើ `bcrypt.compare()`, បង្កើត JWT (JSON Web Token) សម្រាប់ Authenticated Session, និងឆ្លើយតបត្រឡប់ទៅ Client វិញជាមួយនឹង HTTP Status 200 OK រួមទាំង Token ឬ HttpOnly Cookie។ ប្រសិនបើខុស ត្រូវឆ្លើយតបសារ Generic 'Invalid email or password' ជានិច្ច ដើម្បីទប់ស្កាត់ User Enumeration។",
       "tip": "Never tell the client whether it was the email or password that was wrong. Always return a generic 401 'Invalid credentials' to prevent user enumeration.",
       "objective": "Implement a secure login endpoint that protects against enumeration and timing attacks.",
       "expectedOutcome": "Hardened authentication controller issuing credentials upon valid login.",
@@ -90,7 +90,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "រចនាសម្ព័ន្ធ និងទ្រឹស្តីនៃ JWT",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "A JSON Web Token (RFC 7519) is a compact, URL-safe standard for cryptographically transmitting claims between parties. A JWT consists of three base64url-encoded parts separated by dots: Header (algorithm & token type), Payload (user claims & expiration timestamp), and Signature (HMAC-SHA256 or RSA hash of header + payload signed with a server secret).",
+      "summary": "JWT (JSON Web Token - RFC 7519) គឺជា Compact, URL-safe Token សម្រាប់បញ្ជាក់អត្តសញ្ញាណរវាង Client និង Server ដោយមិនចាំបាច់រក្សាទុក Session ក្នុង Database (Stateless Architecture)។ JWT មាន ៣ ផ្នែកខណ្ឌដោយសញ្ញាចុច (.) រួមមាន Header (Algorithm & Token Type), Payload (User Claims ដូចជា userId, role, exp), និង Signature (បង្កើតឡើងដោយការ Hash Header + Payload ជាមួយ Secret Key របស់ Server)។",
       "tip": "Never put confidential data like passwords, credit card numbers, or API keys in a JWT payload! The payload is only base64 encoded, not encrypted, and can be read by anyone.",
       "objective": "Understand the three segments of a JWT (Header, Payload, Signature) and how stateless verification works.",
       "expectedOutcome": "Ability to inspect, construct, and cryptographically verify JWTs.",
@@ -103,7 +103,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការបង្កើត និងប្រើប្រាស់ Access Tokens",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "An Access Token is a short-lived bearer credential sent by the client on every HTTP request inside the `Authorization: Bearer <token>` header. Because access tokens are stateless, the backend validates them purely via cryptographic signature verification without performing a database lookup on every single request. To limit damage if intercepted, access token lifetimes should be kept between 10 and 15 minutes.",
+      "summary": "Access Token គឺជា JWT ដែលមានអាយុកាលខ្លី (Short-lived, ជាទូទៅពី 15 នាទី ទៅ 1 ម៉ោង) ប្រើប្រាស់សម្រាប់ផ្ទៀងផ្ទាត់សិទ្ធិពេលហៅទៅកាន់ Protected API Endpoints។ ដោយសារ Access Token មានផ្ទុកព័ត៌មាន User ID និង Role នៅក្នុង Payload Server មិនចាំបាច់ Query Database រាល់ពេលដែល Client ធ្វើ Request នោះទេ ដែលជួយបង្កើន Performance របស់ API យ៉ាងច្រើន។",
       "tip": "Keep access token lifespans short (10-15m). If an access token is leaked, the attacker's window of vulnerability expires automatically in a few minutes.",
       "objective": "Generate short-lived access tokens containing minimal claims for stateless authorization.",
       "expectedOutcome": "Production-ready access token signing utility with expiry guarantees.",
@@ -116,7 +116,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "យន្តការ Refresh Tokens និង Token Rotation",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "A Refresh Token is a long-lived credential (typically 7 to 30 days) used solely to obtain a new access token when the current one expires. Unlike access tokens, refresh tokens should be stored in the database or Redis cache so they can be immediately revoked if compromised. In Token Rotation, every time a refresh token is used, it is invalidated and replaced with a brand new one, preventing replay attacks.",
+      "summary": "Refresh Token គឺជា Long-lived Token (ឧទាហរណ៍ 7 ថ្ងៃ ទៅ 30 ថ្ងៃ) ដែលប្រើសម្រាប់ស្នើសុំ Access Token ថ្មីដោយស្វ័យប្រវត្តិនៅពេល Access Token ចាស់ផុតកំណត់ (Expired) ដោយមិនតម្រូវឱ្យ User ត្រូវ Login សាជាថ្មីឡើយ។ Refresh Token ត្រូវបានរក្សាទុកយ៉ាងមានសុវត្ថិភាពក្នុង HttpOnly Cookie និងអាចកត់ត្រាទុកក្នុង Database សម្រាប់គាំទ្រ Token Revocation និង Token Rotation នៅពេលមានការសង្ស័យថា Token ត្រូវបានលួច។",
       "tip": "Store hashed refresh tokens in MongoDB or Redis so you can revoke them instantly when a user clicks 'Log out from all devices'.",
       "objective": "Implement a refresh token endpoint with token rotation and revocation capabilities.",
       "expectedOutcome": "Seamless user session persistence without sacrificing credential revocation control.",
@@ -129,7 +129,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការការពារ Credential ជាមួយ HttpOnly Cookies",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "An HttpOnly cookie is a browser cookie flag that prevents client-side scripts (JavaScript) from accessing `document.cookie`. This mitigates Cross-Site Scripting (XSS) credential theft because even if malicious JavaScript runs on the client, it cannot read the refresh token. Together with `secure: true` (HTTPS only) and `sameSite: 'strict'` (CSRF mitigation), HttpOnly cookies provide the safest storage for persistent tokens.",
+      "summary": "HttpOnly Cookies គឺជាយន្តការរក្សាទុក Authentication Tokens ប្រកបដោយសុវត្ថិភាពខ្ពស់បំផុតក្នុង Web Browsers។ ដោយសារ Flag `httpOnly: true` ត្រូវបានកំណត់ JavaScript នៅលើ Frontend មិនអាចអាន ឬលួចយក Token តាមរយៈ Cross-Site Scripting (XSS) Attacks បានឡើយ។ លើសពីនេះ ការកំណត់ Flags បន្ថែមដូចជា `secure: true` (HTTPS only) និង `sameSite: 'strict'` ឬ `'lax'` ជួយការពារការវាយប្រហារ CSRF យ៉ាងមានប្រសិទ្ធភាព។",
       "tip": "Always combine `httpOnly: true`, `secure: true`, and `sameSite: 'strict'` or `'lax'` when issuing cookies from Express in production.",
       "objective": "Configure secure cookie dispatch in Express with httpOnly, secure, and sameSite attributes.",
       "expectedOutcome": "XSS-resistant credential transmission for web clients.",
@@ -142,7 +142,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការចាកចេញពីប្រព័ន្ធ (Logout and Cookie Invalidation)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "In a token-based authentication system, logging out requires two simultaneous steps: invalidating the persistent refresh token in the backend database/cache, and instructing the client browser to immediately purge the HttpOnly cookie by sending an expired cookie header (`maxAge: 0`). For maximum security, you can also store access tokens on a short-lived Redis denylist.",
+      "summary": "យន្តការ Logout នៅក្នុង Stateless JWT System តម្រូវឱ្យ Server សម្អាត Cookie ចេញពី Browser ដោយកំណត់ Expire Date ទៅកាន់អតីតកាល (`res.clearCookie('token')` ឬ `res.cookie('token', '', { expires: new Date(0) })`)។ សម្រាប់កម្រិត Enterprise យើងអាចបញ្ចូល Access Token ចូលក្នុង Redis Blacklist ឬលុប Refresh Token ចេញពី Database ដើម្បី Invalidate Session ភ្លាមៗ។",
       "tip": "Setting `res.clearCookie()` alone is not enough! You must also nullify the stored refresh token in MongoDB so that an intercepted copy cannot be reused.",
       "objective": "Build an explicit logout route that clears client cookies and revokes database tokens.",
       "expectedOutcome": "Complete session destruction on both client and server.",
@@ -155,7 +155,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការគ្រប់គ្រង Token Expiration និង Error Handling",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "When a JWT passes its `exp` timestamp, `jwt.verify()` throws a `TokenExpiredError`. A robust backend catches this specific error and translates it into a distinct 401 response code (e.g. `TOKEN_EXPIRED`), signaling to frontend API interceptors (like Axios) to trigger silent token refresh without interrupting the active user.",
+      "summary": "ការគ្រប់គ្រង Token Expiration គឺជាគោលការណ៍គ្រឹះនៃសុវត្ថិភាព។ នៅពេល Access Token ផុតកំណត់ បណ្ណាល័យ `jsonwebtoken` នឹងបោះ `TokenExpiredError`។ Server ត្រូវចាប់ Error នេះក្នុង Global Error Handler ហើយឆ្លើយតបត្រឡប់ទៅ Frontend នូវ HTTP 401 Unauthorized ជាមួយនឹង Code `TOKEN_EXPIRED` ដើម្បីឱ្យ Frontend ដឹង និងហៅ Refresh Token Endpoint មកដូរយក Access Token ថ្មីដោយស្វ័យប្រវត្តិ។",
       "tip": "Give expired token responses a unique error code string like `code: 'TOKEN_EXPIRED'` so frontend Axios interceptors know exactly when to trigger silent refresh.",
       "objective": "Catch and gracefully handle TokenExpiredError and JsonWebTokenError exceptions in Express.",
       "expectedOutcome": "Deterministic error responses enabling seamless client-side token refresh.",
@@ -168,7 +168,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការបង្កើត Authentication Middleware (protect)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "The `protect` middleware intercepts requests to private routes, extracts the Bearer token from the `Authorization` header, verifies its cryptographic signature, checks if the user still exists in the database, and verifies whether the user changed their password after the token was issued. Upon passing all checks, it attaches `req.user` to the request object.",
+      "summary": "Authentication Middleware (ជាទូទៅដាក់ឈ្មោះថា `protect` ឬ `authenticate`) គឺជា Middleware ដែលដំណើរការមុន Protected Route Handlers ទាំងអស់។ តួនាទីរបស់វាគឺ៖ ទាញយក JWT ចេញពី `Authorization: Bearer <token>` Header ឬពី HttpOnly Cookie, ផ្ទៀងផ្ទាត់ Signature តាមរយៈ `jwt.verify()`, ស្វែងរក User ក្នុង MongoDB, និងភ្ជាប់ User Object ទៅកាន់ `req.user`។ ប្រសិនបើ Token បាត់បង់ ឬមិនត្រឹមត្រូវ វានឹងបញ្ជូន 401 Unauthorized ភ្លាមៗ។",
       "tip": "Always check `user.changedPasswordAfter(decoded.iat)`. If a user resets their password, previously issued tokens must be rejected immediately.",
       "objective": "Construct a production-ready protect middleware enforcing authentication across Express endpoints.",
       "expectedOutcome": "Centralized route protection injecting req.user into downstream handlers.",
@@ -181,7 +181,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការរៀបចំរចនាសម្ព័ន្ធ Protected Routes ក្នុង Express Router",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "In Express, route protection can be applied at the individual endpoint level or across entire router modules using router-level middleware (`router.use(protect)`). Organizing public routes (login, register, forgot-password) separately from protected routes (profile, orders, checkout) enforces strict security boundaries and eliminates repetitive middleware definitions.",
+      "summary": "Protected Routes គឺជារចនាសម្ព័ន្ធ Express Router ដែលទាមទារ Authentication Middleware មុនពេលអនុញ្ញាតឱ្យ Client ចូលដំណើរការ Resource ណាមួយ។ យើងអាចការពារ Routes ជាលក្ខណៈបុគ្គល (Per-route) ឬការពារ Router ទាំងមូលដោយប្រើ `router.use(protect)` ដែលធ្វើឱ្យគ្រប់ Endpoints ទាំងអស់ដែលស្ថិតនៅក្រោម Router នោះត្រូវបានការពារដោយស្វ័យប្រវត្តិ ធានាភាពស្អាត និងកាត់បន្ថយការសរសេរកូដដដែលៗ។",
       "tip": "Use `router.use(protect)` at the top of protected route files to safeguard all subsequent routes in that router automatically.",
       "objective": "Architect clear boundaries between public and protected routes in modular Express applications.",
       "expectedOutcome": "Clean, maintainable route declarations with zero unprotected private routes.",
@@ -196,7 +196,7 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការកំណត់ User Roles ក្នុង Schema",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "User roles define categorical identities within an application (e.g. `user`, `moderator`, `admin`, `superadmin`). In Mongoose, roles are declared as an enumerated string with strict validation and a safe default (e.g. `user`). Restricting role escalation during self-registration ensures standard signups can never assign themselves administrative privileges.",
+      "summary": "User Roles គឺជាការកំណត់ឋានានុក្រមនៃអ្នកប្រើប្រាស់នៅក្នុង User Schema តាមរយៈ Mongoose Enum (ឧ. `['student', 'instructor', 'admin']`)។ ការកំណត់ Role តាំងពីកម្រិត Database ជួយធានានូវ Data Integrity និងការពារកុំឱ្យមានការកែប្រែ Role ដោយខុសច្បាប់តាមរយៈ Mass Assignment ដោយការពារ Field `role` មិនឱ្យ Client Update ដោយផ្ទាល់។",
       "tip": "Never allow `req.body.role` to be saved directly on public registration routes! Always hardcode `role: 'user'` during self-signup.",
       "objective": "Define role schemas with Mongoose enums and enforce strict privilege defaults.",
       "expectedOutcome": "Type-safe role schema preventing unauthorized privilege escalation.",
@@ -209,19 +209,11 @@ export const MODULES_16_20 = {
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ Role-based Access Control (RBAC)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Role-based Access Control (RBAC) regulates user operations based on roles assigned to individuals within an organization. Instead of assigning granular permissions directly to every user, permissions are grouped into roles, and users are assigned those roles. RBAC simplifies authorization audits, scales seamlessly, and aligns with enterprise compliance requirements.",
+      "summary": "Role-Based Access Control (RBAC) គឺជាគំរូគ្រប់គ្រងសិទ្ធិអំណាចដែលផ្អែកលើតួនាទីរបស់អ្នកប្រើប្រាស់ក្នុងអង្គភាព។ ជំនួសឱ្យការកំណត់សិទ្ធិលើ User ម្នាក់ៗដោយផ្ទាល់ សិទ្ធិ (Permissions) ត្រូវបានប្រគល់ឱ្យ Roles (ដូចជា Student, Instructor, Admin) ហើយ Users ទទួលបានសិទ្ធិទាំងនោះតាមរយៈ Roles របស់ពួកគេ។ វិធីនេះជួយឱ្យការគ្រប់គ្រងសិទ្ធិក្នុង Enterprise Backends មានភាពងាយស្រួល និងងាយពង្រីក។",
       "tip": "Keep role hierarchies flat and clear initially. Introduce permission matrices only when role definitions begin to blur across departments.",
       "objective": "Understand how RBAC decouples user identities from system permissions.",
       "expectedOutcome": "Comprehensive understanding of RBAC models and permission inheritance.",
-      "codeSnippet": `// RBAC Conceptual Model:
-// User -> Has Role -> Has Permissions -> Can Access Resource
-//
-// Alice (Student)     -> [Role: "student"]    -> Read courses, enroll in course, view progress
-// Bob (Instructor)    -> [Role: "instructor"] -> Create course, manage own lessons, grade assignments
-// Carol (Superadmin)  -> [Role: "admin"]      -> Delete courses, manage user roles, view platform metrics
-//
-// In middleware:
-// if (!roles.includes(req.user.role)) return 403 Forbidden`
+      "codeSnippet": "// RBAC Conceptual Model:\n// User -> Has Role -> Has Permissions -> Can Access Resource\n//\n// Alice (Student)     -> [Role: \"student\"]    -> Read courses, enroll in course, view progress\n// Bob (Instructor)    -> [Role: \"instructor\"] -> Create course, manage own lessons, grade assignments\n// Carol (Superadmin)  -> [Role: \"admin\"]      -> Delete courses, manage user roles, view platform metrics\n//\n// In middleware:\n// if (!roles.includes(req.user.role)) return 403 Forbidden"
     },
     {
       "id": "M17-03",
@@ -230,27 +222,11 @@ export const MODULES_16_20 = {
       "khmerTitle": "ការគ្រប់គ្រងសិទ្ធិលម្អិត (Fine-grained Permissions)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "When static roles become insufficient for complex applications, fine-grained permission systems map actions to resources using verbs like `courses:create`, `courses:publish`, or `users:ban`. An access matrix evaluates whether a user's assigned role or direct permission set contains the required resource action before proceeding.",
+      "summary": "Fine-Grained Permissions គឺជាយុទ្ធសាស្ត្របំបែកសិទ្ធិអំណាចឱ្យកាន់តែលម្អិតតាមសកម្មភាពជាក់ស្តែង (ឧ. `course:create`, `course:publish`, `user:ban`) ជាជាងពឹងផ្អែកលើ Role ទាំងមូល។ វិធីនេះផ្តល់នូវភាពបត់បែនខ្ពស់ (Granular Control) សម្រាប់កម្មវិធីស្មុគស្មាញ ដែលអនុញ្ញាតឱ្យបង្កើត Custom Roles ឬកែប្រែសិទ្ធិដោយមិនបាច់ប៉ះពាល់ដល់ Core Business Logic ឡើយ។",
       "tip": "Use colon notation for granular permissions: `<resource>:<action>` (e.g. `courses:publish`, `lessons:create`).",
       "objective": "Model granular resource-action permission strings and role permission mappings.",
       "expectedOutcome": "Scalable permission matrix capable of fine-grained access control beyond simple roles.",
-      "codeSnippet": `// config/permissions.js
-export const ROLE_PERMISSIONS = {
-  student: ["courses:read", "enrollments:create", "enrollments:read_own"],
-  instructor: [
-    "courses:read", "courses:create", "courses:update_own", "courses:delete_own",
-    "lessons:create", "lessons:update_own", "lessons:delete_own"
-  ],
-  admin: [
-    "courses:read", "courses:create", "courses:update_all", "courses:delete_all",
-    "users:manage", "analytics:read"
-  ]
-};
-
-export const hasPermission = (userRole, requiredPermission) => {
-  const permissions = ROLE_PERMISSIONS[userRole] || [];
-  return permissions.includes(requiredPermission);
-};`
+      "codeSnippet": "// config/permissions.js\nexport const ROLE_PERMISSIONS = {\n  student: [\"courses:read\", \"enrollments:create\", \"enrollments:read_own\"],\n  instructor: [\n    \"courses:read\", \"courses:create\", \"courses:update_own\", \"courses:delete_own\",\n    \"lessons:create\", \"lessons:update_own\", \"lessons:delete_own\"\n  ],\n  admin: [\n    \"courses:read\", \"courses:create\", \"courses:update_all\", \"courses:delete_all\",\n    \"users:manage\", \"analytics:read\"\n  ]\n};\n\nexport const hasPermission = (userRole, requiredPermission) => {\n  const permissions = ROLE_PERMISSIONS[userRole] || [];\n  return permissions.includes(requiredPermission);\n};"
     },
     {
       "id": "M17-04",
@@ -259,7 +235,7 @@ export const hasPermission = (userRole, requiredPermission) => {
       "khmerTitle": "ការការពារ Admin Routes ដោយឡែក",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Admin routes handle privileged operations like user management, system analytics, and catalog updates. These endpoints should be grouped into dedicated route modules (e.g. `/api/v1/admin/...`) protected by both authentication and role restriction middleware (`restrictTo('admin')`).",
+      "summary": "Admin Routes គឺជា Endpoints ពិសេសដែលបម្រុងទុកសម្រាប់តែ Admin ឬ Superadmin ប៉ុណ្ណោះ ដូចជា `/api/v1/admin/users` ឬ `/api/v1/admin/analytics`។ Routes ទាំងនេះត្រូវតែការពារដោយកម្រិតសុវត្ថិភាពពីរជាន់ (Dual-layer Protection)៖ ទីមួយគឺ Authentication Middleware (`protect`) និងទីពីរគឺ Authorization Middleware (`restrictTo('admin')`) ដើម្បីធានាថាអ្នកប្រើប្រាស់ធម្មតាមិនអាចចូលបានជាដាច់ខាត។",
       "tip": "Mount all administrative routes under a single dedicated prefix like `/api/v1/admin` to apply global admin guards and audit logging effortlessly.",
       "objective": "Isolate and protect administrative endpoints behind role-based route guards.",
       "expectedOutcome": "Dedicated admin routing module inaccessible to non-privileged users.",
@@ -272,7 +248,7 @@ export const hasPermission = (userRole, requiredPermission) => {
       "khmerTitle": "ការរៀបចំ User Profile Routes និង Self-Service Actions",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "User routes handle self-service account management, such as updating profiles, changing passwords, and viewing personal order histories. Standard authenticated users (`role: 'user'`) must have access to these routes, but must only be permitted to mutate their own account details, never other users' records.",
+      "summary": "User Routes គឺជា Endpoints ដែលបម្រើឱ្យសកម្មភាពផ្ទាល់ខ្លួនរបស់អ្នកប្រើប្រាស់ (Self-Service) ដូចជា ការមើល Profile (`/api/v1/users/me`), ការកែប្រែព័ត៌មានផ្ទាល់ខ្លួន, ឬការផ្លាស់ប្តូរ Password។ ចំណុចសំខាន់គឺ Controller ត្រូវប្រើប្រាស់ `req.user.id` ដែលទាញចេញពី Authentication Middleware ដោយមិនពឹងផ្អែកលើ `req.params.id` ពី URL ឡើយ ដើម្បីការពារ IDOR (Insecure Direct Object Reference)។",
       "tip": "Use the authenticated `req.user._id` directly instead of taking user IDs from URL params for personal profile updates.",
       "objective": "Build user-specific routes that safely operate on the authenticated user context.",
       "expectedOutcome": "Safe user profile endpoints preventing accidental or malicious cross-account modifications.",
@@ -285,30 +261,11 @@ export const hasPermission = (userRole, requiredPermission) => {
       "khmerTitle": "ការបង្កើត restrictTo Middleware Factory",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "The `restrictTo(...roles)` middleware factory accepts a list of permitted roles and returns an Express middleware function. It checks if the already-authenticated `req.user.role` is included in the allowed list. If not, it throws a 403 Forbidden error immediately, halting execution before the controller is reached.",
+      "summary": "Authorization Middleware Factory (ជាទូទៅហៅថា `restrictTo(...roles)`) គឺជា Higher-Order Function ដែលត្រឡប់ Express Middleware មកវិញ។ វាទទួលយកបញ្ជី Roles ដែលអនុញ្ញាត (ឧ. `'admin'`, `'instructor'`) ហើយពិនិត្យមើលថា `req.user.role` មានក្នុងបញ្ជីនោះឬទេ។ ប្រសិនបើគ្មានសិទ្ធិ វានឹងបញ្ជូន HTTP 403 Forbidden ភ្លាមៗជាមួយនឹងសារបញ្ជាក់ច្បាស់លាស់។",
       "tip": "Always run `protect` BEFORE `restrictTo`. If `req.user` is undefined, `restrictTo` cannot evaluate roles.",
       "objective": "Build a reusable restrictTo middleware factory supporting multiple permitted roles.",
       "expectedOutcome": "Flexible, declarative role authorization middleware for Express routes.",
-      "codeSnippet": `// middleware/role.middleware.js
-import { AppError } from "../utils/AppError.js";
-
-export const restrictTo = (...allowedRoles) => {
-  return (req, res, next) => {
-    // req.user was populated by protect middleware
-    if (!req.user || !allowedRoles.includes(req.user.role)) {
-      return next(
-        new AppError(
-          \`Forbidden: Role '\${req.user?.role || "anonymous"}' does not have permission\`,
-          403
-        )
-      );
-    }
-    next();
-  };
-};
-
-// Usage in course routes:
-// router.delete("/courses/:id", protect, restrictTo("instructor", "admin"), deleteCourse);`
+      "codeSnippet": "// middleware/role.middleware.js\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    // req.user was populated by protect middleware\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return next(\n        new AppError(\n          `Forbidden: Role '${req.user?.role || \"anonymous\"}' does not have permission`,\n          403\n        )\n      );\n    }\n    next();\n  };\n};\n\n// Usage in course routes:\n// router.delete(\"/courses/:id\", protect, restrictTo(\"instructor\", \"admin\"), deleteCourse);"
     },
     {
       "id": "M17-07",
@@ -317,37 +274,11 @@ export const restrictTo = (...allowedRoles) => {
       "khmerTitle": "ការផ្ទៀងផ្ទាត់កម្មសិទ្ធិនៃទិន្នន័យ (Resource Ownership Verification)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Resource ownership ensures that instructors can only edit or delete courses they authored, and students can only view or cancel their own enrollments. An instructor might have permission to update courses, but only courses where `course.instructor.toString() === req.user._id.toString()`. Administrators typically bypass ownership checks via admin privilege logic.",
+      "summary": "Resource Ownership Verification គឺជាការផ្ទៀងផ្ទាត់ថា User ដែលកំពុងធ្វើ Request គឺជាម្ចាស់ពិតប្រាកដនៃ Document នោះឬទេ (ឧ. Instructor អាច Update ឬ Delete បានតែ Course ផ្ទាល់ខ្លួនរបស់គាត់ប៉ុណ្ណោះ)។ បន្ទាប់ពីទាញយក Resource ពី Database Middleware ឬ Service ត្រូវប្រៀបធៀប `resource.instructor.toString() === req.user._id.toString()` មុននឹងអនុញ្ញាតឱ្យប្រតិបត្តិការបន្ត។",
       "tip": "Always convert MongoDB ObjectIds to strings with `.toString()` when comparing `doc.instructor.toString() === req.user._id.toString()`, because two distinct ObjectId instances never match with `===`.",
       "objective": "Implement resource ownership checks ensuring instructors can only mutate their own courses.",
       "expectedOutcome": "Bulletproof data protection preventing Horizontal Privilege Escalation (IDOR).",
-      "codeSnippet": `// controllers/course.controller.js
-import { Course } from "../models/course.model.js";
-import { AppError } from "../utils/AppError.js";
-
-export const updateCourse = async (req, res, next) => {
-  try {
-    const course = await Course.findById(req.params.id);
-    if (!course) throw new AppError("Course not found", 404);
-
-    // Check ownership: Must be course instructor OR an administrator
-    const isOwner = course.instructor.toString() === req.user._id.toString();
-    const isAdmin = req.user.role === "admin";
-
-    if (!isOwner && !isAdmin) {
-      throw new AppError("You do not have permission to edit this course", 403);
-    }
-
-    // Apply updates...
-    course.title = req.body.title || course.title;
-    course.description = req.body.description || course.description;
-    await course.save();
-
-    res.json({ status: "success", data: { course } });
-  } catch (err) {
-    next(err);
-  }
-};`
+      "codeSnippet": "// controllers/course.controller.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const updateCourse = async (req, res, next) => {\n  try {\n    const course = await Course.findById(req.params.id);\n    if (!course) throw new AppError(\"Course not found\", 404);\n\n    // Check ownership: Must be course instructor OR an administrator\n    const isOwner = course.instructor.toString() === req.user._id.toString();\n    const isAdmin = req.user.role === \"admin\";\n\n    if (!isOwner && !isAdmin) {\n      throw new AppError(\"You do not have permission to edit this course\", 403);\n    }\n\n    // Apply updates...\n    course.title = req.body.title || course.title;\n    course.description = req.body.description || course.description;\n    await course.save();\n\n    res.json({ status: \"success\", data: { course } });\n  } catch (err) {\n    next(err);\n  }\n};"
     },
     {
       "id": "M17-08",
@@ -356,27 +287,11 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ស្ថាបត្យកម្មរចនា API ប្រកបដោយសុវត្ថិភាពតាមតួនាទី",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Well-designed role-based APIs clearly separate public, authenticated, and privileged endpoints. Consistent route naming, standardized error responses, clear permission matrices, and automated permission tests prevent accidental exposure of privileged capabilities across the course platform lifecycle.",
+      "summary": "Role-Based API Design គឺជាស្ថាបត្យកម្មរួមបញ្ចូលគ្នានៃ Authentication, RBAC, និង Resource Ownership ទៅក្នុងរចនាសម្ព័ន្ធ API ដែលមានរបៀបរៀបរយ។ តាមរយៈការរៀបចំ Middleware Pipeline ច្បាស់លាស់ API ធានាបាននូវសុវត្ថិភាព ភាពងាយស្រួលក្នុងការធ្វើ Audit និងការការពារទិន្នន័យសម្ងាត់ស្របតាមស្តង់ដារ Enterprise Security។",
       "tip": "Document required permissions in your Swagger/OpenAPI annotations for every route to ensure frontend developers know authentication requirements upfront.",
       "objective": "Design scalable, secure API route architectures applying defense-in-depth authorization.",
       "expectedOutcome": "Clean, documented, and resilient API architecture enforcing role safety.",
-      "codeSnippet": `// Architectural Overview for Course Platform API:
-//
-// 1. Public Tier (No Auth):
-//    GET  /api/v1/courses (Browse published catalog)
-//    POST /api/v1/auth/login
-//
-// 2. Student Tier (protect):
-//    GET  /api/v1/users/me
-//    POST /api/v1/enrollments (Enroll in course)
-//
-// 3. Instructor Ownership Tier (protect + checkOwner):
-//    PATCH  /api/v1/courses/:id (Course instructor only)
-//    DELETE /api/v1/courses/:id (Course instructor only)
-//
-// 4. Privileged Admin Tier (protect + restrictTo('admin')):
-//    POST   /api/v1/admin/categories
-//    PATCH  /api/v1/admin/users/:id/role`
+      "codeSnippet": "// Architectural Overview for Course Platform API:\n//\n// 1. Public Tier (No Auth):\n//    GET  /api/v1/courses (Browse published catalog)\n//    POST /api/v1/auth/login\n//\n// 2. Student Tier (protect):\n//    GET  /api/v1/users/me\n//    POST /api/v1/enrollments (Enroll in course)\n//\n// 3. Instructor Ownership Tier (protect + checkOwner):\n//    PATCH  /api/v1/courses/:id (Course instructor only)\n//    DELETE /api/v1/courses/:id (Course instructor only)\n//\n// 4. Privileged Admin Tier (protect + restrictTo('admin')):\n//    POST   /api/v1/admin/categories\n//    PATCH  /api/v1/admin/users/:id/role"
     }
   ],
   "M18": [
@@ -387,7 +302,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "បញ្ហាសុវត្ថិភាពទូទៅក្នុង Web API (OWASP Top 10)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Modern APIs face pervasive threats classified by OWASP (Open Web Application Security Project). The most damaging vulnerabilities include Broken Object Level Authorization (BOLA/IDOR), Broken Authentication, Mass Assignment, Injection (SQL/NoSQL), Security Misconfiguration, and lack of Rate Limiting leading to denial of service.",
+      "summary": "ការយល់ដឹងអំពីបញ្ហាសុវត្ថិភាពទូទៅក្នុង Web API ផ្អែកតាម OWASP API Security Top 10 (ដូចជា Broken Object Level Authorization, Broken Authentication, Mass Assignment, និង Injection) គឺជាមូលដ្ឋានគ្រឹះដ៏សំខាន់។ ការយល់ដឹងពី Vector នៃការវាយប្រហារជួយឱ្យ Developer អាចរចនាប្រព័ន្ធការពារទុកជាមុន (Defense-in-Depth) ចាប់តាំងពីដំណាក់កាលដំបូងនៃការសរសេរកូដ។",
       "tip": "Treat every piece of client input as untrusted. Never rely exclusively on frontend validation — attackers bypass frontend clients entirely using curl or Postman.",
       "objective": "Identify the top OWASP API security threats and understand defense-in-depth strategies.",
       "expectedOutcome": "Risk awareness and defensive coding habits countering prevalent API vulnerabilities.",
@@ -400,7 +315,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការកំណត់ Cross-Origin Resource Sharing (CORS)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Cross-Origin Resource Sharing (CORS) is a browser security mechanism that restricts web pages from making AJAX requests to a different domain, port, or protocol than the one serving the web page. The `cors` package in Express manages headers like `Access-Control-Allow-Origin` and handles HTTP `OPTIONS` preflight requests.",
+      "summary": "CORS (Cross-Origin Resource Sharing) គឺជាយន្តការសុវត្ថិភាពរបស់ Browser ដែលគ្រប់គ្រងថាតើ Domain ខាងក្រៅណាខ្លះអាចធ្វើ Request មកកាន់ API របស់យើងបាន។ ការប្រើប្រាស់បណ្ណាល័យ `cors` ក្នុង Express អនុញ្ញាតឱ្យយើងកំណត់ Whitelist នៃ Allowed Origins, Methods (GET, POST, PUT, DELETE), និង Headers ជៀសវាងការបើកចំហ `*` (Wildcard) លើ Production Endpoints ដែលមានទិន្នន័យសម្ងាត់។",
       "tip": "Never use `cors({ origin: '*' })` with `credentials: true` in production! Explicitly whitelist trusted frontend domains via an array or function.",
       "objective": "Configure the cors middleware to securely permit trusted frontend origins while rejecting unauthorized domains.",
       "expectedOutcome": "Secure cross-origin request handling with strict origin whitelisting.",
@@ -413,7 +328,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការការពារ HTTP Headers ជាមួយ Helmet",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Helmet is a collection of 15 smaller middleware functions that set secure HTTP response headers. It hides the revealing `X-Powered-By: Express` header, enforces HTTPS via HTTP Strict Transport Security (HSTS), blocks clickjacking with `X-Frame-Options`, prevents MIME-sniffing with `X-Content-Type-Options`, and configures Content Security Policy (CSP).",
+      "summary": "Helmet គឺជា Express Middleware ដែលជួយការពារ API តាមរយៈការកំណត់ HTTP Response Headers សំខាន់ៗដោយស្វ័យប្រវត្តិតាមស្តង់ដារសុវត្ថិភាព (រួមមាន Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, និងការដកចេញនូវ X-Powered-By header) ដើម្បីបិទបាំងបច្ចេកវិទ្យា Server និងការពារការវាយប្រហារ Clickjacking និង MIME Sniffing។",
       "tip": "Place `app.use(helmet())` at the very top of your Express middleware stack to protect all downstream responses, including error responses.",
       "objective": "Harden HTTP response headers using the helmet middleware package.",
       "expectedOutcome": "Elimination of header-based information leaks and improved security scanning score.",
@@ -426,7 +341,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការកំណត់ចំនួន Request (Rate Limiting) ជាមួយ express-rate-limit",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Rate limiting restricts how many HTTP requests a client IP address can make within a specified time window. It protects APIs from Denial of Service (DoS) attacks, brute-force credential stuffing, and web scraping abuse. The `express-rate-limit` package sets standard `RateLimit-*` headers and returns HTTP `429 Too Many Requests` upon breach.",
+      "summary": "Rate Limiting គឺជាការកំណត់ចំនួនអតិបរមានៃ HTTP Requests ដែល Client មួយអាចផ្ញើមកកាន់ Server ក្នុងចន្លោះពេលជាក់លាក់មួយ (ឧ. 100 requests ក្នុង 15 នាទី) ដោយប្រើបណ្ណាល័យ `express-rate-limit`។ យន្តការនេះជួយការពារ Server ពីការវាយប្រហារ Denial of Service (DoS), API Scraping, និងការកើនឡើងហួសប្រមាណនៃបន្ទុក Server (Traffic Spikes)។",
       "tip": "Always configure `legacyHeaders: false` and `standardHeaders: true` to comply with modern IETF rate-limiting header specifications.",
       "objective": "Implement global and route-specific rate limits to defend against DoS and abusive scraping.",
       "expectedOutcome": "Resilient API that gracefully throttles excessive requests with HTTP 429.",
@@ -439,7 +354,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការទប់ស្កាត់ការវាយប្រហារ Brute-force លើ Login Routes",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Authentication routes require aggressive rate limiting compared to general API endpoints. An attacker submitting thousands of password combinations can crack weak passwords or saturate server CPU with bcrypt operations. Strict limiters (e.g. 5 attempts per 15 minutes) or progressive delay mechanisms stop automated brute-force attacks in their tracks.",
+      "summary": "Brute-force Protection គឺជាការដាក់កំហិតពិសេសលើ Endpoints ដែលប្រឈមនឹងការស្មាន Password ដូចជា `/api/v1/auth/login` និង `/api/v1/auth/forgot-password`។ តាមរយៈការកំណត់ Rate Limiter តឹងរ៉ឹង (ឧ. អនុញ្ញាតត្រឹមតែ 5 ដងក្នុង 15 នាទី សម្រាប់ IP ឬ Email មួយ) រួមជាមួយ Account Lockout បណ្តោះអាសន្ន យើងអាចការពារការទម្លុះ Password ដោយស្វ័យប្រវត្តិពី Botnets បានយ៉ាងរឹងមាំ។",
       "tip": "Apply strict rate limiting specifically to `/api/v1/auth/login` and `/api/v1/auth/forgot-password` to neutralize automated password dictionary attacks.",
       "objective": "Configure specialized high-friction rate limiters on credential verification routes.",
       "expectedOutcome": "Hardened authentication endpoints that lock out brute-force attackers.",
@@ -452,7 +367,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការការពារប្រព័ន្ធតាមរយៈ Input Validation",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Rigorous input validation is the primary line of defense against injection attacks, buffer anomalies, and data corruption. By defining strict schema contracts using Zod or Joi, every incoming field must adhere to expected data types, string length boundaries, regex patterns, and allowable values before any business logic executes.",
+      "summary": "Input Validation គឺជាខ្សែការពារទីមួយក្នុងការទប់ស្កាត់ទិន្នន័យមិនប្រក្រតីមុនពេលវាទៅដល់ Business Logic ឬ Database។ ការប្រើប្រាស់ Validation Libraries ទំនើបដូចជា Zod ឬ Joi អនុញ្ញាតឱ្យយើង Validate គ្រប់ Data Types, String Length, Email Format, និងដកចេញនូវ Unrecognized Fields ដោយស្វ័យប្រវត្តិ ធានាថាកូដដំណើរការតែជាមួយទិន្នន័យស្អាត និងមានសុវត្ថិភាពប៉ុណ្ណោះ។",
       "tip": "Strip unexpected properties automatically using strict schema parsers (`schema.parse()`) to prevent Mass Assignment attacks where users inject unauthorized fields like `isAdmin: true`.",
       "objective": "Enforce strict schema validation rules to prevent malicious payloads from reaching application layers.",
       "expectedOutcome": "Zero unvalidated data penetrating beyond the Express middleware layer.",
@@ -465,7 +380,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "គោលការណ៍សុវត្ថិភាពពាក្យសម្ងាត់ (NIST Guidelines)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Modern password security aligns with NIST Special Publication 800-63B standards. Key recommendations include requiring a minimum of 8 to 12 characters, permitting long passphrases (up to 64+ characters), allowing all printable ASCII and Unicode characters, checking against lists of breached/compromised passwords, and eliminating arbitrary periodic expiration rules.",
+      "summary": "គោលការណ៍សុវត្ថិភាព Password ទំនើបផ្អែកលើស្តង់ដារ NIST SP 800-63B ណែនាំឱ្យកំណត់ប្រវែងអប្បបរមា (យ៉ាងតិច 8 ទៅ 12 តួអក្សរ) ត្រួតពិនិត្យប្រឆាំងនឹង Common Leaked Passwords និងមិនត្រូវបង្ខំឱ្យប្តូរ Password ញឹកញាប់ដោយគ្មានមូលហេតុឡើយ។ លើសពីនេះ Password ត្រូវតែ Hash ជាមួយ bcrypt ដោយប្រើ Salt Rounds សមស្របជានិច្ច។",
       "tip": "Do not enforce frustrating rules like 'must contain 1 special character and 1 uppercase letter' without allowing long passphrases. Length provides far more entropy than character complexity.",
       "objective": "Understand and implement contemporary password strength guidelines based on NIST standards.",
       "expectedOutcome": "User-friendly yet mathematically robust password validation schemas.",
@@ -478,7 +393,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការការពារសុវត្ថិភាព JWT (Algorithm Confusion & Secret Entropy)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Common JWT security vulnerabilities include using weak signing secrets (crackable in seconds via hashcat), allowing the insecure 'none' algorithm, failing to validate the token's expiration timestamp, and storing sensitive PII in unencrypted payloads. JWT secrets must be at least 256 bits (32 random bytes) of cryptographically secure entropy.",
+      "summary": "JWT Security ទាមទារឱ្យមានការកំណត់រចនាសម្ព័ន្ធប្រកបដោយការប្រុងប្រយ័ត្ន៖ ប្រើប្រាស់ Strong Secret Keys (យ៉ាងតិច 256-bit Entropy), កំណត់ Algorithm ជាក់លាក់ (`HS256` ឬ `RS256`) ដើម្បីការពារ Algorithm Confusion Attacks (none algorithm), កំណត់ Expiration Time ខ្លីសម្រាប់ Access Token, និងមិនត្រូវដាក់ទិន្នន័យសម្ងាត់ (Passwords, Credit Cards) ក្នុង Payload ជាដាច់ខាត។",
       "tip": "Generate cryptographic secrets using Node.js crypto: `node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"`.",
       "objective": "Harden JWT creation and verification against algorithm confusion and secret brute-forcing.",
       "expectedOutcome": "Cryptographically sound JWT configuration immune to common attack vectors.",
@@ -491,7 +406,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការការពារសុវត្ថិភាព Cookies (HttpOnly, Secure, SameSite)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Cookies carrying session identifiers or refresh tokens must be hardened against theft and misuse. The `HttpOnly` attribute blocks client script extraction, the `Secure` attribute ensures cookies are only transmitted over TLS/HTTPS encrypted connections, and `SameSite=Strict` or `Lax` governs whether cookies are sent across origin boundaries, preventing CSRF.",
+      "summary": "Cookie Security ផ្តោតលើការការពារ Cookies តាមរយៈ Security Flags ចំនួន ៣ សំខាន់ៗ៖ `httpOnly: true` (ការពារការលួច Token តាមរយៈ JavaScript/XSS), `secure: true` (អនុញ្ញាតឱ្យបញ្ជូនតែតាមបណ្តាញ HTTPS), និង `sameSite: 'strict'` ឬ `'lax'` (ការពារការវាយប្រហារ Cross-Site Request Forgery) ធានាថាសិទ្ធិ Authentication ត្រូវបានការពារគ្រប់ជ្រុងជ្រោយ។",
       "tip": "Use `SameSite=Lax` for standard web apps where users might follow external links to your site, or `SameSite=Strict` for sensitive single-page APIs.",
       "objective": "Master the triumvirate of cookie security flags: HttpOnly, Secure, and SameSite.",
       "expectedOutcome": "Cookies that cannot be hijacked by XSS or forged by cross-origin CSRF attacks.",
@@ -504,7 +419,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការគ្រប់គ្រង Secret Keys និង Environment Variables ដោយសុវត្ថិភាព",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Secrets like database connection URIs, JWT signing keys, and payment gateway tokens must never be hardcoded in source code or committed to Git repositories. Storing them in `.env` files locally and environment variables in production keeps source code repos safe from catastrophic secret leaks.",
+      "summary": "ការគ្រប់គ្រង Environment Variables ដោយសុវត្ថិភាពតម្រូវឱ្យរក្សាទុក Secret Keys, Database URIs, និង API Keys ទាំងអស់នៅក្នុងឯកសារ `.env` ហើយត្រូវបន្ថែម `.env` ទៅក្នុង `.gitignore` ជាដាច់ខាតដើម្បីកុំឱ្យធ្លាយចូល Git Repository។ ក្នុង Production ត្រូវចាក់បញ្ចូល Variables ទាំងនេះតាមរយៈ Environment Secret Management របស់ Cloud Provider (ដូចជា AWS SSM, Docker Secrets, ឬ Cloudflare Variables)។",
       "tip": "Add `.env*` to your `.gitignore` immediately upon project initialization. Provide a sanitized `.env.example` template with dummy values for team onboarding.",
       "objective": "Establish secure environment configuration workflows preventing credential leakage to version control.",
       "expectedOutcome": "Zero hardcoded credentials in source code and clean environment segregation.",
@@ -517,7 +432,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការការពារទិន្នន័យសម្ងាត់ (Data Masking & Sanitization)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Sensitive information like passwords, credit card numbers, national IDs, and internal server paths must never appear in HTTP responses, error logs, or query strings. In Mongoose, schema definitions should mark sensitive fields with `select: false` so queries never retrieve them by default.",
+      "summary": "Sensitive Information Sanitization គឺជាការលុបទិន្នន័យសម្ងាត់ (Passwords, Credit Card Numbers, Tokens, PII) ចេញពី API Responses និង Server Logs។ តាមរយៈការប្រើ Mongoose Projection (`select: false`), Transform Functions (`toJSON`), និង Log Masking យើងធានាថាទិន្នន័យសម្ងាត់មិនត្រូវធ្លាយចេញទៅកាន់ Third-party Log Aggregators ឬ Client Interface ឡើយ។",
       "tip": "Use `select: false` on Mongoose password fields. When logging errors in production, strip headers that contain `Authorization` or `Cookie` tokens.",
       "objective": "Prevent sensitive credential and system data leaks across API responses and logs.",
       "expectedOutcome": "Clean response payloads with automatic exclusion of internal hashes and secrets.",
@@ -530,7 +445,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការទប់ស្កាត់ការវាយប្រហារ NoSQL Injection",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "NoSQL injection occurs when attackers submit MongoDB operator objects (like `{\"$gt\": \"\"}`) in place of string parameters. In a query like `User.findOne({ email: req.body.email, password: req.body.password })`, sending `{\"$ne\": null}` as the password satisfies the condition and bypasses authentication. Sanitizing inputs with `express-mongo-sanitize` strips all `$` and `.` characters.",
+      "summary": "NoSQL Injection កើតឡើងនៅពេល Attacker បញ្ជូន MongoDB Query Operators (ដូចជា `{\"username\": {\"$gt\": \"\"}}`) ចូលតាម Request Body ឬ Query String ដើម្បីទម្លុះ Authentication ដោយមិនចាំបាច់ស្គាល់ Password។ ដំណោះស្រាយគឺការប្រើប្រាស់ Middleware `express-mongo-sanitize` ដើម្បីជម្រះសញ្ញា `$` និង `.` ចេញពី Input ទាំងអស់ដោយស្វ័យប្រវត្តិ។",
       "tip": "Install `express-mongo-sanitize` and mount it globally to automatically strip `$` operators from `req.body`, `req.query`, and `req.params`.",
       "objective": "Identify NoSQL injection mechanics and deploy automated sanitization middleware.",
       "expectedOutcome": "Complete immunity against MongoDB operator injection attacks.",
@@ -543,7 +458,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការទប់ស្កាត់ការវាយប្រហារ Cross-Site Scripting (XSS)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Cross-Site Scripting (XSS) occurs when untrusted user HTML or JavaScript input is reflected into web pages without proper encoding or sanitization. While modern frontend frameworks like React automatically escape JSX expressions, backend APIs should sanitize text fields using tools like `xss-clean` or `isomorphic-dompurify` to prevent stored malicious scripts.",
+      "summary": "XSS (Cross-Site Scripting) គឺជាការចាក់បញ្ចូល Malicious JavaScript Code ចូលទៅក្នុង Database ដែលអាចដំណើរការលើ Browser របស់អ្នកប្រើប្រាស់ដទៃទៀត។ ដំណោះស្រាយក្នុង Backend រួមមាន៖ ការ Sanitizing HTML Input ដោយប្រើបណ្ណាល័យដូចជា `xss-clean` ឬ `DOMPurify`, ការកំណត់ HTTP Header Content-Security-Policy (CSP) តាមរយៈ Helmet, និងការរក្សាទុក Authentication Tokens ក្នុង HttpOnly Cookies។",
       "tip": "Sanitize user-generated rich text fields (like blog content or comments) on the server before saving to MongoDB using DOMPurify.",
       "objective": "Understand XSS mechanics and apply server-side HTML entity sanitization.",
       "expectedOutcome": "Clean database records free from executable script injections.",
@@ -556,7 +471,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការយល់ដឹង និងការពារ Cross-Site Request Forgery (CSRF)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Cross-Site Request Forgery (CSRF) tricks a user's browser into executing unwanted actions on an authenticated web app where the user is logged in via ambient cookies. Modern Single Page Applications (SPAs) communicating via `Authorization: Bearer <token>` headers are inherently immune to CSRF because browsers never attach authorization headers automatically across cross-origin requests.",
+      "summary": "CSRF (Cross-Site Request Forgery) គឺជាការវាយប្រហារដែលបង្ខំឱ្យ Browser របស់ Authenticated User ផ្ញើ Request ទៅកាន់ Server ដោយមិនដឹងខ្លួន។ ការការពារ CSRF អាចសម្រេចបានយ៉ាងមានប្រសិទ្ធភាពតាមរយៈការប្រើប្រាស់ SameSite Cookies (`sameSite: 'lax'` ឬ `'strict'`), ការផ្ទៀងផ្ទាត់ Custom Headers (ដូចជា `X-Requested-With`), ឬការប្រើប្រាស់ Double-Submit Anti-CSRF Tokens សម្រាប់ State-changing Endpoints។",
       "tip": "If using cookies for authentication, set `SameSite: 'strict'` or `'lax'` — this modern browser standard eliminates the need for complex CSRF tokens in 99% of web apps.",
       "objective": "Understand the mechanics of CSRF and modern defenses like SameSite cookies and custom headers.",
       "expectedOutcome": "Solid understanding of when CSRF protection is required vs when Bearer tokens render it moot.",
@@ -569,7 +484,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "គោលការណ៍គ្រឹះនៃស្ថាបត្យកម្ម API ប្រកបដោយសុវត្ថិភាព",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Building production-grade secure APIs requires Defense in Depth — stacking multiple layers of protection so that if one layer fails, others stop the breach. This encompasses input validation, rate limiting, helmet security headers, sanitized database queries, least privilege roles, audit logging, and automated dependency vulnerability scanning via `npm audit`.",
+      "summary": "ស្ថាបត្យកម្ម API ប្រកបដោយសុវត្ថិភាព (Secure API Design) អនុវត្តតាមគោលការណ៍ Defense-in-Depth ដោយរួមបញ្ចូលគ្នានូវគ្រប់ស្រទាប់ការពារ៖ HTTPS Only, Helmet Headers, Rate Limiting, CORS Restrictions, Input Validation, Sanitization, Parameterized Queries, និង Centralized Error Handling ដែលមិនបញ្ចេញ Stack Trace ទៅកាន់សាធារណៈ។",
       "tip": "Integrate `npm audit --audit-level=high` into your CI/CD pipeline to catch known vulnerable dependencies before deploying to production.",
       "objective": "Synthesize all security layers into an enterprise-grade Express middleware pipeline.",
       "expectedOutcome": "Hardened Express server setup incorporating comprehensive security defenses.",
@@ -584,7 +499,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "គោលការណ៍គ្រឹះនៃការ Upload ឯកសារក្នុង Web Backend",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Uploading files requires handling binary streaming data rather than standard JSON payloads. HTTP transfers binary files using the `multipart/form-data` encoding format. Because `express.json()` only decodes application/json, specialized streaming parsers like `multer` are required to intercept, chunk, validate, and buffer binary byte streams into memory or disk.",
+      "summary": "ការ Upload ឯកសារក្នុង Web Backend ទាមទារឱ្យយល់ដឹងពីលំហូរការងារទាំងមូល៖ ចាប់ពី Browser ខ្ចប់ File ជាមួយទម្រង់ Multipart Form Data, បញ្ជូនតាម HTTP Stream, Server ដំណើរការ Parsing ឯកសារជាមួយ Middleware (Multer), ផ្ទៀងផ្ទាត់ទំហំ និងប្រភេទឯកសារ, រហូតដល់ការរក្សាទុក File លើ Filesystem ឬ Cloud Storage និងកត់ត្រា File URL ក្នុង Database។",
       "tip": "Never parse file uploads entirely in memory on production servers handling high concurrent traffic — large files can exhaust available Node.js RAM and trigger OOM crashes.",
       "objective": "Understand binary streams, MIME types, and multipart form encoding in HTTP file uploads.",
       "expectedOutcome": "Clear grasp of file upload life cycles from browser dispatch to server storage.",
@@ -597,7 +512,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការស្វែងយល់ពីទម្រង់ Multipart Form Data",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "A `multipart/form-data` payload breaks an HTTP message body into multiple distinct sections delimited by unique boundary strings. Each section contains its own mini-headers (e.g. `Content-Disposition`, `Content-Type`) followed by that field's text or raw binary contents. This allows text form fields and multiple files to be submitted concurrently in a single HTTP request.",
+      "summary": "Multipart Form Data (`multipart/form-data`) គឺជា MIME Type ពិសេសដែលប្រើប្រាស់សម្រាប់បញ្ជូន Binary Files (រូបភាព, វីដេអូ, ឯកសារ) រួមជាមួយ Text Fields ក្នុង HTTP Request តែមួយ។ Request Body ត្រូវបានបែងចែកជាផ្នែកៗដោយ Boundary Delimiter ដែលទាមទារឱ្យ Server ប្រើ Streaming Multipart Parser ដូចជា `busboy` ឬ `multer` ដើម្បីបំបែកទិន្នន័យ។",
       "tip": "Ensure frontend clients do NOT manually set `Content-Type: multipart/form-data` with `fetch` or `axios` — let the browser set it automatically with the correct dynamic boundary string.",
       "objective": "Learn how the HTTP boundary delimiter splits form fields and binary payloads.",
       "expectedOutcome": "Accurate debugging of multipart headers and frontend payload preparation.",
@@ -610,7 +525,7 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ Multer Middleware",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Multer is the standard Node.js middleware for handling `multipart/form-data`. It integrates with Express by parsing incoming streams and attaching a `req.file` (for single files) or `req.files` (for multiple files) object containing metadata such as original filename, MIME type, size, and destination path or buffer.",
+      "summary": "Multer គឺជា Middleware ដ៏ពេញនិយមបំផុតសម្រាប់ Express ក្នុងការគ្រប់គ្រង `multipart/form-data`។ វាដើរតួជា Wrapper លើ `busboy` ដោយផ្តល់នូវ API ងាយស្រួលសម្រាប់ការកំណត់ទំហំអតិបរមា (Limits), ការត្រួតពិនិត្យប្រភេទឯកសារ (FileFilter), និងការជ្រើសរើស Storage Engine (MemoryStorage ឬ DiskStorage) សម្រាប់គ្រប់គ្រងឯកសារដែលបាន Upload។",
       "tip": "Multer ignores any form that is NOT `multipart/form-data`. Ensure all upload forms specify the correct enctype.",
       "objective": "Configure Multer middleware for single and multi-file upload routes.",
       "expectedOutcome": "Successful integration of Multer processing single and multi-part payloads.",
@@ -623,35 +538,11 @@ export const updateCourse = async (req, res, next) => {
       "khmerTitle": "ការ Upload រូបភាព (Single & Multiple Image Uploads)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Image upload routes often accept either a single image (e.g. user avatar) or a collection of images (e.g. product gallery). Using `upload.single('avatar')` handles one file, while `upload.array('photos', 5)` accepts up to 5 images under the same field name. `upload.fields()` allows handling mixed fields like one cover image and several gallery photos.",
+      "summary": "ការ Upload រូបភាព (Image Uploads) ក្នុង Course Platform API គាំទ្រទាំង Single Upload (រូបភាព Course Thumbnail ដោយប្រើ `upload.single('thumbnail')`) និង Multiple Uploads (រូបភាព Gallery ដោយប្រើ `upload.array('images', 5)`)។ Multer នឹងភ្ជាប់ Metadata នៃ File ទៅកាន់ `req.file` ឬ `req.files` ដែលផ្ទុកព័ត៌មាន path, mimetype, size, និង filename។",
       "tip": "Use `upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])` for e-commerce product endpoints.",
       "objective": "Handle single, array, and mixed multi-field image uploads in Express.",
       "expectedOutcome": "Versatile image upload routes supporting complex multi-image forms.",
-      "codeSnippet": `// routes/course.routes.js
-import express from "express";
-import multer from "multer";
-import { protect } from "../middleware/auth.middleware.js";
-import { restrictTo } from "../middleware/role.middleware.js";
-
-const router = express.Router();
-const upload = multer({ dest: "uploads/temp" });
-
-// Handling course uploads: 1 thumbnail image + up to 5 course material attachments
-const courseUploads = upload.fields([
-  { name: "thumbnail", maxCount: 1 },
-  { name: "materials", maxCount: 5 },
-]);
-
-router.post("/courses", protect, restrictTo("instructor", "admin"), courseUploads, (req, res) => {
-  const thumbnail = req.files["thumbnail"]?.[0];
-  const materials = req.files["materials"] || [];
-
-  res.status(201).json({
-    status: "success",
-    thumbnailFilename: thumbnail?.filename,
-    materialsCount: materials.length,
-  });
-});`
+      "codeSnippet": "// routes/course.routes.js\nimport express from \"express\";\nimport multer from \"multer\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport { restrictTo } from \"../middleware/role.middleware.js\";\n\nconst router = express.Router();\nconst upload = multer({ dest: \"uploads/temp\" });\n\n// Handling course uploads: 1 thumbnail image + up to 5 course material attachments\nconst courseUploads = upload.fields([\n  { name: \"thumbnail\", maxCount: 1 },\n  { name: \"materials\", maxCount: 5 },\n]);\n\nrouter.post(\"/courses\", protect, restrictTo(\"instructor\", \"admin\"), courseUploads, (req, res) => {\n  const thumbnail = req.files[\"thumbnail\"]?.[0];\n  const materials = req.files[\"materials\"] || [];\n\n  res.status(201).json({\n    status: \"success\",\n    thumbnailFilename: thumbnail?.filename,\n    materialsCount: materials.length,\n  });\n});"
     },
     {
       "id": "M19-05",
@@ -660,7 +551,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការ Upload ឯកសារ PDF និង Office Documents",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Document uploads (e.g. PDF resumes, spreadsheets, Word documents) require distinct validation compared to images. Checking the MIME type and file extension ensures executable binaries (like `.exe` or `.sh`) disguised as documents are promptly rejected before reaching storage.",
+      "summary": "ការ Upload ឯកសារ PDF និង Course Syllabus តម្រូវឱ្យមានការត្រួតពិនិត្យប្រភេទឯកសារជាក់លាក់ (`upload.single('syllabus')`)។ កូដត្រូវផ្ទៀងផ្ទាត់ MIME Type (`application/pdf`) យ៉ាងតឹងរ៉ឹង ដើម្បីទប់ស្កាត់ការ Upload Executable Files ឬ Malicious Scripts ចូលក្នុង Server ព្រមទាំងដាក់កម្រិតទំហំសមស្រប (ឧ. 10MB)។",
       "tip": "Do not trust file extensions alone! Always check the MIME type (`file.mimetype`) and inspect the file magic bytes buffer for bulletproof security.",
       "objective": "Build document upload routes strictly accepting verified PDF and Office formats.",
       "expectedOutcome": "Secure document ingestion rejecting unauthorized executable files.",
@@ -673,7 +564,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការផ្ទៀងផ្ទាត់ប្រភេទ និងភាពត្រឹមត្រូវនៃឯកសារ (File Filter)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Multer provides a `fileFilter` callback to evaluate incoming files before saving them. The filter receives `req`, `file`, and a `cb` callback. Passing `cb(null, true)` accepts the file, while `cb(new AppError(...), false)` rejects the upload. Validating both MIME types and extensions stops malicious script uploads.",
+      "summary": "File Validation គឺជាការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវនៃឯកសារតាមរយៈ `fileFilter` function របស់ Multer។ ការត្រួតពិនិត្យត្រូវផ្អែកលើទាំង File Extension (`.jpg`, `.png`, `.pdf`) និង MIME Type (`image/jpeg`, `application/pdf`) ព្រមទាំងការប្រើប្រាស់ Magic Bytes (File Signatures) សម្រាប់កម្រិត High Security ដើម្បីការពារកុំឱ្យ Attacker បន្លំ File Extension។",
       "tip": "Reject SVG files if user avatars are rendered directly in browsers unless sanitized — SVGs can embed inline JavaScript and trigger XSS attacks.",
       "objective": "Implement a custom fileFilter callback rejecting dangerous file types.",
       "expectedOutcome": "Strict file filtering protecting server storage from malicious file extensions.",
@@ -686,7 +577,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការកំណត់ទំហំអតិបរមានៃឯកសារ (File Size Limits & Multer Errors)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Unrestricted file size limits allow malicious actors to flood server storage and cause memory exhaustion. Multer accepts a `limits` object where `fileSize` specifies the maximum byte threshold. When a file exceeds the limit, Multer aborts and raises a `LIMIT_FILE_SIZE` error code, which must be converted into a friendly 400 response.",
+      "summary": "File Size Limits គឺជាការកំណត់ទំហំអតិបរមានៃឯកសារដែលអនុញ្ញាតឱ្យ Upload តាមរយៈ Option `limits: { fileSize: 5 * 1024 * 1024 }` (ឧ. 5MB)។ ប្រសិនបើឯកសារមានទំហំលើស Multer នឹងបោះ `LIMIT_FILE_SIZE` Error ដែលត្រូវចាប់ក្នុង Global Error Handler ហើយឆ្លើយតបត្រឡប់ទៅជា HTTP 400 Bad Request ដ៏សមរម្យ។",
       "tip": "Catch `multer.MulterError` in your global Express error middleware to deliver clean, custom error messages instead of raw crash traces.",
       "objective": "Enforce strict byte limits on uploads and handle MulterError exceptions gracefully.",
       "expectedOutcome": "Predictable, user-friendly 400 Bad Request responses upon file size violations.",
@@ -699,7 +590,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "យុទ្ធសាស្ត្រជ្រើសរើសទីតាំងផ្ទុកឯកសារ (Local vs Cloud Storage)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Modern backend architectures choose between storing uploads on local server disks or offloading them to managed cloud object storage (AWS S3, Cloudflare R2). Local disk storage is simple for development, but in production, containerized deployments (Docker/Kubernetes) lose local files on restart unless persistent volumes are attached. Cloud object storage provides infinite durability and global CDN delivery.",
+      "summary": "យុទ្ធសាស្ត្រជ្រើសរើសទីតាំងផ្ទុកឯកសារ (File Storage Strategy)៖ Local Disk Storage សមស្របសម្រាប់តែដំណាក់កាល Development ប៉ុណ្ណោះ ព្រោះវាមិនអាច Scale បានក្នុង Multi-instance Stateless Containers (Docker/Kubernetes)។ សម្រាប់ Production ស្តង់ដារឧស្សាហកម្មតម្រូវឱ្យប្រើ Cloud Object Storage (S3-Compatible) ដើម្បីធានា Scalability, High Availability, និង CDN Delivery។",
       "tip": "Never store production user uploads on the ephemeral local container filesystem. Always use object storage like S3 or R2 for production backends.",
       "objective": "Evaluate trade-offs between local filesystem storage and cloud object stores.",
       "expectedOutcome": "Architectural strategy suited for stateless, scalable container deployments.",
@@ -712,7 +603,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការរៀបចំ Multer DiskStorage លើ Local Filesystem",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Multer's `diskStorage` engine gives complete control over where files are written and how they are named. Custom `destination` callbacks dynamically route files into organized subdirectories (e.g. `uploads/avatars`), while `filename` callbacks prepend unique timestamps or UUIDs to avoid name collision overwrites.",
+      "summary": "Local Disk Storage ត្រូវបានរៀបចំឡើងតាមរយៈ `multer.diskStorage()` ដោយកំណត់ `destination` (Folder ផ្ទុកឯកសារ) និង `filename` (ការបង្កើតឈ្មោះឯកសារប្លែកៗគ្នាដោយប្រើ Timestamp + Random String ដូចជា `crypto.randomUUID()`) ដើម្បីការពារការសរសេរជាន់លើឯកសារចាស់ (File Name Collisions)។",
       "tip": "Always generate random filenames (e.g. `user-123-1773729600.jpg`) rather than saving `file.originalname`, which may contain spaces or path traversal characters (`../../`).",
       "objective": "Configure Multer diskStorage with deterministic path generation and collision-free names.",
       "expectedOutcome": "Organized on-disk storage with sanitized, collision-free file naming.",
@@ -725,7 +616,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ស្ថាបត្យកម្ម Cloud Object Storage (S3-Compatible)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Cloud object storage stores files as objects within buckets identified by keys. Modern cloud providers (AWS S3, Cloudflare R2, MinIO, Google Cloud Storage) support the S3-compatible API standard. Node.js applications use the `@aws-sdk/client-s3` library to programmatically upload, retrieve, and delete files via secure HTTPS requests.",
+      "summary": "Cloud Object Storage (ដូចជា AWS S3, Cloudflare R2, Google Cloud Storage) ផ្តល់នូវស្ថាបត្យកម្មផ្ទុកឯកសារកម្រិត Enterprise ដោយមិនប្រើ Filesystem របស់ Server ឡើយ។ ឯកសារនីមួយៗត្រូវចាត់ទុកជា Object ដែលមាន Unique Key ក្នុង Bucket ហើយអាចទាញយកបានតាមរយៈ CDN URLs ដែលមានល្បឿនលឿន និង Highly Resilient។",
       "tip": "Use MinIO locally via Docker to test S3-compatible cloud uploads on your development machine without incurring cloud bills.",
       "objective": "Understand S3-compatible object storage concepts: buckets, keys, and access policies.",
       "expectedOutcome": "Readiness to integrate any S3-compatible cloud storage provider into Node.js.",
@@ -738,7 +629,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការ Upload ឯកសារទៅ Cloudflare R2 ដោយប្រើ AWS SDK v3",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Cloudflare R2 is an S3-compatible object storage service that charges zero egress bandwidth fees, making it exceptionally cost-effective for web applications. Using `@aws-sdk/client-s3`, files processed into memory buffers by Multer are streamed directly to R2 buckets via `PutObjectCommand`.",
+      "summary": "Cloudflare R2 គឺជា S3-Compatible Object Storage ដែលមានចំណុចខ្លាំងគឺគ្មានការគិតថ្លៃលើ Egress Bandwidth (Zero Egress Fees)។ យើងអាចប្រើប្រាស់ `@aws-sdk/client-s3` ក្នុង Node.js ដើម្បី Upload រូបភាពពី `Multer.memoryStorage()` (Buffer) ទៅកាន់ Cloudflare R2 ដោយផ្ទាល់តាមរយៈ `PutObjectCommand`។",
       "tip": "Cloudflare R2 has zero data egress fees! Serving 10TB of images per month costs $0 in bandwidth compared to hundreds of dollars on AWS S3.",
       "objective": "Stream in-memory file buffers to Cloudflare R2 using AWS SDK v3.",
       "expectedOutcome": "Production-ready cloud upload helper pushing assets to Cloudflare R2.",
@@ -751,7 +642,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការបង្កើត និងរក្សាទុក Image URLs ក្នុង Database",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Databases should never store binary image data directly in document fields as Base64 strings, which inflates document sizes by 33% and bogs down MongoDB RAM cache. Instead, the database stores clean, relative or absolute URL path strings pointing to where the static file is served.",
+      "summary": "Image URLs Management គឺជាការកត់ត្រា Full Public URL ឬ Relative Storage Key ចូលទៅក្នុង Database (ដូចជា `course.thumbnail = 'https://cdn.example.com/courses/thumb-123.jpg'`)។ ការរក្សាទុកតែ URL ក្នុង MongoDB ជួយឱ្យ Document មានទំហំស្រាល លឿន និងងាយស្រួលសម្រាប់ Frontend ក្នុងការទាញយកទៅបង្ហាញលើ UI។",
       "tip": "Store relative paths (`/uploads/avatars/pic.jpg`) in the database so if your domain or CDN changes, you won't need to run database-wide migration scripts.",
       "objective": "Persist clean URL pointers in Mongoose schemas rather than raw binary data.",
       "expectedOutcome": "High-performance schema storing lightweight URL references to uploaded media.",
@@ -764,7 +655,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការលុបឯកសារចាស់ៗ (File Deletion & Storage Cleanup)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "When users update their avatar or delete a product, the previous image file must be deleted from storage to prevent orphaned files from accumulating. For local files, use `fs.promises.unlink()`. For cloud storage, execute an S3 `DeleteObjectCommand`. Always wrap deletions in error-safe try/catch blocks so file deletion failures do not abort database updates.",
+      "summary": "ការលុបឯកសារដែលលែងប្រើប្រាស់ (File Deletion & Storage Cleanup) គឺជាការសម្អាតឯកសារចាស់ៗចេញពី Disk ឬ Cloud Storage នៅពេលដែល User កែប្រែ Thumbnail ថ្មី ឬលុប Course ចោល។ ការអនុវត្ត Mongoose Post-delete Hooks ឬ Event-driven Handlers ជួយការពារកុំឱ្យមាន Orphaned Files កកស្ទះ និងខ្ជះខ្ជាយ Storage Space។",
       "tip": "Always wrap file unlinking in try/catch — if an old file is missing on disk, your API should log a warning instead of failing the user's update request.",
       "objective": "Implement automated file cleanup routines for updated or deleted resources.",
       "expectedOutcome": "Zero storage leaks from orphaned files across product and user updates.",
@@ -779,7 +670,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ស្ថាបត្យកម្មប្រព័ន្ធផ្ញើ Email ក្នុង Web Application",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Sending transactional emails (password resets, welcome messages, purchase receipts) requires reliable transport architecture. Calling external SMTP servers synchronously blocks HTTP request threads, slowing response times by several seconds. Production architectures decouple email generation from delivery using asynchronous background message queues.",
+      "summary": "ស្ថាបត្យកម្មប្រព័ន្ធ Email ក្នុង Web Application តម្រូវឱ្យបែងចែកដាច់រវាង HTTP Thread និង Email Delivery។ ដោយសារការផ្ញើ Email តាមរយៈបណ្តាញខាងក្រៅត្រូវការពេលពី 1 ទៅ 3 វិនាទី Server មិនត្រូវធ្វើ `await` ការផ្ញើ Email ក្នុង Request-Response Cycle ឡើយ ប៉ុន្តែត្រូវបញ្ជូន Task ទៅកាន់ Background Queue ដើម្បីកុំឱ្យប៉ះពាល់ដល់ User Experience។",
       "tip": "Never `await` email delivery directly inside customer-facing HTTP requests. Offload email tasks to background workers (BullMQ/Redis) so API responses remain sub-100ms.",
       "objective": "Understand synchronous vs asynchronous email delivery architectures in Node.js.",
       "expectedOutcome": "High-performance architecture where slow SMTP handshakes never block HTTP responses.",
@@ -792,7 +683,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការស្វែងយល់ពី Simple Mail Transfer Protocol (SMTP)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Simple Mail Transfer Protocol (SMTP) is the internet standard communication protocol for electronic mail transmission. An SMTP client establishes an encrypted TLS connection with an SMTP relay server (e.g. Brevo, SendGrid, Amazon SES, Mailgun) on port 587 or 465, performs SASL authentication, and transmits RFC 5322 MIME messages.",
+      "summary": "SMTP (Simple Mail Transfer Protocol) គឺជាពិធីការស្តង់ដារសម្រាប់បញ្ជូន Email ឆ្លងកាត់បណ្តាញ Internet។ ក្នុងបរិស្ថាន Development យើងអាចប្រើប្រាស់ Ethereal Email ឬ Mailtrap សម្រាប់ចាប់យក Email សាកល្បងដោយមិនបាច់ផ្ញើទៅកាន់ Inbox ពិតប្រាកដ។ ក្នុង Production យើងប្រើប្រាស់ Transactional Email Providers ដូចជា SendGrid, Resend, ឬ AWS SES តាមរយៈ SMTP ឬ HTTP API។",
       "tip": "Do not use your personal Gmail account for production application emails! Google imposes daily sending quotas and blocks rapid programmatic requests. Use dedicated transactional providers like Brevo, Resend, or SES.",
       "objective": "Understand SMTP protocols, connection ports (587, 465), and authentication mechanisms.",
       "expectedOutcome": "Solid grasp of mail relays and production SMTP configuration.",
@@ -805,7 +696,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការដំឡើង និងបង្កើត Nodemailer Transporter",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Nodemailer is the defacto standard Node.js library for email dispatch. It abstracts raw SMTP socket connections behind a simple `createTransport()` interface. A reusable transporter singleton handles connection pooling, authentication, and TLS handshakes across your application.",
+      "summary": "Nodemailer គឺជាបណ្ណាល័យ Node.js ដ៏ពេញនិយម និងមានស្ថេរភាពខ្ពស់បំផុតសម្រាប់ផ្ញើ Email។ ការបង្កើត Transporter តាមរយៈ `nodemailer.createTransport()` អនុញ្ញាតឱ្យយើងកំណត់រចនាសម្ព័ន្ធ SMTP Host, Port (587 ឬ 465), Secure Flag, និង Authentication Credentials (user, pass) ដែលទាញចេញពី Environment Variables ដោយសុវត្ថិភាព។",
       "tip": "During local development, use Mailtrap or Ethereal Email as your SMTP host to capture and preview test emails in a fake web inbox without spamming real recipients.",
       "objective": "Create and configure a robust Nodemailer transporter singleton supporting pooled connections.",
       "expectedOutcome": "Reusable mail transporter configured via environment variables.",
@@ -818,7 +709,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការផ្ញើ Email (Text & HTML Format)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Nodemailer's `sendMail()` method accepts an options object containing `from`, `to`, `subject`, `text` (fallback plaintext), and `html` (rich rendered styling). Providing both `html` and `text` alternatives ensures email accessibility on screen readers and low-bandwidth mobile clients.",
+      "summary": "ការផ្ញើ Email ជាមួយ Nodemailer គាំទ្រទាំង Plain Text (សម្រាប់ Fallback) និង HTML Body (សម្រាប់ Rich Styling) តាមរយៈ Method `transporter.sendMail()`។ ការកំណត់ជម្រើសរួមមាន `from` (Verified Sender Address), `to` (Recipient Address), `subject`, `text`, និង `html` ដោយធានាបាននូវការបង្ហាញត្រឹមត្រូវនៅលើគ្រប់ Email Clients។",
       "tip": "Always provide a `text` fallback along with `html` — emails containing only HTML without a plaintext alternative trigger spam filters on Gmail and Outlook.",
       "objective": "Send multi-part MIME emails with HTML formatting and plaintext fallbacks.",
       "expectedOutcome": "Reliable email transmission function delivering to recipient inboxes.",
@@ -831,7 +722,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការបង្កើត Responsive HTML Email Templates",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "HTML emails require specialized inline CSS styles and table-based layouts because modern email clients (like Outlook and Gmail) strip out `<style>` tags, CSS Grid, and Flexbox. Using template functions or templating engines (Pug, EJS, Handlebars) allows injecting dynamic user data into responsive email templates.",
+      "summary": "Email Templates គឺជាការរចនាទម្រង់ HTML Email ដែលមាន Responsive Design អាចបង្ហាញបានយ៉ាងស្អាតលើទាំងទូរស័ព្ទដៃ និងកុំព្យូទ័រ។ ការប្រើប្រាស់ Template Engines ដូចជា Handlebars, Pug, ឬ React Email ជួយឱ្យយើងអាចបញ្ចូល Dynamic Variables (ដូចជា ឈ្មោះសិស្ស, Verification Links, Course Names) ចូលក្នុង Template យ៉ាងមានរបៀបរៀបរយ។",
       "tip": "Use inline styles (`style=\"...\"`) on all HTML email elements. External stylesheets and `<style>` blocks are frequently ignored by email clients.",
       "objective": "Build modular, responsive HTML email templates with dynamic variable interpolation.",
       "expectedOutcome": "Clean, cross-client compatible HTML templates with inline styles.",
@@ -844,7 +735,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការផ្ញើ Welcome Email បន្ទាប់ពីចុះឈ្មោះជោគជ័យ",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "A welcome email greets new users immediately following account creation. It provides initial onboarding links, documentation references, and establishes trusted domain reputation. Triggering the welcome email from the registration controller reinforces user engagement.",
+      "summary": "Registration Welcome Email គឺជា Email ដំបូងដែលផ្ញើទៅកាន់ User បន្ទាប់ពីការចុះឈ្មោះជោគជ័យ។ Email នេះមានគោលបំណងស្វាគមន៍ ណែនាំពីរបៀបចាប់ផ្តើមប្រើប្រាស់ Course Platform និងផ្តល់នូវតំណភ្ជាប់សំខាន់ៗ ដើម្បីបង្កើនភាពស្និទ្ធស្នាល និង User Engagement តាំងពីជំហានដំបូង។",
       "tip": "Fire welcome emails asynchronously without awaiting them in the registration response to keep signup latency minimal.",
       "objective": "Wire dynamic user welcome emails into the account registration lifecycle.",
       "expectedOutcome": "Automated delivery of branded onboarding emails upon registration.",
@@ -857,7 +748,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "លំហូរ Password Reset ជាមួយ Cryptographic Token",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Password reset flows generate an unguessable cryptographic token (`crypto.randomBytes(32).toString('hex')`), store a SHA-256 hash of that token in the database alongside a 10-minute expiration timestamp, and email the plaintext token inside a secure reset link. When the user clicks the link, the backend re-hashes the submitted token and verifies its validity.",
+      "summary": "Password Reset Email Flow គឺជាយន្តការស្តារពាក្យសម្ងាត់ប្រកបដោយសុវត្ថិភាពខ្ពស់៖ User ស្នើសុំ Reset, Server បង្កើត Unhashed Cryptographic Token (ផ្ញើតាម Email Link) និងរក្សាទុក Hashed Token រួមជាមួយ Expiration Time (ឧ. 10 នាទី) ក្នុង Database។ នៅពេល User ចុច Link Server នឹង Hash Token នោះមកផ្ទៀងផ្ទាត់ជាមួយ Database ជៀសវាងការធ្លាយ Token តាមរយៈ Database Leak។",
       "tip": "Never store the raw reset token in your database! Hash it with SHA-256 before saving, exactly like passwords, so a database leak doesn't permit account takeovers.",
       "objective": "Implement a secure password reset workflow using hashed tokens and time limits.",
       "expectedOutcome": "Cryptographically sound forgot/reset password system.",
@@ -870,7 +761,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការផ្ទៀងផ្ទាត់អាសយដ្ឋាន Email (Email Verification)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Email verification ensures that users actually own the email address they registered with. Until verified, sensitive application capabilities (like posting public content or making payments) are restricted. Upon clicking the verification link, the backend updates `isEmailVerified: true` and invalidates the single-use verification token.",
+      "summary": "Email Verification គឺជាដំណើរការបញ្ជាក់ថាអាសយដ្ឋាន Email ដែល User បានចុះឈ្មោះគឺជា Email ពិតប្រាកដ និងជារបស់ User នោះ។ Server នឹងផ្ញើ Email Verification Link ដែលមានផ្ទុក Crypto Token ហើយបន្ទាប់ពី User ចុច Link Server នឹងកែប្រែ Flag `isEmailVerified = true` ក្នុង User Document មុននឹងអនុញ្ញាតឱ្យចូលប្រើប្រាស់មុខងារសំខាន់ៗ។",
       "tip": "Set `isVerified: false` by default in your user schema. Include verification status checks in protected route middleware where verified emails are mandatory.",
       "objective": "Build an email verification system with single-use confirmation tokens.",
       "expectedOutcome": "Account verification pipeline preventing registration with fake or typoed emails.",
@@ -883,7 +774,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ស្ថាបត្យកម្មប្រព័ន្ធ Notification (In-app & Email)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Comprehensive notification architectures deliver updates across multiple channels: in-app notification bells and external channels like Email, SMS, or Push. An event-driven notification service dispatches notifications according to user preference settings (e.g. 'Email me when someone comments on my post').",
+      "summary": "Notification System Architecture គឺជាស្ថាបត្យកម្មបញ្ជូនដំណឹងដែលអាចគាំទ្រច្រើន Channels (Multi-channel Notifications) រួមមាន In-App Notifications (រក្សាទុកក្នុង MongoDB និងបញ្ជូនតាម WebSockets) និង Transactional Emails។ តាមរយៈការបង្កើត Centralized Notification Service កូដអាចគ្រប់គ្រងការផ្ញើដំណឹងបានយ៉ាងរលូន និងងាយស្រួលថែទាំ។",
       "tip": "Store in-app notifications in MongoDB with `{ isRead: false }` so users can see a live notification badge and mark items as read.",
       "objective": "Architect a multi-channel notification service supporting user delivery preferences.",
       "expectedOutcome": "Unified notification pipeline orchestrating both database and email alerts.",
@@ -896,7 +787,7 @@ router.post("/courses", protect, restrictTo("instructor", "admin"), courseUpload
       "khmerTitle": "ការផ្ញើ Email តាមរយៈ Background Queues (BullMQ)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "In high-traffic production environments, email delivery must be decoupled from web servers using asynchronous job queues like BullMQ backed by Redis. The Express API publishes email jobs to the queue instantly (<5ms). Dedicated background worker processes listen to the queue, execute SMTP transfers with automatic retries on network failure, and track delivery status.",
+      "summary": "Background Email Jobs គឺជាការប្រើប្រាស់ Message Queue (ដូចជា BullMQ ជាមួយ Redis) ដើម្បីដំណើរការការផ្ញើ Email ជាលក្ខណៈ Asynchronous។ Controller គ្រាន់តែបន្ថែម Job ចូលទៅក្នុង `emailQueue` ភ្លាមៗ (ចំណាយពេលត្រឹមតែប៉ុន្មាន Milliseconds) ហើយឆ្លើយតប 200 OK ទៅកាន់ Client ខណៈដែល Background Worker ជាអ្នកទទួលខុសត្រូវលើការហៅ Nodemailer ដោយស្វ័យប្រវត្តិ។",
       "tip": "Set exponential backoff retries on email jobs (`attempts: 5, backoff: { type: 'exponential', delay: 5000 }`) so temporary SMTP glitches don't drop emails.",
       "objective": "Dispatch email delivery tasks to a Redis-backed BullMQ queue.",
       "expectedOutcome": "Zero-latency email dispatch with automated retry resilience.",

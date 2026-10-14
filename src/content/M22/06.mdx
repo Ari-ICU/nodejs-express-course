@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រៀបធៀប Jest និង Vitest ក្នុង Node.js Backends",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Jest has historically been the standard testing framework in Node.js. While highly feature-rich, configuring Jest with modern ECMAScript Modules (ESM) often requires complex Babel or ts-jest configurations. Vitest provides identical APIs (`describe`, `it`, `expect`, `vi.fn()`) while handling ESM and TypeScript natively.",
+  summary: "ការប្រៀបធៀប Jest និង Vitest៖ Jest គឺជាស្តង់ដារចាស់ទុំយូរអង្វែងក្នុង Node.js Ecosystem ប៉ុន្តែជារឿយៗជួបបញ្ហាពិបាកកំណត់រចនាសម្ព័ន្ធជាមួយ ES Modules និង Babel/TypeScript transform។ Vitest គឺជាជម្រើសទំនើបសម្រាប់ Modern Node.js APIs ដែលដំណើរការលើ Native ESM ជាមួយ Instant Hot-Module-Reloading ពេល run tests ក្នុង watch mode។",
   codeSnippet: "// Vitest / Jest Compatible Test:\nimport { describe, it, expect, vi } from \"vitest\";\n\ndescribe(\"User Notification\", () => {\n  it(\"should trigger callback when user registers\", () => {\n    const mockNotifier = vi.fn(); // Mock function\n\n    mockNotifier(\"user@example.com\");\n\n    expect(mockNotifier).toHaveBeenCalledTimes(1);\n    expect(mockNotifier).toHaveBeenCalledWith(\"user@example.com\");\n  });\n});",
 };
 

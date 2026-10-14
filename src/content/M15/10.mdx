@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការដោះស្រាយកំហុស MongoDB Duplicate Key Error (Code 11000)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "នៅពេលដែល Client ព្យាយាមបង្កើត Course ដែលមាន Title ឬ Slug ជាន់គ្នាលើ Field ដែលមាន `unique: true` MongoDB Driver នឹងបោះកំហុសដែលមាន **`code: 11000`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.code === 11000)`\n* ស្រង់ឈ្មោះ Field ដែលស្ទួនចេញពី Error\n* បញ្ជូន **`409 Conflict`** ត្រឡប់ទៅ Client៖ ``new AppError(`Duplicate field value: '${value}'`, 409)``",
+  summary: "នៅពេលដែល Client ព្យាយាមបង្កើត Course ដែលមាន Title ឬ Slug ជាន់គ្នាលើ Field ដែលមាន `unique: true` MongoDB Driver នឹងបោះកំហុសដែលមាន **`code: 11000`**។\n\nដំណោះស្រាយ៖\n* ពិនិត្យ `if (err.code === 11000)`\n* ស្រង់ឈ្មោះ Field ដែលស្ទួនចេញពី Error\n* បញ្ជូន **`409 Conflict`** ត្រឡប់ទៅ Client៖\n  `new AppError(`Duplicate field value: '${value}'. Please use another value!`, 409)`",
   codeSnippet: "import { AppError } from \"../errors/AppError.js\";\n\n// Helper: Handle MongoDB Duplicate Unique Field (Error code 11000)\nexport const handleMongoDuplicateKeyError = (err) => {\n  // Extract duplicate field key and value from keyValue object\n  const field = Object.keys(err.keyValue)[0];\n  const value = err.keyValue[field];\n  const message = `Duplicate field error: Course with ${field} '${value}' already exists. Please choose another.`;\n  return new AppError(message, 409); // 409 Conflict!\n};\n\n// In global error handler:\n// if (err.code === 11000) err = handleMongoDuplicateKeyError(err);",
 };
 

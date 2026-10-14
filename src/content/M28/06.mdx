@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Server Process ជាមួយ PM2 Cluster Mode",
   type: "lab",
   codeLanguage: "bash",
-  summary: "PM2 is the production process manager for Node.js. It features zero-downtime reloads, built-in cluster mode (`-i max` to spawn a worker per CPU core), automated startup on VPS system reboot, and real-time CPU/memory monitoring.",
+  summary: "PM2 គឺជា Production Process Manager ដ៏ពេញនិយមបំផុតសម្រាប់ Node.js។ វាផ្តល់នូវមុខងារ Automatic Restarts, Log Management, និង Cluster Mode ដែលអនុញ្ញាតឱ្យ Node.js បង្កើត Process ស្មើនឹងចំនួន CPU Cores ដើម្បីទាញយកសមត្ថភាព Hardware ទាំងមូល និងអនុញ្ញាត Zero-Downtime Reloads។",
   codeSnippet: "# Start application in Cluster mode across all CPU cores:\npm2 start src/server.js -i max --name \"enterprise-api\"\n\n# Useful PM2 commands:\npm2 status          # View status, memory, CPU of all instances\npm2 logs            # Stream real-time logs\npm2 monit           # Visual interactive terminal dashboard\npm2 reload all      # Zero-downtime rolling reload!\npm2 startup         # Configure auto-start on VPS server reboot",
 };
 

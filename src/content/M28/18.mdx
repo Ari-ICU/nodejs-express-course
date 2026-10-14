@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍ Continuous Integration & Continuous Deployment",
   type: "concept",
   codeLanguage: "yaml",
-  summary: "Continuous Integration (CI) automatically builds and tests code on every Git commit or pull request. Continuous Deployment (CD) automatically pushes passing code to staging or production servers without manual intervention. CI/CD catches regressions early and shortens delivery cycles from weeks to minutes.",
+  summary: "CI/CD (Continuous Integration & Continuous Deployment) គឺជាការបង្កើតស្វ័យប្រវត្តិកម្មលើគ្រប់ជំហាននៃការបញ្ចេញសូហ្វវែរ៖ Linting, Running Automated Tests, Building Docker Images, និងការ Deploy កូដទៅកាន់ Production Server ដោយស្វ័យប្រវត្តិតាមរយៈ Version Control Triggers។",
   codeSnippet: "// Modern CI/CD Pipeline Lifecycle:\n//\n// 1. Developer pushes commit to 'main'\n// 2. GitHub Actions CI triggers automatically:\n//    ├── Runs ESLint check\n//    ├── Runs TypeScript check (tsc --noEmit)\n//    ├── Runs Vitest automated test suite\n//    └── Builds Docker image\n// 3. CD step deploys passing container to VPS / Cloud via SSH / Webhook\n// 4. Zero-downtime rolling update completes in under 2 minutes!",
 };
 

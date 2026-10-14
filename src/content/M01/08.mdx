@@ -5,37 +5,25 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មជំរុញដោយព្រឹត្តិការណ៍ (Event-driven)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `នៅក្នុង Event-Driven Architecture Server ស្តាប់ជានិច្ចសម្រាប់ព្រឹត្តិការណ៍ (Request HTTP ចូល Socket Connection ការបំពេញ Timers Response នៃ Database) និង Trigger ឧបករណ៍ដោះស្រាយ Callbacks មកវិញដែលពាក់ព័ន្ធនៅពេលដែលព្រឹត្តិការណ៍កើតឡើង។`,
-  codeSnippet: "// Event-Driven Pattern (Publish-Subscribe Concept):\n// Components listen for named events and react when triggered\n\nconst eventListeners = {};\n\nfunction on(event, handler) {\n  if (!eventListeners[event]) eventListeners[event] = [];\n  eventListeners[event].push(handler);\n}\n\nfunction emit(event, data) {\n  const handlers = eventListeners[event] || [];\n  handlers.forEach((fn) => fn(data));\n}\n\n// 1. Register subscribers (listeners)\non(\"order:placed\", (order) => {\n  console.log(`📧 [Email] Sending confirmation for order #${order.id}`);\n});\n\non(\"order:placed\", (order) => {\n  console.log(`📦 [Warehouse] Reserving item \"${order.item}\"`);\n});\n\n// 2. Trigger the event (publisher)\nconsole.log(\"Customer completes checkout...\");\nemit(\"order:placed\", { id: 101, item: \"Laptop\", price: 1200 });",
+  summary: "In an event-driven architecture, the server constantly listens for events (incoming HTTP requests, socket connections, timer completions, database responses) and triggers associated callback handlers when events occur.",
+  codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst orderEmitter = new EventEmitter();\n\n// Listener 1: Send confirmation email\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`Sending invoice email for order #${order.id}`);\n});\n\n// Listener 2: Update warehouse inventory\norderEmitter.on(\"order:placed\", (order) => {\n  console.log(`Deducting item ${order.item} from inventory`);\n});\n\n// Trigger event\norderEmitter.emit(\"order:placed\", { id: 9812, item: \"MacBook Pro\" });",
 };
 
 ```javascript
-// Event-Driven Pattern (Publish-Subscribe Concept):
-// Components listen for named events and react when triggered
+import { EventEmitter } from "node:events";
 
-const eventListeners = {};
+const orderEmitter = new EventEmitter();
 
-function on(event, handler) {
-  if (!eventListeners[event]) eventListeners[event] = [];
-  eventListeners[event].push(handler);
-}
-
-function emit(event, data) {
-  const handlers = eventListeners[event] || [];
-  handlers.forEach((fn) => fn(data));
-}
-
-// 1. Register subscribers (listeners)
-on("order:placed", (order) => {
-  console.log(`📧 [Email] Sending confirmation for order #${order.id}`);
+// Listener 1: Send confirmation email
+orderEmitter.on("order:placed", (order) => {
+  console.log(`Sending invoice email for order #${order.id}`);
 });
 
-on("order:placed", (order) => {
-  console.log(`📦 [Warehouse] Reserving item "${order.item}"`);
+// Listener 2: Update warehouse inventory
+orderEmitter.on("order:placed", (order) => {
+  console.log(`Deducting item ${order.item} from inventory`);
 });
 
-// 2. Trigger the event (publisher)
-console.log("Customer completes checkout...");
-emit("order:placed", { id: 101, item: "Laptop", price: 1200 });
+// Trigger event
+orderEmitter.emit("order:placed", { id: 9812, item: "MacBook Pro" });
 ```
-

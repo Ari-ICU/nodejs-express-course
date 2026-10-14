@@ -1,6 +1,6 @@
 /**
  * modules-21-25.mjs
- * Detailed curriculum data for Modules 21 through 25 (55 topics total)
+ * Updated with Khmer summaries
  */
 
 export const MODULES_21_25 = {
@@ -12,7 +12,7 @@ export const MODULES_21_25 = {
       "khmerTitle": "សារៈសំខាន់នៃការបង្កើត API Documentation",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "An API is only as good as its documentation. Without clear specifications, frontend developers, mobile engineers, and third-party consumers waste countless hours guessing request payloads, header requirements, query parameters, and error shapes. Comprehensive documentation acts as a living contract that bridges the gap between frontend and backend teams.",
+      "summary": "API Documentation គឺជាកិច្ចសន្យាផ្លូវការ (Contract) រវាង Backend Developers និង Frontend/Mobile Developers ឬ Third-party Consumers។ ការមាន Documentation ច្បាស់លាស់ជួយកាត់បន្ថយពេលវេលាប្រាស្រ័យទាក់ទងគ្នា ទប់ស្កាត់ការប្រើប្រាស់ Endpoints ខុសទម្រង់ និងបង្កើនល្បឿននៃការធ្វើសមាហរណកម្ម (API Integration) ក្នុងគម្រោងធំៗ។",
       "tip": "Treat API documentation as part of your code review checklist. An endpoint is never considered 'Done' until its documentation is updated and verified.",
       "objective": "Understand the critical role of standardized API documentation in enterprise engineering teams.",
       "expectedOutcome": "Adoption of documentation-first principles across API development workflows.",
@@ -25,27 +25,11 @@ export const MODULES_21_25 = {
       "khmerTitle": "ស្វែងយល់ពី OpenAPI Specification (OAS 3.0)",
       "type": "concept",
       "codeLanguage": "yaml",
-      "summary": "The OpenAPI Specification (formerly Swagger) is the broadly adopted, vendor-neutral standard for describing RESTful APIs. Written in YAML or JSON, an OpenAPI document describes endpoints, HTTP methods, input parameters, request payloads, response bodies, status codes, and authentication mechanisms in a machine-readable format.",
+      "summary": "OpenAPI Specification (OAS 3.0) គឺជាស្តង់ដារបើកទូលាយ (Standard Specification) សម្រាប់កំណត់រចនាសម្ព័ន្ធ RESTful APIs ជាលក្ខណៈ Machine-readable (JSON ឬ YAML)។ វាពិពណ៌នាអំពី Base URL, Endpoints, Parameters, Request Body, Response Schemas, និង Security Requirements យ៉ាងច្បាស់លាស់ ដោយឯករាជ្យពីភាសា Programming។",
       "tip": "Use OpenAPI 3.0+ rather than legacy Swagger 2.0. OAS 3.0 offers better component reusability, multiple server URLs, and flexible request body definitions.",
       "objective": "Learn the core anatomy and schema structure of OpenAPI 3.0 specifications.",
       "expectedOutcome": "Ability to read and structure machine-readable OpenAPI contracts.",
-      "codeSnippet": `openapi: 3.0.3
-info:
-  title: Course Platform REST API
-  version: 1.0.0
-  description: Enterprise backend API for course catalog, lessons, and student enrollments
-servers:
-  - url: http://localhost:5000/api/v1
-    description: Development server
-  - url: https://api.myenterprise.com/v1
-    description: Production server
-paths:
-  /courses:
-    get:
-      summary: Retrieve all published courses
-      responses:
-        '200':
-          description: A list of courses`
+      "codeSnippet": "openapi: 3.0.3\ninfo:\n  title: Course Platform REST API\n  version: 1.0.0\n  description: Enterprise backend API for course catalog, lessons, and student enrollments\nservers:\n  - url: http://localhost:5000/api/v1\n    description: Development server\n  - url: https://api.myenterprise.com/v1\n    description: Production server\npaths:\n  /courses:\n    get:\n      summary: Retrieve all published courses\n      responses:\n        '200':\n          description: A list of courses"
     },
     {
       "id": "M21-03",
@@ -54,7 +38,7 @@ paths:
       "khmerTitle": "ការស្វែងយល់ពីប្រព័ន្ធអេកូឡូស៊ី Swagger",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Swagger is a suite of open-source tools built around the OpenAPI specification. It includes Swagger Editor for designing API contracts, Swagger Codegen for generating client SDKs in multiple programming languages, and Swagger UI for rendering interactive, browser-based documentation from OpenAPI documents.",
+      "summary": "Swagger គឺជាប្រព័ន្ធអេកូឡូស៊ីនៃឧបករណ៍ (Ecosystem of Tools) ដែលត្រូវបានបង្កើតឡើងជុំវិញ OpenAPI Specification។ ឧបករណ៍សំខាន់ៗរួមមាន៖ Swagger Editor (សម្រាប់សរសេរ និង Validate OpenAPI specs), Swagger UI (សម្រាប់បង្ហាញ Interface ឱ្យ Developer អាចអាន និងសាកល្បងហៅ API បាន), និង Swagger Codegen (សម្រាប់បង្កើត Client SDKs ដោយស្វ័យប្រវត្តិ)។",
       "tip": "In Node.js backends, pair `swagger-jsdoc` (which parses JSDoc comments into OpenAPI specs) with `swagger-ui-express` for automated interactive docs.",
       "objective": "Differentiate between OpenAPI (the standard specification) and Swagger (the toolset).",
       "expectedOutcome": "Clear understanding of how Swagger tools integrate with Node.js and Express.",
@@ -67,7 +51,7 @@ paths:
       "khmerTitle": "ការដំឡើង Swagger UI ក្នុង Express ជាមួយ swagger-ui-express",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Swagger UI generates an interactive, human-readable documentation website directly from your OpenAPI specification. Developers can explore endpoints, inspect schemas, and test live HTTP requests directly within the browser using the built-in 'Try it out' console.",
+      "summary": "Swagger UI អនុញ្ញាតឱ្យយើងបង្ហោះ Interactive Documentation ដ៏ស្រស់ស្អាតដោយផ្ទាល់នៅក្នុង Express App តាមរយៈ Endpoints ដូចជា `/api/docs`។ ដោយប្រើប្រាស់បណ្ណាល័យ `swagger-ui-express` និង `swagger-jsdoc` ឬ Static YAML file Developer អាចចុចតេស្ត Send Request និងមើល Live Responses ភ្លាមៗនៅលើ Browser។",
       "tip": "Mount your Swagger documentation at `/api/docs` and restrict access in production environments using basic authentication if the API is internal.",
       "objective": "Mount Swagger UI interactive documentation in an Express application.",
       "expectedOutcome": "Working interactive API documentation hosted live at /api/docs.",
@@ -80,38 +64,11 @@ paths:
       "khmerTitle": "ការកំណត់ Schemas និង DTOs ក្នុង Swagger Components",
       "type": "lab",
       "codeLanguage": "yaml",
-      "summary": "OpenAPI schemas define the shape, types, and constraints of data models used across endpoints. Centralizing data models inside `components.schemas` promotes reuse and avoids duplicating object definitions across multiple route annotations.",
+      "summary": "API Schemas នៅក្នុង OpenAPI អនុញ្ញាតឱ្យយើងកំណត់ទម្រង់ Data Models (DTOs) នៅកន្លែងកណ្តាលមួយ (`components.schemas`) ដូចជា `Course`, `User`, `Pagination`។ ការរៀបចំ Schemas បែបនេះជួយឱ្យយើងអាច Reuse បាននៅគ្រប់ Endpoints កាត់បន្ថយការសរសេរជាន់គ្នា និងធានាថា Response Structure ត្រូវគ្នាជាមួយ Mongoose Model ជានិច្ច។",
       "tip": "Reference reusable schemas using the `$ref` pointer (e.g. `'$ref': '#/components/schemas/User'`) to keep route docs DRY and maintainable.",
       "objective": "Define reusable data schemas with typed properties and validation rules in OpenAPI.",
       "expectedOutcome": "Consistent, reusable component schemas reflecting database and DTO models.",
-      "codeSnippet": `/**
- * @openapi
- * components:
- *   schemas:
- *     Course:
- *       type: object
- *       required:
- *         - title
- *         - price
- *         - level
- *       properties:
- *         id:
- *           type: string
- *           example: "64f1a2b3c4d5e6f7a8b9c0d1"
- *         title:
- *           type: string
- *           example: "Complete Node.js & Express Bootcamp"
- *         price:
- *           type: number
- *           example: 49.99
- *         level:
- *           type: string
- *           enum: [beginner, intermediate, advanced]
- *           example: "beginner"
- *         category:
- *           type: string
- *           example: "Web Development"
- */`
+      "codeSnippet": "/**\n * @openapi\n * components:\n *   schemas:\n *     Course:\n *       type: object\n *       required:\n *         - title\n *         - price\n *         - level\n *       properties:\n *         id:\n *           type: string\n *           example: \"64f1a2b3c4d5e6f7a8b9c0d1\"\n *         title:\n *           type: string\n *           example: \"Complete Node.js & Express Bootcamp\"\n *         price:\n *           type: number\n *           example: 49.99\n *         level:\n *           type: string\n *           enum: [beginner, intermediate, advanced]\n *           example: \"beginner\"\n *         category:\n *           type: string\n *           example: \"Web Development\"\n */"
     },
     {
       "id": "M21-06",
@@ -120,30 +77,11 @@ paths:
       "khmerTitle": "ការសរសេរឯកសារ Params, Query, និង Request Body",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Documenting API requests requires detailing URL path parameters (e.g. `:id`), query parameters (e.g. `?page=1&limit=10`), and JSON request bodies with required attributes, data types, and realistic mock examples.",
+      "summary": "Request Documentation ផ្តោតលើការកត់ត្រាព័ត៌មានលម្អិតនៃ Input ទាំងអស់ដែល Endpoint មួយត្រូវការ រួមមាន Path Parameters (ឧ. `/courses/{id}`), Query Parameters (ឧ. `?page=1&limit=10&sort=-createdAt`), Headers, និង Request Body (JSON Schema) ជាមួយ Validation Rules ដូចជា required, minimum, និង enum values។",
       "tip": "Always provide realistic `example` values in your annotations — Swagger UI uses these to prepopulate the 'Try it out' request body automatically.",
       "objective": "Annotate route parameters, query filters, and JSON request bodies using JSDoc.",
       "expectedOutcome": "Crystal-clear documentation instructing consumers on how to formulate requests.",
-      "codeSnippet": `/**
- * @openapi
- * /api/v1/courses/{id}:
- *   put:
- *     summary: Update an existing course
- *     tags: [Courses]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: MongoDB ObjectId of the course
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UpdateCourseDTO'
- */`
+      "codeSnippet": "/**\n * @openapi\n * /api/v1/courses/{id}:\n *   put:\n *     summary: Update an existing course\n *     tags: [Courses]\n *     parameters:\n *       - in: path\n *         name: id\n *         required: true\n *         schema:\n *           type: string\n *         description: MongoDB ObjectId of the course\n *     requestBody:\n *       required: true\n *       content:\n *         application/json:\n *           schema:\n *             $ref: '#/components/schemas/UpdateCourseDTO'\n */"
     },
     {
       "id": "M21-07",
@@ -152,32 +90,11 @@ paths:
       "khmerTitle": "ការសរសេរឯកសារ HTTP Responses (200, 201, 400, 404, 500)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Endpoints must document every possible HTTP status response, including both successful outcomes (200 OK, 201 Created) and failure scenarios. Response bodies should link to component schemas or define clear JSON response structures.",
+      "summary": "Response Documentation គឺជាការកំណត់យ៉ាងច្បាស់លាស់នូវរាល់ HTTP Status Codes ដែល API អាចឆ្លើយតបត្រឡប់ទៅវិញ (ដូចជា 200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Internal Server Error) រួមទាំង Example Payload សម្រាប់ករណីជោគជ័យ និងករណីបរាជ័យ។",
       "tip": "Document common error codes (400, 401, 403, 404) for every endpoint so frontend engineers can handle all branch conditions.",
       "objective": "Document standard success and failure HTTP responses with payload schemas.",
       "expectedOutcome": "Predictable API contracts defining both happy path and failure scenarios.",
-      "codeSnippet": `/**
- * @openapi
- * /api/v1/courses:
- *   post:
- *     summary: Create a new course
- *     tags: [Courses]
- *     responses:
- *       201:
- *         description: Course created successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: success
- *                 data:
- *                   $ref: '#/components/schemas/Course'
- *       400:
- *         description: Bad Request (Validation failure)
- */`
+      "codeSnippet": "/**\n * @openapi\n * /api/v1/courses:\n *   post:\n *     summary: Create a new course\n *     tags: [Courses]\n *     responses:\n *       201:\n *         description: Course created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Course'\n *       400:\n *         description: Bad Request (Validation failure)\n */"
     },
     {
       "id": "M21-08",
@@ -186,7 +103,7 @@ paths:
       "khmerTitle": "ការកត់ត្រា Auth Security Schemes (Bearer JWT & Cookies)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Documenting authentication informs consumers which security schemes protect an endpoint. OpenAPI supports Bearer JWT tokens, API keys, and HTTP cookies. Setting up a `bearerAuth` security scheme in Swagger UI enables the green 'Authorize' padlock button, allowing developers to paste a JWT token and test protected endpoints live.",
+      "summary": "Authentication Documentation គឺជាការកត់ត្រា Security Schemes ក្នុង OpenAPI (ដូចជា Bearer JWT តាមរយៈ `securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' } }`)។ ការកំណត់នេះបង្កើតប៊ូតុង 'Authorize' លើ Swagger UI ដែលអនុញ្ញាតឱ្យ Developer បញ្ចូល Token ម្តង ហើយតេស្តគ្រប់ Protected Endpoints ទាំងអស់បានយ៉ាងងាយស្រួល។",
       "tip": "Define `bearerAuth` in `components.securitySchemes` and add `security: - bearerAuth: []` to all protected routes in Swagger annotations.",
       "objective": "Configure Bearer JWT security schemes in OpenAPI and enable interactive authorization.",
       "expectedOutcome": "Fully functional 'Authorize' button in Swagger UI allowing authenticated API testing.",
@@ -199,7 +116,7 @@ paths:
       "khmerTitle": "ការរៀបចំទម្រង់ Error Response ជាលក្ខណៈស្តង់ដារក្នុង Swagger",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Standardized error responses streamline API troubleshooting. Documenting a centralized `ErrorResponse` component schema with `status`, `message`, and optional `errors` array provides a consistent blueprint that all 4xx and 5xx responses conform to.",
+      "summary": "Error Documentation គឺជាការចងក្រងទម្រង់ស្តង់ដារនៃ Error Envelope (ដូចជា `{ status: 'fail', message: string, errors?: array }`) ទៅក្នុង Swagger Docs។ ការធ្វើបែបនេះជួយឱ្យ Frontend Developers អាចសរសេរ Global Error Handlers បានត្រឹមត្រូវ និងដឹងជាមុននូវគ្រប់ប្រភេទ Error Codes ដែល API អាចបញ្ចេញ។",
       "tip": "Ensure your global Express error middleware emits the exact same JSON keys documented in your OpenAPI `ErrorResponse` schema.",
       "objective": "Define and reference unified error response schemas across all endpoints.",
       "expectedOutcome": "Consistent error documentation matching real runtime Express errors.",
@@ -212,7 +129,7 @@ paths:
       "khmerTitle": "ស្ថាបត្យកម្មប្រព័ន្ធ Documentation ពេញលេញកម្រិត Production",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "A production-grade API documentation architecture automates spec generation from route files, exposes interactive Swagger UI for development, and generates static HTML or Markdown for public developer portals. Versioning your documentation (`/api/v1/docs`, `/api/v2/docs`) guarantees backward compatibility for enterprise consumers.",
+      "summary": "ស្ថាបត្យកម្ម API Documentation ពេញលេញកម្រិត Production តម្រូវឱ្យមានការរៀបចំ Documentation-first ឬ Code-first ស្របគ្នាជាមួយ CI/CD Pipeline។ Documentation ត្រូវតែ Update ដោយស្វ័យប្រវត្តិតាម Code Changes អាច Export ជា Postman Collection ឬ OpenAPI JSON និងត្រូវបានការពារដោយ Authentication ប្រសិនបើជា Internal Enterprise API។",
       "tip": "Export your generated OpenAPI specification as a raw JSON file (`/api/docs.json`) so external tools like Postman and SDK generators can import it automatically.",
       "objective": "Architect a comprehensive, versioned API documentation system in Node.js.",
       "expectedOutcome": "Self-updating, interactive, and exportable API documentation for production backends.",
@@ -227,7 +144,7 @@ paths:
       "khmerTitle": "សារៈសំខាន់នៃការធ្វើតេស្ត API (Software Quality & Confidence)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Automated API testing ensures your backend behaves correctly under all conditions, catches regressions before deployments, and provides the confidence to refactor code without fear. Relying solely on manual Postman clicking is slow, error-prone, and cannot scale as endpoints multiply.",
+      "summary": "ការធ្វើតេស្ត API ដោយស្វ័យប្រវត្តិ (Automated Testing) គឺជាមូលដ្ឋានគ្រឹះនៃ Software Reliability។ វាជួយធានាថាកូដថ្មីមិនបង្កឱ្យខូចមុខងារចាស់ៗ (Preventing Regressions), ផ្តល់ទំនុកចិត្តខ្ពស់ពេល Refactor កូដ, និងជួយឱ្យក្រុមការងារអាច Deploy ទៅកាន់ Production បានញឹកញាប់ដោយសុវត្ថិភាព។",
       "tip": "Automated tests act as executable specifications — they prove how your code actually runs, unlike comments that easily become outdated.",
       "objective": "Understand the software quality pyramid and the return on investment (ROI) of automated tests.",
       "expectedOutcome": "Appreciation of testing as a foundational engineering discipline.",
@@ -240,7 +157,7 @@ paths:
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ Unit Testing",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Unit testing verifies individual units of source code — typically isolated functions or service classes — in complete isolation from external dependencies like databases, file systems, or network sockets. By mocking out external systems, unit tests execute in milliseconds.",
+      "summary": "Unit Testing ផ្តោតលើការធ្វើតេស្តមុខងារតូចៗបំផុតនៃកូដ (Isolated Functions) ដូចជា Helper Utilities, Validation Functions, ឬ Business Calculation Methods ដោយមិនភ្ជាប់ទៅកាន់ External Dependencies (គ្មាន Network, គ្មាន Database)។ Unit Tests ដំណើរការលឿនបំផុត (គិតជា Milliseconds) និងផ្តល់ Feedback ភ្លាមៗដល់ Developer។",
       "tip": "Keep unit tests deterministic: given the same input, a unit test must always produce the exact same assertion output regardless of environment.",
       "objective": "Learn the principles of isolated unit testing and the Arrange-Act-Assert (AAA) pattern.",
       "expectedOutcome": "Ability to identify testable units and write fast, deterministic unit tests.",
@@ -253,7 +170,7 @@ paths:
       "khmerTitle": "គោលការណ៍ Integration Testing លើ API Endpoints",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Integration testing verifies that multiple system components work harmoniously together — for example, confirming that an Express route handler correctly passes through middleware, executes database queries via Mongoose, and formats JSON responses.",
+      "summary": "Integration Testing ផ្តោតលើការធ្វើតេស្តលើការធ្វើការងាររួមគ្នារវាង Components ច្រើន (ដូចជា Controller, Service, Middleware, និង Database)។ ក្នុង Node.js Integration Tests ផ្ទៀងផ្ទាត់ថាតើ HTTP Request មួយដំណើរការកាត់តាម Middleware Pipeline, Persist ទិន្នន័យក្នុង Database, និងឆ្លើយតប JSON ត្រឹមត្រូវតាមការរំពឹងទុកឬទេ។",
       "tip": "Integration tests give the highest confidence per line of test code because they test the real HTTP request-response pipeline.",
       "objective": "Understand how integration tests validate cross-layer interactions in web backends.",
       "expectedOutcome": "Solid grasp of integration testing strategies for Express and MongoDB.",
@@ -266,7 +183,7 @@ paths:
       "khmerTitle": "ការធ្វើតេស្ត HTTP API តាមបែបស្វ័យប្រវត្តិ",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "API testing treats the backend as a black box, dispatching synthetic HTTP requests and asserting on status codes, response headers, JSON payload structures, and response latency. It verifies contract compliance without coupling tests to internal implementation details.",
+      "summary": "API Testing គឺជាការផ្ញើ HTTP Requests ពិតប្រាកដ (GET, POST, PUT, DELETE) ទៅកាន់ API Server និងពិនិត្យផ្ទៀងផ្ទាត់ HTTP Status Codes, Response Headers, និង JSON Body Payloads។ គោលបំណងគឺដើម្បីធានាថា API Contract ត្រូវបានគោរពយ៉ាងពេញលេញ។",
       "tip": "Always test both success status codes (200, 201) and error responses (400, 401, 403, 404, 409) for complete endpoint coverage.",
       "objective": "Formulate automated HTTP assertion suites evaluating status codes, headers, and payloads.",
       "expectedOutcome": "Robust test specifications validating public API behavior.",
@@ -279,7 +196,7 @@ paths:
       "khmerTitle": "ការដំឡើង និងដំណើរការ Vitest ក្នុង Node.js",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Vitest is a blazing-fast, modern next-generation test runner powered by Vite. It features out-of-the-box native TypeScript and ES Modules support, instantaneous hot module reloading (watch mode), Jest-compatible assertion syntax, and multi-threaded test execution.",
+      "summary": "Vitest គឺជា Test Framework ជំនាន់ថ្មីដែលដំណើរការលឿនបំផុត (Blazing Fast) ផ្អែកលើ Vite Engine គាំទ្រ ES Modules និង TypeScript ដោយផ្ទាល់ពីកំណើត (Zero-config ESM)។ Vitest មាន API ដូចគ្នាទៅនឹង Jest (describe, it, expect, vi) ប៉ុន្តែដំណើរការលឿនជាង និងប្រើប្រាស់ Memory តិចជាងច្រើន។",
       "tip": "Add `\"test\": \"vitest run\"` and `\"test:watch\": \"vitest\"` to your `package.json` scripts for lightning-fast test execution.",
       "objective": "Install, configure, and execute automated test suites using Vitest.",
       "expectedOutcome": "Configured Vitest environment running tests with sub-second execution speeds.",
@@ -292,7 +209,7 @@ paths:
       "khmerTitle": "ការប្រៀបធៀប Jest និង Vitest ក្នុង Node.js Backends",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Jest has historically been the standard testing framework in Node.js. While highly feature-rich, configuring Jest with modern ECMAScript Modules (ESM) often requires complex Babel or ts-jest configurations. Vitest provides identical APIs (`describe`, `it`, `expect`, `vi.fn()`) while handling ESM and TypeScript natively.",
+      "summary": "ការប្រៀបធៀប Jest និង Vitest៖ Jest គឺជាស្តង់ដារចាស់ទុំយូរអង្វែងក្នុង Node.js Ecosystem ប៉ុន្តែជារឿយៗជួបបញ្ហាពិបាកកំណត់រចនាសម្ព័ន្ធជាមួយ ES Modules និង Babel/TypeScript transform។ Vitest គឺជាជម្រើសទំនើបសម្រាប់ Modern Node.js APIs ដែលដំណើរការលើ Native ESM ជាមួយ Instant Hot-Module-Reloading ពេល run tests ក្នុង watch mode។",
       "tip": "Vitest is 99% API-compatible with Jest. If migrating from Jest, simply replace `jest.fn()` with `vi.fn()`.",
       "objective": "Understand differences between Jest and Vitest and learn to write compatible test suites.",
       "expectedOutcome": "Fluency with modern JavaScript testing assertions and mock APIs.",
@@ -305,7 +222,7 @@ paths:
       "khmerTitle": "ការធ្វើតេស្ត HTTP Requests ជាមួយ Supertest",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Supertest provides high-level HTTP abstractions for testing Node.js Express applications without binding to a physical network port. It boots the Express app in-memory, transmits simulated HTTP requests, and asserts against status codes and headers in a fluent chainable syntax.",
+      "summary": "Supertest គឺជាបណ្ណាល័យដ៏មានឥទ្ធិពលសម្រាប់ធ្វើតេស្ត HTTP Endpoints ក្នុង Express ដោយមិនចាំបាច់បើក Network Port ពិតប្រាកដឡើយ (`supertest(app)` ដំណើរការលើ Node HTTP Server Interface)។ វាអនុញ្ញាតឱ្យយើងសរសេរ Assertion លើ Status Codes, Headers, និង Body យ៉ាងងាយស្រួល និងមានល្បឿនលឿន។",
       "tip": "Pass your `app` instance directly to `request(app)` without calling `app.listen()` — this avoids port collision errors when running tests concurrently.",
       "objective": "Use Supertest to dispatch HTTP verbs (GET, POST, PUT, DELETE) and assert responses.",
       "expectedOutcome": "Fast in-memory HTTP endpoint testing without opening network sockets.",
@@ -318,23 +235,11 @@ paths:
       "khmerTitle": "ការធ្វើតេស្ត Controllers តាមរយៈ Supertest",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Testing controllers verifies that request parameters, body payloads, and query filters are processed correctly and appropriate status codes and JSON envelopes are returned. Mocking underlying service methods allows testing controller edge cases like validation errors and custom exceptions.",
+      "summary": "ការធ្វើតេស្ត Controllers តាមរយៈ Supertest អនុញ្ញាតឱ្យយើងផ្ទៀងផ្ទាត់លំហូរការងារទាំងមូលរបស់ Controller៖ ការទទួល Parameters, ការហៅ Business Logic, និងការឆ្លើយតប HTTP Response Codes (ដូចជា 200 OK សម្រាប់ Read, 201 Created សម្រាប់ Create, និង 404 Not Found សម្រាប់ Resource ដែលរកមិនឃើញ)។",
       "tip": "Export your Express `app` from `app.js` without calling `listen()`, and create a separate `server.js` for startup. This allows tests to import `app` cleanly.",
       "objective": "Write targeted tests validating controller responses, status codes, and JSON bodies.",
       "expectedOutcome": "Verified controllers handling both valid inputs and error conditions.",
-      "codeSnippet": `describe("POST /api/v1/courses", () => {
-  it("should return 400 when title is missing", async () => {
-    const invalidCourse = { price: 49.99, level: "beginner" };
-
-    const res = await request(app)
-      .post("/api/v1/courses")
-      .send(invalidCourse)
-      .expect(400);
-
-    expect(res.body.status).toBe("fail");
-    expect(res.body.message).toMatch(/title is required/i);
-  });
-});`
+      "codeSnippet": "describe(\"POST /api/v1/courses\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidCourse = { price: 49.99, level: \"beginner\" };\n\n    const res = await request(app)\n      .post(\"/api/v1/courses\")\n      .send(invalidCourse)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});"
     },
     {
       "id": "M22-09",
@@ -343,23 +248,11 @@ paths:
       "khmerTitle": "ការធ្វើតេស្ត Business Logic ក្នុង Service Layer",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Services encapsulate core business logic independent of Express request and response objects. Because service functions accept plain JavaScript parameters and return data, testing them requires no HTTP overhead, resulting in blistering test execution speeds.",
+      "summary": "ការធ្វើតេស្ត Services (Business Logic Layer) ផ្តោតលើ Core Domain Rules ដោយឡែកពី HTTP Layer (Req/Res)។ វិធីនេះជួយឱ្យយើងអាចតេស្តករណី Edge Cases ស្មុគស្មាញ (ដូចជា ការគណនាតម្លៃបញ្ចុះតម្លៃនៃ Course, ការផ្ទៀងផ្ទាត់កាលបរិច្ឆេទចុះឈ្មោះ) បានយ៉ាងលម្អិត និងងាយស្រួល។",
       "tip": "Keep business logic in services rather than controllers — this makes testing business logic 10x faster because you don't need HTTP request simulation.",
       "objective": "Write isolated unit tests for business logic methods inside the service layer.",
       "expectedOutcome": "High test coverage over core business algorithms and data transformations.",
-      "codeSnippet": `import { describe, it, expect } from "vitest";
-import { CourseService } from "../services/course.service.js";
-
-describe("CourseService.calculateDiscount", () => {
-  it("should calculate promotional price with discount percentage", () => {
-    const originalPrice = 100;
-    const discountPercent = 20;
-
-    const promoPrice = CourseService.calculateDiscount(originalPrice, discountPercent);
-
-    expect(promoPrice).toBe(80);
-  });
-});`
+      "codeSnippet": "import { describe, it, expect } from \"vitest\";\nimport { CourseService } from \"../services/course.service.js\";\n\ndescribe(\"CourseService.calculateDiscount\", () => {\n  it(\"should calculate promotional price with discount percentage\", () => {\n    const originalPrice = 100;\n    const discountPercent = 20;\n\n    const promoPrice = CourseService.calculateDiscount(originalPrice, discountPercent);\n\n    expect(promoPrice).toBe(80);\n  });\n});"
     },
     {
       "id": "M22-10",
@@ -368,37 +261,11 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការធ្វើតេស្ត CRUD Endpoints ពេញលេញ (Full CRUD Test Suite)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "A complete CRUD test suite covers the entire lifecycle of a resource: creating a new record (POST 201), fetching the collection (GET 200), retrieving by ID (GET 200), modifying properties (PATCH 200), and deleting the record (DELETE 204 or 200).",
+      "summary": "ការបង្កើត Full CRUD Test Suite សម្រាប់ Course Platform API រួមមានការធ្វើតេស្តគ្រប់ករណី៖ `POST /api/v1/courses` (បង្កើត Course ថ្មី), `GET /api/v1/courses` (ទាញយកបញ្ជី Courses ជាមួយ Pagination), `GET /api/v1/courses/:id` (ទាញយក Single Course), `PATCH /api/v1/courses/:id` (Update), និង `DELETE /api/v1/courses/:id` (Delete)។",
       "tip": "Save the created resource's `_id` in a variable during the POST test and reuse it across GET by ID, PATCH, and DELETE tests.",
       "objective": "Construct an end-to-end CRUD test suite exercising all REST operations.",
       "expectedOutcome": "Comprehensive test suite guaranteeing functional integrity of CRUD endpoints.",
-      "codeSnippet": `describe("Courses CRUD API", () => {
-  let createdCourseId = "";
-
-  it("POST /api/v1/courses -> 201 Created", async () => {
-    const res = await request(app)
-      .post("/api/v1/courses")
-      .send({ title: "Mastering Node.js", price: 39.99, level: "intermediate" })
-      .expect(201);
-
-    createdCourseId = res.body.data.course._id;
-    expect(createdCourseId).toBeDefined();
-  });
-
-  it("GET /api/v1/courses/:id -> 200 OK", async () => {
-    const res = await request(app)
-      .get(\`/api/v1/courses/\${createdCourseId}\`)
-      .expect(200);
-
-    expect(res.body.data.course.title).toBe("Mastering Node.js");
-  });
-
-  it("DELETE /api/v1/courses/:id -> 200 OK", async () => {
-    await request(app)
-      .delete(\`/api/v1/courses/\${createdCourseId}\`)
-      .expect(200);
-  });
-});`
+      "codeSnippet": "describe(\"Courses CRUD API\", () => {\n  let createdCourseId = \"\";\n\n  it(\"POST /api/v1/courses -> 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/courses\")\n      .send({ title: \"Mastering Node.js\", price: 39.99, level: \"intermediate\" })\n      .expect(201);\n\n    createdCourseId = res.body.data.course._id;\n    expect(createdCourseId).toBeDefined();\n  });\n\n  it(\"GET /api/v1/courses/:id -> 200 OK\", async () => {\n    const res = await request(app)\n      .get(`/api/v1/courses/${createdCourseId}`)\n      .expect(200);\n\n    expect(res.body.data.course.title).toBe(\"Mastering Node.js\");\n  });\n\n  it(\"DELETE /api/v1/courses/:id -> 200 OK\", async () => {\n    await request(app)\n      .delete(`/api/v1/courses/${createdCourseId}`)\n      .expect(200);\n  });\n});"
     },
     {
       "id": "M22-11",
@@ -407,7 +274,7 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការធ្វើតេស្ត Protected Endpoints ជាមួយ Authorization Headers",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Testing protected routes requires simulating authenticated sessions. Tests can either execute a live login request before protected calls to obtain a real token, or generate a signed test JWT directly using test secret keys and attach it via `.set('Authorization', 'Bearer ' + token)`.",
+      "summary": "ការធ្វើតេស្ត Authentication & Authorization តម្រូវឱ្យសាកល្បងទាំង Happy Path និង Failure Cases៖ ការផ្ញើ Request ដោយគ្មាន Token (រំពឹងទុក 401 Unauthorized), ការផ្ញើ Expired/Invalid Token (401), និងការផ្ញើ Token របស់ Student ដើម្បីលុប Course (រំពឹងទុក 403 Forbidden ពី RBAC)។",
       "tip": "Create a test helper `getAuthToken(user)` to sign test JWTs quickly without making repetitive HTTP login calls in every test.",
       "objective": "Test route access control, valid token acceptance, and rejection of unauthorized calls.",
       "expectedOutcome": "Automated verification of authentication and role guards.",
@@ -420,7 +287,7 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការ Mock 3rd-party Services (Stripe, Email, SMS) ជាមួយ vi.fn()",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Mocking replaces real external dependencies (payment gateways like Stripe, email providers like SendGrid, or SMS APIs) with dummy simulations during tests. This prevents tests from incurring financial costs, sending real emails to users, or failing when third-party servers experience outages.",
+      "summary": "Mocking គឺជាការជំនួស External Services ដែលមានតម្លៃថ្លៃ ឬពិបាកតេស្ត (ដូចជា Stripe Payment, AWS S3, Twilio SMS, Nodemailer) ដោយ Fake Implementations តាមរយៈ `vi.fn()` ឬ `vi.spyOn()`។ វិធីនេះធានាថា Tests អាចដំណើរការបានលឿន មិនចំណាយលុយលើ API Calls និងអាចដំណើរការបានទោះគ្មាន Internet ក៏ដោយ។",
       "tip": "Never call real payment gateways or SMTP servers during automated tests! Always mock external network calls.",
       "objective": "Mock third-party services using Vitest vi.spyOn and vi.mock.",
       "expectedOutcome": "Reliable, isolated test suites that execute without external network dependencies.",
@@ -433,7 +300,7 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការរៀបចំ Test Database ជាមួយ mongodb-memory-server",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Automated tests must never execute against production or shared development databases. Using `mongodb-memory-server` spins up a lightweight, ephemeral MongoDB instance running entirely in system RAM. Each test suite runs against isolated in-memory collections that are wiped clean after tests finish.",
+      "summary": "ការប្រើប្រាស់ Test Database ជាមួយ `mongodb-memory-server` គឺជា Best Practice ដ៏ល្អឥតខ្ចោះ។ វាដំណើរការ MongoDB Instance ក្នុង RAM ទាំងស្រុង ដែលធ្វើឱ្យ Tests ដំណើរការលឿនបំផុត មិនប៉ះពាល់ដល់ Development Database និងអាច Clear ទិន្នន័យចោលទាំងអស់ក្រោយពេល Test Suite នីមួយៗបញ្ចប់ (`afterEach` / `afterAll`)។",
       "tip": "Use `mongodb-memory-server` in test hooks (`beforeAll`, `afterEach`, `afterAll`) to guarantee zero cross-test data pollution.",
       "objective": "Configure an isolated in-memory MongoDB environment for integration testing.",
       "expectedOutcome": "Fast, isolated database testing with automatic cleanup after test completion.",
@@ -448,7 +315,7 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការស្វែងយល់ពីឧបករណ៍ Postman សម្រាប់ API Development",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Postman is the industry-leading API development and testing platform. It provides a visual graphical interface to compose HTTP requests, inspect headers and JSON responses, organize endpoints into hierarchical collections, manage environment variables, and automate assertions using JavaScript.",
+      "summary": "Postman គឺជា GUI Platform ឈានមុខគេសម្រាប់ការរចនា, សាកល្បង, និងចងក្រងឯកសារ API។ វាផ្តល់នូវឧបករណ៍ពេញលេញសម្រាប់ការបង្កើត HTTP Requests, ការគ្រប់គ្រង Headers និង Auth Tokens, ការពិនិត្យ Response Bodies និង Performance Metrics, និងការចែករំលែក API Collections រវាងសមាជិកក្រុម។",
       "tip": "Use the Postman desktop client rather than the web version to avoid CORS limitations when testing local `localhost` servers.",
       "objective": "Understand Postman features for interactive testing, debugging, and team collaboration.",
       "expectedOutcome": "Proficiency navigating Postman workspaces, requests, and consoles.",
@@ -461,23 +328,11 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការបង្កើត និងរៀបចំ API Collections ក្នុង Postman",
       "type": "lab",
       "codeLanguage": "json",
-      "summary": "A Postman Collection is a group of saved API requests organized into logical folders (e.g. Auth, Users, Products, Orders). Collections can be exported as JSON files and checked into Git repositories alongside backend source code, allowing entire engineering teams to share verified API requests.",
+      "summary": "Postman Collections គឺជាការរៀបចំ Endpoints ជាបណ្តុំ Folder តាម Modules (ដូចជា Auth, Courses, Lessons, Enrollments)។ ការរៀបចំ Collection ប្រកបដោយរបៀបរៀបរយជួយឱ្យក្រុម Developers អាច Run សាកល្បងលំហូរ API ទាំងមូលបានយ៉ាងរហ័ស និងមានលក្ខណៈស្តង់ដារ។",
       "tip": "Store your exported Postman collection JSON inside a `/docs/postman` folder in your project repo so all developers stay in sync.",
       "objective": "Structure and organize enterprise REST API requests into modular Postman collections.",
       "expectedOutcome": "Structured, shareable Postman collection mirroring your backend routing hierarchy.",
-      "codeSnippet": `// Postman Collection Structure:
-// 📁 Course-Platform-API
-//   ├── 📁 01-Authentication
-//   │   ├── POST Register
-//   │   ├── POST Login
-//   │   └── POST Refresh Token
-//   ├── 📁 02-Courses
-//   │   ├── GET All Courses
-//   │   ├── POST Create Course
-//   │   └── DELETE Course
-//   └── 📁 03-Enrollments
-//       ├── POST Enroll in Course
-//       └── GET My Enrolled Courses`
+      "codeSnippet": "// Postman Collection Structure:\n// 📁 Course-Platform-API\n//   ├── 📁 01-Authentication\n//   │   ├── POST Register\n//   │   ├── POST Login\n//   │   └── POST Refresh Token\n//   ├── 📁 02-Courses\n//   │   ├── GET All Courses\n//   │   ├── POST Create Course\n//   │   └── DELETE Course\n//   └── 📁 03-Enrollments\n//       ├── POST Enroll in Course\n//       └── GET My Enrolled Courses"
     },
     {
       "id": "M23-03",
@@ -486,20 +341,11 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការប្រើប្រាស់ Environment Variables ក្នុង Postman ({{base_url}})",
       "type": "lab",
       "codeLanguage": "json",
-      "summary": "Postman environments allow you to define key-value variables that adapt dynamically across different hosting stages. By parameterizing URLs as `{{base_url}}/courses` and tokens as `{{auth_token}}`, switching between Local (`http://localhost:5000`), Staging, and Production requires a single dropdown click.",
+      "summary": "Environment Variables ក្នុង Postman អនុញ្ញាតឱ្យយើងគ្រប់គ្រង Variables ដូចជា `{{base_url}}`, `{{token}}`, និង `{{courseId}}` ដោយប្តូររវាង Environments ផ្សេងៗ (Local, Staging, Production) ដោយមិនបាច់កែប្រែ URL ក្នុង Request ដោយដៃឡើយ។",
       "tip": "Always reference `{{base_url}}` instead of hardcoding `http://localhost:5000` in individual requests.",
       "objective": "Configure dynamic environment variables to switch between development and staging environments.",
       "expectedOutcome": "Flexible Postman requests parameterizing domains, ports, and tokens.",
-      "codeSnippet": `// In Postman URL Bar:
-// {{base_url}}/api/v1/courses/{{course_id}}
-//
-// Environment: "Local Development"
-// base_url   -> http://localhost:5000
-// auth_token -> eyJhbGciOiJIUzI1Ni...
-//
-// Environment: "Production"
-// base_url   -> https://api.myenterprise.com
-// auth_token -> eyJhbGciOiJIUzI1Ni...`
+      "codeSnippet": "// In Postman URL Bar:\n// {{base_url}}/api/v1/courses/{{course_id}}\n//\n// Environment: \"Local Development\"\n// base_url   -> http://localhost:5000\n// auth_token -> eyJhbGciOiJIUzI1Ni...\n//\n// Environment: \"Production\"\n// base_url   -> https://api.myenterprise.com\n// auth_token -> eyJhbGciOiJIUzI1Ni..."
     },
     {
       "id": "M23-04",
@@ -508,7 +354,7 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការផ្ញើ និងត្រួតពិនិត្យ HTTP Requests ក្នុង Postman",
       "type": "lab",
       "codeLanguage": "json",
-      "summary": "Inspecting API responses requires examining status codes, response times (ms), payload sizes (KB), and HTTP response headers. Postman's pretty-printed JSON viewer highlights syntax, formats responses, and renders cookies sent by the server.",
+      "summary": "ការផ្ញើ និងត្រួតពិនិត្យ HTTP Requests ក្នុង Postman រួមមានការកំណត់ HTTP Methods, Query Params, JSON Request Body, និង Headers ព្រមទាំងការវិភាគ HTTP Status Codes, Response Time, Size, និង Pretty JSON View ជួយសម្រួលដល់ការ Debug Backend យ៉ាងមានប្រសិទ្ធភាព។",
       "tip": "Use the Postman Console (`Ctrl+Alt+C` or `Cmd+Option+C`) to view raw network traffic, exact headers sent, and `console.log()` outputs.",
       "objective": "Analyze HTTP response metrics, headers, and payload structures in Postman.",
       "expectedOutcome": "Detailed diagnostic capability when debugging live backend endpoints.",
@@ -521,7 +367,7 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "ការកំណត់ Authentication ស្វ័យប្រវត្តិតាមរយៈ Collection Variables",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Configuring authentication at the Collection root level allows all nested requests to inherit authentication credentials automatically (`Inherit auth from parent`). Upon successful login, a Postman script automatically captures the returned JWT token and writes it to `{{auth_token}}`.",
+      "summary": "Authentication Automation ក្នុង Postman អនុញ្ញាតឱ្យយើងទាញយក JWT Access Token ពី Response នៃ Login Request ដោយស្វ័យប្រវត្តិតាមរយៈ Scripts ហើយកំណត់វាជា Collection Variable `{{token}}`។ បន្ទាប់មក គ្រប់ Protected Requests ទាំងអស់នឹងប្រើប្រាស់ Bearer Token នោះដោយស្វ័យប្រវត្តិ។",
       "tip": "Set the Authorization type to `Bearer Token` with value `{{auth_token}}` at the collection folder level so you never have to configure tokens on individual routes.",
       "objective": "Automate token injection across all collection requests using Postman scripts.",
       "expectedOutcome": "Seamless authenticated testing across all protected endpoints without manual copy-pasting.",
@@ -534,20 +380,11 @@ describe("CourseService.calculateDiscount", () => {
       "khmerTitle": "លំហូរនៃការធ្វើតេស្ត CRUD APIs ជាខ្សែសង្វាក់ក្នុង Postman",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Testing CRUD APIs effectively involves chaining requests: POST creates an entity and writes its ID to `{{entity_id}}`, subsequent GET/PUT requests reference `{{entity_id}}`, and DELETE removes it. This verifies the complete lifecycle in a continuous workflow.",
+      "summary": "ការធ្វើតេស្ត CRUD APIs ជាខ្សែសង្វាក់ (Chained Workflow) គឺជាការរៀបចំលំដាប់លំដោយនៃការតេស្ត៖ ១. បង្កើត Resource ថ្មី (POST) និងរក្សាទុក `_id` ក្នុង Variable, ២. អានទិន្នន័យតាម ID (GET), ៣. កែប្រែទិន្នន័យ (PATCH), និង ៤. លុបទិន្នន័យ (DELETE) ដើម្បីផ្ទៀងផ្ទាត់ State នៃ Database។",
       "tip": "Use Postman Collection Runner to execute your entire CRUD workflow from start to finish with a single click.",
       "objective": "Chain CRUD operations together using dynamic Postman variables.",
       "expectedOutcome": "Automated end-to-end CRUD verification sequence.",
-      "codeSnippet": `// In POST /courses Tests tab:
-const jsonData = pm.response.json();
-pm.test("Course created successfully", () => {
-  pm.response.to.have.status(201);
-  // Store created ID for subsequent GET/PATCH/DELETE calls:
-  pm.environment.set("course_id", jsonData.data.course._id);
-});
-
-// In next request:
-// GET {{base_url}}/api/v1/courses/{{course_id}}`
+      "codeSnippet": "// In POST /courses Tests tab:\nconst jsonData = pm.response.json();\npm.test(\"Course created successfully\", () => {\n  pm.response.to.have.status(201);\n  // Store created ID for subsequent GET/PATCH/DELETE calls:\n  pm.environment.set(\"course_id\", jsonData.data.course._id);\n});\n\n// In next request:\n// GET {{base_url}}/api/v1/courses/{{course_id}}"
     },
     {
       "id": "M23-07",
@@ -556,7 +393,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការធ្វើតេស្តកំហុសផ្សេងៗ (Negative Testing ក្នុង Postman)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Negative testing deliberately sends malformed bodies, missing headers, or invalid IDs to confirm that the API returns appropriate 4xx status codes and descriptive error messages rather than unhandled 500 internal server crashes.",
+      "summary": "Negative Testing ក្នុង Postman គឺជាការធ្វើតេស្តករណីកំហុសដោយចេតនា៖ ការផ្ញើ Missing Required Fields (រំពឹងទុក 400 Bad Request), ការផ្ញើ Invalid ObjectId (400), ការស្វែងរក Resource ដែលមិនមាន (404), និងការធ្វើ Request ដោយគ្មាន Token (401) ដើម្បីធានាថា API មានភាពធន់ និងឆ្លើយតប Error Envelope ត្រឹមត្រូវ។",
       "tip": "Always create dedicated negative test requests in your collection (e.g. 'Create Product - Missing Title -> 400').",
       "objective": "Validate edge cases and error handling paths using Postman assertions.",
       "expectedOutcome": "Resilient APIs validated against invalid and adversarial payloads.",
@@ -569,7 +406,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការសរសេរ Pre-request Scripts និង Test Scripts (Chai Assertions)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Postman scripts execute JavaScript before requests are dispatched (Pre-request scripts) and after responses arrive (Test scripts). Using the built-in Chai assertion library, tests validate response latency, status codes, and data types automatically.",
+      "summary": "Postman Scripts រួមមាន Pre-request Scripts (ដំណើរការមុនពេល Request ត្រូវបានផ្ញើ ឧ. បង្កើត Timestamp ឬ Random Email) និង Test Scripts (ដំណើរការបន្ទាប់ពីទទួលបាន Response) ដោយប្រើប្រាស់ Chai Assertion Library (ឧ. `pm.response.to.have.status(200); pm.expect(pm.response.json().status).to.eql('success');`)។",
       "tip": "Pre-request scripts can compute timestamps, MD5 hashes, or dynamic random data using `pm.variables.replaceIn('{{$randomEmail}}')`.",
       "objective": "Write advanced JavaScript pre-request workflows and Chai test assertions.",
       "expectedOutcome": "Automated assertion suites validating contract rules on every request execution.",
@@ -582,7 +419,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការប្រៀបធៀប និងការធ្វើសមាហរណកម្ម Swagger UI ជាមួយ Postman",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Swagger UI and Postman complement each other. Swagger UI serves as the official, self-documenting contract embedded in the backend codebase, while Postman serves as an exploratory workbench and CI test runner. Postman can directly import OpenAPI JSON specs to instantly generate ready-to-test collections.",
+      "summary": "ការធ្វើសមាហរណកម្ម Swagger UI ជាមួយ Postman អនុញ្ញាតឱ្យយើង Import OpenAPI Specification (JSON ឬ YAML) ចូលទៅក្នុង Postman ដោយផ្ទាល់។ Postman នឹងបង្កើត Collection ពេញលេញ រួមទាំង Endpoints, Params, និង Example Bodies ដោយស្វ័យប្រវត្តិក្នុងរយៈពេលតែប៉ុន្មានវិនាទីប៉ុណ្ណោះ។",
       "tip": "Import your live `/api/docs.json` URL directly into Postman using 'Import -> Link' to generate fully configured Postman collections in seconds.",
       "objective": "Import OpenAPI specifications into Postman to synchronize documentation and test collections.",
       "expectedOutcome": "Automated collection generation directly from OpenAPI/Swagger definitions.",
@@ -595,7 +432,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ស្ថាបត្យកម្ម API Testing Workflow និង Newman CLI ក្នុង CI/CD",
       "type": "architecture",
       "codeLanguage": "bash",
-      "summary": "Newman is the command-line collection runner for Postman. It allows running Postman test suites directly from terminal scripts and automated GitHub Actions CI/CD pipelines, outputting structured test reports and failing pull requests if any assertion breaks.",
+      "summary": "API Testing Workflow ក្នុង CI/CD Pipeline អាចត្រូវបានអនុវត្តដោយស្វ័យប្រវត្តិតាមរយៈ Newman CLI (Command-line Runner របស់ Postman)។ ក្នុង GitHub Actions ឬ GitLab CI Newman អាចដំណើរការ Postman Collection ប្រឆាំងនឹង Test Server និងរាយការណ៍អំពី Pass/Fail មុនពេលអនុញ្ញាតឱ្យ Merge កូដចូល Production។",
       "tip": "Run `npx newman run collection.json -e env.json` in your GitHub Actions pipeline to run your API tests on every pull request.",
       "objective": "Integrate Newman CLI into automated continuous integration workflows.",
       "expectedOutcome": "Automated API regression testing integrated into CI/CD pipelines.",
@@ -610,7 +447,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ស្វែងយល់ពីកម្មវិធី Real-time (Polling vs WebSockets)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Traditional HTTP is a unidirectional request-response protocol: the client must initiate every interaction, and the server cannot push data proactively. While short-polling or long-polling periodically checks for updates, they create massive HTTP overhead. True real-time applications (chat, live tracking, financial tickers, collaborative editing) require persistent, bidirectional communication channels.",
+      "summary": "កម្មវិធី Real-Time ទាមទារឱ្យមានការបញ្ជូនទិន្នន័យភ្លាមៗរវាង Server និង Client ដោយគ្មានភាពយឺតយ៉ាវ (Instant Data Exchange)។ បច្ចេកទេសចាស់ៗដូចជា Short Polling ឬ Long Polling បង្កើត Overhead ធ្ងន់ធ្ងរដោយសារតែ Client ត្រូវបើក HTTP Request ថ្មីជាបន្តបន្ទាប់។ ដំណោះស្រាយស្តង់ដារទំនើបគឺការប្រើប្រាស់ Persistent Full-Duplex Connection។",
       "tip": "Don't use HTTP short-polling for real-time features! Polling every 2 seconds consumes massive bandwidth and wastes server CPU.",
       "objective": "Understand the differences between HTTP Polling, Server-Sent Events (SSE), and WebSockets.",
       "expectedOutcome": "Clear criteria for choosing between HTTP, SSE, and full-duplex WebSockets.",
@@ -623,7 +460,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ WebSocket Protocol (RFC 6455)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "The WebSocket protocol (RFC 6455) provides full-duplex communication over a single long-lived TCP connection. It begins with an HTTP Upgrade handshake (`Upgrade: websocket`). Once established, tiny 2-to-10 byte binary frames replace bloated 1KB+ HTTP headers, enabling lightning-fast real-time messaging with minimal latency.",
+      "summary": "WebSocket Protocol (RFC 6455) គឺជាពិធីការទំនាក់ទំនងដែលបង្កើត Full-Duplex, Bi-Directional Connection តែមួយរវាង Browser និង Server តាមរយៈ TCP Socket។ វាចាប់ផ្តើមពី HTTP Handshake ហើយ Upgrade ទៅជា WebSocket Protocol ដែលអនុញ្ញាតឱ្យភាគីទាំងសងខាងអាចផ្ញើសារទៅវិញទៅមកបានគ្រប់ពេលវេលាដោយគ្មាន Header Overhead ដូច HTTP ឡើយ។",
       "tip": "WebSocket connections use the `ws://` (unencrypted) or `wss://` (TLS encrypted) URL schemes. Always use `wss://` in production.",
       "objective": "Understand the WebSocket upgrade handshake and frame architecture.",
       "expectedOutcome": "Technical understanding of low-overhead full-duplex socket protocols.",
@@ -636,7 +473,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការស្វែងយល់ពីបណ្ណាល័យ Socket.IO",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Socket.IO is a feature-rich library that builds on top of WebSocket and HTTP long-polling fallbacks. Unlike raw WebSockets, Socket.IO provides automatic reconnection, connection buffering, heartbeat packet heartbeats, event-based multiplexing, rooms, and namespaces out of the box.",
+      "summary": "Socket.IO គឺជាបណ្ណាល័យ Node.js ដ៏ពេញនិយមបំផុតសម្រាប់បង្កើត Real-Time Applications។ វាផ្តល់នូវសមត្ថភាពលើសពី Raw WebSockets រួមមាន៖ Fallback ស្វ័យប្រវត្តិតាម HTTP Long-polling (ពេល WebSocket ត្រូវបាន Firewalls រារាំង), Automatic Reconnection, Event-driven Messaging, និង Built-in Rooms & Namespaces Support។",
       "tip": "Socket.IO is NOT a raw WebSocket implementation — a raw WebSocket client cannot connect to a Socket.IO server. Both client and server must use Socket.IO libraries.",
       "objective": "Understand Socket.IO advantages over raw WebSockets in production applications.",
       "expectedOutcome": "Knowledge of Socket.IO primitives: fallbacks, events, rooms, and auto-reconnection.",
@@ -649,7 +486,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការបង្កើត និងភ្ជាប់ Socket.IO ជាមួយ Express HTTP Server",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "In Node.js, Socket.IO attaches to a native Node `http.Server` instance rather than directly to the Express `app` object. Express handles traditional REST endpoints while Socket.IO handles real-time WebSocket traffic over the exact same port.",
+      "summary": "ការបង្កើត Socket.IO Server តម្រូវឱ្យភ្ជាប់ Socket.IO ជាមួយនឹង Node.js HTTP Server (`http.createServer(app)`) ដែលរុំពីលើ Express App។ វិធីនេះអនុញ្ញាតឱ្យ HTTP Server តែមួយអាចដំណើរការបានទាំង REST API Endpoints ធម្មតា និង WebSocket Connections ស្របគ្នាក្នុង Port តែមួយ។",
       "tip": "Configure CORS on the Socket.IO server separately from Express, as WebSocket upgrade handshakes require distinct origin verification.",
       "objective": "Initialize and attach a Socket.IO server to an Express HTTP server instance.",
       "expectedOutcome": "Unified HTTP and WebSocket server listening on a single port.",
@@ -662,7 +499,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការភ្ជាប់ Client ទៅកាន់ Socket.IO Server",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Frontend clients connect using the `socket.io-client` library. The client establishes a persistent connection, listens for server-dispatched events via `socket.on()`, and transmits client events using `socket.emit()`.",
+      "summary": "Socket.IO Client គឺជាបណ្ណាល័យ JavaScript ដែលដំណើរការលើ Browser ឬ Mobile App។ Client ចាប់ផ្តើម Connection តាមរយៈ `io('http://localhost:5000')` ស្តាប់ Connection Events (`connect`, `disconnect`) និងគ្រប់គ្រងការផ្ញើ/ទទួលទិន្នន័យជាមួយ Server តាមរយៈ Event Emitter Pattern។",
       "tip": "Always clean up socket listeners (`socket.off()`) when unmounting React components to prevent memory leaks and duplicate event firings.",
       "objective": "Connect frontend clients to Socket.IO and establish bidirectional event communication.",
       "expectedOutcome": "Operational client-server socket connection handling connect and disconnect states.",
@@ -675,7 +512,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការបញ្ជូន និងទទួល Events (Custom Events & Acknowledgments)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Socket.IO communication revolves around named custom events. `socket.emit('event', payload)` sends data, `socket.on('event', callback)` receives data, and Acknowledgments allow the receiver to invoke a callback to confirm message processing.",
+      "summary": "Event-Driven Communication ក្នុង Socket.IO ដំណើរការតាមរយៈ Method `socket.emit('eventName', data)` សម្រាប់បញ្ជូនទិន្នន័យ និង `socket.on('eventName', callback)` សម្រាប់ទទួលទិន្នន័យ។ លើសពីនេះ Socket.IO គាំទ្រ Acknowledgments (Call-and-Response) ដែលអនុញ្ញាតឱ្យ Client ដឹងថា Server បានទទួល និងដំណើរការសារនោះដោយជោគជ័យឬទេ។",
       "tip": "Use acknowledgments (callbacks passed to `emit`) for guaranteed delivery confirmation without needing to create separate 'received' events.",
       "objective": "Emit and listen for custom events with payload delivery confirmations.",
       "expectedOutcome": "Robust message transmission with bidirectional request-response acknowledgments.",
@@ -688,7 +525,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការគ្រប់គ្រង Channels តាមរយៈ Socket.IO Rooms",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Rooms are virtual server-side channels that sockets can join (`socket.join('room-id')`) and leave (`socket.leave('room-id')`). Broadcasting to a room (`io.to('room-id').emit(...)`) delivers messages only to the clients currently subscribed to that specific room, ideal for private chat rooms or order tracking.",
+      "summary": "Socket.IO Rooms គឺជា Channels បណ្តោះអាសន្នដែលអនុញ្ញាតឱ្យ Server ដាក់ Socket Connections ចូលទៅក្នុងក្រុមជាក់លាក់ (ឧ. `socket.join('course-101')`)។ បន្ទាប់មក Server អាចផ្សាយសារ (Broadcast) ទៅកាន់តែសមាជិកដែលមានវត្តមានក្នុង Room នោះ (`io.to('course-101').emit('newAnnouncement', data)`) ដោយមិនចាំបាច់ផ្ញើទៅកាន់ User ទាំងអស់ក្នុងប្រព័ន្ធឡើយ។",
       "tip": "Every socket automatically joins a private room identified by its own `socket.id`. You can send a direct private message to any user with `io.to(recipientSocketId).emit(...)`.",
       "objective": "Implement room subscriptions for targeted channel messaging.",
       "expectedOutcome": "Isolated communication channels delivering messages strictly to room members.",
@@ -701,7 +538,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការបញ្ជូន Real-time Notifications ទៅកាន់អ្នកប្រើប្រាស់ជាក់លាក់",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Real-time notifications inform specific users of instant updates (e.g. 'Your order has shipped', 'Someone liked your photo'). By associating an authenticated user's MongoDB `_id` with their active socket connection, the backend can target notification events directly to individual users across devices.",
+      "summary": "Real-Time Notifications Architecture អនុញ្ញាតឱ្យ Server បញ្ជូនដំណឹងសំខាន់ៗ (ដូចជា សិស្សទទួលបាន Badge ថ្មី, Course ត្រូវបាន Approve, ឬមាន Reply លើ Comment) ទៅកាន់ User ជាក់លាក់ភ្លាមៗ។ នៅពេល User Connect Server នឹង map User ID ជាមួយ Socket ID ឬឱ្យ User ចូលទៅក្នុង Private Room (`socket.join(\"user:\" + userId)`)។",
       "tip": "Map user IDs to socket rooms: on connection, have each user join `socket.join('user:' + user._id)`. Then trigger notifications with `io.to('user:' + targetUserId).emit('notification', payload)`.",
       "objective": "Build a targeted real-time user notification pipeline.",
       "expectedOutcome": "Targeted push notifications delivered instantly to specific authenticated users.",
@@ -714,7 +551,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការតាមដានវត្តមាន Online Users (Presence Tracking)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Tracking user presence (online, away, offline) requires managing connected state across socket lifecycles. Maintaining a connected user registry in memory or a Redis Set allows broadcasting presence updates to all clients whenever a user connects or disconnects.",
+      "summary": "Presence Tracking គឺជាការតាមដានវត្តមាន Online/Offline របស់អ្នកប្រើប្រាស់ក្នុងប្រព័ន្ធ។ តាមរយៈការស្តាប់ `connection` និង `disconnect` events Server អាចកត់ត្រា Status ក្នុង Redis In-Memory Store (Redis Sets) និងផ្សាយដំណឹងទៅកាន់អ្នកប្រើប្រាស់ដទៃទៀតអំពីស្ថានភាព Online របស់សមាជិកក្នុងថ្នាក់។",
       "tip": "Use Redis Sets (`SADD online_users userId` / `SREM online_users userId`) for presence tracking in multi-server architectures so all cluster nodes share the active user list.",
       "objective": "Implement online presence tracking with connection registries and disconnect event hooks.",
       "expectedOutcome": "Live user presence system updating contact online/offline indicators in real time.",
@@ -727,7 +564,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ស្ថាបត្យកម្មប្រព័ន្ធ Real-time Chat ពេញលេញ",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "An enterprise real-time chat architecture combines persistent database storage with WebSocket delivery. When a message is sent, the server validates the payload, persists the chat document to MongoDB for conversation history, and broadcasts the event to the chat room via Socket.IO for sub-100ms real-time delivery.",
+      "summary": "ស្ថាបត្យកម្ម Real-Time Chat ពេញលេញរួមបញ្ចូលគ្នានូវ Socket.IO ជាមួយ MongoDB និង Redis Adapter៖ សារត្រូវបានផ្ញើតាម WebSocket, រក្សាទុកជាអចិន្ត្រៃយ៍ក្នុង MongoDB Collection (`ChatMessage`), ផ្សាយទៅកាន់សមាជិកក្នុង Chat Room, និងប្រើប្រាស់ `@socket.io/redis-adapter` ដើម្បីធានាថា Real-time Messages អាចបញ្ជូនឆ្លងកាត់ Multi-instance Scaled Backend Servers បានយ៉ាងរលូន។",
       "tip": "Always persist messages to MongoDB BEFORE broadcasting over Socket.IO so message history is guaranteed even if a client disconnects mid-delivery.",
       "objective": "Architect a full-featured real-time chat pipeline uniting MongoDB persistence with Socket.IO rooms.",
       "expectedOutcome": "End-to-end chat engine with message persistence, typing indicators, and delivery receipts.",
@@ -742,7 +579,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការស្វែងយល់ពីប្រសិទ្ធភាព និង Performance Metrics ក្នុង Node.js",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Node.js is exceptionally fast for I/O-heavy operations due to its event-driven non-blocking architecture, but its single-threaded nature requires careful performance management. Key metrics to monitor include CPU utilization, Event Loop Lag, Resident Set Size (RSS) memory consumption, garbage collection pauses, and response latency percentiles (p95, p99).",
+      "summary": "Node.js Performance Optimization តម្រូវឱ្យយល់ដឹងពី Single-Threaded Event Loop Architecture។ ដោយសារ JavaScript ដំណើរការ Core Logic លើ Main Thread តែមួយ គោលដៅចម្បងនៃ Performance Engineering គឺការកាត់បន្ថយ CPU-intensive tasks លើ Main Thread និងការប្រើប្រាស់ Asynchronous I/O ឱ្យអស់ពីលទ្ធភាព។",
       "tip": "Monitor p95 and p99 response times rather than averages. An average of 50ms can easily hide the fact that 5% of your users are experiencing 3-second delays.",
       "objective": "Identify key performance metrics and bottlenecks in Node.js backend services.",
       "expectedOutcome": "Comprehensive understanding of performance profiling indicators.",
@@ -755,7 +592,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការទប់ស្កាត់ការស្ទះ Event Loop (Blocking the Event Loop)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Because JavaScript runs on a single main thread, any synchronous CPU-intensive computation (complex regex, synchronous file reading `fs.readFileSync`, heavy JSON stringification, cryptography) freezes the entire event loop. While blocked, the server cannot accept new requests or process timers, causing all concurrent users to experience connection timeouts.",
+      "summary": "Blocking the Event Loop គឺជាកំហុសធ្ងន់ធ្ងរបំផុតក្នុង Node.js ដែលកើតឡើងពីការដំណើរការ Synchronous Operations យូរៗ (ដូចជា `fs.readFileSync`, JSON.parse លើទំហំទិន្នន័យធំៗ, ReDoS Regex, ឬ Synchronous Crypto)។ នៅពេល Main Thread ជាប់រវល់ រាល់ Incoming HTTP Requests ទាំងអស់ត្រូវរង់ចាំ ដែលបណ្តាលឱ្យ Server កកស្ទះ និង Response Time កើនឡើងខ្ពស់។",
       "tip": "Never use synchronous methods (`readFileSync`, `crypto.pbkdf2Sync`, `bcrypt.hashSync`) inside Express request handlers in production.",
       "objective": "Diagnose and prevent Event Loop starvation caused by synchronous operations.",
       "expectedOutcome": "Non-blocking codebase keeping the main thread free to handle concurrent requests.",
@@ -768,7 +605,7 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការអនុវត្ត Async ល្អបំផុត (Promise.all vs Sequential Await)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "A common performance anti-pattern is sequentially awaiting independent asynchronous operations one after another. If fetching user details takes 100ms and fetching user orders takes 100ms, sequential awaits total 200ms. Running independent promises concurrently via `Promise.all()` executes them in parallel, reducing total latency to just 100ms.",
+      "summary": "Async Best Practices ផ្តោតលើការដំណើរការ I/O Operations ស្របគ្នា (Concurrency) តាមរយៈ `Promise.all()` ឬ `Promise.allSettled()` ជំនួសឱ្យការសរសេរ `await` ជាបន្តបន្ទាប់គ្នា (Sequential Execution) ក្នុងករណីដែល Queries ទាំងនោះឯករាជ្យពីគ្នា (ឧ. ទាញយក Course Details និង Instructor Profile ក្នុងពេលតែមួយ)។",
       "tip": "Use `Promise.all([promise1, promise2])` whenever two or more async operations do not depend on each other's return values.",
       "objective": "Optimize async execution workflows using parallel promise resolution.",
       "expectedOutcome": "Halved endpoint latency by eliminating sequential waterfalls.",
@@ -781,18 +618,11 @@ pm.test("Course created successfully", () => {
       "khmerTitle": "ការបង្កើនល្បឿន MongoDB Queries ជាមួយ Lean និង Projections",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "By default, Mongoose wraps query results in full Mongoose Document instances complete with change tracking, getters, and schema methods. For read-heavy endpoints, appending `.lean()` skips document instantiation and returns plain JavaScript objects, reducing memory allocation and improving query execution speeds by up to 400%.",
+      "summary": "MongoDB Query Optimization ជួយកាត់បន្ថយ Latency តាមរយៈការប្រើប្រាស់ `.lean()` (ដែលត្រឡប់ Plain JavaScript Objects ជំនួសឱ្យ Heavy Mongoose Documents កាត់បន្ថយ Memory រហូតដល់ 5-10 ដង), ការជ្រើសរើសយកតែ Fields ចាំបាច់តាមរយៈ Projections (`.select('title price thumbnail')`), និងការចៀសវាង N+1 Query Problems។",
       "tip": "Always append `.lean()` to GET queries where you do not need to call `.save()` on the returned documents.",
       "objective": "Apply query optimizations including .lean(), field projections (.select()), and limit clauses.",
       "expectedOutcome": "Substantially reduced memory footprint and faster JSON serialization.",
-      "codeSnippet": `// High Performance Course Query:
-// 1. .select() only fetches necessary fields (reduces network transfer)
-// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)
-// 3. .limit() restricts total document count
-const courses = await Course.find({ published: true })
-  .select("title price thumbnailUrl level category") // Field projection
-  .limit(20)
-  .lean(); // 3-4x faster than default find()!`
+      "codeSnippet": "// High Performance Course Query:\n// 1. .select() only fetches necessary fields (reduces network transfer)\n// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)\n// 3. .limit() restricts total document count\nconst courses = await Course.find({ published: true })\n  .select(\"title price thumbnailUrl level category\") // Field projection\n  .limit(20)\n  .lean(); // 3-4x faster than default find()!"
     },
     {
       "id": "M25-05",
@@ -801,23 +631,11 @@ const courses = await Course.find({ published: true })
       "khmerTitle": "ការបង្កើត និងគ្រប់គ្រង Database Indexes (Single & Compound)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Without indexes, MongoDB must perform a Collection Scan (`COLLSCAN`), inspecting every single document in the collection to satisfy a query. Indexes create ordered B-tree data structures that locate matching documents in milliseconds (`IXSCAN`). Single-field, compound, and text indexes are essential for scalable databases.",
+      "summary": "MongoDB Indexing គឺជាកត្តាកំណត់ល្បឿនលេខមួយក្នុង Database Operations។ បើគ្មាន Index MongoDB ត្រូវធ្វើ Collection Scan (COLLSCAN) ដោយពិនិត្យគ្រប់ Document ទាំងអស់។ តាមរយៈការបង្កើត Single Field Indexes, Compound Indexes (ឧ. `{ category: 1, price: -1 }`), និងការវិភាគ Query Performance ជាមួយ `.explain('executionStats')` ល្បឿនស្វែងរកអាចកើនឡើងរាប់ពាន់ដង។",
       "tip": "Use `explain('executionStats')` on your queries to verify they use `IXSCAN` (index scan) instead of `COLLSCAN` (table scan).",
       "objective": "Design efficient single-field and compound indexes supporting common query patterns.",
       "expectedOutcome": "Transformation of slow collection scans into high-speed index lookups.",
-      "codeSnippet": `const courseSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  category: { type: String, index: true }, // Single-field index
-  price: Number,
-  createdAt: Date,
-});
-
-// Compound index for queries that filter by category and sort by price:
-// db.courses.find({ category: "Web Development" }).sort({ price: -1 })
-courseSchema.index({ category: 1, price: -1 });
-
-// Verify query execution in MongoDB:
-// await Course.find({ category: "Web Development" }).explain("executionStats");`
+      "codeSnippet": "const courseSchema = new mongoose.Schema({\n  title: { type: String, required: true },\n  category: { type: String, index: true }, // Single-field index\n  price: Number,\n  createdAt: Date,\n});\n\n// Compound index for queries that filter by category and sort by price:\n// db.courses.find({ category: \"Web Development\" }).sort({ price: -1 })\ncourseSchema.index({ category: 1, price: -1 });\n\n// Verify query execution in MongoDB:\n// await Course.find({ category: \"Web Development\" }).explain(\"executionStats\");"
     },
     {
       "id": "M25-06",
@@ -826,25 +644,11 @@ courseSchema.index({ category: 1, price: -1 });
       "khmerTitle": "យុទ្ធសាស្ត្រ Pagination (Offset vs Cursor-based Pagination)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Returning entire collections in a single API call degrades database performance and crashes mobile clients. Offset pagination (`skip` + `limit`) is simple to implement but suffers from performance degradation at high offsets (`skip(100000)` scans 100,000 documents). Cursor-based pagination (`_id: { $gt: lastId }`) maintains constant O(1) performance regardless of dataset depth.",
+      "summary": "API Pagination Strategies៖ Offset-based Pagination (`skip` និង `limit`) មានភាពងាយស្រួល ប៉ុន្តែជួបបញ្ហា Performance នៅលើទិន្នន័យរាប់សែន Documents ព្រោះ MongoDB ត្រូវ Scan Documents ចាស់ៗចោល។ សម្រាប់ High-scale APIs Cursor-based Pagination (ផ្អែកលើ `_id: { $gt: lastId }`) គឺជាជម្រើសដ៏ល្អបំផុតព្រោះវាដំណើរការលឿនថេរ O(1) ជានិច្ច។",
       "tip": "Use cursor-based pagination (keyset pagination) for infinite scroll feeds to achieve constant O(1) query time.",
       "objective": "Implement both offset and high-performance cursor-based pagination in Express APIs.",
       "expectedOutcome": "Scalable pagination strategies preventing memory saturation and slow deep queries.",
-      "codeSnippet": `// 1. Offset Pagination (Good for numbered page UI):
-const page = Number(req.query.page) || 1;
-const limit = Number(req.query.limit) || 20;
-const skip = (page - 1) * limit;
-const items = await Course.find().skip(skip).limit(limit).lean();
-
-// 2. Cursor Pagination (Optimal for Infinite Scroll & Massive Datasets):
-// Query: /api/courses?cursor=64f1a2b3c4...&limit=20
-const { cursor, limit = 20 } = req.query;
-const query = cursor ? { _id: { $lt: cursor } } : {}; // uses indexed _id directly!
-
-const courses = await Course.find(query)
-  .sort({ _id: -1 })
-  .limit(Number(limit))
-  .lean();`
+      "codeSnippet": "// 1. Offset Pagination (Good for numbered page UI):\nconst page = Number(req.query.page) || 1;\nconst limit = Number(req.query.limit) || 20;\nconst skip = (page - 1) * limit;\nconst items = await Course.find().skip(skip).limit(limit).lean();\n\n// 2. Cursor Pagination (Optimal for Infinite Scroll & Massive Datasets):\n// Query: /api/courses?cursor=64f1a2b3c4...&limit=20\nconst { cursor, limit = 20 } = req.query;\nconst query = cursor ? { _id: { $lt: cursor } } : {}; // uses indexed _id directly!\n\nconst courses = await Course.find(query)\n  .sort({ _id: -1 })\n  .limit(Number(limit))\n  .lean();"
     },
     {
       "id": "M25-07",
@@ -853,7 +657,7 @@ const courses = await Course.find(query)
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ Caching (Cache-Aside Pattern & TTL)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Caching stores copies of frequently accessed data in high-speed, volatile storage layers (such as RAM) so future requests can be served instantly without querying the primary database. In the Cache-Aside pattern, the application checks the cache first: if found (cache hit), it returns data immediately; if missing (cache miss), it queries the database, populates the cache with a Time-To-Live (TTL), and responds.",
+      "summary": "Caching គឺជាការរក្សាទុកទិន្នន័យដែលប្រើប្រាស់ញឹកញាប់នៅក្នុង High-speed Storage Layer (Memory) ដើម្បីចៀសវាងការ Query Database ដដែលៗ។ យុទ្ធសាស្ត្រ Cache-Aside Pattern រួមមាន៖ ពិនិត្យ Cache ជាមុន (Cache Hit), ប្រសិនបើគ្មាន ទាញយកពី Database (Cache Miss), រក្សាទុកក្នុង Cache ជាមួយ TTL (Time-To-Live), និងការធ្វើ Cache Invalidation នៅពេលទិន្នន័យមានការ Update។",
       "tip": "Always configure a Time-To-Live (TTL) on cached items to prevent stale data from lingering permanently.",
       "objective": "Master the Cache-Aside pattern, cache hit/miss flows, and TTL expiration strategies.",
       "expectedOutcome": "Solid theoretical and practical grasp of distributed caching concepts.",
@@ -866,16 +670,11 @@ const courses = await Course.find(query)
       "khmerTitle": "ការស្វែងយល់ពី In-Memory Data Store (Redis)",
       "type": "concept",
       "codeLanguage": "bash",
-      "summary": "Redis (Remote Dictionary Server) is an open-source, in-memory key-value data structure store. Because it holds all data in RAM rather than spinning disks or flash memory, read and write operations execute in sub-millisecond speeds (over 100,000 operations per second). Redis supports versatile data types: strings, hashes, lists, sets, and sorted sets.",
+      "summary": "Redis គឺជា In-Memory Key-Value Data Store ដ៏មានឥទ្ធិពលបំផុតក្នុងពិភពលោក ដែលគាំទ្រ Data Structures ជាច្រើនដូចជា Strings, Hashes, Lists, Sets, និង Sorted Sets។ Redis ដំណើរការក្នុង RAM ទាំងស្រុង ដែលផ្តល់នូវ Read/Write Latency ក្រោម 1 Millisecond និងសមស្របបំផុតសម្រាប់ Caching, Session Storage, និង Rate Limiting។",
       "tip": "Run Redis locally in one command using Docker: `docker run -d -p 6379:6379 redis:alpine`.",
       "objective": "Understand Redis architecture, memory-first performance, and supported data structures.",
       "expectedOutcome": "Preparedness to integrate Redis as an application caching and state layer.",
-      "codeSnippet": `# Common Redis CLI commands:
-SET user:100:name "Alice" EX 3600  # Set key with 1-hour expiration (TTL)
-GET user:100:name                  # Retrieve value -> "Alice"
-DEL user:100:name                  # Delete key immediately
-KEYS course:*                      # Search course cache keys
-TTL user:100:name                  # Check remaining seconds before expiry`
+      "codeSnippet": "# Common Redis CLI commands:\nSET user:100:name \"Alice\" EX 3600  # Set key with 1-hour expiration (TTL)\nGET user:100:name                  # Retrieve value -> \"Alice\"\nDEL user:100:name                  # Delete key immediately\nKEYS course:*                      # Search course cache keys\nTTL user:100:name                  # Check remaining seconds before expiry"
     },
     {
       "id": "M25-09",
@@ -884,7 +683,7 @@ TTL user:100:name                  # Check remaining seconds before expiry`
       "khmerTitle": "ការភ្ជាប់ និងប្រើប្រាស់ Redis ក្នុង Node.js (ioredis)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "`ioredis` is a robust, full-featured Redis client for Node.js. It features built-in support for Promises, cluster configurations, sentinel failover, and automatic reconnection. Establishing a single shared Redis client singleton provides high-throughput caching throughout your Express services.",
+      "summary": "ការប្រើប្រាស់ Redis ក្នុង Node.js ត្រូវបានអនុវត្តយ៉ាងរលូនតាមរយៈបណ្ណាល័យ `ioredis`។ ioredis ផ្តល់នូវសមត្ថភាពគ្រប់គ្រង Connection Pool, Auto-reconnect, Cluster Support, និង Promise-based APIs សម្រាប់ប្រតិបត្តិការ `redis.get(key)`, `redis.setex(key, ttl, value)`, និង `redis.del(key)`។",
       "tip": "Use `ioredis` instead of the legacy `redis` package for superior cluster management and better TypeScript support.",
       "objective": "Connect to a Redis instance from Node.js using ioredis with error handling.",
       "expectedOutcome": "Operational Redis client connection handling read/write operations.",
@@ -897,7 +696,7 @@ TTL user:100:name                  # Check remaining seconds before expiry`
       "khmerTitle": "ការបង្កើត Express Cache Middleware ជាមួយ Redis",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Response caching intercepts incoming GET requests, constructs a cache key from the request URL, and checks Redis. If cached, it sends the stored JSON string immediately (<2ms), bypassing database lookups and controller handlers entirely. When data mutations occur (POST/PUT/DELETE), the cache key is purged.",
+      "summary": "Response Caching Middleware គឺជា Express Middleware ដែលដំណើរការមុន Controller Handlers។ វាបង្កើត Cache Key ផ្អែកលើ Request URL (ឧ. `courses:page=1:limit=10`) ហើយប្រសិនបើទិន្នន័យមានក្នុង Redis វានឹងឆ្លើយតប Cached JSON ភ្លាមៗក្នុងរយៈពេលត្រឹមតែប៉ុន្មាន Milliseconds ដោយមិនចាំបាច់ឆ្លងកាត់ Database Query ឡើយ។",
       "tip": "Use `req.originalUrl` as the Redis cache key so query parameters (e.g. `?page=1&limit=10`) are preserved in distinct cache entries.",
       "objective": "Construct an Express caching middleware that automatically intercepts and caches responses.",
       "expectedOutcome": "Dramatic response time reduction from ~150ms to ~2ms for cached endpoints.",
@@ -910,7 +709,7 @@ TTL user:100:name                  # Check remaining seconds before expiry`
       "khmerTitle": "ការបង្រួម HTTP Responses ជាមួយ compression (Gzip / Brotli)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "The `compression` middleware compresses HTTP response bodies using Gzip or Brotli algorithms before transmitting them over the network. Compressing JSON payloads reduces transfer sizes by 60% to 80%, resulting in dramatically faster page loads on mobile networks and reduced cloud bandwidth costs.",
+      "summary": "HTTP Response Compression គឺជាការបង្រួម JSON Payloads តាមរយៈ Gzip ឬ Brotli មុនពេលបញ្ជូនទៅកាន់ Client ដោយប្រើបណ្ណាល័យ `compression` ក្នុង Express។ ការបង្រួមទំហំ Response អាចកាត់បន្ថយទំហំទិន្នន័យរហូតដល់ 70-80% ដែលជួយសន្សំសំចៃ Network Bandwidth និងបង្កើនល្បឿនផ្ទុកទំព័រលើ Frontend យ៉ាងខ្លាំង។",
       "tip": "Place `app.use(compression())` near the top of your middleware stack to compress all responses exceeding 1KB.",
       "objective": "Enable Gzip compression in Express to reduce data payload size.",
       "expectedOutcome": "Up to 80% reduction in transmitted network byte sizes for JSON responses.",
@@ -923,7 +722,7 @@ TTL user:100:name                  # Check remaining seconds before expiry`
       "khmerTitle": "ការតាមដាន Performance តាមរយៈ APM (Prometheus & Grafana)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Continuous performance monitoring tracks production application health. Application Performance Monitoring (APM) tools (Prometheus, Grafana, New Relic, Datadog) measure endpoint latency distributions, error rates, throughput (requests per second), and database query times to detect performance regressions before users complain.",
+      "summary": "Performance Monitoring គឺជាការតាមដានសុខភាព និងល្បឿនរបស់ API ក្នុង Production។ តាមរយៈការកត់ត្រា Key Metrics ដូចជា Response Time (p95, p99 Latency), Error Rates, CPU & Memory Usage, និង Event Loop Lag ដោយប្រើឧបករណ៍ APM (Application Performance Monitoring) ដូចជា Prometheus, Grafana, ឬ Datadog ក្រុមការងារអាចដឹងពីបញ្ហាមុនពេលប៉ះពាល់ដល់ User។",
       "tip": "Expose a `/metrics` endpoint using `prom-client` to scrape runtime metrics into Prometheus and visualize real-time dashboards in Grafana.",
       "objective": "Architect performance instrumentation and application telemetry collection.",
       "expectedOutcome": "Production-ready observability monitoring latency, memory, and throughput.",

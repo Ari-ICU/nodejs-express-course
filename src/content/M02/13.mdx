@@ -2,10 +2,10 @@ export const meta = {
   id: "M02-13",
   number: "13",
   title: "Environment Variables",
-  khmerTitle: "អថេរកំណត់Environment (Environment Variables)",
+  khmerTitle: "អថេរកំណត់បរិស្ថាន (Environment Variables)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Environment Variablesខាងក្រៅកំណត់រចនាសម្ព័ន្ធថាមវន្ត (URL Database លេខច្រក សោសម្ងាត់ API កម្រិតកំណត់ហេតុ) ពី Source Code ដោយប្រកាន់ខ្ជាប់នូវ Methods កម្មវិធី 12-Factor សម្រាប់ការដាក់ពង្រាយពហុEnvironmentប្រកបដោយសុវត្ថិភាព។`,
+  summary: "Environment variables externalize dynamic configuration (database URLs, port numbers, API secret keys, log levels) from source code, adhering to the 12-Factor App methodology for secure multi-environment deployments.",
   codeSnippet: "// Accessing environment variables via process.env\nconst PORT = process.env.PORT || 5000;\nconst DB_URI = process.env.DATABASE_URL;\nconst IS_PROD = process.env.NODE_ENV === \"production\";\n\nconsole.log(`Server starting on port ${PORT} in ${IS_PROD ? \"PROD\" : \"DEV\"} mode`);",
 };
 

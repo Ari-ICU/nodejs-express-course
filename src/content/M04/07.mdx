@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ដំណើរការ Event Loop របស់ Node.js",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `libuv Event Loop គឺជាបេះដូងរបស់ Node.js ។ វាបន្តសំរបសំរួលការប្រតិបត្តិរវាងកូដ JavaScript និងប្រព័ន្ធប្រតិបត្តិការឆ្លងកាត់ដំណាក់កាលផ្សេងៗគ្នា៖ Timers រង់ចាំ Callbacks មកវិញ ការស្ទង់មតិ ពិនិត្យ (setImmediate) និងបិទ Callbacks មកវិញ។`,
+  summary: "The libuv Event Loop is the heart of Node.js. It continuously coordinates execution between JavaScript code and the operating system across distinct phases: Timers, Pending Callbacks, Poll, Check (setImmediate), and Close Callbacks.",
   codeSnippet: "/* Libuv Event Loop Phases:\n   ┌───────────────────────────┐\n   │          Timers           │ (setTimeout, setInterval)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │     Pending Callbacks     │ (I/O callbacks deferred)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │           Poll            │ (Retrieve new I/O events; execute I/O)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │           Check           │ (setImmediate callbacks)\n   └─────────────┬─────────────┘\n   ┌─────────────┴─────────────┐\n   │      Close Callbacks      │ (socket.on('close'))\n   └───────────────────────────┘\n*/",
 };
 

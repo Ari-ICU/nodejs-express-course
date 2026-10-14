@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៥ ៖ Course Platform Enrollment & Payments ជាមួយ Transactions",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build an end-to-end Course Platform payment and enrollment engine including student course checkout, Stripe payment intent creation, background email receipts via BullMQ, role-based enrollment management, and course seat capacity decrement with MongoDB ACID multi-document transactions.",
+  summary: "គម្រោងទី ៥ ៖ Course Platform Enrollment & Payment Backend គឺជាគម្រោងស្ថាបត្យកម្មស្មុគស្មាញ រួមមាន MongoDB Multi-document ACID Transactions សម្រាប់ដំណើរការការទិញ Course, ការកាត់ប្រាក់តាម Stripe Webhooks, និងការបញ្ជូន Email Invoices តាមរយៈ BullMQ Background Queue។",
   codeSnippet: "// Course Enrollment with MongoDB Transaction:\nexport const enrollInCourse = async (studentId, courseId, price) => {\n  const session = await mongoose.startSession();\n  return session.withTransaction(async () => {\n    // 1. Check and decrement available course capacity atomically\n    const course = await Course.findOneAndUpdate(\n      { _id: courseId, published: true, seatsAvailable: { $gt: 0 } },\n      { $inc: { seatsAvailable: -1, enrollmentCount: 1 } },\n      { session, new: true }\n    );\n    if (!course) throw new AppError(\"Course is either full or not published\", 400);\n\n    // 2. Create enrollment document & enqueue receipt email job\n    const enrollment = await Enrollment.create(\n      [{ student: studentId, course: courseId, enrolledPrice: price, status: \"active\" }],\n      { session }\n    );\n    await emailQueue.add(\"enrollment-receipt\", {\n      studentId,\n      courseId,\n      enrollmentId: enrollment[0]._id\n    });\n\n    return enrollment[0];\n  });\n};",
 };
 

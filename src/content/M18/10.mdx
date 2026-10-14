@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Secret Keys និង Environment Variables ដោយសុវត្ថិភាព",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Secrets like database connection URIs, JWT signing keys, and payment gateway tokens must never be hardcoded in source code or committed to Git repositories. Storing them in `.env` files locally and environment variables in production keeps source code repos safe from catastrophic secret leaks.",
+  summary: "ការគ្រប់គ្រង Environment Variables ដោយសុវត្ថិភាពតម្រូវឱ្យរក្សាទុក Secret Keys, Database URIs, និង API Keys ទាំងអស់នៅក្នុងឯកសារ `.env` ហើយត្រូវបន្ថែម `.env` ទៅក្នុង `.gitignore` ជាដាច់ខាតដើម្បីកុំឱ្យធ្លាយចូល Git Repository។ ក្នុង Production ត្រូវចាក់បញ្ចូល Variables ទាំងនេះតាមរយៈ Environment Secret Management របស់ Cloud Provider (ដូចជា AWS SSM, Docker Secrets, ឬ Cloudflare Variables)។",
   codeSnippet: "# .env.example (Safe to commit to Git)\nNODE_ENV=development\nPORT=5000\nMONGODB_URI=mongodb://localhost:27017/app_dev\nJWT_ACCESS_SECRET=replace_with_min_32_bytes_random_hex_key\nJWT_REFRESH_SECRET=replace_with_min_32_bytes_random_hex_key\n\n# .gitignore (MANDATORY)\n.env\n.env.local\n.env.production",
 };
 

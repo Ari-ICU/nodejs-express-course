@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង និងស្វែងរកថត Folders",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "បង្កើត​ថត​ដដែលៗ រាយ​មាតិកា​ជាមួយ​ប្រភេទ​ឯកសារ និង​សម្អាត​ថត​បណ្ដោះអាសន្ន។",
+  summary: "Creating directories recursively, listing contents with file types, and cleaning up temporary folders.",
   codeSnippet: "import fs from \"node:fs/promises\";\n\n// Create nested directory safely\nawait fs.mkdir(\"public/uploads/avatars\", { recursive: true });\n\n// Read directory entries with types\nconst entries = await fs.readdir(\"src\", { withFileTypes: true });\nfor (const entry of entries) {\n  console.log(entry.isDirectory() ? \"📁 [DIR]\" : \"📄 [FILE]\", entry.name);\n}",
 };
 

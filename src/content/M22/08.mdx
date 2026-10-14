@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Controllers តាមរយៈ Supertest",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Testing controllers verifies that request parameters, body payloads, and query filters are processed correctly and appropriate status codes and JSON envelopes are returned. Mocking underlying service methods allows testing controller edge cases like validation errors and custom exceptions.",
+  summary: "ការធ្វើតេស្ត Controllers តាមរយៈ Supertest អនុញ្ញាតឱ្យយើងផ្ទៀងផ្ទាត់លំហូរការងារទាំងមូលរបស់ Controller៖ ការទទួល Parameters, ការហៅ Business Logic, និងការឆ្លើយតប HTTP Response Codes (ដូចជា 200 OK សម្រាប់ Read, 201 Created សម្រាប់ Create, និង 404 Not Found សម្រាប់ Resource ដែលរកមិនឃើញ)។",
   codeSnippet: "describe(\"POST /api/v1/courses\", () => {\n  it(\"should return 400 when title is missing\", async () => {\n    const invalidCourse = { price: 49.99, level: \"beginner\" };\n\n    const res = await request(app)\n      .post(\"/api/v1/courses\")\n      .send(invalidCourse)\n      .expect(400);\n\n    expect(res.body.status).toBe(\"fail\");\n    expect(res.body.message).toMatch(/title is required/i);\n  });\n});",
 };
 

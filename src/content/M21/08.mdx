@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកត់ត្រា Auth Security Schemes (Bearer JWT & Cookies)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Documenting authentication informs consumers which security schemes protect an endpoint. OpenAPI supports Bearer JWT tokens, API keys, and HTTP cookies. Setting up a `bearerAuth` security scheme in Swagger UI enables the green 'Authorize' padlock button, allowing developers to paste a JWT token and test protected endpoints live.",
+  summary: "Authentication Documentation គឺជាការកត់ត្រា Security Schemes ក្នុង OpenAPI (ដូចជា Bearer JWT តាមរយៈ `securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' } }`)។ ការកំណត់នេះបង្កើតប៊ូតុង 'Authorize' លើ Swagger UI ដែលអនុញ្ញាតឱ្យ Developer បញ្ចូល Token ម្តង ហើយតេស្តគ្រប់ Protected Endpoints ទាំងអស់បានយ៉ាងងាយស្រួល។",
   codeSnippet: "/**\n * @openapi\n * components:\n *   securitySchemes:\n *     bearerAuth:\n *       type: http\n *       scheme: bearer\n *       bearerFormat: JWT\n *       description: Enter your JWT Bearer token to authorize requests\n *\n * /api/v1/users/me:\n *   get:\n *     summary: Get current authenticated user profile\n *     tags: [Users]\n *     security:\n *       - bearerAuth: []\n *     responses:\n *       200:\n *         description: User profile retrieved successfully\n *       401:\n *         description: Unauthorized - Token missing or expired\n */",
 };
 

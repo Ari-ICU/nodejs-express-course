@@ -2,10 +2,10 @@ export const meta = {
   id: "M05-04",
   number: "04",
   title: "HTTP Methods",
-  khmerTitle: "ស្វែងយល់ពី HTTP Methods (GET, POST, PUT, PATCH, DELETE)",
+  khmerTitle: "កិរិយាស័ព្ទ HTTP (GET, POST, PUT, PATCH, DELETE)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `HTTP Methods ទំនាក់ទំនងតាមចេតនា៖ GET អានធនធានដោយគ្មានផលប៉ះពាល់ POST បង្កើតធនធានថ្មី PUT ជំនួសធនធានទាំងមូល PATCH អនុវត្តការអាប់ដេតដោយផ្នែក ហើយ DELETE លុបធនធាន។`,
+  summary: "HTTP methods communicate semantic intent: GET reads resources without side-effects, POST creates new resources, PUT replaces an entire resource, PATCH applies partial updates, and DELETE removes a resource.",
   codeSnippet: "/* HTTP Methods Semantic Mapping:\n   GET    /api/users      -> Retrieve users (Safe, Idempotent)\n   POST   /api/users      -> Create user (Non-idempotent)\n   PUT    /api/users/1    -> Replace user completely (Idempotent)\n   PATCH  /api/users/1    -> Update specific fields (e.g. name only)\n   DELETE /api/users/1    -> Remove user (Idempotent)\n*/",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Password Hashing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Password hashing transforms a plaintext password into an irreversible, fixed-length alphanumeric string using a one-way cryptographic mathematical function. Unlike encryption which is two-way and reversible with a secret key, secure hashing is permanently irreversible. Storing passwords in plaintext or using fast algorithms like MD5/SHA-1 exposes users to instant credential theft during database leaks.",
+  summary: "Password Hashing គឺជាដំណើរការបំប្លែង Plaintext Password ទៅជា String ដែលមានប្រវែងថេរ និងមិនអាចត្រឡប់ក្រោយវិញបាន (Irreversible) ដោយប្រើប្រាស់ Cryptographic One-way Function។ ខុសពី Encryption ដែលជាដំណើរការ Two-way អាច Decrypt មកវិញបានដោយ Secret Key ការ Hash ពាក្យសម្ងាត់គឺមិនអាច Reversible បានជាដាច់ខាត។ ការរក្សាទុក Password ជា Plaintext ឬប្រើ Algorithms លឿនៗដូចជា MD5/SHA-1 នឹងធ្វើឱ្យប្រឈមហានិភ័យធ្ងន់ធ្ងរនៅពេល Database ត្រូវបែកធ្លាយ (Data Breach)។",
   codeSnippet: "// Plaintext vs Irreversible One-Way Hash:\n// Plaintext: \"SecretP@ss123\" -> stored directly (FATAL SECURITY FLAW)\n// MD5/SHA256: \"SecretP@ss123\" -> fast hash (VULNERABLE to GPU rainbow tables)\n// bcrypt:    \"SecretP@ss123\" -> $2a$12$e8YkZ... (SLOW, SALTED, INDUSTRY STANDARD)\n\n// One-way verification principle:\n// We NEVER decrypt: Decrypt(hash) -> Impossible!\n// Instead we re-hash: bcrypt.compare(incomingCandidate, storedHash);",
 };
 

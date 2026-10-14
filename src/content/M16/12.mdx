@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Token Expiration និង Error Handling",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "When a JWT passes its `exp` timestamp, `jwt.verify()` throws a `TokenExpiredError`. A robust backend catches this specific error and translates it into a distinct 401 response code (e.g. `TOKEN_EXPIRED`), signaling to frontend API interceptors (like Axios) to trigger silent token refresh without interrupting the active user.",
+  summary: "ការគ្រប់គ្រង Token Expiration គឺជាគោលការណ៍គ្រឹះនៃសុវត្ថិភាព។ នៅពេល Access Token ផុតកំណត់ បណ្ណាល័យ `jsonwebtoken` នឹងបោះ `TokenExpiredError`។ Server ត្រូវចាប់ Error នេះក្នុង Global Error Handler ហើយឆ្លើយតបត្រឡប់ទៅ Frontend នូវ HTTP 401 Unauthorized ជាមួយនឹង Code `TOKEN_EXPIRED` ដើម្បីឱ្យ Frontend ដឹង និងហៅ Refresh Token Endpoint មកដូរយក Access Token ថ្មីដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "// middleware/errorHandler.js\nexport const handleJwtError = (err, req, res, next) => {\n  if (err.name === \"TokenExpiredError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_EXPIRED\",\n      message: \"Access token has expired. Please refresh your token.\",\n    });\n  }\n\n  if (err.name === \"JsonWebTokenError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_INVALID\",\n      message: \"Invalid token. Please log in again.\",\n    });\n  }\n\n  next(err);\n};",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៣ ៖ Full Auth System ជាមួយ JWT និង HttpOnly Cookies",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build a complete authentication system: registration with bcrypt hashing, login with dual JWT tokens (short-lived access token + long-lived refresh token in HttpOnly cookie), protected /me endpoint, logout (cookie invalidation and database token cleanup), forgot password with email reset token, and password reset. Serves as the authentication backbone for enterprise projects.",
+  summary: "គម្រោងទី ៣ ៖ Authentication & Authorization API គឺជាគម្រោងកសាងប្រព័ន្ធសុវត្ថិភាពពេញលេញកម្រិត Production រួមមាន User Registration, Password Hashing ជាមួយ bcrypt, JWT Access & Refresh Tokens, HttpOnly Cookie Authentication, Role-Based Access Control (RBAC), និង Password Reset Flow។",
   codeSnippet: "export const login = async ({ email, password }) => {\n  const user = await User.findOne({ email }).select(\"+password\");\n  if (!user || !(await bcrypt.compare(password, user.password))) {\n    throw new AppError(\"Invalid email or password\", 401);\n  }\n  const accessToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_ACCESS_SECRET, { expiresIn: \"15m\" });\n  const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: \"7d\" });\n  return { user: sanitizeUser(user), accessToken, refreshToken };\n};",
 };
 

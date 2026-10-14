@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្វែងយល់ពីកម្មវិធី Real-time (Polling vs WebSockets)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Traditional HTTP is a unidirectional request-response protocol: the client must initiate every interaction, and the server cannot push data proactively. While short-polling or long-polling periodically checks for updates, they create massive HTTP overhead. True real-time applications (chat, live tracking, financial tickers, collaborative editing) require persistent, bidirectional communication channels.",
+  summary: "កម្មវិធី Real-Time ទាមទារឱ្យមានការបញ្ជូនទិន្នន័យភ្លាមៗរវាង Server និង Client ដោយគ្មានភាពយឺតយ៉ាវ (Instant Data Exchange)។ បច្ចេកទេសចាស់ៗដូចជា Short Polling ឬ Long Polling បង្កើត Overhead ធ្ងន់ធ្ងរដោយសារតែ Client ត្រូវបើក HTTP Request ថ្មីជាបន្តបន្ទាប់។ ដំណោះស្រាយស្តង់ដារទំនើបគឺការប្រើប្រាស់ Persistent Full-Duplex Connection។",
   codeSnippet: "// Comparison:\n// 1. Short Polling:   Client asks every 2s: \"New data? New data? New data?\" (High overhead)\n// 2. Long Polling:    Client asks; server holds connection open until data arrives (Moderate)\n// 3. SSE:             Unidirectional server-to-client streaming over HTTP (Great for tickers)\n// 4. WebSocket:       Bi-directional, persistent TCP connection with sub-millisecond frames (Ideal for chat/gaming)",
 };
 

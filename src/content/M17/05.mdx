@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ User Profile Routes និង Self-Service Actions",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "User routes handle self-service account management, such as updating profiles, changing passwords, and viewing personal order histories. Standard authenticated users (`role: 'user'`) must have access to these routes, but must only be permitted to mutate their own account details, never other users' records.",
+  summary: "User Routes គឺជា Endpoints ដែលបម្រើឱ្យសកម្មភាពផ្ទាល់ខ្លួនរបស់អ្នកប្រើប្រាស់ (Self-Service) ដូចជា ការមើល Profile (`/api/v1/users/me`), ការកែប្រែព័ត៌មានផ្ទាល់ខ្លួន, ឬការផ្លាស់ប្តូរ Password។ ចំណុចសំខាន់គឺ Controller ត្រូវប្រើប្រាស់ `req.user.id` ដែលទាញចេញពី Authentication Middleware ដោយមិនពឹងផ្អែកលើ `req.params.id` ពី URL ឡើយ ដើម្បីការពារ IDOR (Insecure Direct Object Reference)។",
   codeSnippet: "// controllers/user.controller.js\nexport const getMyProfile = async (req, res, next) => {\n  // Always query by req.user._id, never trust client-supplied ID for \"me\" routes\n  res.json({\n    status: \"success\",\n    data: { user: req.user }\n  });\n};\n\nexport const updateMyPassword = async (req, res, next) => {\n  const { currentPassword, newPassword } = req.body;\n  const user = await User.findById(req.user._id).select(\"+password\");\n\n  if (!(await bcrypt.compare(currentPassword, user.password))) {\n    throw new AppError(\"Current password incorrect\", 400);\n  }\n\n  user.password = newPassword;\n  await user.save(); // triggers pre-save bcrypt hook\n\n  res.json({ status: \"success\", message: \"Password updated successfully\" });\n};",
 };
 

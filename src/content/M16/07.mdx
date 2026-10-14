@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធ និងទ្រឹស្តីនៃ JWT",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "A JSON Web Token (RFC 7519) is a compact, URL-safe standard for cryptographically transmitting claims between parties. A JWT consists of three base64url-encoded parts separated by dots: Header (algorithm & token type), Payload (user claims & expiration timestamp), and Signature (HMAC-SHA256 or RSA hash of header + payload signed with a server secret).",
+  summary: "JWT (JSON Web Token - RFC 7519) គឺជា Compact, URL-safe Token សម្រាប់បញ្ជាក់អត្តសញ្ញាណរវាង Client និង Server ដោយមិនចាំបាច់រក្សាទុក Session ក្នុង Database (Stateless Architecture)។ JWT មាន ៣ ផ្នែកខណ្ឌដោយសញ្ញាចុច (.) រួមមាន Header (Algorithm & Token Type), Payload (User Claims ដូចជា userId, role, exp), និង Signature (បង្កើតឡើងដោយការ Hash Header + Payload ជាមួយ Secret Key របស់ Server)។",
   codeSnippet: "// Structure of a JWT:\n// header.payload.signature\n//\n// 1. Header (base64url):   {\"alg\": \"HS256\", \"typ\": \"JWT\"}\n// 2. Payload (base64url):  {\"userId\": \"64f1a2b3...\", \"role\": \"user\", \"exp\": 1773729600}\n// 3. Signature:            HMACSHA256(base64Url(header) + \".\" + base64Url(payload), secretKey)\n\n// Example decoding in Node.js:\nimport jwt from \"jsonwebtoken\";\n\nconst token = jwt.sign({ sub: \"user_123\", role: \"editor\" }, process.env.JWT_SECRET, {\n  expiresIn: \"1h\",\n});\nconsole.log(\"Encoded JWT:\", token);",
 };
 

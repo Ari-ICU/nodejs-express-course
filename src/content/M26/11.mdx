@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ Scheduled Cron Jobs ក្នុង BullMQ (Repeatable Jobs)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Repeatable jobs execute automatically on a scheduled recurring basis using standard 5-part cron syntax (e.g. `0 0 * * *` for daily at midnight). Unlike local OS crontabs or in-process node-cron schedulers, BullMQ repeatable jobs are synchronized across cluster instances via Redis, preventing duplicate execution.",
+  summary: "Repeatable Cron Jobs ក្នុង BullMQ អនុញ្ញាតឱ្យយើងកំណត់កាលវិភាគនៃការងារដែលត្រូវរត់ជាប្រចាំ (Scheduled Tasks) ដោយប្រើ Cron Syntax (ឧ. `'0 0 * * *'` សម្រាប់ដំណើរការរៀងរាល់ពាក់កណ្តាលអធ្រាត្រ)។ វិធីនេះសមស្របបំផុតសម្រាប់កិច្ចការប្រចាំថ្ងៃដូចជា Daily Digest Emails, Database Backups, និងការសម្អាត Unverified Users។",
   codeSnippet: "// Schedule a repeatable job to run every day at midnight (UTC)\nawait reportQueue.add(\n  \"daily-sales-summary\",\n  { department: \"ecommerce\" },\n  {\n    repeat: {\n      pattern: \"0 0 * * *\", // Standard Cron: minute hour day month weekday\n    },\n  }\n);\n\nconsole.log(\"Repeatable daily job scheduled!\");",
 };
 

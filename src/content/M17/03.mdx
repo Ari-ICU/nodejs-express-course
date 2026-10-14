@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងសិទ្ធិលម្អិត (Fine-grained Permissions)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "When static roles become insufficient for complex applications, fine-grained permission systems map actions to resources using verbs like `courses:create`, `courses:publish`, or `users:ban`. An access matrix evaluates whether a user's assigned role or direct permission set contains the required resource action before proceeding.",
+  summary: "Fine-Grained Permissions គឺជាយុទ្ធសាស្ត្របំបែកសិទ្ធិអំណាចឱ្យកាន់តែលម្អិតតាមសកម្មភាពជាក់ស្តែង (ឧ. `course:create`, `course:publish`, `user:ban`) ជាជាងពឹងផ្អែកលើ Role ទាំងមូល។ វិធីនេះផ្តល់នូវភាពបត់បែនខ្ពស់ (Granular Control) សម្រាប់កម្មវិធីស្មុគស្មាញ ដែលអនុញ្ញាតឱ្យបង្កើត Custom Roles ឬកែប្រែសិទ្ធិដោយមិនបាច់ប៉ះពាល់ដល់ Core Business Logic ឡើយ។",
   codeSnippet: "// config/permissions.js\nexport const ROLE_PERMISSIONS = {\n  student: [\"courses:read\", \"enrollments:create\", \"enrollments:read_own\"],\n  instructor: [\n    \"courses:read\", \"courses:create\", \"courses:update_own\", \"courses:delete_own\",\n    \"lessons:create\", \"lessons:update_own\", \"lessons:delete_own\"\n  ],\n  admin: [\n    \"courses:read\", \"courses:create\", \"courses:update_all\", \"courses:delete_all\",\n    \"users:manage\", \"analytics:read\"\n  ]\n};\n\nexport const hasPermission = (userRole, requiredPermission) => {\n  const permissions = ROLE_PERMISSIONS[userRole] || [];\n  return permissions.includes(requiredPermission);\n};",
 };
 

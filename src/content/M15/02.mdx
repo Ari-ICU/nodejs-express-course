@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងកំហុសក្នុង Synchronous Code",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "នៅក្នុង **Synchronous Code** (កូដដែលដំណើរការតាមលំដាប់លំដោយធម្មតា) Express នឹងស្ទាក់ចាប់កំហុសដែល `throw` ដោយស្វ័យប្រវត្តិ ហើយបញ្ជូនវាទៅកាន់ Error Middleware ភ្លាមៗ។\n\nចំណុចគន្លឹះសំខាន់ៗ៖\n* **Automatic Catching**: រាល់ Error ដែលត្រូវបាន `throw` ក្នុង synchronous route handler ត្រូវបាន Express ចាប់យកដោយស្វ័យប្រវត្តិ\n* **Direct Routing**: Express បញ្ជូន Error នោះទៅកាន់ Global Error Middleware `(err, req, res, next)` ភ្លាមៗ\n* **Safe Execution**: Process របស់ Node.js មិនដួលរលំ (Crash) ឡើយនៅពេលមាន Synchronous Error កើតឡើង",
+  summary: "នៅក្នុង Synchronous Code (កូដដែលដំណើរការតាមលំដាប់លំដោយធម្មតា) Express នឹងស្ទាក់ចាប់កំហុសដែល `throw` ដោយស្វ័យប្រវត្តិ ហើយបញ្ជូនវាទៅកាន់ Error Middleware ភ្លាមៗ។\n\nឧទាហរណ៍៖\n```javascript\napp.get(\"/sync-error\", (req, res) => {\n  throw new Error(\"Something broke synchronously!\"); // Express catches this automatically!\n});\n```",
   codeSnippet: "import express from \"express\";\nconst app = express();\n\n// Synchronous route handler\napp.get(\"/api/v1/courses/sync-check\", (req, res) => {\n  if (!req.query.token) {\n    // 💡 Synchronously thrown errors are automatically caught by Express!\n    throw new Error(\"Missing required security verification token\");\n  }\n  res.json({ success: true });\n});",
 };
 

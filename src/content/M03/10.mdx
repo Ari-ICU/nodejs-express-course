@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត Custom EventEmitter Class",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការចាត់ថ្នាក់រង \`EventEmitter\` អនុញ្ញាតឱ្យអ្នកបង្កើតថ្នាក់Servicesសហគ្រាស (ឧ. សេវាបង់ប្រាក់ សេវាការជូនដំណឹង) ដែលជូនដំណឹងដល់ផ្នែកផ្សេងទៀតនៃកម្មវិធីរបស់អ្នក នៅពេលដែលការផ្លាស់ប្តូរស្ថានភាពកើតឡើង។`,
+  summary: "Subclassing `EventEmitter` allows you to create enterprise service classes (e.g. PaymentService, NotificationService) that notify other parts of your application when state changes occur.",
   codeSnippet: "import { EventEmitter } from \"node:events\";\n\nclass PaymentGateway extends EventEmitter {\n  processPayment(amount, user) {\n    // Simulate transaction\n    setTimeout(() => {\n      this.emit(\"payment:success\", { transactionId: \"TX_1092\", amount, user });\n    }, 200);\n  }\n}\n\nconst gateway = new PaymentGateway();\ngateway.on(\"payment:success\", (tx) => console.log(\"Transaction verified:\", tx));\ngateway.processPayment(99.99, \"Sokha\");",
 };
 

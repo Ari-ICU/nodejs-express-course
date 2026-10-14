@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី In-Memory Data Store (Redis)",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Redis (Remote Dictionary Server) is an open-source, in-memory key-value data structure store. Because it holds all data in RAM rather than spinning disks or flash memory, read and write operations execute in sub-millisecond speeds (over 100,000 operations per second). Redis supports versatile data types: strings, hashes, lists, sets, and sorted sets.",
+  summary: "Redis គឺជា In-Memory Key-Value Data Store ដ៏មានឥទ្ធិពលបំផុតក្នុងពិភពលោក ដែលគាំទ្រ Data Structures ជាច្រើនដូចជា Strings, Hashes, Lists, Sets, និង Sorted Sets។ Redis ដំណើរការក្នុង RAM ទាំងស្រុង ដែលផ្តល់នូវ Read/Write Latency ក្រោម 1 Millisecond និងសមស្របបំផុតសម្រាប់ Caching, Session Storage, និង Rate Limiting។",
   codeSnippet: "# Common Redis CLI commands:\nSET user:100:name \"Alice\" EX 3600  # Set key with 1-hour expiration (TTL)\nGET user:100:name                  # Retrieve value -> \"Alice\"\nDEL user:100:name                  # Delete key immediately\nKEYS course:*                      # Search course cache keys\nTTL user:100:name                  # Check remaining seconds before expiry",
 };
 

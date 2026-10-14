@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង និងត្រួតពិនិត្យ Failed Jobs (Bull Board)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "When a job exhausts all configured retry attempts, it moves to the 'failed' state with the error stack trace attached. Mounting the `Bull Board` web dashboard provides a visual admin interface to inspect failed job payloads, view error stack traces, and manually retry jobs with a single click.",
+  summary: "ការគ្រប់គ្រង Failed Jobs គឺជាការតាមដានមូលហេតុដែលនាំឱ្យ Job បរាជ័យតាមរយៈ Error Stack Trace។ ការប្រើប្រាស់ Bull Board (Dashboard GUI) អនុញ្ញាតឱ្យ Developers អាចពិនិត្យមើលស្ថានភាព Queues, មើល Payloads នៃ Failed Jobs, និងចុចប៊ូតុង Retry ឬ Clean Jobs តាមរយៈ Web Interface ប្រកបដោយភាពងាយស្រួល។",
   codeSnippet: "import { createBullBoard } from \"@bull-board/api\";\nimport { BullMQAdapter } from \"@bull-board/api/bullMQAdapter.js\";\nimport { ExpressAdapter } from \"@bull-board/express\";\n\nconst serverAdapter = new ExpressAdapter();\nserverAdapter.setBasePath(\"/admin/queues\");\n\ncreateBullBoard({\n  queues: [new BullMQAdapter(emailQueue), new BullMQAdapter(videoQueue)],\n  serverAdapter,\n});\n\n// Protect with admin auth guard and mount:\napp.use(\"/admin/queues\", protect, restrictTo(\"admin\"), serverAdapter.getRouter());",
 };
 

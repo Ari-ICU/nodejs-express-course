@@ -1,6 +1,6 @@
 /**
  * modules-26-29.mjs
- * Detailed curriculum data for Modules 26 through 29 (53 topics total)
+ * Updated with Khmer summaries
  */
 
 export const MODULES_26_29 = {
@@ -12,7 +12,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការស្វែងយល់ពី Background Jobs ក្នុង Web Backend",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Background jobs are asynchronous tasks that execute outside the critical request-response cycle of an HTTP server. Heavy computations (video transcoding, large CSV generation, external API syncs, batch emails) that take seconds or minutes to complete are moved out of HTTP handlers so users receive instant HTTP responses.",
+      "summary": "Background Jobs គឺជាការងារដែលត្រូវបានដកចេញពី HTTP Request-Response Cycle ដើម្បីដំណើរការនៅពីក្រោយខ្នង (Asynchronously)។ ជំនួសឱ្យការឱ្យ Client រង់ចាំប្រតិបត្តិការយូរៗដូចជា ការផ្ញើ Email, ការ Resize រូបភាព, ការបង្កើត PDF Reports, ឬការទូទាត់ប្រាក់ Server បញ្ជូន Job នោះទៅកាន់ Queue ហើយឆ្លើយតប HTTP Response ទៅកាន់ Client ភ្លាមៗ។",
       "tip": "If a task takes longer than 200ms to complete, offload it to a background job instead of holding the HTTP connection open.",
       "objective": "Understand why long-running computational tasks must run asynchronously in the background.",
       "expectedOutcome": "Clear criteria for identifying tasks that should be offloaded from HTTP threads.",
@@ -25,7 +25,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "មូលហេតុចម្បងដែលត្រូវប្រើប្រាស់ Background Processing",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Background jobs solve three critical production challenges: responsiveness, reliability, and scalability. Responsiveness ensures end-users experience snappy, sub-100ms API responses. Reliability ensures transient failures (e.g. SMTP outages) are automatically retried without losing user actions. Scalability allows workers to scale independently from API web servers.",
+      "summary": "អត្ថប្រយោជន៍ចម្បងនៃ Background Processing រួមមាន៖ ការកាត់បន្ថយ HTTP Latency ឱ្យនៅកម្រិតទាបបំផុត, ការការពារ Server Timeouts, ការធានាថាការងារសំខាន់ៗមិនត្រូវបាត់បង់នៅពេល Server ជួបបញ្ហា (Fault Tolerance), និងលទ្ធភាពកំណត់ចំនួន Concurrency ឱ្យសមស្របតាមធនធាន Server។",
       "tip": "Separating API web servers from background workers lets you scale worker CPU independently during heavy batch workloads without impacting web API throughput.",
       "objective": "Analyze responsiveness, reliability, and resource isolation benefits of job architectures.",
       "expectedOutcome": "Understanding of enterprise asynchronous job decoupling and fault tolerance.",
@@ -38,7 +38,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ Message Queue (FIFO, Priority, Dead Letter)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "A Message Queue acts as a durable buffer between job producers (Express API) and consumers (background workers). Queues adhere to First-In-First-Out (FIFO) ordering by default, but support priority scheduling (e.g. password resets jump ahead of marketing newsletters) and Dead Letter Queues (DLQ) for isolating permanently failing jobs.",
+      "summary": "Message Queue ដំណើរការតាមគោលការណ៍ FIFO (First-In, First-Out) ដោយ Producer បន្ថែមសារ (Enqueue) ចូលក្នុងជួរ ហើយ Worker ទាញយកសារ (Dequeue) មកដំណើរការ។ ប្រព័ន្ធ Queue ទំនើបផ្តល់នូវសមត្ថភាពគាំទ្រ Priority Queues, Delayed Jobs, Job Deduplication, និង Dead Letter Queues សម្រាប់គ្រប់គ្រង Jobs ដែលបរាជ័យច្រើនដង។",
       "tip": "Use Dead Letter Queues (DLQ) to capture jobs that failed all retry attempts so developers can inspect error payloads and replay them once fixed.",
       "objective": "Master message queue patterns: FIFO ordering, priority queues, and dead letter queues.",
       "expectedOutcome": "Architectural blueprint for reliable distributed task queues.",
@@ -51,7 +51,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "តួនាទីរបស់ Redis ក្នុងប្រព័ន្ធ Message Queues",
       "type": "concept",
       "codeLanguage": "bash",
-      "summary": "Redis is the industry standard backing store for Node.js message queues because of its atomic data structures (`LPUSH`, `BRPOP`, `ZADD`). In-memory storage provides microsecond task scheduling, while Redis Streams and Pub/Sub primitives ensure guaranteed at-least-once message delivery across clustered workers.",
+      "summary": "Redis ដើរតួជា Engine ដ៏មានល្បឿនលឿន និងមានស្ថេរភាពបំផុតសម្រាប់ Message Queues។ តាមរយៈ Redis Lists, Streams, និង Sorted Sets រួមជាមួយ Pub/Sub និង Atomic Lua Scripts Redis ផ្តល់នូវ throughput ខ្ពស់រាប់ម៉ឺន Jobs ក្នុងមួយវិនាទី និងធានាថាមិនមាន Job ពីរត្រូវ Worker ដំណើរការជាន់គ្នាឡើយ។",
       "tip": "Enable Redis AOF (Append-Only File) persistence (`appendonly yes`) in production so pending queue jobs survive unexpected Redis server restarts.",
       "objective": "Understand how Redis atomic data structures power distributed message queues.",
       "expectedOutcome": "Confidence configuring Redis as a high-throughput job queue engine.",
@@ -64,7 +64,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការស្វែងយល់ពីបណ្ណាល័យ BullMQ ទំនើប",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "BullMQ is the fastest, most reliable, TypeScript-native Redis-based queue library for Node.js. It features automatic parent-child job flows, rate-limited queues, concurrency controls, cron-based repeatable scheduling, sandboxed worker processes, and pause/resume capabilities.",
+      "summary": "BullMQ គឺជាបណ្ណាល័យ Node.js/TypeScript ឈានមុខគេសម្រាប់គ្រប់គ្រង Distributed Message Queues និង Scheduled Tasks លើ Redis។ វាផ្តល់នូវ Core Abstractions ចំនួន ៣៖ `Queue` (សម្រាប់ Producers បន្ថែម Jobs), `Worker` (សម្រាប់ដំណើរការ Business Logic), និង `QueueEvents` (សម្រាប់ស្តាប់ស្ថានភាពដូចជា completed ឬ failed)។",
       "tip": "Use BullMQ instead of the legacy 'bull' library. BullMQ is written from scratch in modern TypeScript with better Redis Stream support and lower memory overhead.",
       "objective": "Understand the core architecture and features of the BullMQ queue system.",
       "expectedOutcome": "Familiarity with BullMQ Queue, Worker, and QueueEvents abstractions.",
@@ -77,7 +77,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការបង្កើត Job Producer ដើម្បីបញ្ជូន Tasks ទៅកាន់ Queue",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "A producer is any service that constructs and pushes tasks into a BullMQ queue using `queue.add(name, data, opts)`. The Express controller or service layer functions as the producer, submitting jobs with options such as retry counts, exponential backoff, and execution delays.",
+      "summary": "Job Producers គឺជាកូដដែលដំណើរការក្នុង Express Controllers ឬ Services។ នៅពេលមាន Action កើតឡើង (ដូចជា សិស្សចុះឈ្មោះរៀន Course ជោគជ័យ) Producer ហៅ `await emailQueue.add('sendWelcomeEmail', payload, options)` ដោយកំណត់ជម្រើសដូចជា Priority, Delay, ឬ Retry Options។",
       "tip": "Always pass serializable JSON data (strings, numbers, plain objects) into `queue.add()` — never pass complex class instances or database connection handles.",
       "objective": "Construct BullMQ producer utilities pushing payloads with retry options.",
       "expectedOutcome": "Fast job creation that returns immediate HTTP confirmation to clients.",
@@ -90,7 +90,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការបង្កើត Background Worker ដើម្បីទាញយក និងដំណើរការ Jobs",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "A Worker is a background process that listens to a specific BullMQ queue and processes incoming jobs. Workers run in separate Node.js processes or separate Docker containers, ensuring CPU-heavy job execution never impacts the responsiveness of user-facing Express API servers.",
+      "summary": "Background Workers គឺជា Process ដាច់ដោយឡែក (ឬ Background Thread) ដែលដំណើរការ `new Worker(queueName, processorFn, { connection })`។ Worker នឹងទាញយក Jobs ពី Redis ដោយស្វ័យប្រវត្តិ និងដំណើរការ Task តាមរយៈ Concurrency ដែលបានកំណត់ (ឧ. ដំណើរការ 5 Jobs ស្របគ្នា) ដោយមិនរំខានដល់ Main HTTP Server ឡើយ។",
       "tip": "Set `concurrency: 5` (or match your server CPU cores) in worker options to process multiple jobs simultaneously on a single worker instance.",
       "objective": "Build dedicated BullMQ worker processes with concurrency configuration.",
       "expectedOutcome": "Asynchronous worker consuming and processing jobs concurrently in the background.",
@@ -103,7 +103,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការតាមដាន Job Progress និងការបញ្ជូនទិន្នន័យត្រឡប់មកវិញ",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "During execution, long-running jobs can report real-time progress percentages using `job.updateProgress(percent)`. Workers return a final result object upon completion, or throw an error to signal failure. Clients can query job progress via polling or real-time Socket.IO broadcasts.",
+      "summary": "Job Processing Lifecycle រួមមានដំណាក់កាលសំខាន់ៗ៖ Waiting, Active, Completed, Failed, និង Delayed។ ក្នុងអំឡុងពេលដំណើរការ Worker អាចរាយការណ៍អំពី Progress តាមរយៈ `job.updateProgress(percentage)` ដែលអនុញ្ញាតឱ្យ Frontend អាចបង្ហាញ Progress Bar ដល់ User បានយ៉ាងរលូន។",
       "tip": "Emit `job.updateProgress()` during multi-step jobs so frontend progress bars can update dynamically via WebSockets.",
       "objective": "Track and broadcast job execution progress in real-time.",
       "expectedOutcome": "Granular progress monitoring for long-running backend processes.",
@@ -116,7 +116,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "យុទ្ធសាស្ត្រ Retry ជាមួយ Exponential Backoff",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "External networks and APIs experience transient glitches (rate limits, timeouts, temporary 503s). Configuring automatic retries with Exponential Backoff (`2s`, `4s`, `8s`, `16s`) ensures that temporary network drops resolve automatically without dropping messages or spamming failing endpoints.",
+      "summary": "Retry Strategies គឺជាការកំណត់ចំនួនដងដែល Job គួរដំណើរការឡើងវិញនៅពេលជួបប្រទះ Network Errors ឬ 3rd-party Outages។ តាមរយៈការកំណត់ Exponential Backoff (ឧ. `attempts: 5, backoff: { type: 'exponential', delay: 2000 }`) BullMQ នឹងពន្យារពេល Retry ជាបន្តបន្ទាប់ (2s, 4s, 8s, 16s...) ជៀសវាងការ Spam Server ខាងក្រៅ។",
       "tip": "Always use exponential backoff rather than fixed delay retries — exponential backoff gives recovering third-party servers breathing room to stabilize.",
       "objective": "Configure resilient automated retry policies with exponential backoff.",
       "expectedOutcome": "Automated self-healing job execution resilient to network interruptions.",
@@ -129,7 +129,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការគ្រប់គ្រង និងត្រួតពិនិត្យ Failed Jobs (Bull Board)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "When a job exhausts all configured retry attempts, it moves to the 'failed' state with the error stack trace attached. Mounting the `Bull Board` web dashboard provides a visual admin interface to inspect failed job payloads, view error stack traces, and manually retry jobs with a single click.",
+      "summary": "ការគ្រប់គ្រង Failed Jobs គឺជាការតាមដានមូលហេតុដែលនាំឱ្យ Job បរាជ័យតាមរយៈ Error Stack Trace។ ការប្រើប្រាស់ Bull Board (Dashboard GUI) អនុញ្ញាតឱ្យ Developers អាចពិនិត្យមើលស្ថានភាព Queues, មើល Payloads នៃ Failed Jobs, និងចុចប៊ូតុង Retry ឬ Clean Jobs តាមរយៈ Web Interface ប្រកបដោយភាពងាយស្រួល។",
       "tip": "Protect your Bull Board dashboard route (`/admin/queues`) behind admin authentication and IP whitelisting in production.",
       "objective": "Monitor failed jobs and mount Bull Board UI inside an Express application.",
       "expectedOutcome": "Visual web dashboard for queue inspection, metrics, and manual job retries.",
@@ -142,7 +142,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ការកំណត់ Scheduled Cron Jobs ក្នុង BullMQ (Repeatable Jobs)",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Repeatable jobs execute automatically on a scheduled recurring basis using standard 5-part cron syntax (e.g. `0 0 * * *` for daily at midnight). Unlike local OS crontabs or in-process node-cron schedulers, BullMQ repeatable jobs are synchronized across cluster instances via Redis, preventing duplicate execution.",
+      "summary": "Repeatable Cron Jobs ក្នុង BullMQ អនុញ្ញាតឱ្យយើងកំណត់កាលវិភាគនៃការងារដែលត្រូវរត់ជាប្រចាំ (Scheduled Tasks) ដោយប្រើ Cron Syntax (ឧ. `'0 0 * * *'` សម្រាប់ដំណើរការរៀងរាល់ពាក់កណ្តាលអធ្រាត្រ)។ វិធីនេះសមស្របបំផុតសម្រាប់កិច្ចការប្រចាំថ្ងៃដូចជា Daily Digest Emails, Database Backups, និងការសម្អាត Unverified Users។",
       "tip": "BullMQ repeatable jobs automatically deduplicate across multiple server instances — only ONE worker in your cluster will run the scheduled job at midnight.",
       "objective": "Configure cluster-safe repeatable scheduled jobs using cron expressions.",
       "expectedOutcome": "Reliable scheduled tasks (daily digest, database vacuum, report exports).",
@@ -155,7 +155,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "ស្ថាបត្យកម្ម Email Queue System ពេញលេញក្នុង Production",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "An enterprise email queue architecture combines an Express producer, a Redis buffer, and dedicated Nodemailer workers. By segregating queues into high-priority transactional streams (password resets) and lower-priority batch streams (marketing campaigns), mission-critical emails are never delayed by bulk marketing broadcasts.",
+      "summary": "ស្ថាបត្យកម្ម Email Queue System ពេញលេញក្នុង Production រួមបញ្ចូលគ្នានូវ Express Controller, Redis Connection, BullMQ Email Queue, និង Dedicated Worker Process ជាមួយ Nodemailer។ ប្រព័ន្ធនេះធានាបាននូវការឆ្លើយតប HTTP Response ក្រោម 50ms និងការធានាថា Email គ្រប់ច្បាប់ត្រូវបានបញ្ជូនជោគជ័យ ១០០%។",
       "tip": "Create two separate queues: `email:critical` (concurrency 10) and `email:bulk` (concurrency 2 with rate limits) to guarantee zero latency on password resets.",
       "objective": "Architect a production-grade multi-tier email processing queue.",
       "expectedOutcome": "Decoupled, fault-tolerant email dispatch system with zero impact on HTTP latency.",
@@ -170,7 +170,7 @@ export const MODULES_26_29 = {
       "khmerTitle": "រចនាសម្ព័ន្ធ Folder ស្តង់ដារសម្រាប់ Enterprise Backend",
       "type": "architecture",
       "codeLanguage": "bash",
-      "summary": "A scalable backend codebase enforces strict Separation of Concerns (SoC). Organizing code into discrete layers (`config`, `routes`, `controllers`, `services`, `models`, `middleware`, `validators`, `utils`) prevents messy monolithic files and ensures code remains testable and maintainable as the project grows.",
+      "summary": "រចនាសម្ព័ន្ធ Folder ស្តង់ដារកម្រិត Enterprise (Clean Architecture) បែងចែកកូដជាស្រទាប់ច្បាស់លាស់ (Separation of Concerns) រួមមាន `src/routes`, `src/controllers`, `src/services`, `src/models`, `src/middlewares`, `src/validators`, `src/utils`, និង `src/config`។ រចនាសម្ព័ន្ធនេះជួយឱ្យគម្រោងងាយស្រួល Maintain, Test, និង Scale ជាមួយ Developers ច្រើននាក់។",
       "tip": "Keep business logic strictly inside `services/` and HTTP protocol logic inside `controllers/`. This makes swapping Express for Fastify or writing unit tests trivial.",
       "objective": "Organize a modular, production-ready directory structure for Node.js Express projects.",
       "expectedOutcome": "Standardized enterprise project layout adopted across all features.",
@@ -183,30 +183,11 @@ export const MODULES_26_29 = {
       "khmerTitle": "តួនាទី និងការរៀបចំ Routes Layer",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Routes layer defines the API's public URL surface and maps incoming HTTP verbs and paths to corresponding controller handlers. Route files should remain lean: they declare paths, mount validation and auth middleware, and delegate immediately to controllers without executing business logic.",
+      "summary": "Routes Layer ទទួលខុសត្រូវលើការផ្គូផ្គង HTTP Path និង Verb ទៅកាន់ Handler Function សមស្រប (`router.get()`, `router.post()`)។ Routes ត្រូវតែរក្សាភាពស្អាត (Skinny Routes) ដោយគ្រាន់តែភ្ជាប់ Middleware (Auth, Validation) និងហៅ Controller Method ប៉ុណ្ណោះ ដោយគ្មាន Business Logic ឬ Database Queries ឡើយ។",
       "tip": "Group related endpoints using `router.route('/path').get(...).post(...)` for clean, readable endpoint declarations.",
       "objective": "Structure declarative Express routers free of embedded business logic.",
       "expectedOutcome": "Clean, readable route definitions acting purely as HTTP routing maps.",
-      "codeSnippet": `// routes/course.routes.js
-import express from "express";
-import { protect } from "../middleware/auth.js";
-import { restrictTo } from "../middleware/role.js";
-import { validate } from "../middleware/validate.js";
-import { createCourseSchema } from "../validators/course.validator.js";
-import * as courseController from "../controllers/course.controller.js";
-
-const router = express.Router();
-
-router.route("/")
-  .get(courseController.getAllCourses)
-  .post(protect, restrictTo("instructor", "admin"), validate(createCourseSchema), courseController.createCourse);
-
-router.route("/:id")
-  .get(courseController.getCourseById)
-  .patch(protect, restrictTo("instructor", "admin"), courseController.updateCourse)
-  .delete(protect, restrictTo("instructor", "admin"), courseController.deleteCourse);
-
-export default router;`
+      "codeSnippet": "// routes/course.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createCourseSchema } from \"../validators/course.validator.js\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(protect, restrictTo(\"instructor\", \"admin\"), validate(createCourseSchema), courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(protect, restrictTo(\"instructor\", \"admin\"), courseController.updateCourse)\n  .delete(protect, restrictTo(\"instructor\", \"admin\"), courseController.deleteCourse);\n\nexport default router;"
     },
     {
       "id": "M27-03",
@@ -215,25 +196,11 @@ export default router;`
       "khmerTitle": "តួនាទី និងការរៀបចំ Controllers Layer",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Controllers handle the HTTP transport protocol. A controller extracts inputs from `req.body`, `req.query`, and `req.params`, invokes appropriate service layer methods to perform work, and formats the output into standard JSON envelopes with correct HTTP status codes (200, 201, 204).",
+      "summary": "Controllers Layer ទទួលខុសត្រូវលើ HTTP Lifecycle៖ ទទួល Request (params, query, body), ហៅ Services ដើម្បីអនុវត្ត Business Logic, និងរៀបចំ HTTP Response (Status Code, JSON Envelope) ត្រឡប់ទៅកាន់ Client វិញ។ Controller មិនត្រូវសរសេរ Database Query ដោយផ្ទាល់ឡើយ។",
       "tip": "Never write raw database queries (`Course.find()`) directly inside controllers — delegate queries to the service layer to keep controllers focused solely on HTTP.",
       "objective": "Implement clean controllers translating HTTP requests to service calls.",
       "expectedOutcome": "Lean controllers decoupled from database drivers and raw business logic.",
-      "codeSnippet": `// controllers/course.controller.js
-import * as courseService from "../services/course.service.js";
-
-export const createCourse = async (req, res, next) => {
-  try {
-    const course = await courseService.createCourse(req.body, req.user._id);
-
-    res.status(201).json({
-      status: "success",
-      data: { course },
-    });
-  } catch (err) {
-    next(err);
-  }
-};`
+      "codeSnippet": "// controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\n\nexport const createCourse = async (req, res, next) => {\n  try {\n    const course = await courseService.createCourse(req.body, req.user._id);\n\n    res.status(201).json({\n      status: \"success\",\n      data: { course },\n    });\n  } catch (err) {\n    next(err);\n  }\n};"
     },
     {
       "id": "M27-04",
@@ -242,28 +209,11 @@ export const createCourse = async (req, res, next) => {
       "khmerTitle": "តួនាទី និងការរៀបចំ Services Layer (Core Business Logic)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Service layer contains the core business logic of the application. Services know nothing about Express, `req`, or `res`. They receive plain JavaScript objects, perform computations, execute database operations, dispatch emails, and return data or throw errors. This makes services 100% reusable across CLI scripts, tests, and API routes.",
+      "summary": "Services Layer គឺជាបេះដូងនៃកម្មវិធី (Core Business Logic)។ Service Methods ដំណើរការលើ Domain Rules, គណនាទិន្នន័យ, ទំនាក់ទំនងជាមួយ Models (Mongoose), និងហៅ External Services (Stripe, Cloudflare R2)។ Services ត្រូវតែឯករាជ្យពី HTTP Objects (`req`, `res`) ដែលធ្វើឱ្យពួកវាអាច Unit Test បានយ៉ាងងាយស្រួល។",
       "tip": "Because services do not touch `req` or `res`, you can unit test them without needing Supertest or HTTP simulation.",
       "objective": "Encapsulate business operations inside transport-agnostic service functions.",
       "expectedOutcome": "Portable, testable business logic isolated from HTTP routing frameworks.",
-      "codeSnippet": `// services/course.service.js
-import { Course } from "../models/course.model.js";
-import { AppError } from "../utils/AppError.js";
-
-export const createCourse = async (courseData, instructorId) => {
-  // Business rule: Check duplicate title
-  const existing = await Course.findOne({ title: courseData.title });
-  if (existing) {
-    throw new AppError("A course with this title already exists", 409);
-  }
-
-  const course = await Course.create({
-    ...courseData,
-    instructor: instructorId,
-  });
-
-  return course;
-};`
+      "codeSnippet": "// services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const createCourse = async (courseData, instructorId) => {\n  // Business rule: Check duplicate title\n  const existing = await Course.findOne({ title: courseData.title });\n  if (existing) {\n    throw new AppError(\"A course with this title already exists\", 409);\n  }\n\n  const course = await Course.create({\n    ...courseData,\n    instructor: instructorId,\n  });\n\n  return course;\n};"
     },
     {
       "id": "M27-05",
@@ -272,28 +222,11 @@ export const createCourse = async (courseData, instructorId) => {
       "khmerTitle": "តួនាទី និងការរៀបចំ Models Layer (Mongoose Schemas)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Models layer defines the database schema, data validation rules, indexes, virtuals, and lifecycle hooks (pre/post middleware). Models represent the single source of truth for database structure and data integrity.",
+      "summary": "Models Layer កំណត់រចនាសម្ព័ន្ធទិន្នន័យតាមរយៈ Mongoose Schemas រួមមាន Field Types, Validation Rules, Default Values, Indexes, Pre/Post Hooks, និង Custom Instance/Static Methods ដើម្បីធានានូវ Data Integrity មុនពេលរក្សាទុកក្នុង MongoDB។",
       "tip": "Encapsulate instance-specific helper logic (like password hashing or token verification) as Mongoose instance methods directly on the model.",
       "objective": "Design cohesive Mongoose schemas with validation, indexes, and virtual fields.",
       "expectedOutcome": "Robust data models enforcing schema integrity at the database layer.",
-      "codeSnippet": `// models/enrollment.model.js
-import mongoose from "mongoose";
-
-const enrollmentSchema = new mongoose.Schema({
-  student: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  course: { type: mongoose.Schema.Types.ObjectId, ref: "Course", required: true },
-  enrolledPrice: { type: Number, required: true },
-  status: {
-    type: String,
-    enum: ["active", "completed", "cancelled"],
-    default: "active",
-  },
-  progress: { type: Number, min: 0, max: 100, default: 0 },
-}, { timestamps: true });
-
-enrollmentSchema.index({ student: 1, course: 1 }, { unique: true });
-
-export const Enrollment = mongoose.model("Enrollment", enrollmentSchema);`
+      "codeSnippet": "// models/enrollment.model.js\nimport mongoose from \"mongoose\";\n\nconst enrollmentSchema = new mongoose.Schema({\n  student: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  course: { type: mongoose.Schema.Types.ObjectId, ref: \"Course\", required: true },\n  enrolledPrice: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"active\", \"completed\", \"cancelled\"],\n    default: \"active\",\n  },\n  progress: { type: Number, min: 0, max: 100, default: 0 },\n}, { timestamps: true });\n\nenrollmentSchema.index({ student: 1, course: 1 }, { unique: true });\n\nexport const Enrollment = mongoose.model(\"Enrollment\", enrollmentSchema);"
     },
     {
       "id": "M27-06",
@@ -302,7 +235,7 @@ export const Enrollment = mongoose.model("Enrollment", enrollmentSchema);`
       "khmerTitle": "តួនាទី និងការរៀបចំ Middleware Layer (Auth, Guard, Logging)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Middleware functions execute during the lifecycle of an HTTP request before the controller is reached. They handle cross-cutting concerns: authenticating tokens, verifying role permissions, logging requests, parsing body limits, and catching uncaught exceptions in global error handlers.",
+      "summary": "Middleware Layer ផ្ទុកនូវ Reusable Functions ដែលដំណើរការក្នុង Request Pipeline រួមមាន Authentication (`protect`), Authorization (`restrictTo`), Error Handling, Request Logging (Morgan), Security Headers (Helmet), និង Rate Limiting។",
       "tip": "Keep middleware focused on a single responsibility. Create separate middleware for authentication (`protect`) and role checking (`restrictTo`) rather than combining them.",
       "objective": "Organize reusable Express middleware for security, logging, and access control.",
       "expectedOutcome": "Modular middleware pipeline intercepting and validating requests cleanly.",
@@ -315,21 +248,11 @@ export const Enrollment = mongoose.model("Enrollment", enrollmentSchema);`
       "khmerTitle": "តួនាទី និងការរៀបចំ Validators Layer (Zod Schemas)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Validators layer houses Zod or Joi schemas defining the contract for every incoming request body, query parameter, and route parameter. Grouping validation schemas into dedicated files keeps controllers clean and allows schemas to be reused across API endpoints and tests.",
+      "summary": "Validators Layer ប្រើប្រាស់ Schema Validation Libraries (ដូចជា Zod) ដើម្បី Validate Request Payloads មុនពេលវាទៅដល់ Controller។ វិធីនេះធានាថាទិន្នន័យដែលចូលមកមាន Type ត្រឹមត្រូវ និងទប់ស្កាត់កំហុសតាំងពីជំហានដំបូង។",
       "tip": "Name validation schemas descriptively: `createCourseSchema`, `updateCourseSchema`, `queryCoursesSchema`.",
       "objective": "Define structured request validation schemas separate from route handlers.",
       "expectedOutcome": "Clear, declarative data contracts isolating validation logic.",
-      "codeSnippet": `// validators/course.validator.js
-import { z } from "zod";
-
-export const createCourseSchema = z.object({
-  body: z.object({
-    title: z.string().min(3).max(100),
-    price: z.number().nonnegative(),
-    level: z.enum(["beginner", "intermediate", "advanced"]),
-    category: z.string().min(1),
-  }),
-});`
+      "codeSnippet": "// validators/course.validator.js\nimport { z } from \"zod\";\n\nexport const createCourseSchema = z.object({\n  body: z.object({\n    title: z.string().min(3).max(100),\n    price: z.number().nonnegative(),\n    level: z.enum([\"beginner\", \"intermediate\", \"advanced\"]),\n    category: z.string().min(1),\n  }),\n});"
     },
     {
       "id": "M27-08",
@@ -338,7 +261,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Shared Utilities និង Helper Functions",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Utils directory contains generic, reusable helper functions and classes that are domain-independent. Typical utilities include the `AppError` class, async handler wrappers (`catchAsync`), date formatters, cryptographic helpers, and string transformers.",
+      "summary": "Utils Layer ផ្ទុកនូវ Pure Helper Functions ដែលអាចប្រើប្រាស់ឡើងវិញបានពាសពេញគម្រោង ដូចជា `AppError` class, API Response Formatter, Date Helpers, Token Generators, និង Currency Formatters។",
       "tip": "Only place functions in `utils/` if they are pure and have no direct dependency on database models or business rules.",
       "objective": "Build a shared utility toolbox for error handling, formatting, and async flow.",
       "expectedOutcome": "Clean, tested utility functions eliminating duplicate code across the project.",
@@ -351,7 +274,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការគ្រប់គ្រង Centralized Configuration និង Environment Validation",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Config directory centralizes application settings and environment variables. Instead of scattering `process.env.VAR` references across dozens of files, a central `config/env.js` file reads, validates (via Zod), and exports typed configuration objects, failing fast at startup if any critical secret is missing.",
+      "summary": "Config Layer គ្រប់គ្រង Centralized Application Configuration។ វាទាញយក Environment Variables ពី `process.env`, Validate វត្តមានរបស់ Variables សំខាន់ៗ (ជាមួយ Zod ឬ Envalid), និង Export ជា Type-safe Config Object ជៀសវាងការហៅ `process.env` រាយប៉ាយក្នុងកូដ។",
       "tip": "Validate your environment variables with Zod at startup so the server crashes immediately with a clear error message rather than failing mysteriously hours later.",
       "objective": "Centralize and validate all application configuration parameters.",
       "expectedOutcome": "Fail-fast configuration management preventing runtime crashes from missing environment variables.",
@@ -364,7 +287,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Database Connection Pool និង Lifecycle Hooks",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Database configuration module manages the MongoDB connection lifecycle. It configures connection pooling (`maxPoolSize`), handles initial connect attempts with retries, and registers event listeners for disconnects, reconnections, and errors.",
+      "summary": "Database Connection Layer គ្រប់គ្រង Lifecycle នៃការភ្ជាប់ MongoDB តាមរយៈ Mongoose Pool រួមមាន Connection Event Listeners (`connected`, `error`, `disconnected`), Reconnect Strategies, និង Graceful Disconnect នៅពេល Server បិទ។",
       "tip": "Set `maxPoolSize: 50` in Mongoose connection options for high-traffic servers to handle concurrent queries efficiently without socket starvation.",
       "objective": "Build a resilient MongoDB connection module with pooling and lifecycle logging.",
       "expectedOutcome": "Robust database connection singleton with auto-reconnect resilience.",
@@ -377,7 +300,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Jobs Directory សម្រាប់ Background Queues និង Workers",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The Jobs directory groups queue definitions, job producers, and worker processors. Keeping job definitions organized by domain (e.g. `jobs/email.job.js`, `jobs/report.job.js`) provides clear separation between scheduled cron tasks and transactional queue processing.",
+      "summary": "Jobs Layer ផ្ទុកនូវរចនាសម្ព័ន្ធគ្រប់គ្រង Background Processing រួមមាន Queue Definitions, Job Schedulers, និង Worker Processors សម្រាប់ BullMQ ដោយបំបែកដាច់ពី Web Server Process។",
       "tip": "Separate your worker startup script (`npm run worker`) from your web server startup (`npm start`) so they can run in isolated Docker containers.",
       "objective": "Organize background queue producers and worker processors into dedicated job modules.",
       "expectedOutcome": "Structured background task architecture supporting independent worker scaling.",
@@ -390,19 +313,11 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Tests Directory (Unit, Integration, E2E)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Structuring tests into `unit/` (testing pure services and utilities in memory) and `integration/` (testing full HTTP routes with Supertest and MongoDB Memory Server) ensures quick test execution during development and comprehensive test coverage before production deployments.",
+      "summary": "Tests Layer រៀបចំ Test Suites ជាលក្ខណៈប្រព័ន្ធ រួមមាន `unit/` (សម្រាប់ Services និង Utilities), `integration/` (សម្រាប់ API Endpoints ជាមួយ Supertest), និង `fixtures/` (សម្រាប់ Mock Data និង Database Seeders)។",
       "tip": "Keep unit tests fast (<1s total) so developers run them continuously on every file save.",
       "objective": "Structure scalable test directories separating fast unit tests from comprehensive integration suites.",
       "expectedOutcome": "Organized test suites matching the backend folder architecture.",
-      "codeSnippet": `tests/
-├── setup.js            # Vitest global setup (in-memory MongoDB)
-├── helpers/            # getAuthToken(), createTestUser()
-├── unit/               # Fast, mocked tests
-│   ├── services/       # course.service.test.js
-│   └── utils/
-└── integration/        # Route & HTTP tests
-    ├── auth.test.js
-    └── courses.test.js`
+      "codeSnippet": "tests/\n├── setup.js            # Vitest global setup (in-memory MongoDB)\n├── helpers/            # getAuthToken(), createTestUser()\n├── unit/               # Fast, mocked tests\n│   ├── services/       # course.service.test.js\n│   └── utils/\n└── integration/        # Route & HTTP tests\n    ├── auth.test.js\n    └── courses.test.js"
     },
     {
       "id": "M27-13",
@@ -411,7 +326,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំឯកសារគម្រោង (README, ARCHITECTURE, OpenAPI)",
       "type": "architecture",
       "codeLanguage": "markdown",
-      "summary": "Professional codebases include standard documentation: a `README.md` with setup and environment instructions, an `ARCHITECTURE.md` explaining data flow and module responsibilities, and an OpenAPI contract (`swagger.json`). This ensures frictionless onboarding for new engineers.",
+      "summary": "Documentation Layer ផ្ទុកនូវឯកសារគម្រោងសំខាន់ៗ រួមមាន OpenAPI/Swagger Specs, Architecture Diagrams, Database Schema Documentation, និង Onboarding Guides សម្រាប់ Developer ថ្មី។",
       "tip": "Include a one-line 'Quick Start' in your README with Docker Compose commands so new developers can boot the entire stack in under 2 minutes.",
       "objective": "Author comprehensive project documentation covering setup, architecture, and deployment.",
       "expectedOutcome": "Professional documentation guiding new team members through local setup and design decisions.",
@@ -424,7 +339,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការគ្រប់គ្រងបរិស្ថាន Development, Staging, Production",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Applications behave differently across environments: development enables verbose error traces and mock SMTP servers; staging mirrors production configuration against isolated test databases; production enforces strict SSL, rate limiting, and structured JSON logging.",
+      "summary": "Environment Configuration បែងចែកការកំណត់រចនាសម្ព័ន្ធដាច់ដោយឡែករវាង Development, Staging, និង Production (ដូចជា Log Levels, CORS Whitelists, Database URIs, និង Cache TTLs) ដោយផ្អែកលើ `NODE_ENV`។",
       "tip": "Never conditionally check `if (env === 'dev')` everywhere in code. Instead, define an environment configuration matrix that supplies environment-specific constants cleanly.",
       "objective": "Architect multi-stage environment configurations with environment-specific behaviors.",
       "expectedOutcome": "Clean environment segregation without hardcoded stage checks.",
@@ -437,7 +352,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ស្ថាបត្យកម្ម Scalable Backend កម្រិត Enterprise (Full Architecture Blueprint)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "An enterprise-grade scalable backend unites the layered architecture: Nginx reverse proxy load balancer -> stateless Express API servers (clustered horizontally) -> Redis caching & queue layer -> MongoDB database cluster with replica sets. Background workers scale independently to handle async tasks without consuming API web server resources.",
+      "summary": "ស្ថាបត្យកម្ម Scalable Backend កម្រិត Enterprise រួមបញ្ចូលគ្នានូវ Modular Layered Architecture ជាមួយ Stateless Web Instances, Shared Redis Cache & Queues, MongoDB Replica Set, និង Centralized Observability ត្រៀមខ្លួនសម្រាប់ចរាចរណ៍កម្រិតខ្ពស់។",
       "tip": "Design your Express servers to be 100% stateless — store no session data in local server RAM. This allows you to add or remove servers behind a load balancer with zero user disruption.",
       "objective": "Synthesize all backend layers into an enterprise-scale architecture blueprint.",
       "expectedOutcome": "Production-ready, highly available, and scalable backend architecture design.",
@@ -452,7 +367,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ភាពខុសគ្នារវាងបរិស្ថាន Development និង Production",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Development environments prioritize developer velocity: hot-reloading (nodemon/tsx), detailed error stack traces, mock SMTP inboxes, and verbose console logs. Production environments prioritize security, uptime, performance, and fault tolerance: optimized minified builds, structured JSON logging, strict CORS, HTTPS encryption, and sanitized error envelopes.",
+      "summary": "ភាពខុសគ្នារវាង Development និង Production Environments៖ ក្នុង Development ការផ្តោតគឺលើ Developer Velocity (Hot-reloading, Verbose Logs, Detailed Stack Traces)។ ក្នុង Production ការផ្តោតគឺលើ Security, Reliability, Performance, Minimized Latency, Silent Stack Traces, និង Graceful Error Recovery។",
       "tip": "Set `NODE_ENV=production` on production servers — Express and many packages automatically enable performance caching and suppress leaking internal stack traces when this flag is set.",
       "objective": "Contrast operational requirements between development and production environments.",
       "expectedOutcome": "Clear strategy for environment-dependent performance and security behaviors.",
@@ -465,7 +380,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការគ្រប់គ្រង Environment Variables ក្នុង Production",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "In production, environment variables should be injected directly by the hosting platform (Docker environment flags, Kubernetes secrets, or VPS systemd environment configurations) rather than read from physical `.env` files on disk. This prevents secrets from persisting in container images or leaking via file permissions.",
+      "summary": "ការគ្រប់គ្រង Environment Variables ក្នុង Production តម្រូវឱ្យប្រើប្រាស់ Secret Management Solutions ដូចជា Docker Secrets, AWS Systems Manager Parameter Store, ឬ Cloudflare Environment Variables ដោយមិនត្រូវផ្ទុកឯកសារ `.env` ក្នុង Container Images ឬ Git Repositories ជាដាច់ខាត។",
       "tip": "Never commit `.env` files into Docker images or Git repositories. Use Docker Compose `environment:` or pass `--env-file` at runtime.",
       "objective": "Inject production environment variables securely via container runtimes and VPS environments.",
       "expectedOutcome": "Secure credential management without plaintext files in images or repositories.",
@@ -478,7 +393,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការកំណត់រចនាសម្ព័ន្ធ Production (Graceful Shutdown & Keep-Alive)",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "Production configuration requires handling process signals like `SIGTERM` and `SIGINT` gracefully. When a server restarts or redeploys, a graceful shutdown handler stops accepting new HTTP requests, waits for in-flight requests to complete, flushes background queues, closes database connection pools, and exits cleanly.",
+      "summary": "Production Configuration សំខាន់ៗរួមមាន៖ ការកំណត់ `NODE_ENV=production`, ការគ្រប់គ្រង Graceful Shutdown (ស្តាប់ `SIGTERM` និង `SIGINT` ដើម្បីបញ្ចប់ In-flight Requests មុននឹងបិទ Database Connections), និងការកំណត់ Keep-Alive Timeouts ឱ្យត្រូវគ្នាជាមួយ Reverse Proxy។",
       "tip": "Implement a 10-second timeout on graceful shutdown: if pending requests do not complete within 10 seconds, force exit (`process.exit(1)`) to avoid hanging deployments.",
       "objective": "Implement graceful shutdown handlers for zero-downtime rolling deployments.",
       "expectedOutcome": "Clean shutdown mechanics preserving in-flight transactions during redeployment.",
@@ -491,7 +406,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការកត់ត្រា Logs ប្រកបដោយស្តង់ដារជាមួយ Winston ឬ Pino",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "In production, `console.log()` is synchronous and can block the event loop under heavy throughput. Structured logging libraries like `pino` or `winston` output logs as machine-readable JSON strings formatted with timestamps, log levels (info, warn, error), request IDs, and context metadata for indexing in Datadog, ELK, or Logstash.",
+      "summary": "Structured Logging ជាមួយ Winston ឬ Pino គឺជាស្តង់ដារ Production។ ជំនួសឱ្យការប្រើ `console.log()` Logs ត្រូវកត់ត្រាជាទម្រង់ JSON រួមទាំង Timestamps, Log Levels (error, warn, info, debug), Request IDs (Correlation IDs), និង HTTP Context ងាយស្រួលក្នុងការ Search និង Aggregate ក្នុង Elasticsearch ឬ Datadog។",
       "tip": "Use `pino` for maximum performance — it is up to 5x faster than Winston and produces minimal CPU overhead under heavy traffic.",
       "objective": "Configure structured JSON logging with request tracing and error diagnostics.",
       "expectedOutcome": "High-performance structured logs ready for cloud log aggregator indexing.",
@@ -504,7 +419,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គោលការណ៍ Process Management ក្នុង Node.js (Cluster & Crash Recovery)",
       "type": "concept",
       "codeLanguage": "javascript",
-      "summary": "Because Node.js runs on a single CPU core by default, a server with 8 CPU cores utilizes only 12.5% of available computing power unless clustered. Process managers fork multiple worker instances across all CPU cores, balance incoming network sockets across workers, and automatically restart crashed processes instantly.",
+      "summary": "Process Management ក្នុង Node.js៖ ដោយសារ Node.js ដំណើរការលើ Single Thread ការកើតមាន Uncaught Exception អាចធ្វើឱ្យ Server រលត់ទាំងស្រុង។ Process Manager ធានាថានៅពេល Server ជួបបញ្ហា Crash វានឹង Restart ឡើងវិញភ្លាមៗដោយស្វ័យប្រវត្តិក្នងរយៈពេលត្រឹមតែប៉ុន្មាន Milliseconds។",
       "tip": "In modern containerized architectures (Docker/Kubernetes), run one Node.js process per container and scale container replicas via Kubernetes rather than using in-process clustering.",
       "objective": "Understand process clustering, auto-restart mechanics, and resource utilization.",
       "expectedOutcome": "Knowledge of multi-core scaling strategies for Node.js backends.",
@@ -517,7 +432,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការគ្រប់គ្រង Server Process ជាមួយ PM2 Cluster Mode",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "PM2 is the production process manager for Node.js. It features zero-downtime reloads, built-in cluster mode (`-i max` to spawn a worker per CPU core), automated startup on VPS system reboot, and real-time CPU/memory monitoring.",
+      "summary": "PM2 គឺជា Production Process Manager ដ៏ពេញនិយមបំផុតសម្រាប់ Node.js។ វាផ្តល់នូវមុខងារ Automatic Restarts, Log Management, និង Cluster Mode ដែលអនុញ្ញាតឱ្យ Node.js បង្កើត Process ស្មើនឹងចំនួន CPU Cores ដើម្បីទាញយកសមត្ថភាព Hardware ទាំងមូល និងអនុញ្ញាត Zero-Downtime Reloads។",
       "tip": "Create an `ecosystem.config.cjs` file to define PM2 settings, environment variables, and log file paths in version control.",
       "objective": "Deploy, manage, and monitor Node.js applications using PM2 in cluster mode.",
       "expectedOutcome": "Self-healing Node.js application running in clustered production mode.",
@@ -530,7 +445,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គោលការណ៍គ្រឹះនៃ Containerization ជាមួយ Docker",
       "type": "concept",
       "codeLanguage": "dockerfile",
-      "summary": "Docker containerizes applications by bundling backend source code, runtime dependencies, system libraries, and configurations into lightweight, standalone executable images. This guarantees identical behavior across development machines, CI runners, and production cloud servers ('works on my machine' eliminated permanently).",
+      "summary": "Docker គឺជាបច្ចេកវិទ្យា Containerization ដែលខ្ចប់ Node.js Application រួមជាមួយ Dependencies, Runtime, និង System Libraries ទៅក្នុង Portable Container Image តែមួយ។ វាលុបបំបាត់បញ្ហា «ដំណើរការលើម៉ាស៊ីនខ្ញុំ តែមិនដំណើរការលើ Server» ធានាថា App ដំណើរការដូចគ្នាបេះបិទគ្រប់កន្លែង។",
       "tip": "Containers are lightweight compared to Virtual Machines: they share the host OS kernel and boot in milliseconds with minimal memory overhead.",
       "objective": "Understand containerization principles: images, containers, volumes, and networks.",
       "expectedOutcome": "Conceptual foundation for containerized application delivery.",
@@ -543,7 +458,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការបង្កើត Multi-stage Dockerfile សម្រាប់ Node.js",
       "type": "lab",
       "codeLanguage": "dockerfile",
-      "summary": "A production Dockerfile uses multi-stage builds to separate the build phase (compiling TypeScript, installing devDependencies) from the final production runtime. Multi-stage builds produce tiny, secure container images (<150MB) containing only production dependencies and compiled JavaScript.",
+      "summary": "Multi-stage Dockerfile គឺជា Best Practice ក្នុងការ Build Production Images។ ដំណាក់កាល Builder ដំឡើង Build Tools និង Compile TypeScript/Assets ខណៈដែលដំណាក់កាល Runner ចម្លងយកតែ Production Output និង Production Dependencies (`--omit=dev`) ដោយប្រើ Alpine Linux Base Image កាត់បន្ថយទំហំ Image ពី 1GB មកនៅត្រឹមក្រោម 150MB។",
       "tip": "Always copy `package*.json` and run `npm ci` BEFORE copying source code — this leverages Docker layer caching so subsequent builds take 2 seconds instead of reinstalling dependencies.",
       "objective": "Author an optimized, secure multi-stage Dockerfile for Node.js backends.",
       "expectedOutcome": "Minimal, secure production Docker image with layer caching.",
@@ -556,7 +471,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Multi-Container Stack ជាមួយ Docker Compose",
       "type": "lab",
       "codeLanguage": "yaml",
-      "summary": "Docker Compose coordinates multi-container environments (Node.js API, MongoDB, Redis, Nginx) defined in a single `docker-compose.yml` file. A single command (`docker compose up -d`) creates isolated internal networks, mounts storage volumes, and boots the entire application stack.",
+      "summary": "Docker Compose គឺជាឧបករណ៍សម្រាប់កំណត់ និងដំណើរការ Multi-Container Docker Applications តាមរយៈឯកសារ `docker-compose.yml`។ វាអនុញ្ញាតឱ្យយើង Spin Up ប្រព័ន្ធទាំងមូល (Node.js API, MongoDB, Redis, Nginx) ដោយប្រើប្រាស់តែមួយ Command (`docker compose up -d`) ជាមួយ Private Bridge Network។",
       "tip": "Use named volumes for database storage (`volumes: - mongodb_data:/data/db`) so database records survive container restarts and updates.",
       "objective": "Define and orchestrate multi-container application stacks using Docker Compose.",
       "expectedOutcome": "One-command local environment bootstrapping Node.js, MongoDB, and Redis.",
@@ -569,7 +484,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការ Build និង Run Node.js Production Container",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "Building and executing a production container requires building the image (`docker build -t my-api .`), tagging with a version tag, running with memory limits (`--memory=512m`), and passing environment variables via secret managers or environment files.",
+      "summary": "Production Node.js Container ត្រូវតែដំណើរការក្រោម Non-root User (`USER node`) ដើម្បីការពារសុវត្ថិភាព Host System ព្រមទាំងមាន Healthcheck Configuration (`HEALTHCHECK --interval=30s CMD curl -f http://localhost:5000/health || exit 1`) ដើម្បីឱ្យ Container Orchestrator ដឹងពីស្ថានភាព Server។",
       "tip": "Always enforce container memory limits (`--memory=512m`) to prevent a runaway memory leak from starving the host OS.",
       "objective": "Build, tag, run, and inspect production Node.js containers from the command line.",
       "expectedOutcome": "Operational Node.js container executing with resource boundaries.",
@@ -582,7 +497,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ MongoDB Container ជាមួយ Persistent Volumes",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "Running MongoDB in Docker requires persistent volumes to store database files permanently on host disk. Without volumes, deleting or updating the MongoDB container permanently destroys all database records. Configuring root authentication credentials ensures database security inside the container network.",
+      "summary": "MongoDB Container ក្នុង Docker Compose ត្រូវតែកំណត់ Persistent Named Volume (`volumes: mongodb_data:/data/db`) ដើម្បីធានាថាទិន្នន័យមិនបាត់បង់នៅពេល Container ត្រូវបាន Restart ឬ Rebuild ព្រមទាំងកំណត់ Authentication Credentials (User/Password) យ៉ាងតឹងរ៉ឹង។",
       "tip": "Always configure `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD` when booting MongoDB containers.",
       "objective": "Deploy MongoDB inside a Docker container with persistent storage volumes and authentication.",
       "expectedOutcome": "Persistent, secure containerized database ready for application connections.",
@@ -595,7 +510,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Redis Container សម្រាប់ Caching និង Queues",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "Deploying Redis via Docker provides an instant in-memory cache and queue engine. Configuring a password (`requirepass`), enabling AOF persistence (`--appendonly yes`), and attaching a data volume ensures Redis state survives restarts.",
+      "summary": "Redis Container ត្រូវបានរៀបចំឡើងជា In-Memory Store សម្រាប់ Caching និង BullMQ Queues។ ការកំណត់រចនាសម្ព័ន្ធរួមមានការបើក Persistent AOF (Append Only File) តាមរយៈ Volume និងការការពារដោយ Password តាមរយៈ Option `--requirepass`។",
       "tip": "Always append `--appendonly yes` to your Redis container command to ensure job queues persist across host reboots.",
       "objective": "Deploy an authenticated Redis container with persistent append-only storage.",
       "expectedOutcome": "Secure, durable Redis cache container ready for BullMQ and session caching.",
@@ -608,7 +523,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការស្វែងយល់ពីតួនាទីរបស់ Nginx ក្នុង Production Architecture",
       "type": "concept",
       "codeLanguage": "nginx",
-      "summary": "Nginx is a high-performance HTTP web server and reverse proxy. Sitting between the public internet and your Node.js API, Nginx handles SSL/TLS termination, HTTP request routing, static file caching, client payload buffering, and Gzip compression, shielding Node.js from slow clients and DoS floods.",
+      "summary": "Nginx គឺជា High-Performance Web Server និង Reverse Proxy ដ៏មានឥទ្ធិពល។ ក្នុង Production Nginx ឈរនៅពីមុខ Node.js API ដើម្បីទទួល Client Connections, គ្រប់គ្រង SSL/TLS Termination, បង្រួមទិន្នន័យ Gzip, និងការពារ Direct Exposure នៃ Node.js Ports ទៅកាន់សាធារណៈ។",
       "tip": "Never expose Node.js directly to public port 80/443 in production. Always place Nginx or Cloudflare in front as a reverse proxy.",
       "objective": "Understand the architectural benefits of Nginx reverse proxying in front of Node.js.",
       "expectedOutcome": "Clear rationale for reverse proxy architecture separating web tier from application tier.",
@@ -621,7 +536,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការកំណត់រចនាសម្ព័ន្ធ Nginx Reverse Proxy (nginx.conf)",
       "type": "architecture",
       "codeLanguage": "nginx",
-      "summary": "Configuring Nginx as a reverse proxy forwards HTTP requests to your Node.js backend using `proxy_pass`. Nginx preserves client IP addresses via `X-Forwarded-For` and `X-Real-IP` headers so Express rate limiters and loggers receive actual client IPs.",
+      "summary": "Nginx Reverse Proxy Configuration (`nginx.conf`) បញ្ជូន Incoming Requests ពី Port 80/443 ទៅកាន់ Node.js API (`proxy_pass http://api:5000;`) ព្រមទាំងបញ្ជូន Real Client IP Headers (`X-Real-IP`, `X-Forwarded-For`, `X-Forwarded-Proto`) ដើម្បីឱ្យ Express ដឹងពី IP ពិតប្រាកដរបស់ Client។",
       "tip": "Set `app.set('trust proxy', 1)` in Express when behind Nginx so `req.ip` correctly reads the forwarded client IP.",
       "objective": "Write an Nginx configuration file proxying traffic to an Express upstream server.",
       "expectedOutcome": "Production Nginx reverse proxy configuration passing client headers accurately.",
@@ -634,7 +549,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការដំឡើង HTTPS / SSL ដោយឥតគិតថ្លៃជាមួយ Certbot & Let's Encrypt",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "HTTPS encrypts network traffic between browser and server, preventing eavesdropping and man-in-the-middle attacks. Let's Encrypt provides free SSL certificates, and Certbot automates certificate issuance, Nginx SSL configuration, and automated 90-day renewals.",
+      "summary": "ការដំឡើង HTTPS / SSL ដោយឥតគិតថ្លៃតាមរយៈ Certbot និង Let's Encrypt អនុញ្ញាតឱ្យ Nginx អ៊ិនគ្រីបការតភ្ជាប់ទាំងអស់ជាមួយ TLS 1.3 ព្រមទាំងមានយន្តការ Auto-Renewal ដោយស្វ័យប្រវត្តិតាមរយៈ Cron Job ឬ Systemd Timer ជៀសវាងការផុតកំណត់ SSL Certificate។",
       "tip": "Certbot installs a systemd timer that automatically renews your SSL certificate before expiration — test renewals with `certbot renew --dry-run`.",
       "objective": "Provision free Let's Encrypt SSL certificates and enforce HTTPS redirects via Certbot.",
       "expectedOutcome": "A+ rated SSL configuration with automatic certificate renewals.",
@@ -647,7 +562,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ និងដាក់ឱ្យដំណើរការលើ Virtual Private Server (VPS)",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "Deploying to a Virtual Private Server (VPS from DigitalOcean, Linode, AWS EC2, or Hetzner) gives total root control over your hosting infrastructure. The workflow involves provisioning an Ubuntu server, configuring SSH key authentication, setting up firewalls (UFW), installing Docker, and pulling application images.",
+      "summary": "VPS Deployment គឺជាការដាក់ឱ្យដំណើរការលើ Cloud Virtual Private Server (ដូចជា DigitalOcean, AWS EC2, Linode, ឬ Hetzner)។ ដំណើរការរួមមានការភ្ជាប់តាមរយៈ SSH Key-based Authentication, ការ Setup Firewall (UFW) អនុញ្ញាតតែ Ports 22, 80, 443, និងការរៀបចំ Docker Environment។",
       "tip": "Always disable password authentication in `/etc/ssh/sshd_config` (`PasswordAuthentication no`) and use SSH keys exclusively to protect against SSH brute-force attacks.",
       "objective": "Provision, secure, and deploy a containerized backend on a live cloud VPS.",
       "expectedOutcome": "Live production server reachable at a public IP/domain running your backend.",
@@ -660,7 +575,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការរៀបចំ Ubuntu Server (Security Hardening & Swap Memory)",
       "type": "lab",
       "codeLanguage": "bash",
-      "summary": "Securing an Ubuntu server requires creating a non-root user with `sudo` privileges, configuring automatic security updates via `unattended-upgrades`, and creating a Swap memory file to prevent Out-Of-Memory (OOM) kernel kills on entry-level 1GB/2GB RAM cloud servers.",
+      "summary": "Ubuntu Server Security Hardening រួមមានការបិទ Root SSH Login, ការបង្កើត Sudo User ផ្ទាល់ខ្លួន, ការកំណត់ Swap Memory (2GB ទៅ 4GB) ដើម្បីទប់ស្កាត់ Out-of-Memory (OOM) Kills លើ Node.js, និងការដំឡើង Fail2ban ដើម្បីទប់ស្កាត់ Brute-force SSH Attacks។",
       "tip": "Add a 2GB Swap file on 1GB/2GB VPS instances — this prevents the Linux kernel from killing Node.js when memory spikes during builds.",
       "objective": "Harden an Ubuntu server and configure Swap memory for resource resilience.",
       "expectedOutcome": "Hardened Ubuntu server resistant to OOM kernel termination.",
@@ -673,7 +588,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គោលការណ៍ Continuous Integration & Continuous Deployment",
       "type": "concept",
       "codeLanguage": "yaml",
-      "summary": "Continuous Integration (CI) automatically builds and tests code on every Git commit or pull request. Continuous Deployment (CD) automatically pushes passing code to staging or production servers without manual intervention. CI/CD catches regressions early and shortens delivery cycles from weeks to minutes.",
+      "summary": "CI/CD (Continuous Integration & Continuous Deployment) គឺជាការបង្កើតស្វ័យប្រវត្តិកម្មលើគ្រប់ជំហាននៃការបញ្ចេញសូហ្វវែរ៖ Linting, Running Automated Tests, Building Docker Images, និងការ Deploy កូដទៅកាន់ Production Server ដោយស្វ័យប្រវត្តិតាមរយៈ Version Control Triggers។",
       "tip": "Require all CI checks (linting, TypeScript check, unit tests) to pass before permitting pull request merges to the `main` branch.",
       "objective": "Understand the CI/CD pipeline lifecycle from commit to production deployment.",
       "expectedOutcome": "Familiarity with automated testing, building, and deployment workflows.",
@@ -686,7 +601,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "ការបង្កើត GitHub Actions Workflow សម្រាប់ Test និង Auto-deploy",
       "type": "lab",
       "codeLanguage": "yaml",
-      "summary": "GitHub Actions automates your software workflows directly within your GitHub repository. A `.github/workflows/deploy.yml` file defines automated triggers (`push: branches: [main]`), spins up Ubuntu runners, executes tests, builds Docker images, and deploys the passing image to your VPS over SSH.",
+      "summary": "GitHub Actions Workflow ដំណើរការ Pipeline ស្វ័យប្រវត្តិរាល់ពេលដែលមាន Git Push ទៅកាន់ `main` branch៖ វាដំណើរការ Vitest/Jest Suite, Build និង Push Docker Image ទៅកាន់ Container Registry (GHCR/DockerHub), និង SSH ទៅកាន់ VPS ដើម្បី Pull Image ថ្មី និងធ្វើ Zero-downtime Restart។",
       "tip": "Store sensitive deployment credentials (SSH private keys, Docker tokens) securely in GitHub Repository Secrets (`Settings -> Secrets and variables -> Actions`).",
       "objective": "Author an automated GitHub Actions workflow running tests and deploying to a server.",
       "expectedOutcome": "Automated pipeline that tests and deploys code on every push to main.",
@@ -699,7 +614,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "បញ្ជីត្រួតពិនិត្យចុងក្រោយមុនពេល Launch (Production Go-Live Checklist)",
       "type": "architecture",
       "codeLanguage": "markdown",
-      "summary": "Before launching an API to real users, engineers must verify a comprehensive production checklist. This covers environment secrets validation, database indexes, rate limiting, error logging to external tools (Sentry), automated backups, SSL encryption, and health checks.",
+      "summary": "Production Go-Live Checklist គឺជាបញ្ជីត្រួតពិនិត្យចុងក្រោយមុនពេលបើកដំណើរការជាផ្លូវការ រួមមាន៖ Database Backup Automation, SSL Health Verification, Error Monitoring (Sentry), APM Metrics, Rate Limiting Validation, និង Disaster Recovery Plan ធានាថាកម្មវិធីដំណើរការដោយរលូន ១០០%។",
       "tip": "Always create an automated daily MongoDB backup cron job (`mongodump`) and upload archives to S3/R2 before opening your application to public users.",
       "objective": "Execute a thorough production readiness audit ensuring zero launch gaps.",
       "expectedOutcome": "Rock-solid, audit-verified backend ready for real-world enterprise traffic.",
@@ -714,7 +629,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គម្រោងទី ១ ៖ Todo REST API",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build a robust Todo REST API with full CRUD functionality, status filtering (?completed=true), search by title, sorting by creation date, pagination with limit and skip, Zod input validation, central error handling, and MongoDB persistence. Teaches fundamental RESTful design principles and clean controller-service architecture.",
+      "summary": "គម្រោងទី ១ ៖ Todo REST API គឺជាគម្រោងអនុវត្តគ្រឹះដំបូងក្នុងការសរសេរ REST API ជាមួយ Express និង MongoDB (Mongoose) ដោយផ្តោតលើ Full CRUD Operations, Schema Validation, Proper HTTP Status Codes, និង Error Handling Envelope ស្តង់ដារ។",
       "tip": "Use Promise.all to run the data query and the countDocuments query concurrently — this halves the response time on paginated endpoints.",
       "objective": "Build a production-quality CRUD REST API with filtering, pagination, and validation.",
       "expectedOutcome": "Clean, robust Todo API meeting REST standards and proper HTTP response contracts.",
@@ -727,7 +642,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គម្រោងទី ២ ៖ Student Management API ជាមួយ Swagger",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build a Student Management API with comprehensive CRUD, full-text student search, course enrollment relationships with Mongoose population, grade tracking, Zod schema validation, and complete OpenAPI/Swagger interactive documentation. Demonstrates professional data modeling and interactive documentation.",
+      "summary": "គម្រោងទី ២ ៖ Student Management API គឺជាគម្រោងពង្រីកសមត្ថភាពដោយរួមបញ្ចូល Swagger/OpenAPI Interactive Documentation, Advanced Filtering, Sorting, និង Pagination សម្រាប់គ្រប់គ្រងទិន្នន័យសិស្ស និងវគ្គសិក្សា។",
       "tip": "Use Mongoose pre-populate middleware on find queries so course details are attached automatically without repeating populate() in every controller.",
       "objective": "Construct an educational records API with relational population and interactive Swagger documentation.",
       "expectedOutcome": "Fully documented Student Management API with relational data integrity.",
@@ -740,7 +655,7 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គម្រោងទី ៣ ៖ Full Auth System ជាមួយ JWT និង HttpOnly Cookies",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build a complete authentication system: registration with bcrypt hashing, login with dual JWT tokens (short-lived access token + long-lived refresh token in HttpOnly cookie), protected /me endpoint, logout (cookie invalidation and database token cleanup), forgot password with email reset token, and password reset. Serves as the authentication backbone for enterprise projects.",
+      "summary": "គម្រោងទី ៣ ៖ Authentication & Authorization API គឺជាគម្រោងកសាងប្រព័ន្ធសុវត្ថិភាពពេញលេញកម្រិត Production រួមមាន User Registration, Password Hashing ជាមួយ bcrypt, JWT Access & Refresh Tokens, HttpOnly Cookie Authentication, Role-Based Access Control (RBAC), និង Password Reset Flow។",
       "tip": "Test your token expiry logic thoroughly — simulate expired access tokens, cookie-based refresh, and the full re-authentication cycle.",
       "objective": "Implement a complete, production-grade JWT authentication system with dual tokens and cookie security.",
       "expectedOutcome": "Secure authentication API: register, login, refresh, logout, and password recovery.",
@@ -753,24 +668,11 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គម្រោងទី ៤ ៖ Course Media & File Upload Service ជាមួយ Redis Caching",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build a production-grade Course Media & Catalog API with multi-file uploads (course thumbnails and lesson PDF worksheets) to Cloudflare R2 / S3, category management, text search with MongoDB $text indexes, compound indexes for fast query execution, price range filtering, Redis response caching on public endpoints, and RBAC instructor/admin guards for write operations.",
+      "summary": "គម្រោងទី ៤ ៖ Course Media & File Upload Service គឺជាគម្រោងគ្រប់គ្រងឯកសារ និងប្រព័ន្ធផ្ទុកទិន្នន័យ រួមមាន Multer Middleware, File Validation & Sanitization, Cloudflare R2 / AWS S3 Integration, Image Resizing, និង Redis Response Caching សម្រាប់បង្កើនល្បឿន API។",
       "tip": "Apply the Redis cache-aside pattern on GET /courses with a 60-second TTL, and invalidate the cache on every create/update/delete operation.",
       "objective": "Build a complete course media & catalog API with search, filtering, thumbnail uploads, and Redis caching.",
       "expectedOutcome": "High-performance course API with sub-10ms cached responses and instructor RBAC.",
-      "codeSnippet": `export const getCourses = catchAsync(async (req, res) => {
-  const cacheKey = \`courses:\${JSON.stringify(req.query)}\`;
-  const cached = await redis.get(cacheKey);
-  if (cached) return res.json(JSON.parse(cached));
-
-  const courses = await Course.find(filter)
-    .sort(sort || "-createdAt")
-    .skip((page - 1) * limit).limit(Number(limit))
-    .populate("instructor", "name email");
-
-  const body = { success: true, count: courses.length, data: courses };
-  await redis.set(cacheKey, JSON.stringify(body), "EX", 60);
-  res.json(body);
-});`
+      "codeSnippet": "export const getCourses = catchAsync(async (req, res) => {\n  const cacheKey = `courses:${JSON.stringify(req.query)}`;\n  const cached = await redis.get(cacheKey);\n  if (cached) return res.json(JSON.parse(cached));\n\n  const courses = await Course.find(filter)\n    .sort(sort || \"-createdAt\")\n    .skip((page - 1) * limit).limit(Number(limit))\n    .populate(\"instructor\", \"name email\");\n\n  const body = { success: true, count: courses.length, data: courses };\n  await redis.set(cacheKey, JSON.stringify(body), \"EX\", 60);\n  res.json(body);\n});"
     },
     {
       "id": "M29-05",
@@ -779,36 +681,11 @@ export const createCourseSchema = z.object({
       "khmerTitle": "គម្រោងទី ៥ ៖ Course Platform Enrollment & Payments ជាមួយ Transactions",
       "type": "lab",
       "codeLanguage": "javascript",
-      "summary": "Build an end-to-end Course Platform payment and enrollment engine including student course checkout, Stripe payment intent creation, background email receipts via BullMQ, role-based enrollment management, and course seat capacity decrement with MongoDB ACID multi-document transactions.",
+      "summary": "គម្រោងទី ៥ ៖ Course Platform Enrollment & Payment Backend គឺជាគម្រោងស្ថាបត្យកម្មស្មុគស្មាញ រួមមាន MongoDB Multi-document ACID Transactions សម្រាប់ដំណើរការការទិញ Course, ការកាត់ប្រាក់តាម Stripe Webhooks, និងការបញ្ជូន Email Invoices តាមរយៈ BullMQ Background Queue។",
       "tip": "Use MongoDB multi-document transactions (`session.withTransaction()`) during checkout to ensure seat capacity decrement and enrollment record creation succeed or fail together atomically.",
       "objective": "Build an enterprise course enrollment backend with payments, background jobs, and ACID transactions.",
       "expectedOutcome": "Production-ready course enrollment platform orchestrating payments, seats, and background jobs.",
-      "codeSnippet": `// Course Enrollment with MongoDB Transaction:
-export const enrollInCourse = async (studentId, courseId, price) => {
-  const session = await mongoose.startSession();
-  return session.withTransaction(async () => {
-    // 1. Check and decrement available course capacity atomically
-    const course = await Course.findOneAndUpdate(
-      { _id: courseId, published: true, seatsAvailable: { $gt: 0 } },
-      { $inc: { seatsAvailable: -1, enrollmentCount: 1 } },
-      { session, new: true }
-    );
-    if (!course) throw new AppError("Course is either full or not published", 400);
-
-    // 2. Create enrollment document & enqueue receipt email job
-    const enrollment = await Enrollment.create(
-      [{ student: studentId, course: courseId, enrolledPrice: price, status: "active" }],
-      { session }
-    );
-    await emailQueue.add("enrollment-receipt", {
-      studentId,
-      courseId,
-      enrollmentId: enrollment[0]._id
-    });
-
-    return enrollment[0];
-  });
-};`
+      "codeSnippet": "// Course Enrollment with MongoDB Transaction:\nexport const enrollInCourse = async (studentId, courseId, price) => {\n  const session = await mongoose.startSession();\n  return session.withTransaction(async () => {\n    // 1. Check and decrement available course capacity atomically\n    const course = await Course.findOneAndUpdate(\n      { _id: courseId, published: true, seatsAvailable: { $gt: 0 } },\n      { $inc: { seatsAvailable: -1, enrollmentCount: 1 } },\n      { session, new: true }\n    );\n    if (!course) throw new AppError(\"Course is either full or not published\", 400);\n\n    // 2. Create enrollment document & enqueue receipt email job\n    const enrollment = await Enrollment.create(\n      [{ student: studentId, course: courseId, enrolledPrice: price, status: \"active\" }],\n      { session }\n    );\n    await emailQueue.add(\"enrollment-receipt\", {\n      studentId,\n      courseId,\n      enrollmentId: enrollment[0]._id\n    });\n\n    return enrollment[0];\n  });\n};"
     },
     {
       "id": "M29-06",
@@ -817,7 +694,7 @@ export const enrollInCourse = async (studentId, courseId, price) => {
       "khmerTitle": "គម្រោងទី ៦ ៖ Final Production Course Platform REST API Capstone",
       "type": "architecture",
       "codeLanguage": "javascript",
-      "summary": "The capstone project integrates every concept from the entire course into a single production-grade Course Platform application: Express REST API with authentication (students/instructors/admins), RBAC, MongoDB + Mongoose, Redis caching, BullMQ background jobs for video encoding & emails, Socket.IO real-time student Q&A, file uploads to R2, Swagger docs, Vitest integration tests, Docker containerization with Compose, Nginx reverse proxy, and GitHub Actions CI/CD.",
+      "summary": "គម្រោងទី ៦ ៖ Final Production Course Platform REST API Capstone គឺជាគម្រោងបញ្ចប់ការសិក្សាដ៏ធំបំផុត ដែលរួមបញ្ចូលគ្នានូវគ្រប់ជំនាញទាំងអស់៖ Clean Modular Architecture, Full Course Platform Domain, Advanced Security (OWASP), Automated Tests (Vitest & Supertest), Docker Multi-stage Containers, Nginx Reverse Proxy, Redis Caching, និង CI/CD GitHub Actions Deployment។",
       "tip": "Before deploying, run through the production checklist: env validation, graceful shutdown handlers, connection pooling, rate limiting, Helmet security headers, structured logging, and health check endpoints.",
       "objective": "Ship a complete, production-grade Node.js API integrating all course technologies end-to-end.",
       "expectedOutcome": "A portfolio-ready, full-featured Course Platform backend deployed to production with CI/CD automation.",

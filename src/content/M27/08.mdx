@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Shared Utilities និង Helper Functions",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Utils directory contains generic, reusable helper functions and classes that are domain-independent. Typical utilities include the `AppError` class, async handler wrappers (`catchAsync`), date formatters, cryptographic helpers, and string transformers.",
+  summary: "Utils Layer ផ្ទុកនូវ Pure Helper Functions ដែលអាចប្រើប្រាស់ឡើងវិញបានពាសពេញគម្រោង ដូចជា `AppError` class, API Response Formatter, Date Helpers, Token Generators, និង Currency Formatters។",
   codeSnippet: "// utils/catchAsync.js\n// Wraps async route handlers to catch rejected promises and forward to next(err)\nexport const catchAsync = (fn) => (req, res, next) => {\n  Promise.resolve(fn(req, res, next)).catch(next);\n};\n\n// utils/AppError.js\nexport class AppError extends Error {\n  constructor(message, statusCode) {\n    super(message);\n    this.statusCode = statusCode;\n    this.status = `${statusCode}`.startsWith(\"4\") ? \"fail\" : \"error\";\n    this.isOperational = true;\n    Error.captureStackTrace(this, this.constructor);\n  }\n}",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការសរសេរឯកសារ HTTP Responses (200, 201, 400, 404, 500)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Endpoints must document every possible HTTP status response, including both successful outcomes (200 OK, 201 Created) and failure scenarios. Response bodies should link to component schemas or define clear JSON response structures.",
+  summary: "Response Documentation គឺជាការកំណត់យ៉ាងច្បាស់លាស់នូវរាល់ HTTP Status Codes ដែល API អាចឆ្លើយតបត្រឡប់ទៅវិញ (ដូចជា 200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Internal Server Error) រួមទាំង Example Payload សម្រាប់ករណីជោគជ័យ និងករណីបរាជ័យ។",
   codeSnippet: "/**\n * @openapi\n * /api/v1/courses:\n *   post:\n *     summary: Create a new course\n *     tags: [Courses]\n *     responses:\n *       201:\n *         description: Course created successfully\n *         content:\n *           application/json:\n *             schema:\n *               type: object\n *               properties:\n *                 status:\n *                   type: string\n *                   example: success\n *                 data:\n *                   $ref: '#/components/schemas/Course'\n *       400:\n *         description: Bad Request (Validation failure)\n */",
 };
 

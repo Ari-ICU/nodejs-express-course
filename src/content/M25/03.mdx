@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Async ល្អបំផុត (Promise.all vs Sequential Await)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "A common performance anti-pattern is sequentially awaiting independent asynchronous operations one after another. If fetching user details takes 100ms and fetching user orders takes 100ms, sequential awaits total 200ms. Running independent promises concurrently via `Promise.all()` executes them in parallel, reducing total latency to just 100ms.",
+  summary: "Async Best Practices ផ្តោតលើការដំណើរការ I/O Operations ស្របគ្នា (Concurrency) តាមរយៈ `Promise.all()` ឬ `Promise.allSettled()` ជំនួសឱ្យការសរសេរ `await` ជាបន្តបន្ទាប់គ្នា (Sequential Execution) ក្នុងករណីដែល Queries ទាំងនោះឯករាជ្យពីគ្នា (ឧ. ទាញយក Course Details និង Instructor Profile ក្នុងពេលតែមួយ)។",
   codeSnippet: "// SLOW: Waterfall execution (Total: ~200ms)\nconst user = await User.findById(userId);       // 100ms\nconst orders = await Order.find({ user: userId }); // 100ms\n\n// FAST: Parallel concurrent execution (Total: ~100ms!)\nconst [user, orders] = await Promise.all([\n  User.findById(userId),\n  Order.find({ user: userId }),\n]);",
 };
 

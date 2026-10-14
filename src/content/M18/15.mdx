@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃស្ថាបត្យកម្ម API ប្រកបដោយសុវត្ថិភាព",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Building production-grade secure APIs requires Defense in Depth — stacking multiple layers of protection so that if one layer fails, others stop the breach. This encompasses input validation, rate limiting, helmet security headers, sanitized database queries, least privilege roles, audit logging, and automated dependency vulnerability scanning via `npm audit`.",
+  summary: "ស្ថាបត្យកម្ម API ប្រកបដោយសុវត្ថិភាព (Secure API Design) អនុវត្តតាមគោលការណ៍ Defense-in-Depth ដោយរួមបញ្ចូលគ្នានូវគ្រប់ស្រទាប់ការពារ៖ HTTPS Only, Helmet Headers, Rate Limiting, CORS Restrictions, Input Validation, Sanitization, Parameterized Queries, និង Centralized Error Handling ដែលមិនបញ្ចេញ Stack Trace ទៅកាន់សាធារណៈ។",
   codeSnippet: "// app.js - Enterprise Security Middleware Pipeline:\nimport express from \"express\";\nimport helmet from \"helmet\";\nimport cors from \"cors\";\nimport mongoSanitize from \"express-mongo-sanitize\";\nimport { globalLimiter } from \"./middleware/rateLimit.js\";\nimport { errorHandler } from \"./middleware/errorHandler.js\";\n\nconst app = express();\n\n// 1. HTTP Security Headers\napp.use(helmet());\n\n// 2. CORS Policy\napp.use(cors({ origin: process.env.ALLOWED_ORIGINS.split(\",\"), credentials: true }));\n\n// 3. Rate Limiting\napp.use(\"/api\", globalLimiter);\n\n// 4. Body Parser with Size Limits (Prevents payload DoS)\napp.use(express.json({ limit: \"10kb\" }));\n\n// 5. Data Sanitization against NoSQL Injection\napp.use(mongoSanitize());\n\n// 6. Central Error Handling (Never leaks stack traces in production)\napp.use(errorHandler);\n\nexport default app;",
 };
 

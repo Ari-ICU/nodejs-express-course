@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Multi-Container Stack ជាមួយ Docker Compose",
   type: "lab",
   codeLanguage: "yaml",
-  summary: "Docker Compose coordinates multi-container environments (Node.js API, MongoDB, Redis, Nginx) defined in a single `docker-compose.yml` file. A single command (`docker compose up -d`) creates isolated internal networks, mounts storage volumes, and boots the entire application stack.",
+  summary: "Docker Compose គឺជាឧបករណ៍សម្រាប់កំណត់ និងដំណើរការ Multi-Container Docker Applications តាមរយៈឯកសារ `docker-compose.yml`។ វាអនុញ្ញាតឱ្យយើង Spin Up ប្រព័ន្ធទាំងមូល (Node.js API, MongoDB, Redis, Nginx) ដោយប្រើប្រាស់តែមួយ Command (`docker compose up -d`) ជាមួយ Private Bridge Network។",
   codeSnippet: "version: \"3.8\"\n\nservices:\n  api:\n    build: .\n    ports:\n      - \"5000:5000\"\n    environment:\n      - NODE_ENV=production\n      - MONGODB_URI=mongodb://mongo:27017/app_prod\n      - REDIS_URL=redis://redis:6379\n    depends_on:\n      - mongo\n      - redis\n\n  mongo:\n    image: mongo:7-jammy\n    restart: always\n    volumes:\n      - mongo_data:/data/db\n\n  redis:\n    image: redis:alpine\n    restart: always\n\nvolumes:\n  mongo_data:",
 };
 

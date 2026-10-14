@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងប្រើប្រាស់ Access Tokens",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "An Access Token is a short-lived bearer credential sent by the client on every HTTP request inside the `Authorization: Bearer <token>` header. Because access tokens are stateless, the backend validates them purely via cryptographic signature verification without performing a database lookup on every single request. To limit damage if intercepted, access token lifetimes should be kept between 10 and 15 minutes.",
+  summary: "Access Token គឺជា JWT ដែលមានអាយុកាលខ្លី (Short-lived, ជាទូទៅពី 15 នាទី ទៅ 1 ម៉ោង) ប្រើប្រាស់សម្រាប់ផ្ទៀងផ្ទាត់សិទ្ធិពេលហៅទៅកាន់ Protected API Endpoints។ ដោយសារ Access Token មានផ្ទុកព័ត៌មាន User ID និង Role នៅក្នុង Payload Server មិនចាំបាច់ Query Database រាល់ពេលដែល Client ធ្វើ Request នោះទេ ដែលជួយបង្កើន Performance របស់ API យ៉ាងច្រើន។",
   codeSnippet: "import jwt from \"jsonwebtoken\";\n\nexport const generateAccessToken = (userId, role) => {\n  return jwt.sign(\n    { \n      sub: userId, \n      role: role \n    },\n    process.env.JWT_ACCESS_SECRET,\n    { \n      expiresIn: \"15m\", // Short lifespan for security\n      issuer: \"api.myenterprise.com\",\n      audience: \"myenterprise-client\"\n    }\n  );\n};\n\n// Client sends in header:\n// Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
 };
 

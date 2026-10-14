@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ MongoDB Container ជាមួយ Persistent Volumes",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Running MongoDB in Docker requires persistent volumes to store database files permanently on host disk. Without volumes, deleting or updating the MongoDB container permanently destroys all database records. Configuring root authentication credentials ensures database security inside the container network.",
+  summary: "MongoDB Container ក្នុង Docker Compose ត្រូវតែកំណត់ Persistent Named Volume (`volumes: mongodb_data:/data/db`) ដើម្បីធានាថាទិន្នន័យមិនបាត់បង់នៅពេល Container ត្រូវបាន Restart ឬ Rebuild ព្រមទាំងកំណត់ Authentication Credentials (User/Password) យ៉ាងតឹងរ៉ឹង។",
   codeSnippet: "# Run MongoDB with persistent named volume and authentication:\ndocker run -d   --name production-mongo   -p 27017:27017   -v mongo_data:/data/db   -e MONGO_INITDB_ROOT_USERNAME=admin   -e MONGO_INITDB_ROOT_PASSWORD=SuperSecretPassword123!   --restart always   mongo:7-jammy",
 };
 

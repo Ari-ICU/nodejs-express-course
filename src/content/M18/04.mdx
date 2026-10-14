@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ចំនួន Request (Rate Limiting) ជាមួយ express-rate-limit",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Rate limiting restricts how many HTTP requests a client IP address can make within a specified time window. It protects APIs from Denial of Service (DoS) attacks, brute-force credential stuffing, and web scraping abuse. The `express-rate-limit` package sets standard `RateLimit-*` headers and returns HTTP `429 Too Many Requests` upon breach.",
+  summary: "Rate Limiting គឺជាការកំណត់ចំនួនអតិបរមានៃ HTTP Requests ដែល Client មួយអាចផ្ញើមកកាន់ Server ក្នុងចន្លោះពេលជាក់លាក់មួយ (ឧ. 100 requests ក្នុង 15 នាទី) ដោយប្រើបណ្ណាល័យ `express-rate-limit`។ យន្តការនេះជួយការពារ Server ពីការវាយប្រហារ Denial of Service (DoS), API Scraping, និងការកើនឡើងហួសប្រមាណនៃបន្ទុក Server (Traffic Spikes)។",
   codeSnippet: "import rateLimit from \"express-rate-limit\";\n\n// Global limiter: 100 requests per 15 minutes per IP\nexport const globalLimiter = rateLimit({\n  windowMs: 15 * 60 * 1000, // 15 minutes\n  max: 100, // Max 100 requests per IP per window\n  standardHeaders: true, // Return standard RateLimit-* headers\n  legacyHeaders: false, // Disable X-RateLimit-* headers\n  message: {\n    status: 429,\n    message: \"Too many requests from this IP, please try again after 15 minutes\"\n  }\n});\n\napp.use(\"/api\", globalLimiter);",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ Schemas និង DTOs ក្នុង Swagger Components",
   type: "lab",
   codeLanguage: "yaml",
-  summary: "OpenAPI schemas define the shape, types, and constraints of data models used across endpoints. Centralizing data models inside `components.schemas` promotes reuse and avoids duplicating object definitions across multiple route annotations.",
+  summary: "API Schemas នៅក្នុង OpenAPI អនុញ្ញាតឱ្យយើងកំណត់ទម្រង់ Data Models (DTOs) នៅកន្លែងកណ្តាលមួយ (`components.schemas`) ដូចជា `Course`, `User`, `Pagination`។ ការរៀបចំ Schemas បែបនេះជួយឱ្យយើងអាច Reuse បាននៅគ្រប់ Endpoints កាត់បន្ថយការសរសេរជាន់គ្នា និងធានាថា Response Structure ត្រូវគ្នាជាមួយ Mongoose Model ជានិច្ច។",
   codeSnippet: "/**\n * @openapi\n * components:\n *   schemas:\n *     Course:\n *       type: object\n *       required:\n *         - title\n *         - price\n *         - level\n *       properties:\n *         id:\n *           type: string\n *           example: \"64f1a2b3c4d5e6f7a8b9c0d1\"\n *         title:\n *           type: string\n *           example: \"Complete Node.js & Express Bootcamp\"\n *         price:\n *           type: number\n *           example: 49.99\n *         level:\n *           type: string\n *           enum: [beginner, intermediate, advanced]\n *           example: \"beginner\"\n *         category:\n *           type: string\n *           example: \"Web Development\"\n */",
 };
 

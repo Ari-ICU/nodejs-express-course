@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Real-time Chat ពេញលេញ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "An enterprise real-time chat architecture combines persistent database storage with WebSocket delivery. When a message is sent, the server validates the payload, persists the chat document to MongoDB for conversation history, and broadcasts the event to the chat room via Socket.IO for sub-100ms real-time delivery.",
+  summary: "ស្ថាបត្យកម្ម Real-Time Chat ពេញលេញរួមបញ្ចូលគ្នានូវ Socket.IO ជាមួយ MongoDB និង Redis Adapter៖ សារត្រូវបានផ្ញើតាម WebSocket, រក្សាទុកជាអចិន្ត្រៃយ៍ក្នុង MongoDB Collection (`ChatMessage`), ផ្សាយទៅកាន់សមាជិកក្នុង Chat Room, និងប្រើប្រាស់ `@socket.io/redis-adapter` ដើម្បីធានាថា Real-time Messages អាចបញ្ជូនឆ្លងកាត់ Multi-instance Scaled Backend Servers បានយ៉ាងរលូន។",
   codeSnippet: "// Complete Real-Time Chat Handler:\nsocket.on(\"send_chat_message\", async ({ conversationId, text }, ack) => {\n  try {\n    // 1. Persist message in MongoDB\n    const message = await Message.create({\n      conversation: conversationId,\n      sender: socket.user.id,\n      text,\n      createdAt: new Date(),\n    });\n\n    // 2. Broadcast to all members in this conversation room\n    io.to(`conversation:${conversationId}`).emit(\"new_chat_message\", message);\n\n    // 3. Acknowledge back to sender\n    if (ack) ack({ success: true, messageId: message._id });\n  } catch (err) {\n    if (ack) ack({ success: false, error: err.message });\n  }\n});",
 };
 

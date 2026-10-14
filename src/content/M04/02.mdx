@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "មូលដ្ឋានគ្រឹះ Callbacks ក្នុង Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Callbacks មកវិញគឺជាមុខងារដែលបានបញ្ជូនជាអាគុយម៉ង់ទៅមុខងារអសមកាល ដែលហៅនៅពេលកិច្ចការផ្ទៃខាងក្រោយបញ្ចប់។ APIs ប្រពៃណី Node.js ធ្វើតាម error-first callback convention \`(err, result) => {}\`។`,
+  summary: "A callback is a function passed as an argument to an asynchronous function, invoked when the background task completes. Traditional Node.js APIs follow the error-first callback convention `(err, result) => {}`.",
   codeSnippet: "import fs from \"node:fs\";\n\n// Node.js Error-First Callback pattern:\nfs.readFile(\"config.json\", \"utf-8\", (err, data) => {\n  if (err) {\n    console.error(\"Error reading file:\", err.message);\n    return;\n  }\n  console.log(\"File content:\", data);\n});",
 };
 

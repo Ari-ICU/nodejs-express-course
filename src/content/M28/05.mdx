@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍ Process Management ក្នុង Node.js (Cluster & Crash Recovery)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Because Node.js runs on a single CPU core by default, a server with 8 CPU cores utilizes only 12.5% of available computing power unless clustered. Process managers fork multiple worker instances across all CPU cores, balance incoming network sockets across workers, and automatically restart crashed processes instantly.",
+  summary: "Process Management ក្នុង Node.js៖ ដោយសារ Node.js ដំណើរការលើ Single Thread ការកើតមាន Uncaught Exception អាចធ្វើឱ្យ Server រលត់ទាំងស្រុង។ Process Manager ធានាថានៅពេល Server ជួបបញ្ហា Crash វានឹង Restart ឡើងវិញភ្លាមៗដោយស្វ័យប្រវត្តិក្នងរយៈពេលត្រឹមតែប៉ុន្មាន Milliseconds។",
   codeSnippet: "// Node.js Multi-Core Utilization:\n// Single Process:      1 Node Process -> Utilizes 1 Core (3 Cores idle on quad-core VPS!)\n// Clustered (PM2/OS):  4 Node Processes -> Utilizes 100% of Quad-Core CPU!\n//\n// Load Balancer distributes requests across workers automatically.",
 };
 

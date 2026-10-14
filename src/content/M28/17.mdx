@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Ubuntu Server (Security Hardening & Swap Memory)",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Securing an Ubuntu server requires creating a non-root user with `sudo` privileges, configuring automatic security updates via `unattended-upgrades`, and creating a Swap memory file to prevent Out-Of-Memory (OOM) kernel kills on entry-level 1GB/2GB RAM cloud servers.",
+  summary: "Ubuntu Server Security Hardening រួមមានការបិទ Root SSH Login, ការបង្កើត Sudo User ផ្ទាល់ខ្លួន, ការកំណត់ Swap Memory (2GB ទៅ 4GB) ដើម្បីទប់ស្កាត់ Out-of-Memory (OOM) Kills លើ Node.js, និងការដំឡើង Fail2ban ដើម្បីទប់ស្កាត់ Brute-force SSH Attacks។",
   codeSnippet: "# Create a 2GB Swap File on Ubuntu:\nsudo fallocate -l 2G /swapfile\nsudo chmod 600 /swapfile\nsudo mkswap /swapfile\nsudo swapon /swapfile\n\n# Make swap permanent across reboots:\necho '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab\n\n# Verify swap active:\nfree -h",
 };
 

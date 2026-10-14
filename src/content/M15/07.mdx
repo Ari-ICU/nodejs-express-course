@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត 404 Route Handler សម្រាប់ URL ដែលមិនមានក្នុងប្រព័ន្ធ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "នៅពេល Client ហៅ URL ដែលមិនត្រឹមត្រូវ (ឧ. `GET /api/v1/invalid-route`) ប្រសិនបើយើងមិនមាន Catch-all Handler ទេ Express នឹងត្រឡប់ Default HTML 404 page ដែលមិនមែនជាទម្រង់ JSON REST API ឡើយ។\n\nដំណោះស្រាយ៖\n* ដាក់ Catch-all Middleware នៅខាងក្រោម Route ទាំងអស់\n* បង្កើត ``new AppError(`Cannot find ${req.originalUrl} on this server!`, 404)``\n* បញ្ជូនទៅកាន់ `next(err)`",
+  summary: "នៅពេល Client ហៅ URL ដែលមិនត្រឹមត្រូវ (ឧ. `GET /api/v1/invalid-route`) ប្រសិនបើយើងមិនមាន Catch-all Handler ទេ Express នឹងត្រឡប់ Default HTML 404 page ដែលមិនមែនជាទម្រង់ JSON REST API ឡើយ។\n\nដំណោះស្រាយ៖\n* ដាក់ Catch-all Middleware នៅខាងក្រោម Route ទាំងអស់\n* បង្កើត `new AppError(`Cannot find ${req.originalUrl} on this server!`, 404)`\n* បញ្ជូនទៅកាន់ `next(err)`",
   codeSnippet: "import { AppError } from \"./errors/AppError.js\";\n\n// Step 1: Place AFTER all valid routes in app.js\napp.all(\"*\", (req, res, next) => {\n  // 💡 Teaching Note: Passes clean 404 AppError directly to global error handler!\n  next(new AppError(`Endpoint ${req.method} ${req.originalUrl} does not exist on this server`, 404));\n});",
 };
 

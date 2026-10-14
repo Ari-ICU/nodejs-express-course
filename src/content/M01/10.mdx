@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ករណីប្រើប្រាស់សមស្របសម្រាប់ Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Node.js គឺល្អសម្រាប់កម្មវិធី I/O-heavy, data-intensive, និង real-time applications ដូចជា REST APIs, GraphQL services, chat applications, streaming servers, microservices និង IoT dashboards ។ វាមិនសូវសមរម្យសម្រាប់ការគណនាCPUធ្ងន់ៗ ដូចជាការអ៊ិនកូដវីដេអូ ឬការហ្វឹកហ្វឺនគំរូការរៀនម៉ាស៊ីននៅលើMain thread។",
+  summary: "Node.js is ideal for I/O-heavy, data-intensive, and real-time applications such as REST APIs, GraphQL services, chat applications, streaming servers, microservices, and IoT dashboards. It is less suitable for heavy CPU computation like video encoding or machine learning model training on the main thread.",
   codeSnippet: "/* Ideal Node.js Workloads:\n   ✅ REST & GraphQL APIs (High concurrency, DB read/writes)\n   ✅ Real-time Chat & WebSockets (Socket.IO, notifications)\n   ✅ Streaming services (Audio/Video file pipelines)\n   ✅ Microservices & API Gateways (Fast HTTP proxying)\n   ❌ Heavy 3D Graphics Rendering (Blocks single thread)\n*/",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Caching (Cache-Aside Pattern & TTL)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Caching stores copies of frequently accessed data in high-speed, volatile storage layers (such as RAM) so future requests can be served instantly without querying the primary database. In the Cache-Aside pattern, the application checks the cache first: if found (cache hit), it returns data immediately; if missing (cache miss), it queries the database, populates the cache with a Time-To-Live (TTL), and responds.",
+  summary: "Caching គឺជាការរក្សាទុកទិន្នន័យដែលប្រើប្រាស់ញឹកញាប់នៅក្នុង High-speed Storage Layer (Memory) ដើម្បីចៀសវាងការ Query Database ដដែលៗ។ យុទ្ធសាស្ត្រ Cache-Aside Pattern រួមមាន៖ ពិនិត្យ Cache ជាមុន (Cache Hit), ប្រសិនបើគ្មាន ទាញយកពី Database (Cache Miss), រក្សាទុកក្នុង Cache ជាមួយ TTL (Time-To-Live), និងការធ្វើ Cache Invalidation នៅពេលទិន្នន័យមានការ Update។",
   codeSnippet: "// Cache-Aside Workflow:\n//\n// Client Request -> [Check Cache (Redis)]\n//                         │\n//            ┌────────────┴────────────┐\n//         Hit (Data exists)        Miss (Not in cache)\n//            │                         │\n//            ↓                         ↓\n//     Return cached data      Query Primary Database (MongoDB)\n//                                      │\n//                                      ↓\n//                             Save to Cache (with TTL)\n//                                      │\n//                                      ↓\n//                             Return data to client",
 };
 

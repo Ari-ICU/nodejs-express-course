@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់អាសយដ្ឋាន Email (Email Verification)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Email verification ensures that users actually own the email address they registered with. Until verified, sensitive application capabilities (like posting public content or making payments) are restricted. Upon clicking the verification link, the backend updates `isEmailVerified: true` and invalidates the single-use verification token.",
+  summary: "Email Verification គឺជាដំណើរការបញ្ជាក់ថាអាសយដ្ឋាន Email ដែល User បានចុះឈ្មោះគឺជា Email ពិតប្រាកដ និងជារបស់ User នោះ។ Server នឹងផ្ញើ Email Verification Link ដែលមានផ្ទុក Crypto Token ហើយបន្ទាប់ពី User ចុច Link Server នឹងកែប្រែ Flag `isEmailVerified = true` ក្នុង User Document មុននឹងអនុញ្ញាតឱ្យចូលប្រើប្រាស់មុខងារសំខាន់ៗ។",
   codeSnippet: "// GET /api/v1/auth/verify-email?token=<token>\nexport const verifyEmail = async (req, res, next) => {\n  try {\n    const hashedToken = crypto\n      .createHash(\"sha256\")\n      .update(req.query.token)\n      .digest(\"hex\");\n\n    const user = await User.findOne({\n      emailVerificationToken: hashedToken,\n      emailVerificationExpires: { $gt: Date.now() },\n    });\n\n    if (!user) throw new AppError(\"Token is invalid or has expired\", 400);\n\n    user.isEmailVerified = true;\n    user.emailVerificationToken = undefined;\n    user.emailVerificationExpires = undefined;\n    await user.save();\n\n    res.json({ status: \"success\", message: \"Email verified successfully!\" });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

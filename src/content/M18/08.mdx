@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារសុវត្ថិភាព JWT (Algorithm Confusion & Secret Entropy)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Common JWT security vulnerabilities include using weak signing secrets (crackable in seconds via hashcat), allowing the insecure 'none' algorithm, failing to validate the token's expiration timestamp, and storing sensitive PII in unencrypted payloads. JWT secrets must be at least 256 bits (32 random bytes) of cryptographically secure entropy.",
+  summary: "JWT Security ទាមទារឱ្យមានការកំណត់រចនាសម្ព័ន្ធប្រកបដោយការប្រុងប្រយ័ត្ន៖ ប្រើប្រាស់ Strong Secret Keys (យ៉ាងតិច 256-bit Entropy), កំណត់ Algorithm ជាក់លាក់ (`HS256` ឬ `RS256`) ដើម្បីការពារ Algorithm Confusion Attacks (none algorithm), កំណត់ Expiration Time ខ្លីសម្រាប់ Access Token, និងមិនត្រូវដាក់ទិន្នន័យសម្ងាត់ (Passwords, Credit Cards) ក្នុង Payload ជាដាច់ខាត។",
   codeSnippet: "// 1. Generate strong secret (run in terminal):\n// node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"\n\n// 2. Explicitly specify allowed algorithms during verification:\nimport jwt from \"jsonwebtoken\";\n\nexport const verifyTokenSecurely = (token) => {\n  return jwt.verify(token, process.env.JWT_ACCESS_SECRET, {\n    algorithms: [\"HS256\"], // Strictly enforce algorithm (defeats 'none' and RS/HS confusion)\n    issuer: \"api.myenterprise.com\",\n    audience: \"myenterprise-client\",\n  });\n};",
 };
 

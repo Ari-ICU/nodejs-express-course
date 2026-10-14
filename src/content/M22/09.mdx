@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Business Logic ក្នុង Service Layer",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Services encapsulate core business logic independent of Express request and response objects. Because service functions accept plain JavaScript parameters and return data, testing them requires no HTTP overhead, resulting in blistering test execution speeds.",
+  summary: "ការធ្វើតេស្ត Services (Business Logic Layer) ផ្តោតលើ Core Domain Rules ដោយឡែកពី HTTP Layer (Req/Res)។ វិធីនេះជួយឱ្យយើងអាចតេស្តករណី Edge Cases ស្មុគស្មាញ (ដូចជា ការគណនាតម្លៃបញ្ចុះតម្លៃនៃ Course, ការផ្ទៀងផ្ទាត់កាលបរិច្ឆេទចុះឈ្មោះ) បានយ៉ាងលម្អិត និងងាយស្រួល។",
   codeSnippet: "import { describe, it, expect } from \"vitest\";\nimport { CourseService } from \"../services/course.service.js\";\n\ndescribe(\"CourseService.calculateDiscount\", () => {\n  it(\"should calculate promotional price with discount percentage\", () => {\n    const originalPrice = 100;\n    const discountPercent = 20;\n\n    const promoPrice = CourseService.calculateDiscount(originalPrice, discountPercent);\n\n    expect(promoPrice).toBe(80);\n  });\n});",
 };
 

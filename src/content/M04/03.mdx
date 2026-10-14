@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "បញ្ហា Callback Hell និង Inversion of Control",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `ការដាក់ Callbacks មកវិញអសមកាលជាបន្តបន្ទាប់ច្រើនដងនាំទៅដល់ 'ពីរ៉ាមីតនៃសេចក្តីវិនាស' (Callback Hell) ធ្វើឱ្យកូដមិនអាចអានបាន ពិបាកក្នុងការតាមដាន និងងាយនឹងមានកំហុសដែលមិនអាចដោះស្រាយបាន។`,
+  summary: "Nesting multiple sequential asynchronous callbacks leads to the 'Pyramid of Doom' (Callback Hell), making code unreadable, difficult to trace, and prone to unhandled errors.",
   codeSnippet: "// The \"Pyramid of Doom\" (Anti-pattern):\ngetUser(userId, (err, user) => {\n  if (err) return handleErr(err);\n  getOrders(user.id, (err, orders) => {\n    if (err) return handleErr(err);\n    getInvoice(orders[0].id, (err, invoice) => {\n      if (err) return handleErr(err);\n      sendEmail(user.email, invoice, (err) => {\n        // Deeply nested, unmaintainable code!\n      });\n    });\n  });\n});",
 };
 

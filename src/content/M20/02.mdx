@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី Simple Mail Transfer Protocol (SMTP)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Simple Mail Transfer Protocol (SMTP) is the internet standard communication protocol for electronic mail transmission. An SMTP client establishes an encrypted TLS connection with an SMTP relay server (e.g. Brevo, SendGrid, Amazon SES, Mailgun) on port 587 or 465, performs SASL authentication, and transmits RFC 5322 MIME messages.",
+  summary: "SMTP (Simple Mail Transfer Protocol) គឺជាពិធីការស្តង់ដារសម្រាប់បញ្ជូន Email ឆ្លងកាត់បណ្តាញ Internet។ ក្នុងបរិស្ថាន Development យើងអាចប្រើប្រាស់ Ethereal Email ឬ Mailtrap សម្រាប់ចាប់យក Email សាកល្បងដោយមិនបាច់ផ្ញើទៅកាន់ Inbox ពិតប្រាកដ។ ក្នុង Production យើងប្រើប្រាស់ Transactional Email Providers ដូចជា SendGrid, Resend, ឬ AWS SES តាមរយៈ SMTP ឬ HTTP API។",
   codeSnippet: "// Standard SMTP Configuration Parameters:\n// Host:     smtp-relay.brevo.com (or smtp.mailgun.org, email-smtp.us-east-1.amazonaws.com)\n// Port:     587 (STARTTLS - recommended) or 465 (SSL/TLS direct)\n// Secure:   false for 587 (upgrades via STARTTLS), true for 465\n// Auth:     User (API Key / Username) & Password (Secret Key)\n// From:     \"MyEnterprise Support <no-reply@myenterprise.com>\"",
 };
 

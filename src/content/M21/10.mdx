@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Documentation ពេញលេញកម្រិត Production",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "A production-grade API documentation architecture automates spec generation from route files, exposes interactive Swagger UI for development, and generates static HTML or Markdown for public developer portals. Versioning your documentation (`/api/v1/docs`, `/api/v2/docs`) guarantees backward compatibility for enterprise consumers.",
+  summary: "ស្ថាបត្យកម្ម API Documentation ពេញលេញកម្រិត Production តម្រូវឱ្យមានការរៀបចំ Documentation-first ឬ Code-first ស្របគ្នាជាមួយ CI/CD Pipeline។ Documentation ត្រូវតែ Update ដោយស្វ័យប្រវត្តិតាម Code Changes អាច Export ជា Postman Collection ឬ OpenAPI JSON និងត្រូវបានការពារដោយ Authentication ប្រសិនបើជា Internal Enterprise API។",
   codeSnippet: "// Expose raw spec for Postman / SDK generators\napp.get(\"/api/docs.json\", (req, res) => {\n  res.setHeader(\"Content-Type\", \"application/json\");\n  res.send(swaggerSpec);\n});\n\n// Mount interactive documentation UI\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {\n  explorer: true,\n  customCss: \".swagger-ui .topbar { display: none }\", // Clean look\n  customSiteTitle: \"Enterprise REST API Documentation\",\n}));",
 };
 

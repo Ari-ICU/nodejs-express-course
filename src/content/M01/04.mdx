@@ -4,11 +4,15 @@ export const meta = {
   title: "What is Node.js?",
   khmerTitle: "អ្វីទៅជា Node.js?",
   type: "concept",
-  imageUrl: "/images/lessons/key-features-of-nodejs.png",
-  summary: `**Node.js** គឺជាប្រភពបើកចំហរ Environmentដំណើរការ JavaScript ឆ្លងវេទិកា ដែលប្រតិបត្តិកូដនៅខាងក្រៅ Browser ៖
-- ** Asynchronous & Event-Driven **៖ APIs មិនទប់ស្កាត់។ Server មិនដែលរង់ចាំ API ដើម្បីបញ្ជូនទិន្នន័យមកវិញទេ មុនពេលដោះស្រាយកិច្ចការបន្ទាប់។
-- ** ដំណើរការដោយ Google V8 Engine**៖ ចងក្រង JavaScript ដោយផ្ទាល់ទៅក្នុងកូដម៉ាស៊ីន ដោយផ្តល់នូវល្បឿនប្រតិបត្តិលឿនបំផុត។
-- **Single-Threaded with Event Loop**: ដោះស្រាយការភ្ជាប់ដំណាលគ្នារាប់ពាន់នៃការតភ្ជាប់ក្នុងពេលដំណាលគ្នាដោយមិនមានការផ្លាស់ប្តូរបរិបទ Threads ។
-- **គ្មានការបណ្ដោះអាសន្ន (ការស្ទ្រីមទិន្នន័យ)**៖ ដំណើរការកម្មវិធី និងទិន្នន័យលទ្ធផលនៅក្នុងស្ទ្រីមជាបន្តបន្ទាប់ ដោយមិនមានការពន្យាពេលបណ្តោះអាសន្ន។
-- **ប្រព័ន្ធអេកូ NPM រស់រវើក**៖ កម្មវិធីគ្រប់គ្រងកញ្ចប់ Node ផ្តល់នូវ Collections ផ្តុំដ៏ធំបំផុតនៃបណ្ណាល័យប្រភពបើកចំហក្នុងការអភិវឌ្ឍកម្មវិធី។`,
+  codeLanguage: "javascript",
+  summary: "Node.js is an open-source, cross-platform JavaScript runtime environment built on Google Chrome's high-performance V8 JavaScript engine and libuv. It executes JavaScript outside the web browser, allowing developers to build lightning-fast, highly scalable network servers using JavaScript.",
+  codeSnippet: "// Inspect your Node environment\nconsole.log(\"Node version:\", process.version);\nconsole.log(\"Platform:\", process.platform);\nconsole.log(\"Architecture:\", process.arch);\nconsole.log(\"Memory Usage:\", process.memoryUsage().heapUsed / 1024 / 1024, \"MB\");",
 };
+
+```javascript
+// Inspect your Node environment
+console.log("Node version:", process.version);
+console.log("Platform:", process.platform);
+console.log("Architecture:", process.arch);
+console.log("Memory Usage:", process.memoryUsage().heapUsed / 1024 / 1024, "MB");
+```

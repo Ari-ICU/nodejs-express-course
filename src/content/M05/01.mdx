@@ -4,45 +4,23 @@ export const meta = {
   title: "HTTP Fundamentals",
   khmerTitle: "មូលដ្ឋានគ្រឹះពិធីការ HTTP និងដំណើរការ Request-Response",
   type: "concept",
-  codeLanguage: "http",
-  summary: `Hypertext Transfer Protocol (HTTP) គឺជា Application Layer Protocol បែប Stateless ដែលផ្តល់ថាមពលដល់ World Wide Web ។ Client ធ្វើការផ្ញើ Request ដែលមាន HTTP Methods, Path (Routes), Headers និង Optional Body ។ បន្ទាប់មក Server ធ្វើការវាយតម្លៃ Request និងឆ្លើយតបមកវិញនូវ HTTP Status Codes, Response Headers និង JSON Payload ។`,
-  codeSnippet: `POST /api/v1/orders HTTP/1.1
-Host: api.store.com
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOi...
-
-{
-  "item": "Keyboard",
-  "qty": 1
-}
-
-# --- SERVER RESPONSE ---
-HTTP/1.1 201 Created
-Content-Type: application/json
-
-{
-  "success": true,
-  "orderId": "ORD-55"
-}`,
+  codeLanguage: "javascript",
+  summary: "Hypertext Transfer Protocol (HTTP) is the stateless, application-layer protocol powering the World Wide Web. Clients send request packets containing a method, path, headers, and optional body; servers evaluate the request and return an HTTP status code, response headers, and payload.",
+  codeSnippet: "/* Anatomy of an HTTP Request / Response:\n   CLIENT REQUEST:\n   POST /api/v1/orders HTTP/1.1\n   Host: api.store.com\n   Content-Type: application/json\n   Authorization: Bearer eyJhbGci...\n   {\"item\": \"Keyboard\", \"qty\": 1}\n\n   SERVER RESPONSE:\n   HTTP/1.1 201 Created\n   Content-Type: application/json\n   {\"success\": true, \"orderId\": \"ORD-55\"}\n*/",
 };
 
-```http
-POST /api/v1/orders HTTP/1.1
-Host: api.store.com
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOi...
+```javascript
+/* Anatomy of an HTTP Request / Response:
+   CLIENT REQUEST:
+   POST /api/v1/orders HTTP/1.1
+   Host: api.store.com
+   Content-Type: application/json
+   Authorization: Bearer eyJhbGci...
+   {"item": "Keyboard", "qty": 1}
 
-{
-  "item": "Keyboard",
-  "qty": 1
-}
-
-# --- SERVER RESPONSE ---
-HTTP/1.1 201 Created
-Content-Type: application/json
-
-{
-  "success": true,
-  "orderId": "ORD-55"
-}
+   SERVER RESPONSE:
+   HTTP/1.1 201 Created
+   Content-Type: application/json
+   {"success": true, "orderId": "ORD-55"}
+*/
 ```

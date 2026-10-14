@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Routes Layer",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Routes layer defines the API's public URL surface and maps incoming HTTP verbs and paths to corresponding controller handlers. Route files should remain lean: they declare paths, mount validation and auth middleware, and delegate immediately to controllers without executing business logic.",
+  summary: "Routes Layer ទទួលខុសត្រូវលើការផ្គូផ្គង HTTP Path និង Verb ទៅកាន់ Handler Function សមស្រប (`router.get()`, `router.post()`)។ Routes ត្រូវតែរក្សាភាពស្អាត (Skinny Routes) ដោយគ្រាន់តែភ្ជាប់ Middleware (Auth, Validation) និងហៅ Controller Method ប៉ុណ្ណោះ ដោយគ្មាន Business Logic ឬ Database Queries ឡើយ។",
   codeSnippet: "// routes/course.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createCourseSchema } from \"../validators/course.validator.js\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(protect, restrictTo(\"instructor\", \"admin\"), validate(createCourseSchema), courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(protect, restrictTo(\"instructor\", \"admin\"), courseController.updateCourse)\n  .delete(protect, restrictTo(\"instructor\", \"admin\"), courseController.deleteCourse);\n\nexport default router;",
 };
 

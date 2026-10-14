@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "យុទ្ធសាស្ត្រ Pagination (Offset vs Cursor-based Pagination)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Returning entire collections in a single API call degrades database performance and crashes mobile clients. Offset pagination (`skip` + `limit`) is simple to implement but suffers from performance degradation at high offsets (`skip(100000)` scans 100,000 documents). Cursor-based pagination (`_id: { $gt: lastId }`) maintains constant O(1) performance regardless of dataset depth.",
+  summary: "API Pagination Strategies៖ Offset-based Pagination (`skip` និង `limit`) មានភាពងាយស្រួល ប៉ុន្តែជួបបញ្ហា Performance នៅលើទិន្នន័យរាប់សែន Documents ព្រោះ MongoDB ត្រូវ Scan Documents ចាស់ៗចោល។ សម្រាប់ High-scale APIs Cursor-based Pagination (ផ្អែកលើ `_id: { $gt: lastId }`) គឺជាជម្រើសដ៏ល្អបំផុតព្រោះវាដំណើរការលឿនថេរ O(1) ជានិច្ច។",
   codeSnippet: "// 1. Offset Pagination (Good for numbered page UI):\nconst page = Number(req.query.page) || 1;\nconst limit = Number(req.query.limit) || 20;\nconst skip = (page - 1) * limit;\nconst items = await Course.find().skip(skip).limit(limit).lean();\n\n// 2. Cursor Pagination (Optimal for Infinite Scroll & Massive Datasets):\n// Query: /api/courses?cursor=64f1a2b3c4...&limit=20\nconst { cursor, limit = 20 } = req.query;\nconst query = cursor ? { _id: { $lt: cursor } } : {}; // uses indexed _id directly!\n\nconst courses = await Course.find(query)\n  .sort({ _id: -1 })\n  .limit(Number(limit))\n  .lean();",
 };
 

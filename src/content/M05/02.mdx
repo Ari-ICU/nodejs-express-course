@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធនៃ HTTP Request (req)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Request HTTP រួមមាន HTTP Verbs (GET, POST ។`,
+  summary: "An HTTP request consists of an HTTP verb (GET, POST, etc.), a target URL path, headers providing metadata (content types, client user-agents, auth tokens), query string parameters, and an optional payload body.",
   codeSnippet: "import http from \"node:http\";\n\nconst server = http.createServer((req, res) => {\n  console.log(\"Method:\", req.method);\n  console.log(\"URL Path:\", req.url);\n  console.log(\"User-Agent:\", req.headers[\"user-agent\"]);\n  res.end(\"Request logged\");\n});",
 };
 

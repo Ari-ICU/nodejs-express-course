@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម API Testing Workflow និង Newman CLI ក្នុង CI/CD",
   type: "architecture",
   codeLanguage: "bash",
-  summary: "Newman is the command-line collection runner for Postman. It allows running Postman test suites directly from terminal scripts and automated GitHub Actions CI/CD pipelines, outputting structured test reports and failing pull requests if any assertion breaks.",
+  summary: "API Testing Workflow ក្នុង CI/CD Pipeline អាចត្រូវបានអនុវត្តដោយស្វ័យប្រវត្តិតាមរយៈ Newman CLI (Command-line Runner របស់ Postman)។ ក្នុង GitHub Actions ឬ GitLab CI Newman អាចដំណើរការ Postman Collection ប្រឆាំងនឹង Test Server និងរាយការណ៍អំពី Pass/Fail មុនពេលអនុញ្ញាតឱ្យ Merge កូដចូល Production។",
   codeSnippet: "# Run Postman Collection headless via Newman CLI\nnpx newman run ./docs/postman/collection.json   --environment ./docs/postman/local-env.json   --reporters cli,htmlextra   --reporter-htmlextra-export ./reports/api-test-report.html\n\n# In GitHub Actions:\n# - name: Run Postman Tests via Newman\n#   run: npx newman run ./docs/postman/collection.json -e ./docs/postman/ci-env.json",
 };
 

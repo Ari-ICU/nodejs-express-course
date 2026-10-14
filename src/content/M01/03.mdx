@@ -4,10 +4,23 @@ export const meta = {
   title: "Client-Server Architecture",
   khmerTitle: "ស្ថាបត្យកម្ម Client-Server",
   type: "architecture",
-  imageUrl: "/images/lessons/client-server-architecture.png",
-  summary: `**ស្ថាបត្យកម្ម Client-Server** គឺជាគំរូកុំព្យូទ័រចែកចាយជាមូលដ្ឋានដែលផ្តល់ថាមពលដល់អ៊ីនធឺណិតទំនើប៖
-- **Client (ឧបករណ៍ជួរមុខ)**៖ Web Browser កម្មវិធីទូរស័ព្ទ និងឧបករណ៍ IoT ផ្តួចផ្តើម Request លើពិធីការបណ្តាញ (HTTP/HTTPS, TCP/IP) ។
-- ** Servers (Backend Hosts)**៖ Centralized Node.js + Express servers ផ្ទៀងផ្ទាត់ Request ពង្រឹង Business Logic និងការគណនា Response ។
-- ** Database & Cache **៖ Persistence Layer ដែលមានប្រសិទ្ធភាពខ្ពស់ (MongoDB NoSQL Database) និង In-memory Cache (Redis) ផ្គត់ផ្គង់ទិន្នន័យតាមពេលវេលាជាក់ស្តែង។
-- **ទំនាក់ទំនង Stateless**៖ នៅក្នុង REST APIs Request នីមួយៗមានព័ត៌មានបញ្ជាក់ Authentication ពេញលេញ (JWT Bearer tokens) ដើម្បីដំណើរការដោយឯករាជ្យ។`,
+  codeLanguage: "javascript",
+  summary: "The foundational distributed systems model where clients (mobile apps, web browsers, IoT devices) initiate requests over TCP/IP and HTTP, and centralized server nodes authenticate, parse, query database clusters, and return formatted responses.",
+  codeSnippet: "/* Client-Server Communication Flow:\n   [Mobile App / React App] \n            │ (HTTP Request / HTTPS)\n            ▼\n   [Reverse Proxy (Nginx)]\n            │\n            ▼\n   [Node.js Server (Express)]\n            │\n      ┌─────┴─────┐\n      ▼           ▼\n   [MongoDB]   [Redis Cache]\n*/",
 };
+
+```javascript
+/* Client-Server Communication Flow:
+   [Mobile App / React App] 
+            │ (HTTP Request / HTTPS)
+            ▼
+   [Reverse Proxy (Nginx)]
+            │
+            ▼
+   [Node.js Server (Express)]
+            │
+      ┌─────┴─────┐
+      ▼           ▼
+   [MongoDB]   [Redis Cache]
+*/
+```

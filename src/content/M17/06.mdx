@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត restrictTo Middleware Factory",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "The `restrictTo(...roles)` middleware factory accepts a list of permitted roles and returns an Express middleware function. It checks if the already-authenticated `req.user.role` is included in the allowed list. If not, it throws a 403 Forbidden error immediately, halting execution before the controller is reached.",
+  summary: "Authorization Middleware Factory (ជាទូទៅហៅថា `restrictTo(...roles)`) គឺជា Higher-Order Function ដែលត្រឡប់ Express Middleware មកវិញ។ វាទទួលយកបញ្ជី Roles ដែលអនុញ្ញាត (ឧ. `'admin'`, `'instructor'`) ហើយពិនិត្យមើលថា `req.user.role` មានក្នុងបញ្ជីនោះឬទេ។ ប្រសិនបើគ្មានសិទ្ធិ វានឹងបញ្ជូន HTTP 403 Forbidden ភ្លាមៗជាមួយនឹងសារបញ្ជាក់ច្បាស់លាស់។",
   codeSnippet: "// middleware/role.middleware.js\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const restrictTo = (...allowedRoles) => {\n  return (req, res, next) => {\n    // req.user was populated by protect middleware\n    if (!req.user || !allowedRoles.includes(req.user.role)) {\n      return next(\n        new AppError(\n          `Forbidden: Role '${req.user?.role || \"anonymous\"}' does not have permission`,\n          403\n        )\n      );\n    }\n    next();\n  };\n};\n\n// Usage in course routes:\n// router.delete(\"/courses/:id\", protect, restrictTo(\"instructor\", \"admin\"), deleteCourse);",
 };
 

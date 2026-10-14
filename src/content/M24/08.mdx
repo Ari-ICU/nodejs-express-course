@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបញ្ជូន Real-time Notifications ទៅកាន់អ្នកប្រើប្រាស់ជាក់លាក់",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Real-time notifications inform specific users of instant updates (e.g. 'Your order has shipped', 'Someone liked your photo'). By associating an authenticated user's MongoDB `_id` with their active socket connection, the backend can target notification events directly to individual users across devices.",
+  summary: "Real-Time Notifications Architecture អនុញ្ញាតឱ្យ Server បញ្ជូនដំណឹងសំខាន់ៗ (ដូចជា សិស្សទទួលបាន Badge ថ្មី, Course ត្រូវបាន Approve, ឬមាន Reply លើ Comment) ទៅកាន់ User ជាក់លាក់ភ្លាមៗ។ នៅពេល User Connect Server នឹង map User ID ជាមួយ Socket ID ឬឱ្យ User ចូលទៅក្នុង Private Room (`socket.join(\"user:\" + userId)`)។",
   codeSnippet: "// Authenticate socket and join personal notification channel:\nio.use((socket, next) => {\n  const token = socket.handshake.auth.token;\n  try {\n    const user = jwt.verify(token, process.env.JWT_SECRET);\n    socket.user = user;\n    next();\n  } catch (err) {\n    next(new Error(\"Authentication failed\"));\n  }\n});\n\nio.on(\"connection\", (socket) => {\n  // Join room named after user's database ID\n  socket.join(`user:${socket.user.id}`);\n});\n\n// Anywhere in your backend (e.g. Order Service):\nexport const notifyUserOrderShipped = (io, userId, order) => {\n  io.to(`user:${userId}`).emit(\"notification\", {\n    type: \"ORDER_SHIPPED\",\n    title: \"Order on the way!\",\n    message: `Order #${order.id} has been dispatched.`,\n  });\n};",
 };
 

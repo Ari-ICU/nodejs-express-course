@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ WebSocket Protocol (RFC 6455)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "The WebSocket protocol (RFC 6455) provides full-duplex communication over a single long-lived TCP connection. It begins with an HTTP Upgrade handshake (`Upgrade: websocket`). Once established, tiny 2-to-10 byte binary frames replace bloated 1KB+ HTTP headers, enabling lightning-fast real-time messaging with minimal latency.",
+  summary: "WebSocket Protocol (RFC 6455) គឺជាពិធីការទំនាក់ទំនងដែលបង្កើត Full-Duplex, Bi-Directional Connection តែមួយរវាង Browser និង Server តាមរយៈ TCP Socket។ វាចាប់ផ្តើមពី HTTP Handshake ហើយ Upgrade ទៅជា WebSocket Protocol ដែលអនុញ្ញាតឱ្យភាគីទាំងសងខាងអាចផ្ញើសារទៅវិញទៅមកបានគ្រប់ពេលវេលាដោយគ្មាន Header Overhead ដូច HTTP ឡើយ។",
   codeSnippet: "// WebSocket Upgrade Handshake:\n// Client -> GET /chat HTTP/1.1\n//           Host: server.example.com\n//           Upgrade: websocket\n//           Connection: Upgrade\n//           Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n//           Sec-WebSocket-Version: 13\n//\n// Server -> HTTP/1.1 101 Switching Protocols\n//           Upgrade: websocket\n//           Connection: Upgrade\n//           Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\n//\n// Connection upgraded! Direct TCP full-duplex streaming begins.",
 };
 

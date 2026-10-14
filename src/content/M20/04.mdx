@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការផ្ញើ Email (Text & HTML Format)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Nodemailer's `sendMail()` method accepts an options object containing `from`, `to`, `subject`, `text` (fallback plaintext), and `html` (rich rendered styling). Providing both `html` and `text` alternatives ensures email accessibility on screen readers and low-bandwidth mobile clients.",
+  summary: "ការផ្ញើ Email ជាមួយ Nodemailer គាំទ្រទាំង Plain Text (សម្រាប់ Fallback) និង HTML Body (សម្រាប់ Rich Styling) តាមរយៈ Method `transporter.sendMail()`។ ការកំណត់ជម្រើសរួមមាន `from` (Verified Sender Address), `to` (Recipient Address), `subject`, `text`, និង `html` ដោយធានាបាននូវការបង្ហាញត្រឹមត្រូវនៅលើគ្រប់ Email Clients។",
   codeSnippet: "export const sendEmail = async ({ to, subject, html, text }) => {\n  const mailOptions = {\n    from: `\"${process.env.APP_NAME}\" <${process.env.EMAIL_FROM}>`,\n    to,\n    subject,\n    text, // Plaintext version for spam filters & accessibility\n    html, // Rich HTML version\n  };\n\n  const info = await transporter.sendMail(mailOptions);\n  console.log(\"Email dispatched successfully. MessageID:\", info.messageId);\n  return info;\n};",
 };
 

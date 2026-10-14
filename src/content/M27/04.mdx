@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Services Layer (Core Business Logic)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Service layer contains the core business logic of the application. Services know nothing about Express, `req`, or `res`. They receive plain JavaScript objects, perform computations, execute database operations, dispatch emails, and return data or throw errors. This makes services 100% reusable across CLI scripts, tests, and API routes.",
+  summary: "Services Layer គឺជាបេះដូងនៃកម្មវិធី (Core Business Logic)។ Service Methods ដំណើរការលើ Domain Rules, គណនាទិន្នន័យ, ទំនាក់ទំនងជាមួយ Models (Mongoose), និងហៅ External Services (Stripe, Cloudflare R2)។ Services ត្រូវតែឯករាជ្យពី HTTP Objects (`req`, `res`) ដែលធ្វើឱ្យពួកវាអាច Unit Test បានយ៉ាងងាយស្រួល។",
   codeSnippet: "// services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const createCourse = async (courseData, instructorId) => {\n  // Business rule: Check duplicate title\n  const existing = await Course.findOne({ title: courseData.title });\n  if (existing) {\n    throw new AppError(\"A course with this title already exists\", 409);\n  }\n\n  const course = await Course.create({\n    ...courseData,\n    instructor: instructorId,\n  });\n\n  return course;\n};",
 };
 

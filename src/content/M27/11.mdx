@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Jobs Directory សម្រាប់ Background Queues និង Workers",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "The Jobs directory groups queue definitions, job producers, and worker processors. Keeping job definitions organized by domain (e.g. `jobs/email.job.js`, `jobs/report.job.js`) provides clear separation between scheduled cron tasks and transactional queue processing.",
+  summary: "Jobs Layer ផ្ទុកនូវរចនាសម្ព័ន្ធគ្រប់គ្រង Background Processing រួមមាន Queue Definitions, Job Schedulers, និង Worker Processors សម្រាប់ BullMQ ដោយបំបែកដាច់ពី Web Server Process។",
   codeSnippet: "src/jobs/\n├── index.js          # Initializes all queues and workers\n├── email/\n│   ├── email.queue.js   # Queue initialization & producer helpers\n│   └── email.worker.js  # Worker logic processing email delivery\n└── reports/\n    ├── report.queue.js\n    └── report.worker.js",
 };
 

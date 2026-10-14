@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Environment Variables ក្នុង Postman ({{base_url}})",
   type: "lab",
   codeLanguage: "json",
-  summary: "Postman environments allow you to define key-value variables that adapt dynamically across different hosting stages. By parameterizing URLs as `{{base_url}}/courses` and tokens as `{{auth_token}}`, switching between Local (`http://localhost:5000`), Staging, and Production requires a single dropdown click.",
+  summary: "Environment Variables ក្នុង Postman អនុញ្ញាតឱ្យយើងគ្រប់គ្រង Variables ដូចជា `{{base_url}}`, `{{token}}`, និង `{{courseId}}` ដោយប្តូររវាង Environments ផ្សេងៗ (Local, Staging, Production) ដោយមិនបាច់កែប្រែ URL ក្នុង Request ដោយដៃឡើយ។",
   codeSnippet: "// In Postman URL Bar:\n// {{base_url}}/api/v1/courses/{{course_id}}\n//\n// Environment: \"Local Development\"\n// base_url   -> http://localhost:5000\n// auth_token -> eyJhbGciOiJIUzI1Ni...\n//\n// Environment: \"Production\"\n// base_url   -> https://api.myenterprise.com\n// auth_token -> eyJhbGciOiJIUzI1Ni...",
 };
 

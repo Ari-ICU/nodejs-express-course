@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ User Roles ក្នុង Schema",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "User roles define categorical identities within an application (e.g. `user`, `moderator`, `admin`, `superadmin`). In Mongoose, roles are declared as an enumerated string with strict validation and a safe default (e.g. `user`). Restricting role escalation during self-registration ensures standard signups can never assign themselves administrative privileges.",
+  summary: "User Roles គឺជាការកំណត់ឋានានុក្រមនៃអ្នកប្រើប្រាស់នៅក្នុង User Schema តាមរយៈ Mongoose Enum (ឧ. `['student', 'instructor', 'admin']`)។ ការកំណត់ Role តាំងពីកម្រិត Database ជួយធានានូវ Data Integrity និងការពារកុំឱ្យមានការកែប្រែ Role ដោយខុសច្បាប់តាមរយៈ Mass Assignment ដោយការពារ Field `role` មិនឱ្យ Client Update ដោយផ្ទាល់។",
   codeSnippet: "// models/user.model.js\nimport mongoose from \"mongoose\";\n\nconst userSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n  email: { type: String, required: true, unique: true },\n  password: { type: String, required: true, select: false },\n  role: {\n    type: String,\n    enum: {\n      values: [\"user\", \"moderator\", \"admin\", \"superadmin\"],\n      message: \"{VALUE} is not a valid user role\"\n    },\n    default: \"user\", // Strict safe default\n  },\n  isActive: { type: Boolean, default: true }\n}, { timestamps: true });\n\nexport const User = mongoose.model(\"User\", userSchema);",
 };
 

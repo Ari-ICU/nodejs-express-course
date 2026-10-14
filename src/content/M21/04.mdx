@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការដំឡើង Swagger UI ក្នុង Express ជាមួយ swagger-ui-express",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Swagger UI generates an interactive, human-readable documentation website directly from your OpenAPI specification. Developers can explore endpoints, inspect schemas, and test live HTTP requests directly within the browser using the built-in 'Try it out' console.",
+  summary: "Swagger UI អនុញ្ញាតឱ្យយើងបង្ហោះ Interactive Documentation ដ៏ស្រស់ស្អាតដោយផ្ទាល់នៅក្នុង Express App តាមរយៈ Endpoints ដូចជា `/api/docs`។ ដោយប្រើប្រាស់បណ្ណាល័យ `swagger-ui-express` និង `swagger-jsdoc` ឬ Static YAML file Developer អាចចុចតេស្ត Send Request និងមើល Live Responses ភ្លាមៗនៅលើ Browser។",
   codeSnippet: "import express from \"express\";\nimport swaggerUi from \"swagger-ui-express\";\nimport swaggerJsdoc from \"swagger-jsdoc\";\n\nconst app = express();\n\nconst swaggerOptions = {\n  definition: {\n    openapi: \"3.0.0\",\n    info: {\n      title: \"Node.js Express API Documentation\",\n      version: \"1.0.0\",\n      description: \"Interactive documentation with live request testing\",\n    },\n  },\n  apis: [\"./src/routes/*.js\"], // Scan route files for JSDoc annotations\n};\n\nconst swaggerSpec = swaggerJsdoc(swaggerOptions);\n\n// Serve Swagger UI at /api/docs\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec));",
 };
 

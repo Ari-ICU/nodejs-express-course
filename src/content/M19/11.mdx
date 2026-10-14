@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការ Upload ឯកសារទៅ Cloudflare R2 ដោយប្រើ AWS SDK v3",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Cloudflare R2 is an S3-compatible object storage service that charges zero egress bandwidth fees, making it exceptionally cost-effective for web applications. Using `@aws-sdk/client-s3`, files processed into memory buffers by Multer are streamed directly to R2 buckets via `PutObjectCommand`.",
+  summary: "Cloudflare R2 គឺជា S3-Compatible Object Storage ដែលមានចំណុចខ្លាំងគឺគ្មានការគិតថ្លៃលើ Egress Bandwidth (Zero Egress Fees)។ យើងអាចប្រើប្រាស់ `@aws-sdk/client-s3` ក្នុង Node.js ដើម្បី Upload រូបភាពពី `Multer.memoryStorage()` (Buffer) ទៅកាន់ Cloudflare R2 ដោយផ្ទាល់តាមរយៈ `PutObjectCommand`។",
   codeSnippet: "import { S3Client, PutObjectCommand } from \"@aws-sdk/client-s3\";\nimport crypto from \"node:crypto\";\n\nconst r2 = new S3Client({\n  region: \"auto\",\n  endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,\n  credentials: {\n    accessKeyId: process.env.R2_ACCESS_KEY_ID,\n    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,\n  },\n});\n\nexport const uploadToR2 = async (fileBuffer, originalName, mimeType) => {\n  const fileKey = `uploads/${crypto.randomUUID()}-${originalName}`;\n\n  await r2.send(\n    new PutObjectCommand({\n      Bucket: process.env.R2_BUCKET_NAME,\n      Key: fileKey,\n      Body: fileBuffer,\n      ContentType: mimeType,\n    })\n  );\n\n  return `${process.env.R2_PUBLIC_DOMAIN}/${fileKey}`;\n};",
 };
 

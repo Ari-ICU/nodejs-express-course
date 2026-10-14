@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Environment Variables ក្នុង Production",
   type: "lab",
   codeLanguage: "bash",
-  summary: "In production, environment variables should be injected directly by the hosting platform (Docker environment flags, Kubernetes secrets, or VPS systemd environment configurations) rather than read from physical `.env` files on disk. This prevents secrets from persisting in container images or leaking via file permissions.",
+  summary: "ការគ្រប់គ្រង Environment Variables ក្នុង Production តម្រូវឱ្យប្រើប្រាស់ Secret Management Solutions ដូចជា Docker Secrets, AWS Systems Manager Parameter Store, ឬ Cloudflare Environment Variables ដោយមិនត្រូវផ្ទុកឯកសារ `.env` ក្នុង Container Images ឬ Git Repositories ជាដាច់ខាត។",
   codeSnippet: "# 1. Passing env vars to Docker container at runtime:\ndocker run -d   -p 5000:5000   -e NODE_ENV=production   -e MONGODB_URI=\"mongodb+srv://admin:secret@cluster.mongodb.net/prod\"   --name my-api   my-enterprise-api:latest\n\n# 2. Or using Docker Compose secrets / env_file:\n# docker compose --env-file .env.production up -d",
 };
 

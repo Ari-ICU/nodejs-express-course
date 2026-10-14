@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទីរបស់ Redis ក្នុងប្រព័ន្ធ Message Queues",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Redis is the industry standard backing store for Node.js message queues because of its atomic data structures (`LPUSH`, `BRPOP`, `ZADD`). In-memory storage provides microsecond task scheduling, while Redis Streams and Pub/Sub primitives ensure guaranteed at-least-once message delivery across clustered workers.",
+  summary: "Redis ដើរតួជា Engine ដ៏មានល្បឿនលឿន និងមានស្ថេរភាពបំផុតសម្រាប់ Message Queues។ តាមរយៈ Redis Lists, Streams, និង Sorted Sets រួមជាមួយ Pub/Sub និង Atomic Lua Scripts Redis ផ្តល់នូវ throughput ខ្ពស់រាប់ម៉ឺន Jobs ក្នុងមួយវិនាទី និងធានាថាមិនមាន Job ពីរត្រូវ Worker ដំណើរការជាន់គ្នាឡើយ។",
   codeSnippet: "# Redis atomic operations for queues:\nLPUSH queue:jobs '{\"id\": 101, \"task\": \"send_email\"}' # Producer adds job\nBRPOP queue:jobs 0                                    # Worker blocks waiting for job atomically\nZADD queue:delayed 1773729600 '{\"id\": 102}'            # Scheduled delayed job sorted by timestamp",
 };
 

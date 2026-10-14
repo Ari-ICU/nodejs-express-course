@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ និងប្រើប្រាស់ Redis ក្នុង Node.js (ioredis)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "`ioredis` is a robust, full-featured Redis client for Node.js. It features built-in support for Promises, cluster configurations, sentinel failover, and automatic reconnection. Establishing a single shared Redis client singleton provides high-throughput caching throughout your Express services.",
+  summary: "ការប្រើប្រាស់ Redis ក្នុង Node.js ត្រូវបានអនុវត្តយ៉ាងរលូនតាមរយៈបណ្ណាល័យ `ioredis`។ ioredis ផ្តល់នូវសមត្ថភាពគ្រប់គ្រង Connection Pool, Auto-reconnect, Cluster Support, និង Promise-based APIs សម្រាប់ប្រតិបត្តិការ `redis.get(key)`, `redis.setex(key, ttl, value)`, និង `redis.del(key)`។",
   codeSnippet: "import Redis from \"ioredis\";\n\nexport const redis = new Redis({\n  host: process.env.REDIS_HOST || \"localhost\",\n  port: Number(process.env.REDIS_PORT) || 6379,\n  password: process.env.REDIS_PASSWORD || undefined,\n  retryStrategy: (times) => Math.min(times * 50, 2000), // Exponential backoff\n});\n\nredis.on(\"connect\", () => console.log(\"Connected to Redis successfully!\"));\nredis.on(\"error\", (err) => console.error(\"Redis connection error:\", err));",
 };
 

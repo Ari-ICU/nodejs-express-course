@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត Express Cache Middleware ជាមួយ Redis",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Response caching intercepts incoming GET requests, constructs a cache key from the request URL, and checks Redis. If cached, it sends the stored JSON string immediately (<2ms), bypassing database lookups and controller handlers entirely. When data mutations occur (POST/PUT/DELETE), the cache key is purged.",
+  summary: "Response Caching Middleware គឺជា Express Middleware ដែលដំណើរការមុន Controller Handlers។ វាបង្កើត Cache Key ផ្អែកលើ Request URL (ឧ. `courses:page=1:limit=10`) ហើយប្រសិនបើទិន្នន័យមានក្នុង Redis វានឹងឆ្លើយតប Cached JSON ភ្លាមៗក្នុងរយៈពេលត្រឹមតែប៉ុន្មាន Milliseconds ដោយមិនចាំបាច់ឆ្លងកាត់ Database Query ឡើយ។",
   codeSnippet: "// middleware/cache.js\nimport { redis } from \"../config/redis.js\";\n\nexport const cache = (durationInSeconds = 300) => async (req, res, next) => {\n  if (req.method !== \"GET\") return next();\n\n  const key = `cache:${req.originalUrl}`;\n  try {\n    const cachedData = await redis.get(key);\n    if (cachedData) {\n      return res.status(200).json(JSON.parse(cachedData));\n    }\n\n    // Intercept res.json to capture response before sending\n    const originalJson = res.json.bind(res);\n    res.json = (body) => {\n      // Store in Redis with TTL\n      redis.set(key, JSON.stringify(body), \"EX\", durationInSeconds);\n      return originalJson(body);\n    };\n\n    next();\n  } catch (err) {\n    next(); // On cache failure, gracefully proceed to database\n  }\n};",
 };
 

@@ -34,9 +34,6 @@ function generateMdx(topic) {
   const lang = topic.codeLanguage || "javascript";
   const code = topic.codeSnippet || "// No code snippet";
   const summary = topic.summary || "";
-  const tip = topic.tip || "";
-  const objective = topic.objective || "";
-  const expectedOutcome = topic.expectedOutcome || "";
 
   return `export const meta = {
   id: ${JSON.stringify(topic.id)},
@@ -46,9 +43,6 @@ function generateMdx(topic) {
   type: ${JSON.stringify(topic.type)},
   codeLanguage: ${JSON.stringify(lang)},
   summary: ${JSON.stringify(summary)},
-  tip: ${JSON.stringify(tip)},
-  objective: ${JSON.stringify(objective)},
-  expectedOutcome: ${JSON.stringify(expectedOutcome)},
   codeSnippet: ${JSON.stringify(code)},
 };
 

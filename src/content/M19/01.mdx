@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃការ Upload ឯកសារក្នុង Web Backend",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Uploading files requires handling binary streaming data rather than standard JSON payloads. HTTP transfers binary files using the `multipart/form-data` encoding format. Because `express.json()` only decodes application/json, specialized streaming parsers like `multer` are required to intercept, chunk, validate, and buffer binary byte streams into memory or disk.",
+  summary: "ការ Upload ឯកសារក្នុង Web Backend ទាមទារឱ្យយល់ដឹងពីលំហូរការងារទាំងមូល៖ ចាប់ពី Browser ខ្ចប់ File ជាមួយទម្រង់ Multipart Form Data, បញ្ជូនតាម HTTP Stream, Server ដំណើរការ Parsing ឯកសារជាមួយ Middleware (Multer), ផ្ទៀងផ្ទាត់ទំហំ និងប្រភេទឯកសារ, រហូតដល់ការរក្សាទុក File លើ Filesystem ឬ Cloud Storage និងកត់ត្រា File URL ក្នុង Database។",
   codeSnippet: "// HTTP Request Header for File Uploads:\n// POST /api/v1/uploads\n// Content-Type: multipart/form-data; boundary=---------------------------974767299852498929531610575\n//\n// ---------------------------974767299852498929531610575\n// Content-Disposition: form-data; name=\"avatar\"; filename=\"profile.png\"\n// Content-Type: image/png\n//\n// <Binary byte data here...>\n// ---------------------------974767299852498929531610575--",
 };
 

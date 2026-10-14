@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាងបរិស្ថាន Development និង Production",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Development environments prioritize developer velocity: hot-reloading (nodemon/tsx), detailed error stack traces, mock SMTP inboxes, and verbose console logs. Production environments prioritize security, uptime, performance, and fault tolerance: optimized minified builds, structured JSON logging, strict CORS, HTTPS encryption, and sanitized error envelopes.",
+  summary: "ភាពខុសគ្នារវាង Development និង Production Environments៖ ក្នុង Development ការផ្តោតគឺលើ Developer Velocity (Hot-reloading, Verbose Logs, Detailed Stack Traces)។ ក្នុង Production ការផ្តោតគឺលើ Security, Reliability, Performance, Minimized Latency, Silent Stack Traces, និង Graceful Error Recovery។",
   codeSnippet: "// Key Differences:\n// Setting                | Development            | Production\n// -----------------------+------------------------+--------------------------\n// NODE_ENV               | \"development\"          | \"production\"\n// Error Responses        | Full stack trace       | Generic \"Something went wrong\"\n// Server Process         | nodemon / tsx watch    | PM2 cluster / Docker container\n// Logging                | Pretty console output  | Structured JSON (Winston/Pino)\n// HTTPS                  | Disabled (http://)     | Enforced (SSL/TLS certificate)",
 };
 

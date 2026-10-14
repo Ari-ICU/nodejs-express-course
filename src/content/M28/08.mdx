@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត Multi-stage Dockerfile សម្រាប់ Node.js",
   type: "lab",
   codeLanguage: "dockerfile",
-  summary: "A production Dockerfile uses multi-stage builds to separate the build phase (compiling TypeScript, installing devDependencies) from the final production runtime. Multi-stage builds produce tiny, secure container images (<150MB) containing only production dependencies and compiled JavaScript.",
+  summary: "Multi-stage Dockerfile គឺជា Best Practice ក្នុងការ Build Production Images។ ដំណាក់កាល Builder ដំឡើង Build Tools និង Compile TypeScript/Assets ខណៈដែលដំណាក់កាល Runner ចម្លងយកតែ Production Output និង Production Dependencies (`--omit=dev`) ដោយប្រើ Alpine Linux Base Image កាត់បន្ថយទំហំ Image ពី 1GB មកនៅត្រឹមក្រោម 150MB។",
   codeSnippet: "# Stage 1: Build & Dependencies\nFROM node:20-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\n\n# Stage 2: Production Runtime\nFROM node:20-alpine AS runner\nWORKDIR /app\nENV NODE_ENV=production\n# Run as non-root user for security\nUSER node\nCOPY --chown=node:node package*.json ./\nRUN npm ci --only=production\nCOPY --chown=node:node --from=builder /app/src ./src\n\nEXPOSE 5000\nCMD [\"node\", \"src/server.js\"]",
 };
 

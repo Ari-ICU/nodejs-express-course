@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការតាមដានវត្តមាន Online Users (Presence Tracking)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Tracking user presence (online, away, offline) requires managing connected state across socket lifecycles. Maintaining a connected user registry in memory or a Redis Set allows broadcasting presence updates to all clients whenever a user connects or disconnects.",
+  summary: "Presence Tracking គឺជាការតាមដានវត្តមាន Online/Offline របស់អ្នកប្រើប្រាស់ក្នុងប្រព័ន្ធ។ តាមរយៈការស្តាប់ `connection` និង `disconnect` events Server អាចកត់ត្រា Status ក្នុង Redis In-Memory Store (Redis Sets) និងផ្សាយដំណឹងទៅកាន់អ្នកប្រើប្រាស់ដទៃទៀតអំពីស្ថានភាព Online របស់សមាជិកក្នុងថ្នាក់។",
   codeSnippet: "// In-memory or Redis presence tracking:\nconst onlineUsers = new Map(); // userId -> Set of socketIds\n\nio.on(\"connection\", (socket) => {\n  const userId = socket.user?.id;\n  if (userId) {\n    if (!onlineUsers.has(userId)) onlineUsers.set(userId, new Set());\n    onlineUsers.get(userId).add(socket.id);\n\n    // Broadcast user is online\n    io.emit(\"user_status_change\", { userId, status: \"online\" });\n  }\n\n  socket.on(\"disconnect\", () => {\n    if (userId && onlineUsers.has(userId)) {\n      const userSockets = onlineUsers.get(userId);\n      userSockets.delete(socket.id);\n      if (userSockets.size === 0) {\n        onlineUsers.delete(userId);\n        io.emit(\"user_status_change\", { userId, status: \"offline\" });\n      }\n    }\n  });\n});",
 };
 

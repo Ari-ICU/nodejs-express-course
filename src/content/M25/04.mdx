@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើនល្បឿន MongoDB Queries ជាមួយ Lean និង Projections",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "By default, Mongoose wraps query results in full Mongoose Document instances complete with change tracking, getters, and schema methods. For read-heavy endpoints, appending `.lean()` skips document instantiation and returns plain JavaScript objects, reducing memory allocation and improving query execution speeds by up to 400%.",
+  summary: "MongoDB Query Optimization ជួយកាត់បន្ថយ Latency តាមរយៈការប្រើប្រាស់ `.lean()` (ដែលត្រឡប់ Plain JavaScript Objects ជំនួសឱ្យ Heavy Mongoose Documents កាត់បន្ថយ Memory រហូតដល់ 5-10 ដង), ការជ្រើសរើសយកតែ Fields ចាំបាច់តាមរយៈ Projections (`.select('title price thumbnail')`), និងការចៀសវាង N+1 Query Problems។",
   codeSnippet: "// High Performance Course Query:\n// 1. .select() only fetches necessary fields (reduces network transfer)\n// 2. .lean() skips heavy Mongoose Document overhead (returns plain JS objects)\n// 3. .limit() restricts total document count\nconst courses = await Course.find({ published: true })\n  .select(\"title price thumbnailUrl level category\") // Field projection\n  .limit(20)\n  .lean(); // 3-4x faster than default find()!",
 };
 

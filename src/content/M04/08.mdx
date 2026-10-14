@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ជួរការងារ Event Queue និង Task Queues",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `កិច្ចការ​អសមកាល​ដាក់​ការ​ហៅ​ត្រឡប់​របស់​ពួកគេ​ទៅ​លើ​ជួរ​កិច្ចការ​នៅ​ពេល I/O បញ្ចប់។ Event Loop ទាញ Callbacks មកវិញពីជួរទាំងនេះ ហើយប្រតិបត្តិពួកវានៅពេលណាដែលជង់ការហៅគឺទទេ។`,
+  summary: "Asynchronous tasks place their callbacks onto task queues when I/O completes. The event loop pulls callbacks from these queues and executes them whenever the call stack is empty.",
   codeSnippet: "console.log(\"A: Stack execution\");\n\nsetTimeout(() => {\n  console.log(\"C: Task queue callback executed\");\n}, 0);\n\nconsole.log(\"B: Stack execution continues\");\n// Output order: A -> B -> C",
 };
 

@@ -5,18 +5,19 @@ export const meta = {
   khmerTitle: "ប្រតិបត្តិការមិនរាំងស្ទះ (Non-blocking I/O)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការមិនទប់ស្កាត់ I/O អនុញ្ញាតឱ្យ Node.js ចាប់ផ្តើមប្រតិបត្តិការមួយ (អានឯកសារឌីស សួរ Database ហៅច្រកផ្លូវបង់ប្រាក់ខាងក្រៅ) ហើយបន្តភ្លាមៗដើម្បីដោះស្រាយ Request ផ្សេងទៀតដោយមិនរង់ចាំឱ្យប្រតិបត្តិការបញ្ចប់។`,
-  codeSnippet: "// Non-blocking Asynchronous Execution Flow:\nconsole.log(\"1. Request received: Start simulated background I/O...\");\n\n// Offloaded to background — does NOT freeze the main thread\nsetTimeout(() => {\n  console.log(\"3. Background task complete! Callback executed.\");\n}, 500);\n\nconsole.log(\"2. Main thread stays 100% free to handle other incoming users!\");",
+  summary: "Non-blocking I/O allows Node.js to initiate an operation (reading a disk file, querying a database, calling an external payment gateway) and immediately proceed to handle other requests without waiting for the operation to finish.",
+  codeSnippet: "import fs from \"node:fs/promises\";\n\nconsole.log(\"1. Starting non-blocking read...\");\n\n// Initiates I/O and continues immediately\nfs.readFile(\"package.json\", \"utf-8\").then((data) => {\n  console.log(\"3. File read complete! Size:\", data.length, \"characters\");\n});\n\nconsole.log(\"2. Main thread continues serving other clients!\");",
 };
 
 ```javascript
-// Non-blocking Asynchronous Execution Flow:
-console.log("1. Request received: Start simulated background I/O...");
+import fs from "node:fs/promises";
 
-// Offloaded to background — does NOT freeze the main thread
-setTimeout(() => {
-  console.log("3. Background task complete! Callback executed.");
-}, 500);
+console.log("1. Starting non-blocking read...");
 
-console.log("2. Main thread stays 100% free to handle other incoming users!");
+// Initiates I/O and continues immediately
+fs.readFile("package.json", "utf-8").then((data) => {
+  console.log("3. File read complete! Size:", data.length, "characters");
+});
+
+console.log("2. Main thread continues serving other clients!");
 ```

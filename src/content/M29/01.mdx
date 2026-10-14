@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គម្រោងទី ១ ៖ Todo REST API",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Build a robust Todo REST API with full CRUD functionality, status filtering (?completed=true), search by title, sorting by creation date, pagination with limit and skip, Zod input validation, central error handling, and MongoDB persistence. Teaches fundamental RESTful design principles and clean controller-service architecture.",
+  summary: "គម្រោងទី ១ ៖ Todo REST API គឺជាគម្រោងអនុវត្តគ្រឹះដំបូងក្នុងការសរសេរ REST API ជាមួយ Express និង MongoDB (Mongoose) ដោយផ្តោតលើ Full CRUD Operations, Schema Validation, Proper HTTP Status Codes, និង Error Handling Envelope ស្តង់ដារ។",
   codeSnippet: "// GET /api/v1/todos?completed=true&sort=-createdAt&page=1&limit=10\n\nexport const getTodos = catchAsync(async (req, res) => {\n  const { completed, sort = \"-createdAt\", page = 1, limit = 10 } = req.query;\n  const filter = completed !== undefined ? { completed: completed === \"true\" } : {};\n\n  const [todos, total] = await Promise.all([\n    Todo.find(filter)\n      .sort(sort)\n      .skip((Number(page) - 1) * Number(limit))\n      .limit(Number(limit)),\n    Todo.countDocuments(filter)\n  ]);\n\n  res.json({\n    success: true,\n    count: todos.length,\n    total,\n    page: Number(page),\n    pages: Math.ceil(total / Number(limit)),\n    data: todos\n  });\n});",
 };
 

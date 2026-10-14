@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មរចនា API ប្រកបដោយសុវត្ថិភាពតាមតួនាទី",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Well-designed role-based APIs clearly separate public, authenticated, and privileged endpoints. Consistent route naming, standardized error responses, clear permission matrices, and automated permission tests prevent accidental exposure of privileged capabilities across the course platform lifecycle.",
+  summary: "Role-Based API Design គឺជាស្ថាបត្យកម្មរួមបញ្ចូលគ្នានៃ Authentication, RBAC, និង Resource Ownership ទៅក្នុងរចនាសម្ព័ន្ធ API ដែលមានរបៀបរៀបរយ។ តាមរយៈការរៀបចំ Middleware Pipeline ច្បាស់លាស់ API ធានាបាននូវសុវត្ថិភាព ភាពងាយស្រួលក្នុងការធ្វើ Audit និងការការពារទិន្នន័យសម្ងាត់ស្របតាមស្តង់ដារ Enterprise Security។",
   codeSnippet: "// Architectural Overview for Course Platform API:\n//\n// 1. Public Tier (No Auth):\n//    GET  /api/v1/courses (Browse published catalog)\n//    POST /api/v1/auth/login\n//\n// 2. Student Tier (protect):\n//    GET  /api/v1/users/me\n//    POST /api/v1/enrollments (Enroll in course)\n//\n// 3. Instructor Ownership Tier (protect + checkOwner):\n//    PATCH  /api/v1/courses/:id (Course instructor only)\n//    DELETE /api/v1/courses/:id (Course instructor only)\n//\n// 4. Privileged Admin Tier (protect + restrictTo('admin')):\n//    POST   /api/v1/admin/categories\n//    PATCH  /api/v1/admin/users/:id/role",
 };
 

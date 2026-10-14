@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាង Authentication និង Authorization",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Authentication (AuthN) answers 'Who are you?' by verifying identity through credentials like email/password or tokens. Authorization (AuthZ) answers 'What are you allowed to do?' by evaluating privileges, roles, and permissions against resources. In standard backend flows, Authentication must always succeed before Authorization evaluation begins.",
+  summary: "Authentication (AuthN) ឆ្លើយតបទៅនឹងសំណួរថា «តើអ្នកជានរណា?» (Who are you?) ដោយផ្ទៀងផ្ទាត់អត្តសញ្ញាណតាមរយៈ Credentials ដូចជា Email/Password ឬ Tokens។ ចំណែក Authorization (AuthZ) ឆ្លើយតបទៅនឹងសំណួរថា «តើអ្នកមានសិទ្ធិធ្វើអ្វីខ្លះ?» (What are you allowed to do?) ដោយវាយតម្លៃលើ Roles និង Permissions ធៀបនឹង Resources។ ក្នុងលំហូរការងារ Backend ស្តង់ដារ Authentication ត្រូវតែជោគជ័យជាមុនសិន ទើប Authorization អាចចាប់ផ្តើមបាន។",
   codeSnippet: "// Concept breakdown in Express middleware flow:\n// 1. Authentication (Who are you?) -> returns 401 if unauthenticated\napp.use(\"/api/admin/*\", verifyAuthToken);\n\n// 2. Authorization (What can you do?) -> returns 403 if unauthorized\napp.delete(\"/api/admin/users/:id\", (req, res) => {\n  if (req.user.role !== \"superadmin\") {\n    return res.status(403).json({\n      status: \"fail\",\n      message: \"Forbidden: Only superadmins can delete user accounts\"\n    });\n  }\n  // Proceed with deletion...\n});",
 };
 

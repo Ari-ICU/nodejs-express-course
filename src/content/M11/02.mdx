@@ -5,20 +5,36 @@ export const meta = {
   khmerTitle: "ការប្រៀបធៀប SQL vs NoSQL",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Database SQL ទំនាក់ទំនង (PostgreSQL, MySQL) រក្សាទុកទិន្នន័យក្នុងតារាងដ៏តឹងរឹងជាមួយនឹងសោបរទេស និង JOIN ពហុតារាង។ Document NoSQL databases (MongoDB) រក្សាទុកឯកសារ polymorphic ដែលមានផ្ទុកដោយខ្លួនឯង បង្កើនប្រសិទ្ធភាពសម្រាប់ការបំបែកផ្តេក និងការអានសំណួរតែមួយរហ័ស។`,
-  tip: "ប្រើ SQL សម្រាប់សៀវភៅបញ្ជីហិរញ្ញវត្ថុដែលទាក់ទងយ៉ាងស៊ីជម្រៅដែលទាមទារ ACID នៅទូទាំងតារាងជាច្រើន។ ប្រើ MongoDB សម្រាប់កាតាឡុកតាមឋានានុក្រម ទម្រង់អ្នកប្រើប្រាស់ ការគ្រប់គ្រងខ្លឹមសារ និងការបង្កើតគំរូយ៉ាងឆាប់រហ័ស។",
-  objective: "វាយតម្លៃការដោះដូរស្ថាបត្យកម្មរវាង Database SQL និង NoSQL ។",
-  expectedOutcome: "ការជ្រើសរើស Database ដែលមានទំនុកចិត្តដោយផ្អែកលើលក្ខណៈនៃ Payload ការងារ។",
-  codeSnippet: "/* SQL vs NoSQL Conceptual Comparison:\n   SQL (PostgreSQL/MySQL):      NoSQL (MongoDB):\n   - Database                   - Database\n   - Table                      - Collection\n   - Row / Record               - Document (BSON)\n   - Column                     - Field\n   - Foreign Key JOIN           - Embedded Document or $lookup Reference\n*/",
-};
+  summary: `ការប្រៀបធៀបរវាង **Relational SQL Databases** និង **Document NoSQL Database (MongoDB)**៖
 
-```javascript
-/* SQL vs NoSQL Conceptual Comparison:
-   SQL (PostgreSQL/MySQL):      NoSQL (MongoDB):
+* **SQL Databases**៖ រក្សាទុកទិន្នន័យក្នុង Tables ដ៏តឹងរឹង (Rigid Schemas) ជាមួយ Foreign Keys និង Multi-table JOINs។
+* **Document NoSQL Database (MongoDB)**៖ រក្សាទុកទិន្នន័យជាឯកសារ BSON Documents (JSON-like) ដែលមានភាពបត់បែនខ្ពស់ (Polymorphic) ងាយស្រួល Scale តាមបែប Horizontal Sharding និងមានល្បឿន Query លឿនបំផុតជាមួយ Node.js & Express។
+
+នៅក្នុង Course នេះ យើងប្រើប្រាស់ **MongoDB** ជា Database ស្នូលជាមួយ Express តាមរយៈ **Mongoose ODM**។`,
+  tip: "MongoDB គឺជាជម្រើសលេខមួយសម្រាប់ Node.js/Express Developer ព្រោះ BSON Documents មានរចនាសម្ព័ន្ធដូចជា Native JavaScript Objects ១០០% ធ្វើឱ្យការអភិវឌ្ឍ API មានភាពរហ័សរហួន។",
+  objective: "យល់ដឹងពីគុណសម្បត្តិនៃការប្រើប្រាស់ MongoDB លើ Node.js Backend។",
+  expectedOutcome: "ដឹងពីមូលហេតុច្បាស់លាស់ក្នុងការជ្រើសរើស MongoDB សម្រាប់ Course Catalog API។",
+  codeSnippet: `/* SQL vs NoSQL Conceptual Comparison:
+   Relational SQL:              NoSQL (MongoDB - Used in this Course):
+   -----------------------      -------------------------------------
    - Database                   - Database
    - Table                      - Collection
    - Row / Record               - Document (BSON)
    - Column                     - Field
    - Foreign Key JOIN           - Embedded Document or $lookup Reference
+   - Rigid Table Migration      - Dynamic, Flexible Document Schema
+*/`,
+};
+
+```javascript
+/* SQL vs NoSQL Conceptual Comparison:
+   Relational SQL:              NoSQL (MongoDB - Used in this Course):
+   -----------------------      -------------------------------------
+   - Database                   - Database
+   - Table                      - Collection
+   - Row / Record               - Document (BSON)
+   - Column                     - Field
+   - Foreign Key JOIN           - Embedded Document or $lookup Reference
+   - Rigid Table Migration      - Dynamic, Flexible Document Schema
 */
 ```

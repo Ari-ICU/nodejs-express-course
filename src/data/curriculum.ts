@@ -169,7 +169,7 @@ const MODULE_TOPICS: Record<string, LessonTopic[]> = {
     {"id":"M09-02","number":"02","title":"REST Principles","khmerTitle":"គោលការណ៍គ្រឹះទាំង ៦ នៃ REST (6 Architectural Constraints)","type":"concept","codeLanguage":"javascript"},
     {"id":"M09-03","number":"03","title":"RESTful API Design","khmerTitle":"ការរចនា RESTful API ប្រកបដោយវិជ្ជាជីវៈ (URL Conventions)","type":"architecture","codeLanguage":"javascript"},
     {"id":"M09-04","number":"04","title":"Resource Modeling","khmerTitle":"ការកំណត់ និងគ្រប់គ្រង Resources (Courses, Lessons, Categories)","type":"concept","codeLanguage":"javascript"},
-    {"id":"M09-05","number":"05","title":"CRUD Operations Mapping","khmerTitle":"ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP Verbs","type":"concept","codeLanguage":"javascript"},
+    {"id":"M09-05","number":"05","title":"CRUD Operations Mapping","khmerTitle":"ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP Verbs ក្នុង MongoDB","type":"concept","codeLanguage":"javascript"},
     {"id":"M09-06","number":"06","title":"Production GET Endpoints","khmerTitle":"ការអនុវត្ត Production GET Endpoint ជាមួយ Metadata","type":"lab","codeLanguage":"javascript"},
     {"id":"M09-07","number":"07","title":"Production POST Endpoints","khmerTitle":"ការអនុវត្ត Production POST Endpoint និង Location Header","type":"lab","codeLanguage":"javascript"},
     {"id":"M09-08","number":"08","title":"Production PUT Endpoints","khmerTitle":"ការអនុវត្ត Production PUT Endpoint (Full Replacement)","type":"lab","codeLanguage":"javascript"},

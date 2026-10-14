@@ -9,7 +9,7 @@ export const meta = {
   tip: "កុំធ្វើឱ្យ Nested Routes ជ្រៅលើសពី ២ កម្រិត (ឧ. `/authors/1/books/2/chapters/3/paragraphs` គឺជ្រៅពេក)។ ត្រូវបំប្លែងទៅជា `/chapters/3/paragraphs` វិញ។",
   objective: "ចេះកំណត់កម្រិត Hierarchy នៃ Resources ក្នុងប្រព័ន្ធ។",
   expectedOutcome: "រចនាសម្ព័ន្ធ Resource Models ងាយស្រួល Maintain និងមិនស្មុគស្មាញជ្រុល។",
-  codeSnippet: "// Resource Schemas in Course Catalog Domain\nexport const CourseSchema = {\n  id: \"number\",\n  title: \"string\",\n  slug: \"string\",           // e.g., \"mastering-express-architecture\"\n  instructor: \"string\",\n  price: \"number\",\n  level: \"beginner | intermediate | advanced\",\n  published: \"boolean\",\n  categoryId: \"number\",\n  createdAt: \"ISO8601 string\"\n};\n\nexport const LessonSchema = {\n  id: \"number\",\n  courseId: \"number\",       // Foreign key reference\n  title: \"string\",\n  durationMinutes: \"number\",\n  videoUrl: \"string\",\n  orderIndex: \"number\"\n};",
+  codeSnippet: "// Resource Schemas in Course Catalog Domain\nexport const CourseSchema = {\n  id: \"number\",\n  title: \"string\",\n  slug: \"string\",           // e.g., \"mastering-express-architecture\"\n  instructor: \"string\",\n  price: \"number\",\n  level: \"beginner | intermediate | advanced\",\n  published: \"boolean\",\n  categoryId: \"number\",\n  createdAt: \"ISO8601 string\"\n};\n\nexport const LessonSchema = {\n  id: \"ObjectId\",           // MongoDB ObjectId\n  courseId: \"ObjectId\",     // MongoDB Reference to Course (_id)\n  title: \"string\",\n  durationMinutes: \"number\",\n  videoUrl: \"string\",\n  orderIndex: \"number\"\n};",
 };
 
 ```javascript
@@ -27,8 +27,8 @@ export const CourseSchema = {
 };
 
 export const LessonSchema = {
-  id: "number",
-  courseId: "number",       // Foreign key reference
+  id: "ObjectId",           // MongoDB ObjectId
+  courseId: "ObjectId",     // MongoDB Reference to Course (_id)
   title: "string",
   durationMinutes: "number",
   videoUrl: "string",

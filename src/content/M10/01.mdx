@@ -9,7 +9,7 @@ export const meta = {
   tip: "ច្បាប់មាសនៃ Clean Architecture៖ Controller គួរតែ 'ស្គម' (Slim Controller) ហើយ Service គួរតែ 'សម្បូរបែប' (Rich Service)។",
   objective: "យល់ដឹងពីគុណវិបត្តិនៃ Fat Controllers និងគុណសម្បត្តិនៃ 3-Tier Architecture។",
   expectedOutcome: "មានផ្នត់គំនិតស្ថាបត្យកម្មច្បាស់លាស់ក្នុងការបំបែកកូដឱ្យមានរបៀបរៀបរយ។",
-  codeSnippet: "// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)\napp.post(\"/api/v1/courses/:id/enroll\", async (req, res) => {\n  // 1. Validation mixed in\n  if (!req.body.studentId) return res.status(400).send();\n  // 2. Database query mixed in\n  const course = await db.findCourse(req.params.id);\n  // 3. Discount calculation mixed in\n  const price = course.price * 0.9;\n  // 4. Payment processing mixed in\n  await stripe.charges.create({ amount: price });\n  // 5. Email receipt mixed in\n  await mailer.sendReceipt();\n  // 6. Response sending\n  res.json({ enrolled: true });\n});\n\n// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)",
+  codeSnippet: "// ❌ ANTI-PATTERN: Fat Controller (Everything mixed together!)\napp.post(\"/api/v1/courses/:id/enroll\", async (req, res) => {\n  // 1. Validation mixed in\n  if (!req.body.studentId) return res.status(400).send();\n  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)\n  const course = await Course.findById(req.params.id);\n  // 3. Discount calculation mixed in\n  const price = course.price * 0.9;\n  // 4. Payment processing mixed in\n  await stripe.charges.create({ amount: price });\n  // 5. Email receipt mixed in\n  await mailer.sendReceipt();\n  // 6. Response sending\n  res.json({ enrolled: true });\n});\n\n// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)\n",
 };
 
 ```javascript
@@ -17,8 +17,8 @@ export const meta = {
 app.post("/api/v1/courses/:id/enroll", async (req, res) => {
   // 1. Validation mixed in
   if (!req.body.studentId) return res.status(400).send();
-  // 2. Database query mixed in
-  const course = await db.findCourse(req.params.id);
+  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)
+  const course = await Course.findById(req.params.id);
   // 3. Discount calculation mixed in
   const price = course.price * 0.9;
   // 4. Payment processing mixed in
@@ -30,4 +30,5 @@ app.post("/api/v1/courses/:id/enroll", async (req, res) => {
 });
 
 // ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)
+
 ```

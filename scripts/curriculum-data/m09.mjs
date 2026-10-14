@@ -134,8 +134,8 @@ export const CourseSchema = {
 };
 
 export const LessonSchema = {
-  id: "number",
-  courseId: "number",       // Foreign key reference
+  id: "ObjectId",           // MongoDB ObjectId
+  courseId: "ObjectId",     // MongoDB Reference to Course (_id)
   title: "string",
   durationMinutes: "number",
   videoUrl: "string",
@@ -146,19 +146,19 @@ export const LessonSchema = {
     id: "M09-05",
     number: "05",
     title: "CRUD Operations Mapping",
-    khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP Verbs",
+    khmerTitle: "ប្រតិបត្តិការ CRUD និងការផ្សារភ្ជាប់ជាមួយ HTTP Verbs ក្នុង MongoDB",
     type: "concept",
     codeLanguage: "javascript",
-    summary: `ការផ្សារភ្ជាប់រវាង **CRUD (Database Operations)** និង **HTTP Verbs (Web Protocols)**៖
+    summary: `ការផ្សារភ្ជាប់រវាង **CRUD (Database Operations)** និង **HTTP Verbs (Web Protocols)** ជាមួយ **MongoDB & Mongoose**៖
 
-| CRUD Operation | HTTP Method | Endpoint | សកម្មភាពលើ Database |
+| CRUD Operation | HTTP Method | Endpoint | សកម្មភាពលើ MongoDB (Mongoose Model) |
 |---|---|---|---|
-| **Create** | \`POST\` | \`/api/v1/courses\` | \`INSERT INTO / Collection.create()\` |
-| **Read (All)** | \`GET\` | \`/api/v1/courses\` | \`SELECT * / Collection.find()\` |
-| **Read (One)** | \`GET\` | \`/api/v1/courses/:id\` | \`SELECT WHERE id / findById()\` |
-| **Update (Full)** | \`PUT\` | \`/api/v1/courses/:id\` | \`REPLACE / findByIdAndReplace()\` |
-| **Update (Partial)** | \`PATCH\` | \`/api/v1/courses/:id\` | \`UPDATE SET / findByIdAndUpdate()\` |
-| **Delete** | \`DELETE\` | \`/api/v1/courses/:id\` | \`DELETE WHERE / findByIdAndDelete()\` |`,
+| **Create** | \`POST\` | \`/api/v1/courses\` | \`Course.create(req.body)\` |
+| **Read (All)** | \`GET\` | \`/api/v1/courses\` | \`Course.find(filter)\` |
+| **Read (One)** | \`GET\` | \`/api/v1/courses/:id\` | \`Course.findById(id)\` |
+| **Update (Full)** | \`PUT\` | \`/api/v1/courses/:id\` | \`Course.findOneAndReplace({ _id: id }, payload)\` |
+| **Update (Partial)** | \`PATCH\` | \`/api/v1/courses/:id\` | \`Course.findByIdAndUpdate(id, { $set: payload }, { new: true })\` |
+| **Delete** | \`DELETE\` | \`/api/v1/courses/:id\` | \`Course.findByIdAndDelete(id)\` |`,
     tip: "សិស្សភាគច្រើនតែងច្រឡំរវាង PUT និង PATCH៖ PUT ជំនួសទាំងស្រុង ចំណែក PATCH កែប្រែតែ Field ណាដែលផ្ញើមកប៉ុណ្ណោះ។",
     objective: "យល់ច្បាស់ពីការផ្គូផ្គងប្រតិបត្តិការ CRUD ទៅកាន់ HTTP Methods ក្នុង Express។",
     expectedOutcome: "សមត្ថភាពអនុវត្ត CRUD API ពេញលេញដោយគ្មានការភាន់ច្រឡំ។",

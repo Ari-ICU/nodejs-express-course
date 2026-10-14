@@ -26,8 +26,8 @@ export const M10 = [
 app.post("/api/v1/courses/:id/enroll", async (req, res) => {
   // 1. Validation mixed in
   if (!req.body.studentId) return res.status(400).send();
-  // 2. Database query mixed in
-  const course = await db.findCourse(req.params.id);
+  // 2. Direct MongoDB model query mixed in (Anti-pattern in controller)
+  const course = await Course.findById(req.params.id);
   // 3. Discount calculation mixed in
   const price = course.price * 0.9;
   // 4. Payment processing mixed in
@@ -38,7 +38,8 @@ app.post("/api/v1/courses/:id/enroll", async (req, res) => {
   res.json({ enrolled: true });
 });
 
-// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)`,
+// ✅ SOLUTION: Slim Controller (Orchestrator) + Rich Service (Business Logic)
+`,
   },
   {
     id: "M10-02",
@@ -54,7 +55,7 @@ app.post("/api/v1/courses/:id/enroll", async (req, res) => {
 2. **Delegate to Service**៖ បញ្ជូនទិន្នន័យទាំងនោះទៅឱ្យ Service Function ដំណើរការ
 3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (\`200\`, \`201\`)
 
-Controller មិនត្រូវមាន Business Logic, Database SQL, ឬ Payment Code ដោយផ្ទាល់ឡើយ!`,
+Controller មិនត្រូវមាន Business Logic, MongoDB Queries ដោយផ្ទាល់ ឬ Payment Code ឡើយ!`,
     tip: "ប្រសិនបើអ្នកឃើញ Controller របស់អ្នកមានកូដច្រើនជាង ១៥-២០ ជួរ នោះមានន័យថាអ្នកកំពុងដាក់ Business Logic ខុសកន្លែងហើយ — ត្រូវរើវាទៅកាន់ Service វិញ។",
     objective: "ចេះសរសេរ Slim Controller ដែលផ្តោតតែលើ HTTP Orchestration។",
     expectedOutcome: "Controller មានភាពសាមញ្ញ ងាយស្រួលអាន និងស្អាត។",
@@ -107,6 +108,8 @@ const courses = [
 ];
 
 // Step 1: Pure Business Logic Service function (No req, no res!)
+// 💡 Teaching Note: In Modules 11-13, this queries MongoDB via Mongoose Model:
+// export const findAllCourses = async (filters = {}) => await Course.find(filters);
 export const findAllCourses = async (filters = {}) => {
   let result = [...courses];
 
@@ -121,6 +124,7 @@ export const findAllCourses = async (filters = {}) => {
 };
 
 // Step 2: Create Course Service with business validation
+// 💡 Teaching Note: With MongoDB, this delegates to: await Course.create(courseData);
 export const createCourse = async (courseData) => {
   if (courseData.price < 0) {
     throw new Error("Course price cannot be negative");
@@ -190,13 +194,13 @@ export default router;`,
    * ដោះស្រាយ HTTP Status Codes
 3. **Service Layer (\`services/\`)**៖
    * ផ្ទុក Business Logic, Calculations, Security Rules
-   * ទំនាក់ទំនងជាមួយ Database / 3rd Party APIs`,
+   * ទំនាក់ទំនងជាមួយ MongoDB Database (Mongoose Models)`,
     tip: "ប្រសិនបើថ្ងៃក្រោយអ្នកចង់ប្តូរពី Express ទៅ Fastify ឬ Nest.js អ្នកគ្រាន់តែកែ Controller ប៉ុណ្ណោះ ចំណែក Service Layer ទាំងមូលនៅតែអាចប្រើប្រាស់បានដដែល ១០០%!",
     objective: "យល់ច្បាស់ពីលំហូរការងារ និងព្រំដែនទំនួលខុសត្រូវនៃស្រទាប់នីមួយៗ។",
     expectedOutcome: "សមត្ថភាពរចនា Codebase តាមស្តង់ដារស្ថាបត្យកម្មកម្រិតខ្ពស់។",
     codeSnippet: `/*
   ==============================================================
-  DATA FLOW IN 3-TIER ARCHITECTURE:
+  DATA FLOW IN 3-TIER ARCHITECTURE (Node + Express + MongoDB):
   ==============================================================
   Client Request (HTTP GET /api/v1/courses)
         │
@@ -207,10 +211,10 @@ export default router;`,
   [ 2. Controller Layer ]     --> Extracts req.query, orchestrates
         │
         ▼
-  [ 3. Service Layer ]        --> Executes business rules & fetches data
+  [ 3. Service Layer ]        --> Executes business rules & calls Mongoose
         │
         ▼
-  [ 4. Database / Store ]     --> Returns raw records
+  [ 4. MongoDB Database ]     --> Returns BSON Documents via Model.find()
         │
         ▲ (Data flows back up cleanly)
         │

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងទំនួលខុសត្រូវរបស់ Controllers",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "**Controller** ដើរតួជា **Request Orchestrator (អ្នកសម្របសម្រួល HTTP)**៖\n\nតួនាទីតែមួយគត់របស់ Controller៖\n1. **Unpack HTTP Request**៖ ទាញយកទិន្នន័យពី `req.body`, `req.params`, `req.query`\n2. **Delegate to Service**៖ បញ្ជូនទិន្នន័យទាំងនោះទៅឱ្យ Service Function ដំណើរការ\n3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (`200`, `201`)\n\nController មិនត្រូវមាន Business Logic, Database SQL, ឬ Payment Code ដោយផ្ទាល់ឡើយ!",
+  summary: "**Controller** ដើរតួជា **Request Orchestrator (អ្នកសម្របសម្រួល HTTP)**៖\n\nតួនាទីតែមួយគត់របស់ Controller៖\n1. **Unpack HTTP Request**៖ ទាញយកទិន្នន័យពី `req.body`, `req.params`, `req.query`\n2. **Delegate to Service**៖ បញ្ជូនទិន្នន័យទាំងនោះទៅឱ្យ Service Function ដំណើរការ\n3. **Pack HTTP Response**៖ ទទួលលទ្ធផលពី Service រួចបញ្ជូនទៅកាន់ Client ជាមួយ Status Code សមស្រប (`200`, `201`)\n\nController មិនត្រូវមាន Business Logic, MongoDB Queries ដោយផ្ទាល់ ឬ Payment Code ឡើយ!",
   tip: "ប្រសិនបើអ្នកឃើញ Controller របស់អ្នកមានកូដច្រើនជាង ១៥-២០ ជួរ នោះមានន័យថាអ្នកកំពុងដាក់ Business Logic ខុសកន្លែងហើយ — ត្រូវរើវាទៅកាន់ Service វិញ។",
   objective: "ចេះសរសេរ Slim Controller ដែលផ្តោតតែលើ HTTP Orchestration។",
   expectedOutcome: "Controller មានភាពសាមញ្ញ ងាយស្រួលអាន និងស្អាត។",

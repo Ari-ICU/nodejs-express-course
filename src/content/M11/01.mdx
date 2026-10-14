@@ -5,20 +5,38 @@ export const meta = {
   khmerTitle: "អ្វីជាប្រព័ន្ធទិន្នន័យ MongoDB?",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `MongoDB គឺជា Database NoSQL ទំនើប គោលបំណងទូទៅ និង Filter ់ទិសឯកសារ។ វារក្សាទុកទិន្នន័យក្នុងឯកសារ BSON (Binary JSON) ដូច JSON ដែលអាចបត់បែនបាន ដែលអនុញ្ញាតឱ្យរចនាសម្ព័ន្ធទិន្នន័យវិវឌ្ឍន៍យ៉ាងរលូនដោយមិនមានការផ្លាស់ប្តូរតារាងរឹង។`,
-  tip: "Schema ដែលអាចបត់បែនបានរបស់ MongoDB ធ្វើឱ្យវាល្អសម្រាប់ការចាប់ផ្តើមដំណើរការលឿន និងកម្មវិធីរហ័ស ​​ប៉ុន្តែការពង្រឹង Validation តាមរយៈ Schema (ដូចជា Mongoose) គឺមានសារៈសំខាន់សម្រាប់ភាពត្រឹមត្រូវនៃទិន្នន័យ។",
-  objective: "ស្វែងយល់អំពីគំរូ Database ឯកសាររបស់ MongoDB ។",
-  expectedOutcome: "ការយល់ដឹងច្បាស់អំពី Document-based persistence បើប្រៀបធៀបទៅនឹង Relational tables។",
-  codeSnippet: "// A MongoDB document looks and feels just like a native JavaScript object!\n{\n  \"_id\": \"6648e58319f3a9e224e78891\",\n  \"name\": \"Mechanical Keyboard\",\n  \"price\": 129.99,\n  \"inStock\": true,\n  \"tags\": [\"hardware\", \"accessories\"]\n}",
+  summary: `**MongoDB** គឺជា Database NoSQL បែប Document-oriented ដ៏ទំនើប និងពេញនិយមបំផុតសម្រាប់ Node.js Backend។
+
+លក្ខណៈពិសេសចម្បងៗ៖
+* រក្សាទុកទិន្នន័យជាឯកសារ **BSON (Binary JSON)** ដែលមានទម្រង់ដូចជា JavaScript Object ១០០%
+* គាំទ្រ Dynamic & Flexible Schema — មិនចាំបាច់រៀបចំ Table Migrations តឹងរឹងដូច SQL ឡើយ
+* ផ្តល់នូវ High Scalability តាមរយៈ Horizontal Sharding និង Automatic Failover Replicas`,
+  tip: "MongoDB គឺជា Database ស្នូលតែមួយគត់ដែលយើងប្រើប្រាស់នៅក្នុងវគ្គសិក្សានេះ ពីព្រោះ JSON/BSON Document ផ្សារភ្ជាប់គ្នាយ៉ាងល្អឥតខ្ចោះជាមួយ JavaScript និង Express APIs។",
+  objective: "យល់ដឹងពីទស្សនទាន Document Database របស់ MongoDB សម្រាប់ Node.js APIs។",
+  expectedOutcome: "ចេះរៀបចំទិន្នន័យ Course Catalog ជាទម្រង់ MongoDB Document។",
+  codeSnippet: `// A MongoDB document looks and feels just like a native JavaScript object!
+{
+  "_id": "6648e58319f3a9e224e78891",
+  "title": "Full-Stack Node.js & Express Architecture",
+  "instructor": "Ratha",
+  "price": 49.99,
+  "level": "intermediate",
+  "published": true,
+  "tags": ["nodejs", "express", "mongodb"],
+  "createdAt": "2026-10-14T08:00:00.000Z"
+}`,
 };
 
 ```javascript
 // A MongoDB document looks and feels just like a native JavaScript object!
 {
   "_id": "6648e58319f3a9e224e78891",
-  "name": "Mechanical Keyboard",
-  "price": 129.99,
-  "inStock": true,
-  "tags": ["hardware", "accessories"]
+  "title": "Full-Stack Node.js & Express Architecture",
+  "instructor": "Ratha",
+  "price": 49.99,
+  "level": "intermediate",
+  "published": true,
+  "tags": ["nodejs", "express", "mongodb"],
+  "createdAt": "2026-10-14T08:00:00.000Z"
 }
 ```

@@ -28,17 +28,19 @@ export const MODULES_11_15 = {
       title: "SQL vs NoSQL",
       khmerTitle: "ការប្រៀបធៀប SQL vs NoSQL",
       type: "concept", codeLanguage: "javascript",
-      summary: "Relational SQL databases (PostgreSQL, MySQL) store data in strict tables with foreign keys and multi-table JOINs. Document NoSQL databases (MongoDB) store self-contained polymorphic documents, optimizing for horizontal sharding and fast single-query reads.",
-      tip: "Use SQL for deeply relational financial ledgers requiring ACID across many tables; use MongoDB for hierarchical catalogs, user profiles, content management, and rapid prototyping.",
-      objective: "Evaluate architectural trade-offs between SQL and NoSQL databases.",
-      expectedOutcome: "Confident database selection based on workload characteristics.",
+      summary: "Comparison between Relational SQL databases and Document NoSQL database (MongoDB). In this course, MongoDB is the primary database paired with Express via Mongoose ODM for fast, scalable JSON APIs.",
+      tip: "MongoDB is the default standard for Node.js backends because BSON documents map 1:1 with native JavaScript objects, eliminating ORM impedance mismatch.",
+      objective: "Understand why MongoDB was chosen as the core database for the Course Catalog API.",
+      expectedOutcome: "Clear technical rationale for using MongoDB throughout the course.",
       codeSnippet: `/* SQL vs NoSQL Conceptual Comparison:
-   SQL (PostgreSQL/MySQL):      NoSQL (MongoDB):
+   Relational SQL:              NoSQL (MongoDB - Used in this Course):
+   -----------------------      -------------------------------------
    - Database                   - Database
    - Table                      - Collection
    - Row / Record               - Document (BSON)
    - Column                     - Field
    - Foreign Key JOIN           - Embedded Document or $lookup Reference
+   - Rigid Table Migration      - Dynamic, Flexible Document Schema
 */`
     },
     {

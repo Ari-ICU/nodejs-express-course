@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការអនុវត្ត Async ល្អបំផុត (Promise.all vs Sequential Await)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Async Best Practices ផ្តោតលើការដំណើរការ I/O Operations ស្របគ្នា (Concurrency) តាមរយៈ `Promise.all()` ឬ `Promise.allSettled()` ជំនួសឱ្យការសរសេរ `await` ជាបន្តបន្ទាប់គ្នា (Sequential Execution) ក្នុងករណីដែល Queries ទាំងនោះឯករាជ្យពីគ្នា (ឧ. ទាញយក Course Details និង Instructor Profile ក្នុងពេលតែមួយ)។",
+  summary: "ការអនុវត្ត Async ល្អបំផុត (Promise.all vs Sequential Await)៖\n\n- **Sequential Execution (យឺត)**៖ ការសរសេរ `await` តគ្នាសម្រាប់ Queries ឯករាជ្យ ធ្វើឱ្យរយៈពេលរង់ចាំបូកបញ្ចូលគ្នា (T1 + T2)។\n- **Parallel Concurrency (លឿន)**៖ ប្រើ `await Promise.all([query1(), query2()])` ដើម្បីដំណើរការ Queries ស្របពេលគ្នា (ចំណាយពេលត្រឹម `max(T1, T2)`)។\n- **Error Resilience**៖ ប្រើ `Promise.allSettled()` នៅពេលមិនចង់ឱ្យបរាជ័យមួយប៉ះពាល់ដល់ Tasks ដទៃទៀត។",
   codeSnippet: "// SLOW: Waterfall execution (Total: ~200ms)\nconst user = await User.findById(userId);       // 100ms\nconst orders = await Order.find({ user: userId }); // 100ms\n\n// FAST: Parallel concurrent execution (Total: ~100ms!)\nconst [user, orders] = await Promise.all([\n  User.findById(userId),\n  Order.find({ user: userId }),\n]);",
 };
 

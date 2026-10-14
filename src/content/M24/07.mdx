@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Channels តាមរយៈ Socket.IO Rooms",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Socket.IO Rooms គឺជា Channels បណ្តោះអាសន្នដែលអនុញ្ញាតឱ្យ Server ដាក់ Socket Connections ចូលទៅក្នុងក្រុមជាក់លាក់ (ឧ. `socket.join('course-101')`)។ បន្ទាប់មក Server អាចផ្សាយសារ (Broadcast) ទៅកាន់តែសមាជិកដែលមានវត្តមានក្នុង Room នោះ (`io.to('course-101').emit('newAnnouncement', data)`) ដោយមិនចាំបាច់ផ្ញើទៅកាន់ User ទាំងអស់ក្នុងប្រព័ន្ធឡើយ។",
+  summary: "ការគ្រប់គ្រង Channels តាមរយៈ Socket.IO Rooms៖\n\n- **Join Room**៖ ដាក់ Socket ចូលទៅក្នុង Room ជាក់លាក់ `socket.join('course:101')`។\n- **Broadcast to Room**៖ ផ្សាយសារទៅកាន់តែ Users ក្នុង Room នោះ `io.to('course:101').emit('new_message', data)`។\n- **Leave Room**៖ ដក Socket ចេញពី Room នៅពេល User ចាកចេញពី Course Page។",
   codeSnippet: "io.on(\"connection\", (socket) => {\n  // Join a specific chat channel or project room\n  socket.on(\"join_room\", (roomId) => {\n    socket.join(roomId);\n    console.log(`Socket ${socket.id} joined room: ${roomId}`);\n\n    // Notify others in that room only\n    socket.to(roomId).emit(\"user_joined\", { userId: socket.id });\n  });\n\n  // Send message strictly to members of this room\n  socket.on(\"chat_in_room\", ({ roomId, message }) => {\n    io.to(roomId).emit(\"receive_room_message\", {\n      sender: socket.id,\n      message,\n      sentAt: new Date(),\n    });\n  });\n});",
 };
 

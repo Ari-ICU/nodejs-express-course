@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម Scalable Backend កម្រិត Enterprise (Full Architecture Blueprint)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ស្ថាបត្យកម្ម Scalable Backend កម្រិត Enterprise រួមបញ្ចូលគ្នានូវ Modular Layered Architecture ជាមួយ Stateless Web Instances, Shared Redis Cache & Queues, MongoDB Replica Set, និង Centralized Observability ត្រៀមខ្លួនសម្រាប់ចរាចរណ៍កម្រិតខ្ពស់។",
+  summary: "ស្ថាបត្យកម្ម Scalable Backend កម្រិត Enterprise (Full Architecture Blueprint)៖\n\n- **Stateless API Layer**៖ Web Nodes អាច Scale Out ផ្តេក (Horizontal Scaling) បានដោយសេរី។\n- **Shared Infrastructure**៖ ប្រើប្រាស់ Redis Cluster សម្រាប់ Cache/Queues និង MongoDB Replica Set សម្រាប់ High Availability។\n- **Full Observability**៖ រួមបញ្ចូល Centralized Logging, APM Monitoring, និង Automated CI/CD Pipelines។",
   codeSnippet: "// Enterprise High-Availability Topology:\n//\n//              [Client Browser / Mobile App]\n//                           │ (HTTPS)\n//                           ↓\n//                [Nginx Reverse Proxy / CDN]\n//                           │\n//            ┌──────────────┴──────────────┐\n//            ↓ (Round-Robin)               ↓\n//   [Node.js API Server 1]       [Node.js API Server 2]\n//            │                             │\n//            ├──────────────┬──────────────┤\n//            ↓              ↓              ↓\n//    [Redis Cache]   [BullMQ Queue]   [MongoDB Replica Set]\n//                           │\n//                           ↓\n//                [Background Worker Nodes]",
 };
 

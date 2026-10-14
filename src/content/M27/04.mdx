@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Services Layer (Core Business Logic)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Services Layer គឺជាបេះដូងនៃកម្មវិធី (Core Business Logic)។ Service Methods ដំណើរការលើ Domain Rules, គណនាទិន្នន័យ, ទំនាក់ទំនងជាមួយ Models (Mongoose), និងហៅ External Services (Stripe, Cloudflare R2)។ Services ត្រូវតែឯករាជ្យពី HTTP Objects (`req`, `res`) ដែលធ្វើឱ្យពួកវាអាច Unit Test បានយ៉ាងងាយស្រួល។",
+  summary: "តួនាទី និងការរៀបចំ Services Layer (Core Business Logic)៖\n\n- **Application Heart**៖ ផ្ទុក Business Rules ទាំងអស់របស់ Course Platform (Enrollment, Pricing, Access)។\n- **Decoupled from Express**៖ មិនប្រើ `req` និង `res` objects ឡើយ ធ្វើឱ្យងាយស្រួល Unit Test និង Reuse។\n- **Integrate External APIs**៖ ទំនាក់ទំនងជាមួយ Payment Gateways, Cloud Storage, និង Database Models។",
   codeSnippet: "// services/course.service.js\nimport { Course } from \"../models/course.model.js\";\nimport { AppError } from \"../utils/AppError.js\";\n\nexport const createCourse = async (courseData, instructorId) => {\n  // Business rule: Check duplicate title\n  const existing = await Course.findOne({ title: courseData.title });\n  if (existing) {\n    throw new AppError(\"A course with this title already exists\", 409);\n  }\n\n  const course = await Course.create({\n    ...courseData,\n    instructor: instructorId,\n  });\n\n  return course;\n};",
 };
 

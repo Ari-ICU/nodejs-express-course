@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងរក្សាទុក Image URLs ក្នុង Database",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Image URLs Management គឺជាការកត់ត្រា Full Public URL ឬ Relative Storage Key ចូលទៅក្នុង Database (ដូចជា `course.thumbnail = 'https://cdn.example.com/courses/thumb-123.jpg'`)។ ការរក្សាទុកតែ URL ក្នុង MongoDB ជួយឱ្យ Document មានទំហំស្រាល លឿន និងងាយស្រួលសម្រាប់ Frontend ក្នុងការទាញយកទៅបង្ហាញលើ UI។",
+  summary: "ការបង្កើត និងរក្សាទុក Image URLs ក្នុង Database៖\n\n- **Store URL or Key**៖ រក្សាទុក Public CDN URL ពេញលេញ ឬ Relative Key ក្នុង Mongoose Document (`course.thumbnail`)។\n- **Lean Document Size**៖ Database ផ្ទុកត្រឹមតែ String URL ទំហំតិចតួច មិនផ្ទុក Binary Data ធ្ងន់ៗឡើយ។\n- **Frontend Ready**៖ Frontend អាចយក URL ទៅបង្ហាញក្នុង `<img>` tag ដោយផ្ទាល់បានភ្លាមៗ។",
   codeSnippet: "// 1. Mongoose Model stores only URL string\nconst userSchema = new mongoose.Schema({\n  name: String,\n  avatarUrl: {\n    type: String,\n    default: \"/images/default-avatar.png\",\n  },\n});\n\n// 2. Controller uploads file and persists URL:\nexport const updateAvatar = async (req, res, next) => {\n  try {\n    if (!req.file) throw new AppError(\"Please provide an image\", 400);\n\n    // Upload to Cloudflare R2\n    const publicUrl = await uploadToR2(req.file.buffer, req.file.originalname, req.file.mimetype);\n\n    // Persist URL in MongoDB\n    const user = await User.findByIdAndUpdate(\n      req.user._id,\n      { avatarUrl: publicUrl },\n      { new: true }\n    );\n\n    res.json({ status: \"success\", data: { avatarUrl: user.avatarUrl } });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

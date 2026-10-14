@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធផ្ញើ Email ក្នុង Web Application",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ស្ថាបត្យកម្មប្រព័ន្ធ Email ក្នុង Web Application តម្រូវឱ្យបែងចែកដាច់រវាង HTTP Thread និង Email Delivery។ ដោយសារការផ្ញើ Email តាមរយៈបណ្តាញខាងក្រៅត្រូវការពេលពី 1 ទៅ 3 វិនាទី Server មិនត្រូវធ្វើ `await` ការផ្ញើ Email ក្នុង Request-Response Cycle ឡើយ ប៉ុន្តែត្រូវបញ្ជូន Task ទៅកាន់ Background Queue ដើម្បីកុំឱ្យប៉ះពាល់ដល់ User Experience។",
+  summary: "ស្ថាបត្យកម្មប្រព័ន្ធផ្ញើ Email ក្នុង Web Application៖\n\n- **Decoupled Delivery**៖ ការផ្ញើ Email ត្រូវការពេលពី 1-3 វិនាទី ដូច្នេះមិនត្រូវ `await` ក្នុង HTTP Thread ឡើយ។\n- **Background Queueing**៖ បញ្ជូន Email Task ទៅកាន់ Message Queue (BullMQ) ដើម្បីឆ្លើយតបទៅ Client ក្រោម 50ms។\n- **High Reliability**៖ មានយន្តការ Retry ដោយស្វ័យប្រវត្តិនៅពេល SMTP Server ជួបបញ្ហារអាក់រអួល។",
   codeSnippet: "// Asynchronous Email Architecture:\n//\n// 1. Client POST /register\n// 2. Express Controller validates & saves user to MongoDB\n// 3. Controller dispatches email job to Redis Queue: emailQueue.add(\"welcome\", { email, name })\n// 4. Controller immediately returns 201 Created (<50ms!)\n// 5. Background BullMQ Worker consumes job and dispatches email via SMTP in parallel",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការតាមដាន Job Progress និងការបញ្ជូនទិន្នន័យត្រឡប់មកវិញ",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Job Processing Lifecycle រួមមានដំណាក់កាលសំខាន់ៗ៖ Waiting, Active, Completed, Failed, និង Delayed។ ក្នុងអំឡុងពេលដំណើរការ Worker អាចរាយការណ៍អំពី Progress តាមរយៈ `job.updateProgress(percentage)` ដែលអនុញ្ញាតឱ្យ Frontend អាចបង្ហាញ Progress Bar ដល់ User បានយ៉ាងរលូន។",
+  summary: "ការតាមដាន Job Progress និងការបញ្ជូនទិន្នន័យត្រឡប់មកវិញ៖\n\n- **Progress Updates**៖ ហៅ `await job.updateProgress(percentage)` ក្នុងអំឡុងពេលដំណើរការ Task។\n- **Return Value**៖ ត្រឡប់លទ្ធផលសម្រេចចេញពី Processor Function (ដូចជា Uploaded S3 URL)។\n- **Real-time Reporting**៖ បញ្ជូន Progress ទៅកាន់ Frontend តាមរយៈ WebSockets ដើម្បីបង្ហាញ Progress Bar។",
   codeSnippet: "const reportWorker = new Worker(\"reports\", async (job) => {\n  await job.updateProgress(10); // 10%\n\n  const data = await queryLargeDataset();\n  await job.updateProgress(50); // 50%\n\n  const pdfBuffer = await generatePdf(data);\n  await job.updateProgress(90); // 90%\n\n  const fileUrl = await uploadToCloud(pdfBuffer);\n  await job.updateProgress(100); // 100%\n\n  return { reportUrl: fileUrl };\n}, { connection: redisConnection });",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត HTTP Requests ជាមួយ Supertest",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Supertest គឺជាបណ្ណាល័យដ៏មានឥទ្ធិពលសម្រាប់ធ្វើតេស្ត HTTP Endpoints ក្នុង Express ដោយមិនចាំបាច់បើក Network Port ពិតប្រាកដឡើយ (`supertest(app)` ដំណើរការលើ Node HTTP Server Interface)។ វាអនុញ្ញាតឱ្យយើងសរសេរ Assertion លើ Status Codes, Headers, និង Body យ៉ាងងាយស្រួល និងមានល្បឿនលឿន។",
+  summary: "ការធ្វើតេស្ត HTTP Requests ជាមួយ Supertest៖\n\n- **In-memory HTTP Server**៖ តេស្ត Express App លើ Node HTTP Interface ដោយមិនចាំបាច់បើក Network Port ពិតឡើយ។\n- **Fluent Chain API**៖ ប្រើ Syntax ច្បាស់លាស់ `.post('/api/v1/courses').send(payload).expect(201)`។\n- **Header & Cookie Testing**៖ គាំទ្រការផ្ញើ Authorization Headers និង Cookies យ៉ាងងាយស្រួល។",
   codeSnippet: "import request from \"supertest\";\nimport { describe, it, expect } from \"vitest\";\nimport app from \"../src/app.js\";\n\ndescribe(\"GET /api/v1/health\", () => {\n  it(\"should return 200 OK with system status\", async () => {\n    const res = await request(app)\n      .get(\"/api/v1/health\")\n      .expect(\"Content-Type\", /json/)\n      .expect(200);\n\n    expect(res.body.status).toBe(\"success\");\n    expect(res.body.data).toHaveProperty(\"uptime\");\n  });\n});",
 };
 

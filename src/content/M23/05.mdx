@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ Authentication ស្វ័យប្រវត្តិតាមរយៈ Collection Variables",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Authentication Automation ក្នុង Postman អនុញ្ញាតឱ្យយើងទាញយក JWT Access Token ពី Response នៃ Login Request ដោយស្វ័យប្រវត្តិតាមរយៈ Scripts ហើយកំណត់វាជា Collection Variable `{{token}}`។ បន្ទាប់មក គ្រប់ Protected Requests ទាំងអស់នឹងប្រើប្រាស់ Bearer Token នោះដោយស្វ័យប្រវត្តិ។",
+  summary: "ការកំណត់ Authentication ស្វ័យប្រវត្តិតាមរយៈ Collection Variables៖\n\n- **Auto Token Capture**៖ សរសេរ Test Script ក្នុង Login Request ដើម្បីទាញយក Token៖ `pm.collectionVariables.set('token', pm.response.json().data.token)`។\n- **Inherit Auth**៖ កំណត់ Auth Type ជា 'Bearer Token' នៅកម្រិត Collection ជាមួយ Value `{{token}}`។\n- **Zero Manual Work**៖ គ្រប់ Endpoints ទាំងអស់នឹងប្រើប្រាស់ Token នោះដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "// Postman Tests Script on POST /login:\n// Save JWT token automatically to environment variables!\nconst response = pm.response.json();\n\nif (response.token) {\n  pm.environment.set(\"auth_token\", response.token);\n  console.log(\"Updated auth_token variable successfully!\");\n}\n\n// In Collection Root -> Authorization Tab:\n// Type: Bearer Token\n// Token: {{auth_token}}",
 };
 

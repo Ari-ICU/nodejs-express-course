@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Documentation ពេញលេញកម្រិត Production",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ស្ថាបត្យកម្ម API Documentation ពេញលេញកម្រិត Production តម្រូវឱ្យមានការរៀបចំ Documentation-first ឬ Code-first ស្របគ្នាជាមួយ CI/CD Pipeline។ Documentation ត្រូវតែ Update ដោយស្វ័យប្រវត្តិតាម Code Changes អាច Export ជា Postman Collection ឬ OpenAPI JSON និងត្រូវបានការពារដោយ Authentication ប្រសិនបើជា Internal Enterprise API។",
+  summary: "ស្ថាបត្យកម្មប្រព័ន្ធ Documentation ពេញលេញកម្រិត Production៖\n\n- **Doc-as-Code**៖ ធ្វើបច្ចុប្បន្នភាពឯកសារស្របគ្នាជាមួយ Codebase ក្នុង Git Repository។\n- **CI/CD Integration**៖ Validate OpenAPI Syntax ដោយស្វ័យប្រវត្តិតាមរយៈ GitHub Actions មុនពេល Merge កូដ។\n- **Export Capabilities**៖ អនុញ្ញាតឱ្យ Export ជា OpenAPI JSON ឬ Postman Collection សម្រាប់ Third-party Partners។",
   codeSnippet: "// Expose raw spec for Postman / SDK generators\napp.get(\"/api/docs.json\", (req, res) => {\n  res.setHeader(\"Content-Type\", \"application/json\");\n  res.send(swaggerSpec);\n});\n\n// Mount interactive documentation UI\napp.use(\"/api/docs\", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {\n  explorer: true,\n  customCss: \".swagger-ui .topbar { display: none }\", // Clean look\n  customSiteTitle: \"Enterprise REST API Documentation\",\n}));",
 };
 

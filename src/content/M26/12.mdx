@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្ម Email Queue System ពេញលេញក្នុង Production",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "ស្ថាបត្យកម្ម Email Queue System ពេញលេញក្នុង Production រួមបញ្ចូលគ្នានូវ Express Controller, Redis Connection, BullMQ Email Queue, និង Dedicated Worker Process ជាមួយ Nodemailer។ ប្រព័ន្ធនេះធានាបាននូវការឆ្លើយតប HTTP Response ក្រោម 50ms និងការធានាថា Email គ្រប់ច្បាប់ត្រូវបានបញ្ជូនជោគជ័យ ១០០%។",
+  summary: "ស្ថាបត្យកម្ម Email Queue System ពេញលេញក្នុង Production៖\n\n- **End-to-End Pipeline**៖ Express Controller -> BullMQ Producer -> Redis -> Background Worker -> Nodemailer។\n- **High Throughput**៖ អាចបញ្ជូន Email រាប់ម៉ឺនច្បាប់ក្នុងមួយថ្ងៃដោយមិនធ្វើឱ្យ Web App យឺតឡើយ។\n- **Guaranteed Delivery**៖ ធានាថា Email គ្រប់ច្បាប់ត្រូវបានបញ្ជូនជោគជ័យ ១០០%។",
   codeSnippet: "// Complete Architecture Blueprint:\n//\n// Express Route: POST /auth/forgot-password\n//      │\n//      ↓ (Enqueues job in 2ms)\n// [Redis Queue: \"email-critical\"]\n//      │\n//      ↓ (Worker pulls job)\n// [Email Worker Process]\n//      ├── Formats HTML template\n//      ├── Contacts SMTP Relay (Brevo/SES)\n//      └── If SMTP fails: Retries automatically in 3s (Exponential backoff)",
 };
 

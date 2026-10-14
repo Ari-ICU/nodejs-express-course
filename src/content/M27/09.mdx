@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Centralized Configuration និង Environment Validation",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Config Layer គ្រប់គ្រង Centralized Application Configuration។ វាទាញយក Environment Variables ពី `process.env`, Validate វត្តមានរបស់ Variables សំខាន់ៗ (ជាមួយ Zod ឬ Envalid), និង Export ជា Type-safe Config Object ជៀសវាងការហៅ `process.env` រាយប៉ាយក្នុងកូដ។",
+  summary: "ការគ្រប់គ្រង Centralized Configuration និង Environment Validation៖\n\n- **Type-safe Config Object**៖ ចងក្រង `process.env` ទាំងអស់ចូលទៅក្នុង Config Object តែមួយ (`config/index.ts`)។\n- **Startup Validation**៖ ពិនិត្យមើលថារាល់ Required Environment Variables ទាំងអស់មានវត្តមានពេល Server Boot។\n- **Fail-Fast Principle**៖ បញ្ឈប់ Server ភ្លាមៗប្រសិនបើខ្វះ Database URI ឬ JWT Secret Key។",
   codeSnippet: "// config/env.js\nimport { z } from \"zod\";\n\nconst envSchema = z.object({\n  NODE_ENV: z.enum([\"development\", \"production\", \"test\"]).default(\"development\"),\n  PORT: z.coerce.number().default(5000),\n  MONGODB_URI: z.string().url(),\n  JWT_ACCESS_SECRET: z.string().min(32),\n  REDIS_URL: z.string().default(\"redis://localhost:6379\"),\n});\n\nconst parsed = envSchema.safeParse(process.env);\nif (!parsed.success) {\n  console.error(\"Invalid environment variables:\", parsed.error.format());\n  process.exit(1); // Fail fast!\n}\n\nexport const env = parsed.data;",
 };
 

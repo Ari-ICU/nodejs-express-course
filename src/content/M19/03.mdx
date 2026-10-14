@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ Multer Middleware",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Multer គឺជា Middleware ដ៏ពេញនិយមបំផុតសម្រាប់ Express ក្នុងការគ្រប់គ្រង `multipart/form-data`។ វាដើរតួជា Wrapper លើ `busboy` ដោយផ្តល់នូវ API ងាយស្រួលសម្រាប់ការកំណត់ទំហំអតិបរមា (Limits), ការត្រួតពិនិត្យប្រភេទឯកសារ (FileFilter), និងការជ្រើសរើស Storage Engine (MemoryStorage ឬ DiskStorage) សម្រាប់គ្រប់គ្រងឯកសារដែលបាន Upload។",
+  summary: "ការដំឡើង និងកំណត់រចនាសម្ព័ន្ធ Multer Middleware៖\n\n- **Storage Engine**៖ ជ្រើសរើសរវាង `multer.memoryStorage()` (សម្រាប់ Cloud) ឬ `multer.diskStorage()` (សម្រាប់ Local)។\n- **Limits & Filters**៖ កំណត់ទំហំអតិបរមា (`fileSize`) និងប្រភេទ File (`fileFilter`)។\n- **Route Integration**៖ ប្រើ `upload.single('file')` ឬ `upload.array('files')` លើ Express Route Handlers។",
   codeSnippet: "import multer from \"multer\";\n\n// Basic in-memory storage configuration\nconst upload = multer({\n  storage: multer.memoryStorage(),\n  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB max\n});\n\n// Single file upload route\napp.post(\"/api/upload-avatar\", upload.single(\"avatar\"), (req, res) => {\n  console.log(\"Uploaded file metadata:\", req.file);\n  console.log(\"Text fields:\", req.body);\n\n  res.json({\n    status: \"success\",\n    filename: req.file.originalname,\n    size: req.file.size,\n    mimetype: req.file.mimetype,\n  });\n});",
 };
 

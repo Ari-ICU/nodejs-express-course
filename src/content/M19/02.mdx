@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពីទម្រង់ Multipart Form Data",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Multipart Form Data (`multipart/form-data`) គឺជា MIME Type ពិសេសដែលប្រើប្រាស់សម្រាប់បញ្ជូន Binary Files (រូបភាព, វីដេអូ, ឯកសារ) រួមជាមួយ Text Fields ក្នុង HTTP Request តែមួយ។ Request Body ត្រូវបានបែងចែកជាផ្នែកៗដោយ Boundary Delimiter ដែលទាមទារឱ្យ Server ប្រើ Streaming Multipart Parser ដូចជា `busboy` ឬ `multer` ដើម្បីបំបែកទិន្នន័យ។",
+  summary: "ការស្វែងយល់ពីទម្រង់ Multipart Form Data៖\n\n- **Content-Type**៖ ប្រើប្រាស់ `multipart/form-data; boundary=----WebKitFormBoundary...`។\n- **Boundary Delimiter**៖ បែងចែករវាង File Data (Binary) និង Regular Form Fields (Text) ក្នុង HTTP Body តែមួយ។\n- **Streaming Parser**៖ តម្រូវឱ្យប្រើ Library ដូចជា Multer / Busboy ព្រោះ `express.json()` មិនអាច Parse Multipart បានឡើយ។",
   codeSnippet: "// Frontend form data preparation:\nconst formData = new FormData();\nformData.append(\"title\", \"My Summer Vacation\"); // Regular text field\nformData.append(\"coverImage\", fileInput.files[0]); // Binary file field\n\n// Using fetch: DO NOT explicitly set Content-Type! Browser appends boundary automatically!\nconst res = await fetch(\"/api/v1/posts\", {\n  method: \"POST\",\n  body: formData, // Browser sets: 'multipart/form-data; boundary=----WebKitFormBoundary...'\n});",
 };
 

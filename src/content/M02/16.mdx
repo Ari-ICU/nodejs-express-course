@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "អាគុយម៉ង់បន្ទាត់ពាក្យបញ្ជា (Command Line Arguments)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `អាគុយម៉ង់បន្ទាត់ពាក្យបញ្ជាបានឆ្លងកាត់នៅពេលចាប់ផ្តើមស្គ្រីប (\`node script.js --port 8080\`) អាចចូលប្រើបានក្នុង \`process.argv\` ។ Node.js ទំនើបផ្តល់ \`util.parseArgs()\` ដើម្បីញែកទង់ ប៊ូលីន និងតម្លៃStringដើម។`,
+  summary: "អាគុយម៉ង់បន្ទាត់ពាក្យបញ្ជាបានឆ្លងកាត់នៅពេលចាប់ផ្តើមស្គ្រីប (\\`node script.js --port 8080\\`) អាចចូលប្រើបានក្នុង \\`process.argv\\` ។ Node.js ទំនើបផ្តល់ \\`util.parseArgs()\\` ដើម្បីញែកទង់ ប៊ូលីន និងតម្លៃStringដើម។",
   codeSnippet: "import { parseArgs } from \"node:util\";\n\nconst options = {\n  port: { type: \"string\", short: \"p\", default: \"5000\" },\n  migrate: { type: \"boolean\", default: false }\n};\n\nconst { values } = parseArgs({ options });\nconsole.log(\"Configured Port:\", values.port);\nconsole.log(\"Run Migration?\", values.migrate);",
 };
 

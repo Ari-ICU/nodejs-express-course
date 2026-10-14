@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ BullMQ ទំនើប",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "BullMQ គឺជាបណ្ណាល័យ Node.js/TypeScript ឈានមុខគេសម្រាប់គ្រប់គ្រង Distributed Message Queues និង Scheduled Tasks លើ Redis។ វាផ្តល់នូវ Core Abstractions ចំនួន ៣៖ `Queue` (សម្រាប់ Producers បន្ថែម Jobs), `Worker` (សម្រាប់ដំណើរការ Business Logic), និង `QueueEvents` (សម្រាប់ស្តាប់ស្ថានភាពដូចជា completed ឬ failed)។",
+  summary: "ការស្វែងយល់ពីបណ្ណាល័យ BullMQ ទំនើប៖\n\n- **Queue Class**៖ ប្រើប្រាស់ដោយ Producers ដើម្បីបន្ថែម Jobs (`queue.add(jobName, data)`)។\n- **Worker Class**៖ Process ដាច់ដោយឡែកដែលទាញយក និងដំណើរការ Tasks (`new Worker(queueName, processor)`)។\n- **QueueEvents Class**៖ ស្តាប់ Events ដូចជា `completed`, `failed`, និង `progress` សម្រាប់តាមដានស្ថានភាព។",
   codeSnippet: "// Core BullMQ Primitives:\n// 1. Queue:       Used by producers to add jobs with options (delay, priority, retries)\n// 2. Worker:      Background process that consumes jobs and executes business logic\n// 3. QueueEvents: Emits lifecycle events ('completed', 'failed', 'progress') for monitoring",
 };
 

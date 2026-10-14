@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Token Expiration និង Error Handling",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការគ្រប់គ្រង Token Expiration គឺជាគោលការណ៍គ្រឹះនៃសុវត្ថិភាព។ នៅពេល Access Token ផុតកំណត់ បណ្ណាល័យ `jsonwebtoken` នឹងបោះ `TokenExpiredError`។ Server ត្រូវចាប់ Error នេះក្នុង Global Error Handler ហើយឆ្លើយតបត្រឡប់ទៅ Frontend នូវ HTTP 401 Unauthorized ជាមួយនឹង Code `TOKEN_EXPIRED` ដើម្បីឱ្យ Frontend ដឹង និងហៅ Refresh Token Endpoint មកដូរយក Access Token ថ្មីដោយស្វ័យប្រវត្តិ។",
+  summary: "ការគ្រប់គ្រង Token Expiration និង Error Handling៖\n\n- **TokenExpiredError**៖ កើតឡើងនៅពេល `jwt.verify()` ឃើញពេលវេលាបច្ចុប្បន្នលើស `exp` timestamp។\n- **JsonWebTokenError**៖ កើតឡើងនៅពេល Signature មិនត្រឹមត្រូវ ឬ Token មានទម្រង់ខូចខាត (Malformed)។\n- **Standard Error Response**៖ ចាប់ Error ទាំងនេះក្នុង Error Middleware ហើយឆ្លើយតប `401 Unauthorized` ជាមួយ Error Code `TOKEN_EXPIRED` ដើម្បីឱ្យ Frontend ហៅ Refresh Flow។",
   codeSnippet: "// middleware/errorHandler.js\nexport const handleJwtError = (err, req, res, next) => {\n  if (err.name === \"TokenExpiredError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_EXPIRED\",\n      message: \"Access token has expired. Please refresh your token.\",\n    });\n  }\n\n  if (err.name === \"JsonWebTokenError\") {\n    return res.status(401).json({\n      status: \"fail\",\n      code: \"TOKEN_INVALID\",\n      message: \"Invalid token. Please log in again.\",\n    });\n  }\n\n  next(err);\n};",
 };
 

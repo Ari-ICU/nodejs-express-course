@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Test Database ជាមួយ mongodb-memory-server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការប្រើប្រាស់ Test Database ជាមួយ `mongodb-memory-server` គឺជា Best Practice ដ៏ល្អឥតខ្ចោះ។ វាដំណើរការ MongoDB Instance ក្នុង RAM ទាំងស្រុង ដែលធ្វើឱ្យ Tests ដំណើរការលឿនបំផុត មិនប៉ះពាល់ដល់ Development Database និងអាច Clear ទិន្នន័យចោលទាំងអស់ក្រោយពេល Test Suite នីមួយៗបញ្ចប់ (`afterEach` / `afterAll`)។",
+  summary: "ការរៀបចំ Test Database ជាមួយ `mongodb-memory-server`៖\n\n- **In-memory MongoDB**៖ ដំណើរការ MongoDB Server ក្នុង RAM ទាំងស្រុង មានល្បឿនលឿនបំផុត។\n- **Isolated Data**៖ មិនប៉ះពាល់ដល់ Development Database ឬ Production Data ឡើយ។\n- **Tear Down & Cleanup**៖ លុបទិន្នន័យចោលទាំងអស់ក្រោយពេល Test Case នីមួយៗបញ្ចប់ (`afterEach`)។",
   codeSnippet: "import { MongoMemoryServer } from \"mongodb-memory-server\";\nimport mongoose from \"mongoose\";\nimport { beforeAll, afterAll, afterEach } from \"vitest\";\n\nlet mongoServer;\n\nbeforeAll(async () => {\n  mongoServer = await MongoMemoryServer.create();\n  const uri = mongoServer.getUri();\n  await mongoose.connect(uri);\n});\n\nafterEach(async () => {\n  // Clear all collections between individual tests\n  const collections = mongoose.connection.collections;\n  for (const key in collections) {\n    await collections[key].deleteMany({});\n  }\n});\n\nafterAll(async () => {\n  await mongoose.disconnect();\n  await mongoServer.stop();\n});",
 };
 

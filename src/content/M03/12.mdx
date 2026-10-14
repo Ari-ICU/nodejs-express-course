@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការអានឯកសារ (Text & JSON)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ការអានឯកសារកំណត់រចនាសម្ព័ន្ធ និងទ្រព្យសម្បត្តិអត្ថបទដោយភាពជឿជាក់ដោយប្រើ Methods async គ្រប់គ្រងការញែក JSON និងការអ៊ិនកូដតួអក្សរឱ្យបានត្រឹមត្រូវ។`,
+  summary: "ការអានឯកសារកំណត់រចនាសម្ព័ន្ធ និងទ្រព្យសម្បត្តិអត្ថបទដោយភាពជឿជាក់ដោយប្រើ Methods async គ្រប់គ្រងការញែក JSON និងការអ៊ិនកូដតួអក្សរឱ្យបានត្រឹមត្រូវ។",
   codeSnippet: "import fs from \"node:fs/promises\";\n\nasync function loadConfig() {\n  try {\n    const raw = await fs.readFile(\"./package.json\", \"utf-8\");\n    const pkg = JSON.parse(raw);\n    console.log(\"Loaded package:\", pkg.name, \"v\" + pkg.version);\n  } catch (error) {\n    console.error(\"Failed to load config:\", error.message);\n  }\n}\nloadConfig();",
 };
 

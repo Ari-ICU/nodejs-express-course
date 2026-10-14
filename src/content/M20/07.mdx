@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "លំហូរ Password Reset ជាមួយ Cryptographic Token",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Password Reset Email Flow គឺជាយន្តការស្តារពាក្យសម្ងាត់ប្រកបដោយសុវត្ថិភាពខ្ពស់៖ User ស្នើសុំ Reset, Server បង្កើត Unhashed Cryptographic Token (ផ្ញើតាម Email Link) និងរក្សាទុក Hashed Token រួមជាមួយ Expiration Time (ឧ. 10 នាទី) ក្នុង Database។ នៅពេល User ចុច Link Server នឹង Hash Token នោះមកផ្ទៀងផ្ទាត់ជាមួយ Database ជៀសវាងការធ្លាយ Token តាមរយៈ Database Leak។",
+  summary: "លំហូរ Password Reset ជាមួយ Cryptographic Token៖\n\n- **Generate Crypto Token**៖ បង្កើត Random Token តាមរយៈ `crypto.randomBytes(32).toString('hex')`។\n- **Hash & Save with Expiry**៖ Hash Token រួចរក្សាទុកក្នុង MongoDB ជាមួយកាលបរិច្ឆេទផុតកំណត់ (10 នាទី)។\n- **Send Reset Link**៖ ផ្ញើ Reset URL ដែលមានផ្ទុក Unhashed Token តាមរយៈ Email ទៅកាន់ User។\n- **Verify & Update**៖ នៅពេល User ចុច Link Server Hash Token មកផ្ទៀងផ្ទាត់ជាមួយ Database មុននឹងអនុញ្ញាតឱ្យប្តូរ Password ថ្មី។",
   codeSnippet: "import crypto from \"node:crypto\";\n\n// 1. Generate reset token in User Model method:\nuserSchema.methods.createPasswordResetToken = function () {\n  const resetToken = crypto.randomBytes(32).toString(\"hex\");\n\n  // Hash token before saving to database\n  this.passwordResetToken = crypto\n    .createHash(\"sha256\")\n    .update(resetToken)\n    .digest(\"hex\");\n\n  // Token expires in 10 minutes\n  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;\n\n  return resetToken; // Return unhashed token to send via email\n};\n\n// 2. Controller sends reset link:\nconst resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;",
 };
 

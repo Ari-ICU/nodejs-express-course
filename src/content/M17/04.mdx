@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារ Admin Routes ដោយឡែក",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Admin Routes គឺជា Endpoints ពិសេសដែលបម្រុងទុកសម្រាប់តែ Admin ឬ Superadmin ប៉ុណ្ណោះ ដូចជា `/api/v1/admin/users` ឬ `/api/v1/admin/analytics`។ Routes ទាំងនេះត្រូវតែការពារដោយកម្រិតសុវត្ថិភាពពីរជាន់ (Dual-layer Protection)៖ ទីមួយគឺ Authentication Middleware (`protect`) និងទីពីរគឺ Authorization Middleware (`restrictTo('admin')`) ដើម្បីធានាថាអ្នកប្រើប្រាស់ធម្មតាមិនអាចចូលបានជាដាច់ខាត។",
+  summary: "ការការពារ Admin Routes ដោយឡែក៖\n\n- **Dedicated Admin Endpoints**៖ បម្រុងទុកសម្រាប់តែ Admin ដូចជា `/api/v1/admin/users` ឬ `/api/v1/admin/analytics`។\n- **Dual-layer Protection**៖ ត្រូវឆ្លងកាត់ទាំង `protect` (Authentication) និង `restrictTo('admin')` (Authorization)។\n- **Strict Error Envelope**៖ ប្រសិនបើ User ធម្មតាព្យាយាមហៅ Server ឆ្លើយតប `403 Forbidden` ភ្លាមៗ។",
   codeSnippet: "// routes/admin.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport { restrictTo } from \"../middleware/role.middleware.js\";\nimport * as adminController from \"../controllers/admin.controller.js\";\n\nconst router = express.Router();\n\n// Enforce authentication AND admin role for all routes in this file\nrouter.use(protect);\nrouter.use(restrictTo(\"admin\", \"superadmin\"));\n\nrouter.get(\"/dashboard/stats\", adminController.getSystemStats);\nrouter.get(\"/users\", adminController.getAllUsers);\nrouter.patch(\"/users/:id/ban\", adminController.banUser);\n\nexport default router;",
 };
 

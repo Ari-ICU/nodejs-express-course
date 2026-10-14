@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "រចនាសម្ព័ន្ធ URL (Protocol, Host, Port, Path, Query)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Uniform Resource Locators (URLs) កំណត់អត្តសញ្ញាណធនធានបណ្តាញតែមួយគត់។ URL ពេញលេញរួមបញ្ចូលពិធីការ (\`https://\`) ម៉ាស៊ីនដែន (\`api.store.com\`) ច្រកស្រេចចិត្ត (\`:443\`) ផ្លូវធនធាន (\`/v1/products\`) និងParamsសំណួរ (\`?sort=desc\`) ។`,
+  summary: "Uniform Resource Locators (URLs) កំណត់អត្តសញ្ញាណធនធានបណ្តាញតែមួយគត់។ URL ពេញលេញរួមបញ្ចូលពិធីការ (\\`https://\\`) ម៉ាស៊ីនដែន (\\`api.store.com\\`) ច្រកស្រេចចិត្ត (\\`:443\\`) ផ្លូវធនធាន (\\`/v1/products\\`) និងParamsសំណួរ (\\`?sort=desc\\`) ។",
   codeSnippet: "import http from \"node:http\";\n\nhttp.createServer((req, res) => {\n  const parsed = new URL(req.url, `http://${req.headers.host}`);\n  console.log(\"Pathname:\", parsed.pathname); // e.g. /api/products\n  console.log(\"Search query:\", parsed.search); // e.g. ?page=2\n  res.end(\"Parsed\");\n});",
 };
 

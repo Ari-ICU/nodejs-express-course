@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាងបរិស្ថាន Development និង Production",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "ភាពខុសគ្នារវាង Development និង Production Environments៖ ក្នុង Development ការផ្តោតគឺលើ Developer Velocity (Hot-reloading, Verbose Logs, Detailed Stack Traces)។ ក្នុង Production ការផ្តោតគឺលើ Security, Reliability, Performance, Minimized Latency, Silent Stack Traces, និង Graceful Error Recovery។",
+  summary: "ភាពខុសគ្នារវាងបរិស្ថាន Development និង Production៖\n\n- **Development Focus**៖ ផ្តោតលើ Developer Experience, Fast Hot-reloading, Verbose Logs, និង Detailed Errors។\n- **Production Focus**៖ ផ្តោតលើ Security, High Availability, Silent Error Details, និង Zero-downtime Uptime។\n- **Performance Tuning**៖ បិទ Dev Middleware និងបើកការបង្រួម Response (Compression & Caching)។",
   codeSnippet: "// Key Differences:\n// Setting                | Development            | Production\n// -----------------------+------------------------+--------------------------\n// NODE_ENV               | \"development\"          | \"production\"\n// Error Responses        | Full stack trace       | Generic \"Something went wrong\"\n// Server Process         | nodemon / tsx watch    | PM2 cluster / Docker container\n// Logging                | Pretty console output  | Structured JSON (Winston/Pino)\n// HTTPS                  | Disabled (http://)     | Enforced (SSL/TLS certificate)",
 };
 

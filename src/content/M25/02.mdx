@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការទប់ស្កាត់ការស្ទះ Event Loop (Blocking the Event Loop)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Blocking the Event Loop គឺជាកំហុសធ្ងន់ធ្ងរបំផុតក្នុង Node.js ដែលកើតឡើងពីការដំណើរការ Synchronous Operations យូរៗ (ដូចជា `fs.readFileSync`, JSON.parse លើទំហំទិន្នន័យធំៗ, ReDoS Regex, ឬ Synchronous Crypto)។ នៅពេល Main Thread ជាប់រវល់ រាល់ Incoming HTTP Requests ទាំងអស់ត្រូវរង់ចាំ ដែលបណ្តាលឱ្យ Server កកស្ទះ និង Response Time កើនឡើងខ្ពស់។",
+  summary: "ការទប់ស្កាត់ការស្ទះ Event Loop (Blocking the Event Loop)៖\n\n- **Common Blockers**៖ ការប្រើ Synchronous APIs (`fs.readFileSync`), ការ Parse JSON ធំៗ, និង ReDoS Vulnerable Regexes។\n- **ផលប៉ះពាល់ធ្ងន់ធ្ងរ**៖ នៅពេល Main Thread ជាប់រវល់ រាល់ Incoming Requests ទាំងអស់ត្រូវគាំងរង់ចាំ។\n- **ដំណោះស្រាយ**៖ ប្រើ Asynchronous Methods, បំបែក Large Computations, ឬប្រើ Worker Threads សម្រាប់ CPU-heavy Tasks។",
   codeSnippet: "// DANGEROUS: Blocks the entire server for all concurrent users!\napp.get(\"/bad\", (req, res) => {\n  const data = fs.readFileSync(\"/huge-file.csv\"); // Event loop BLOCKED!\n  res.send(data);\n});\n\n// PROPER: Non-blocking asynchronous I/O allows thousands of concurrent requests\napp.get(\"/good\", async (req, res) => {\n  const data = await fs.promises.readFile(\"/huge-file.csv\"); // Event loop stays FREE!\n  res.send(data);\n});",
 };
 

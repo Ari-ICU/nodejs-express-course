@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Models Layer (Mongoose Schemas)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Models Layer កំណត់រចនាសម្ព័ន្ធទិន្នន័យតាមរយៈ Mongoose Schemas រួមមាន Field Types, Validation Rules, Default Values, Indexes, Pre/Post Hooks, និង Custom Instance/Static Methods ដើម្បីធានានូវ Data Integrity មុនពេលរក្សាទុកក្នុង MongoDB។",
+  summary: "តួនាទី និងការរៀបចំ Models Layer (Mongoose Schemas)៖\n\n- **Data Schema Definition**៖ កំណត់រចនាសម្ព័ន្ធ Fields, Types, Defaults, និង Validation Rules។\n- **Database Indexes**៖ បង្កើត Single Field និង Compound Indexes សម្រាប់បង្កើនល្បឿន Query។\n- **Mongoose Hooks & Methods**៖ ប្រើ Pre/Post Hooks (Password Hashing) និង Custom Instance Methods។",
   codeSnippet: "// models/enrollment.model.js\nimport mongoose from \"mongoose\";\n\nconst enrollmentSchema = new mongoose.Schema({\n  student: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  course: { type: mongoose.Schema.Types.ObjectId, ref: \"Course\", required: true },\n  enrolledPrice: { type: Number, required: true },\n  status: {\n    type: String,\n    enum: [\"active\", \"completed\", \"cancelled\"],\n    default: \"active\",\n  },\n  progress: { type: Number, min: 0, max: 100, default: 0 },\n}, { timestamps: true });\n\nenrollmentSchema.index({ student: 1, course: 1 }, { unique: true });\n\nexport const Enrollment = mongoose.model(\"Enrollment\", enrollmentSchema);",
 };
 

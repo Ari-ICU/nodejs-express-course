@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Controllers Layer",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Controllers Layer ទទួលខុសត្រូវលើ HTTP Lifecycle៖ ទទួល Request (params, query, body), ហៅ Services ដើម្បីអនុវត្ត Business Logic, និងរៀបចំ HTTP Response (Status Code, JSON Envelope) ត្រឡប់ទៅកាន់ Client វិញ។ Controller មិនត្រូវសរសេរ Database Query ដោយផ្ទាល់ឡើយ។",
+  summary: "តួនាទី និងការរៀបចំ Controllers Layer៖\n\n- **HTTP Request Coordinator**៖ ទទួល Parameters, Query Strings, និង Request Body ពី Client។\n- **Delegate to Services**៖ ហៅ Service Layer ដើម្បីអនុវត្ត Core Business Logic។\n- **Send HTTP Responses**៖ រៀបចំ Status Codes (200, 201) និង Format JSON Envelope ត្រឡប់ទៅ Client។",
   codeSnippet: "// controllers/course.controller.js\nimport * as courseService from \"../services/course.service.js\";\n\nexport const createCourse = async (req, res, next) => {\n  try {\n    const course = await courseService.createCourse(req.body, req.user._id);\n\n    res.status(201).json({\n      status: \"success\",\n      data: { course },\n    });\n  } catch (err) {\n    next(err);\n  }\n};",
 };
 

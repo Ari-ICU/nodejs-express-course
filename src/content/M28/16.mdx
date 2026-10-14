@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ និងដាក់ឱ្យដំណើរការលើ Virtual Private Server (VPS)",
   type: "lab",
   codeLanguage: "bash",
-  summary: "VPS Deployment គឺជាការដាក់ឱ្យដំណើរការលើ Cloud Virtual Private Server (ដូចជា DigitalOcean, AWS EC2, Linode, ឬ Hetzner)។ ដំណើរការរួមមានការភ្ជាប់តាមរយៈ SSH Key-based Authentication, ការ Setup Firewall (UFW) អនុញ្ញាតតែ Ports 22, 80, 443, និងការរៀបចំ Docker Environment។",
+  summary: "ការរៀបចំ និងដាក់ឱ្យដំណើរការលើ Virtual Private Server (VPS)៖\n\n- **VPS Providers**៖ ជ្រើសរើស DigitalOcean, AWS EC2, Hetzner, ឬ Linode តាមតម្រូវការ។\n- **SSH Key Authentication**៖ ភ្ជាប់ទៅកាន់ Server តាមរយៈ SSH Keys ដោយបិទ Password Authentication។\n- **Firewall Setup (UFW)**៖ បើកតែ Ports ចាំបាច់ (22 សម្រាប់ SSH, 80 សម្រាប់ HTTP, 443 សម្រាប់ HTTPS)។",
   codeSnippet: "# 1. Connect to VPS via SSH Key:\nssh -i ~/.ssh/id_ed25519 deploy@your-server-ip\n\n# 2. Configure Uncomplicated Firewall (UFW):\nsudo ufw default deny incoming\nsudo ufw default allow outgoing\nsudo ufw allow ssh        # Port 22\nsudo ufw allow http       # Port 80\nsudo ufw allow https      # Port 443\nsudo ufw enable",
 };
 

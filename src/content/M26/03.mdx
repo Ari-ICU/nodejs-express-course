@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Message Queue (FIFO, Priority, Dead Letter)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Message Queue ដំណើរការតាមគោលការណ៍ FIFO (First-In, First-Out) ដោយ Producer បន្ថែមសារ (Enqueue) ចូលក្នុងជួរ ហើយ Worker ទាញយកសារ (Dequeue) មកដំណើរការ។ ប្រព័ន្ធ Queue ទំនើបផ្តល់នូវសមត្ថភាពគាំទ្រ Priority Queues, Delayed Jobs, Job Deduplication, និង Dead Letter Queues សម្រាប់គ្រប់គ្រង Jobs ដែលបរាជ័យច្រើនដង។",
+  summary: "គោលការណ៍គ្រឹះនៃ Message Queue (FIFO, Priority, Dead Letter)៖\n\n- **FIFO Model**៖ ដំណើរការតាមលំដាប់លំដោយ First-In, First-Out។\n- **Priority Queues**៖ អនុញ្ញាតឱ្យ Jobs សំខាន់ៗ (ឧ. Password Reset Email) ដំណើរការមុន Jobs ទូទៅ (Daily Marketing)។\n- **Dead Letter Queue (DLQ)**៖ កន្លែងស្តុកទុក Jobs ដែលបរាជ័យច្រើនដង ដើម្បីឱ្យ Developer ចូលពិនិត្យ និង Debug។",
   codeSnippet: "// Message Queue Lifecycle:\n//\n// [Producer (Express API)]\n//          │\n//          ↓ (Enqueues Job)\n// [Redis Queue: \"reports\"]\n//          │\n//          ├── Job 1 (Priority: Low)\n//          ├── Job 2 (Priority: Normal)\n//          └── Job 3 (Priority: Urgent - Jumps to Front!)\n//          │\n//          ↓ (Pulls Job)\n// [Worker Process (Node.js)] ─── Fails 5x ───> [Dead Letter Queue (DLQ)]",
 };
 

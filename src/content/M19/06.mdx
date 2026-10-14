@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការផ្ទៀងផ្ទាត់ប្រភេទ និងភាពត្រឹមត្រូវនៃឯកសារ (File Filter)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "File Validation គឺជាការផ្ទៀងផ្ទាត់ភាពត្រឹមត្រូវនៃឯកសារតាមរយៈ `fileFilter` function របស់ Multer។ ការត្រួតពិនិត្យត្រូវផ្អែកលើទាំង File Extension (`.jpg`, `.png`, `.pdf`) និង MIME Type (`image/jpeg`, `application/pdf`) ព្រមទាំងការប្រើប្រាស់ Magic Bytes (File Signatures) សម្រាប់កម្រិត High Security ដើម្បីការពារកុំឱ្យ Attacker បន្លំ File Extension។",
+  summary: "ការផ្ទៀងផ្ទាត់ប្រភេទ និងភាពត្រឹមត្រូវនៃឯកសារ (File Validation)៖\n\n- **fileFilter Function**៖ ត្រួតពិនិត្យប្រភេទឯកសារមុនពេល Multer ទទួលយក File។\n- **MIME Type & Extension**៖ ផ្ទៀងផ្ទាត់ទាំង File Extension (`.jpg`, `.png`, `.pdf`) និង `file.mimetype`។\n- **Magic Bytes Verification**៖ ត្រួតពិនិត្យ File Signature ដើម្បីការពារ Attacker ប្តូរ Extension បន្លំប្រព័ន្ធ។",
   codeSnippet: "import path from \"node:path\";\n\nconst imageFileFilter = (req, file, cb) => {\n  const allowedExtensions = /jpeg|jpg|png|webp/;\n  const ext = path.extname(file.originalname).toLowerCase();\n  const isValidExt = allowedExtensions.test(ext);\n  const isValidMime = file.mimetype.startsWith(\"image/\");\n\n  if (isValidExt && isValidMime) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Only image files (JPEG, PNG, WebP) are allowed!\", 400), false);\n  }\n};",
 };
 

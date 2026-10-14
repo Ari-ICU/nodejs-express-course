@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្វែងយល់ពី OpenAPI Specification (OAS 3.0)",
   type: "concept",
   codeLanguage: "yaml",
-  summary: "OpenAPI Specification (OAS 3.0) គឺជាស្តង់ដារបើកទូលាយ (Standard Specification) សម្រាប់កំណត់រចនាសម្ព័ន្ធ RESTful APIs ជាលក្ខណៈ Machine-readable (JSON ឬ YAML)។ វាពិពណ៌នាអំពី Base URL, Endpoints, Parameters, Request Body, Response Schemas, និង Security Requirements យ៉ាងច្បាស់លាស់ ដោយឯករាជ្យពីភាសា Programming។",
+  summary: "ស្វែងយល់ពី OpenAPI Specification (OAS 3.0)៖\n\n- **Machine-readable Standard**៖ ស្តង់ដារកំណត់រចនាសម្ព័ន្ធ RESTful APIs ជាលក្ខណៈ JSON ឬ YAML ដោយឯករាជ្យពីភាសា Programming។\n- **សមាសធាតុចម្បង**៖ ពិពណ៌នាអំពី Base URLs, Paths, HTTP Verbs, Parameters, Request Bodies, និង Response Codes។\n- **Security Definitions**៖ កំណត់រចនាសម្ព័ន្ធ Security Schemes ដូចជា Bearer JWT, API Keys, និង OAuth2។",
   codeSnippet: "openapi: 3.0.3\ninfo:\n  title: Course Platform REST API\n  version: 1.0.0\n  description: Enterprise backend API for course catalog, lessons, and student enrollments\nservers:\n  - url: http://localhost:5000/api/v1\n    description: Development server\n  - url: https://api.myenterprise.com/v1\n    description: Production server\npaths:\n  /courses:\n    get:\n      summary: Retrieve all published courses\n      responses:\n        '200':\n          description: A list of courses",
 };
 

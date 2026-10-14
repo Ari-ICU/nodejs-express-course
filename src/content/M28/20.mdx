@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "បញ្ជីត្រួតពិនិត្យចុងក្រោយមុនពេល Launch (Production Go-Live Checklist)",
   type: "architecture",
   codeLanguage: "markdown",
-  summary: "Production Go-Live Checklist គឺជាបញ្ជីត្រួតពិនិត្យចុងក្រោយមុនពេលបើកដំណើរការជាផ្លូវការ រួមមាន៖ Database Backup Automation, SSL Health Verification, Error Monitoring (Sentry), APM Metrics, Rate Limiting Validation, និង Disaster Recovery Plan ធានាថាកម្មវិធីដំណើរការដោយរលូន ១០០%។",
+  summary: "បញ្ជីត្រួតពិនិត្យចុងក្រោយមុនពេល Launch (Production Go-Live Checklist)៖\n\n- **Security Audit**៖ ផ្ទៀងផ្ទាត់ HTTPS, CORS Whitelist, Rate Limiting, និង Helmet Headers។\n- **Backup Automation**៖ ធានាថា Database Backups ដំណើរការ និងបានតេស្ត Restore ជោគជ័យ។\n- **Monitoring & Alerts**៖ រៀបចំ Error Tracking (Sentry) និង Server Health Monitoring ត្រៀមខ្លួនរួចរាល់។",
   codeSnippet: "## Enterprise Production Go-Live Checklist:\n- [ ] 1. Security: Helmet headers active & X-Powered-By removed\n- [ ] 2. CORS: Explicit origin whitelisting configured (No wildcard '*')\n- [ ] 3. Secrets: All passwords & JWT secrets have 32+ bytes entropy in env\n- [ ] 4. Database: Compound indexes created & query latency verified with explain()\n- [ ] 5. Rate Limiting: Active on all endpoints, strict on auth (/login)\n- [ ] 6. Caching: Redis TTL configured on read-heavy public endpoints\n- [ ] 7. Error Handling: No internal stack traces leaked in 500 responses\n- [ ] 8. Monitoring: Health check route (/health) returning DB + Redis status\n- [ ] 9. Backups: Daily automated database snapshots to Cloud storage (R2/S3)\n- [ ] 10. SSL/TLS: Valid HTTPS certificate with auto-renewal active",
 };
 

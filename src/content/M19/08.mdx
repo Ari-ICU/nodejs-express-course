@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "យុទ្ធសាស្ត្រជ្រើសរើសទីតាំងផ្ទុកឯកសារ (Local vs Cloud Storage)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "យុទ្ធសាស្ត្រជ្រើសរើសទីតាំងផ្ទុកឯកសារ (File Storage Strategy)៖ Local Disk Storage សមស្របសម្រាប់តែដំណាក់កាល Development ប៉ុណ្ណោះ ព្រោះវាមិនអាច Scale បានក្នុង Multi-instance Stateless Containers (Docker/Kubernetes)។ សម្រាប់ Production ស្តង់ដារឧស្សាហកម្មតម្រូវឱ្យប្រើ Cloud Object Storage (S3-Compatible) ដើម្បីធានា Scalability, High Availability, និង CDN Delivery។",
+  summary: "យុទ្ធសាស្ត្រជ្រើសរើសទីតាំងផ្ទុកឯកសារ (Local vs Cloud Storage)៖\n\n- **Local Disk Storage**៖ សមស្របសម្រាប់តែដំណាក់កាល Development ព្រោះមិនអាច Scale លើ Multi-instance Containers បាន។\n- **Cloud Object Storage (S3-Compatible)**៖ ស្តង់ដារ Production ដោយសារ Scalability គ្មានដែនកំណត់, ភាពធន់ខ្ពស់, និង CDN Integration។\n- **Stateless Server Principle**៖ រក្សា Server ឱ្យនៅជា Stateless ដោយមិនពឹងផ្អែកលើ Local Hard Disk ឡើយ។",
   codeSnippet: "// Comparison Matrix:\n// Feature            | Local Disk Storage       | Cloud Object Storage (S3/R2)\n// -------------------+--------------------------+------------------------------\n// Setup Complexity   | Zero (built-in)          | Requires cloud credentials & SDK\n// Scalability        | Limited to server disk   | Infinite, virtually unlimited\n// Docker Containers  | Ephemeral (Lost on reboot)| Persistent & stateless\n// Global CDN         | Needs reverse proxy setup| Built-in CDN edge distribution\n// Backup/Durability  | Manual backups required  | 99.999999999% (11 9s) durability",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ Environment Variables ក្នុង Postman ({{base_url}})",
   type: "lab",
   codeLanguage: "json",
-  summary: "Environment Variables ក្នុង Postman អនុញ្ញាតឱ្យយើងគ្រប់គ្រង Variables ដូចជា `{{base_url}}`, `{{token}}`, និង `{{courseId}}` ដោយប្តូររវាង Environments ផ្សេងៗ (Local, Staging, Production) ដោយមិនបាច់កែប្រែ URL ក្នុង Request ដោយដៃឡើយ។",
+  summary: "ការប្រើប្រាស់ Environment Variables ក្នុង Postman ({{base_url}})៖\n\n- **Dynamic Variables**៖ ប្រើ `{{base_url}}` ដើម្បីប្តូររវាង Local (`localhost:5000`), Staging, និង Production។\n- **Session Tokens**៖ រក្សាទុក `{{token}}` ជា Variable ដោយមិនបាច់ Copy-paste ដោយដៃរាល់ពេល Login ឡើយ។\n- **Data Isolation**៖ បែងចែក Environments ដាច់ដោយឡែកពីគ្នា ជៀសវាងការតេស្តប៉ះពាល់ Production Data។",
   codeSnippet: "// In Postman URL Bar:\n// {{base_url}}/api/v1/courses/{{course_id}}\n//\n// Environment: \"Local Development\"\n// base_url   -> http://localhost:5000\n// auth_token -> eyJhbGciOiJIUzI1Ni...\n//\n// Environment: \"Production\"\n// base_url   -> https://api.myenterprise.com\n// auth_token -> eyJhbGciOiJIUzI1Ni...",
 };
 

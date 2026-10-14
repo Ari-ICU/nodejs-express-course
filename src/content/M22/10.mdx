@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត CRUD Endpoints ពេញលេញ (Full CRUD Test Suite)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបង្កើត Full CRUD Test Suite សម្រាប់ Course Platform API រួមមានការធ្វើតេស្តគ្រប់ករណី៖ `POST /api/v1/courses` (បង្កើត Course ថ្មី), `GET /api/v1/courses` (ទាញយកបញ្ជី Courses ជាមួយ Pagination), `GET /api/v1/courses/:id` (ទាញយក Single Course), `PATCH /api/v1/courses/:id` (Update), និង `DELETE /api/v1/courses/:id` (Delete)។",
+  summary: "ការធ្វើតេស្ត CRUD Endpoints ពេញលេញ (Full CRUD Test Suite)៖\n\n- **Create (POST)**៖ បង្កើត Course ថ្មី និងរំពឹងទុក `201 Created` ជាមួយ `_id`។\n- **Read (GET)**៖ ទាញយកបញ្ជី Courses (200 OK) និង Single Course តាម ID។\n- **Update (PATCH)**៖ កែប្រែព័ត៌មាន Course និងផ្ទៀងផ្ទាត់ការផ្លាស់ប្តូរក្នុង Database។\n- **Delete (DELETE)**៖ លុប Course និងផ្ទៀងផ្ទាត់ថា Endpoint ឆ្លើយតប `204 No Content` ឬ `200 OK`។",
   codeSnippet: "describe(\"Courses CRUD API\", () => {\n  let createdCourseId = \"\";\n\n  it(\"POST /api/v1/courses -> 201 Created\", async () => {\n    const res = await request(app)\n      .post(\"/api/v1/courses\")\n      .send({ title: \"Mastering Node.js\", price: 39.99, level: \"intermediate\" })\n      .expect(201);\n\n    createdCourseId = res.body.data.course._id;\n    expect(createdCourseId).toBeDefined();\n  });\n\n  it(\"GET /api/v1/courses/:id -> 200 OK\", async () => {\n    const res = await request(app)\n      .get(`/api/v1/courses/${createdCourseId}`)\n      .expect(200);\n\n    expect(res.body.data.course.title).toBe(\"Mastering Node.js\");\n  });\n\n  it(\"DELETE /api/v1/courses/:id -> 200 OK\", async () => {\n    await request(app)\n      .delete(`/api/v1/courses/${createdCourseId}`)\n      .expect(200);\n  });\n});",
 };
 

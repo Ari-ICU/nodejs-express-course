@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំរចនាសម្ព័ន្ធ Protected Routes ក្នុង Express Router",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Protected Routes គឺជារចនាសម្ព័ន្ធ Express Router ដែលទាមទារ Authentication Middleware មុនពេលអនុញ្ញាតឱ្យ Client ចូលដំណើរការ Resource ណាមួយ។ យើងអាចការពារ Routes ជាលក្ខណៈបុគ្គល (Per-route) ឬការពារ Router ទាំងមូលដោយប្រើ `router.use(protect)` ដែលធ្វើឱ្យគ្រប់ Endpoints ទាំងអស់ដែលស្ថិតនៅក្រោម Router នោះត្រូវបានការពារដោយស្វ័យប្រវត្តិ ធានាភាពស្អាត និងកាត់បន្ថយការសរសេរកូដដដែលៗ។",
+  summary: "ការរៀបចំ Protected Routes ក្នុង Express Router៖\n\n- **Per-route Protection**៖ ដាក់ Middleware លើ Route ជាក់លាក់ `router.post('/courses', protect, createCourse)`។\n- **Router-wide Protection**៖ ប្រើ `router.use(protect)` នៅដើម Router ដើម្បីការពាររាល់ Endpoints ទាំងអស់ដែលនៅខាងក្រោមវា។\n- **Clean Architecture**៖ បំបែក Public Routes (Login, Register) និង Protected Routes (Profile, Courses) ឱ្យដាច់ពីគ្នា។",
   codeSnippet: "// routes/user.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.middleware.js\";\nimport * as userController from \"../controllers/user.controller.js\";\nimport * as authController from \"../controllers/auth.controller.js\";\n\nconst router = express.Router();\n\n// --- PUBLIC ROUTES ---\nrouter.post(\"/register\", authController.register);\nrouter.post(\"/login\", authController.login);\nrouter.post(\"/refresh\", authController.refreshTokenHandler);\n\n// --- PROTECTED ROUTES (all routes below require valid JWT) ---\nrouter.use(protect);\n\nrouter.get(\"/me\", userController.getProfile);\nrouter.patch(\"/update-me\", userController.updateProfile);\nrouter.delete(\"/delete-me\", userController.deleteAccount);\n\nexport default router;",
 };
 

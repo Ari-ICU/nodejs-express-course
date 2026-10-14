@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការ Upload ឯកសារ PDF និង Office Documents",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការ Upload ឯកសារ PDF និង Course Syllabus តម្រូវឱ្យមានការត្រួតពិនិត្យប្រភេទឯកសារជាក់លាក់ (`upload.single('syllabus')`)។ កូដត្រូវផ្ទៀងផ្ទាត់ MIME Type (`application/pdf`) យ៉ាងតឹងរ៉ឹង ដើម្បីទប់ស្កាត់ការ Upload Executable Files ឬ Malicious Scripts ចូលក្នុង Server ព្រមទាំងដាក់កម្រិតទំហំសមស្រប (ឧ. 10MB)។",
+  summary: "ការ Upload ឯកសារ PDF និង Office Documents៖\n\n- **Document Upload**៖ ប្រើ `upload.single('syllabus')` សម្រាប់ Course Syllabus ឬ Assignment PDFs។\n- **Strict MIME Type**៖ អនុញ្ញាតតែ `application/pdf` ដោយបដិសេធរាល់ Executable Files (`.exe`, `.sh`, `.js`)។\n- **Size Limit Allocation**៖ កំណត់ទំហំធំសមស្របសម្រាប់ Documents (ឧ. 10MB ទៅ 20MB)។",
   codeSnippet: "const documentFilter = (req, file, cb) => {\n  const allowedMimeTypes = [\n    \"application/pdf\",\n    \"application/msword\",\n    \"application/vnd.openxmlformats-officedocument.wordprocessingml.document\",\n  ];\n\n  if (allowedMimeTypes.includes(file.mimetype)) {\n    cb(null, true);\n  } else {\n    cb(new AppError(\"Invalid file format. Only PDF and Word documents are permitted!\", 400), false);\n  }\n};\n\nexport const uploadDocument = multer({\n  storage: multer.memoryStorage(),\n  fileFilter: documentFilter,\n  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit for documents\n});",
 };
 

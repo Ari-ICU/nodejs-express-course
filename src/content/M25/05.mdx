@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងគ្រប់គ្រង Database Indexes (Single & Compound)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "MongoDB Indexing គឺជាកត្តាកំណត់ល្បឿនលេខមួយក្នុង Database Operations។ បើគ្មាន Index MongoDB ត្រូវធ្វើ Collection Scan (COLLSCAN) ដោយពិនិត្យគ្រប់ Document ទាំងអស់។ តាមរយៈការបង្កើត Single Field Indexes, Compound Indexes (ឧ. `{ category: 1, price: -1 }`), និងការវិភាគ Query Performance ជាមួយ `.explain('executionStats')` ល្បឿនស្វែងរកអាចកើនឡើងរាប់ពាន់ដង។",
+  summary: "ការបង្កើត និងគ្រប់គ្រង Database Indexes (Single & Compound)៖\n\n- **COLLSCAN vs IXSCAN**៖ បើគ្មាន Index MongoDB ត្រូវ Scan គ្រប់ Documents ទាំងអស់ (COLLSCAN)។ មាន Index ស្វែងរកតាម B-Tree (IXSCAN) O(log N)។\n- **Compound Indexes**៖ បង្កើត Index លើ Fields ច្រើនរួមគ្នា (ឧ. `{ category: 1, price: -1 }`) សម្រាប់ស្វែងរក និង Sort ក្នុងពេលតែមួយ។\n- **Query Analysis**៖ ប្រើ `.explain('executionStats')` ដើម្បីពិនិត្យមើល Execution Time និងចំនួន Documents Examined។",
   codeSnippet: "const courseSchema = new mongoose.Schema({\n  title: { type: String, required: true },\n  category: { type: String, index: true }, // Single-field index\n  price: Number,\n  createdAt: Date,\n});\n\n// Compound index for queries that filter by category and sort by price:\n// db.courses.find({ category: \"Web Development\" }).sort({ price: -1 })\ncourseSchema.index({ category: 1, price: -1 });\n\n// Verify query execution in MongoDB:\n// await Course.find({ category: \"Web Development\" }).explain(\"executionStats\");",
 };
 

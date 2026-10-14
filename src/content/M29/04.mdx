@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គម្រោងទី ៤ ៖ Course Media & File Upload Service ជាមួយ Redis Caching",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "គម្រោងទី ៤ ៖ Course Media & File Upload Service គឺជាគម្រោងគ្រប់គ្រងឯកសារ និងប្រព័ន្ធផ្ទុកទិន្នន័យ រួមមាន Multer Middleware, File Validation & Sanitization, Cloudflare R2 / AWS S3 Integration, Image Resizing, និង Redis Response Caching សម្រាប់បង្កើនល្បឿន API។",
+  summary: "គម្រោងទី ៤ ៖ Course Media & File Upload Service (Media & Caching)៖\n\n- **គោលដៅ**៖ គ្រប់គ្រងការ Upload រូបភាព និងឯកសារ Course Syllabus ជាមួយ High Performance Caching។\n- **មុខងារស្នូល**៖ Multer Multipart Parsing, Image Validation, និង Cloudflare R2 / AWS S3 Integration។\n- **ស្ថាបត្យកម្ម**៖ Redis Response Caching Middleware សម្រាប់ Cache Course Catalog ឆ្លើយតបក្រោម 5ms។",
   codeSnippet: "export const getCourses = catchAsync(async (req, res) => {\n  const cacheKey = `courses:${JSON.stringify(req.query)}`;\n  const cached = await redis.get(cacheKey);\n  if (cached) return res.json(JSON.parse(cached));\n\n  const courses = await Course.find(filter)\n    .sort(sort || \"-createdAt\")\n    .skip((page - 1) * limit).limit(Number(limit))\n    .populate(\"instructor\", \"name email\");\n\n  const body = { success: true, count: courses.length, data: courses };\n  await redis.set(cacheKey, JSON.stringify(body), \"EX\", 60);\n  res.json(body);\n});",
 };
 

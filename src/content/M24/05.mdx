@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការភ្ជាប់ Client ទៅកាន់ Socket.IO Server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Socket.IO Client គឺជាបណ្ណាល័យ JavaScript ដែលដំណើរការលើ Browser ឬ Mobile App។ Client ចាប់ផ្តើម Connection តាមរយៈ `io('http://localhost:5000')` ស្តាប់ Connection Events (`connect`, `disconnect`) និងគ្រប់គ្រងការផ្ញើ/ទទួលទិន្នន័យជាមួយ Server តាមរយៈ Event Emitter Pattern។",
+  summary: "ការភ្ជាប់ Client ទៅកាន់ Socket.IO Server៖\n\n- **Socket Client Library**៖ ប្រើប្រាស់ `import { io } from 'socket.io-client'` លើ Frontend។\n- **Connection Handshake**៖ ចាប់ផ្តើម Connection `const socket = io(SERVER_URL)`។\n- **Lifecycle Events**៖ ស្តាប់ Events សំខាន់ៗដូចជា `connect`, `disconnect`, និង `connect_error`។",
   codeSnippet: "// In Frontend (React or Vanilla JS):\nimport { io } from \"socket.io-client\";\n\nconst socket = io(\"http://localhost:5000\", {\n  autoConnect: true,\n  reconnectionAttempts: 5,\n  reconnectionDelay: 1000,\n});\n\nsocket.on(\"connect\", () => {\n  console.log(\"Connected to server with ID:\", socket.id);\n});\n\nsocket.on(\"connect_error\", (err) => {\n  console.error(\"Connection failed:\", err.message);\n});",
 };
 

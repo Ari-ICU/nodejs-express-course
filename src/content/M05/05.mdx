@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "សារៈសំខាន់នៃ HTTP Headers",
   type: "concept",
   codeLanguage: "javascript",
-  summary: `Headers HTTP អនុញ្ញាតឱ្យ Client និង Server ផ្លាស់ប្តូរទិន្នន័យមេតានៃការគ្រប់គ្រង៖ ការចរចាខ្លឹមសារ (\`Accept\`, \`Content-Type\`), Authentication (\`Authorization\`), Cache (\`Cache-Control\`, \`ETag\`) និងគោលការណ៍សុវត្ថិភាព (\`CORS\`, \`CSP\`)។`,
+  summary: "Headers HTTP អនុញ្ញាតឱ្យ Client និង Server ផ្លាស់ប្តូរទិន្នន័យមេតានៃការគ្រប់គ្រង៖ ការចរចាខ្លឹមសារ (\\`Accept\\`, \\`Content-Type\\`), Authentication (\\`Authorization\\`), Cache (\\`Cache-Control\\`, \\`ETag\\`) និងគោលការណ៍សុវត្ថិភាព (\\`CORS\\`, \\`CSP\\`)។",
   codeSnippet: "// Reading Authorization header safely\nconst authHeader = req.headers[\"authorization\"]; // e.g. \"Bearer eyJhb...\"\n\nif (!authHeader || !authHeader.startsWith(\"Bearer \")) {\n  res.writeHead(401, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ error: \"Missing or invalid Bearer token\" }));\n}",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ភាពខុសគ្នារវាង Authentication និង Authorization",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Authentication (AuthN) ឆ្លើយតបទៅនឹងសំណួរថា «តើអ្នកជានរណា?» (Who are you?) ដោយផ្ទៀងផ្ទាត់អត្តសញ្ញាណតាមរយៈ Credentials ដូចជា Email/Password ឬ Tokens។ ចំណែក Authorization (AuthZ) ឆ្លើយតបទៅនឹងសំណួរថា «តើអ្នកមានសិទ្ធិធ្វើអ្វីខ្លះ?» (What are you allowed to do?) ដោយវាយតម្លៃលើ Roles និង Permissions ធៀបនឹង Resources។ ក្នុងលំហូរការងារ Backend ស្តង់ដារ Authentication ត្រូវតែជោគជ័យជាមុនសិន ទើប Authorization អាចចាប់ផ្តើមបាន។",
+  summary: "ភាពខុសគ្នាសំខាន់រវាង Authentication និង Authorization ក្នុងស្ថាបត្យកម្ម Backend៖\n\n- **Authentication (AuthN) — «តើអ្នកជានរណា?» (Who are you?)**៖ ផ្ទៀងផ្ទាត់អត្តសញ្ញាណអ្នកប្រើប្រាស់តាមរយៈ Credentials (Email, Password, Token)។ បើមិនត្រឹមត្រូវ Server ឆ្លើយតប `401 Unauthorized`។\n- **Authorization (AuthZ) — «តើអ្នកមានសិទ្ធិធ្វើអ្វីខ្លះ?» (What can you do?)**៖ វាយតម្លៃលើ Roles និង Permissions ធៀបនឹង Resources (ដូចជា Admin, Instructor, Student)។ បើគ្មានសិទ្ធិ Server ឆ្លើយតប `403 Forbidden`។\n- **លំដាប់លំដោយ (Execution Order)**៖ ក្នុង Backend Flow ត្រូវតែឆ្លងកាត់ Authentication ឱ្យជោគជ័យជាមុនសិន ទើប Authorization អាចចាប់ផ្តើមវាយតម្លៃបាន។",
   codeSnippet: "// Concept breakdown in Express middleware flow:\n// 1. Authentication (Who are you?) -> returns 401 if unauthenticated\napp.use(\"/api/admin/*\", verifyAuthToken);\n\n// 2. Authorization (What can you do?) -> returns 403 if unauthorized\napp.delete(\"/api/admin/users/:id\", (req, res) => {\n  if (req.user.role !== \"superadmin\") {\n    return res.status(403).json({\n      status: \"fail\",\n      message: \"Forbidden: Only superadmins can delete user accounts\"\n    });\n  }\n  // Proceed with deletion...\n});",
 };
 

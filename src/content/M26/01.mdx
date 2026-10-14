@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី Background Jobs ក្នុង Web Backend",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Background Jobs គឺជាការងារដែលត្រូវបានដកចេញពី HTTP Request-Response Cycle ដើម្បីដំណើរការនៅពីក្រោយខ្នង (Asynchronously)។ ជំនួសឱ្យការឱ្យ Client រង់ចាំប្រតិបត្តិការយូរៗដូចជា ការផ្ញើ Email, ការ Resize រូបភាព, ការបង្កើត PDF Reports, ឬការទូទាត់ប្រាក់ Server បញ្ជូន Job នោះទៅកាន់ Queue ហើយឆ្លើយតប HTTP Response ទៅកាន់ Client ភ្លាមៗ។",
+  summary: "ការស្វែងយល់ពី Background Jobs ក្នុង Web Backend៖\n\n- **Non-blocking Architecture**៖ ដកការងារធ្ងន់ៗចេញពី HTTP Thread ដើម្បីកុំឱ្យ Client រង់ចាំយូរ។\n- **Common Background Tasks**៖ ការផ្ញើ Emails, ការ Resize រូបភាព, ការបង្កើត PDF Invoices, និងការដកប្រាក់។\n- **Fast HTTP Response**៖ Server បញ្ជូន Job ទៅកាន់ Queue រួចឆ្លើយតប `202 Accepted` ឬ `200 OK` ក្រោម 50ms។",
   codeSnippet: "// Synchronous (Bad UX - 5s delay):\n// POST /checkout -> [Charge Card] -> [Generate PDF Invoice (4s)] -> [Send Email (1s)] -> 200 OK (5.2s total!)\n\n// Asynchronous Background Jobs (Great UX - 50ms):\n// POST /checkout -> [Charge Card] -> [Enqueue Job: invoice + email] -> 200 OK (50ms!)\n// [Background Worker] consumes job in background and emails PDF without blocking user.",
 };
 

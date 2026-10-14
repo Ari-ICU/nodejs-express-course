@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត GitHub Actions Workflow សម្រាប់ Test និង Auto-deploy",
   type: "lab",
   codeLanguage: "yaml",
-  summary: "GitHub Actions Workflow ដំណើរការ Pipeline ស្វ័យប្រវត្តិរាល់ពេលដែលមាន Git Push ទៅកាន់ `main` branch៖ វាដំណើរការ Vitest/Jest Suite, Build និង Push Docker Image ទៅកាន់ Container Registry (GHCR/DockerHub), និង SSH ទៅកាន់ VPS ដើម្បី Pull Image ថ្មី និងធ្វើ Zero-downtime Restart។",
+  summary: "ការបង្កើត GitHub Actions Workflow សម្រាប់ Test និង Auto-deploy៖\n\n- **Automated Test Job**៖ Run `npm test` និង Lint លើ Ubuntu Runner ក្នុង GitHub Actions។\n- **Docker Build & Push**៖ Build Production Image រួច Push ទៅកាន់ GitHub Container Registry (GHCR)។\n- **Zero-downtime SSH Deploy**៖ SSH ទៅកាន់ VPS ដើម្បី Pull Image ថ្មី និង Reload Containers ដោយរលូន។",
   codeSnippet: "name: CI/CD Pipeline\n\non:\n  push:\n    branches: [main]\n\njobs:\n  test-and-deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 20\n          cache: \"npm\"\n\n      - run: npm ci\n      - run: npm run test:run\n\n      - name: Deploy to VPS over SSH\n        uses: appleboy/ssh-action@master\n        with:\n          host: ${{ secrets.VPS_HOST }}\n          username: ${{ secrets.VPS_USER }}\n          key: ${{ secrets.VPS_SSH_KEY }}\n          script: |\n            cd /opt/enterprise-app\n            git pull origin main\n            docker compose down\n            docker compose up -d --build",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Containerization ជាមួយ Docker",
   type: "concept",
   codeLanguage: "dockerfile",
-  summary: "Docker គឺជាបច្ចេកវិទ្យា Containerization ដែលខ្ចប់ Node.js Application រួមជាមួយ Dependencies, Runtime, និង System Libraries ទៅក្នុង Portable Container Image តែមួយ។ វាលុបបំបាត់បញ្ហា «ដំណើរការលើម៉ាស៊ីនខ្ញុំ តែមិនដំណើរការលើ Server» ធានាថា App ដំណើរការដូចគ្នាបេះបិទគ្រប់កន្លែង។",
+  summary: "គោលការណ៍គ្រឹះនៃ Containerization ជាមួយ Docker៖\n\n- **Container Isolation**៖ ខ្ចប់ App រួមជាមួយ Dependencies, Node Runtime, និង OS Libraries ទៅក្នុង Image តែមួយ។\n- **Consistency Everywhere**៖ ធានាថាកូដដំណើរការដូចគ្នាបេះបិទលើម៉ាស៊ីន Dev, Staging, និង Production។\n- **Lightweight Virtualization**៖ ចែករំលែក Host OS Kernel ដំណើរការលឿន និងស៊ីធនធានតិចជាង Traditional VMs។",
   codeSnippet: "// Virtual Machine vs Docker Container:\n// VM:         [App] -> [Bins/Libs] -> [Guest OS (GBs)] -> [Hypervisor] -> [Host OS]\n// Container:  [App] -> [Bins/Libs] -> [Docker Engine]  -> [Host OS Kernel]\n// Result: Containers boot in 1 second and consume megabytes rather than gigabytes.",
 };
 

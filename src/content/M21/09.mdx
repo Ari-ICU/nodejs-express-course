@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំទម្រង់ Error Response ជាលក្ខណៈស្តង់ដារក្នុង Swagger",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Error Documentation គឺជាការចងក្រងទម្រង់ស្តង់ដារនៃ Error Envelope (ដូចជា `{ status: 'fail', message: string, errors?: array }`) ទៅក្នុង Swagger Docs។ ការធ្វើបែបនេះជួយឱ្យ Frontend Developers អាចសរសេរ Global Error Handlers បានត្រឹមត្រូវ និងដឹងជាមុននូវគ្រប់ប្រភេទ Error Codes ដែល API អាចបញ្ចេញ។",
+  summary: "ការរៀបចំទម្រង់ Error Response ជាលក្ខណៈស្តង់ដារក្នុង Swagger៖\n\n- **Standard Error Schema**៖ កំណត់ Error Envelope រួមមាន `status`, `message`, និង `errors` array។\n- **Predictable Errors**៖ ជួយឱ្យ Frontend Developers ដឹងជាមុននូវរាល់ Error Structures ដែល API អាចឆ្លើយតប។\n- **Consistent Integration**៖ សម្រួលដល់ការបង្កើត Global Axios/Fetch Interceptors លើ Client-side។",
   codeSnippet: "/**\n * @openapi\n * components:\n *   schemas:\n *     ErrorResponse:\n *       type: object\n *       properties:\n *         status:\n *           type: string\n *           example: \"fail\"\n *         statusCode:\n *           type: integer\n *           example: 404\n *         message:\n *           type: string\n *           example: \"Resource not found\"\n *         errors:\n *           type: array\n *           items:\n *             type: string\n *           example: [\"Email already registered\"]\n */",
 };
 

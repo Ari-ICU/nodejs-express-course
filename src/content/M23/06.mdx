@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "លំហូរនៃការធ្វើតេស្ត CRUD APIs ជាខ្សែសង្វាក់ក្នុង Postman",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការធ្វើតេស្ត CRUD APIs ជាខ្សែសង្វាក់ (Chained Workflow) គឺជាការរៀបចំលំដាប់លំដោយនៃការតេស្ត៖ ១. បង្កើត Resource ថ្មី (POST) និងរក្សាទុក `_id` ក្នុង Variable, ២. អានទិន្នន័យតាម ID (GET), ៣. កែប្រែទិន្នន័យ (PATCH), និង ៤. លុបទិន្នន័យ (DELETE) ដើម្បីផ្ទៀងផ្ទាត់ State នៃ Database។",
+  summary: "លំហូរនៃការធ្វើតេស្ត CRUD APIs ជាខ្សែសង្វាក់ក្នុង Postman៖\n\n- **1. Create (POST)**៖ បង្កើត Course និងចាប់យក ID ទុកក្នុង `{{courseId}}`។\n- **2. Read (GET)**៖ ហៅ `/api/v1/courses/{{courseId}}` ដើម្បីផ្ទៀងផ្ទាត់ទិន្នន័យ។\n- **3. Update (PATCH)**៖ កែប្រែព័ត៌មាន Course និងពិនិត្យមើល Changes។\n- **4. Delete (DELETE)**៖ លុប Course និងបញ្ជាក់ថា Status Code ឆ្លើយតប `200` ឬ `204`។",
   codeSnippet: "// In POST /courses Tests tab:\nconst jsonData = pm.response.json();\npm.test(\"Course created successfully\", () => {\n  pm.response.to.have.status(201);\n  // Store created ID for subsequent GET/PATCH/DELETE calls:\n  pm.environment.set(\"course_id\", jsonData.data.course._id);\n});\n\n// In next request:\n// GET {{base_url}}/api/v1/courses/{{course_id}}",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់ async / await ទំនើប",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Syntactic sugar over Promises ដែលអនុញ្ញាតឱ្យអានកូដអសមកាល និងរៀបចំរចនាសម្ព័ន្ធដោយ Synchronous ។ មុខងារ Async តែងតែត្រឡប់ Promises ហើយ \`await\` ផ្អាកការប្រតិបត្តិរហូតដល់Promisesដោះស្រាយ។`,
+  summary: "Syntactic sugar over Promises ដែលអនុញ្ញាតឱ្យអានកូដអសមកាល និងរៀបចំរចនាសម្ព័ន្ធដោយ Synchronous ។ មុខងារ Async តែងតែត្រឡប់ Promises ហើយ \\`await\\` ផ្អាកការប្រតិបត្តិរហូតដល់Promisesដោះស្រាយ។",
   codeSnippet: "async function fetchDashboardData(userId) {\n  try {\n    // Run both queries concurrently!\n    const [user, orders] = await Promise.all([\n      db.users.findById(userId),\n      db.orders.find({ userId })\n    ]);\n    return { user, orders };\n  } catch (error) {\n    console.error(\"Dashboard query failed:\", error);\n    throw error;\n  }\n}",
 };
 

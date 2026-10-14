@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ម៉ូឌុល Events",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ម៉ូឌុល \`node:events\` បង្កើតជាឆ្អឹងខ្នងនៃ Node.js ស្ថាបត្យកម្មដែលជំរុញដោយព្រឹត្តិការណ៍។ ស្ទើរតែរាល់ការស្ទ្រីម និងបណ្តាញភ្ជាប់វត្ថុនៅក្នុង Node (HTTP សំណើ រន្ធServer ស្ទ្រីម) ទទួលមរតកពី EventEmitter ។`,
+  summary: "ម៉ូឌុល \\`node:events\\` បង្កើតជាឆ្អឹងខ្នងនៃ Node.js ស្ថាបត្យកម្មដែលជំរុញដោយព្រឹត្តិការណ៍។ ស្ទើរតែរាល់ការស្ទ្រីម និងបណ្តាញភ្ជាប់វត្ថុនៅក្នុង Node (HTTP សំណើ រន្ធServer ស្ទ្រីម) ទទួលមរតកពី EventEmitter ។",
   codeSnippet: "import { EventEmitter } from \"node:events\";\n\nconst serverEmitter = new EventEmitter();\n\nserverEmitter.on(\"user:signup\", (user) => {\n  console.log(\"Send welcome notification to:\", user.email);\n});\n\nserverEmitter.emit(\"user:signup\", { email: \"sokha@gmail.com\" });",
 };
 

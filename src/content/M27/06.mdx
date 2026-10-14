@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Middleware Layer (Auth, Guard, Logging)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Middleware Layer ផ្ទុកនូវ Reusable Functions ដែលដំណើរការក្នុង Request Pipeline រួមមាន Authentication (`protect`), Authorization (`restrictTo`), Error Handling, Request Logging (Morgan), Security Headers (Helmet), និង Rate Limiting។",
+  summary: "តួនាទី និងការរៀបចំ Middleware Layer (Auth, Guard, Logging)៖\n\n- **Request Interception**៖ ដំណើរការមុនពេល Request ទៅដល់ Controller (Authentication, Role Guards, Logging)។\n- **Centralized Error Handling**៖ ចាប់រាល់ Errors ទាំងអស់ និងបំប្លែងទៅជា Standard JSON Error Envelope។\n- **Reusable Security**៖ អនុវត្ត Rate Limiting, Helmet Headers, និង CORS Policies។",
   codeSnippet: "// middleware/logger.middleware.js\nexport const requestLogger = (req, res, next) => {\n  const start = Date.now();\n  res.on(\"finish\", () => {\n    const duration = Date.now() - start;\n    console.log(`[${req.method}] ${req.originalUrl} ${res.statusCode} - ${duration}ms`);\n  });\n  next();\n};",
 };
 

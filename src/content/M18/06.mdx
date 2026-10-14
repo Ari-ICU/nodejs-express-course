@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារប្រព័ន្ធតាមរយៈ Input Validation",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Input Validation គឺជាខ្សែការពារទីមួយក្នុងការទប់ស្កាត់ទិន្នន័យមិនប្រក្រតីមុនពេលវាទៅដល់ Business Logic ឬ Database។ ការប្រើប្រាស់ Validation Libraries ទំនើបដូចជា Zod ឬ Joi អនុញ្ញាតឱ្យយើង Validate គ្រប់ Data Types, String Length, Email Format, និងដកចេញនូវ Unrecognized Fields ដោយស្វ័យប្រវត្តិ ធានាថាកូដដំណើរការតែជាមួយទិន្នន័យស្អាត និងមានសុវត្ថិភាពប៉ុណ្ណោះ។",
+  summary: "ការការពារប្រព័ន្ធតាមរយៈ Input Validation ជាមួយ Zod៖\n\n- **First Line of Defense**៖ ត្រួតពិនិត្យទិន្នន័យទាំងអស់មុនពេលវាទៅដល់ Controller ឬ Database។\n- **Type & Format Checking**៖ ផ្ទៀងផ្ទាត់ Type, String Length, Email Format, និង Value Range។\n- **Strip Unknown Fields**៖ ជម្រះចោលនូវ Fields មិនស្គាល់ដោយស្វ័យប្រវត្តិតាមរយៈ `.strict()` ដើម្បីការពារ Mass Assignment។",
   codeSnippet: "import { z } from \"zod\";\n\nexport const updateProfileSchema = z.object({\n  name: z.string().trim().min(2).max(50),\n  bio: z.string().trim().max(300).optional(),\n  website: z.string().url().optional(),\n}).strict(); // .strict() rejects any payload containing unknown fields like 'role'!\n\nexport const validateUpdateProfile = (req, res, next) => {\n  const result = updateProfileSchema.safeParse(req.body);\n  if (!result.success) {\n    return res.status(400).json({\n      status: \"fail\",\n      errors: result.error.flatten().fieldErrors,\n    });\n  }\n  req.body = result.data; // replace with sanitized data\n  next();\n};",
 };
 

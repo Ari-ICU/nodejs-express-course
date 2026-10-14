@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបញ្ជូន និងទទួល Events (Custom Events & Acknowledgments)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Event-Driven Communication ក្នុង Socket.IO ដំណើរការតាមរយៈ Method `socket.emit('eventName', data)` សម្រាប់បញ្ជូនទិន្នន័យ និង `socket.on('eventName', callback)` សម្រាប់ទទួលទិន្នន័យ។ លើសពីនេះ Socket.IO គាំទ្រ Acknowledgments (Call-and-Response) ដែលអនុញ្ញាតឱ្យ Client ដឹងថា Server បានទទួល និងដំណើរការសារនោះដោយជោគជ័យឬទេ។",
+  summary: "ការបញ្ជូន និងទទួល Events (Custom Events & Acknowledgments)៖\n\n- **Emit Events**៖ ប្រើ `socket.emit('event_name', data)` ដើម្បីបញ្ជូនសារ។\n- **Listen Events**៖ ប្រើ `socket.on('event_name', callback)` ដើម្បីទទួលទិន្នន័យមកដំណើរការ។\n- **Acknowledgments**៖ គាំទ្រ Call-and-Response Pattern ដើម្បីឱ្យ Client ដឹងច្បាស់ថា Server បានទទួល Message ដោយជោគជ័យ។",
   codeSnippet: "// Server:\nio.on(\"connection\", (socket) => {\n  // Listen for message with acknowledgment callback\n  socket.on(\"send_message\", (data, callback) => {\n    console.log(\"Received:\", data);\n\n    // Broadcast to all other connected clients\n    socket.broadcast.emit(\"new_message\", data);\n\n    // Acknowledge receipt to the sender\n    if (typeof callback === \"function\") {\n      callback({ status: \"delivered\", timestamp: Date.now() });\n    }\n  });\n});",
 };
 

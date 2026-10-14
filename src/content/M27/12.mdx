@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Tests Directory (Unit, Integration, E2E)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Tests Layer រៀបចំ Test Suites ជាលក្ខណៈប្រព័ន្ធ រួមមាន `unit/` (សម្រាប់ Services និង Utilities), `integration/` (សម្រាប់ API Endpoints ជាមួយ Supertest), និង `fixtures/` (សម្រាប់ Mock Data និង Database Seeders)។",
+  summary: "ការរៀបចំ Tests Directory (Unit, Integration, E2E)៖\n\n- **Test Organization**៖ បែងចែកជា `unit/` (សម្រាប់ Services/Utils) និង `integration/` (សម្រាប់ API Endpoints)។\n- **Test Helpers & Fixtures**៖ រៀបចំ Mock Data, Database Seeders, និង Auth Token Generators។\n- **Clean Coverage**៖ ធានាថា Core Business Logic និង Endpoints សំខាន់ៗមាន Test Coverage ខ្ពស់។",
   codeSnippet: "tests/\n├── setup.js            # Vitest global setup (in-memory MongoDB)\n├── helpers/            # getAuthToken(), createTestUser()\n├── unit/               # Fast, mocked tests\n│   ├── services/       # course.service.test.js\n│   └── utils/\n└── integration/        # Route & HTTP tests\n    ├── auth.test.js\n    └── courses.test.js",
 };
 

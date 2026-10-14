@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ម៉ូឌុល Stream សម្រាប់ទិន្នន័យធំៗ",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: `Streams ដំណើរការទិន្នន័យជាបណ្តើរៗ ជាជាងផ្ទុកឯកសារទាំងមូលទៅក្នុង RAM ។ នេះអនុញ្ញាតឱ្យកម្មវិធី Node.js ដំណើរការឯកសារទំហំជីហ្គា Bytes ការផ្សាយវីដេអូ និងការបោះចោល Database ជាមួយនឹងការប្រើប្រាស់អង្គចងចាំ ~ 20MB ថេរ។`,
+  summary: "Streams ដំណើរការទិន្នន័យជាបណ្តើរៗ ជាជាងផ្ទុកឯកសារទាំងមូលទៅក្នុង RAM ។ នេះអនុញ្ញាតឱ្យកម្មវិធី Node.js ដំណើរការឯកសារទំហំជីហ្គា Bytes ការផ្សាយវីដេអូ និងការបោះចោល Database ជាមួយនឹងការប្រើប្រាស់អង្គចងចាំ ~ 20MB ថេរ។",
   codeSnippet: "import fs from \"node:fs\";\nimport { pipeline } from \"node:stream/promises\";\nimport zlib from \"node:zlib\";\n\n// Compress a huge file using streams without loading it all in RAM\nawait pipeline(\n  fs.createReadStream(\"huge-log.txt\"),\n  zlib.createGzip(),\n  fs.createWriteStream(\"huge-log.txt.gz\")\n);\nconsole.log(\"Streaming compression complete!\");",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្តកំហុសផ្សេងៗ (Negative Testing ក្នុង Postman)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Negative Testing ក្នុង Postman គឺជាការធ្វើតេស្តករណីកំហុសដោយចេតនា៖ ការផ្ញើ Missing Required Fields (រំពឹងទុក 400 Bad Request), ការផ្ញើ Invalid ObjectId (400), ការស្វែងរក Resource ដែលមិនមាន (404), និងការធ្វើ Request ដោយគ្មាន Token (401) ដើម្បីធានាថា API មានភាពធន់ និងឆ្លើយតប Error Envelope ត្រឹមត្រូវ។",
+  summary: "ការធ្វើតេស្តកំហុសផ្សេងៗ (Negative Testing ក្នុង Postman)៖\n\n- **Missing Fields (400)**៖ ផ្ញើ Body ខ្វះ Required Data ដើម្បីផ្ទៀងផ្ទាត់ Zod Validation Error Envelope។\n- **Invalid ID (400)**៖ ផ្ញើ Invalid ObjectId (ឧ. `invalid-id-123`) និងពិនិត្យ CastError Response។\n- **Resource Not Found (404)**៖ ស្វែងរក Non-existent ID និងរំពឹងទុក `404 Not Found`។\n- **Unauthorized Access (401)**៖ ហៅ Endpoint ដោយគ្មាន Token និងរំពឹងទុក `401 Unauthorized`។",
   codeSnippet: "// Postman Tests Tab for 400 Bad Request:\npm.test(\"Status code is 400 Bad Request\", () => {\n  pm.response.to.have.status(400);\n});\n\npm.test(\"Error response contains fail status\", () => {\n  const jsonData = pm.response.json();\n  pm.expect(jsonData.status).to.eql(\"fail\");\n  pm.expect(jsonData.message).to.be.a(\"string\");\n});",
 };
 

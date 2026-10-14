@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់រចនាសម្ព័ន្ធ Nginx Reverse Proxy (nginx.conf)",
   type: "architecture",
   codeLanguage: "nginx",
-  summary: "Nginx Reverse Proxy Configuration (`nginx.conf`) បញ្ជូន Incoming Requests ពី Port 80/443 ទៅកាន់ Node.js API (`proxy_pass http://api:5000;`) ព្រមទាំងបញ្ជូន Real Client IP Headers (`X-Real-IP`, `X-Forwarded-For`, `X-Forwarded-Proto`) ដើម្បីឱ្យ Express ដឹងពី IP ពិតប្រាកដរបស់ Client។",
+  summary: "ការកំណត់រចនាសម្ព័ន្ធ Nginx Reverse Proxy (nginx.conf)៖\n\n- **proxy_pass Directive**៖ បញ្ជូន Requests ពី Port 80/443 ទៅកាន់ Node.js API Container (`http://api:5000`)។\n- **Forward Real Client Headers**៖ បញ្ជូន Headers `X-Real-IP`, `X-Forwarded-For`, និង `X-Forwarded-Proto`។\n- **Security Hardening**៖ បិទ Header `server_tokens` និងកំណត់ Buffer Sizes សមស្រប។",
   codeSnippet: "server {\n    listen 80;\n    server_name api.myenterprise.com;\n\n    location / {\n        proxy_pass http://127.0.0.1:5000;\n        proxy_http_version 1.1;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection 'upgrade';\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        proxy_cache_bypass $http_upgrade;\n    }\n}",
 };
 

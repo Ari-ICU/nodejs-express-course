@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារសុវត្ថិភាព Cookies (HttpOnly, Secure, SameSite)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Cookie Security ផ្តោតលើការការពារ Cookies តាមរយៈ Security Flags ចំនួន ៣ សំខាន់ៗ៖ `httpOnly: true` (ការពារការលួច Token តាមរយៈ JavaScript/XSS), `secure: true` (អនុញ្ញាតឱ្យបញ្ជូនតែតាមបណ្តាញ HTTPS), និង `sameSite: 'strict'` ឬ `'lax'` (ការពារការវាយប្រហារ Cross-Site Request Forgery) ធានាថាសិទ្ធិ Authentication ត្រូវបានការពារគ្រប់ជ្រុងជ្រោយ។",
+  summary: "ការការពារសុវត្ថិភាព Cookies (HttpOnly, Secure, SameSite)៖\n\n- **httpOnly**៖ ទប់ស្កាត់ការលួច Token តាមរយៈ JavaScript និង XSS Attacks។\n- **secure**៖ បង្ខំឱ្យ Browser បញ្ជូន Cookie តែតាមបណ្តាញ HTTPS ប៉ុណ្ណោះ។\n- **sameSite**៖ កំណត់ `'strict'` ឬ `'lax'` ដើម្បីការពារការវាយប្រហារ Cross-Site Request Forgery (CSRF)។",
   codeSnippet: "// Express Cookie Security Best Practice:\nres.cookie(\"token\", value, {\n  httpOnly: true,                         // Defeats XSS (No JS access)\n  secure: process.env.NODE_ENV === \"production\", // Defeats Sniffing (HTTPS only)\n  sameSite: \"strict\",                    // Defeats CSRF (Never sent cross-site)\n  domain: \".myenterprise.com\",           // Restrict to trusted subdomains\n  path: \"/\",\n  maxAge: 3600000,                       // 1 hour\n});",
 };
 

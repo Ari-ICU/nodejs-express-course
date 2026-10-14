@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារទិន្នន័យសម្ងាត់ (Data Masking & Sanitization)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Sensitive Information Sanitization គឺជាការលុបទិន្នន័យសម្ងាត់ (Passwords, Credit Card Numbers, Tokens, PII) ចេញពី API Responses និង Server Logs។ តាមរយៈការប្រើ Mongoose Projection (`select: false`), Transform Functions (`toJSON`), និង Log Masking យើងធានាថាទិន្នន័យសម្ងាត់មិនត្រូវធ្លាយចេញទៅកាន់ Third-party Log Aggregators ឬ Client Interface ឡើយ។",
+  summary: "ការការពារទិន្នន័យសម្ងាត់ (Data Masking & Sanitization)៖\n\n- **Mongoose Exclusions**៖ ប្រើ `select: false` លើ Fields សម្ងាត់ដូចជា Password, Reset Tokens។\n- **Response Transforms**៖ ប្រើ `toJSON: { transform }` ដើម្បីដក `password` និង `__v` ចេញពី API Output។\n- **Log Masking**៖ មិនកត់ត្រា Password, Tokens, ឬ Credit Cards ចូលទៅក្នុង Server Logs ឡើយ។",
   codeSnippet: "// 1. In Mongoose Schema:\nconst userSchema = new mongoose.Schema({\n  email: { type: String, required: true },\n  password: { type: String, required: true, select: false }, // Never selected by default\n  passwordResetToken: { type: String, select: false },\n});\n\n// 2. In Model JSON transformation:\nuserSchema.set(\"toJSON\", {\n  transform: (doc, ret) => {\n    delete ret.password;\n    delete ret.__v;\n    return ret;\n  }\n});",
 };
 

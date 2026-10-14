@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការបង្កើត និងភ្ជាប់ Socket.IO ជាមួយ Express HTTP Server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការបង្កើត Socket.IO Server តម្រូវឱ្យភ្ជាប់ Socket.IO ជាមួយនឹង Node.js HTTP Server (`http.createServer(app)`) ដែលរុំពីលើ Express App។ វិធីនេះអនុញ្ញាតឱ្យ HTTP Server តែមួយអាចដំណើរការបានទាំង REST API Endpoints ធម្មតា និង WebSocket Connections ស្របគ្នាក្នុង Port តែមួយ។",
+  summary: "ការបង្កើត និងភ្ជាប់ Socket.IO ជាមួយ Express HTTP Server៖\n\n- **Attach to HTTP Server**៖ បង្កើត HTTP Server ដោយប្រើ `http.createServer(app)` រួចភ្ជាប់ជាមួយ Socket.IO `new Server(server)`។\n- **Shared Port**៖ ដំណើរការទាំង Express REST API និង Socket.IO Real-time Server លើ Port តែមួយ (ឧ. Port 5000)។\n- **CORS Setup**៖ កំណត់ Allowed Origins សម្រាប់ WebSockets ឱ្យត្រូវគ្នាជាមួយ Frontend Domain។",
   codeSnippet: "import http from \"node:http\";\nimport express from \"express\";\nimport { Server } from \"socket.io\";\n\nconst app = express();\nconst server = http.createServer(app);\n\n// Initialize Socket.IO with CORS\nconst io = new Server(server, {\n  cors: {\n    origin: process.env.CLIENT_URL || \"http://localhost:3000\",\n    methods: [\"GET\", \"POST\"],\n    credentials: true,\n  },\n});\n\nio.on(\"connection\", (socket) => {\n  console.log(\"New client connected. Socket ID:\", socket.id);\n\n  socket.on(\"disconnect\", (reason) => {\n    console.log(`Client ${socket.id} disconnected: ${reason}`);\n  });\n});\n\nserver.listen(5000, () => console.log(\"Server listening on port 5000\"));",
 };
 

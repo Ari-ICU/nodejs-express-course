@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃការ Upload ឯកសារក្នុង Web Backend",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "ការ Upload ឯកសារក្នុង Web Backend ទាមទារឱ្យយល់ដឹងពីលំហូរការងារទាំងមូល៖ ចាប់ពី Browser ខ្ចប់ File ជាមួយទម្រង់ Multipart Form Data, បញ្ជូនតាម HTTP Stream, Server ដំណើរការ Parsing ឯកសារជាមួយ Middleware (Multer), ផ្ទៀងផ្ទាត់ទំហំ និងប្រភេទឯកសារ, រហូតដល់ការរក្សាទុក File លើ Filesystem ឬ Cloud Storage និងកត់ត្រា File URL ក្នុង Database។",
+  summary: "គោលការណ៍គ្រឹះនៃការ Upload ឯកសារក្នុង Web Backend៖\n\n- **Multipart Stream**៖ ឯកសារ Binary ត្រូវបានបញ្ជូនជា Stream តាមរយៈ HTTP `multipart/form-data`។\n- **Server-side Parsing**៖ Server ប្រើប្រាស់ Middleware (Multer) ដើម្បី Parse និងទាញយក File Buffer។\n- **Storage & Metadata**៖ រក្សាទុក File លើ Cloud Storage រួចកត់ត្រា File URL ទៅក្នុង MongoDB Document។",
   codeSnippet: "// HTTP Request Header for File Uploads:\n// POST /api/v1/uploads\n// Content-Type: multipart/form-data; boundary=---------------------------974767299852498929531610575\n//\n// ---------------------------974767299852498929531610575\n// Content-Disposition: form-data; name=\"avatar\"; filename=\"profile.png\"\n// Content-Type: image/png\n//\n// <Binary byte data here...>\n// ---------------------------974767299852498929531610575--",
 };
 

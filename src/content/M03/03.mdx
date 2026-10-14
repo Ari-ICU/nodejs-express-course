@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ម៉ូឌុលផ្លូវឯកសារ path Module",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `ម៉ូឌុល \`node:path\` ផ្តល់ឧបករណ៍ប្រើប្រាស់ដំណោះស្រាយផ្លូវឆ្លងវេទិកា ដោះស្រាយផ្លូវបំបែកបានត្រឹមត្រូវ (\`/\` នៅលើ macOS/Linux ទល់នឹង \`\\\` នៅលើ Windows) ការគណនាផ្លូវដែលទាក់ទង និងទាញយកផ្នែកបន្ថែមឯកសារ។`,
+  summary: "ម៉ូឌុល \\`node:path\\` ផ្តល់ឧបករណ៍ប្រើប្រាស់ដំណោះស្រាយផ្លូវឆ្លងវេទិកា ដោះស្រាយផ្លូវបំបែកបានត្រឹមត្រូវ (\\`/\\` នៅលើ macOS/Linux ទល់នឹង \\`\\\\\\` នៅលើ Windows) ការគណនាផ្លូវដែលទាក់ទង និងទាញយកផ្នែកបន្ថែមឯកសារ។",
   codeSnippet: "import path from \"node:path\";\n\n// Safe cross-platform path joining\nconst uploadPath = path.join(process.cwd(), \"public\", \"uploads\", \"avatar.png\");\n\n// Extract metadata\nconsole.log(\"Directory:\", path.dirname(uploadPath));\nconsole.log(\"Filename:\", path.basename(uploadPath));\nconsole.log(\"Extension:\", path.extname(uploadPath));",
 };
 

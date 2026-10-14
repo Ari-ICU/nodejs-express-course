@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រងឯកសារក្នុង Server",
   type: "lab",
   codeLanguage: "javascript",
-  summary: `Server សហគ្រាសឧស្សាហ៍ផ្ទៀងផ្ទាត់អត្ថិភាពឯកសារ ពិនិត្យទិន្នន័យមេតា (ទំហំឯកសារ ពេលវេលាកែប្រែ Authorization) និងគ្រប់គ្រងថតបណ្តោះអាសន្ន មុនពេលផ្ទុកឯកសារទៅកន្លែងផ្ទុកពពក។`,
+  summary: "Server សហគ្រាសឧស្សាហ៍ផ្ទៀងផ្ទាត់អត្ថិភាពឯកសារ ពិនិត្យទិន្នន័យមេតា (ទំហំឯកសារ ពេលវេលាកែប្រែ Authorization) និងគ្រប់គ្រងថតបណ្តោះអាសន្ន មុនពេលផ្ទុកឯកសារទៅកន្លែងផ្ទុកពពក។",
   codeSnippet: "import fs from \"node:fs/promises\";\n\ntry {\n  const stats = await fs.stat(\"package.json\");\n  console.log(\"Is File?\", stats.isFile());\n  console.log(\"Size in bytes:\", stats.size);\n  console.log(\"Last Modified:\", stats.mtime);\n} catch (err) {\n  if (err.code === \"ENOENT\") console.log(\"File does not exist!\");\n}",
 };
 

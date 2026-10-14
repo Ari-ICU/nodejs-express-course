@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការសរសេរឯកសារ Params, Query, និង Request Body",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Request Documentation ផ្តោតលើការកត់ត្រាព័ត៌មានលម្អិតនៃ Input ទាំងអស់ដែល Endpoint មួយត្រូវការ រួមមាន Path Parameters (ឧ. `/courses/{id}`), Query Parameters (ឧ. `?page=1&limit=10&sort=-createdAt`), Headers, និង Request Body (JSON Schema) ជាមួយ Validation Rules ដូចជា required, minimum, និង enum values។",
+  summary: "ការសរសេរឯកសារ Params, Query, និង Request Body៖\n\n- **Path Parameters**៖ កត់ត្រា URL Params (ឧ. `/courses/{id}`) រួមជាមួយ Type និង Validation (24 hex characters)។\n- **Query Parameters**៖ កត់ត្រា Filtering, Sorting, និង Pagination Options (ឧ. `?page=1&limit=10&sort=-createdAt`)។\n- **Request Body (JSON)**៖ បញ្ជាក់ Required Fields, Field Types, និង Example Payloads យ៉ាងលម្អិត។",
   codeSnippet: "/**\n * @openapi\n * /api/v1/courses/{id}:\n *   put:\n *     summary: Update an existing course\n *     tags: [Courses]\n *     parameters:\n *       - in: path\n *         name: id\n *         required: true\n *         schema:\n *           type: string\n *         description: MongoDB ObjectId of the course\n *     requestBody:\n *       required: true\n *       content:\n *         application/json:\n *           schema:\n *             $ref: '#/components/schemas/UpdateCourseDTO'\n */",
 };
 

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Unit Testing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Unit Testing ផ្តោតលើការធ្វើតេស្តមុខងារតូចៗបំផុតនៃកូដ (Isolated Functions) ដូចជា Helper Utilities, Validation Functions, ឬ Business Calculation Methods ដោយមិនភ្ជាប់ទៅកាន់ External Dependencies (គ្មាន Network, គ្មាន Database)។ Unit Tests ដំណើរការលឿនបំផុត (គិតជា Milliseconds) និងផ្តល់ Feedback ភ្លាមៗដល់ Developer។",
+  summary: "គោលការណ៍គ្រឹះនៃ Unit Testing៖\n\n- **Isolated Scope**៖ ធ្វើតេស្តមុខងារតូចៗដាច់ដោយឡែក (Pure Functions, Helper Utilities, Validation Rules)។\n- **គ្មាន External Dependencies**៖ មិនភ្ជាប់ទៅកាន់ Database, Network, ឬ External APIs ឡើយ។\n- **Execution Speed**៖ ដំណើរការលឿនបំផុត (គិតជា Milliseconds) ផ្តល់ Instant Feedback ដល់ Developer។",
   codeSnippet: "// Arrange - Act - Assert (AAA) Pattern:\nimport { describe, it, expect } from \"vitest\";\nimport { calculateDiscount } from \"../services/pricing.service.js\";\n\ndescribe(\"calculateDiscount\", () => {\n  it(\"should apply 20% discount for orders exceeding $100\", () => {\n    // 1. Arrange\n    const originalPrice = 120;\n    const discountRate = 0.20;\n\n    // 2. Act\n    const finalPrice = calculateDiscount(originalPrice, discountRate);\n\n    // 3. Assert\n    expect(finalPrice).toBe(96);\n  });\n});",
 };
 

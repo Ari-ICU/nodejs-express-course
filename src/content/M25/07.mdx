@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Caching (Cache-Aside Pattern & TTL)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Caching គឺជាការរក្សាទុកទិន្នន័យដែលប្រើប្រាស់ញឹកញាប់នៅក្នុង High-speed Storage Layer (Memory) ដើម្បីចៀសវាងការ Query Database ដដែលៗ។ យុទ្ធសាស្ត្រ Cache-Aside Pattern រួមមាន៖ ពិនិត្យ Cache ជាមុន (Cache Hit), ប្រសិនបើគ្មាន ទាញយកពី Database (Cache Miss), រក្សាទុកក្នុង Cache ជាមួយ TTL (Time-To-Live), និងការធ្វើ Cache Invalidation នៅពេលទិន្នន័យមានការ Update។",
+  summary: "គោលការណ៍គ្រឹះនៃ Caching (Cache-Aside Pattern & TTL)៖\n\n- **Cache-Aside Pattern**៖ ពិនិត្យទិន្នន័យក្នុង Cache ជាមុន (Hit)។ បើគ្មាន ទាញយកពី Database (Miss) រួចរក្សាទុកក្នុង Cache សម្រាប់ Request បន្ទាប់។\n- **Time-To-Live (TTL)**៖ កំណត់អាយុកាលទិន្នន័យក្នុង Cache (ឧ. 1 ម៉ោង) ដើម្បីឱ្យ Cache ផុតកំណត់ដោយស្វ័យប្រវត្ត។\n- **Cache Invalidation**៖ លុប ឬកែប្រែ Cache Key ភ្លាមៗនៅពេលមានការ Update ឬ Delete ទិន្នន័យក្នុង Database។",
   codeSnippet: "// Cache-Aside Workflow:\n//\n// Client Request -> [Check Cache (Redis)]\n//                         │\n//            ┌────────────┴────────────┐\n//         Hit (Data exists)        Miss (Not in cache)\n//            │                         │\n//            ↓                         ↓\n//     Return cached data      Query Primary Database (MongoDB)\n//                                      │\n//                                      ↓\n//                             Save to Cache (with TTL)\n//                                      │\n//                                      ↓\n//                             Return data to client",
 };
 

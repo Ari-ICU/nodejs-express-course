@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "មូលហេតុចម្បងដែលត្រូវប្រើប្រាស់ Background Processing",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "អត្ថប្រយោជន៍ចម្បងនៃ Background Processing រួមមាន៖ ការកាត់បន្ថយ HTTP Latency ឱ្យនៅកម្រិតទាបបំផុត, ការការពារ Server Timeouts, ការធានាថាការងារសំខាន់ៗមិនត្រូវបាត់បង់នៅពេល Server ជួបបញ្ហា (Fault Tolerance), និងលទ្ធភាពកំណត់ចំនួន Concurrency ឱ្យសមស្របតាមធនធាន Server។",
+  summary: "មូលហេតុចម្បងដែលត្រូវប្រើប្រាស់ Background Processing៖\n\n- **Prevent HTTP Timeouts**៖ ការពារបញ្ហា Gateway Timeout (504) នៅពេលប្រតិបត្តិការត្រូវការពេលលើសពី 30 វិនាទី។\n- **Fault Tolerance & Reliability**៖ Jobs មិនបាត់បង់ឡើយទោះបី Server Restart ដោយសារវាត្រូវបានរក្សាទុកក្នុង Redis។\n- **Controlled Concurrency**៖ កំណត់ចំនួនការងារដែលត្រូវដំណើរការស្របគ្នាឱ្យសមស្របតាម CPU និង RAM របស់ Server។",
   codeSnippet: "// 3 Pillars of Background Jobs:\n// 1. User Responsiveness: Return 202 Accepted or 201 Created immediately\n// 2. Failure Resilience: Automated retries with exponential backoff on network dropouts\n// 3. Rate-Limiting External APIs: Throttle outgoing requests to avoid 3rd-party rate limits",
 };
 

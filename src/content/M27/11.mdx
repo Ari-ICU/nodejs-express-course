@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Jobs Directory សម្រាប់ Background Queues និង Workers",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Jobs Layer ផ្ទុកនូវរចនាសម្ព័ន្ធគ្រប់គ្រង Background Processing រួមមាន Queue Definitions, Job Schedulers, និង Worker Processors សម្រាប់ BullMQ ដោយបំបែកដាច់ពី Web Server Process។",
+  summary: "ការរៀបចំ Jobs Directory សម្រាប់ Background Queues និង Workers៖\n\n- **Queue Definitions**៖ រៀបចំ Email Queues, Media Processing Queues, និង Report Queues ដោយឡែកពីគ្នា។\n- **Worker Processors**៖ សរសេរ Processor Functions ក្នុង Folder ជាក់លាក់ ងាយស្រួល Maintain។\n- **Standalone Worker Entry**៖ អនុញ្ញាតឱ្យ Worker អាច Run ជា Standalone Process ក្នុង Docker Container។",
   codeSnippet: "src/jobs/\n├── index.js          # Initializes all queues and workers\n├── email/\n│   ├── email.queue.js   # Queue initialization & producer helpers\n│   └── email.worker.js  # Worker logic processing email delivery\n└── reports/\n    ├── report.queue.js\n    └── report.worker.js",
 };
 

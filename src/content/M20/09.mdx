@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ស្ថាបត្យកម្មប្រព័ន្ធ Notification (In-app & Email)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Notification System Architecture គឺជាស្ថាបត្យកម្មបញ្ជូនដំណឹងដែលអាចគាំទ្រច្រើន Channels (Multi-channel Notifications) រួមមាន In-App Notifications (រក្សាទុកក្នុង MongoDB និងបញ្ជូនតាម WebSockets) និង Transactional Emails។ តាមរយៈការបង្កើត Centralized Notification Service កូដអាចគ្រប់គ្រងការផ្ញើដំណឹងបានយ៉ាងរលូន និងងាយស្រួលថែទាំ។",
+  summary: "ស្ថាបត្យកម្មប្រព័ន្ធ Notification (In-app & Email)៖\n\n- **Multi-channel Notifications**៖ គាំទ្រទាំង In-App Notifications (បញ្ជូនតាម WebSockets) និង Email Notifications។\n- **User Notification Preferences**៖ អនុញ្ញាតឱ្យ User អាចជ្រើសរើសបិទ/បើក Email Alerts តាមចំណង់ចំណូលចិត្ត។\n- **Centralized Service**៖ បង្កើត `NotificationService` តែមួយដើម្បីគ្រប់គ្រងការបញ្ជូនដំណឹងគ្រប់ទម្រង់។",
   codeSnippet: "// models/notification.model.js\nconst notificationSchema = new mongoose.Schema({\n  recipient: { type: mongoose.Schema.Types.ObjectId, ref: \"User\", required: true },\n  actor: { type: mongoose.Schema.Types.ObjectId, ref: \"User\" },\n  type: { type: String, enum: [\"ORDER_SHIPPED\", \"COMMENT_REPLY\", \"SECURITY_ALERT\"] },\n  title: String,\n  message: String,\n  link: String,\n  isRead: { type: Boolean, default: false },\n}, { timestamps: true });\n\nexport const Notification = mongoose.model(\"Notification\", notificationSchema);",
 };
 

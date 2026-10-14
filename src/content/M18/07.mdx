@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍សុវត្ថិភាពពាក្យសម្ងាត់ (NIST Guidelines)",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "គោលការណ៍សុវត្ថិភាព Password ទំនើបផ្អែកលើស្តង់ដារ NIST SP 800-63B ណែនាំឱ្យកំណត់ប្រវែងអប្បបរមា (យ៉ាងតិច 8 ទៅ 12 តួអក្សរ) ត្រួតពិនិត្យប្រឆាំងនឹង Common Leaked Passwords និងមិនត្រូវបង្ខំឱ្យប្តូរ Password ញឹកញាប់ដោយគ្មានមូលហេតុឡើយ។ លើសពីនេះ Password ត្រូវតែ Hash ជាមួយ bcrypt ដោយប្រើ Salt Rounds សមស្របជានិច្ច។",
+  summary: "គោលការណ៍សុវត្ថិភាពពាក្យសម្ងាត់ (NIST Guidelines)៖\n\n- **Minimum Length**៖ កំណត់ប្រវែងយ៉ាងតិច 8 ទៅ 12 តួអក្សរ (ប្រវែងសំខាន់ជាងភាពស្មុគស្មាញ)។\n- **Check Leaked Passwords**៖ ពិនិត្យផ្ទៀងផ្ទាត់មិនឱ្យប្រើប្រាស់ Common Passwords (ដូចជា '12345678', 'password')។\n- **bcrypt Hashing**៖ ប្រើប្រាស់ Slow Cryptographic Hashing ជាមួយ 12 Salt Rounds ជានិច្ច។",
   codeSnippet: "import { z } from \"zod\";\n\n// NIST-aligned password schema:\nexport const passwordSchema = z\n  .string()\n  .min(10, \"Password must be at least 10 characters long\")\n  .max(128, \"Password cannot exceed 128 characters\")\n  .refine((val) => !/^(password|12345678|qwerty|admin)/i.test(val), {\n    message: \"Password is too common and easily guessable\",\n  });",
 };
 

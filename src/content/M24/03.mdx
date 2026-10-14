@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពីបណ្ណាល័យ Socket.IO",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Socket.IO គឺជាបណ្ណាល័យ Node.js ដ៏ពេញនិយមបំផុតសម្រាប់បង្កើត Real-Time Applications។ វាផ្តល់នូវសមត្ថភាពលើសពី Raw WebSockets រួមមាន៖ Fallback ស្វ័យប្រវត្តិតាម HTTP Long-polling (ពេល WebSocket ត្រូវបាន Firewalls រារាំង), Automatic Reconnection, Event-driven Messaging, និង Built-in Rooms & Namespaces Support។",
+  summary: "ការស្វែងយល់ពីបណ្ណាល័យ Socket.IO៖\n\n- **More than Raw WebSockets**៖ Socket.IO ផ្តល់នូវ Features បន្ថែមលើសពី WebSocket ធម្មតា។\n- **Automatic Fallback**៖ ធ្លាក់មកប្រើ HTTP Long-polling ដោយស្វ័យប្រវត្ត ប្រសិនបើ WebSocket ត្រូវបាន Firewall បិទ។\n- **Built-in Reconnection**៖ ព្យាយាម Reconnect ដោយស្វ័យប្រវត្តិនៅពេលបាត់បង់ Network Connection។\n- **Rooms & Namespaces**៖ គាំទ្រការរៀបចំ Channels និង Private Rooms តាំងពីកំណើត។",
   codeSnippet: "// Why Socket.IO over raw ws:\n// 1. Reliability: Falls back to HTTP long-polling if corporate firewalls block WebSockets\n// 2. Auto-reconnect: Automatically reconnects and flushes buffered messages\n// 3. Named Events: emit(\"order:paid\", payload) instead of JSON.stringify({ type: ... })\n// 4. Broadcasting: Easily emit to all clients EXCEPT sender: socket.broadcast.emit(...)\n// 5. Rooms: Group sockets into virtual channels: socket.join(\"room-123\")",
 };
 

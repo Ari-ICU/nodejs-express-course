@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គោលការណ៍គ្រឹះនៃ Role-based Access Control (RBAC)",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Role-Based Access Control (RBAC) គឺជាគំរូគ្រប់គ្រងសិទ្ធិអំណាចដែលផ្អែកលើតួនាទីរបស់អ្នកប្រើប្រាស់ក្នុងអង្គភាព។ ជំនួសឱ្យការកំណត់សិទ្ធិលើ User ម្នាក់ៗដោយផ្ទាល់ សិទ្ធិ (Permissions) ត្រូវបានប្រគល់ឱ្យ Roles (ដូចជា Student, Instructor, Admin) ហើយ Users ទទួលបានសិទ្ធិទាំងនោះតាមរយៈ Roles របស់ពួកគេ។ វិធីនេះជួយឱ្យការគ្រប់គ្រងសិទ្ធិក្នុង Enterprise Backends មានភាពងាយស្រួល និងងាយពង្រីក។",
+  summary: "គោលការណ៍គ្រឹះនៃ Role-Based Access Control (RBAC)៖\n\n- **Roles**៖ តួនាទីជាក់លាក់ក្នុងស្ថាប័ន (Student, Instructor, Admin)។\n- **Permissions**៖ សិទ្ធិធ្វើសកម្មភាពលើ Resources (Read, Create, Update, Delete)។\n- **Scalable Management**៖ Permissions ត្រូវបានភ្ជាប់ជាមួយ Roles ហើយ Users ទទួលបានសិទ្ធិតាមរយៈ Role របស់ខ្លួន ជួយកាត់បន្ថយភាពស្មុគស្មាញក្នុង Enterprise Apps។",
   codeSnippet: "// RBAC Conceptual Model:\n// User -> Has Role -> Has Permissions -> Can Access Resource\n//\n// Alice (Student)     -> [Role: \"student\"]    -> Read courses, enroll in course, view progress\n// Bob (Instructor)    -> [Role: \"instructor\"] -> Create course, manage own lessons, grade assignments\n// Carol (Superadmin)  -> [Role: \"admin\"]      -> Delete courses, manage user roles, view platform metrics\n//\n// In middleware:\n// if (!roles.includes(req.user.role)) return 403 Forbidden",
 };
 

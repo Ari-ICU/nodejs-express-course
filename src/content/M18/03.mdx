@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារ HTTP Headers ជាមួយ Helmet",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Helmet គឺជា Express Middleware ដែលជួយការពារ API តាមរយៈការកំណត់ HTTP Response Headers សំខាន់ៗដោយស្វ័យប្រវត្តិតាមស្តង់ដារសុវត្ថិភាព (រួមមាន Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, និងការដកចេញនូវ X-Powered-By header) ដើម្បីបិទបាំងបច្ចេកវិទ្យា Server និងការពារការវាយប្រហារ Clickjacking និង MIME Sniffing។",
+  summary: "ការការពារ HTTP Headers ជាមួយ Helmet Middleware៖\n\n- **X-Frame-Options**៖ ការពារការវាយប្រហារ Clickjacking ដោយហាមឃាត់ការដាក់ API ក្នុង iframe។\n- **Content-Security-Policy (CSP)**៖ គ្រប់គ្រងប្រភព Scripts និង Assets ដែលអនុញ្ញាតឱ្យដំណើរការ។\n- **Hide Server Tech**៖ ដកចេញ Header `X-Powered-By: Express` ដោយស្វ័យប្រវត្តិដើម្បីបិទបាំងបច្ចេកវិទ្យា Server។",
   codeSnippet: "import express from \"express\";\nimport helmet from \"helmet\";\n\nconst app = express();\n\n// Enable all standard 15 security headers with sensible defaults\napp.use(helmet());\n\n// Or customize individual header policies:\napp.use(\n  helmet({\n    contentSecurityPolicy: {\n      directives: {\n        defaultSrc: [\"'self'\"],\n        scriptSrc: [\"'self'\", \"https://cdn.trusted.com\"],\n      },\n    },\n    crossOriginEmbedderPolicy: false,\n    hsts: {\n      maxAge: 31536000, // 1 year\n      includeSubDomains: true,\n      preload: true,\n    },\n  })\n);",
 };
 

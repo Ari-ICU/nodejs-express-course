@@ -4,18 +4,21 @@ export const meta = {
   title: "Frontend vs Backend",
   khmerTitle: "ភាពខុសគ្នារវាង Frontend និង Backend",
   type: "concept",
-  imageUrl: "/images/lessons/frontend-vs-backend.png",
-  summary: `**Frontend** — ប្រតិបត្តិក្នុង browser របស់អ្នកប្រើ៖
-- បង្កើតជាមួយ HTML, CSS, JavaScript (React, Next.js, Vue)
-- បង្ហាញ UI (User Interface) ចលនា និង Form Inputs
-- គ្រប់គ្រងស្ថានភាពផ្នែកខាង Client និង Browser Cookies
-- ផ្ញើ Request ទៅ Backend តាមរយៈ HTTP/REST APIs
-- មាន **សូន្យភាពឯកជន** — Source Code ទាំងអស់អាចអានបានដោយអ្នកប្រើប្រាស់
-
-**Backend** — ដំណើរការលើ Server ឯកជនដែលមានសុវត្ថិភាព៖
-- បង្កើតឡើងដោយ Node.js, Express, Database (MongoDB, PostgreSQL)
-- អនុវត្ត Authentication Authorization និង Validation ទិន្នន័យ
-- ប្រតិបត្តិការអាន/សរសេរ Database ជាមួយនឹងប្រតិបត្តិការ ACID
-- ការពារអាថ៌កំបាំង API ឯកជន និងសោទូទាត់ដោយសុវត្ថិភាព
-- បញ្ជូន JSON Response ដែលមាន Sanitization ត្រឡប់ទៅ Client វិញ។`,
+  codeLanguage: "javascript",
+  summary: "**Frontend** — ប្រតិបត្តិក្នុង browser របស់អ្នកប្រើ៖\n- បង្កើតជាមួយ HTML, CSS, JavaScript (React, Next.js, Vue)\n- បង្ហាញ UI (User Interface) ចលនា និង Form Inputs\n- គ្រប់គ្រងស្ថានភាពផ្នែកខាង Client និង Browser Cookies\n- ផ្ញើ Request ទៅ Backend តាមរយៈ HTTP/REST APIs\n- មាន **សូន្យភាពឯកជន** — Source Code ទាំងអស់អាចអានបានដោយអ្នកប្រើប្រាស់\n\n**Backend** — ដំណើរការលើ Server ឯកជនដែលមានសុវត្ថិភាព៖\n- បង្កើតឡើងដោយ Node.js, Express, Database (MongoDB, PostgreSQL)\n- អនុវត្ត Authentication Authorization និង Validation ទិន្នន័យ\n- ប្រតិបត្តិការអាន/សរសេរ Database ជាមួយនឹងប្រតិបត្តិការ ACID\n- ការពារអាថ៌កំបាំង API ឯកជន និងសោទូទាត់ដោយសុវត្ថិភាព\n- បញ្ជូន JSON Response ដែលមាន Sanitization ត្រឡប់ទៅ Client វិញ។",
+  codeSnippet: "// FRONTEND (Browser):\n// Fetches data, manages UI state, triggers visual renders\nconst res = await fetch(\"/api/v1/products\");\nconst products = await res.json();\n\n// BACKEND (Node.js Server):\n// Validates token, queries MongoDB, hides secret API keys\napp.get(\"/api/v1/products\", verifyToken, async (req, res) => {\n  const products = await Product.find({ published: true });\n  res.json({ success: true, data: products });\n});",
 };
+
+```javascript
+// FRONTEND (Browser):
+// Fetches data, manages UI state, triggers visual renders
+const res = await fetch("/api/v1/products");
+const products = await res.json();
+
+// BACKEND (Node.js Server):
+// Validates token, queries MongoDB, hides secret API keys
+app.get("/api/v1/products", verifyToken, async (req, res) => {
+  const products = await Product.find({ published: true });
+  res.json({ success: true, data: products });
+});
+```

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការលុបឯកសារចាស់ៗ (File Deletion & Storage Cleanup)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការលុបឯកសារដែលលែងប្រើប្រាស់ (File Deletion & Storage Cleanup) គឺជាការសម្អាតឯកសារចាស់ៗចេញពី Disk ឬ Cloud Storage នៅពេលដែល User កែប្រែ Thumbnail ថ្មី ឬលុប Course ចោល។ ការអនុវត្ត Mongoose Post-delete Hooks ឬ Event-driven Handlers ជួយការពារកុំឱ្យមាន Orphaned Files កកស្ទះ និងខ្ជះខ្ជាយ Storage Space។",
+  summary: "ការលុបឯកសារចាស់ៗ (File Deletion & Storage Cleanup)៖\n\n- **Prevent Orphaned Files**៖ លុប File ចាស់ចេញពី Storage នៅពេល User កែប្រែរូបភាពថ្មី ឬលុប Course ចោល។\n- **S3 DeleteObjectCommand**៖ ហៅ `DeleteObjectCommand` ដើម្បីលុប Object ចេញពី Cloud Storage Bucket។\n- **Mongoose Middleware Cleanup**៖ ប្រើ Mongoose `post('findOneAndDelete')` hook ដើម្បី Trigger ការលុប File ដោយស្វ័យប្រវត្តិ។",
   codeSnippet: "import fs from \"node:fs/promises\";\nimport path from \"node:path\";\nimport { DeleteObjectCommand } from \"@aws-sdk/client-s3\";\n\n// 1. Local filesystem deletion helper:\nexport const deleteLocalFile = async (relativeFilePath) => {\n  try {\n    const fullPath = path.resolve(relativeFilePath);\n    await fs.unlink(fullPath);\n    console.log(`Deleted local file: ${fullPath}`);\n  } catch (err) {\n    console.warn(`Warning: Could not delete local file ${relativeFilePath}: ${err.message}`);\n  }\n};\n\n// 2. Cloudflare R2 / S3 deletion helper:\nexport const deleteFromR2 = async (fileKey) => {\n  try {\n    await r2.send(new DeleteObjectCommand({\n      Bucket: process.env.R2_BUCKET_NAME,\n      Key: fileKey,\n    }));\n  } catch (err) {\n    console.error(`Failed to delete R2 object ${fileKey}:`, err);\n  }\n};",
 };
 

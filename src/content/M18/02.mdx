@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ Cross-Origin Resource Sharing (CORS)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "CORS (Cross-Origin Resource Sharing) គឺជាយន្តការសុវត្ថិភាពរបស់ Browser ដែលគ្រប់គ្រងថាតើ Domain ខាងក្រៅណាខ្លះអាចធ្វើ Request មកកាន់ API របស់យើងបាន។ ការប្រើប្រាស់បណ្ណាល័យ `cors` ក្នុង Express អនុញ្ញាតឱ្យយើងកំណត់ Whitelist នៃ Allowed Origins, Methods (GET, POST, PUT, DELETE), និង Headers ជៀសវាងការបើកចំហ `*` (Wildcard) លើ Production Endpoints ដែលមានទិន្នន័យសម្ងាត់។",
+  summary: "ការកំណត់ Cross-Origin Resource Sharing (CORS)៖\n\n- **Same-Origin Policy**៖ ច្បាប់សុវត្ថិភាពរបស់ Browser ដែលរារាំង Cross-origin Requests តាមលំនាំដើម។\n- **Whitelist Allowed Origins**៖ កំណត់តែ Domains ជាក់លាក់របស់ Frontend (ឧ. `https://mycourse.edu`) ក្នុង Production។\n- **ហាមដាច់ខាត**៖ មិនត្រូវបើក `origin: '*'` លើ Endpoints ដែលមាន Credentials (Cookies/Authorization Headers) ឡើយ។",
   codeSnippet: "import cors from \"cors\";\n\nconst allowedOrigins = [\n  \"https://mywebapplication.com\",\n  \"https://admin.mywebapplication.com\"\n];\n\nconst corsOptions = {\n  origin: (origin, callback) => {\n    // Allow server-to-server or tools with no origin (like Postman or curl)\n    if (!origin || allowedOrigins.includes(origin)) {\n      callback(null, true);\n    } else {\n      callback(new Error(\"Blocked by CORS policy\"));\n    }\n  },\n  credentials: true, // Allow cookies and authorization headers\n  methods: [\"GET\", \"POST\", \"PUT\", \"PATCH\", \"DELETE\", \"OPTIONS\"],\n  allowedHeaders: [\"Content-Type\", \"Authorization\"],\n  maxAge: 86400, // Preflight cache for 24 hours\n};\n\napp.use(cors(corsOptions));",
 };
 

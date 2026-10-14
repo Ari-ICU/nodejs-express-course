@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "តួនាទី និងការរៀបចំ Routes Layer",
   type: "architecture",
   codeLanguage: "javascript",
-  summary: "Routes Layer ទទួលខុសត្រូវលើការផ្គូផ្គង HTTP Path និង Verb ទៅកាន់ Handler Function សមស្រប (`router.get()`, `router.post()`)។ Routes ត្រូវតែរក្សាភាពស្អាត (Skinny Routes) ដោយគ្រាន់តែភ្ជាប់ Middleware (Auth, Validation) និងហៅ Controller Method ប៉ុណ្ណោះ ដោយគ្មាន Business Logic ឬ Database Queries ឡើយ។",
+  summary: "តួនាទី និងការរៀបចំ Routes Layer៖\n\n- **HTTP Endpoint Mapping**៖ ផ្គូផ្គង HTTP Path និង Verbs (`router.get`, `router.post`) ទៅកាន់ Handlers។\n- **Skinny Routes Principle**៖ Routes ត្រូវតែរក្សាភាពសាមញ្ញ ដោយគ្រាន់តែភ្ជាប់ Middleware និងហៅ Controller ប៉ុណ្ណោះ។\n- **No Business Logic**៖ ដាច់ខាតមិនត្រូវសរសេរ Database Queries ឬ Core Business Logic ក្នុង Routes ឡើយ។",
   codeSnippet: "// routes/course.routes.js\nimport express from \"express\";\nimport { protect } from \"../middleware/auth.js\";\nimport { restrictTo } from \"../middleware/role.js\";\nimport { validate } from \"../middleware/validate.js\";\nimport { createCourseSchema } from \"../validators/course.validator.js\";\nimport * as courseController from \"../controllers/course.controller.js\";\n\nconst router = express.Router();\n\nrouter.route(\"/\")\n  .get(courseController.getAllCourses)\n  .post(protect, restrictTo(\"instructor\", \"admin\"), validate(createCourseSchema), courseController.createCourse);\n\nrouter.route(\"/:id\")\n  .get(courseController.getCourseById)\n  .patch(protect, restrictTo(\"instructor\", \"admin\"), courseController.updateCourse)\n  .delete(protect, restrictTo(\"instructor\", \"admin\"), courseController.deleteCourse);\n\nexport default router;",
 };
 

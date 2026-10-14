@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពីប្រសិទ្ធភាព និង Performance Metrics ក្នុង Node.js",
   type: "concept",
   codeLanguage: "javascript",
-  summary: "Node.js Performance Optimization តម្រូវឱ្យយល់ដឹងពី Single-Threaded Event Loop Architecture។ ដោយសារ JavaScript ដំណើរការ Core Logic លើ Main Thread តែមួយ គោលដៅចម្បងនៃ Performance Engineering គឺការកាត់បន្ថយ CPU-intensive tasks លើ Main Thread និងការប្រើប្រាស់ Asynchronous I/O ឱ្យអស់ពីលទ្ធភាព។",
+  summary: "ការស្វែងយល់ពីប្រសិទ្ធភាព និង Performance Metrics ក្នុង Node.js៖\n\n- **Single-Threaded Architecture**៖ Node.js ដំណើរការ JavaScript លើ Main Thread តែមួយ តាមរយៈ Event Loop។\n- **Key Metrics**៖ តាមដាន Response Time (p95, p99 Latency), Throughput (RPS), និង Memory/CPU Utilization។\n- **Non-blocking Rule**៖ ជៀសវាងការដំណើរការ CPU-heavy Tasks លើ Main Thread ដើម្បីកុំឱ្យ Server កកស្ទះ។",
   codeSnippet: "// Key Performance Metrics in Node.js:\n// 1. Event Loop Lag: Delay before scheduled callbacks execute (<20ms is healthy)\n// 2. Memory (RSS): Total memory allocated for the process (watch for memory leaks!)\n// 3. Heap Used: Actual memory utilized by V8 objects\n// 4. Latency Percentiles: p50 (median), p95 (95% of users), p99 (tail latency)",
 };
 

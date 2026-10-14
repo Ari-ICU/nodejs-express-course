@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការទប់ស្កាត់ការវាយប្រហារ NoSQL Injection",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "NoSQL Injection កើតឡើងនៅពេល Attacker បញ្ជូន MongoDB Query Operators (ដូចជា `{\"username\": {\"$gt\": \"\"}}`) ចូលតាម Request Body ឬ Query String ដើម្បីទម្លុះ Authentication ដោយមិនចាំបាច់ស្គាល់ Password។ ដំណោះស្រាយគឺការប្រើប្រាស់ Middleware `express-mongo-sanitize` ដើម្បីជម្រះសញ្ញា `$` និង `.` ចេញពី Input ទាំងអស់ដោយស្វ័យប្រវត្តិ។",
+  summary: "ការទប់ស្កាត់ការវាយប្រហារ NoSQL Injection៖\n\n- **NoSQL Injection Attack**៖ ការផ្ញើ Query Operators (ដូចជា `{\"username\": {\"$gt\": \"\"}}`) ដើម្បី Bypass Login។\n- **express-mongo-sanitize**៖ ប្រើ Middleware ដើម្បីជម្រះសញ្ញា `$` និង `.` ចេញពី Request Body និង Query Params។\n- **Schema Validation**៖ ធានាថា Input មាន Type ជា String ពិតប្រាកដមុននឹងយកទៅ Query Database។",
   codeSnippet: "import mongoSanitize from \"express-mongo-sanitize\";\n\n// Attack scenario if unsanitized:\n// Attacker sends POST body: { \"email\": \"admin@app.com\", \"password\": { \"$ne\": null } }\n// MongoDB interprets: Find admin where password is not null -> LOGIN BYPASSED!\n\n// Defense: Mount express-mongo-sanitize\n// Replaces prohibited characters ($, .) with underscores or removes them entirely\napp.use(mongoSanitize());\n\n// Also enforce strict string schemas with Zod:\nconst loginSchema = z.object({\n  email: z.string().email(),\n  password: z.string().min(1), // Rejects objects like {\"$ne\": null} with 400 Bad Request!\n});",
 };
 

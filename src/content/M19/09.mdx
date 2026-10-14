@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Multer DiskStorage លើ Local Filesystem",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Local Disk Storage ត្រូវបានរៀបចំឡើងតាមរយៈ `multer.diskStorage()` ដោយកំណត់ `destination` (Folder ផ្ទុកឯកសារ) និង `filename` (ការបង្កើតឈ្មោះឯកសារប្លែកៗគ្នាដោយប្រើ Timestamp + Random String ដូចជា `crypto.randomUUID()`) ដើម្បីការពារការសរសេរជាន់លើឯកសារចាស់ (File Name Collisions)។",
+  summary: "ការរៀបចំ Multer DiskStorage លើ Local Filesystem៖\n\n- **destination**៖ កំណត់ Folder ផ្ទុកឯកសារ (ឧ. `'uploads/courses/'`)។\n- **Unique Filename**៖ បង្កើតឈ្មោះ File មិនឱ្យជាន់គ្នាដោយប្រើ `crypto.randomUUID()` ឬ Timestamp + Extension។\n- **Static Serving**៖ បើកឱ្យទាញយកតាមរយៈ `app.use('/uploads', express.static('uploads'))` ក្នុង Development។",
   codeSnippet: "import multer from \"multer\";\nimport path from \"node:path\";\nimport crypto from \"node:crypto\";\n\nconst storage = multer.diskStorage({\n  destination: (req, file, cb) => {\n    cb(null, \"public/uploads/avatars\");\n  },\n  filename: (req, file, cb) => {\n    // Generate: user-<id>-<randomHex><ext>\n    const uniqueSuffix = crypto.randomBytes(8).toString(\"hex\");\n    const ext = path.extname(file.originalname).toLowerCase();\n    cb(null, `user-${req.user?._id || \"anon\"}-${uniqueSuffix}${ext}`);\n  },\n});\n\nexport const uploadAvatarLocal = multer({ storage });",
 };
 

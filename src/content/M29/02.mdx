@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "គម្រោងទី ២ ៖ Student Management API ជាមួយ Swagger",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "គម្រោងទី ២ ៖ Student Management API គឺជាគម្រោងពង្រីកសមត្ថភាពដោយរួមបញ្ចូល Swagger/OpenAPI Interactive Documentation, Advanced Filtering, Sorting, និង Pagination សម្រាប់គ្រប់គ្រងទិន្នន័យសិស្ស និងវគ្គសិក្សា។",
+  summary: "គម្រោងទី ២ ៖ Student Management API ជាមួយ Swagger (Documentation & Querying)៖\n\n- **គោលដៅ**៖ បង្កើត API គ្រប់គ្រងទិន្នន័យសិស្ស និងវគ្គសិក្សា ជាមួយ Interactive Documentation។\n- **មុខងារស្នូល**៖ Advanced Query Filtering, Field Projections, Dynamic Sorting, និង Pagination។\n- **ស្ថាបត្យកម្ម**៖ ដំឡើង Swagger UI លើ `/api/docs` ដោយកត់ត្រា Schemas, Parameters, និង Responses ពេញលេញ។",
   codeSnippet: "// routes/student.routes.js with OpenAPI annotations\n/**\n * @openapi\n * /api/v1/students:\n *   get:\n *     summary: Retrieve paginated students with course population\n *     tags: [Students]\n *     parameters:\n *       - in: query\n *         name: search\n *         schema:\n *           type: string\n *     responses:\n *       200:\n *         description: List of students\n */\nrouter.get(\"/students\", studentController.getStudents);",
 };
 

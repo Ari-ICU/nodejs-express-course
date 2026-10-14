@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "យុទ្ធសាស្ត្រ Retry ជាមួយ Exponential Backoff",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Retry Strategies គឺជាការកំណត់ចំនួនដងដែល Job គួរដំណើរការឡើងវិញនៅពេលជួបប្រទះ Network Errors ឬ 3rd-party Outages។ តាមរយៈការកំណត់ Exponential Backoff (ឧ. `attempts: 5, backoff: { type: 'exponential', delay: 2000 }`) BullMQ នឹងពន្យារពេល Retry ជាបន្តបន្ទាប់ (2s, 4s, 8s, 16s...) ជៀសវាងការ Spam Server ខាងក្រៅ។",
+  summary: "យុទ្ធសាស្ត្រ Retry ជាមួយ Exponential Backoff៖\n\n- **Network Resilience**៖ ដោះស្រាយបញ្ហា Transient Errors (ដូចជា Network Flakes ឬ 3rd-party Outages)។\n- **Exponential Backoff**៖ បង្កើនរយៈពេលរង់ចាំទ្វេដងរាល់ពេល Retry (2s, 4s, 8s, 16s...)។\n- **Prevent Server Flooding**៖ ជៀសវាងការ Spam Requests ទៅកាន់ External SMTP ឬ Payment APIs ដែលកំពុងជួបបញ្ហា។",
   codeSnippet: "// Producer configuring exponential backoff retries:\nawait orderQueue.add(\n  \"process-payment\",\n  { orderId: \"ord_10293\", amount: 99.00 },\n  {\n    attempts: 5, // Try 5 times before declaring permanent failure\n    backoff: {\n      type: \"exponential\",\n      delay: 3000, // 3s, 6s, 12s, 24s...\n    },\n  }\n);",
 };
 

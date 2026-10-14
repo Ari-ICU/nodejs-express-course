@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Ubuntu Server (Security Hardening & Swap Memory)",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Ubuntu Server Security Hardening រួមមានការបិទ Root SSH Login, ការបង្កើត Sudo User ផ្ទាល់ខ្លួន, ការកំណត់ Swap Memory (2GB ទៅ 4GB) ដើម្បីទប់ស្កាត់ Out-of-Memory (OOM) Kills លើ Node.js, និងការដំឡើង Fail2ban ដើម្បីទប់ស្កាត់ Brute-force SSH Attacks។",
+  summary: "ការរៀបចំ Ubuntu Server (Security Hardening & Swap Memory)៖\n\n- **Dedicated Sudo User**៖ បង្កើត User ថ្មី និងបិទ Root SSH Access (`PermitRootLogin no`)។\n- **Swap Memory Configuration**៖ បង្កើត Swap Memory 2GB ទៅ 4GB ដើម្បីការពារ Node.js ពី Out-Of-Memory (OOM) Crashes។\n- **Fail2ban Protection**៖ ដំឡើង Fail2ban ដើម្បី Block IPs ដែលព្យាយាម Brute-force SSH Login ដោយស្វ័យប្រវត្ត។",
   codeSnippet: "# Create a 2GB Swap File on Ubuntu:\nsudo fallocate -l 2G /swapfile\nsudo chmod 600 /swapfile\nsudo mkswap /swapfile\nsudo swapon /swapfile\n\n# Make swap permanent across reboots:\necho '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab\n\n# Verify swap active:\nfree -h",
 };
 

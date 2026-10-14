@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការដំឡើង និងដំណើរការ Vitest ក្នុង Node.js",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Vitest គឺជា Test Framework ជំនាន់ថ្មីដែលដំណើរការលឿនបំផុត (Blazing Fast) ផ្អែកលើ Vite Engine គាំទ្រ ES Modules និង TypeScript ដោយផ្ទាល់ពីកំណើត (Zero-config ESM)។ Vitest មាន API ដូចគ្នាទៅនឹង Jest (describe, it, expect, vi) ប៉ុន្តែដំណើរការលឿនជាង និងប្រើប្រាស់ Memory តិចជាងច្រើន។",
+  summary: "ការដំឡើង និងដំណើរការ Vitest ក្នុង Node.js៖\n\n- **Vite-powered Speed**៖ Test Runner ជំនាន់ថ្មីដែលមានល្បឿនលឿនបំផុត គាំទ្រ Native ES Modules ដោយផ្ទាល់។\n- **Jest-compatible API**៖ ប្រើ Syntax ដូចគ្នា (`describe`, `it`, `expect`, `vi`) ងាយស្រួលសរសេរ និងរៀនសូត្រ។\n- **Instant Watch Mode**៖ ដំណើរការឡើងវិញតែ Tests ដែលពាក់ព័ន្ធនឹង File ដែលបានកែប្រែ (HMR for Tests)។",
   codeSnippet: "// vitest.config.js\nimport { defineConfig } from \"vitest/config\";\n\nexport default defineConfig({\n  test: {\n    globals: true,\n    environment: \"node\",\n    testTimeout: 10000,\n    coverage: {\n      provider: \"v8\",\n      reporter: [\"text\", \"json\", \"html\"],\n    },\n  },\n});",
 };
 

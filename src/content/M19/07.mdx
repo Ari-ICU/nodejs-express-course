@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកំណត់ទំហំអតិបរមានៃឯកសារ (File Size Limits & Multer Errors)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "File Size Limits គឺជាការកំណត់ទំហំអតិបរមានៃឯកសារដែលអនុញ្ញាតឱ្យ Upload តាមរយៈ Option `limits: { fileSize: 5 * 1024 * 1024 }` (ឧ. 5MB)។ ប្រសិនបើឯកសារមានទំហំលើស Multer នឹងបោះ `LIMIT_FILE_SIZE` Error ដែលត្រូវចាប់ក្នុង Global Error Handler ហើយឆ្លើយតបត្រឡប់ទៅជា HTTP 400 Bad Request ដ៏សមរម្យ។",
+  summary: "ការកំណត់ទំហំអតិបរមានៃឯកសារ (File Size Limits & Error Handling)៖\n\n- **limits Configuration**៖ កំណត់ `fileSize: 5 * 1024 * 1024` (5MB) ក្នុង Multer Options។\n- **MulterError Handling**៖ ចាប់ `LIMIT_FILE_SIZE` ក្នុង Express Error Middleware។\n- **User-friendly Response**៖ ឆ្លើយតប `400 Bad Request` ជាមួយសារច្បាស់លាស់ «File size exceeds 5MB limit»។",
   codeSnippet: "// 1. Configure limit\nconst upload = multer({\n  limits: {\n    fileSize: 2 * 1024 * 1024, // 2MB in bytes\n    files: 5, // Maximum 5 files per request\n  },\n});\n\n// 2. Catch MulterError in global error middleware:\nexport const handleMulterError = (err, req, res, next) => {\n  if (err instanceof multer.MulterError) {\n    if (err.code === \"LIMIT_FILE_SIZE\") {\n      return res.status(400).json({\n        status: \"fail\",\n        message: \"File too large. Maximum allowed size is 2MB.\",\n      });\n    }\n    return res.status(400).json({ status: \"fail\", message: err.message });\n  }\n  next(err);\n};",
 };
 

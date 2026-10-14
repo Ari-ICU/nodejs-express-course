@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Protected Endpoints ជាមួយ Authorization Headers",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការធ្វើតេស្ត Authentication & Authorization តម្រូវឱ្យសាកល្បងទាំង Happy Path និង Failure Cases៖ ការផ្ញើ Request ដោយគ្មាន Token (រំពឹងទុក 401 Unauthorized), ការផ្ញើ Expired/Invalid Token (401), និងការផ្ញើ Token របស់ Student ដើម្បីលុប Course (រំពឹងទុក 403 Forbidden ពី RBAC)។",
+  summary: "ការធ្វើតេស្ត Protected Endpoints ជាមួយ Authorization Headers៖\n\n- **Unauthenticated Test**៖ ផ្ញើ Request ដោយគ្មាន Token និងរំពឹងទុក `401 Unauthorized`។\n- **Forbidden Role Test**៖ ផ្ញើ Token របស់ Student ដើម្បីលុប Course និងរំពឹងទុក `403 Forbidden`។\n- **Authorized Test**៖ ផ្ញើ Admin/Instructor Token និងរំពឹងទុកជោគជ័យ `200 OK`។",
   codeSnippet: "import { generateAccessToken } from \"../utils/jwt.js\";\n\ndescribe(\"Protected Routes Auth Testing\", () => {\n  it(\"should reject requests without a Bearer token with 401\", async () => {\n    const res = await request(app)\n      .get(\"/api/v1/users/me\")\n      .expect(401);\n\n    expect(res.body.message).toMatch(/not logged in/i);\n  });\n\n  it(\"should permit access when a valid JWT token is provided\", async () => {\n    const testToken = generateAccessToken(\"test_user_id_123\", \"user\");\n\n    const res = await request(app)\n      .get(\"/api/v1/users/me\")\n      .set(\"Authorization\", `Bearer ${testToken}`)\n      .expect(200);\n\n    expect(res.body.data.user).toBeDefined();\n  });\n});",
 };
 

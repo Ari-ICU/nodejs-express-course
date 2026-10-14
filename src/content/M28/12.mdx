@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការរៀបចំ Redis Container សម្រាប់ Caching និង Queues",
   type: "lab",
   codeLanguage: "bash",
-  summary: "Redis Container ត្រូវបានរៀបចំឡើងជា In-Memory Store សម្រាប់ Caching និង BullMQ Queues។ ការកំណត់រចនាសម្ព័ន្ធរួមមានការបើក Persistent AOF (Append Only File) តាមរយៈ Volume និងការការពារដោយ Password តាមរយៈ Option `--requirepass`។",
+  summary: "ការរៀបចំ Redis Container សម្រាប់ Caching និង Queues៖\n\n- **Persistent Redis**៖ បើកដំណើរការ AOF (Append Only File) តាមរយៈ Flag `--appendonly yes`។\n- **Password Protection**៖ កំណត់ Password សុវត្ថិភាពតាមរយៈ `--requirepass <secret>`។\n- **Dedicated Network**៖ ដាក់ Redis ក្នុង Private Docker Network មិនបើក Port ទៅកាន់សាធារណៈឡើយ។",
   codeSnippet: "# Run authenticated Redis container with AOF persistence:\ndocker run -d   --name production-redis   -p 6379:6379   -v redis_data:/data   --restart always   redis:alpine   redis-server --appendonly yes --requirepass \"RedisSecurePassword2026!\"",
 };
 

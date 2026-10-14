@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការការពារ Credential ជាមួយ HttpOnly Cookies",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "HttpOnly Cookies គឺជាយន្តការរក្សាទុក Authentication Tokens ប្រកបដោយសុវត្ថិភាពខ្ពស់បំផុតក្នុង Web Browsers។ ដោយសារ Flag `httpOnly: true` ត្រូវបានកំណត់ JavaScript នៅលើ Frontend មិនអាចអាន ឬលួចយក Token តាមរយៈ Cross-Site Scripting (XSS) Attacks បានឡើយ។ លើសពីនេះ ការកំណត់ Flags បន្ថែមដូចជា `secure: true` (HTTPS only) និង `sameSite: 'strict'` ឬ `'lax'` ជួយការពារការវាយប្រហារ CSRF យ៉ាងមានប្រសិទ្ធភាព។",
+  summary: "ការការពារ Credential ជាមួយ HttpOnly Cookies៖\n\n- **httpOnly: true**៖ ការពារ JavaScript លើ Frontend មិនឱ្យអាន Token ជួយទប់ស្កាត់ការលួច Token តាមរយៈ XSS Attacks។\n- **secure: true**៖ អនុញ្ញាតឱ្យ Browser បញ្ជូន Cookie តែតាមបណ្តាញ HTTPS ប៉ុណ្ណោះ។\n- **sameSite: 'strict' ឬ 'lax'**៖ ការពារការវាយប្រហារ Cross-Site Request Forgery (CSRF) ពី Website ខាងក្រៅ។",
   codeSnippet: "export const sendRefreshTokenCookie = (res, token) => {\n  const isProduction = process.env.NODE_ENV === \"production\";\n\n  res.cookie(\"refreshToken\", token, {\n    httpOnly: true, // Inaccessible to JavaScript document.cookie (Defeats XSS)\n    secure: isProduction, // Transmitted only over HTTPS\n    sameSite: isProduction ? \"strict\" : \"lax\", // Prevents CSRF cross-origin leakage\n    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds\n    path: \"/api/v1/auth\", // Restricted only to auth refresh endpoints\n  });\n};",
 };
 

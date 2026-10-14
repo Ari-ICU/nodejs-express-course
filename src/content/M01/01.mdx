@@ -4,6 +4,17 @@ export const meta = {
   title: "What is Backend Development?",
   khmerTitle: "អ្វីជាការអភិវឌ្ឍ Backend?",
   type: "concept",
-  imageUrl: "/images/lessons/what-is-backend.png",
-  summary: `ការអភិវឌ្ឍ Backend ផ្តល់ថាមពលដល់ម៉ាស៊ីន Server-side ដែលលាក់នៅពីក្រោយកម្មវិធីទំនើប។ វាសម្របសម្រួល Business Logic ទំនាក់ទំនងជាមួយ Database គ្រប់គ្រង Authentication និង Session ដំណើរការការរួមបញ្ចូល API ខាងក្រៅ និងធានាភាពអាចរកបានខ្ពស់ សុវត្ថិភាពទិន្នន័យ និងភាពយឺតយ៉ាវទាបសម្រាប់ InterfaceClient ។`,
+  codeLanguage: "javascript",
+  summary: "ការអភិវឌ្ឍ Backend ផ្តល់ថាមពលដល់ម៉ាស៊ីន Server-side ដែលលាក់នៅពីក្រោយកម្មវិធីទំនើប។ វាសម្របសម្រួល Business Logic ទំនាក់ទំនងជាមួយ Database គ្រប់គ្រង Authentication និង Session ដំណើរការការរួមបញ្ចូល API ខាងក្រៅ និងធានាភាពអាចរកបានខ្ពស់ សុវត្ថិភាពទិន្នន័យ និងភាពយឺតយ៉ាវទាបសម្រាប់ InterfaceClient ។",
+  codeSnippet: "// A minimal HTTP response conceptual model\n// Client sends Request -> Server executes business logic -> Server returns Response\nconst response = {\n  status: 200,\n  headers: { \"Content-Type\": \"application/json\" },\n  data: { user: \"Sokha\", role: \"Developer\", access: true }\n};",
 };
+
+```javascript
+// A minimal HTTP response conceptual model
+// Client sends Request -> Server executes business logic -> Server returns Response
+const response = {
+  status: 200,
+  headers: { "Content-Type": "application/json" },
+  data: { user: "Sokha", role: "Developer", access: true }
+};
+```

@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការស្វែងយល់ពី In-Memory Data Store (Redis)",
   type: "concept",
   codeLanguage: "bash",
-  summary: "Redis គឺជា In-Memory Key-Value Data Store ដ៏មានឥទ្ធិពលបំផុតក្នុងពិភពលោក ដែលគាំទ្រ Data Structures ជាច្រើនដូចជា Strings, Hashes, Lists, Sets, និង Sorted Sets។ Redis ដំណើរការក្នុង RAM ទាំងស្រុង ដែលផ្តល់នូវ Read/Write Latency ក្រោម 1 Millisecond និងសមស្របបំផុតសម្រាប់ Caching, Session Storage, និង Rate Limiting។",
+  summary: "ការស្វែងយល់ពី In-Memory Data Store (Redis)៖\n\n- **In-Memory Speed**៖ ដំណើរការក្នុង RAM ទាំងស្រុង ផ្តល់ Read/Write Latency ក្រោម 1 Millisecond។\n- **Rich Data Structures**៖ គាំទ្រ Strings, Hashes (Objects), Lists, Sets, និង Sorted Sets។\n- **Use Cases**៖ ប្រើប្រាស់សម្រាប់ API Response Caching, User Sessions, Rate Limiting, និង Real-time Leaderboards។",
   codeSnippet: "# Common Redis CLI commands:\nSET user:100:name \"Alice\" EX 3600  # Set key with 1-hour expiration (TTL)\nGET user:100:name                  # Retrieve value -> \"Alice\"\nDEL user:100:name                  # Delete key immediately\nKEYS course:*                      # Search course cache keys\nTTL user:100:name                  # Check remaining seconds before expiry",
 };
 

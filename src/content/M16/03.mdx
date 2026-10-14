@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការប្រើប្រាស់បណ្ណាល័យ bcrypt",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "bcrypt គឺជា Cryptographic Hashing Algorithm ដ៏រឹងមាំផ្អែកលើ Blowfish Cipher ដែលបង្កើតឡើងដោយ Niels Provos និង David Mazières។ ចំណុចពិសេសបំផុតរបស់វាគឺ Configurable Work Factor (Cost ឬ Salt Rounds) ដែលបង្កើនរយៈពេលគណនាជាលក្ខណៈ Exponential នៅពេល Hardware កាន់តែខ្លាំងឡើង។ នៅក្នុង Node.js យើងអាចប្រើប្រាស់ `bcryptjs` (Pure JavaScript) ឬ `bcrypt` (Native C++ Bindings) ដើម្បី Hash និងផ្ទៀងផ្ទាត់ Passwords។",
+  summary: "ការប្រើប្រាស់បណ្ណាល័យ bcrypt ក្នុង Node.js៖\n\n- **Adaptive Hashing**៖ ផ្អែកលើ Blowfish Cipher ដែលមាន Configurable Work Factor (Cost ឬ Salt Rounds) អាចបង្កើនភាពស្មុគស្មាញតាមសម័យកាល Hardware។\n- **Recommended Cost Factor**៖ ប្រើ `12 rounds` សម្រាប់ Production (ដំណើរការប្រហែល 250-350ms ក្នុងមួយ Password)។\n- **Node.js Implementations**៖ ប្រើប្រាស់ `bcryptjs` (Pure JavaScript ងាយស្រួល Deploy) ឬ `bcrypt` (C++ Native Bindings ដំណើរការលឿន)។",
   codeSnippet: "import bcrypt from \"bcryptjs\";\n\n// 1. Generate salt and hash during registration\nconst SALT_ROUNDS = 12;\nconst plainPassword = \"SecurePassword2026!\";\n\nconst salt = await bcrypt.genSalt(SALT_ROUNDS);\nconst passwordHash = await bcrypt.hash(plainPassword, salt);\nconsole.log(\"Hashed Password:\", passwordHash);\n\n// 2. Verify during user login\nconst candidatePassword = \"SecurePassword2026!\";\nconst isMatch = await bcrypt.compare(candidatePassword, passwordHash);\n\nif (!isMatch) {\n  throw new Error(\"Invalid email or password\");\n}\nconsole.log(\"Authentication successful!\");",
 };
 

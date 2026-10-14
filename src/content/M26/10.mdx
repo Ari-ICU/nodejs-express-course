@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង និងត្រួតពិនិត្យ Failed Jobs (Bull Board)",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការគ្រប់គ្រង Failed Jobs គឺជាការតាមដានមូលហេតុដែលនាំឱ្យ Job បរាជ័យតាមរយៈ Error Stack Trace។ ការប្រើប្រាស់ Bull Board (Dashboard GUI) អនុញ្ញាតឱ្យ Developers អាចពិនិត្យមើលស្ថានភាព Queues, មើល Payloads នៃ Failed Jobs, និងចុចប៊ូតុង Retry ឬ Clean Jobs តាមរយៈ Web Interface ប្រកបដោយភាពងាយស្រួល។",
+  summary: "ការគ្រប់គ្រង និងត្រួតពិនិត្យ Failed Jobs (Bull Board)៖\n\n- **Error Stack Traces**៖ កត់ត្រាមូលហេតុបរាជ័យលម្អិតនៃគ្រប់ Failed Jobs ក្នុង Redis។\n- **Bull Board Dashboard**៖ UI Dashboard សម្រាប់ពិនិត្យ Queues, មើល Payloads, និង Retrying Jobs ដោយចុចប៊ូតុងមួយ។\n- **Manual Intervention**៖ ជួយឱ្យ Support Team ឬ Developers អាចដោះស្រាយបញ្ហាទិន្នន័យបានទាន់ពេលវេលា។",
   codeSnippet: "import { createBullBoard } from \"@bull-board/api\";\nimport { BullMQAdapter } from \"@bull-board/api/bullMQAdapter.js\";\nimport { ExpressAdapter } from \"@bull-board/express\";\n\nconst serverAdapter = new ExpressAdapter();\nserverAdapter.setBasePath(\"/admin/queues\");\n\ncreateBullBoard({\n  queues: [new BullMQAdapter(emailQueue), new BullMQAdapter(videoQueue)],\n  serverAdapter,\n});\n\n// Protect with admin auth guard and mount:\napp.use(\"/admin/queues\", protect, restrictTo(\"admin\"), serverAdapter.getRouter());",
 };
 

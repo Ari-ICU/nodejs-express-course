@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការកត់ត្រា Logs ប្រកបដោយស្តង់ដារជាមួយ Winston ឬ Pino",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "Structured Logging ជាមួយ Winston ឬ Pino គឺជាស្តង់ដារ Production។ ជំនួសឱ្យការប្រើ `console.log()` Logs ត្រូវកត់ត្រាជាទម្រង់ JSON រួមទាំង Timestamps, Log Levels (error, warn, info, debug), Request IDs (Correlation IDs), និង HTTP Context ងាយស្រួលក្នុងការ Search និង Aggregate ក្នុង Elasticsearch ឬ Datadog។",
+  summary: "ការកត់ត្រា Logs ប្រកបដោយស្តង់ដារជាមួយ Winston ឬ Pino៖\n\n- **Structured JSON Logging**៖ កត់ត្រា Logs ជាទម្រង់ JSON រួមជាមួយ Timestamp, Level, និង Metadata។\n- **Log Levels**៖ បែងចែកតាមកម្រិត `error`, `warn`, `info`, និង `debug`។\n- **Centralized Log Aggregation**៖ បញ្ជូន Logs ទៅកាន់ Elasticsearch, Logstash, ឬ Datadog សម្រាប់ងាយស្រួល Search។",
   codeSnippet: "import pino from \"pino\";\n\nexport const logger = pino({\n  level: process.env.LOG_LEVEL || \"info\",\n  timestamp: pino.stdTimeFunctions.isoTime,\n  formatters: {\n    level: (label) => ({ level: label.toUpperCase() }),\n  },\n});\n\n// Usage across application:\n// logger.info({ userId: \"123\", action: \"ORDER_PLACED\" }, \"User completed purchase\");\n// logger.error({ err, route: \"/checkout\" }, \"Payment gateway timeout\");",
 };
 

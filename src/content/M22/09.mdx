@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការធ្វើតេស្ត Business Logic ក្នុង Service Layer",
   type: "lab",
   codeLanguage: "javascript",
-  summary: "ការធ្វើតេស្ត Services (Business Logic Layer) ផ្តោតលើ Core Domain Rules ដោយឡែកពី HTTP Layer (Req/Res)។ វិធីនេះជួយឱ្យយើងអាចតេស្តករណី Edge Cases ស្មុគស្មាញ (ដូចជា ការគណនាតម្លៃបញ្ចុះតម្លៃនៃ Course, ការផ្ទៀងផ្ទាត់កាលបរិច្ឆេទចុះឈ្មោះ) បានយ៉ាងលម្អិត និងងាយស្រួល។",
+  summary: "ការធ្វើតេស្ត Business Logic ក្នុង Service Layer៖\n\n- **Decoupled from HTTP**៖ តេស្ត Service Functions ដោយផ្ទាល់ដោយមិនចាំបាច់ប្រើ `req` និង `res` objects។\n- **Domain Logic Focus**៖ ផ្ទៀងផ្ទាត់ការគណនាស្មុគស្មាញ (ដូចជា Discount Calculation, Enrollment Validity)។\n- **Clean Edge Cases**៖ ធ្វើតេស្តករណី Edge Cases ផ្សេងៗបានយ៉ាងឆាប់រហ័ស និងហ្មត់ចត់។",
   codeSnippet: "import { describe, it, expect } from \"vitest\";\nimport { CourseService } from \"../services/course.service.js\";\n\ndescribe(\"CourseService.calculateDiscount\", () => {\n  it(\"should calculate promotional price with discount percentage\", () => {\n    const originalPrice = 100;\n    const discountPercent = 20;\n\n    const promoPrice = CourseService.calculateDiscount(originalPrice, discountPercent);\n\n    expect(promoPrice).toBe(80);\n  });\n});",
 };
 

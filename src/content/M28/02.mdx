@@ -5,7 +5,7 @@ export const meta = {
   khmerTitle: "ការគ្រប់គ្រង Environment Variables ក្នុង Production",
   type: "lab",
   codeLanguage: "bash",
-  summary: "ការគ្រប់គ្រង Environment Variables ក្នុង Production តម្រូវឱ្យប្រើប្រាស់ Secret Management Solutions ដូចជា Docker Secrets, AWS Systems Manager Parameter Store, ឬ Cloudflare Environment Variables ដោយមិនត្រូវផ្ទុកឯកសារ `.env` ក្នុង Container Images ឬ Git Repositories ជាដាច់ខាត។",
+  summary: "ការគ្រប់គ្រង Environment Variables ក្នុង Production៖\n\n- **No .env in Git or Images**៖ ហាមដាច់ខាតមិនឱ្យ Commit ឯកសារ `.env` ចូល Git ឬ Build ចូល Docker Image ឡើយ។\n- **Cloud Secret Providers**៖ ប្រើប្រាស់ Docker Secrets, AWS SSM Parameter Store, ឬ Vault សម្រាប់ចាក់បញ្ចូល Secrets។\n- **Runtime Injections**៖ ចាក់បញ្ចូល Environment Variables ផ្ទាល់នៅពេល Container ចាប់ផ្តើមដំណើរការ។",
   codeSnippet: "# 1. Passing env vars to Docker container at runtime:\ndocker run -d   -p 5000:5000   -e NODE_ENV=production   -e MONGODB_URI=\"mongodb+srv://admin:secret@cluster.mongodb.net/prod\"   --name my-api   my-enterprise-api:latest\n\n# 2. Or using Docker Compose secrets / env_file:\n# docker compose --env-file .env.production up -d",
 };
 
